@@ -45,7 +45,7 @@ public class MagLock extends Skill {
                             + " around {other:name-possessive} arm. It doesn't do anything right now,"
                             + " but the powerful electromagnet inside will prove very hard to remove"
                             + " if it can lock on to another such band.", getSelf(), target));
-            target.add(new MagLocked(target));
+            target.add(c, new MagLocked(target));
             return true;
         }
         if (stat.getCount() == 1) {

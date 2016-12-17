@@ -43,7 +43,7 @@ public class Grab extends ArmSkill {
                                 + " robotic arms lock together behind {other:possessive} back,"
                                 + " immobilizing {other:possessive} arms.", owner, target, arm.getName()));
                 data.setIntegerFlag(FLAG, 0);
-                target.add(new Bound(target, 75, owner.nameOrPossessivePronoun() + " " + arm.getName()));
+                target.add(c, new Bound(target, 75, owner.nameOrPossessivePronoun() + " " + arm.getName()));
             }
             return true;
         } else {

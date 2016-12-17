@@ -10,15 +10,20 @@ import nightgames.status.Falling;
 
 public class Trip extends Skill {
     public Trip(Character self) {
-        super("Trip", self);
+        super("Trip", self, 1);
         addTag(SkillTag.positioning);
         addTag(SkillTag.knockdown);
     }
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !target.wary() && c.getStance().mobile(getSelf()) && !c.getStance().prone(target)
-                        && c.getStance().front(getSelf()) && getSelf().canAct();
+        return !target.wary() && c.getStance()
+                                  .mobile(getSelf())
+                        && !c.getStance()
+                             .prone(target)
+                        && c.getStance()
+                            .front(getSelf())
+                        && getSelf().canAct();
     }
 
     private boolean isSlime() {
@@ -67,7 +72,8 @@ public class Trip extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        double cunningDifference = getSelf().get(Attribute.Cunning) - c.getOpponent(getSelf()).get(Attribute.Cunning);
+        double cunningDifference = getSelf().get(Attribute.Cunning) - c.getOpponent(getSelf())
+                                                                       .get(Attribute.Cunning);
         double accuracy = 2.5f * cunningDifference + 75 - target.knockdownDC();
         if (isSlime()) {
             accuracy += 25;
@@ -109,16 +115,15 @@ public class Trip extends Skill {
             return String.format(
                             "%s shoves a mass of %s slime under %s feet, destabilizing %s. With a few"
                                             + " pulls, %s throws %s onto %s back.",
-                            getSelf().name(), getSelf().possessivePronoun(),
-                            target.nameOrPossessivePronoun(), target.directObject(),
-                            getSelf().pronoun(), target.directObject(), target.possessivePronoun());
+                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            target.directObject(), getSelf().pronoun(), target.directObject(),
+                            target.possessivePronoun());
         } else if (modifier == Result.weak) {
             return String.format(
                             "%s forms some of %s slime into a sheet and slides it towards %s feet."
                                             + " %s %s away from it, and %s harmlessly retracts the slime.",
-                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(), 
-                            Global.capitalizeFirstLetter(target.pronoun()), target.action("jump"),
-                            getSelf().pronoun());
+                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            Global.capitalizeFirstLetter(target.pronoun()), target.action("jump"), getSelf().pronoun());
         } else {
             return String.format("%s takes %s feet out from under %s and sends %s sprawling to the floor.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject(),

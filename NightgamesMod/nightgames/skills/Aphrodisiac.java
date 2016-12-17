@@ -45,7 +45,7 @@ public class Aphrodisiac extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return getSelf().has(Item.Aersolizer) ? 200 : 65;
+        return getSelf().has(Item.Aersolizer) ? 200 : (c.getStance().mobile(target) ? 65 : 100);
     }
 
     @Override

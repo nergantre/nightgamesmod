@@ -8,6 +8,11 @@ public class Smothering extends FaceSitting {
     public Smothering(Character top, Character bottom) {
         super(top, bottom, Stance.smothering);
     }
+    
+    public String image() {
+       
+        return "ass_smother.png";
+    }
 
     @Override
     public String describe(Combat c) {

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -41,8 +42,8 @@ public class DivineCharge extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance().vaginallyPenetrated(c, affected) && !(affected.has(Trait.zealinspiring) && !Global.getPlayer()
-                        .getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
+        if (!c.getStance().vaginallyPenetrated(c, affected) && !(affected.has(Trait.zealinspiring)
+                        && !((Player)affected).getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
             c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
             if (magnitude < .05f)

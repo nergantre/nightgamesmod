@@ -7,6 +7,7 @@ import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.status.Lethargic;
+import nightgames.status.Pheromones;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -133,7 +134,7 @@ public enum Trait {
     magicEyeFrenzy("Magic Eyes: Frenzy", "Eyes have a chance to cause frenzy"),
     enchantingVoice("Enchanting Voice", "Willbending voice, can occasionally force a command."),
     soulsucker("Soulsucker", "Soul sucking lips"),
-    entrallingjuices("Enthralling cum", "Enthralling juices"),
+    enthrallingjuices("Enthralling cum", "Enthralling juices"),
     frenzyingjuices("Frenzying juices", "Frenzying juices"),
     lacedjuices("Laced Juices", "Intoxicating bodily fluids"), // opponents take temptation when using oral skills
     addictivefluids("Addictive Fluids", "Addictive bodily fluids"), // opponents can only use oral skills if available
@@ -238,14 +239,18 @@ public enum Trait {
     toymaster("Toymaster", "Expert at using toys."),
 
     // Weaknesses
-    ticklish("Ticklish", "Can be easily tickled into submission"), // more weaken damage and arousal from tickle
-    insatiable("Insatiable", "One orgasm is never enough"), // arousal doesn't completely clear at end of match
-    lickable("Lickable", "Weak against oral sex"), // more arousal from oral attacks
-    imagination("Active Imagination", "More easily swayed by pillow talk"), // more temptation damage from indirect skills
-    achilles("Achilles Jewels", "Delicate parts are somehow even more delicate"), // more pain from groin attacks
-    naive("Naive", "Chance to not get cynical after mindgames"), // Chance to not get cynical after recovering from mindgames
-    footfetishist("Foot Fetishist", "Loves those feet"), // Starts off each match with a foot fetish
-    immobile("Immobile", "Unable to move"), // Cannot move
+    ticklish("Ticklish", "Can be easily tickled into submission."), // more weaken damage and arousal from tickle
+    insatiable("Insatiable", "One orgasm is never enough."), // arousal doesn't completely clear at end of match
+    lickable("Lickable", "Weak against oral sex."), // more arousal from oral attacks
+    imagination("Active Imagination", "More easily swayed by pillow talk."), // more temptation damage from indirect skills
+    achilles("Achilles Jewels", "Delicate parts are somehow even more delicate."), // more pain from groin attacks
+    naive("Naive", "Chance to not get cynical after mindgames."), // Chance to not get cynical after recovering from mindgames
+    footfetishist("Foot Fetishist", "Loves those feet, always have a feet fetish."), // Starts off each match with a foot fetish
+    breastobsessed("Breast Obsessed", "Infatuated with tits, always have a breast fetish."), // Starts off each match with a breast fetish
+    assaddict("Ass Addict", "Lusts for ass, always have an ass fetish."), // Starts off each match with an ass fetish
+    pussywhipped("Pussy Whipped", "Loves pussy far more than is healthy, always have a pussy fetish."), // Starts off each match with a pussy fetish
+    cockcraver("Cock Craver", "Constantly thinking about cocks, always has a cock fetish."), // Starts off each match with a cock fetish
+    immobile("Immobile", "Unable to move."), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
     obedient("Obedient", "Easy to order around."),
@@ -298,27 +303,30 @@ public enum Trait {
                                                                                 // stimulation
                                                                                 // through
                                                                                 // underwear
-    romantic("Romantic", "Every kiss is as good as the first"), // bonus to kiss
-    experienced("Experienced Lover", "Skilled at pacing yourself when thrusting"), // reduced recoil from
+    romantic("Romantic", "Every kiss is as good as the first."), // bonus to kiss
+    experienced("Experienced Lover", "Skilled at pacing yourself when thrusting."), // reduced recoil from
                                                                                    // penetration
-    wrassler("Wrassler", "A talent for fighting dirty"), // squeeze, knee, kick
+    wrassler("Wrassler", "A talent for fighting dirty."), // squeeze, knee, kick
                                                          // reduce arousal
                                                          // less
-    pimphand("Pimp Hand", "A devastating slap and a bonus to hands"),
-    stableform("Stable Form", "Cannot be affected by unexpected transformations"), // ignores
+    pimphand("Pimp Hand", "A devastating slap and a bonus to hands."),
+    stableform("Stable Form", "Cannot be affected by unexpected transformations."), // ignores
                                                                                    // thrown
                                                                                    // transformative
                                                                                    // drafts
                                                                                    // from the
                                                                                    // opponent
-    brassballs("Brass Balls", "Can take a kick"),
-
+    brassballs("Brass Balls", "Can take a kick."),
+    largereserves("Large Reserves", "You have more willpower than normal people. Start with 20 extra willpower."), //applys on new game start. Will not do anything if added later.
+    attractive("Attractive", "Hotter than the average person."),
+    
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
     repressed("Repressed", "Sexually represssed, lower seduction"),
     // Feats
     sprinter("Sprinter", "Better at escaping combat"),
-    QuickRecovery("Quick Recovery", "Regain stamina rapidly"),
+    Energetic("Energetic", "Regain stamina rapidly"),
+    QuickRecovery("Quick Recovery", "Faster recovery from disabling effects"),
     Sneaky("Sneaky", "Easier time hiding and ambushing competitors"),
     PersonalInertia("Personal Inertia", "Status effects (positive and negative) last 50% longer"),
     Confident("Confident", "Mojo decays slower out of combat"),
@@ -339,7 +347,7 @@ public enum Trait {
     strongwilled("Strong Willed", "Lowers willpower loss from orgasms"),
     nymphomania("Nymphomania", "Restores willpower upon orgasm"),
     alwaysready("Always Ready", "Always ready for penetration", (b, c, t) -> {
-        if (!c.hasDick() && c.crotchAvailable()) {
+        if (c.hasPussy() && c.crotchAvailable()) {
             b.append("Juices constainly drool from ");
             if (c.human()) {
                 b.append("your slobbering pussy.");
@@ -352,7 +360,36 @@ public enum Trait {
     cautious("Cautious", "Better chance of avoiding traps"),
     responsive("Responsive", "Return more pleasure when being fucked"),
     assmaster("Ass Master", "Who needs lube? Also boosts pleasure to both parties when assfucking"),
-    
+
+    // Kat's traits
+    // Speed Focus
+    NimbleRecovery("Nimble Recovery", "Recovers from knockdowns faster"),
+    FeralAgility("Feral Agility", "Extra cunning, evade and counter chance", (b, c, t) -> {
+        b.append(Global.format("It's hard to follow {self:name-possessive} erratic movement with the eyes.", c, c));
+    }),
+    CrossCounter("Cross Counter", "Chance to counter your opponent's counters"),
+    Catwalk("Catwalk", "Sexy walk, alluring when moving"),
+    // Power Focus
+    Unwavering("Unwavering", "Getting knocked down does not stun"),
+    FeralStrength("Feral Strength", "Extra power and grip strength"),
+    Untamed("Untamed", "Wild thrust and ride can flip positions"),
+
+    // Pheromone Focus
+    BefuddlingFragrance("Befuddling Fragrance", "Pheromones causes opponent to lose cunning and advanced attributes"),
+    FrenzyScent("Frenzy Scent", "Chance to become frenzied when affected by pheromones"),
+    FastDiffusion("Fast Diffusion", "Bonus to pheromone power when far away."),
+    PiercingOdor("Piercing Odor", "Pheromones are strong enough to overcome the calm."),
+    ComplexAroma("Complex Aroma", "Pheromones can stack more times.", (b, c, t) ->
+        b.append(Global.format("A complex aroma lingers in the air.", c, c))),
+
+    // Frenzy Focus
+    Rut("Rut", "Half arousal damage during frenzy, chance to go into a frenzy when over half arousal."),
+    PrimalHeat("Primal Heat", "Bonus to seduction while frenzied based on Animism"),
+    Jackhammer("Jackhammer", "Chance to thrust/ride twice"),
+    Piledriver("Piledriver", "Chance to stun when fucking"),
+    MindlessDesire("Mindless Desire", "When frenzied, opponents have lower effective charisma"),
+    Unsatisfied("Unsatisfied", "Hard to finish off without fucking"),
+
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
     temptingass("Tempting Ass", "Opponents can't help butt fuck it"), // ... sorry
@@ -360,14 +397,15 @@ public enum Trait {
     takedown("Takedown", "Expert at tackling weary opponents"),
     indomitable("Indomitable", "Plainly refuses to be dominated"),
     confidentdom("Confident Dom", "Attributes rise while dominant"),
-    drainingass("Draining Ass", "Taking it in the ass drains stamina an possibly Power"),
+    drainingass("Draining Ass", "Taking it in the ass drains stamina and possibly Power"),
     edger("Edger", "Can keep oppoenents right at the edge"),
     commandingvoice("Commanding Voice", "Does not take 'no' for an answer"),
     mentalfortress("Mental Fortress", "Confident enough to have a chance to resist mind control"),
     bewitchingbottom("Bewitching Bottom", "Makes opponents go wild for ass"),
     unquestionable("Unquestionable", "Does not tolerate resistance when on top"),
     grappler("Grappler", "Bonus to hold strength"),
-    suave("Suave", "Bonus increases seduction vs girls."),
+    suave("Suave", "Bonus seduction vs girls."),
+    brutesCharisma("Brute's Charisma", "Extra charisma based on Power and Ki when on top."),
     
     // Mara's unique traits
     harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
@@ -379,6 +417,7 @@ public enum Trait {
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     roboweb("RoboWeb", "Improved Spiderweb trap"),
     octo("Octo", "Has robotic arms mounted onto their back"),
+
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
@@ -449,7 +488,7 @@ public enum Trait {
         nullResistance = (combat, c, s) -> "";
         resistances = new HashMap<>();
         resistances.put(shameless, (combat, c, s) -> {
-            if (s.flags().contains(Stsflag.shamed) || s.flags().contains(Stsflag.distracted)) {
+            if (s.flags().contains(Stsflag.shamed)) {
                 return "Shameless";
             }
             return "";
@@ -466,6 +505,12 @@ public enum Trait {
             // 50% to resist horny and hypersensitive
             if ((s.flags().contains(Stsflag.horny) || s.flags().contains(Stsflag.hypersensitive))
                             && Global.random(100) < 50) {
+                if (s.flags().contains(Stsflag.piercingOdor) && s instanceof Pheromones) {
+                    Pheromones pheromones = ((Pheromones)s);
+                    pheromones.setMagnitude(pheromones.getMagnitude() / 2);
+                    combat.write(c, "The piercing scent of the pheromones overpowers " + c.possessivePronoun() + " cool-headedness. While it doesn't affect " + c.directObject()+ " as much as it should, it's still impossible to just shrug off.");
+                    return "";
+                }
                 return "Calm";
             }
             return "";
@@ -507,12 +552,13 @@ public enum Trait {
         });
         resistances.put(Trait.mindcontrolresistance, (combat, c, s) -> {
            if (s.mindgames() && combat != null && combat.getOpponent(c).has(Trait.mindcontroller)) {
-               float magnitude =
-                               Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
-                                               .orElse(0f);
-               float threshold = 40 * magnitude;
-               if (Global.random(100) < threshold) {
-                   return "Mara's Control";
+               if (c instanceof Player) {
+                   float magnitude = ((Player)c).getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
+                                                   .orElse(0f);
+                   float threshold = 40 * magnitude;
+                   if (Global.random(100) < threshold) {
+                       return "Mara's Control";
+                   }
                }
            }
            return "";

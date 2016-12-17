@@ -26,7 +26,7 @@ public class SlimeJob extends SimpleEnemySkill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
-            int m = (int) (Global.random(10, 16) + Math.sqrt(getSelf().getLevel()));
+            int m = (int) (Global.random(10, 16) + Math.sqrt(getSelf().getLevel())/ 2);
             if (target.crotchAvailable() && !c.getStance().penisInserted(target) && target.hasDick()) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} forms into a humanoid shape and grabs {other:name-possessive} dick. "
                                 + "A slimy vagina forms around {other:possessive} penis and rubs {other:direct-object} with a slippery pleasure.",

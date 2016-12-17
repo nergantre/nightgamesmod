@@ -2,6 +2,7 @@ package nightgames.characters.body;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -64,7 +65,7 @@ public class MouthPart extends GenericBodyPart {
                                     "As {other:name-possessive} " + fluid
                                                     + " flow down your throat, your entire mind fogs up. "
                                                     + "You forget where you are, why you're here, and what you're doing. "
-                                                    + "The only thing left in you is an primal need to obtain more of {other:possessive} fluids.",
+                                                    + "The only thing left in you is a primal need to obtain more of {other:possessive} fluids.",
                                     self, opponent)));
                 } else {
                     c.write(self, Global.capitalizeFirstLetter(Global.format(
@@ -110,8 +111,8 @@ public class MouthPart extends GenericBodyPart {
             bonus += Global.random(3) + 4;
             opponent.pain(c, opponent, 8 + Global.random(10), false, true);
         }
-        if (self.has(Trait.corrupting)) {
-            opponent.add(c, new PartiallyCorrupted(self));
+        if (self.has(Trait.corrupting) && opponent.human()) {
+            opponent.add(c, new PartiallyCorrupted((Player) opponent, self));
         }
         if (self.has(Trait.soulsucker) && target.isGenital()) {
             if (!self.human()) {

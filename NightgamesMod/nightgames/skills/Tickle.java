@@ -9,13 +9,14 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
+import nightgames.skills.damage.Staleness;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Winded;
 
 public class Tickle extends Skill {
-
     public Tickle(Character self) {
-        super("Tickle", self);
+        // tickle has higher decay but pretty fast recovery
+        super("Tickle", self, 0, Staleness.build().withDefault(1.0).withFloor(.5).withDecay(.15).withRecovery(.20));
         addTag(SkillTag.weaken);
         addTag(SkillTag.staminaDamage);
     }

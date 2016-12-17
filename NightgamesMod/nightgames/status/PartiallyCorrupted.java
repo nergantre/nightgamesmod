@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
-import nightgames.global.Global;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
@@ -17,8 +17,8 @@ public class PartiallyCorrupted extends DurationStatus {
     private int counter;
     private final Character cause;
 
-    public PartiallyCorrupted(Character cause) {
-        super("Partially Corrupted", Global.getPlayer(), 4);
+    public PartiallyCorrupted(Player affected, Character cause) {
+        super("Partially Corrupted", affected, 4);
         counter = 1;
         this.cause = cause;
         flag(Stsflag.partiallyCorrupted);
@@ -50,10 +50,9 @@ public class PartiallyCorrupted extends DurationStatus {
         setDuration(Math.max(other.getDuration(), getDuration()));
         counter += other.counter;
         if (counter > THRESHOLD) {
-            Global.getPlayer()
-                  .addict(AddictionType.CORRUPTION, cause, Addiction.MED_INCREASE);
+            ((Player)affected).addict(AddictionType.CORRUPTION, cause, Addiction.MED_INCREASE);
             // TODO: message?
-            Global.getPlayer().removelist.add(this);
+            ((Player)affected).removelist.add(this);
         }
     }
 
@@ -119,7 +118,7 @@ public class PartiallyCorrupted extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new PartiallyCorrupted(newOther);
+        return new PartiallyCorrupted((Player) newAffected, newOther);
     }
 
     @Override  public JsonObject saveToJson() {
@@ -131,7 +130,7 @@ public class PartiallyCorrupted extends DurationStatus {
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        PartiallyCorrupted pc = new PartiallyCorrupted(Global.getCharacterByType(obj.get("cause").getAsString()));
+        PartiallyCorrupted pc = new PartiallyCorrupted(null, null);
         pc.counter = obj.get("counter").getAsInt();
         return pc;
     }

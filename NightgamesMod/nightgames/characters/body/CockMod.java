@@ -14,6 +14,7 @@ import nightgames.status.Enthralled;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Horny;
 import nightgames.status.Hypersensitive;
+import nightgames.status.Pheromones;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 import nightgames.status.Winded;
@@ -306,8 +307,8 @@ public enum CockMod implements BodyPartMod {
             c.write(self, String.format("Raw sexual energy flows from %s %s into %s %s, enflaming %s lust",
                             self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
                             otherOrgan.describe(opponent), opponent.possessivePronoun()));
-            opponent.add(c, Horny.getWithBiologicalType(self, opponent, Global.random(3) + 1, 3,
-                            self.nameOrPossessivePronoun() + " primal passion"));
+            opponent.add(c, Pheromones.getWith(self, opponent, Global.random(3) + 1, 3, " primal passion"));
+
         }
     }
 

@@ -34,7 +34,7 @@ public class Rewind extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().add(new Primed(getSelf(), -8));
+        getSelf().add(c, new Primed(getSelf(), -8));
         getSelf().getArousal()
                  .empty();
         getSelf().getStamina()

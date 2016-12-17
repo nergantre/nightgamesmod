@@ -90,7 +90,7 @@ public class AssJob extends Skill {
                 }
 
                 if (Global.random(100) < fetishChance) {
-                    target.add(new BodyFetish(target, getSelf(), "ass", .1 + getSelf().get(Attribute.Fetish) * .05));
+                    target.add(c, new BodyFetish(target, getSelf(), "ass", .1 + getSelf().get(Attribute.Fetish) * .05));
                 }
             } else {
                 writeOutput(c, Result.normal, target);

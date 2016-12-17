@@ -41,7 +41,7 @@ public class DoubleGrab extends MultiArmMove {
                         + " arms lock together behind {other:possessive} back, completely immobilizing"
                         + " {other:possessive} arms.", owner, target));
         c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 2);
-        target.add(new Bound(target, 75, owner.nameOrPossessivePronoun() + " Grabbers"));
+        target.add(c, new Bound(target, 75, owner.nameOrPossessivePronoun() + " Grabbers"));
     }
     
 }

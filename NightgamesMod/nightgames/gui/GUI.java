@@ -126,6 +126,8 @@ public class GUI extends JFrame implements Observer {
     private JRadioButton rdhard;
     private JRadioButton rdMsgOn;
     private JRadioButton rdMsgOff;
+    private JRadioButton rdAutoNextOn;
+    private JRadioButton rdAutoNextOff;
     private JRadioButton rdautosaveon;
     private JRadioButton rdautosaveoff;
     private JRadioButton rdporon;
@@ -264,6 +266,16 @@ public class GUI extends JFrame implements Observer {
         optionsPanel.add(rdMsgOn);
         optionsPanel.add(rdMsgOff);
 
+        JLabel autoNextLabel = new JLabel("Fast Combat Display");
+        ButtonGroup autoNextG = new ButtonGroup();
+        rdAutoNextOn = new JRadioButton("On");
+        rdAutoNextOff = new JRadioButton("Off");
+        autoNextG.add(rdAutoNextOn);
+        autoNextG.add(rdAutoNextOff);
+        optionsPanel.add(autoNextLabel);
+        optionsPanel.add(rdAutoNextOn);
+        optionsPanel.add(rdAutoNextOff);
+
         // autosave - options submenu - visible -(not currently working?)
 
         JLabel lblauto = new JLabel("Autosave (saves to auto.sav)");
@@ -363,6 +375,12 @@ public class GUI extends JFrame implements Observer {
                 rdMsgOff.setSelected(true);
             }
 
+            if (Global.checkFlag(Flag.AutoNext)) {
+                rdAutoNextOn.setSelected(true);
+            } else {
+                rdAutoNextOff.setSelected(true);
+            }
+
             if (Global.checkFlag(Flag.hardmode)) {
                 rdhard.setSelected(true);
             } else {
@@ -404,6 +422,7 @@ public class GUI extends JFrame implements Observer {
                             JOptionPane.INFORMATION_MESSAGE);
             if (result == JOptionPane.OK_OPTION) {
                 Global.setFlag(Flag.systemMessages, rdMsgOn.isSelected());
+                Global.setFlag(Flag.AutoNext, rdAutoNextOn.isSelected());
                 Global.setFlag(Flag.dumbmode, !rdnormal.isSelected());
                 Global.setFlag(Flag.hardmode, rdhard.isSelected());
                 Global.setFlag(Flag.autosave, rdautosaveon.isSelected());

@@ -33,7 +33,7 @@ public class AttireShift extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().add(new Primed(getSelf(),-2));
+        getSelf().add(c, new Primed(getSelf(),-2));
         target.nudify();
         writeOutput(c, Result.normal, target);
         getSelf().emote(Emotion.dominant, 15);

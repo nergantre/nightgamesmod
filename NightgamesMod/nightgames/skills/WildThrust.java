@@ -5,6 +5,7 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -18,8 +19,7 @@ public class WildThrust extends Thrust {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Animism) > 1 || user.human() && Global.getPlayer()
-                                                                        .checkAddiction(AddictionType.BREEDER);
+        return user.get(Attribute.Animism) > 1 || (user.human() && ((Player)user).checkAddiction(AddictionType.BREEDER));
     }
 
     @Override
@@ -36,22 +36,39 @@ public class WildThrust extends Thrust {
     }
 
     @Override
+    public boolean resolve(Combat c, Character target) {
+        boolean effective = super.resolve(c, target);
+        if (effective && c.getStance().sub(getSelf()) && getSelf().has(Trait.Untamed) && Global.random(4) == 0 ) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:fuck|fucks} {other:name-do} with such abandon that it leaves {other:direct-object} "
+                            + "momentarily dazed. {self:SUBJECT-ACTION:do|does} not let this chance slip and {self:action:rotate|rotates} {self:possessive} body so that {self:pronoun-action:are|is} on top!", getSelf(), target));
+            c.setStance(c.getStance().reverse(c, false));
+        }
+        return effective;
+    }
+
+    @Override
     public int[] getDamage(Combat c, Character target) {
         int results[] = new int[2];
 
-        int m = 15 + Global.random(20) + Math
+        int m = 5 + Global.random(20) + Math
                         .min(getSelf().get(Attribute.Animism), getSelf().getArousal().getReal() / 30);
-        int mt = 15 + Global.random(20);
+        int mt = 5 + Global.random(20);
         mt = Math.max(1, mt);
 
         results[0] = m;
         results[1] = mt;
 
-        if (!getSelf().human() && !target.human()) {
+        Player p = null;
+        if (getSelf().human()) {
+            p = (Player) getSelf();
+        } else if (target.human()) {
+            p = (Player) target;
+        }
+
+        if (p == null) {
             return results;
         }
 
-        Player p = Global.getPlayer();
         Character npc = c.getOpponent(p);
         Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
         if (!addiction.isPresent()) {
@@ -76,7 +93,6 @@ public class WildThrust extends Thrust {
         results[1] = mt;
 
         return results;
-
     }
 
     @Override

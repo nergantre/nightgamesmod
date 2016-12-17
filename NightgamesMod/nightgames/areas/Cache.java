@@ -34,7 +34,7 @@ public class Cache implements Deployable {
             case 1:
                 test = Attribute.Perception;
                 secondary = Attribute.Arcane;
-                dc -= 5;
+                dc -= 8;
                 break;
             default:
                 test = Attribute.Power;
@@ -105,7 +105,7 @@ public class Cache implements Deployable {
                             Global.gui().message("<p>Something is off in this "
                                             + Global.getMatch().genericRoomDescription()
                                             + ", but it's hard to put your finger on it. A trap? No, it's not that. You summon a minor spirit to search the "
-                                            + "area. It's not much good in a fight, but pretty decent at finding hidden objects. It leads you to a small hidden box of goodies.<p>");
+                                            + "area. It's not much good in a fight, but it is pretty decent at finding hidden objects. It leads you to a small hidden box of goodies.<p>");
                             break;
                         case Power:
                             Global.gui().message(
@@ -133,7 +133,7 @@ public class Cache implements Deployable {
                         Global.gui().message(
                                         "<p>You notice a conspicuous box lying on the floor connected to a small digital touchscreen. The box is sealed tight, but it looks like "
                                                         + "the touchscreen probably opens it. The screen is covered by a number of abstract symbols with the phrase \"Solve Me\" at the bottom. A puzzle obviously. "
-                                                        + "You do your best to decode it, but after a couple failed attempts, the screen turns off and stops responding.<p>");
+                                                        + "You do your best to decode it, but after a couple of failed attempts, the screen turns off and stops responding.<p>");
                         break;
                     case Perception:
                         Global.gui().message("<p>Something is off in this " + Global.getMatch().genericRoomDescription()

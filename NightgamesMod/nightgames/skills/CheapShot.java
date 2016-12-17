@@ -41,7 +41,7 @@ public class CheapShot extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().add(new Primed(getSelf(), -3));
+        getSelf().add(c, new Primed(getSelf(), -3));
         writeOutput(c, Result.normal, target);
         if (target.human() && Global.random(5) >= 3) {
             c.write(getSelf(), getSelf().bbLiner(c, target));

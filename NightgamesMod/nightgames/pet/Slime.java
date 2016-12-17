@@ -17,11 +17,11 @@ import nightgames.skills.petskills.SlimeTrip;
 
 public class Slime extends Pet {
     public Slime(Character owner) {
-        super("Slime", owner, Ptype.slime, 3, 3);
+        super("slime", owner, Ptype.slime, 3, 3);
     }
 
     public Slime(Character owner, int power, int ac) {
-        super("Slime", owner, Ptype.slime, power, ac);
+        super("slime", owner, Ptype.slime, power, ac);
     }
 
     @Override

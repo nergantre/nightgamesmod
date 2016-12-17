@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import nightgames.characters.body.CockMod;
@@ -233,7 +234,7 @@ public class Mara extends BasePersonality {
                             + "floor, spent, but Mara isn't finished with you. She pulls out a bottle of lubricant and starts to grease you up. She takes her time with it, teasing and tickling you "
                             + "as she goes, stopping from time to time to place light kisses. Between her enticing behavior and her naked body pressed against you, your erection recovers in record "
                             + "time.<p>Mara makes herself comfortable sitting on your lap and slides your lubed up dick between her thighs. As she leans against your chest, you can feel her hot slit "
-                            + "pressing against your member. Her finger teases the head of your penis, which is poking out of her lap. <i>\"It's a good thing you're such a horny boy. If you couldn't get it "
+                            + "pressing against your member. Her finger teases the head of your penis, which is poking out of her lap. <i>\"It's a good thing you're such a horny " + c.getOpponent(character).boyOrGirl() + ". If you couldn't get it "
                             + "up again, I would have to settle for grinding on your leg.\"</i> As she says this, she starts to rub her clit along the length of your penis. She keeps her legs clamped "
                             + "tightly together so that her movements stimulate your entire shaft. You contribute by licking and sucking the side of her neck to draw out soft moans of pleasure. You "
                             + "support your upper body with your left arm, which leaves your right hand free to play with Mara's small breasts and nipples. Her grinding becomes more needy as she "
@@ -314,9 +315,9 @@ public class Mara extends BasePersonality {
             return "You bury yourself deep into Mara's tight pussy as she screams in pleasure. Her hot folds shudder and squeeze your cock, confirming she's reached her climax. "
                             + "The sensation is amazing, but you're not in danger of cumming with her. You gently stroke her head while spasms of pleasure continue to run through her small body. "
                             + "It occurs to you -not for the first time- that she's really cute, even when she's not trying to be.<p>As Mara catches her breath, you see realization slowly dawn "
-                            + "on her. <i>\"You didn't cum? Why not?\"</i> She actually looks a little hurt. <i>\"Every boy I've been with said it feels really good and tight inside me. They never outlast "
-                            + "me.\"</i> Every boy she's been with? Mara struck you as a bit of an introvert. How many guys has she been with? <br>She gives you a flick on the forehead. <i>\"Don't be mean. "
-                            + "I've only slept with a few boys. It's not like you're a virgin either.\"</i> Fair enough, but if she's upset that you didn't cum inside her, you're eager to remedy that. "
+                            + "on her. <i>\"You didn't cum? Why not?\"</i> She actually looks a little hurt. <i>\"Every " + c.getOpponent(character).boyOrGirl() + " I've been with said it feels really good and tight inside me. They never outlast "
+                            + "me.\"</i> Every " + c.getOpponent(character).boyOrGirl() + " she's been with? Mara struck you as a bit of an introvert. How many " + c.getOpponent(character).guyOrGirl() + "s has she been with? <br>She gives you a flick on the forehead. <i>\"Don't be mean. "
+                            + "I've only slept with a few " + c.getOpponent(character).boyOrGirl() + "s. It's not like you're a virgin either.\"</i> Fair enough, but if she's upset that you didn't cum inside her, you're eager to remedy that. "
                             + "\n\nYou pull most of the way out in preparation for a big thrust, but Mara yelps in alarm. <i>\"Wait!\"</i> She slides her butt backward, causing your dick to fall out completely, "
                             + "and curls up protectively. <i>\"I get really sensitive down there after I orgasm. Give me a minute or two to recover before we continue. In the meantime we can always chat, "
                             + "or maybe kiss?\"</i> You'd feel pretty silly trying to have a conversation while kneeling over her with a painfully hard boner. You lean down and press your lips against "
@@ -532,11 +533,39 @@ public class Mara extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
+        final String finalLines[] = {
+                        "<i>\"NNnnnn..! Oh man I can't take much more!\"</i>",
+                        "<i>\"Ngh! Slow down! please!\"</i>",
+                        "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",
+                        };
+        switch (character.orgasms) {
+            case 0:
+                return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
+            case 1:
+                return "<i>\"No fair! I'll get you next time!\"</i>";
+            case 2:
+                return "<i>\"AAAHHH!\"</i> Mara tries to catch her breath, \"There's... no way... you can keep this up!\"";
+            default:
+                return Global.pickRandom(Arrays.asList(finalLines)).get();
+        }
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
+        final String finalLines[] = {
+                        "<i>\"Cumming again? You " + target.boyOrGirl()+ "s are too easy.\"</i>",
+                        "<i>\"You're simply inexhaustible aren't you? Let's test that theory... for science.\"</i>",
+                        "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",
+                        };
+        switch (target.orgasms) {
+            case 0:
+                return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
+            case 1:
+                return "<i>\"Looks like Mr. Happy over here can't help himself! That's twice now, how long can you go?\"</i>";
+            case 2:
+                return "<i>\"Oh man, not many people lasted to three. I got more coming for you though!\"</i>";
+            default:
+                return Global.pickRandom(Arrays.asList(finalLines)).get();
+        }
     }
 }

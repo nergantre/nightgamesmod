@@ -6,7 +6,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.BasicCockPart;
 import nightgames.global.Global;
+import nightgames.requirements.BodyPartRequirement;
+import nightgames.requirements.NotRequirement;
+import nightgames.requirements.RequirementShortcuts;
 
 public class AiriTime extends BaseNPCTime {
     public AiriTime(Character player) {
@@ -16,8 +20,7 @@ public class AiriTime extends BaseNPCTime {
         giftString = "\"Oh wow... for me? th-thanks...!\"";
         transformationOptionString = "Error";
         advTrait = null;
-        transformationIntro =
-                        "[Placeholder]<br>Nothing here to see.";
+        transformationIntro = "[Placeholder]<br>You ask Airi about bodily transformations. You figure if anyone knew, it would be someone who can freely manipulate their own body.";
         loveIntro = "[Placeholder]<br>Airi greets you at the door and flies into your arms. She looks pretty happy to see you.";
         transformationFlag = "";
     }
@@ -25,6 +28,67 @@ public class AiriTime extends BaseNPCTime {
     @Override
     public void buildTransformationPool() {
         options = new ArrayList<>();
+        {
+            TransformationOption growCock = new TransformationOption();
+            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
+            growCock.additionalRequirements = "";
+            growCock.option = "Airi: Grow a cock";
+            growCock.scene = "<br>You ask Airi if she would consider growing a cock. "
+                            + "Surprisingly, she agrees fairly easily, considering her usual recalcitrant personality. "
+                            + "When you move to ask her what she needs from you, she puts a finger on your lips. "
+                            + "She shyly smiles, <i>\"No need, I can do it myself.\"</i> "
+                            + "After stripping down, Airi displays a look of intense concentration. "
+                            + "<br/><br/>"
+                            + "Right before your eyes, you see the tip of her clit turn transparent cerulean, just like her slime form. "
+                            + "Like a mushroom sprouting after a spring rain, the little nib grows before your eyes. "
+                            + "First it stretches and lengthens like a thin cord growing from her netherlips. "
+                            + "It looks almost like a seven inch long deflated balloon to your eyes as it hangs between her legs. "
+                            + "Then it starts inflating, transforming into what looks like a large flaccid blue dong. "
+                            + "It doesn't stop there though. After filling her cock, the slime pouring in starts making it turgid and erect. "
+                            + "Letting out the breath she was holding, Airi grins and motions for you to feel the a massive hard-on on her feminine hips. "
+                            + "<br/><br/>"
+                            + "You hesitantly touch the distended goo cock and without warning Airi lets out a soft cry and her cock spews "
+                            + "blue viscous cum all over your hand. The cock's coloring fades back into her pale flesh tone as it softens, "
+                            + "but you know that she now packs a powerful new weapon!";
+            growCock.effect = (c, self, other) -> {
+                other.body.add(BasicCockPart.big);
+                return true;
+            };
+            options.add(growCock);
+        }
+        {
+            TransformationOption removeCock = new TransformationOption();
+            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
+            removeCock.additionalRequirements = "";
+            removeCock.option = "Airi: Remove her cock";
+            removeCock.scene = "<br>Airi frowns when you ask her if she can remove her new cock, \"<i>If you didn't like it, don't ask me for one in the first place... "
+                            + "I guess you {other:guy}s are fickle. ...Fine, I'll do it but you're going to help me...</i>\""
+                            + "<br/><br/>"
+                            + "You're happy that she agreed, and tell her you'll do anything you can to help! However, as soon as you speak, the devilish grin on her face tells you that you made a poor choice. "
+                            + "Stammering, you back towards her door, hoping to escape before she can get any ideas. Without you noticing though, two ropes of slime wrap around your feet and send you tumbling to the ground. "
+                            + "Airi happily stands over you with her her skirt tucked away and her panties pulled to one side revealing her rather large cock. "
+                            + "<i>\"You've asked for this {other:name}... and you'll have to take it back...\"</i> More tentacles of slime pull your lips apart and the Asian girl squats down on your face and shoves her dick into your "
+                            + "mouth. You can hardly breathe when she starts forcibly fucking your face with her artificial penis. "
+                            + "<br/><br/>"
+                            + "Getting more turned on by the second, Airi rapidly slimifies; her body turns transparent blue and her lower legs melt into the indistinct blob that she normally rides on. "
+                            + "However, she doesn't stop thrusting into your mouth for a single second. Speaking in the broken speech natural to her slime form, "
+                            + "Airi grunts as she fucks you, \"<i>Hh... This feels... good... Might as well... savour... last time...</i>\""
+                            + "<br/><br/>"
+                            + "Since you figure there's no way to get away from her from this position, you can only make it go faster. "
+                            + "You start playing with her gooey vagina and try to please her with your lips as much as you can. It seems to work as she moans louder with each passing moment. "
+                            + "Soon she hits the point of no return and cums hard in your mouth. The volume she is putting out is unreal. You start choking as the thick fluid rapidly overflows your mouth and throat. "
+                            + "The slime girl doesn't seem to notice though as she collaps on top of you. You try spitting out the cum, but as if it has a mind of its own, the fluid creeps deeper down your esophagus and settles inside your stomach. "
+                            + "Luckily, before you run of air, the entire load finishes the trip into your stomach, leaving you completely bloated with Airi's slime."
+                            + "<br/><br/>"
+                            + "Recovering from her orgasm, Airi gets up off you and slowly returns to her human form. You notice that her cock has disappeared like she promised. "
+                            + "Groaning a bit, you realize that the act of cumming probably liquified her gooey rod and sent it straight down your throat. She literally made you eat her cock. "
+                            + "Before you leave, Airi gives you an apologetic pat and whispers in your ear, <i>\"Some advice... I'd recommend using the bathroom <b>alone</b> the next time you need to go...\"</i> Aw man, that's not cool.";
+            removeCock.effect = (c, self, other) -> {
+                other.body.removeAll("cock");
+                return true;
+            };
+            options.add(removeCock);
+        }
     }
 
     @Override
@@ -192,7 +256,7 @@ public class AiriTime extends BaseNPCTime {
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
             if (Global.random(5) == 0 && (!player.has(Trait.fakeout) || !npc.has(Trait.fakeout))) {
-                Global.gui().message("You feel like you learned a lot about holding on to someone. Maybe you can apply this in the games?");
+                Global.gui().message("You learn some real-world lessons on misleading people.");
                 player.add(Trait.fakeout);
                 npc.getGrowth().addTrait(0, Trait.fakeout);
             }

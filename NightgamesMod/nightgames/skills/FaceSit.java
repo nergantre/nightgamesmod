@@ -38,7 +38,7 @@ public class FaceSit extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
-                        && c.getStance().reachTop(getSelf()) && !c.getStance().penetrated(c, getSelf())
+                        && c.getStance().prone(target) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
                         && !getSelf().has(Trait.shy);
     }
@@ -50,7 +50,7 @@ public class FaceSit extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
+        if (getSelf().has(Trait.enthrallingjuices) && Global.random(4) == 0 && !target.wary()) {
             writeOutput(c, Result.special, target);
             target.add(c, new Enthralled(target, getSelf(), 5));
         } else {
@@ -65,6 +65,10 @@ public class FaceSit extends Skill {
             getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("balls"), m, c, this);
         } else {
             getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandom("pussy"), m, c, this);
+            
+            if (Global.random(100) < 1 + getSelf().get(Attribute.Fetish) / 2) {
+                target.add(c, new BodyFetish(target, getSelf(), "pussy", .05));
+            }
         }
         double n = 4 + Global.random(4);
         if (c.getStance().front(getSelf())) {
@@ -86,6 +90,7 @@ public class FaceSit extends Skill {
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }
+      
         return true;
     }
 
@@ -101,18 +106,14 @@ public class FaceSit extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().isFaceSitting(getSelf())) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override
     public String getLabel(Combat c) {
         if (getSelf().hasBalls() && !getSelf().hasPussy()) {
             return "Teabag";
-        } else if (c.getStance().isFaceSitting(getSelf())) {
+        } else if (!c.getStance().isFaceSitting(getSelf())) {
             return "Facesit";
         } else {
             return "Ride Face";

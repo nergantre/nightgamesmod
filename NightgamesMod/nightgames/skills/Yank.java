@@ -44,7 +44,7 @@ public class Yank extends Skill {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:yank|yanks} {other:name-do}"
                             + " forward by the toy still connecting them, and "
                             + " {other:pronoun-action} falls stumbles and falls.", getSelf(), target));
-            target.add(new Falling(target));
+            target.add(c, new Falling(target));
             if (Global.random(100) < removeChance) {
                 c.write("The powerful tug dislodges the toy, causing it to retract back where it was launched from.");
                 target.outfit.unequip(target.outfit.getBottomOfSlot(ClothingSlot.bottom));

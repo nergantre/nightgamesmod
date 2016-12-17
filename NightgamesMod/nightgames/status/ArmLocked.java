@@ -1,7 +1,5 @@
 package nightgames.status;
 
-import static nightgames.requirements.RequirementShortcuts.eitherinserted;
-
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -9,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.requirements.RequirementShortcuts;
 
 public class ArmLocked extends Status {
     private float toughness;
@@ -16,7 +15,8 @@ public class ArmLocked extends Status {
     public ArmLocked(Character affected, float dc) {
         super("Arm Locked", affected);
         toughness = dc;
-        requirements.add(eitherinserted());
+        requirements.add(RequirementShortcuts.eitherinserted());
+        requirements.add(RequirementShortcuts.dom());
         requirements.add((c, self, other) -> toughness > .01);
         flag(Stsflag.armlocked);
     }

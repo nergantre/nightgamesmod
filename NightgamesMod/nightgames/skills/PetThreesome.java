@@ -121,8 +121,8 @@ public class PetThreesome extends Skill {
             if (fucker.has(Trait.insertion)) {
                 otherm += Math.min(fucker.get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(fucker, selfO, targetO, m, c, this);
-            fucker.body.pleasure(target, targetO, selfO, otherm, c, this);
+            target.body.pleasure(fucker, selfO, targetO, otherm, c, this);
+            fucker.body.pleasure(target, targetO, selfO, m, c, this);
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to pull {other:name-do} into a threesome but {other:pronoun-action:are|is} not aroused enough yet.", 
                             getSelf(), target));

@@ -5,7 +5,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Mount;
-import nightgames.stance.Stance;
 import nightgames.status.Enthralled;
 import nightgames.status.Stsflag;
 
@@ -15,7 +14,7 @@ public class CommandDown extends PlayerCommand {
     public boolean usable(Combat c, Character target) {
         return target.is(Stsflag.enthralled)
                         && ((Enthralled) target.getStatus(Stsflag.enthralled)).master.equals(getSelf())
-                        && !c.getStance().havingSex(c) && getSelf().canRespond() && c.getStance().en == Stance.neutral;
+                        && !c.getStance().havingSex(c) && getSelf().canRespond();
     }
 
     public CommandDown(Character self) {

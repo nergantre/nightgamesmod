@@ -87,7 +87,7 @@ public class FlowerSex extends FemdomSexStance {
 
     @Override
     public double pheromoneMod(Character self) {
-        return 10;
+        return 5;
     }
     
     @Override

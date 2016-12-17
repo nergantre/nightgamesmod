@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -41,8 +42,8 @@ public class Stumble extends Skill {
         }
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-            if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
-                Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+            if (((Player)getSelf()).checkAddiction(AddictionType.MIND_CONTROL, target)) {
+                ((Player)getSelf()).unaddictCombat(AddictionType.MIND_CONTROL, 
                                 target, Addiction.LOW_INCREASE, c);
                 c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
             }

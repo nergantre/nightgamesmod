@@ -118,7 +118,7 @@ public class TestAngel extends BasePersonality {
         character.getGrowth().addTrait(36, Trait.objectOfWorship);
         character.getGrowth().addTrait(39, Trait.tight);
         character.getGrowth().addTrait(42, Trait.desensitized);
-        character.getGrowth().addTrait(45, Trait.entrallingjuices);
+        character.getGrowth().addTrait(45, Trait.enthrallingjuices);
         character.getGrowth().addTrait(48, Trait.magicEyeArousal);
         character.getGrowth().addTrait(51, Trait.sexTraining3);
         character.getGrowth().addTrait(54, Trait.desensitized2);
