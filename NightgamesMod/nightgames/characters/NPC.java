@@ -95,6 +95,10 @@ public class NPC extends Character {
         description = description + "<p>";
         description = description + outfit.describe(this);
         description = description + observe(per);
+        if (roboManager != null) {
+            description += "<p>You can see " + roboManager.describeArms() + " strapped behind "
+                                + possessivePronoun() + " back.<br/>";
+        }
         return description;
     }
 
@@ -527,11 +531,11 @@ public class NPC extends Character {
     }
     
     private void pickAndDoAction(Collection<Action> available, Collection<Action> moves, Collection<Movement> radar) {
-        available.removeIf(a -> a == null || !a.usable(this));
         if (available.isEmpty()) {
             available.addAll(Global.getActions());
             available.addAll(moves);
         }
+        available.removeIf(a -> a == null || !a.usable(this));
         if (location.humanPresent()) {
             Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
         } else {

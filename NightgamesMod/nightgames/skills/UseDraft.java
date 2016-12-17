@@ -61,7 +61,7 @@ public class UseDraft extends Skill {
                 System.out.println("Item " + entry.getKey() + ": " + entry.getValue());
             });
         }
-        Item best = checks.entrySet().stream().max((first, second) -> {
+        Item best = checks.entrySet().stream().min((first, second) -> {
             double test = second.getValue() - first.getValue();
             if (test < 0) {
                 return -1;

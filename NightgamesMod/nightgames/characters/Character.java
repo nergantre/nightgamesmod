@@ -57,6 +57,7 @@ import nightgames.items.clothing.Outfit;
 import nightgames.json.JsonUtils;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.PetCharacter;
+import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Command;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Nothing;
@@ -133,7 +134,8 @@ public abstract class Character extends Observable implements Cloneable {
     public int cloned;
     private Map<Integer, LevelUpData> levelPlan;
     private Growth growth;
-
+    public RoboArmManager roboManager;
+    
     public Character(String name, int level) {
         this.name = name;
         this.level = level;
@@ -3436,6 +3438,10 @@ public abstract class Character extends Observable implements Cloneable {
         if(getPure(Attribute.Ninjutsu)>=9){
             Global.gainSkills(this);
             placeNinjaStash(m);
+        }
+        if (has(Trait.octo)) {
+            roboManager = new RoboArmManager(this);
+            roboManager.selectArms();
         }
     }
 

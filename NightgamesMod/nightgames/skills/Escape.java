@@ -6,6 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.pet.arms.skills.Grab;
 import nightgames.stance.Neutral;
 import nightgames.status.Collared;
 import nightgames.status.Stsflag;
@@ -42,6 +43,7 @@ public class Escape extends Skill {
                     c.write(getSelf(), getSelf().name() + " manages to free " + getSelf().reflectivePronoun() + ".");
                 }
                 getSelf().free();
+                c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 0);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You try to slip your restraints, but can't get free.");

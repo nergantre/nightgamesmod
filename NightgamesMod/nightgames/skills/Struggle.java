@@ -12,6 +12,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.pet.arms.skills.Grab;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
@@ -40,6 +41,7 @@ public class Struggle extends Skill {
         }
         return (!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound()
                         || getSelf().is(Stsflag.maglocked))
+                        || hasSingleGrabber(c, target)
                         && getSelf().canRespond();
     }
 
@@ -50,6 +52,8 @@ public class Struggle extends Skill {
         }
         if (getSelf().is(Stsflag.maglocked)) {
             return struggleMagLock(c, target);
+        } else if (hasSingleGrabber(c, target)) {
+            return struggleGrabber(c, target);
         } else if (getSelf().bound()) {
             return struggleBound(c, target);
         } else if (c.getStance().havingSex(c)) {
@@ -62,6 +66,10 @@ public class Struggle extends Skill {
         } else {
             return struggleRegular(c, target);
         }
+    }
+    
+    private boolean hasSingleGrabber(Combat c, Character target) {
+        return c.getCombatantData(target).getIntegerFlag(Grab.FLAG) == 1;
     }
     
     private boolean blockedByCollar(Combat c, Character target) {
@@ -94,6 +102,7 @@ public class Struggle extends Skill {
                 }
             }
             getSelf().free();
+            c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 0);
             return true;
         } else {
             if (getSelf().human()) {
@@ -401,6 +410,25 @@ public class Struggle extends Skill {
             }
         }
         
+        return false;
+    }
+    
+    private boolean struggleGrabber(Combat c, Character target) {
+        int baseResist = Math.min(90, 40 + target.get(Attribute.Science));
+        int trueResist = Math.max(20, baseResist) - getSelf().get(Attribute.Science) / 2 
+                                                  - getSelf().get(Attribute.Power) / 3 
+                                                  - getSelf().get(Attribute.Cunning) / 3;
+        if (Global.random(100) > trueResist) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:wrench|wrenches}"
+                            + " {other:name-possessive} Grabber off {self:possessive}"
+                            + " wrist without too much trouble.", getSelf(), target));
+            c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 0);
+            return true;
+        } else {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:pull|pulls} mightily"
+                            + " on the Grabber around {self:possessive} wrist, but"
+                            + " {self:action:fail|fails} to remove it.", getSelf(), target));
+        }
         return false;
     }
     

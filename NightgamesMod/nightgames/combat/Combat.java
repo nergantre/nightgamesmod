@@ -490,6 +490,9 @@ public class Combat extends Observable implements Cloneable {
                 getCombatantData(self).setIntegerFlag("enchantingvoice-count", voiceCount + 1);
             }
         }
+        if (self.has(Trait.octo)) {
+            self.roboManager.act(this, other);
+        }
     }
 
     private static final List<CombatPhase> SKIPPABLE_PHASES = 

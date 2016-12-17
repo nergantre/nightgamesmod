@@ -164,6 +164,7 @@ public class Global {
     public Global(boolean headless) {
         debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
         debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        debug[DebugFlags.DEBUG_PET.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();

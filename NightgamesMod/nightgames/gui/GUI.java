@@ -652,6 +652,9 @@ public class GUI extends JFrame implements Observer {
     // image loader
 
     public void displayImage(String path, String artist) {
+        if (Global.checkFlag(Flag.noimage)){ 
+            return;
+        }
         if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
             System.out.println("Display image: " + path);
         }
