@@ -695,17 +695,17 @@ public class Combat extends Observable implements Cloneable {
 
     private String describe(Character player, Character other) {
         if (beingObserved) {
-            return Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
-                            + player.describe(player.get(Attribute.Perception), this) + "<p>"
-                            + other.describe(player.get(Attribute.Perception), this) + "<p>";
+            return Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
+                            + player.describe(player.get(Attribute.Perception), this) + "<br/><br/>"
+                            + other.describe(player.get(Attribute.Perception), this) + "<br/><br/>";
         } else if (!player.is(Stsflag.blinded)) {
-            return other.describe(player.get(Attribute.Perception), this) + "<p>"
-                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
-                            + player.describe(other.get(Attribute.Perception), this) + "<p>";
+            return other.describe(player.get(Attribute.Perception), this) + "<br/><br/>"
+                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
+                            + player.describe(other.get(Attribute.Perception), this) + "<br/><br/>";
         } else {
-            return "<b>You are blinded, and cannot see what " + other.name() + " is doing!</b><p>"
-                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<p>"
-                            + player.describe(other.get(Attribute.Perception), this) + "<p>";
+            return "<b>You are blinded, and cannot see what " + other.name() + " is doing!</b><br/><br/>"
+                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
+                            + player.describe(other.get(Attribute.Perception), this) + "<br/><br/>";
         }
     }
 

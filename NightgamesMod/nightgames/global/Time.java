@@ -19,7 +19,7 @@ public enum Time {
 
     /**
      * Maps old descriptors to current descriptors to maintain save file compatibility.
-     * <p>
+     * <br/><br/>
      * Older save files used different descriptors for DAY and NIGHT (and different enum constants).
      *
      * @param oldDesc A description that may or may not be from an old version.

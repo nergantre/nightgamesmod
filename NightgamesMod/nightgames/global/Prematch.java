@@ -33,15 +33,15 @@ public class Prematch implements Scene {
             message += "You get to the student union a little earlier than usual. Cassie and Jewel are there already and you spend a few minutes talking with them while "
                             + "you wait for the other girls to show up. A few people are still rushing around making preparations, but it's not clear exactly what they're doing. "
                             + "Other than making sure there are enough spare clothes to change into, there shouldn't be too much setup required. Maybe they're responsible for "
-                            + "making sure the game area is clear of normal students, but you can't imagine how a couple students could pull that off.<p>A girl who appears to be "
+                            + "making sure the game area is clear of normal students, but you can't imagine how a couple students could pull that off.<br/><br/>A girl who appears to be "
                             + "in charge calls you over. She has straight, red hair, split into two simple pigtails. Her features are unremarkable except for the freckles lightly "
                             + "spotting her face, but you could reasonably describe her as cute. She mentioned her name once. It was a kind of flower... Lilly? Yeah, "
-                            + "that sounds right, Lilly Quinn.<p>Lilly gives you a thin smile that's somewhere between polite and friendly. <i>\"You seem to be doing alright for a beginner. Not "
+                            + "that sounds right, Lilly Quinn.<br/><br/>Lilly gives you a thin smile that's somewhere between polite and friendly. <i>\"You seem to be doing alright for a beginner. Not "
                             + "everyone takes to this sort of competition so naturally. In fact, if you think you can handle a bit of a handicap, I've been authorized to offer "
                             + "a small bonus.\"</i> Well, you're not going to complain about some extra spending money. It's worth at least hearing her out. <i>\"Sometimes our Benefactor "
                             + "offers some extra prize money, but I can't just give it away for free.\"</i> You think you see a touch of malice enter her smile. <i>\"I came up with some "
                             + "additional rules to make the game a little more interesting. If you accept my rule, then the extra money will be added as a bonus to each point you "
-                            + "score tonight.\"</i><p>It's an interesting offer, but it begs the question of why she's extending it to you specifically. Lilly smirks and brushes one of "
+                            + "score tonight.\"</i><br/><br/>It's an interesting offer, but it begs the question of why she's extending it to you specifically. Lilly smirks and brushes one of "
                             + "her pigtails over her shoulder. <i>\"Don't worry, I'm not giving you preferential treatment. You're very much not my type. On the other hand, I do like "
                             + "watching your opponents win, and by giving you a handicap I make that more likely to happen. I don't intend to unfairly pick on you though. Fortunately, "
                             + "you'll make more money for every fight you do win, "
@@ -58,34 +58,34 @@ public class Prematch implements Scene {
                             + "gathered around Lilly. As you get closer, you notice Maya, the recruiter"
                             + ", standing next to her. She isn't usually present during a match, or at"
                             + " least you haven't seen her, so this must be a special occasion. Lilly"
-                            + " gives you a nod of acknowledgement as you approach.<p><i>\"Is everyone"
+                            + " gives you a nod of acknowledgement as you approach.<br/><br/><i>\"Is everyone"
                             + " here? Good. We have a rare treat tonight.\"</i> She motions toward the"
                             + " visitor. <i>\"Maya, who you have all met, is going to join in this "
                             + "match as a special guest. She is a veteran of the Games and has probably"
                             + " forgotten more about sexfighting than any of you have ever learned."
                             + " You wouldn't normally have an opportunity to face someone of her "
                             + "caliber, but she has graciously come out here to test you rookies.\""
-                            + "</i> She brushes one of her pigtails aside for dramatic effect.<p>Maya "
+                            + "</i> She brushes one of her pigtails aside for dramatic effect.<br/><br/>Maya "
                             + "smiles politely and gives a small curtsy. <i>\"I rarely find an "
                             + "opportunity to compete anymore, but I like to indulge every once in"
                             + " awhile.\"</i> Her eyes meet yours and something in her piercing gaze"
                             + " makes you feel like a small prey animal. Despite feeling intimidated,"
                             + " you feel your cock stir in your pants against your will. <i>\"I may "
-                            + "be a bit rusty, but I'll try to set a good example for you.\"</i><p>"
+                            + "be a bit rusty, but I'll try to set a good example for you.\"</i><br/><br/>"
                             + "Lilly takes the lead again. <i>\"If any of you actually manage to make "
                             + "Maya cum, I'll give you multiple points for it. Otherwise you can just"
                             + " consider this a learning opportunity and a chance to experience an "
-                            + "orgasm at the hands of a master.\"</i><p>\n\n";
+                            + "orgasm at the hands of a master.\"</i><br/><br/>\n\n";
 
             type = new MayaModifier();
             choice.add(new SceneButton("Start The Match"));
         } else {
             message += "You arrive at the student union with about 10 minutes to spare before the start of the match. You greet each of the girls and make some idle chatter with "
-                            + "them before you check in with Lilly to see if she has any custom rules for you.<p>";
+                            + "them before you check in with Lilly to see if she has any custom rules for you.<br/><br/>";
             if (player.getRank() > 0 && !Global.checkFlag(Flag.AiriDisabled) && !Global.checkFlag(Flag.Airi)) {
                 message += "Before you have a chance to ask though, Lilly mentions to you that there is a new competitor. However, when you ask her for details, she only mentions that her "
-                                + "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<p>"
-                                + "<b>Airi has entered the games.</b><p>";
+                                + "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<br/><br/>"
+                                + "<b>Airi has entered the games.</b><br/><br/>";
                 Global.newChallenger(new Airi());
                 Global.flag(Flag.Airi);
             }

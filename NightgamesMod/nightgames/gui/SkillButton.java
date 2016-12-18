@@ -26,7 +26,7 @@ public class SkillButton extends KeyableButton {
         this.action = action;
         int actualAccuracy = target.getChanceToHit(action.getSelf(), c, action.accuracy(c, target));
         int clampedAccuracy = Math.min(100, Math.max(0, actualAccuracy));
-        String text = "<html>" + action.describe(c) + " <p>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
+        String text = "<html>" + action.describe(c) + " <br/><br/>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
         Color bgColor = action.type(c).getColor();
         getButton().setBackground(bgColor);
         getButton().setForeground(foregroundColor(bgColor));

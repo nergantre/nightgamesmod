@@ -346,7 +346,7 @@ public class Player extends Character {
                     gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
                 }
             }
-            gui.message(location.description + "<p>");
+            gui.message(location.description + "<br/><br/>");
             for (Deployable trap : location.env) {
                 if (trap.owner() == this) {
                     gui.message("You've set a " + trap.toString() + " here.");
@@ -560,7 +560,7 @@ public class Player extends Character {
                         + "gives you away, you quickly lunge and grab " + target.name()
                         + " from behind. She freezes in surprise for just a second, but that's all you need to "
                         + "restrain her arms and leave her completely helpless. Both your hands are occupied holding her, so you focus on kissing and licking the "
-                        + "sensitive nape of her neck.<p>");
+                        + "sensitive nape of her neck.<br/><br/>");
     }
 
     @Override
@@ -586,7 +586,7 @@ public class Player extends Character {
                                             + " or two, you may have joined the wrong competition. You take just "
                                             + "the glans into your mouth, attacking the most senstitive area with "
                                             + "your tongue. %s lets out a gasp and shudders. That's a more promising "
-                                            + "reaction.<p>You continue your oral assault until you hear a breathy "
+                                            + "reaction.<br/><br/>You continue your oral assault until you hear a breathy "
                                             + "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
                                             + "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
                                             + "missing you.", target.name(),

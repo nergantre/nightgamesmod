@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 
 /**
  * Returns true if character self has a particular body part.
- * <p>
+ * <br/><br/>
  * This is a more specific requirements than BodyPartRequirement.
  */
 public class SpecificBodyPartRequirement extends BaseRequirement {

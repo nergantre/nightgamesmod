@@ -42,8 +42,8 @@ public class Informant extends Activity {
                                   + "any information would be welcome. It's not like anyone else will talk about the 'night games.' Fortunately, the bench in the shadow of the Liberal Arts "
                                   + "building where you're suppose to meet is away from the normal foot traffic. You should be able to talk freely without having to worry about passersby overhearing "
                                   + "you.<br>You take a seat and idly fiddle with your phone while you wait. Less than a minute later, a somewhat tall guy who looks a few years older than you sits down "
-                                  + "next to you.<p><i>\"Good match last night for a bunch of virgins. There's a lot of potential in your year.\"</i><br>Presumably this is Tyler, the information broker you're "
-                                  + "here to meet - that or a crazy person.<br><i>\"Everyone in the loop calls me Aesop: as long as you can pay, I'll have a fable for you.\"</i><p>Also, you let it pass without "
+                                  + "next to you.<br/><br/><i>\"Good match last night for a bunch of virgins. There's a lot of potential in your year.\"</i><br>Presumably this is Tyler, the information broker you're "
+                                  + "here to meet - that or a crazy person.<br><i>\"Everyone in the loop calls me Aesop: as long as you can pay, I'll have a fable for you.\"</i><br/><br/>Also, you let it pass without "
                                   + "comment a second ago, but you feel compelled to point out that you aren't actually a virgin.<br><i>\"I meant that it was your first match. Everyone this year is coming "
                                   + "in with some sexual experience, but your first match is a whole other virginity. You're either in the loop or out of it and the only people in the loop are current or "
                                   + "former participants.\"</i><br>That would imply that 'Aesop' here is also a participant.<br><i>\"Hell yeah, I used to rock some pussy. Male players are rare, so we have to make "
@@ -51,7 +51,7 @@ public class Informant extends Activity {
                                   + "realized the big money is in selling secrets in a world where everything is secret. Don't worry, you're getting my I'm-mentoring-a-total-newbie-and"
                                   + "-don't-care-if-I-make-a-profit-right-now discount. Besides, most of what you need right now is dime-a-dozen common sense, so I'll even throw you some free advice. "
                                   + "Down the road I'm expecting you to reach the levels where you can afford my premium secrets. I have some much wealthier clients who will set me up for life if I "
-                                  + "can get them the really juicy information.\"</i><p>It's nice to know you're a stepping stone to your broker's financial security, but how helpful is this dime-a-dozen "
+                                  + "can get them the really juicy information.\"</i><br/><br/>It's nice to know you're a stepping stone to your broker's financial security, but how helpful is this dime-a-dozen "
                                   + "common sense going to be?<br><i>\"Obviously this is a physical competition, so conventional exercise is a good idea. You also need to condition your sex drive. I recommend "
                                   + "spending some time with the nastiest, most extreme porn you can get your hands on. After a few hours of that, everything else will seem milder in comparison. Lastly, don't "
                                   + "underestimate the effect of confidence in a fight. If you can consistently dish out a good fucking, you may find things going your way more often.\"</i><br>"
@@ -67,13 +67,13 @@ public class Informant extends Activity {
                                   + "for you. Looking at her next to Aesop, she's probably not much older than he is, but something about her makes her seem more mature. She has modest clothes, glasses and long "
                                   + "black hair tied in a braid that runs down her back. She smiles gently as you approach. <i>\"Congratulations on your new rank. You probably won't realize what an honor it is yet, "
                                   + "but you've proven yourself worthy of learning powerful and potentially dangerous secrets. Because Tyler here has made a business out of such secrets, I'm sure he'll be thrilled "
-                                  + "to offer you details.\"</i><p>Aesop steps forward as if on cue. You get the impression they've done this a few times. <i>\"Congratulations. From here on is where your mind gets blown. "
+                                  + "to offer you details.\"</i><br/><br/>Aesop steps forward as if on cue. You get the impression they've done this a few times. <i>\"Congratulations. From here on is where your mind gets blown. "
                                   + "I'm now allowed to sell you some more valuable secrets and you now have the income to afford them. I can't afford to give you as big a discount anymore, but if you're willing to "
-                                  + "pay, I can help you find some extremely rare and powerful artifacts, technology you couldn't imagine, a master who will train you in legendary martial arts, even magic.\"</i><p>While "
+                                  + "pay, I can help you find some extremely rare and powerful artifacts, technology you couldn't imagine, a master who will train you in legendary martial arts, even magic.\"</i><br/><br/>While "
                                   + "you're still processing this, Maya speaks up again. <i>\"I appreciate that you haven't mentioned the Game to any outsiders. If the wrong people heard what we're doing, there would "
                                   + "be an unpleasant scandal. As you and your fellow competitors gain access to these gifts, the importance of secrecy grows. These are secrets that the general public is not ready "
-                                  + "for.\"</i><p>This is all very far-fetched. The skeptical part of your brain is telling you this is an elaborate scam, but all the money you're paying Aesop is coming from the Game. "
-                                  + "Besides, if they can operate secretly on campus at this scale, you're ready to believe your mysterious benefactor is capable of anything. What do you really have to lose?<p>Maya, "
+                                  + "for.\"</i><br/><br/>This is all very far-fetched. The skeptical part of your brain is telling you this is an elaborate scam, but all the money you're paying Aesop is coming from the Game. "
+                                  + "Besides, if they can operate secretly on campus at this scale, you're ready to believe your mysterious benefactor is capable of anything. What do you really have to lose?<br/><br/>Maya, "
                                   + "having apparently finished her part, excuses herself with a small bow. Aesop clears his throat once she's out of earshot. <i>\"In addition to the new services you have access to, "
                                   + "I can arrange some more competition for you if you're interested. Now I'm not trying to imply that you're the sort of greedy bastard who isn't satisfied with four girls in his "
                                   + "harem. Obviously a serious athlete such as yourself needs a wide range of competitors to hone his skills. I happen to know some girls who are currently taking a break from the "
@@ -111,7 +111,7 @@ public class Informant extends Activity {
                   .message("<i>\"Looking for advice about girls? If you don't have any older brothers to ask, I might be able to help.\"</i><br>Aesop laughs a bit at his own crappy joke.<br><i>\"In all seriousness, you should definitely "
                                   + "get to know your enemies. This isn't a zero-sum game, everyone who participates can make some money. Obviously there would be issues if you tried to doctor the "
                                   + "results of a match, but it's not uncommon for players to collaborate during their free time. You can swap strategies, do some training together or do some "
-                                  + "'training together' as the case may be.\"</i><br>He lets out the same humorless laugh again. That one didn't even really qualify as a joke.<p><i>\"Competitors pushing each "
+                                  + "'training together' as the case may be.\"</i><br>He lets out the same humorless laugh again. That one didn't even really qualify as a joke.<br/><br/><i>\"Competitors pushing each "
                                   + "other to up their game makes for an overall higher level of play and makes the matches more interesting. That makes everyone happy. Besides, all your opponents are "
                                   + "girls of A+ caliber, you lucky bastard. I don't blame you for wanting to get to know them better. Just give me the name of the girl you're interested in (with a nominal "
                                   + "fee of course) and I'll give you some background, some interests, and some places where you're likely to 'coincidentally' run into her during the day. Even if she doesn't "
@@ -140,7 +140,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Black Market: $400")) {
@@ -158,7 +158,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Cassie: $300")) {
@@ -168,7 +168,7 @@ public class Informant extends Activity {
                                       + "enters sexfights, but she's adapting to it pretty well, all things considered. This is apparently a matter of necessity for her, her family doesn't "
                                       + "have a whole lot of money, doesn't get enough financial aid, and they don't want her getting a job until she graduates. Of course, I seriously doubt "
                                       + "they'd approve of this either. Hopefully she's clever enough to explain away her sudden income.<br>I can give you her normal schedule. but you shouldn't "
-                                      + "need any help finding her. The two of you are in a couple classes together this semester.\"</i><p>It's true, you see her in class regularly, and before the "
+                                      + "need any help finding her. The two of you are in a couple classes together this semester.\"</i><br/><br/>It's true, you see her in class regularly, and before the "
                                       + "two of you entered the matches, you chatted before and after class pretty frequently. Now that you're sharing a secret hobby though, you never "
                                       + "get a chance to really talk with her while the other students are around. After class she seems to disappear to quickly that you're starting to suspect she's actively "
                                       + "avoiding you.<br><i>\"I said she was shy, didn't I? In the afternoon, she spends a lot of time studying in the library like a good student. Seems like a good "
@@ -181,7 +181,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Angel: $300")) {
@@ -203,7 +203,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Mara: $300")) {
@@ -224,7 +224,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Jewel: $300")) {
@@ -246,7 +246,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Exotic Artifacts: $2500")) {
@@ -265,7 +265,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Body Shop: $2500")) {
@@ -280,7 +280,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Martial Arts: $2500")) {
@@ -302,7 +302,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Magic?: $2500")) {
@@ -312,7 +312,7 @@ public class Informant extends Activity {
                                       + "and sleight of hand, you can see how that would be useful, but it's not likely to blow your mind. Aesop just shakes his head as he gives you a phone number. "
                                       + "<i>\"I'm not going to try to convince you. You're better off seeing it yourself. That number belongs to an old friend of mine named Aisha. She's spent the last "
                                       + "couple years learning magic and teaching it to others. She'll take you on as an apprentice for a price.\"</i> Of course there's a price. Everyone involved in the "
-                                      + "Games has been eager to take your money.<p>Aesop gives you a frown of disapproval. <i>\"I wasn't implying that she's greedy. Aisha is passionate about developing "
+                                      + "Games has been eager to take your money.<br/><br/>Aesop gives you a frown of disapproval. <i>\"I wasn't implying that she's greedy. Aisha is passionate about developing "
                                       + "her craft and only takes money to further her research. Of all the people I've sent you to, she's easily the most altruistic. I meant it when I called her a "
                                       + "friend, and I have a lot of respect for her, so don't make judgments before you've met her.\"</i>");
                 Global.flag(Flag.magicstore);
@@ -323,7 +323,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Advanced Equipment: $2500")) {
@@ -343,7 +343,7 @@ public class Informant extends Activity {
                 return;
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         final String REMOVE_PREFIX = "Remove: ";
@@ -388,7 +388,7 @@ public class Informant extends Activity {
                                       + "a succubus, Reyka, but after he gave her all his energy, she became way too powerful for him to control. She went on a bit of a rampage, draining men until she was strong "
                                       + "enough to sever the link between her and the summoner. No one was seriously hurt, but it did cause a major fuss. Rin isn't allowed to sell such strong items anymore without "
                                       + "special permission. The summoner was suspended from matches for a couple weeks. Someone with some pull must have taken a liking to Reyka though, since no one has tried to "
-                                      + "banish her and someone's paying her living expenses. She's pretty aggressive, but probably not actually dangerous... probably.\"</i><p>");
+                                      + "banish her and someone's paying her living expenses. She's pretty aggressive, but probably not actually dangerous... probably.\"</i><br/><br/>");
                 Global.gui()
                       .choose(this, "Reyka: $1000");
             }
@@ -401,7 +401,7 @@ public class Informant extends Activity {
                                       + "the other players became very protective of her. She could manage some wins when her opponents underestimated her. She eventually saved up enough money to get turned into a catgirl "
                                       + "by channelling an animal spirit. She's got cat ears, a tail, a kinda cute verbal tic, the whole deal. The cat instincts have made her a lot more capable of holding her own "
                                       + "in a match. She never became the strongest in her year, but she'd be a good match for yours. Just don't dismiss her because she looks young. She is actually a year older "
-                                      + "than you.\"</i><p>");
+                                      + "than you.\"</i><br/><br/>");
                 Global.gui()
                       .choose(this, "Kat: $1000");
             }
@@ -413,7 +413,7 @@ public class Informant extends Activity {
                     if (data.requirement.stream()
                                         .allMatch((req) -> req.meets(null, player, null))) {
                         Global.gui()
-                              .message("<i>\"" + data.introduction + "\"</i><p>");
+                              .message("<i>\"" + data.introduction + "\"</i><br/><br/>");
                         customNPCChoices.put(data.action, npc);
                         Global.gui()
                               .choose(this, data.action);
@@ -436,7 +436,7 @@ public class Informant extends Activity {
                                       + "tries to win to indulge in her sadism. I'm mentioning her because "
                                       + "you guys can probably compete with her if she's just fucking around. "
                                       + "To be honest though, I'd be perfectly happy to never deal with her "
-                                      + "again.\"</i><p>");
+                                      + "again.\"</i><br/><br/>");
 
                 Global.gui()
                       .choose(this, "Eve: $1000");
@@ -461,7 +461,7 @@ public class Informant extends Activity {
                     Global.newChallenger(npc.ai);
                 } else {
                     Global.gui()
-                          .message("You cannot pay the cost.<p>");
+                          .message("You cannot pay the cost.<br/><br/>");
                 }
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
@@ -477,7 +477,7 @@ public class Informant extends Activity {
                 Global.flag(Flag.Reyka);
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Kat: $1000")) {
@@ -491,7 +491,7 @@ public class Informant extends Activity {
                 Global.flag(Flag.Kat);
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Eve: $1000")) {
@@ -508,14 +508,14 @@ public class Informant extends Activity {
                 Global.flag(Flag.Eve);
             } else {
                 Global.gui()
-                      .message("You don't have enough money<p>");
+                      .message("You don't have enough money<br/><br/>");
             }
         }
         if (choice.equals("Competition Info")) {
-            String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><p>";
+            String message = "<i>\"You want to know how the competition is doing? I can give you a breakdown on each of your opponents:\"</i><br/><br/>";
             for (Character npc : Global.everyone()) {
                 if (!npc.human() && !Global.checkCharacterDisabledFlag(npc)) {
-                    message = message + npc.dumpstats(false) + "<p>";
+                    message = message + npc.dumpstats(false) + "<br/><br/>";
                 }
             }
             Global.gui()

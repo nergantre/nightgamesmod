@@ -92,7 +92,7 @@ public class NPC extends Character {
         for (Status s : status) {
             description = description + "<br>" + s.describe(c);
         }
-        description = description + "<p>";
+        description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
         return description;
