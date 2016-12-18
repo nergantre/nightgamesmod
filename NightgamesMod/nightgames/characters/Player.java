@@ -443,6 +443,7 @@ public class Player extends Character {
     @Override
     public void craft() {
         int roll = Global.random(10);
+        Global.gui().message("You spend some time crafting some potions with the equipment.");
         if (check(Attribute.Cunning, 25)) {
             if (roll == 9) {
                 gain(Item.Aphrodisiac);

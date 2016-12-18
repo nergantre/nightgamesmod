@@ -9,6 +9,9 @@ class RunnableButton extends KeyableButton {
         super(text);
         this.text = text;
         getButton().setFont(new Font("Baskerville Old Face", 0, 18));
+        if (text.length() > 20) {
+            
+        }
         getButton().addActionListener((evt) -> runnable.run());
     }
 
