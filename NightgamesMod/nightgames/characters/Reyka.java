@@ -345,7 +345,7 @@ public class Reyka extends BasePersonality {
                         + " painting. Her arms are slim and end in long-fingered,"
                         + " soft hands, nails polished shining red. Underneath, her long and"
                         + " perfectly formed legs and delicate feet stand in an imposing posture."
-                        + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br>"
+                        + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br/>"
                         + " Her gaze speaks of indescribable pleasure, but your mind reminds you"
                         + " of the cost of indulging in a succubus' body: Give her half a chance"
                         + " and she will suck out your very soul.";

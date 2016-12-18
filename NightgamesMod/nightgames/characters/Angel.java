@@ -86,7 +86,7 @@ public class Angel extends BasePersonality {
                                             + "You groan as she slides rocks herself back and forth yet again, fucking you with a soft smile. "
                                             + "<i>\"Quality over quantity as they say. I'll train you so you'll only be able to cum inside me. Wouldn't that be amusing " + other.getName() + "?\"</i>"
                                             + "It's too much for your poor oversensitive cock, as you pump what remains into Angel a final time."
-                                            + "<br>"
+                                            + "<br/>"
                                             + "Angel gives you a quick kiss on the lips before leaving. <i>\"Thanks for listening to me "+ other.getName() + ", but you better be ready for me next time.\"</i>");
                             useSex();
                             return true;
@@ -171,7 +171,7 @@ public class Angel extends BasePersonality {
                         new CombatSceneChoice("Answer: Why not both? [Hard Mode]", (c, self, other) -> {
                             c.write(Global.format("You tell her that the Angel you know wouldn't even think of choosing between either of them. "
                                             + "The Angel you know could do gather a following within a day even while maintaining her close friendships. She's just amazing like that. "
-                                            + "<br>For the first time since you've gotten to know her, Angel seems to blush. \"<i>Enough flattery " + other.getName() + ", it wont make me go any easier on you. "
+                                            + "<br/>For the first time since you've gotten to know her, Angel seems to blush. \"<i>Enough flattery " + other.getName() + ", it wont make me go any easier on you. "
                                                             + "But you know, you're right. Why should I choose? They should be happy to grovel for me. I <b>am</b> a Goddess after all.</i>\"", self, other));
                             useWorship();
                             useFollowers();
@@ -382,12 +382,12 @@ public class Angel extends BasePersonality {
             message = "Angel stares you in the eye, while expertly thrusting in and out of your slobbering pussy. Your needy cunt quivers as she leans close and gives you a long steamy kiss, "
                             + "tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but "
                             + "it'll do you no good, as you're already feeling yourself slip over the edge. "
-                            + "<br><br>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
+                            + "<br/><br/>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
                             + "a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
                             + "anyone cum instantly while they're in me.\"</i> After a small pause, Angel grins devilishly and resumes pumping in and out of your pussy "
                             + "in long leisurely strokes. <i>\"Hmm in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" "
                             + "You groan in frustration as your oversensitive cunt receives her cock again. "
-                            + "<br><br>This could be a long night.";
+                            + "<br/><br/>This could be a long night.";
         } else if (c.getStance().inserted(opponent)) {
             message = "Angel rides your cock passionately, pushing you inevitably closer to ejaculation. Her hot pussy is wrapped around your shaft like... well, exactly "
                             + "what it is. More importantly, she's a master with her hip movements and you've held out against her as long as you can. You can only hope her own orgasm is equally "
@@ -593,7 +593,7 @@ public class Angel extends BasePersonality {
                         + "more time having you all to myself.\"</i> That's quite flattering coming from her, but why you specifically? Angel is openly bisexual, she could just as easily "
                         + "take one of the other girls back with her. She looks back at you and blushes noticeably. <i>\"It's better with you, and not just because you have a cock. It is "
                         + "a pretty good fit though. I don't know. It doesn't matter. I'm kidnapping you, so we're going to go back to my room, have sex, and you're going to stay the night "
-                        + "in case I want more sex in the morning.\"</i> You follow without protest. <br>You lose a lot of sleep, but you don't regret it.";
+                        + "in case I want more sex in the morning.\"</i> You follow without protest. <br/>You lose a lot of sleep, but you don't regret it.";
     }
 
     public void advance() {

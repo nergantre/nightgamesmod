@@ -20,8 +20,8 @@ public abstract class BaseNPCTime extends Activity {
     String giftedString = "\"Awww thanks!\"";
     String giftString = "\"A present? You shouldn't have!\"";
     String transformationOptionString = "Transformations";
-    String loveIntro = "[Placeholder]<br>LoveIntro";
-    String transformationIntro = "[Placeholder]<br>TransformationIntro";
+    String loveIntro = "[Placeholder]<br/>LoveIntro";
+    String transformationIntro = "[Placeholder]<br/>TransformationIntro";
     String transformationFlag = "";
     Trait advTrait = null;
 
@@ -118,7 +118,7 @@ public abstract class BaseNPCTime extends Activity {
                 if (!opt.additionalRequirements.isEmpty()) {
                     Global.gui().message(opt.additionalRequirements);
                 }
-                Global.gui().message("<br>");
+                Global.gui().message("<br/>");
                 Global.gui().choose(this, opt.option);
             });
             Global.gui().choose(this, "Back");

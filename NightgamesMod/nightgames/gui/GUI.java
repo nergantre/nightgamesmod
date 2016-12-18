@@ -476,16 +476,16 @@ public class GUI extends JFrame implements Observer {
         menuBar.add(mntmQuitMatch);
         mntmCredits.addActionListener(arg0 -> {
             JPanel panel = new JPanel();
-            panel.add(new JLabel("<html>Night Games created by The Silver Bard<br>"
-                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br>" + "Upgraded Strapon created by MotoKuchoma<br>"
-                            + "Strapon victory scenes created by Legion<br>" + "Advanced AI by Jos<br>"
-                            + "Magic Training scenes by Legion<br>" + "Jewel 2nd Victory scene by Legion<br>"
-                            + "Video Games scenes 1-9 by Onyxdime<br>"
-                            + "Kat Penetration Victory and Defeat scenes by Onyxdime<br>"
-                            + "Kat Non-Penetration Draw scene by Onyxdime<br>"
-                            + "Mara/Angel threesome scene by Onyxdime<br>"
-                            + "Footfetish expansion scenes by Sakruff<br>"
-                            + "Mod by Nergantre<br>"
+            panel.add(new JLabel("<html>Night Games created by The Silver Bard<br/>"
+                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br/>" + "Upgraded Strapon created by MotoKuchoma<br/>"
+                            + "Strapon victory scenes created by Legion<br/>" + "Advanced AI by Jos<br/>"
+                            + "Magic Training scenes by Legion<br/>" + "Jewel 2nd Victory scene by Legion<br/>"
+                            + "Video Games scenes 1-9 by Onyxdime<br/>"
+                            + "Kat Penetration Victory and Defeat scenes by Onyxdime<br/>"
+                            + "Kat Non-Penetration Draw scene by Onyxdime<br/>"
+                            + "Mara/Angel threesome scene by Onyxdime<br/>"
+                            + "Footfetish expansion scenes by Sakruff<br/>"
+                            + "Mod by Nergantre<br/>"
                             + "A ton of testing by Bronzechair</html>"));
             Object[] options = {"OK", "DEBUG"};
             Object[] okOnly = {"OK"};
@@ -974,7 +974,7 @@ public class GUI extends JFrame implements Observer {
         HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
         try {
             editorKit.insertHTML(doc, doc.getLength(),
-                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
+                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
@@ -988,7 +988,7 @@ public class GUI extends JFrame implements Observer {
         HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
         try {
             editorKit.insertHTML(doc, doc.getLength(),
-                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
+                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
@@ -1360,8 +1360,8 @@ public class GUI extends JFrame implements Observer {
         try {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='3'>"
-                                            + player.getOutfit().describe(player) + "<br>" + player.describeStatus()
-                                            + "<br>",
+                                            + player.getOutfit().describe(player) + "<br/>" + player.describeStatus()
+                                            + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
@@ -1505,7 +1505,7 @@ public class GUI extends JFrame implements Observer {
 
     private KeyableButton combatSceneButton(String label, Combat c, nightgames.characters.Character npc, CombatSceneChoice choice) {
         RunnableButton button = new RunnableButton(label, () -> {
-            c.write("<br>");
+            c.write("<br/>");
             choice.choose(c, npc);
             c.updateMessage();
             Global.gui().next(c);

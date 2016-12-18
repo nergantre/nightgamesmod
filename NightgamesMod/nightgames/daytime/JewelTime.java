@@ -27,7 +27,7 @@ public class JewelTime extends BaseNPCTime {
         giftedString = "\"Thanks! You're a pretty nice you know?\"";
         giftString = "\"A present? I'm not going to go easy on you even if you bribe me you know?\"";
         transformationOptionString = "Training";
-        transformationIntro = "[Placeholder]<br>Jewel explains her training to you and how you can too train yourself.";
+        transformationIntro = "[Placeholder]<br/>Jewel explains her training to you and how you can too train yourself.";
         loveIntro = "You're about to go see Jewel, but she shows up at your dorm room first. You invite her inside and she sits on your bed with her legs crossed. <i>\"I need "
                         + "some advice and you're my best friend, but I'm not sure if I should ask you. It's probably something I should talk to another girl about, but there aren't any other girls "
                         + "I can really confide in. When I was growing up I mostly hung out with the boys, so all that girl talk is kinda.... Will you hear me out?\"</i> You're not sure how much "
@@ -56,7 +56,7 @@ public class JewelTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Jewel: Grow a cock";
-            growCock.scene = "[Placeholder]<br>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
+            growCock.scene = "[Placeholder]<br/>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.enlightened));
                 return true;
@@ -69,7 +69,7 @@ public class JewelTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Jewel: Remove her cock";
-            removeCock.scene = "[Placeholder]<br>Jewel drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris.";
+            removeCock.scene = "[Placeholder]<br/>Jewel drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;
@@ -88,7 +88,7 @@ public class JewelTime extends BaseNPCTime {
         });
         enlightenedCock.additionalRequirements = "A normal cock";
         enlightenedCock.option = "Enlightened Cock";
-        enlightenedCock.scene = "[Placeholder]<br>Jewel trains your cock to be enlightened.";
+        enlightenedCock.scene = "[Placeholder]<br/>Jewel trains your cock to be enlightened.";
         enlightenedCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart = self.body.get("cock")
                                                   .stream()
@@ -112,7 +112,7 @@ public class JewelTime extends BaseNPCTime {
         });
         fieryPussy.additionalRequirements = "A normal pussy";
         fieryPussy.option = "Fiery Pussy";
-        fieryPussy.scene = "[Placeholder]<br>Jewel trains your pussy to be fiery";
+        fieryPussy.scene = "[Placeholder]<br/>Jewel trains your pussy to be fiery";
         fieryPussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.fiery, 1);
             return true;
@@ -125,7 +125,7 @@ public class JewelTime extends BaseNPCTime {
         if (npc.getAffection(player) > 0) {
             Global.gui()
                   .message("You plan to intercept Jewel on her run again, but when you get to the gardens, you find her already there, sitting on a low stone wall. She smiles "
-                                  + "when she sees you and stands up to meet you. Apparently she was waiting for you, but you hadn't made plans to meet. How long was she waiting here?<br><i>\"I just got here a "
+                                  + "when she sees you and stands up to meet you. Apparently she was waiting for you, but you hadn't made plans to meet. How long was she waiting here?<br/><i>\"I just got here a "
                                   + "few minutes ago. I had a feeling you were going to come here to see me. I've learned to always trust my intuition.\"</i> Her instincts are impressive and apparently convenient. "
                                   + "When you're within reach, she plants a light kiss on your lips. <i>\"If you came looking for me, I assume you're eager for some training. Tell me what you have in mind.\"</i>");
             Global.gui()

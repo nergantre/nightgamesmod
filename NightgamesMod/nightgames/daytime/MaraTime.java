@@ -29,7 +29,7 @@ public class MaraTime extends BaseNPCTime {
         transformationOptionString = "Modifications";
         advTrait = Trait.madscientist;
         transformationIntro =
-                        "[Placeholder]<br>Mara explains that she may be able to modify your body with her new equipment.";
+                        "[Placeholder]<br/>Mara explains that she may be able to modify your body with her new equipment.";
         loveIntro = "Mara's computer lab has once again become a clusterfuck of electronics equipment. Not just electronics either. The back corner houses a "
                         + "small chemical lab, and there are welding and metal cutting tools probably borrowed from the mechanical engineering building. You can only identify "
                         + "about 20%% of the junk in here. It looks like some mad scientist's laboratory.<br/><br/>Mara notices your presence and jumps up eagerly from her workstation to greet you. <i>\"Are you here to have some fun? I've "
@@ -54,7 +54,7 @@ public class MaraTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Mara: Install a cock";
-            growCock.scene = "[Placeholder]<br>Mara makes some modifications to the dildo and manages to attach it to her own body through methods unknown to you.";
+            growCock.scene = "[Placeholder]<br/>Mara makes some modifications to the dildo and manages to attach it to her own body through methods unknown to you.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.bionic));
                 return true;
@@ -67,7 +67,7 @@ public class MaraTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Mara: Remove her cock";
-            removeCock.scene = "[Placeholder]<br>Mara uses the solvent to dissolve the bond from her modified cock, making her wholly female again.";
+            removeCock.scene = "[Placeholder]<br/>Mara uses the solvent to dissolve the bond from her modified cock, making her wholly female again.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;
@@ -88,7 +88,7 @@ public class MaraTime extends BaseNPCTime {
         });
         bionicCock.additionalRequirements = "A normal cock";
         bionicCock.option = "Bionic Cock";
-        bionicCock.scene = "[Placeholder]<br>Mara installs a bionic cock on you";
+        bionicCock.scene = "[Placeholder]<br/>Mara installs a bionic cock on you";
         bionicCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart = self.body.get("cock")
                                                   .stream()
@@ -113,7 +113,7 @@ public class MaraTime extends BaseNPCTime {
         });
         cyberneticPussy.additionalRequirements = "A normal pussy";
         cyberneticPussy.option = "Cybernetic Pussy";
-        cyberneticPussy.scene = "[Placeholder]<br>Mara installs a cybernetic pussy on you";
+        cyberneticPussy.scene = "[Placeholder]<br/>Mara installs a cybernetic pussy on you";
         cyberneticPussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.cybernetic, 1);
             return true;
@@ -164,7 +164,7 @@ public class MaraTime extends BaseNPCTime {
                                   + "every surface is covered with assorted electronics. Mara is the only one in the small room, unless someone is buried in the PLCs and cords. She's focused "
                                   + "intensely on her work and doesn't even notice you until you call out to her.<br/><br/><i>\"Oh, hi "
                                   + player.name() + ".\"</i> She glances up at you, but continues typing "
-                                  + "on one of the keyboards in front of her. <i>\"How are you doing?\"</i> You ask her if she'd like to take a break and hang out for a while.<br><i>\"Sounds fun, but I really "
+                                  + "on one of the keyboards in front of her. <i>\"How are you doing?\"</i> You ask her if she'd like to take a break and hang out for a while.<br/><i>\"Sounds fun, but I really "
                                   + "need to finish this tonight and it's not being cooperative.\"</i> She lets out a long yawn and picks up a nearby energy drink, but tosses it away when she realizes it's "
                                   + "empty. <i>\"I'm probably going to be stuck here right up to the start of tonight's match. If you could do me a favor and get me something with some caffeine, "
                                   + "I'll love you forever.\"</i><br/><br/>You find a vending machine not too far from the lab and buy an energy drink. When you return to Mara, she doesn't acknowledge your "
@@ -476,16 +476,16 @@ public class MaraTime extends BaseNPCTime {
                             + "<i>\"So... you've been learning some actual magic, right?\"</i> She asks with thinly veiled excitement. <i>\"Can you summon those faeries anytime?\"</i> She's practically vibrating at "
                             + "the idea of playing with one of your pixie familiars. You've never really tried summoning them outside of a fight or Aisha's training room. The Games seem to have a magic of their own that "
                             + "make the supernatural seem perfectly normal. It's a little harder to focus on your mana here in the 'real world,' but you should be able to manage.<br/><br/>"
-                            + "You begin the spell, and after a bit longer than usual, you feel a fae spirit answer you. You extend your hand and a male faerie winks into existance.<br>"
+                            + "You begin the spell, and after a bit longer than usual, you feel a fae spirit answer you. You extend your hand and a male faerie winks into existance.<br/>"
                             + "<i>\"Ooh, a boy!\"</i> She giggles in amusement as she pokes and prods the fae. <i>\"He's got a tiny dick. It's so cute!\"</i> She seems to be enjoying "
                             + "herself. You feel bad for your familiar though, summoned just to be bullied.<br/><br/>"
                             + "<i>\"Oh, don't worry. He's not complaining. Are all faeries this sensitive?\"</i> They are significantly more sensitive than humans. Mara's delicate fingerwork does seem to be having an "
                             + "effect. If she's not careful, she's going to make her new toy cum. <i>\"I'm very careful. Too bad, little guy.\"</i> She releases the frustrated little faerie. <i>\"Just be patient "
-                            + "and I'll finish you off later.\"</i> She looks at you again expectantly. <i>\"How about a girl faerie next?\"</i><br>"
+                            + "and I'll finish you off later.\"</i> She looks at you again expectantly. <i>\"How about a girl faerie next?\"</i><br/>"
                             + "Two at once? You've never tried to split your mana between two familiars. It takes a lot of concentration just to maintain the one, and it's going to be hard to generate enough mana "
                             + "outside the heat of a sexfight.<br/><br/>"
                             + "Mara pounces on you without warning and kisses you deeply. She slips her tongue into your mouth while pressing her lithe body against you. She breaks the kiss to give you a seductive "
-                            + "smile. <i>\"Does that help at all?\"</i> You can definitely feel a fire blazing inside you. Instead of answering, you easily summon a female faerie.<br>"
+                            + "smile. <i>\"Does that help at all?\"</i> You can definitely feel a fire blazing inside you. Instead of answering, you easily summon a female faerie.<br/>"
                             + "<i>\"Another cutie. Very nice.\"</i> She licks her lips suggestively she starts undressing. <i>\"I could probably have some fun with her, but I think we should start the main event.\"</i> "
                             + "She presses herself against your body again and helps you out of your own clothing. If she just wanted to have sex, you didn't need to summon the second faerie.<br/><br/> "
                             + "Mara assumes a sexy pose on the bed and gives you a wink. <i>\"This way we have two little 'helpers.' One for each of us. Wouldn't a few extra hands, tongues, and sexy parts make things "

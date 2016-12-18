@@ -73,7 +73,7 @@ public class Exercise extends Activity {
                 break;
             case cassie1:
                 Global.gui().message(
-                                "You head over to the campus gym and coincidentally run into Cassie there. <i>\"Hi. I'm not really much of a fitness enthusiast, but I need to get into better shape if I'm going to stay competitive.\"</i><br>The two of you spend some time doing light exercise and chatting.");
+                                "You head over to the campus gym and coincidentally run into Cassie there. <i>\"Hi. I'm not really much of a fitness enthusiast, but I need to get into better shape if I'm going to stay competitive.\"</i><br/>The two of you spend some time doing light exercise and chatting.");
 
                 Global.getNPC("Cassie").gainAffection(player, 1);
                 player.gainAffection(Global.getNPC("Cassie"), 1);
@@ -164,7 +164,7 @@ public class Exercise extends Activity {
                         + "coincidence that we keep meeting. In the brief minutes we spent together, you displayed honor, bravery, and compassion. You are exactly the sort of person my ancestors would "
                         + "have pledged their loyalty to.\"</i><br/><br/>"
                         + "You're completely taken aback by her offer. What would you even do with a ninja? You don't need a bodyguard or an assassin. It's hard to turn down someone asking so earnestly, "
-                        + "but you can't seriously accept either. Yui looks like she may start crying any moment, clearly she's anticipating rejection already.<br>"
+                        + "but you can't seriously accept either. Yui looks like she may start crying any moment, clearly she's anticipating rejection already.<br/>"
                         + "Suddenly, an idea strikes you. If she really wants to help you, maybe she can do so indirectly. Obviously having her help you in the Games would be cheating, but maybe she "
                         + "can teach you some of her skills.<br/><br/>"
                         + "Yui's face lights up at your suggestion. <i>\"Of course, Master! I'll teach you everything I know!\"</i> She abruptly turns red and looks away. <i>\"Almost everything.... "

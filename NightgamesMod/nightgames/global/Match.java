@@ -178,10 +178,10 @@ public class Match {
         }
         winner.modMoney(5 * winner.prize());
         Global.gui().message("You traded in " + cloth + " sets of clothes for a total of $" + cloth * player.prize()
-                        + ".<br>");
+                        + ".<br/>");
         if (creward > 0) {
             Global.gui().message("You also discover an envelope with $" + creward
-                            + " slipped under the door to your room. Presumably it's payment for completed challenges.<br>");
+                            + " slipped under the door to your room. Presumably it's payment for completed challenges.<br/>");
         }
         int maxaffection = 0;
         for (Character rival : combatants) {
@@ -200,7 +200,7 @@ public class Match {
                                             + "sake..\"</i> Lilly sighs, exasperated. <i>\"I thought we'd seen the last of these. I don't know who writes them, but they showed up last year too. I'll have to do a second "
                                             + "sweep of the grounds each night to make sure they're all picked up by morning. They have competitors' names on them, so we absolutely cannot let a normal student find "
                                             + "one.\"</i> She toys with a pigtail idly while looking annoyed. <i>\"For what it's worth, they do seem to pay well if you do what the note says that night. Do with them what "
-                                            + "you will.\"</i><br>");
+                                            + "you will.\"</i><br/>");
             Global.flag(Flag.challengeAccepted);
         }
         /*
@@ -210,13 +210,13 @@ public class Match {
             if (character.getFlag("heelsTraining") >= 50 && !character.hasPure(Trait.proheels)) {
                 if (character.human()) {
                     Global.gui().message(
-                                    "<br>You've gotten comfortable at fighting in heels.<br><b>Gained Trait: Heels Pro</b>");
+                                    "<br/>You've gotten comfortable at fighting in heels.<br/><b>Gained Trait: Heels Pro</b>");
                 }
                 character.add(Trait.proheels);
             }
             if (character.getFlag("heelsTraining") >= 100 && !character.hasPure(Trait.masterheels)) {
                 if (character.human()) {
-                    Global.gui().message("<br>You've mastered fighting in heels.<br><b>Gained Trait: Heels Master</b>");
+                    Global.gui().message("<br/>You've mastered fighting in heels.<br/><b>Gained Trait: Heels Master</b>");
                 }
                 character.add(Trait.masterheels);
             }
@@ -280,7 +280,7 @@ public class Match {
             Area target = areas.get(Global.random(areas.size()));
             if (!target.corridor() && !target.open() && target.env.size() < 5) {
                 target.place(new Cache(meanLvl() + Global.random(11) - 4));
-                Global.gui().message("<br><b>A new cache has been dropped off at " + target.name + "!</b>");
+                Global.gui().message("<br/><b>A new cache has been dropped off at " + target.name + "!</b>");
                 break;
             }
         }

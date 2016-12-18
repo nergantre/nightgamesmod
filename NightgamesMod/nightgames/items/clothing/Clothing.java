@@ -179,27 +179,27 @@ public class Clothing implements Loot {
         DecimalFormat format = new DecimalFormat("#.##");
         sb.append(getName());
         if (!getSlots().isEmpty()) {
-            sb.append("<br>Slots: [");
+            sb.append("<br/>Slots: [");
             sb.append(slots.stream().map(ClothingSlot::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
-        sb.append("<br>Layer: ");
+        sb.append("<br/>Layer: ");
         sb.append(getLayer());
-        sb.append("<br>Appearance: ");
+        sb.append("<br/>Appearance: ");
         sb.append(format.format(getHotness()));
-        sb.append("<br>Exposure: ");
+        sb.append("<br/>Exposure: ");
         sb.append(format.format(getExposure()));
         if (!attributes().isEmpty()) {
-            sb.append("<br>Attributes: [");
+            sb.append("<br/>Attributes: [");
             sb.append(attributes.stream().map(ClothingTrait::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
         if (!buffs().isEmpty()) {
-            sb.append("<br>Buffs: [");
+            sb.append("<br/>Buffs: [");
             sb.append(buffs.stream().map(Trait::name).collect(Collectors.joining(", ")));
             sb.append(']');
         }
-        sb.append("<br>Price: ");
+        sb.append("<br/>Price: ");
         sb.append(getPrice());
         sb.append("</html>");
         return sb.toString();

@@ -154,9 +154,9 @@ public class Jewel extends BasePersonality {
                             c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
                                             + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
                                             + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
-                                            + "idea.<br>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
+                                            + "idea.<br/>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
                                             + "and more <b>worthy</b> than you are, and it's clear that my going <b>easy></b> on you has given you a swelled sense of your "
-                                            + "own ability.</i>\"<br>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
+                                            + "own ability.</i>\"<br/>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
                                             + "from Jewel's past- perhaps something she kept hearing growing up among a mostly-male military related to stereotypes about girls being "
                                             + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
                                             + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
@@ -304,7 +304,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c, Character other) {
-        return "Jewel gently pats your injured testicles. <br><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
+        return "Jewel gently pats your injured testicles. <br/><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
                         + "I could never concentrate on fighting.\"</i>";
     }
 
@@ -377,8 +377,8 @@ public class Jewel extends BasePersonality {
                             + " her teasing bringing you very rapidly to orgasm.<br/><br/>"
                             + "You give one more push against the woman on top of you trying to dislodge her but with another firm shove you find yourself once more pinned by Jewel. With "
                             + "this you are unable to stop Jewel from bringing you to climax and you groan in pleasure as you do so.<br/><br/>"
-                            + "Once you are finished you look up to see Jewel grinning down at you.<br>"
-                            + "<i>\"Well, you didn't put up much of a fight did ya?\"</i> She taunts, <i>\"must have really wanted me to be on top.\"</i><br>"
+                            + "Once you are finished you look up to see Jewel grinning down at you.<br/>"
+                            + "<i>\"Well, you didn't put up much of a fight did ya?\"</i> She taunts, <i>\"must have really wanted me to be on top.\"</i><br/>"
                             + "You feel yourself flush slightly from the embarrassment, but you are unable to complain as you can't deny that you did enjoy yourself. ";
             if (other.hasDick()) {
                 message += "As all of this occurs Jewel has yet to fully release your dick and you soon feel yourself becoming hard again.<br/><br/>"
@@ -660,7 +660,7 @@ public class Jewel extends BasePersonality {
                             + "anything, she sweeps you legs out from under you and deposits you on the floor next to "
                             + assist.name() + ". She traps your arms in her thighs, leaving "
                             + "you defenseless. By this time, " + assist.name()
-                            + " has recovered and looks ready to take revenge.<br>";
+                            + " has recovered and looks ready to take revenge.<br/>";
         } else {
             return "You wrestle with " + target.name()
                             + " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
@@ -668,7 +668,7 @@ public class Jewel extends BasePersonality {
                             + " doesn't have a chance to follow up. Jewel has arrived, seemingly out "
                             + "of nowhere, and before " + target.name()
                             + " can react, Jewel slaps her on the pussy. She crumples in pain, almost mirroring you, and can't put up any defense "
-                            + "when Jewel restrains her arms. You pull yourself back up so you can take advantage of your helpless opponent.<br>";
+                            + "when Jewel restrains her arms. You pull yourself back up so you can take advantage of your helpless opponent.<br/>";
         }
     }
 

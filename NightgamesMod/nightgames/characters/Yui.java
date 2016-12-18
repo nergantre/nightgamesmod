@@ -283,9 +283,9 @@ public class Yui extends BasePersonality {
                         + "Before you can react, Yui grabs you and eagerly kisses you on the lips. Your surprise quickly gives way to extreme lightheadedness and drowsiness. " 
                         + "Your legs give out and you collapse into her arms. Did Yui drug you? <i>\"Please forgive this betrayal, Master. You work so hard fighting and training " 
                         + "every night. For the sake of your health, I thought it was neccessary to make you take a break.\"</i> "
-                        + "She sounds genuinely apologetic, but also a little excited. <br><i>\"Don\'t worry. We\'ll take good care of you until you can move again.\"</i> "
+                        + "She sounds genuinely apologetic, but also a little excited. <br/><i>\"Don\'t worry. We\'ll take good care of you until you can move again.\"</i> "
                         + "She carefully lowers your limp upper body onto her lap as " + assist.name() + " fondles your dick to full hardness. "
-                        + "<i>\"I\'m sure we can relieve some of your built up stress too.\"</i><br>"
+                        + "<i>\"I\'m sure we can relieve some of your built up stress too.\"</i><br/>"
                         :
                             "This fight could certainly have gone better than this. You\'re completely naked and have your hands bound behind your back. " 
                         + target.name() + " is just taking " + "her time to finish you off. A familiar voice calls out to her. <i>\"I see you\'ve caught my master. "

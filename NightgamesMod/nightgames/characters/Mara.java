@@ -254,7 +254,7 @@ public class Mara extends BasePersonality {
                 return "You've got Mara just where you want her. Your arms are wrapped around her, holding her in place as you thrust your cock into her tight pussy over and over. Her moans are getting louder and louder, and you can feel her breath "
                         + "quickening. You're getting close to cumming, but she's definitely closer. She returns your embrace, squeezing her body against yours, stroking your back with her hands. Her hands creep down to grasp your buttocks. "
                         + "All of a sudden, she grins deviously, and she whispers...<br/><br/>"
-                        + "<i>\"Time for an experiment. Surprise!\"</i><br>"
+                        + "<i>\"Time for an experiment. Surprise!\"</i><br/>"
                         + "Suddenly, you feel a poking sensation in your ass. You feel the pressure of her fingers touching your prostate. Wait... is that the hand that she's wearing her shock glove on...?<br/><br/>"
                         + "<b>BZZT!</b> A sharp jolt of pain tears through you as Mara forces electricity through her shock glove and into your ass. You thrash around desperately, but somehow the lithe girl is "
                         + "able to keep her finger pressed against your prostate. You feel an intense pressure welling in your abdomen.<br/><br/>"
@@ -319,7 +319,7 @@ public class Mara extends BasePersonality {
                             + "The sensation is amazing, but you're not in danger of cumming with her. You gently stroke her head while spasms of pleasure continue to run through her small body. "
                             + "It occurs to you -not for the first time- that she's really cute, even when she's not trying to be.<br/><br/>As Mara catches her breath, you see realization slowly dawn "
                             + "on her. <i>\"You didn't cum? Why not?\"</i> She actually looks a little hurt. <i>\"Every " + c.getOpponent(character).boyOrGirl() + " I've been with said it feels really good and tight inside me. They never outlast "
-                            + "me.\"</i> Every " + c.getOpponent(character).boyOrGirl() + " she's been with? Mara struck you as a bit of an introvert. How many " + c.getOpponent(character).guyOrGirl() + "s has she been with? <br>She gives you a flick on the forehead. <i>\"Don't be mean. "
+                            + "me.\"</i> Every " + c.getOpponent(character).boyOrGirl() + " she's been with? Mara struck you as a bit of an introvert. How many " + c.getOpponent(character).guyOrGirl() + "s has she been with? <br/>She gives you a flick on the forehead. <i>\"Don't be mean. "
                             + "I've only slept with a few " + c.getOpponent(character).boyOrGirl() + "s. It's not like you're a virgin either.\"</i> Fair enough, but if she's upset that you didn't cum inside her, you're eager to remedy that. "
                             + "\n\nYou pull most of the way out in preparation for a big thrust, but Mara yelps in alarm. <i>\"Wait!\"</i> She slides her butt backward, causing your dick to fall out completely, "
                             + "and curls up protectively. <i>\"I get really sensitive down there after I orgasm. Give me a minute or two to recover before we continue. In the meantime we can always chat, "
@@ -484,7 +484,7 @@ public class Mara extends BasePersonality {
                             + "but her small size and mocha skin give away Mara's identity. This information doesn't really help you much, as it's too late to defend yourself."
                             + " She yanks on your jewels, forcing you to your knees. Both girls work to restrain your arms, but it's "
                             + "not really necessary since Mara literally has you by the balls. She releases your abused jewels once the fight has left you and focuses on holding your arms, "
-                            + "while " + assist.name() + " moves to your front.<br>";
+                            + "while " + assist.name() + " moves to your front.<br/>";
         } else {
             return "So far this hasn't been your proudest fight. " + target.name()
                             + " was able to pin you early on and is currently rubbing your dick between her thighs. "
@@ -492,7 +492,7 @@ public class Mara extends BasePersonality {
                             + "move to help you, despite being easily in reach. You give her your best puppy-dog eyes, silently pleading while trying not to give away her presence. "
                             + "Mara lets you squirm a little longer before winking at you and tickling " + target.name()
                             + " under her arms. " + target.name() + " lets out a startled yelp "
-                            + "and jumps in surprise. You use the moment of distraction to push her off balance and Mara immediately secures her arms.<br>";
+                            + "and jumps in surprise. You use the moment of distraction to push her off balance and Mara immediately secures her arms.<br/>";
         }
     }
 

@@ -169,7 +169,7 @@ public class Maya extends BasePersonality {
                             + " but now the other girls are picking on him too.\"</i> She looks over "
                             + "your helpless body and sides of her mouth curl slightly with amusement."
                             + " She delicately extends her stocking-covered foot and teases the tip "
-                            + "of your penis.<br><i>\"I think you'll enjoy this bullying, at least.\""
+                            + "of your penis.<br/><i>\"I think you'll enjoy this bullying, at least.\""
                             + "</i> She rubs and squeezes your sensitive glans with her toes. Your "
                             + "hips buck involuntarily as she keeps moving her foot to stimulate "
                             + "different spots on your shaft. How can she give you this kind of "
@@ -207,7 +207,7 @@ public class Maya extends BasePersonality {
                             + "She apparently senses it too, because you both stop and turn "
                             + "to see Maya confidently walking towards you. She smiles and looks "
                             + "at the two of you. <i>\"Eenie... Meenie... Minie....\"</i> Her "
-                            + "finger flicks in your direction. <i>\"Mo.\"</i><br>"
+                            + "finger flicks in your direction. <i>\"Mo.\"</i><br/>"
                             + "You take a step back and prepare to defend yourself, but she's "
                             + "too fast. She reaches you in an instant and sweeps your feet"
                             + " out from under you, depositing you on the floor. She "
@@ -216,21 +216,21 @@ public class Maya extends BasePersonality {
                             + "completely unable to move her. <i>\"Sorry, it's just your "
                             + "bad luck. I could have helped you instead, but I don't do this v"
                             + "ery often anymore and I wanted to watch a cute " + c.getOpponent(character).boyOrGirl() + " orgasm. You "
-                            + "should try to enjoy your defeat, it's just another " + "part of the Game.\"</i><br>";
+                            + "should try to enjoy your defeat, it's just another " + "part of the Game.\"</i><br/>";
         }
         return "In the middle of your fight with " + target.name()
                         + ", you feel an overwhelming presence approach from behind. She apparently "
                         + "senses it too, because you both stop and turn "
                         + "to see Maya confidently walking towards you. She smiles and looks at"
                         + " the two of you. <i>\"Eenie... Meenie... Minie....\"</i> She points toward " + target.name()
-                        + ". <i>\"Mo.\"</i><br>" + "Before the girl can react, Maya is on her and "
+                        + ". <i>\"Mo.\"</i><br/>" + "Before the girl can react, Maya is on her and "
                         + "kisses her passionately. " + target.name()
                         + " struggles for just a moment before going limp. Maya moves to licking and " + "sucking "
                         + "her neck, while she eases the helpless girl to the floor. "
                         + "She glances back at you and you feel a chill run down your spine "
                         + "as her eyes seem to bore into you. <i>\"Are you "
                         + "going to make me do all the work? There's a lovely, naked girl in "
-                        + "front of you who needs a good licking. Don't keep her waiting.</i><br>";
+                        + "front of you who needs a good licking. Don't keep her waiting.</i><br/>";
     }
 
     @Override
@@ -386,7 +386,7 @@ public class Maya extends BasePersonality {
                         + "showing no sign of noticing you. When you've gotten close enough, you lunge toward her, hoping to catch her from behind. To your surprise, she vanishes the "
                         + "moment you touch her and you stumble forward into " + assist.name()
                         + ". You turn around and see Maya standing a couple feet away. You've lost the element of "
-                        + "surprise (you probably never had it), but it's still 2 on 1.<br>" + "You suddenly feel "
+                        + "surprise (you probably never had it), but it's still 2 on 1.<br/>" + "You suddenly feel "
                         + assist.name()
                         + " grab you from behind. You turn your head and notice her eyes are dull and unfocused. Maya must have hypnotized her to "
                         + "help trap you. Maya speaks up in a melodic voice. <i>\"How rude of you to interrupt a perfectly enjoyable fight. Naughty " + c.getOpponent(character).boyOrGirl() + "s should be punished.\"</i> She strips off your clothes and "

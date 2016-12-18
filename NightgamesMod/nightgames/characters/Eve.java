@@ -342,7 +342,7 @@ public class Eve extends BasePersonality {
                         + "response to the enticing scene. Eve grins at you confidently. <i>\"Jealous? I'm sure you wish your cock was buried deep in this tight, wet cunt, but I got "
                         + "here first.\"</i> She thrusts her hips several times for emphasis. <i>\"You could always go for the back door.\"</i> "
                         + target.name() + " frantically shakes her "
-                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br>"
+                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br/>"
                         + "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly "
                         + target.name() + "'s soft butt is rubbing firmly and pleasurably against your erection. "
                         + "Shit. She's going to make you cum too, even when you're helping her. <i>\"Don't let go of her, or you won't get credit for her orgasm.\"</i> Unable to struggle "
@@ -359,7 +359,7 @@ public class Eve extends BasePersonality {
                             + "suspects too much, but the hard bulge hitting your ass does. The last thing you want to do is expose your ass to Eve, but fortunately she doesn't have a "
                             + "firm grip on you yet. You jerk forward to try to escape her grasp. <i>\"Stop squirming!\"</i> She slams her knee up between your legs, hitting you squarely "
                             + "in the balls. The intense pain takes all the fight out of you and you go limp in her arms. <i>\"Are you done struggling or do you need another kick?\"</i> "
-                            + "You meekly shake your head and let her secure her grip.<br>";
+                            + "You meekly shake your head and let her secure her grip.<br/>";
         }
 
         return "Your fight with " + target.name()
@@ -368,9 +368,9 @@ public class Eve extends BasePersonality {
                         + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
                         + " tries to get back to her feet, but Eve easily forces her onto her back. "
                         + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + c.getOpponent(character).boyOrGirl() + ".\"</i> "
-                        + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br>"
+                        + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br/>"
                         + "Apparently you've been forgotten. Oh well. " + target.name()
-                        + "'s pussy looks pretty lonely. Looks like this will be your win.<br>";
+                        + "'s pussy looks pretty lonely. Looks like this will be your win.<br/>";
 
     }
 

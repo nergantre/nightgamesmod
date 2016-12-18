@@ -30,7 +30,7 @@ public class CassieTime extends BaseNPCTime {
         giftedString = "\"Awww thanks!\"";
         giftString = "\"A present? You shouldn't have!\"";
         transformationOptionString = "Enchantments";
-        transformationIntro = "[Placeholder]<br>Cassie tells you she could perhaps enchant some of your body.";
+        transformationIntro = "[Placeholder]<br/>Cassie tells you she could perhaps enchant some of your body.";
         loveIntro = "You and Cassie lay together in her bed while she casts spells above you. Every twitch of her fingers brings a new burst of light and color. She weaves "
                         + "the colors into abstract pictures, but sometimes you can make out figures and familiar places in the patterns. There's no clear narrative or purpose emerging, Cassie "
                         + "probably just likes practicing her witchcraft. <i>\"Not everything I learned has practical applications,\"</i> she says quietly. <i>\"But it's pretty isn't it?\"</i> It is pretty. "
@@ -55,7 +55,7 @@ public class CassieTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Cassie: Grow a cock";
-            growCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
+            growCock.scene = "[Placeholder]<br/>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.runic));
                 return true;
@@ -68,7 +68,7 @@ public class CassieTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Cassie: Remove her cock";
-            removeCock.scene = "[Placeholder]<br>Cassie hesistantly drinks the three femdrafts and her runic cock shrinks into her normal clitoris.";
+            removeCock.scene = "[Placeholder]<br/>Cassie hesistantly drinks the three femdrafts and her runic cock shrinks into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;
@@ -85,7 +85,7 @@ public class CassieTime extends BaseNPCTime {
         });
         runicCock.additionalRequirements = "A normal cock";
         runicCock.option = "Runic Cock";
-        runicCock.scene = "[Placeholder]<br>Cassie enchants your cock with the power of the fairies.";
+        runicCock.scene = "[Placeholder]<br/>Cassie enchants your cock with the power of the fairies.";
         runicCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
                             self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
@@ -105,7 +105,7 @@ public class CassieTime extends BaseNPCTime {
         });
         arcanePussy.additionalRequirements = "A normal pussy";
         arcanePussy.option = "Arcane Pussy";
-        arcanePussy.scene = "[Placeholder]<br>Cassie draws intricate arcane tattoos on your pussy";
+        arcanePussy.scene = "[Placeholder]<br/>Cassie draws intricate arcane tattoos on your pussy";
         arcanePussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.arcane, 1);
             return true;
@@ -128,28 +128,28 @@ public class CassieTime extends BaseNPCTime {
         mouthPussy.scene =
                         "When you mention Cassie's modified mouth to her, she blushes bright red and averts her eyes."
                                         + "She replies shyly, <i>\"Uhm would you mind if we don't talk about that? I'm not entirely sure what I was thinking at the time...\"</i>"
-                                        + "<br>Now you're really interested. You try pressing her a bit, and after threatening her a bit with your tickler, she relents and tells you what you want to hear."
+                                        + "<br/>Now you're really interested. You try pressing her a bit, and after threatening her a bit with your tickler, she relents and tells you what you want to hear."
                                         + "<i>\"Well I found this spell in an old occult book I picked up when I was traveling in Greece last break. When I first tried to translate it, "
                                         + "I thought the spell would enhance my tongue control and make my blowjobs a bit better, giving myself an edge in the sex games. "
-                                        + "Turns out... well I think you know how it turned out.\"</i><br>"
+                                        + "Turns out... well I think you know how it turned out.\"</i><br/>"
                                         + "You a bit red as well, and mention to her that you can certainly vouch for the effectiveness."
-                                        + "<br><i>\"The main problem with it is that it leaves my mouth so sensitive. The first time I tried to practice my blowjobs with a dildo after completing the ritual, "
+                                        + "<br/><i>\"The main problem with it is that it leaves my mouth so sensitive. The first time I tried to practice my blowjobs with a dildo after completing the ritual, "
                                         + "I almost came from feeling the ridges on my tongue! It was super intense. It's a bit of a double edged sword. Or rather a double edged sheath if you know my drift,\"</i> Cassie chuckles softly."
-                                        + "<br>You ask if she could maybe try the spell on you as well"
+                                        + "<br/>You ask if she could maybe try the spell on you as well"
                                         + "Cassie seems a bit surprised with your request, but agrees pretty quickly. She takes the ingredients from you and inscribes a few runes on the dildo you brought along."
                                         + "<i>\"Uhh I think this may be a bit late, but would you mind not watching me? Sorry this is a bit embarassing for me.\"</i>"
-                                        + "<br>You reassure her that whatever she's doing, it can't be too bad compared to the night games. Cassie sighs and waves for you to sit down."
+                                        + "<br/>You reassure her that whatever she's doing, it can't be too bad compared to the night games. Cassie sighs and waves for you to sit down."
                                         + "She starts the ritual by coating the inscribed dildo with all the potions you brought along. After starting a incomprehensible chant, she unbuttons her pants and starts fingering her pussy. "
                                         + "<i>\"I... uhhgh told you... that this would be, aah, embarassing... Nhhh!\"</i> Cassie grunts as she's masturbating. As she's nearing orgasm, she sticks the inscribed dildo inside her and clamps down on it hard."
                                         + "You can see a soft purple glow transfering itself from her body into the plastic rod. After taking a few seconds to calm down, Cassie beckons you over, <i>\"Your turn "
                                         + player.name() + ", say Ahh.\"</i>"
-                                        + "<br>You obediently sit down on the couch, and open your mouth. As expected, Cassie takes the glowing fake phallus, still coated with her juices, and starts putting it in your mouth. "
+                                        + "<br/>You obediently sit down on the couch, and open your mouth. As expected, Cassie takes the glowing fake phallus, still coated with her juices, and starts putting it in your mouth. "
                                         + "At first, you gag a bit from having a large foreign object stuffed into your throat, but after a few moments, you start feeling your entire oral cavity reforming itself around the false cock. "
                                         + "Your teeth recede a bit back into your gums, and you feel walls of soft muscle line your mouth. Your tongue feels like it's on fire as it rapidly lengthens, filling your maw, and spilling out of your expanded lips. "
                                         + "Finally, the changes seem to stabilize and you're left feeling very strange. Cassie notices the expression on your face and grins at you, <i>\"Don't worry, you'll get used to it pretty quickly. I know I did.\"</i>"
-                                        + "<br>She begins to rub the now-drained dildo again against your newly formed mouth-pussy walls and tongue. "
+                                        + "<br/>She begins to rub the now-drained dildo again against your newly formed mouth-pussy walls and tongue. "
                                         + "You blank out with the strange sensations that your organ transmits back to you, and Cassie takes the opportunity to mouth-fuck you to an almost-instantaneous climax."
-                                        + "<br>Cassie walks by you and gives you a quick kiss which almost makes you cum yet again, <i>\"I'm so looking forward to seeing what you do with that tonight!\"</i>";
+                                        + "<br/>Cassie walks by you and gives you a quick kiss which almost makes you cum yet again, <i>\"I'm so looking forward to seeing what you do with that tonight!\"</i>";
         mouthPussy.effect = (c, self, other) -> {
             self.body.addReplace(new MouthPussyPart(), 1);
             return true;
@@ -179,7 +179,7 @@ public class CassieTime extends BaseNPCTime {
                             + "Putting down her book, she walks to you and whispers in your ear, <i>Give me five minutes, then meet me in the girls bathroom on the third floor. Don't worry, it's always empty.</i>"
                             + "You're shocked at her unexpected forwardness, but your pulsing need for milk distracts you from her uncharacteristic attitude."
                             + "You pretend to be interested in a book on Roman history, and stand around the stacks for a while. After roughly five minutes, you put down the literature, and head upstairs."
-                            + "<br>"
+                            + "<br/>"
                             + "The third floor of the library is a part of the archives, where old books go to die if they're not asked for, for over 5 years. "
                             + "You wander around for a bit and find the girls bathroom hidden in a little corner by the classic slavic literature section. No wonder why it's mostly unused. "
                             + "While idly speculating at why Cassie even knows of such a place, you open the door and step inside. The moment you enter, you see Cassie sitting by the sink. She looks up at the noise and smiles as you step inside. "

@@ -110,7 +110,7 @@ public class Workshop extends Activity {
         } else if (choice.equals("Upgrade Strapon: $2500")) {
             if (player.money >= Item.Strapon2.getPrice()) {
                 Global.gui().message(
-                                "[Placeholder]<br>Jett upgrades your strapon with a more flexible body and a vibration feature.");
+                                "[Placeholder]<br/>Jett upgrades your strapon with a more flexible body and a vibration feature.");
                 player.money -= Item.Strapon2.getPrice();
                 player.consume(Item.Strapon, 1, false);
                 player.gain(Item.Strapon2);

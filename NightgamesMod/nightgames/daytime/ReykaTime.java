@@ -33,8 +33,8 @@ public class ReykaTime extends BaseNPCTime {
         giftedString = "\"Awww thanks!\"";
         giftString = "\"A present? You shouldn't have!\"";
         transformationOptionString = "Demonic Rituals";
-        loveIntro = "[Placeholder]<br>You head down to the chapel basement. Reyka shows you a cute smile when she realizes that you've come to visit.";
-        transformationIntro = "<br>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
+        loveIntro = "[Placeholder]<br/>You head down to the chapel basement. Reyka shows you a cute smile when she realizes that you've come to visit.";
+        transformationIntro = "<br/>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
                         + "She looks a bit worried when she responds. You quickly reassure her that you don't necessarily want the whole package, corrupted soul and all. "
                         + "You just want some of the fun bits that she had made such good use of. Seeing the conversation directed back to sex, Reyka quickly recovers her saucy grin, "
                         + "<i>\"You've been having some fun I see? Alright, I can do that for you, but you have to bring me some ingredients. I can't do everything myself! "
@@ -53,7 +53,7 @@ public class ReykaTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Reyka: Grow a cock";
-            growCock.scene = "[Placeholder]<br>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
+            growCock.scene = "[Placeholder]<br/>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.incubus));
@@ -67,7 +67,7 @@ public class ReykaTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Reyka: Remove her cock";
-            removeCock.scene = "<br>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
+            removeCock.scene = "<br/>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
                             + "Taking the FemDrafts you offer her, she drinks them one after another and waits with her cock still proudly erect. "
                             + "Soon enough though, the organ starts shrinking back into her body as if being absorbed by her lower lips. "
                             + "Finally the cock head retreats into her fleshy hood, becoming indistinguishable from her old clitoris.";
@@ -99,7 +99,7 @@ public class ReykaTime extends BaseNPCTime {
                         + "her tail. She pours the thick liquids on her hands and mixes them together. She applies half of the "
                         + "mixture on your cock (which almost makes you cum due to her ministrations), and massages the rest "
                         + "into her cunt. Finally, she draws a familiar rune on your lower belly that you recognize as the orgasm "
-                        + "seal she uses in the night games.<br><br>"
+                        + "seal she uses in the night games.<br/><br/>"
                         + "As Reyka finishes with her preparations, you finally realize what she's about to do. Remembering the last "
                         + "time she fucked you within an inch of your life, you start to scramble off of her couch, in an mad attempt "
                         + "to escape. As if she read your mind, Reyka unfurls her wings and jumps on you as you almost reach the stairs "
@@ -107,7 +107,7 @@ public class ReykaTime extends BaseNPCTime {
                         + "mount you. Grinning devilishly, she purrs <i>\"Oh no {other:name}, we'll be having none "
                         + "of that. You paid for this yourself, and it would be SUCH a waste for us to stop now. Don't you agree "
                         + "{other:name}?\"</i> Resigned to your fate, you can only nod obediently as she rubs her goopy slit against "
-                        + "your rock hard erection<br><br>"
+                        + "your rock hard erection<br/><br/>"
                         + "After 6 hours of messy sex in which Reyka fucked you unconscious 17 times, you wake up cuddled in Reyka's "
                         + "bountiful bosoms. You quickly notice that Reyka has been awake and smiling at your groggy expression while you wake up. "
                         + "As you somehow start to get hard again when you smell Reyka's intoxicating scent, you realize that your penis feels very different. "
@@ -156,7 +156,7 @@ public class ReykaTime extends BaseNPCTime {
         });
         demonTail.option = "Spade Tail";
         demonTail.scene =
-                        "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
+                        "[Placeholder]<br/>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
         demonTail.effect = (c, self, other) -> {
             self.body.addReplace(TailPart.demonic, 1);
             return true;
@@ -198,7 +198,7 @@ public class ReykaTime extends BaseNPCTime {
         succubusPussy.additionalRequirements = "A normal pussy";
         succubusPussy.option = "Succubus Pussy";
         succubusPussy.scene =
-                        "[Placeholder]<br>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
+                        "[Placeholder]<br/>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
         succubusPussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.succubus, 1);
             return true;
@@ -492,7 +492,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "if I could get my hands on one of those strap-ons, you might be...\"</i> taking this worrying prospect as "
                                       + "your cue, you quickly stumble up the stairs. After taking a quick breather and cup of coffee in the "
                                       + "chapel's kitchen, you walk back home, still drowsy. You probably shouldn't do that too often, "
-                                      + "lest she changes her mind about your value to her.<br>"
+                                      + "lest she changes her mind about your value to her.<br/>"
                                       + "Then again, you realize you didn't have any choice from the start. ");
             }
             Global.gui()

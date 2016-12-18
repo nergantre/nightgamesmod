@@ -30,7 +30,7 @@ public class AngelTime extends BaseNPCTime {
         transformationOptionString = "Sacraments";
         advTrait = Trait.demigoddess;
         transformationIntro =
-                        "[Placeholder]<br>Angel says she may be able to try a few things with her new divine powers.";
+                        "[Placeholder]<br/>Angel says she may be able to try a few things with her new divine powers.";
         loveIntro = "You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean "
                         + "against you on the futon while she thinks. It's quiet. You aren't used to your time with Angel being quiet, mostly because you so rarely meet her alone. You "
                         + "lose track of time sitting there before she breaks the silence. <i>\"" + player.name()
@@ -57,7 +57,7 @@ public class AngelTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Angel: Grow a cock";
-            growCock.scene = "[Placeholder]<br>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
+            growCock.scene = "[Placeholder]<br/>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.blessed));
                 return true;
@@ -70,7 +70,7 @@ public class AngelTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Angel: Remove her cock";
-            removeCock.scene = "[Placeholder]<br>Angel drinks the three femdrafts one after another and her blessed cock shrinks back into her normal clitoris.";
+            removeCock.scene = "[Placeholder]<br/>Angel drinks the three femdrafts one after another and her blessed cock shrinks back into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;
@@ -89,10 +89,10 @@ public class AngelTime extends BaseNPCTime {
             blessedCock.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            blessedCock.additionalRequirements = "A normal cock<br>Divinity greater than 10";
+            blessedCock.additionalRequirements = "A normal cock<br/>Divinity greater than 10";
             blessedCock.option = "Blessed Cock";
             blessedCock.scene =
-                            "[Placeholder]<br>Angel performs a sacrament on your cock, imbuing it with holy powers.";
+                            "[Placeholder]<br/>Angel performs a sacrament on your cock, imbuing it with holy powers.";
             blessedCock.effect = (c, self, other) -> {
                 Optional<BodyPart> optPart = self.body.get("cock")
                                                       .stream()
@@ -117,10 +117,10 @@ public class AngelTime extends BaseNPCTime {
             divinePussy.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            divinePussy.additionalRequirements = "A normal pussy<br>Divinity greater than 10";
+            divinePussy.additionalRequirements = "A normal pussy<br/>Divinity greater than 10";
             divinePussy.option = "Divine Pussy";
             divinePussy.scene =
-                            "[Placeholder]<br>Angel performs a sacrament on your pussy, imbuing it with holy powers.";
+                            "[Placeholder]<br/>Angel performs a sacrament on your pussy, imbuing it with holy powers.";
             divinePussy.effect = (c, self, other) -> {
                 self.body.addReplace(PussyPart.divine, 1);
                 return true;
@@ -137,9 +137,9 @@ public class AngelTime extends BaseNPCTime {
             angelWings.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            angelWings.additionalRequirements = "No wings<br>Divinity greater than 10";
+            angelWings.additionalRequirements = "No wings<br/>Divinity greater than 10";
             angelWings.option = "Angelic Wings";
-            angelWings.scene = "[Placeholder]<br>Angel gives you white feathery wings on your back.";
+            angelWings.scene = "[Placeholder]<br/>Angel gives you white feathery wings on your back.";
             angelWings.effect = (c, self, other) -> {
                 self.body.addReplace(WingsPart.angelic, 1);
                 return true;
@@ -150,7 +150,7 @@ public class AngelTime extends BaseNPCTime {
             TransformationOption divinity = new TransformationOption();
             divinity.ingredients.put(Item.HolyWater, 1);
             divinity.option = "Bestow Divinity";
-            divinity.scene = "[Placeholder]<br>Angel has sex with you, lending you a part of her divinity.";
+            divinity.scene = "[Placeholder]<br/>Angel has sex with you, lending you a part of her divinity.";
             divinity.effect = (c, self, other) -> {
                 self.mod(Attribute.Divinity, 1);
                 return true;

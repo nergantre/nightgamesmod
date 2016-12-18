@@ -133,7 +133,7 @@ public class Player extends Character {
             body.describeBodyText(b, Global.getCharacterByName("Angel"), false);
         }
         if (getTraits().size() > 0) {
-            b.append("<br>Traits:<br>");
+            b.append("<br/>Traits:<br/>");
             List<Trait> traits = new ArrayList<>(getTraits());
             traits.sort((first, second) -> first.toString()
                                                 .compareTo(second.toString()));
@@ -142,7 +142,7 @@ public class Player extends Character {
                            .collect(Collectors.joining(", ")));
         }
         if (status.size() > 0) {
-            b.append("<br><br>Statuses:<br>");
+            b.append("<br/><br/>Statuses:<br/>");
             List<Status> statuses = new ArrayList<>(status);
             statuses.sort((first, second) -> first.name.compareTo(second.name));
             b.append(statuses.stream()
@@ -156,14 +156,14 @@ public class Player extends Character {
     public String describe(int per, Combat c) {
         String description = "<i>";
         for (Status s : status) {
-            description = description + s.describe(c) + "<br>";
+            description = description + s.describe(c) + "<br/>";
         }
         description = description + "</i>";
         description = description + outfit.describe(this);
         if (per >= 5 && status.size() > 0) {
-            description += "<br>List of statuses:<br><i>";
+            description += "<br/>List of statuses:<br/><i>";
             description += status.stream().map(Status::toString).collect(Collectors.joining(", "));
-            description += "</i><br>";
+            description += "</i><br/>";
         }
         description += Stage.describe(this);
         
@@ -261,7 +261,7 @@ public class Player extends Character {
         String arousal;
         String stamina;
         if (opponent.state == State.webbed) {
-            gui.message("She is naked and helpless.<br>");
+            gui.message("She is naked and helpless.<br/>");
             return;
         }
         if (get(Attribute.Perception) >= 6) {
@@ -404,7 +404,7 @@ public class Player extends Character {
         getStamina().gain(getGrowth().stamina);
         getArousal().gain(getGrowth().arousal);
         availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
-        gui.message("You've gained a Level!<br>Select which attributes to increase.");
+        gui.message("You've gained a Level!<br/>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10 /*|| (Global.checkFlag(Flag.SuperTraitMode) && ((level < 10 && getLevel()%2 == 0) || (getLevel() % 3 != 0 && level > 10)))*/) {
             traitPoints += 1;
         }
@@ -706,12 +706,12 @@ public class Player extends Character {
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br>Whenever you're near " + opponent.name()
+            c.write(opponent, "<br/>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
             add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
-            c.write("<br>"+Global.capitalizeFirstLetter(
+            c.write("<br/>"+Global.capitalizeFirstLetter(
                             String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
         }

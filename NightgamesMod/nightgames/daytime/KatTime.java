@@ -33,8 +33,8 @@ public class KatTime extends BaseNPCTime {
         giftedString = "\"Awww thanks!\"";
         giftString = "\"A present? That was unexpected nya\"";
         transformationOptionString = "Transformations";
-        loveIntro = "[Placeholder]<br>You text Kat and she excitedly meets up with you.";
-        transformationIntro = "[Placeholder]<br>Kat shares how her totemic magic works.";
+        loveIntro = "[Placeholder]<br/>You text Kat and she excitedly meets up with you.";
+        transformationIntro = "[Placeholder]<br/>Kat shares how her totemic magic works.";
         advTrait = null;
         transformationFlag = "";
     }
@@ -48,7 +48,7 @@ public class KatTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Kat: Grow a cock";
-            growCock.scene = "<br><i>\"Mrrr... Y-you want me to w-what!?\"</i> Kat doesn't seem to be too amused at your suggestion for a little switch-up. "
+            growCock.scene = "<br/><i>\"Mrrr... Y-you want me to w-what!?\"</i> Kat doesn't seem to be too amused at your suggestion for a little switch-up. "
                            + "She glows red like a tomato, and starts stammering like she just learned how to talk. "
                            + "<i>\"W-what do you mean a c-c-c-... a p-penis? But I'm a girl, nya!\"</i>"
                            + "You respond dryly that you can clearly see that she's a girl. There's definitely no mistaking that feminine form of hers. "
@@ -97,7 +97,7 @@ public class KatTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Kat: Remove her cock";
-            removeCock.scene = "<br>Kat gladly drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris. "
+            removeCock.scene = "<br/>Kat gladly drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris. "
                             + "Kat shyly whispers, <i>\"Mrrowwww, t-that was embarassing... but it did feel pretty good when I had it...\"</i>";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
@@ -115,7 +115,7 @@ public class KatTime extends BaseNPCTime {
         });
         primalCock.additionalRequirements = "A normal cock";
         primalCock.option = "Primal Cock";
-        primalCock.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your penis into a primal cock.";
+        primalCock.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your penis into a primal cock.";
         primalCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
                             self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
@@ -135,7 +135,7 @@ public class KatTime extends BaseNPCTime {
             return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
         });
         feralPussy.option = "Feral Pussy";
-        feralPussy.scene = "[Placeholder]<br>Kat uses her totemic magic to convert your pussy into a feral one.";
+        feralPussy.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your pussy into a feral one.";
         feralPussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.feral, 1);
             return true;
@@ -150,7 +150,7 @@ public class KatTime extends BaseNPCTime {
             return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
         });
         catTail.option = "Cat Tail";
-        catTail.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you a cat tail.";
+        catTail.scene = "[Placeholder]<br/>Kat uses her totemic magic to grow you a cat tail.";
         catTail.effect = (c, self, other) -> {
             self.body.addReplace(TailPart.cat, 1);
             return true;
@@ -164,7 +164,7 @@ public class KatTime extends BaseNPCTime {
             return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
         });
         catEars.option = "Cat Ears";
-        catEars.scene = "[Placeholder]<br>Kat uses her totemic magic to grow you cat ears.";
+        catEars.scene = "[Placeholder]<br/>Kat uses her totemic magic to grow you cat ears.";
         catEars.effect = (c, self, other) -> {
             self.body.addReplace(EarPart.cat, 1);
             return true;
@@ -178,7 +178,7 @@ public class KatTime extends BaseNPCTime {
             Global.gui().message(
                             "You send Kat a text to see if she's free. Since exchanging numbers with her, you've discovered that she's much more outgoing "
                                             + "when texting than she is in person. The two of you have chatted quite a bit, you just hope she'll eventually get more used to talking with you in "
-                                            + "person.<br>You quickly receive a reply from Kat. 'i'm free right now. :) do you want to meet up?' You text her back, asking if there's a place you "
+                                            + "person.<br/>You quickly receive a reply from Kat. 'i'm free right now. :) do you want to meet up?' You text her back, asking if there's a place you "
                                             + "can meet without her friends coming after you. 'i'm not with Mel and Emma right now. you can come here' About ten seconds later, she sends you a followup. "
                                             + "'please don't hate them. they're my best friends and they mean well. they just think i'm still an innocent virgin who needs to be protected.' To be "
                                             + "fair, she does inspire inspire that sort of protective attitude, even from her opponents. For Kat's sake, you'll do your best to get along with them, but "
@@ -237,9 +237,9 @@ public class KatTime extends BaseNPCTime {
                                             + "<i>\"What the hell are you doing to my best friend?!\"</i> A girl with curly red hair glares at you and hugs Kat protectively. Another girl, a brunette, looks calmer, but "
                                             + "also stands between you and Kat. This is bad. You quickly explain that you weren't trying to scare Kat, you just wanted to talk to her. <br/><br/><i>\"Our Kat is pretty delicate. "
                                             + "Maybe you should learn how to approach a girl without scaring her before you try to pick her up.\"</i> The brunette speaks in a reasonable tone, but there's a definite "
-                                            + "edge to her voice. The redhead snorts and starts to lead Kat away. <br><i>\"I don't want this creep talking to Kat at all.\"</i> Kat tugs on the girl's sleeve to stop her and "
+                                            + "edge to her voice. The redhead snorts and starts to lead Kat away. <br/><i>\"I don't want this creep talking to Kat at all.\"</i> Kat tugs on the girl's sleeve to stop her and "
                                             + "whispers something in her ear. The girl looks back at you shocked. <i>\"This " + Global.getPlayer().guyOrGirl() + "? Are you kidding me?\"</i> The brunette joins the two of them and they enter a brief huddle. "
-                                            + "You stand there awkwardly, unable to hear their conversation. There are more than a few glances in your direction, and Kat's face is gradually turning red. <br>Eventually, "
+                                            + "You stand there awkwardly, unable to hear their conversation. There are more than a few glances in your direction, and Kat's face is gradually turning red. <br/>Eventually, "
                                             + "Kat leaves the huddle to stand behind you, as if hiding from her friends. The calmer of the two girls gives you an awkward smile. <i>\"We'll give you two some space.\"</i> "
                                             + "She has to practically drag away the other girl, who is glaring daggers at you."
                                             + "Kat doesn't make eye contact, but shyly touches your hand. <i>\"Will you come to my room for a little while?\"</i> she softly asks.<br/><br/>She's quiet all the way to her room "
@@ -415,12 +415,12 @@ public class KatTime extends BaseNPCTime {
                                             + "and pleasures you until your precum starts to leak out onto her fingers.<br/><br/>"
                                             + "<i>\"That's all for now,\"</i> Kat says, as she abruptly takes her hands off your penis. <i>\"The rest will be a reward if you service me properly.\"</i> You groan in "
                                             + "frustration at Kat's uncharacteristic cocktease. Well, you did agree to listen to her for now. You'll surely earn more than a handjob with your expert cunnilingus skills. "
-                                            + "You reach down to remove Kat's pants, but she suddenly covers your eyes with her hands. <br>"
+                                            + "You reach down to remove Kat's pants, but she suddenly covers your eyes with her hands. <br/>"
                                             + "<i>\"I know it's silly after all this time, but I still get embarrassed when a someone stares at my privates. No peeking, OK?\"</i> This has become slightly inconvenient. "
                                             + "You'll have to rely on your sense of touch. You clumsily remove her pants and underwear and quickly locate her vulva with your tongue. Kat shivers as you start to eat her "
                                             + "out and seems to be having trouble keeping her hands over your eyes. <i>\"Keep-Nya!~ Keep your eyes closed. You're doiNya!~ just fine without looking.\"</i><br/><br/>"
                                             + "You're glad she's enjoying your efforts, but you do wish you could look at her. It's not just so you can see what you're doing, but also to watch her reactions. She said "
-                                            + "'no peeking', so you'll just have to harden your resolve and resist temptation. At least you can enjoy her moans, which are gradually becoming more and more feline. <br><i>\"You're "
+                                            + "'no peeking', so you'll just have to harden your resolve and resist temptation. At least you can enjoy her moans, which are gradually becoming more and more feline. <br/><i>\"You're "
                                             + "still nyat peeking?\"</i> You assure her that your eyes are still tightly shut. To your surprise, she lets out a low sound of annoyance and pushes your head away. <i>Why are you "
                                             + "being so obedient?! You're gonnya make me cum too fast!\"</i> You open your eyes (she's obviously too cat-like to care about being seen) and look at her in confusion.<br/><br/>"
                                             + "<i>\"Can't you take a hint? I obviously only told you nyat to tease me so you'd want to do it more. I even teased you and gave you that dumb 'no peeking' rule to put the "
@@ -436,7 +436,7 @@ public class KatTime extends BaseNPCTime {
                                             + "<i>\"Please! You can do whatever you want to me, just help me cum!\"</i><br/><br/>"
                                             + "You make her get on her hands and knees while you move behind her. You pull her tail out of the way, revealing her soaked pussy. Just as you thought, she's even more drenched "
                                             + "then when you were eating her out. You lightly stroke her lower lips, making her moan and shiver. When you slide a finger into her, her arms give out and her upper body drops to "
-                                            + "the floor. <i>\"NYA! Nyat just your fingers! Aren't you horny too? Do it for real!\"</i><br>"
+                                            + "the floor. <i>\"NYA! Nyat just your fingers! Aren't you horny too? Do it for real!\"</i><br/>"
                                             + "You seem to recall her begging you to make her cum, doing whatever you wanted to her. Now she's saying your fingers aren't good enough for her? She should be more clear about "
                                             + "what she wants. She squirms in embarrassment and looks hesitant to speak. She's in full cat mode, so she can't actually be feeling shame. The blushing innocent bit must be part "
                                             + "of her libido. <i>\"I want... your... d-dick.... I want you to f-fuck me.\"</i> She can barely get the words out, but you feel an fresh flood of moisture from her entrance.<br/><br/>"
@@ -512,7 +512,7 @@ public class KatTime extends BaseNPCTime {
                             + "shows off her normally hidden cat parts. <i>\"They're a little "
                             + "inconvenient, but they're really cute, aren't they?\"</i><br/><br/>It's "
                             + "interesting that Aisha never brought up the possibility of giving "
-                            + "you a spirit. Maybe you should ask her about it.<br><i>\"You "
+                            + "you a spirit. Maybe you should ask her about it.<br/><i>\"You "
                             + "totally should! I'm imagining you with puppy ears now, or maybe"
                             + " a tiger.\"</i> She blushes a bit at her own mental image. "
                             + "<i>\"I think Aisha may feel bad about how the ritual turned out, "

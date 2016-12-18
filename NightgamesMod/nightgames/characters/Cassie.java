@@ -385,7 +385,7 @@ public class Cassie extends BasePersonality {
             return "Despite your best efforts, you realize you've lost to Cassie's diligent manipulation of your penis. It takes so much focus to hold back your ejaculation "
                             + "that you can't even attempt to retaliate. She pumps your twitching dick eagerly as the last of your endurance gives way. The pleasure building up in the base "
                             + "of your shaft finally overwhelms you and you almost pass out from the intensity of your climax. White jets of semen coat Cassie's hands in the proof of your defeat. "
-                            + "You recover your senses enough to offer to return the favor.<br><i>\"No need,\"</i> she teases good-naturedly. <i>\"I have a bit more self-control than a horny " + c.getOpponent(character).boyOrGirl() + ".\"</i><br> Her victorious smile is "
+                            + "You recover your senses enough to offer to return the favor.<br/><i>\"No need,\"</i> she teases good-naturedly. <i>\"I have a bit more self-control than a horny " + c.getOpponent(character).boyOrGirl() + ".\"</i><br/> Her victorious smile is "
                             + "bright enough to light up a small city as she gives you a chaste kiss on the cheek and walks away, taking your clothes as a trophy.";
         }
     }
@@ -594,14 +594,14 @@ public class Cassie extends BasePersonality {
                             + "Before you can follow up, a warm body presses against your back and "+(target.hasDick() ?"a soft hand gently grasps your erection" :"soft hands have gently grabbed your breasts from behind")+". Cassie whispers playfully in your ear. <i>\"Hello "
                             + target.name() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
                             + assist.name() + " is already back on her feet. You struggle valiantly, "
-                            + "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br>";
+                            + "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br/>";
         } else {
             return "You wrestle " + target.name()
                             + " to the floor, but she slips away and gets to her feet before you. You roll away to a safe distance before you notice that "
                             + "she's not coming after you. She seems more occupied by the hands that have suddenly grabbed her breasts from behind. You cautiously approach and realize "
                             + "it's Cassie who is holding onto the flailing " + target.name()
                             + ". Releasing her boobs, Cassie starts tickling " + target.name()
-                            + " into submission and pins her " + "arms while she catches her breath.<br>";
+                            + " into submission and pins her " + "arms while she catches her breath.<br/>";
         }
     }
 

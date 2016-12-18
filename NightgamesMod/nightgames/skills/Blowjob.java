@@ -152,7 +152,7 @@ public class Blowjob extends Skill {
                             + "making " + target.name() + " squirm and moan in pleasure is well worth it.";
         }
         if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
-            m += "<br>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck "
+            m += "<br/>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck "
                             + target.possessivePronoun() + " cock.";
         }
         return m;
@@ -212,7 +212,7 @@ public class Blowjob extends Skill {
         }
 
         if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
-            m += String.format("<br>Unfortunately for %s, as %s mouth fucks %s cock %s sensitive"
+            m += String.format("<br/>Unfortunately for %s, as %s mouth fucks %s cock %s sensitive"
                             + " modifier mouth pussy sends spasms of pleasure into %s as well.", 
                             getSelf().directObject(), getSelf().subject(), target.nameOrPossessivePronoun(),
                             getSelf().possessivePronoun(), getSelf().reflectivePronoun());
