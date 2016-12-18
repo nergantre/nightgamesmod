@@ -566,10 +566,6 @@ public class Kat extends BasePersonality {
                         + "delighted as you lead her to your room.";
     }
 
-    public void advance() {
-
-    }
-
     @Override
     public boolean checkMood(Combat c, Emotion mood, int value) {
         if (character.getArousal().percent() >= 50) {

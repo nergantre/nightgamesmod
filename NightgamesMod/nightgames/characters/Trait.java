@@ -231,6 +231,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    flexibleRole("Flexible Roles", "Okay at being the dom."), // Cassie gets this when she takes both specializations to remove the submissive negatives
     naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
@@ -253,6 +254,7 @@ public enum Trait {
     immobile("Immobile", "Unable to move."), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+    buttslut("Buttslut", "Extremely weak to anal pleasure."),
     obedient("Obedient", "Easy to order around."),
     cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
 
@@ -319,7 +321,8 @@ public enum Trait {
     brassballs("Brass Balls", "Can take a kick."),
     largereserves("Large Reserves", "You have more willpower than normal people. Start with 20 extra willpower."), //applys on new game start. Will not do anything if added later.
     attractive("Attractive", "Hotter than the average person."),
-    
+    unpleasant("Unpleasant", "Less attractive than the average person."),
+
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
     repressed("Repressed", "Sexually represssed, lower seduction"),

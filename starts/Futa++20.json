@@ -248,8 +248,7 @@
 				"direct",
 				"wrassler",
 				"insatiable",
-				"hypnoticsemen",
-				"heatedsemen"
+				"hypnoticsemen"
 			],
 			"clothing": [
 				"gi",
@@ -393,5 +392,5 @@
 		}
 	],
 	"all_npcs":{},
-	"flags":["isFuta", "hardmode","SuperTraitMode"]
+	"flags":["hardmode"]
 }

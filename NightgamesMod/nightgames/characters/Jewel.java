@@ -333,7 +333,11 @@ public class Jewel extends BasePersonality {
             }
             return possible.get(Global.random(possible.size()));
         }
-        return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
+        if (opponent.hasDick()) {
+            return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
+        } else {
+            return "Jewel glares at you and pinches your erect nipples. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
+        }
     }
 
     @Override
@@ -694,6 +698,9 @@ public class Jewel extends BasePersonality {
     public void advance() {
         character.getGrowth().addTrait(10, Trait.fighter);
         character.body.addReplace(PussyPart.fiery, 100);
+        if (character.hasDick()) {
+            character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.enlightened), 1);
+        }
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("gi"));
         character.outfitPlan.add(Clothing.getByID("panties"));

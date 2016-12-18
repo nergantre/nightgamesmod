@@ -44,6 +44,7 @@ import nightgames.skills.Reversal;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.skills.WildThrust;
+import nightgames.stance.Behind;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Neutral;
 import nightgames.stance.Pin;
@@ -453,7 +454,23 @@ public class Combat extends Observable implements Cloneable {
             getCombatantData(character).setBooleanFlag(beguilingbreastCompletedFlag, true);
         }
 
-        
+        Character mainOpponent = getOpponent(character);
+        String buttslutCompletedFlag = Trait.buttslut.name() + "Completed";
+        if (character.has(Trait.buttslut) && ((mainOpponent.hasDick() && mainOpponent.crotchAvailable() && mainOpponent.getArousal().percent() > 20) || mainOpponent.has(Trait.strapped)) && !getCombatantData(character).getBooleanFlag(buttslutCompletedFlag)) {
+            write(character, Global.format("Seeing the thick phallus in front of {self:reflective}, {self:subject} can't "
+                            + "but help offer up {self:possessive} ass in hopes that {other:subject} will fill {self:possessive} rear door.", character, mainOpponent));
+            for (int i = 0; i < 5; i++) {
+                Clothing article = character.strip(ClothingSlot.bottom, this);
+                if (article == null) {
+                    break;
+                } else {
+                    write(character, Global.format("{self:SUBJECT-ACTION:strip|strips} off {self:possessive} %s", character, mainOpponent, article.getName()));
+                }
+            }
+            getCombatantData(character).setBooleanFlag(buttslutCompletedFlag, true);
+            setStance(new Behind(mainOpponent, character));
+        }
+
         if (character.has(Trait.footfetishist)) {
             fetishDisadvantageAura(character, allies, opponents, "feet", ClothingSlot.feet);
         }
@@ -553,7 +570,7 @@ public class Combat extends Observable implements Cloneable {
             write(self,
                             Global.format("<br>{other:NAME-POSSESSIVE} eyes start glowing and {self:subject-action:feel|feels} a strong pleasure wherever {other:possessive} gaze lands. {self:SUBJECT-ACTION:are|is} literally being raped by {other:name-possessive} eyes!",
                                             other, self));
-            other.tempt(this, self, self.get(Attribute.Seduction) / 2);
+            other.temptNoSkillNoSource(this, self, self.get(Attribute.Seduction) / 2);
         }
 
         if (self.has(Trait.enchantingVoice)) {
@@ -918,7 +935,7 @@ public class Combat extends Observable implements Cloneable {
         if (getStance().facing(self, other) && other.breastsAvailable() && !self.has(Trait.temptingtits) && other.has(Trait.temptingtits)) {
             write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
                                             self, other));
-            self.tempt(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
+            self.temptNoSkill(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
         } else if (getOpponent(self).has(Trait.temptingtits) && getStance().behind(other)) {
             write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
                             self, other));
@@ -926,7 +943,7 @@ public class Combat extends Observable implements Cloneable {
             double otherTopExposure = other.outfit.getExposure(ClothingSlot.top);
             double temptDamage = 20 + Math.max(0, other.get(Attribute.Seduction) / 2 - 12);
             temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
-            self.tempt(this, other, other.body.getRandomBreasts(), (int) temptDamage);
+            self.temptNoSkill(this, other, other.body.getRandomBreasts(), (int) temptDamage);
         }
     }
 

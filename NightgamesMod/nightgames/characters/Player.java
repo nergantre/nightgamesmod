@@ -94,7 +94,7 @@ public class Player extends Character {
         self.getWillpower().setMax(self.willpower.max());
         self.availableAttributePoints = 0;
         self.setTrophy(Item.PlayerTrophy);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+        if (initialGender.considersItselfFeminine()) {
             outfitPlan.add(Clothing.getByID("bra"));
             outfitPlan.add(Clothing.getByID("panties"));
         } else {
@@ -127,7 +127,11 @@ public class Player extends Character {
 
     public String describeStatus() {
         StringBuilder b = new StringBuilder();
-        body.describeBodyText(b, this, false);
+        if (Global.gui().combat != null && (Global.gui().combat.p1.human() || Global.gui().combat.p2.human())) {
+            body.describeBodyText(b, Global.gui().combat.getOpponent(this), false);
+        } else {
+            body.describeBodyText(b, Global.getCharacterByName("Angel"), false);
+        }
         if (getTraits().size() > 0) {
             b.append("<br>Traits:<br>");
             List<Trait> traits = new ArrayList<>(getTraits());
@@ -712,8 +716,8 @@ public class Player extends Character {
         }
         if (has(Trait.RawSexuality)) {
             c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
-            tempt(c, opponent, arousal.max() / 25);
-            opponent.tempt(c, this, opponent.arousal.max() / 25);
+            temptNoSkillNoSource(c, opponent, arousal.max() / 25);
+            opponent.temptNoSkillNoSource(c, this, opponent.arousal.max() / 25);
         }
         if (has(Trait.slime)) {
             if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {

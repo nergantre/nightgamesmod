@@ -62,7 +62,7 @@ public class EyesOfTemptation extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.pleasure;
+        return Tactics.debuff;
     }
 
     @Override

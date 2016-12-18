@@ -359,7 +359,6 @@ public class Global {
         getSkillPool().add(new WaterForm(ch));
         getSkillPool().add(new DarkTendrils(ch));
         getSkillPool().add(new Dominate(ch));
-        getSkillPool().add(new FlashStep(ch));
         getSkillPool().add(new Illusions(ch));
         getSkillPool().add(new Glamour(ch));
         getSkillPool().add(new LustAura(ch));
@@ -411,7 +410,6 @@ public class Global {
         getSkillPool().add(new FaceSit(ch));
         getSkillPool().add(new Smother(ch));
         getSkillPool().add(new BreastSmother(ch));
-        getSkillPool().add(new Purr(ch));
         getSkillPool().add(new MutualUndress(ch));
         getSkillPool().add(new Surrender(ch));
         getSkillPool().add(new ReverseFuck(ch));
@@ -514,6 +512,7 @@ public class Global {
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
         getSkillPool().add(new PetThreesome(ch));
+        getSkillPool().add(new ReversePetThreesome(ch));
         getSkillPool().add(new PetInitiatedThreesome(ch));
         getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Honeypot(ch));
@@ -1380,6 +1379,24 @@ public class Global {
             }
             return "";
         });
+        matchActions.put("if-female", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.useFemalePronouns() ? third : "";
+            }
+            return "";
+        });
+        matchActions.put("if-male", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.useFemalePronouns() ? "" : third;
+            }
+            return "";
+        });
+        matchActions.put("if-human", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.human() ? third : "";
+            }
+            return "";
+        });
         matchActions.put("subject", (self, first, second, third) -> {
             if (self != null) {
                 return self.subject();
@@ -1429,6 +1446,19 @@ public class Global {
                     return "dick";
                 } else if (self.hasPussy()) {
                     return "pussy";
+                } else {
+                    return "crotch";
+                }
+            }
+            return "";
+        });
+
+        matchActions.put("balls-vulva", (self, first, second, third) -> {
+            if (self != null) {
+                if (self.hasBalls()) {
+                    return "testicles";
+                } else if (self.hasPussy()) {
+                    return "vulva";
                 } else {
                     return "crotch";
                 }

@@ -173,7 +173,7 @@ public class Clothing implements Loot {
                             .collect(Collectors.toList());
     }
 
-    public String getToolTip() {
+    public String getDesc() {
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
         DecimalFormat format = new DecimalFormat("#.##");

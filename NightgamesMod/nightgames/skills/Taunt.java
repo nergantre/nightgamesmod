@@ -40,7 +40,7 @@ public class Taunt extends Skill {
             m += 4;
             chance += .25;
         } 
-        target.tempt(c, getSelf(), (int) Math.round(m));
+        target.temptNoSource(c, getSelf(), (int) Math.round(m), this);
         if (Global.randomdouble() < chance) {
             target.add(c, new Shamed(target));
         }

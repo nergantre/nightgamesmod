@@ -2,13 +2,11 @@ package nightgames.gui;
 
 import java.awt.Font;
 
-import javax.swing.JButton;
-
 import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Global;
 
-public class ActionButton extends JButton {
+public class ActionButton extends KeyableButton {
     /**
      * 
      */
@@ -18,15 +16,20 @@ public class ActionButton extends JButton {
 
     public ActionButton(Action action, Character user) {
         super(action.toString());
-        setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
+        getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
         this.action = action;
         this.user = user;
-        addActionListener(arg0 -> {
+        getButton().addActionListener(arg0 -> {
             Global.gui().clearText();
             ActionButton.this.action.execute(ActionButton.this.user);
             if (!ActionButton.this.action.freeAction()) {
                 Global.getMatch().resume();
             }
         });
+    }
+
+    @Override
+    public String getText() {
+        return action.toString();
     }
 }

@@ -67,7 +67,7 @@ public class BreastSmother extends Skill {
             n *= 1.5;
         }
 
-        target.tempt(c, getSelf(), getSelf().body.getRandom("breasts"), (int) Math.round(n / 2));
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("breasts"), (int) Math.round(n / 2), this);
         target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 15)));
 
         target.loseWillpower(c, Math.min(5, target.getWillpower().max() * 10 / 100 ));     
@@ -86,7 +86,7 @@ public class BreastSmother extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 25;
+        return 0;
     }
 
     @Override

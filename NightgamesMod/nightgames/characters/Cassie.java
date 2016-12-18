@@ -106,6 +106,7 @@ public class Cassie extends BasePersonality {
         }
         character.getGrowth().addTrait(60, Trait.enchantingVoice);
     }
+
     private void useSubmissiveBonus() {
         Global.flag(CASSIE_SUBMISSIVE_FOCUS);
         character.getGrowth().addTrait(21, Trait.submissive);
@@ -121,6 +122,7 @@ public class Cassie extends BasePersonality {
         character.getGrowth().addTrait(60, Trait.obsequiousAppeal);
         preferredAttributes.add(character -> character.get(Attribute.Submissive) < 20 ? Optional.of(Attribute.Submissive) : Optional.empty());
     }
+
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
@@ -175,8 +177,7 @@ public class Cassie extends BasePersonality {
                             return true;
                         }),
                         new CombatSceneChoice("Like her new assertive self more", (c, self, other) -> {
-                            c.write("You reply that you love her magic and new her confident self. Falling into her eyes is a real turn on for you."
-                                            + "<br/>"
+                            c.write("You reply that you love her magic and new her confident self. Falling into her eyes is a real turn on for you. "
                                             + "Cassie's eyes widen briefly before cracking into a wide smile, \""+ Global.getPlayer().getName() + ", I didn't realize you were a sub! "
                                                             + "Do you like being helpless? "
                                                             + "Does it excite you when you are under my control, doing my bidding? I think I can work with that...\"");
@@ -188,6 +189,7 @@ public class Cassie extends BasePersonality {
                                             + "<br/>"
                                             + "Cassie blushes and responds, \"Aww that's so sweet! I'll have to work hard to live up to your expectations then.\"");
                             useSubmissiveBonus();
+                            character.getGrowth().addTrait(21, Trait.flexibleRole);
                             useEnchantressBonus();
                             character.getGrowth().extraAttributes += 1;
                             return true;
@@ -526,7 +528,11 @@ public class Cassie extends BasePersonality {
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
+        if (opponent.hasDick()) {
+            return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
+        } else {
+            return "Cassie giggles and draws a little circle around your nipple with her finger. <i>\"Your body is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
+        }
     }
 
     @Override
@@ -626,6 +632,9 @@ public class Cassie extends BasePersonality {
     public void advance() {
         character.getGrowth().addTrait(10, Trait.witch);
         character.body.addReplace(PussyPart.arcane, 1);
+        if (character.hasDick()) {
+            character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.runic), 1);
+        }
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("bra"));
         character.outfitPlan.add(Clothing.getByID("blouse"));

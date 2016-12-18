@@ -7,10 +7,10 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 
 public enum TailPart implements BodyPart,BodyPartMod {
-    demonic("demonic ", .2, 1.2, 1),
-    demonicslime("demonic slime ", .2, 1.2, 1),
-    cat("cat's ", .3, 1.5, 1.5),
-    slimeycat("slimey cat's ", .3, 1.5, 1.5);
+    demonic("demonic ", .05, 1.2, 1),
+    demonicslime("demonic slime ", .05, 1.2, 1),
+    cat("cat's ", .08, 1.5, 1.5),
+    slimeycat("slimey cat's ", .08, 1.5, 1.5);
 
     public String desc;
     public double hotness;

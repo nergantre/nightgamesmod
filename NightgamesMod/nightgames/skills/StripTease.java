@@ -63,7 +63,7 @@ public class StripTease extends Skill {
         }
         if (!target.is(Stsflag.blinded)) {
             int m = 15 + Global.random(5);
-            target.tempt(c, getSelf(), m);
+            target.temptNoSource(c, getSelf(), m, this);
             getSelf().add(c, new Alluring(getSelf(), 5));
         }
         target.emote(Emotion.horny, 30);

@@ -2,10 +2,9 @@ package nightgames.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import nightgames.characters.Character;
@@ -13,18 +12,14 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
-import nightgames.skills.Tactics;
 
-public class SkillButton extends JPanel {
-
+public class SkillButton extends KeyableButton {
     private static final long serialVersionUID = -1253735466299929203L;
     protected Skill action;
     protected Combat combat;
-    private JButton button;
 
     public SkillButton(Combat c, final Skill action, Character target) {
-        super();
-        setButton(new JButton(action.getLabel(c)));
+        super(action.getLabel(c));
         getButton().setBorderPainted(false);
         getButton().setOpaque(true);
         getButton().setFont(fontForStage(action.getStage()));
@@ -32,27 +27,10 @@ public class SkillButton extends JPanel {
         int actualAccuracy = target.getChanceToHit(action.getSelf(), c, action.accuracy(c, target));
         int clampedAccuracy = Math.min(100, Math.max(0, actualAccuracy));
         String text = "<html>" + action.describe(c) + " <p>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
-        if (action.type(c) == Tactics.damage) {
-            getButton().setBackground(new Color(150, 0, 0));
-        } else if (action.type(c) == Tactics.pleasure) {
-            getButton().setBackground(Color.PINK);
-        } else if (action.type(c) == Tactics.fucking) {
-            getButton().setBackground(new Color(255, 100, 200));
-        } else if (action.type(c) == Tactics.positioning) {
-            getButton().setBackground(new Color(0, 100, 0));
-        } else if (action.type(c) == Tactics.stripping) {
-            getButton().setBackground(new Color(0, 100, 0));
-        } else if (action.type(c) == Tactics.debuff) {
-            getButton().setBackground(Color.CYAN);
-        } else if (action.type(c) == Tactics.recovery || action.type(c) == Tactics.calming) {
-            getButton().setBackground(Color.WHITE);
-        } else if (action.type(c) == Tactics.summoning) {
-            getButton().setBackground(Color.YELLOW);
-        } else {
-            getButton().setBackground(new Color(200, 200, 200));
-        }
-        button.setForeground(foregroundColor(action.type(c)));
-        
+        Color bgColor = action.type(c).getColor();
+        getButton().setBackground(bgColor);
+        getButton().setForeground(foregroundColor(bgColor));
+
         if (action.getMojoCost(c) > 0) {
             setBorder(new LineBorder(Color.RED, 3));
             text += "<br>Mojo cost: " + action.getMojoCost(c);
@@ -79,41 +57,28 @@ public class SkillButton extends JPanel {
                       .size() == 0) {
                 combat.act(SkillButton.this.action.user(), SkillButton.this.action, "");
             } else {
-                Global.gui().commandPanel.removeAll();
+                Global.gui().commandPanel.reset();
                 for (String choice : action.subChoices()) {
                     Global.gui().commandPanel.add(new SubSkillButton(action, choice, combat));
                 }
-                Global.gui().commandPanel.repaint();
-                Global.gui().commandPanel.revalidate();
+                Global.gui().commandPanel.refresh();
             }
         });
         setLayout(new BorderLayout());
+        setMaximumSize(new Dimension(500, 20));
         add(getButton());
     }
 
-    public JButton getButton() {
-        return button;
-    }
-
-    public void setButton(JButton button) {
-        this.button = button;
-    }
-
-    public void addIndex(int idx) {
-        button.setText(button.getText() + " [" + idx + "]");
-    }
-
-    private static Color foregroundColor(Tactics tact) {
-        switch (tact) {
-            case damage:
-            case positioning:
-            case stripping:
-                return Color.WHITE;
-            default:
-                return Color.BLACK;
+    private static Color foregroundColor(Color bgColor) {
+        float hsb[] = new float[3];
+        Color.RGBtoHSB(bgColor.getRed(), bgColor.getGreen(), bgColor.getRed(), hsb);
+        if (hsb[2] < .6) {
+            return Color.WHITE;
+        } else {
+            return Color.BLACK;
         }
     }
-    
+
     private static Font fontForStage(Stage stage) {
         switch (stage) {
             case FINISHER:
@@ -124,5 +89,10 @@ public class SkillButton extends JPanel {
                 return new Font("Baskerville Old Face", Font.PLAIN, 18);
             
         }
+    }
+
+    @Override
+    public String getText() {
+        return action.getLabel(combat);
     }
 }

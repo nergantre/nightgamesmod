@@ -21,6 +21,11 @@ public class MFFMissionaryThreesome extends MaledomSexStance {
     }
 
     @Override
+    public boolean inserted(Character c) {
+        return c == domSexCharacter;
+    }
+
+    @Override
     public float priorityMod(Character self) {
         return super.priorityMod(self) + 3;
     }

@@ -13,7 +13,7 @@
 	  "slots" : ["top"],
 	  "shops" : ["Boutique"],
 	  "sex" : ["female"],
-	  "hotness":0.75,
+	  "hotness":0.4,
       "name":"camisole",
       "toughness":7,
       "exposure":0.7

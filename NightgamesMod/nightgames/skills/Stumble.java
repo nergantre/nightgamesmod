@@ -60,7 +60,7 @@ public class Stumble extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.negative;
+        return Tactics.misc;
     }
 
     @Override

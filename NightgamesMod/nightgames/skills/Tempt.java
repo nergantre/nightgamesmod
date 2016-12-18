@@ -51,7 +51,7 @@ public class Tempt extends Skill {
             target.add(c, new Trance(target, 1, false));
         }
 
-        target.tempt(c, getSelf(), n);
+        target.temptNoSource(c, getSelf(), n, this);
         target.emote(Emotion.horny, 10);
         getSelf().emote(Emotion.confident, 10);
         return true;

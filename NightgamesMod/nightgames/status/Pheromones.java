@@ -36,7 +36,7 @@ public class Pheromones extends Horny {
     private int stacks;
 
     public Pheromones(Character affected, Character other, float magnitude, int duration, String source) {
-        super(affected, magnitude, duration, Global.capitalizeFirstLetter(other.nameOrPossessivePronoun()) + source);
+        super(affected, magnitude, duration, other.nameOrPossessivePronoun() + source);
         this.sourceCharacter = other;
         this.stacks = 1;
         flag(Stsflag.horny);

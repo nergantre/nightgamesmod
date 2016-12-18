@@ -177,10 +177,10 @@ public class Mei extends BasePersonality {
                                 + "{self:SUBJECT} waves happily at {other:name-do} <i>\"Hiya {other:name}, fancy meeting you here! Huh are we on campus? "
                                 + "I seem to be half naked and Angel has wings? Wait what's going on?\"</i> "
                                 + "<br/><br/>"
-                                + "When neither you nor Angel deigned to respond, Mei just shrugs <i>\"I get it. This is a pretty absurd dream. I wonder if I'm just pent up? "
-                                + "Oh well, no point in minding the details. Since we're doing this, I'm going all out!\"</i>"
+                                + "When neither you nor Angel deigned to respond, she just shrugs <i>\"Ahhhh, I get it! This must be one of those sexy dreams right? "
+                                + "I wonder if I'm just pent up... ah well, no point in minding the details.\"<i/> Mei cracks her fingers. <i>\"Since we're doing this, I'm going all out!\"</i>"
                                 + "<br/><br/>"
-                                + "While you're glad she's so adaptable, it looks like the fight's become a two on one!", self, other);
+                                + "Errr... while you're glad she's so adaptable, it looks like the fight's become a two on one!", self, other);
             } else if (self.has(Trait.fallenAngel) && meiFought == 1) {
                 other.setFlag(FOUGHT_MEI_PET, 2);
                 return Global.format("After {self:SUBJECT} materializes as usual, she notices that her body has changed. "

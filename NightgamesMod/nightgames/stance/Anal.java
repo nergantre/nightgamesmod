@@ -30,7 +30,11 @@ public class Anal extends AnalSexStance {
 
     @Override
     public String image() {
-        if (bottom.hasPussy()) {
+        if (top.hasDick() && top.useFemalePronouns() && bottom.hasDick() && bottom.useFemalePronouns()) {
+            return "futa_futa_doggy.jpg";
+        } else if (!bottom.hasDick() && top.useFemalePronouns()) {
+            return "futa_doggy.jpg";
+        } else if (!bottom.hasDick()) {
             return "analf.jpg";
         } else {
             return "pegging.jpg";

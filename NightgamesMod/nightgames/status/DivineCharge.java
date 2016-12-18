@@ -42,8 +42,9 @@ public class DivineCharge extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (!c.getStance().vaginallyPenetrated(c, affected) && !(affected.has(Trait.zealinspiring)
-                        && !((Player)affected).getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
+        Character opponent = c.getOpponent(affected);
+        if (!c.getStance().vaginallyPenetrated(c, affected) && opponent.human() && !(affected.has(Trait.zealinspiring)
+                        && !((Player)opponent).getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
             c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
             if (magnitude < .05f)

@@ -8,7 +8,7 @@ public class FacePart extends GenericBodyPart {
 
     /* femininity goes from [-5, 5] */
     public FacePart(double hotness, double femininity) {
-        super("", hotness, 0, 0, "face", "a ");
+        super("", hotness, 0, 0, true, "face", "a ");
         this.femininity = femininity;
     }
 
@@ -50,6 +50,22 @@ public class FacePart extends GenericBodyPart {
 
     @Override
     public String fullDescribe(Character c) {
-        return "face";
+        String desc;
+        if (femininity < -3) {
+            desc = "rugged ";
+        } else if (femininity < -1) {
+            desc = "manly ";
+        } else if (femininity < .5) {
+            desc = "androgynous ";
+        } else if (femininity < 1.5) {
+            desc = "boyish face ";
+        } else if (femininity < 2.5) {
+            desc = "girlish ";
+        } else if (femininity < 4) {
+            desc = "alluring womanly ";
+        } else {
+            desc = "attractive feminine ";
+        }
+        return desc + "face";
     }
 }

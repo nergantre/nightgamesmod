@@ -12,7 +12,7 @@
 	  "slots" : ["arms"],
 	  "shops" : ["Boutique"],
 	  "sex" : ["all"],
-	  "hotness":0.4,
+	  "hotness":0.3,
       "name":"nursesgloves",
       "toughness":0,
       "exposure":0.99

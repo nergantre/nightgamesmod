@@ -668,44 +668,82 @@ public abstract class Character extends Observable implements Cloneable {
         return pleasure;
     }
 
-    public void tempt(Combat c, int i) {
-        tempt(c, null, i);
+    public void temptNoSkillNoTempter(Combat c, int i) {
+        temptNoSkillNoSource(c, null, i);
     }
 
-    public void tempt(Combat c, Character tempter, int i) {
-        tempt(c, tempter, null, i);
+    public void temptNoSkillNoSource(Combat c, Character tempter, int i) {
+        tempt(c, tempter, null, i, Optional.empty());
     }
 
-    public void tempt(Combat c, Character tempter, BodyPart with, int i) {
+    public void temptNoSource(Combat c, Character tempter, int i, Skill skill) {
+        tempt(c, tempter, null, i, Optional.ofNullable(skill));
+    }
+
+    public void temptNoSkill(Combat c, Character tempter, BodyPart with, int i) {
+        tempt(c, tempter, with, i, Optional.empty());
+    }
+
+    public void temptWithSkill(Combat c, Character tempter, BodyPart with, int i, Skill skill) {
+        tempt(c, tempter, with, i, Optional.ofNullable(skill));
+    }
+
+    private void tempt(Combat c, Character tempter, BodyPart with, int i, Optional<Skill> skillOptional) {
         String extraMsg = "";
         boolean oblivious = false;
-        double extraModifiers = 1.0;
+        double baseModifier = 1.0;
         if (has(Trait.oblivious)) {
             extraMsg += " (Oblivious)";
-            extraModifiers *= .1;
+            baseModifier *= .1;
         }
         if (has(Trait.Unsatisfied) && (getArousal().percent() >= 50 || getWillpower().percent() < 25)) {
             extraMsg += " (Unsatisfied)";
-            extraModifiers *= .2;
+            baseModifier *= .2;
         }
+
+        int bonus = 0;
+        for (Status s : getStatuses()) {
+            bonus += s.tempted(i);
+        }
+
+        if (has(Trait.desensitized2)) {
+            bonus -= i / 2;
+        }
+
+        String bonusString = "";
+        if (bonus > 0) {
+            bonusString = String.format(" + <font color='rgb(240,60,220)'>%d<font color='white'>", bonus);
+        } else if (bonus < 0) {
+            bonusString = String.format(" - <font color='rgb(120,180,200)'>%d<font color='white'>", Math.abs(bonus));
+        }
+
         if (tempter != null) {
             int dmg;
             String message;
-            double temptMultiplier;
+            double temptMultiplier = baseModifier;
+            double stalenessModifier = 1.0;
+            String stalenessString = "";
+
+            if (skillOptional.isPresent()) {
+                stalenessModifier = c.getCombatantData(skillOptional.get().getSelf()).getMoveModifier(skillOptional.get());
+                if (Math.abs(stalenessModifier - 1.0) >= .1 ) {
+                    stalenessString = String.format(", staleness: %.1f", stalenessModifier);
+                }
+            }
+
             if (with != null) {
                 // triple multiplier for the body part
-                temptMultiplier = tempter.body.getCharismaBonus(c, this) + with.getHotness(tempter, this) * 2;
+                temptMultiplier *= tempter.body.getCharismaBonus(c, this) + with.getHotness(tempter, this) * 2;
                 if (oblivious) {
                     temptMultiplier /= 10;
                 }
-                dmg = (int) Math.round(i * temptMultiplier);
+                dmg = (int) Math.round((i + bonus) * temptMultiplier * stalenessModifier);
                 message = String.format(
-                                "%s tempted by %s %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)%s\n",
+                                "%s tempted by %s %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d%s, charisma:%.1f%s)%s\n",
                                 Global.capitalizeFirstLetter(subjectWas()), tempter.nameOrPossessivePronoun(),
-                                with.describe(tempter), dmg, i, temptMultiplier, extraMsg);
-
+                                with.describe(tempter), dmg, i, bonusString, temptMultiplier, stalenessString, extraMsg);
             } else {
-                temptMultiplier = tempter.body.getCharismaBonus(c, this);
+                temptMultiplier *= tempter.body.getCharismaBonus(c, this);
                 if (c != null && tempter.has(Trait.obsequiousAppeal) && c.getStance()
                                                                          .sub(tempter)) {
                     temptMultiplier *= 2;
@@ -713,12 +751,21 @@ public abstract class Character extends Observable implements Cloneable {
                 if (oblivious) {
                     temptMultiplier /= 10;
                 }
-                dmg = (int) Math.round(i * temptMultiplier);
+                dmg = (int) Math.round((i + bonus) * temptMultiplier * stalenessModifier);
                 message = String.format(
-                                "%s tempted %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d, charisma:%.1f)%s\n",
+                                "%s tempted %s for <font color='rgb(240,100,100)'>%d<font color='white'> (base:%d%s, charisma:%.1f%s)%s\n",
                                 Global.capitalizeFirstLetter(tempter.subject()),
-                                tempter == this ? reflectivePronoun() : nameDirectObject(), dmg, i, temptMultiplier, extraMsg);
+                                tempter == this ? reflectivePronoun() : nameDirectObject(), dmg, i, bonusString, temptMultiplier, stalenessString, extraMsg);
             }
+
+            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
+                System.out.printf(message);
+            }
+            if (c != null) {
+                c.writeSystemMessage(message);
+            }
+            tempt(dmg);
+
             if (tempter.has(Trait.mandateOfHeaven)) {
                 double arousalPercent = dmg / getArousal().max() * 100;
                 CombatantData data = c.getCombatantData(this);
@@ -734,19 +781,12 @@ public abstract class Character extends Observable implements Cloneable {
                     c.write(tempter, Global.format("{self:SUBJECT-ACTION:are|is} feeling an irresistable urge to throw {self:reflective} at {other:name-possessive} feet and beg for release.", this, tempter));
                 }
             }
-
-            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
-                System.out.printf(message);
-            }
-            if (c != null) {
-                c.writeSystemMessage(message);
-            }
-            tempt(dmg);
         } else {
+            int damage = (int) Math.round((i + bonus) * baseModifier);
             if (c != null) {
                 c.writeSystemMessage(
-                                String.format("%s tempted for <font color='rgb(240,100,100)'>%d<font color='white'>\n",
-                                                subjectWas(), i));
+                                String.format("%s tempted for <font color='rgb(240,100,100)'>%d<font color='white'>%s\n",
+                                                subjectWas(), damage, extraMsg));
             }
             tempt(i);
         }
@@ -786,13 +826,6 @@ public abstract class Character extends Observable implements Cloneable {
         int temptation = i;
         int bonus = 0;
 
-        for (Status s : getStatuses()) {
-            bonus += s.tempted(i);
-        }
-        temptation += bonus;
-        if (has(Trait.desensitized2)) {
-            temptation /= 2;
-        }
         emote(Emotion.horny, i / 4);
         arousal.restoreNoLimit(temptation);
     }
@@ -1593,20 +1626,6 @@ public abstract class Character extends Observable implements Cloneable {
         return getArousal().isFull() && !is(Stsflag.orgasmseal) && pleasured;
     }
 
-    public CharacterSex getSex() {
-        // it's oversimplified I know. So sue me :(
-        if (hasDick() && hasPussy()) {
-            return CharacterSex.herm;
-        }
-        if (hasDick()) {
-            return CharacterSex.male;
-        }
-        if (hasPussy()) {
-            return CharacterSex.female;
-        }
-        return CharacterSex.asexual;
-    }
-
     public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
         int total = this != opponent && opponent != null && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
         for (int i = 1; i <= total; i++) {
@@ -1702,7 +1721,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (p.checkAddiction(AddictionType.ZEAL, opponent) && selfPart != null && opponentPart != null 
                             && opponentPart.isType("pussy") && selfPart
                             .isType("cock")) {
-                c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces" + " your faith.");
+                c.write(this, "Experiencing so much pleasure inside of " + opponent + " reinforces" + " your faith in your lovely goddess.");
                 p.addict(AddictionType.ZEAL, opponent, Addiction.MED_INCREASE);
             }
             if (p.checkAddiction(AddictionType.ZEAL, opponent) && selfPart != null && opponentPart != null 
@@ -1750,19 +1769,20 @@ public abstract class Character extends Observable implements Cloneable {
     private void resolvePreOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart,
                     int times, int total) {
         if (c.getStance().inserted(this) && !has(Trait.strapped)) {
+            Character partner = c.getStance().getPartner(c, this);
             if (times == 1) {
                 c.write(this, Global.format(
                                 "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:name-do}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
-                                this, opponent));
+                                this, partner));
             } else {
                 c.write(this, Global.format(
                                 "<b>{other:NAME-POSSESSIVE} devilish orfice does not let up, and {other:possessive} intense actions somehow force {self:name-do} to cum again instantly.</b>",
-                                this, opponent));
+                                this, partner));
             }
             if (c.getStance().en == Stance.anal) {
-                opponent.body.receiveCum(c, this, opponent.body.getRandom("ass"));
+                partner.body.receiveCum(c, this, partner.body.getRandom("ass"));
             } else {
-                opponent.body.receiveCum(c, this, opponent.body.getRandom("pussy"));
+                partner.body.receiveCum(c, this, partner.body.getRandom("pussy"));
             }
         } else if (selfPart != null && selfPart.isType("cock") && opponentPart != null
                         && !opponentPart.isType("none")) {
@@ -2782,7 +2802,12 @@ public abstract class Character extends Observable implements Cloneable {
         b.append("<br>Max Stamina " + stamina.max() + ", Max Arousal " + arousal.max() + ", Max Mojo " + mojo.max()
                         + ", Max Willpower " + willpower.max() + ".");
         b.append("<br>");
-        body.describeBodyText(b, this, notableOnly);
+        if (human()) {
+            // ALWAYS GET JUDGED BY ANGEL. lol.
+            body.describeBodyText(b, Global.getCharacterByName("Angel"), notableOnly);
+        } else {
+            body.describeBodyText(b, Global.getPlayer(), notableOnly);
+        }
         if (getTraits().size() > 0) {
             b.append("<br>Traits:<br>");
             List<Trait> traits = new ArrayList<>(getTraits());
@@ -2900,7 +2925,7 @@ public abstract class Character extends Observable implements Cloneable {
         for (Skill a : misc) {
             Global.gui().addSkill(c, a, target);
         }
-        Global.gui().showSkills(0);
+        Global.gui().showSkills();
     }
 
     public float getOtherFitness(Combat c, Character other) {

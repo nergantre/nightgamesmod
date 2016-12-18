@@ -1,3 +1,63 @@
+2.4.5
+New:
+- Added a new skill Reverse Threesome which does exactly what the current threesome does (use pet's pussy if it exists to fuck the opponent).
+- Changed the Threesome skill to use the pet's dick if one exists to penetrate the opponent.
+- The 4 starting girls will now use their respective cock mods when they get to level 10 if they are already hermaphrodites
+- Reworked some of the UI. You can now filter skills by tactics as well as use more keys for hotkeys.
+	- Switch between tactics with 0-9
+	- Pick skills/commands with qwerty,asdfgh,zxcvbn.
+	- for those with azerty/dvorak keyboards... I'm sorry :\
+- Made your attractiveness display a bit more apparent in the combat and status descriptions, since it now factors more into the damage formula
+- Added a new Weakness: "Unpleasant"
+	- lowers your attractiveness by 25%
+- Added a new Weakness: "Buttslut"
+	- drastically increases anal pleasure damage received
+	- chance to become entranced when receiving anal pleasure
+	- upon seeing a erect cock or a strapon for the first time, automatically offers your own ass
+- Added some more stance images, mostly for futas/shemales
+
+Balance:
+- Changed the tempt modifiers of statuses to only apply to temptation damage instead of to any arousal based damage.
+	- This changes Bondage, Charmed, Cynical, Enthralled, Frenzied, IceStance, InducedEuphoria, Lovestruck, Shamed, Stunned, Winded, and MagicMilkAddiction
+	- More specifically the damage message should actually tell you how much damage you did, instead of pleasuring someone for 100 when they're stunned, but they actually take 0.
+- Desensitized 2 will no longer affected arousal over time / pure arousal damage.
+- Made temptation damage respect the staleness modifier like pleasure damage does
+- Made non-pheromone arousal over time not compound when from the same source.
+	- Each source of arousal over time will be replaced with the newest one when applied.
+- Submissive now only reduces your pleasure damage when in a dominant position by 1/3rd instead of 2/3rds.
+	- Now only increases pleasure in a submissive position by 50% instead of 100%
+	- Added a new Trait "Flexible Roles" that will remove the dominant penalty from the Submissive trait.
+		- This is only used by Cassie when you pick "Both" in her second specialization
+- Dark Tendrils now cost 20% of your maximum arousal (minor nerf from 15%)
+- Nerfed seduction bonus to charisma. It's still useful, but hopefully not as overwhelming as before
+	- A quirk of this is that being more attractive is now more effective, since it accounts for a bigger portion of the pleasure/temptation formula
+		- Nerfed most of the underwear "hotness" parameters so that keeping them on isn't always way more attractive than taking them off even for the most basic types
+	- Changed the attractiveness formulas a bit for breasts and cocks.
+		- They are generally less than they were before, but get bonuses from being completely uncovered (completely topless/bottomless)
+- Nerfed Angel's and Reyka's attractiveness (lol)
+	- Reyka's face in particular had such a high "hotness" rating that it was single handedly doubling her early game damage. 
+	- Angel's face was in a similar situation but not quite as bad (or would you say good?).
+	- So I had to hit them a bit with the ugly stick. Sorry dndw.
+- Made shemale start's breasts a bit larger (b -> d)
+- Made herms and shemale start's faces a bit more feminine (this affects no parts of gameplay yet)
+- Made shemales start with bra + panties instead of boxers
+- Changed maneuver's mojo cost to 15
+	- Also merged it with Flash Step (uses flash step if you have > 15% stamina and at least 6 Ki)
+- Merged Purr and Charm
+
+Bug fixes:
+- fixed a bug where everyone was getting the effects of "Brute's Charisma"
+	- Added some of your Power and Ki to your effective seduction when determining pleasure and temptation damage while dominant.
+- fixed a bug where temptation damage outside combat wasn't using the oblivious / unsatisfied traitsS
+- fixed a crash bug related to Angel's Zeal addiction
+- fixed a bug where pets that are player based (simulacrum mainly) always display as level 1
+- fixed bug with simulacrum where it would mention dicks when you didn't have a dick (used on a female PC)
+	- Note that by default simulacrum creates a hermaphrodite copy of females. If you would like it to create a male version instead, you can edit the data/globalflags.json file
+		- Change "femaleTGIntoHerm" to true
+	- Eventually this will have a UI for it.
+- fixed a bug where thrusting as a hermaphrodite in a threesome will rub your pussies together instead.
+- fixed a bug where the Futa++20 start would crash the game
+
 2.4.4.2
 Bug fixes:
 - fixed a bug that was causing consistent crashes when the player was inflicted with dominance addiction (may affect other addictions too)
