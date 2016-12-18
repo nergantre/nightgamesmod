@@ -1,3 +1,10 @@
+2.4.5.1
+Bug fixes:
+- Fixed a bug where leaving a choice prompt on the second page would make you unable to continue with no buttons appearing.
+- Fixed some word alignment issues
+- Fixed missing feat button tooltips
+- Word wrapped long button text to fix button crowding (sorry this may look kind of shitty right now, but it's the best I can do on short notice
+
 2.4.5
 New:
 - Added a new skill Reverse Threesome which does exactly what the current threesome does (use pet's pussy if it exists to fuck the opponent).
