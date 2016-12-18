@@ -87,7 +87,7 @@ public class Drain extends Skill {
                 break;
             case 5:
                 steal(c, target, Attribute.Seduction, strength);
-                target.tempt(c, getSelf(), 10);
+                target.temptNoSource(c, getSelf(), 10, this);
                 break;
             case 6:
                 steal(c, target, Attribute.Power, strength);
@@ -96,7 +96,7 @@ public class Drain extends Skill {
                 target.mod(Attribute.Perception, 1);
                 target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
                 target.loseMojo(c, 10);
-                target.tempt(c, getSelf(), 10);
+                target.temptNoSource(c, getSelf(), 10, this);
                 break;
             default:
                 break;

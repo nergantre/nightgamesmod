@@ -19,7 +19,7 @@ public class Kiss extends Skill {
 
     public Kiss(Character self) {
         // kiss starts off strong, but becomes stale fast. It recovers pretty quickly too, but makes spamming it less effective
-        super("Kiss", self, 0, Staleness.build().withDefault(1.0).withFloor(.25).withDecay(.40).withRecovery(.20));
+        super("Kiss", self, 0, Staleness.build().withDefault(1.0).withFloor(.20).withDecay(.50).withRecovery(.10));
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
     }
@@ -56,7 +56,7 @@ public class Kiss extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = Global.random(10, 14);
+        int m = Global.random(8, 12);
         if (!target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.miss, target);
             return false;
@@ -77,11 +77,11 @@ public class Kiss extends Skill {
             res = Result.weak;
         }
         if (deep) {
-            m += 5;
+            m += 3;
             res = Result.special;
         }
         if (getSelf().has(Trait.experttongue)) {
-            m += 5;
+            m += 3;
             res = Result.special;
         }
         if (getSelf().has(Trait.soulsucker)) {
@@ -89,7 +89,7 @@ public class Kiss extends Skill {
         }
         if (getLabel(c).equals(divineString)) {
             res = Result.divine;
-            m += 20;
+            m += 15;
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {

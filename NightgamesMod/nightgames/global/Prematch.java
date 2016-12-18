@@ -2,12 +2,12 @@ package nightgames.global;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-import javax.swing.JButton;
 
 import nightgames.characters.Airi;
 import nightgames.characters.Player;
+import nightgames.gui.KeyableButton;
 import nightgames.gui.SaveButton;
 import nightgames.gui.SceneButton;
 import nightgames.modifier.Modifier;
@@ -21,7 +21,7 @@ public class Prematch implements Scene {
     public Prematch(Player player) {
         Global.current = this;
         Global.unflag(Flag.victory);
-        ArrayList<JButton> choice = new ArrayList<JButton>();
+        List<KeyableButton> choice = new ArrayList<KeyableButton>();
         String message = "";
         if (player.getLevel() < 5) {
             message += "You arrive at the student union a few minutes before the start of the match. "
@@ -115,7 +115,7 @@ public class Prematch implements Scene {
     @Override
     public void respond(String response) {
         String message = "";
-        ArrayList<JButton> choice = new ArrayList<JButton>();
+        List<KeyableButton> choice = new ArrayList<KeyableButton>();
         if (response.startsWith("Start")) {
             Global.setUpMatch(type);
         } else if (response.startsWith("Not")) {

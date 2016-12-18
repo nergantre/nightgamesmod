@@ -102,7 +102,7 @@ public class MouthPart extends GenericBodyPart {
         if (self.has(Trait.sweetlips) && c.getStance().sub(self)) {
             c.write(opponent, Global.format("<br>{self:name-possessive} enticing lips turns {other:direct-object} on as {other:subject-action:force|forces} {other:reflective} into them.",
                             self, opponent));
-            opponent.tempt(c, self, this, (int) self.modifyDamage(DamageType.temptation, opponent, damage));
+            opponent.temptNoSkill(c, self, this, (int) self.modifyDamage(DamageType.temptation, opponent, damage));
         }
         if (self.has(Trait.catstongue)) {
             c.write(opponent, Global.format("<br>{self:name-possessive} abrasive tongue produces an unique sensation.",

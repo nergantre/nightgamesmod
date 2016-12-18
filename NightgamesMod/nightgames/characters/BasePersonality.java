@@ -173,7 +173,7 @@ public abstract class BasePersonality implements Personality {
         StringBuilder b = new StringBuilder();
         b.append(describe(c, self));
         b.append("<br><br>");
-        self.body.describe(b, self, " ");
+        self.body.describe(b, c.getOpponent(self), " ");
         b.append("<br>");
         for (Trait t : self.getTraits()) {
             t.describe(self, b);

@@ -63,7 +63,7 @@ public class Reyka extends BasePersonality {
         self.body.add(TailPart.demonic);
         self.body.add(WingsPart.demonic);
         self.body.add(EarPart.pointed);
-        self.body.add(new FacePart(1.5, 1.1));
+        self.body.add(new FacePart(0.5, 1.1));
         self.initialGender = CharacterSex.female;
     }
 

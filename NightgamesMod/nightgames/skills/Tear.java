@@ -141,11 +141,11 @@ public class Tear extends Skill {
                 }
                 getSelf().consume(Item.MedicalSupplies, 1);
             } else if (!article.is(ClothingTrait.indestructible) && getSelf().get(Attribute.Animism) >= 12
-                            && getSelf().check(Attribute.Power,
+                            && (getSelf().check(Attribute.Power,
                                             article.dc() + (target.getStamina().percent()
                                                             - (target.getArousal().percent()) / 4)
                                             + getSelf().get(Attribute.Animism) * getSelf().getArousal().percent() / 100)
-                            || !target.canAct()) {
+                            || !target.canAct())) {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You channel your animal spirit and shred " + target.name() + "'s "
                                     + article.getName() + " with claws you don't actually have.");

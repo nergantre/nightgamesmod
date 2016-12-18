@@ -49,12 +49,13 @@ public class Simulacrum extends Skill {
         } else if (target instanceof NPC) {
             pet = new CharacterPet(cloneName, getSelf(), (NPC)target, power, ac);
         } else {
-            writeOutput(c, Result.miss, target);
+            c.write(getSelf(), formatMessage(Result.miss, CharacterSex.asexual, CharacterSex.asexual, target));
             return false;
         }
+        CharacterSex initialSex = pet.getSelf().body.guessCharacterSex();
         pet.getSelf().body.autoTG();
         CharacterSex finalSex = pet.getSelf().body.guessCharacterSex();
-        writeOutput(c, Result.valueOf(finalSex.name()), target);
+        c.write(getSelf(), formatMessage(Result.normal, initialSex, finalSex, target));
         c.addPet(getSelf(), pet.getSelf());
 
         return true;
@@ -72,26 +73,26 @@ public class Simulacrum extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        if (modifier == Result.miss) {
-            return Global.format("Reaching into your divine spark, you command {other:name-possessive} very soul to serve you. "
-                            + "{other:PRONOUN} looks momentarily confused as nothing happened.", getSelf(), target);
-        }
-        return Global.format("Reaching into your divine spark, you command {other:name-possessive} very soul to serve you. "
-                        + "{other:PRONOUN} looks confused for a second before suddenly noticing a translucent figure shifting into existence between you and {other:direct-object}. "
-                        + "The projection stabilizes into a split image of {other:name-do}!", getSelf(), target);
+        return "unused";
     }
     
-    private String getSubText(Result modifier) {
-        switch(modifier) {
+    private String getSubText(CharacterSex initialSex, CharacterSex finalSex) {
+        switch(finalSex) {
             case asexual:
                 return "As the figure stands up, you see that she looks extremely familiar. It's a face that you've seen in the mirror every day. "
                                 + "The clone looks like your identical twin, complete with the missing genitalia! She gives her newly formed nipples a few experimental tweaks before turning to face you. ";
             case shemale:
             case herm:
-                return "As the figure stands up, you see that she looks extremely familiar. It's a face that you've seen in the mirror every day. "
-                                + "The simularities end there however; you see that the rest of the clone looks like an idealized female version of yourself with bountiful breasts and a shapely rear. "
-                                + "What surprises you the most though is that she managed to keep your stiff dick. She gives her newly formed cock a few experimental pumps before "
-                                + "turning to facing you. ";
+                if (initialSex == CharacterSex.herm) {
+                    return "As the figure stands up, you see that she looks extremely familiar. It's a face that you've seen in the mirror every day. "
+                                    + "The clone looks like your identical twin, complete with your signature dual genitalia! "
+                                    + "She gives her newly formed cock a few experimental pumps before "
+                                    + "turning to facing you. ";
+                } else {
+                    return "As the figure stands up, you see that she looks extremely familiar. It's a face that you've seen in the mirror every day. "
+                                    + "The clone looks like your identical twin at first, but when your gaze slides lower, you see her sporting a large rod that you definitely don't remember owning! "
+                                    + "She gives her newly formed cock a few experimental pumps before turning to facing you. ";
+                }
             case female:
                 return "As the figure stands up, you see that she looks extremely familiar. It's a face that you've seen in the mirror every day. "
                                 + "The simularities end there however; you see that the rest of the clone looks like an idealized female version of yourself with bountiful breasts and a shapely rear. "
@@ -105,22 +106,36 @@ public class Simulacrum extends Skill {
         }
     }
 
+    private String formatMessage(Result modifier, CharacterSex initialSex, CharacterSex finalSex, Character target) {
+        if (getSelf().human()) {
+            if (modifier == Result.miss) {
+                return Global.format("Reaching into your divine spark, you command {other:name-possessive} very soul to serve you. "
+                                + "{other:PRONOUN} looks momentarily confused as nothing happened.", getSelf(), target);
+            }
+            return Global.format("Reaching into your divine spark, you command {other:name-possessive} very soul to serve you. "
+                            + "{other:PRONOUN} looks confused for a second before suddenly noticing a translucent figure shifting into existence between you and {other:direct-object}. "
+                            + "The projection stabilizes into a split image of {other:name-do}!", getSelf(), target);
+        } else {
+            if (modifier == Result.miss) {
+                Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
+                                + "{other:SUBJECT-ACTION:are|is} not sure what {self:pronoun} is up to, but it's definitely not good for {other:direct-object}. "
+                                + "Fortunately, {other:subject:were|was} close enough to leap at {self:direct-object} and interrupt whatever {self:pronoun} was trying to do.", 
+                                getSelf(), target);
+            }
+            return Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
+                            + "{other:SUBJECT-ACTION:are|is} not sure what {self:pronoun} is up to, but it's definitely not good for {other:direct-object}. "
+                            + "{other:SUBJECT-ACTION:run|runs} towards {other:direct-object} in a mad dash to try interrupting whatever it is {self:pronoun} is doing. "
+                            + "However it is too late, {self:subject} opens her now-glowing golden eyes and intonates <i>\"{other:NAME}... SERVE ME.\"</i> "
+                            + "The command pierces through {other:direct-object} giving {other:direct-object} a strange sense of vertigo. {other:SUBJECT-ACTION:almost collapse|almost collapses} "
+                            + "but when {other:pronoun-action:raise|raises} {other:possessive} head, {other:subject-action:see|sees} a figure kneeling before {self:name-do}. "
+                            + "<br/><br/>"
+                            + getSubText(initialSex, finalSex)
+                            + "You're now fighting your own clone!", getSelf(), target);
+        }
+    }
+    
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        if (modifier == Result.miss) {
-            Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
-                            + "{other:SUBJECT-ACTION:are|is} not sure what {self:pronoun} is up to, but it's definitely not good for {other:direct-object}. "
-                            + "Fortunately, {other:subject:were|was} close enough to leap at {self:direct-object} and interrupt whatever {self:pronoun} was trying to do.", 
-                            getSelf(), target);
-        }
-        return Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
-                        + "{other:SUBJECT-ACTION:are|is} not sure what {self:pronoun} is up to, but it's definitely not good for {other:direct-object}. "
-                        + "{other:SUBJECT-ACTION:run|runs} towards {other:direct-object} in a mad dash to try interrupting whatever it is {self:pronoun} is doing. "
-                        + "However it is too late, {self:subject} opens her now-glowing golden eyes and intonates <i>\"{other:NAME}... SERVE ME.\"</i> "
-                        + "The command pierces through {other:direct-object} giving {other:direct-object} a strange sense of vertigo. {other:SUBJECT-ACTION:almost collapse|almost collapses} "
-                        + "but when {other:pronoun-action:raise|raises} {other:possessive} head, {other:subject-action:see|sees} a figure kneeling before {self:name-do}. "
-                        + "<br/><br/>"
-                        + getSubText(modifier)
-                        + "You're now fighting your own clone!", getSelf(), target);
+        return "unused";
     }
 }

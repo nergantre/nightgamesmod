@@ -1,14 +1,14 @@
 package nightgames.ftc;
 
 import java.util.ArrayList;
-
-import javax.swing.JButton;
+import java.util.List;
 
 import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.global.Scene;
+import nightgames.gui.KeyableButton;
 import nightgames.gui.SaveButton;
 import nightgames.gui.SceneButton;
 import nightgames.modifier.standard.FTCModifier;
@@ -20,7 +20,7 @@ public class FTCPrematch implements Scene {
     public FTCPrematch(Player player) {        
         Global.current = this;
         Global.unflag(Flag.victory);
-        ArrayList<JButton> choice = new ArrayList<JButton>();
+        List<KeyableButton> choice = new ArrayList<>();
         String message = "";
         if (!Global.checkFlag(Flag.didFTC)) {
             message += "When you get to the student union, you find it deserted save for"
@@ -107,7 +107,7 @@ public class FTCPrematch implements Scene {
                                     + "get to your bases and await Lilly's signal.";
                 }
             }
-            ArrayList<JButton> choices = new ArrayList<>();
+            List<KeyableButton> choices = new ArrayList<>();
             choices.add(new SceneButton("Start the Match"));
             Global.gui().prompt(message, choices);
         }

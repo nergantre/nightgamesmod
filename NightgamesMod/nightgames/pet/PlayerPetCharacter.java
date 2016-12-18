@@ -18,7 +18,8 @@ public class PlayerPetCharacter extends PetCharacter {
         prototype.applyBasicStats(this);
         for (int i = 1; i < level; i++) {
             getGrowth().levelUp(this);
-            prototype.getLevelUpFor(i).apply(this);;
+            prototype.getLevelUpFor(i).apply(this);
+            this.level += 1;
         }
         this.att = new HashMap<>(prototype.att);
         this.traits = new CopyOnWriteArrayList<>(prototype.traits);

@@ -133,28 +133,18 @@ public class Kick extends Skill {
             return getSelf().name() + "'s kick hits nothing but air.";
         }
         if (modifier == Result.special) {
-            return String.format("%s launches a powerful kick straight at %s groin, but pulls it back "
-                            + "just before impact. %s a chill run down %s spine and %s testicles "
-                            + "are grateful for the last second reprieve. %s %s crumble off %s body,"
-                            + " practically disintegrating.... Still somewhat grateful.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(),
-                            Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                            target.possessivePronoun(), target.possessivePronoun(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()),
-                            target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName(),
-                            target.possessivePronoun());
+            return Global.format("{self:SUBJECT} launches a powerful kick straight at {other:name-possessive} groin, but pulls it back "
+                            + "just before impact. {other:pronoun-action:feel|feels} a chill run down {other:possessive} spine and {other:possessive} {other:balls-vulva} "
+                            + "are grateful for the last second reprieve. {other:POSSESSIVE} %s crumble off {other:possessive} body,"
+                            + " practically disintegrating.... Still somewhat grateful.", getSelf(), target,
+                            target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName());
         }
         if (modifier == Result.strong) {
-            return String.format("With %s flat on %s back, %s quickly %s in to press %s advantage. "
-                            + "Faster than %s can react, %s foot shoots up between "
-                            + "%s legs, dealing a critical hit on %s unprotected balls.",
-                            getSelf().subject(), getSelf().possessivePronoun(), target.subject(),
-                            target.action("move"), target.possessivePronoun(), target.pronoun(),
-                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun());
+            return Global.format("With {other:name-do} flat on {other:possessive} back, {self:subject-action:quickly move|quickly moves} in to press {self:possessive} advantage. "
+                            + "Faster than {other:pronoun} can react, {self:possessive} foot shoots up between "
+                            + "{other:possessive} legs, dealing a critical hit on {other:possessive} unprotected {other:balls-vulva}.", getSelf(), target);
         } else {
-            return String.format("%s foot lashes out into %s delicate testicles with devastating force.",
-                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun());
+            return Global.format("{self:NAME-POSSESSIVE} foot lashes out into {other:name-possessive} delicate {other:balls-vulva} with devastating force.", getSelf(), target);
         }
     }
 

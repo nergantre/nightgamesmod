@@ -99,7 +99,7 @@ public class CounterRide extends CounterBase {
         if (modifier == Result.setup && getSelf().hasPussy()) {
             return Global.format(
                             "{self:SUBJECT} turns around and bends over her ass seductively waving in the air. She slowly "
-                                            + "teases her glistening lower lips and spread them apart, inviting {other:name-do} in to her embrace.",
+                                            + "teases her glistening lower lips and spread them apart, inviting {other:name-do} in to her depths.",
                             getSelf(), target);
         } else if (modifier == Result.setup && getSelf().hasDick()) {
             return Global.format(

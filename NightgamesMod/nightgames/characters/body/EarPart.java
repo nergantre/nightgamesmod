@@ -8,8 +8,8 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public enum EarPart implements BodyPart, BodyPartMod {
-    pointed("pointed ", .2, 1.2, 1),
-    cat("cat ", .4, 1.5, 1.5),
+    pointed("pointed ", .1, 1.2, 1),
+    cat("cat ", .15, 1.5, 1.5),
     normal("normal ", 0, 1, 1);
 
     public String desc;

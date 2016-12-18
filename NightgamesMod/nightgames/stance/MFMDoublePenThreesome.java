@@ -26,6 +26,11 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     }
 
     @Override
+    public boolean inserted(Character c) {
+        return c == domSexCharacter || c == top;
+    }
+
+    @Override
     public void checkOngoing(Combat c) {
         if (!c.getOtherCombatants().contains(domSexCharacter)) {
             c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
@@ -62,10 +67,6 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     @Override
     public boolean anallyPenetratedBy(Combat c, Character self, Character other) {        
         return self == bottom && other == top;
-    }
-
-    public boolean inserted(Character c) {
-        return c == top || c == domSexCharacter;
     }
 
     public Character getPartner(Combat c, Character self) {

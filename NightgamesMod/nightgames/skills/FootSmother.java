@@ -43,7 +43,7 @@ public class FootSmother extends Skill {
         } else {
             c.write(getSelf(), Global.format(receive(c, 0, Result.normal, target), getSelf(), target));
         }
-        target.tempt(c, getSelf(), getSelf().body.getRandom("feet"), m);
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("feet"), m, this);
         if (Global.random(100) < 30 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), "feet", .25));
         }

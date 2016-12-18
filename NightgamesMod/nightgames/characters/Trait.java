@@ -231,6 +231,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    flexibleRole("Flexible Roles", "Okay at being the dom."), // Cassie gets this when she takes both specializations to remove the submissive negatives
     naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
@@ -319,7 +320,8 @@ public enum Trait {
     brassballs("Brass Balls", "Can take a kick."),
     largereserves("Large Reserves", "You have more willpower than normal people. Start with 20 extra willpower."), //applys on new game start. Will not do anything if added later.
     attractive("Attractive", "Hotter than the average person."),
-    
+    unpleasant("Unpleasant", "Less attractive than the average person."),
+
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
     repressed("Repressed", "Sexually represssed, lower seduction"),

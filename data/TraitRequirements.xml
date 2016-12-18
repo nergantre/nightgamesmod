@@ -523,7 +523,6 @@
 	<Trait>
 		<Name>sexTraining1</Name>
 		<Requirements>
-				<BodypartReq>pussy</BodypartReq>
 				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>

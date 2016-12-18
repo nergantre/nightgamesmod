@@ -776,8 +776,8 @@ public class NPC extends Character {
         }
         if (has(Trait.RawSexuality)) {
             c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
-            tempt(c, opponent, getArousal().max() / 20);
-            opponent.tempt(c, this, opponent.getArousal().max() / 20);
+            temptNoSkillNoSource(c, opponent, getArousal().max() / 20);
+            opponent.temptNoSkillNoSource(c, this, opponent.getArousal().max() / 20);
         }
         if (c.getStance().dom(this)) {
             emote(Emotion.dominant, 20);

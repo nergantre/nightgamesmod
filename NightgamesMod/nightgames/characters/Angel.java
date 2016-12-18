@@ -51,7 +51,7 @@ public class Angel extends BasePersonality {
         }
         self.body.add(BreastsPart.dd);
         // very feminine face
-        self.body.add(new FacePart(0.6, 4.2));
+        self.body.add(new FacePart(0.3, 4.2));
         self.initialGender = CharacterSex.female;
     }
 
@@ -346,7 +346,11 @@ public class Angel extends BasePersonality {
 
     @Override
     public String taunt(Combat c, Character opponent) {
-        return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
+        if (opponent.hasDick()) {
+            return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
+        } else {
+            return "Angel spreads your cleft with her fingers, <i>\"So wet. Does my little slut want to come? Can't help yourself?\"</i>";
+        }
     }
 
     @Override
@@ -597,6 +601,9 @@ public class Angel extends BasePersonality {
         character.getGrowth().addTrait(10, Trait.divinity);
         character.getGrowth().addTrait(10, Trait.proheels);
         character.body.addReplace(PussyPart.divine, 1);
+        if (character.hasDick()) {
+            character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.blessed), 1);
+        }
         character.body.addReplace(WingsPart.angelic, 5);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("translucentshawl"));
