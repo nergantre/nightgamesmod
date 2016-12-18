@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
+import nightgames.status.Trance;
 
 public class AssPart extends GenericBodyPart {
     /**
@@ -118,6 +119,18 @@ public class AssPart extends GenericBodyPart {
             if (opponent.has(Trait.anatomyknowledge)) {
                 bonus += 5;
             }
+        }
+        if (self.has(Trait.buttslut)) {
+            bonus += 10;
+            if (Global.random(4) == 0 && self.is(Stsflag.trance)) {
+                c.write(opponent, Global.format(
+                                "The foreign object rummaging around inside {self:name-possessive} ass <i><b>just feels so right</b></i>. {self:SUBJECT-ACTION:feel|feels} {self:reflective} slipping into a trance!",
+                                                self, opponent));
+                self.add(c, new Trance(self, 3, false));
+            }
+            c.write(opponent, Global.format(
+                            "The foreign object rummaging around inside {self:name-possessive} ass feels so <i>right</i>. {self:SUBJECT} can't help moaning in time with the swelling pleasure.",
+                                            self, opponent));
         }
         return bonus;
     }

@@ -1,4 +1,4 @@
-2.4.4.3
+2.4.5
 New:
 - Added a new skill Reverse Threesome which does exactly what the current threesome does (use pet's pussy if it exists to fuck the opponent).
 - Changed the Threesome skill to use the pet's dick if one exists to penetrate the opponent.
@@ -10,6 +10,10 @@ New:
 - Made your attractiveness display a bit more apparent in the combat and status descriptions, since it now factors more into the damage formula
 - Added a new Weakness: "Unpleasant"
 	- lowers your attractiveness by 25%
+- Added a new Weakness: "Buttslut"
+	- drastically increases anal pleasure damage received
+	- chance to become entranced when receiving anal pleasure
+	- upon seeing a erect cock or a strapon for the first time, automatically offers your own ass
 - Added some more stance images, mostly for futas/shemales
 
 Balance:
@@ -52,6 +56,7 @@ Bug fixes:
 		- Change "femaleTGIntoHerm" to true
 	- Eventually this will have a UI for it.
 - fixed a bug where thrusting as a hermaphrodite in a threesome will rub your pussies together instead.
+- fixed a bug where the Futa++20 start would crash the game
 
 2.4.4.2
 Bug fixes:

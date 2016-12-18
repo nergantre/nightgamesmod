@@ -20,7 +20,7 @@ public class SwitchTacticsButton extends KeyableButton {
         getButton().setBorderPainted(false);
         getButton().setOpaque(true);
         getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 14));
-        Color bgColor = Tactics.misc.getColor();
+        Color bgColor = new Color(80, 220, 120);
         for (Tactics tactic : Tactics.values()) {
             if (tactic.getGroup() == group) {
                 bgColor = tactic.getColor();
@@ -37,7 +37,7 @@ public class SwitchTacticsButton extends KeyableButton {
         if (nSkills == 0 && group != TacticGroup.all) {
             getButton().setEnabled(false);
             getButton().setForeground(Color.WHITE);
-            getButton().setBackground(getBackground().darker());
+            getButton().setBackground(getButton().getBackground().darker());
         }
 
         getButton().addActionListener(arg0 -> {
@@ -50,7 +50,7 @@ public class SwitchTacticsButton extends KeyableButton {
     private static Color foregroundColor(Color bgColor) {
         float hsb[] = new float[3];
         Color.RGBtoHSB(bgColor.getRed(), bgColor.getGreen(), bgColor.getRed(), hsb);
-        if (hsb[2] < .5) {
+        if (hsb[2] < .6) {
             return Color.WHITE;
         } else {
             return Color.BLACK;

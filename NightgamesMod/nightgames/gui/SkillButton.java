@@ -72,7 +72,7 @@ public class SkillButton extends KeyableButton {
     private static Color foregroundColor(Color bgColor) {
         float hsb[] = new float[3];
         Color.RGBtoHSB(bgColor.getRed(), bgColor.getGreen(), bgColor.getRed(), hsb);
-        if (hsb[2] < .5) {
+        if (hsb[2] < .6) {
             return Color.WHITE;
         } else {
             return Color.BLACK;

@@ -254,6 +254,7 @@ public enum Trait {
     immobile("Immobile", "Unable to move."), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+    buttslut("Buttslut", "Extremely weak to anal pleasure."),
     obedient("Obedient", "Easy to order around."),
     cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
 

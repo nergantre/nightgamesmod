@@ -44,6 +44,7 @@ import nightgames.skills.Reversal;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.skills.WildThrust;
+import nightgames.stance.Behind;
 import nightgames.stance.Kneeling;
 import nightgames.stance.Neutral;
 import nightgames.stance.Pin;
@@ -453,7 +454,23 @@ public class Combat extends Observable implements Cloneable {
             getCombatantData(character).setBooleanFlag(beguilingbreastCompletedFlag, true);
         }
 
-        
+        Character mainOpponent = getOpponent(character);
+        String buttslutCompletedFlag = Trait.buttslut.name() + "Completed";
+        if (character.has(Trait.buttslut) && ((mainOpponent.hasDick() && mainOpponent.crotchAvailable() && mainOpponent.getArousal().percent() > 20) || mainOpponent.has(Trait.strapped)) && !getCombatantData(character).getBooleanFlag(buttslutCompletedFlag)) {
+            write(character, Global.format("Seeing the thick phallus in front of {self:reflective}, {self:subject} can't "
+                            + "but help offer up {self:possessive} ass in hopes that {other:subject} will fill {self:possessive} rear door.", character, mainOpponent));
+            for (int i = 0; i < 5; i++) {
+                Clothing article = character.strip(ClothingSlot.bottom, this);
+                if (article == null) {
+                    break;
+                } else {
+                    write(character, Global.format("{self:SUBJECT-ACTION:strip|strips} off {self:possessive} %s", character, mainOpponent, article.getName()));
+                }
+            }
+            getCombatantData(character).setBooleanFlag(buttslutCompletedFlag, true);
+            setStance(new Behind(mainOpponent, character));
+        }
+
         if (character.has(Trait.footfetishist)) {
             fetishDisadvantageAura(character, allies, opponents, "feet", ClothingSlot.feet);
         }

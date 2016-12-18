@@ -3,9 +3,9 @@ package nightgames.skills;
 public enum TacticGroup {
     all,
     pleasure,
-    preparation,
+    positioning,
     hurt,
+    misc,
     recovery,
     manipulation,
-    misc,
 }

@@ -1015,6 +1015,7 @@ public class GUI extends JFrame implements Observer {
             SwitchTacticsButton tacticsButton = new SwitchTacticsButton(group);
             commandPanel.register(java.lang.Character.forDigit(i % 10, 10), tacticsButton);
             groupBox.add(tacticsButton);
+            groupBox.add(Box.createHorizontalStrut(4));
             i += 1;
         }
         List<SkillButton> flatList = new ArrayList<>();
