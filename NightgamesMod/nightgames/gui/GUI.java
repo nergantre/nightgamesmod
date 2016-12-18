@@ -1403,7 +1403,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     private KeyableButton itemButton(Activity event, Loot i) {
-        RunnableButton button = new RunnableButton(Global.capitalizeFirstLetter(i.getName() + " HEY I LOVE RANDOM TEXT"), () -> {
+        RunnableButton button = new RunnableButton(Global.capitalizeFirstLetter(i.getName()), () -> {
             event.visit(i.getName());
         });
         button.getButton().setToolTipText(i.getDesc());
