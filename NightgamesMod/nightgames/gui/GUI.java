@@ -1403,7 +1403,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     private KeyableButton itemButton(Activity event, Loot i) {
-        RunnableButton button = new RunnableButton(i.getName(), () -> {
+        RunnableButton button = new RunnableButton(Global.capitalizeFirstLetter(i.getName() + " HEY I LOVE RANDOM TEXT"), () -> {
             event.visit(i.getName());
         });
         button.getButton().setToolTipText(i.getDesc());
@@ -1431,7 +1431,7 @@ public class GUI extends JFrame implements Observer {
             refresh();
             ding();
         });
-        button.setToolTipText(trait.getDesc());
+        button.getButton().setToolTipText(trait.getDesc());
         return button;
     }
 
@@ -1441,7 +1441,7 @@ public class GUI extends JFrame implements Observer {
             clearTextIfNeeded();
             ding();
         });
-        button.setToolTipText("Save the trait point for later.");
+        button.getButton().setToolTipText("Save the trait point for later.");
         return button;
     }
 

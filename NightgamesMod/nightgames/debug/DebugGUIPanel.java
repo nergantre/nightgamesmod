@@ -46,6 +46,14 @@ public class DebugGUIPanel extends JPanel {
                 output.setText(list.get(1) + " is not a valid charater");
             }
         }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.move (\\w+)", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                target.travel(Global.getMatch().getAreas().stream().filter(area -> area.name.toLowerCase().contains(list.get(2))).findAny().get());
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            }
+        }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.addTrait (\\w+)", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
