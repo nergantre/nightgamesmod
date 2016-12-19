@@ -209,8 +209,9 @@ public class Command extends Skill {
         if (target.crotchAvailable())
             available.add(CommandType.MASTURBATE);
 
-        if (Global.getByTactics(c, Tactics.fucking)
+        if (getSelf().getSkills()
                   .stream()
+                  .filter(skill -> Tactics.fucking.equals(skill.type(c)))
                   .map(s -> s.copy(getSelf()))
                   .anyMatch(s -> s.requirements(c, getSelf(), target) && s.usable(c, target)))
             available.add(CommandType.MASTER_INSERT);
@@ -467,8 +468,9 @@ public class Command extends Skill {
                                 String.format("With a mischevous smile, %s tells %s to be still,"
                                                 + " and that %s has a special surprise for %s.", getSelf().name(),
                                                 target.subject(), getSelf().pronoun(), target.directObject()));
-                Global.getByTactics(c, Tactics.fucking)
+                getSelf().getSkills()
                       .stream()
+                      .filter(skill -> Tactics.fucking.equals(skill.type(c)))
                       .map(s -> s.copy(getSelf()))
                       .filter(s -> s.requirements(c, getSelf(), target) && s.usable(c, target))
                       .findAny()

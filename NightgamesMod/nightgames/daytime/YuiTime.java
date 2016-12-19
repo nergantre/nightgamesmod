@@ -40,7 +40,7 @@ public class YuiTime extends BaseNPCTime {
                       .message("Yui greets you happily when you arrive at her hideout/shed. <i>\"Master! It's good to see you. I've collected some items "
                                       + "you may find useful.\"</i> She grins and hands you the items proudly. She's acting so much like an excited puppy that you end up patting "
                                       + "her on the head. She blushes, but seems to like it. <i>\"Would you like to spend some time training? Or is there something else I can do "
-                                      + "to help you?\"</i><br>");
+                                      + "to help you?\"</i><br/>");
                 if (Global.checkFlag(Flag.Yui)) {
                     Global.gui()
                           .message("");

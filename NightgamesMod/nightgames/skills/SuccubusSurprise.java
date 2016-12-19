@@ -67,7 +67,7 @@ public class SuccubusSurprise extends Skill {
 
         if (!getSelf().human() && target.human() && !oppHasBlessed
                         && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
-            c.write(getSelf(), "<br><br>\"<i>Do you like your surprise, " + target.name() + "? I do.\"</i>");
+            c.write(getSelf(), "<br/><br/>\"<i>Do you like your surprise, " + target.name() + "? I do.\"</i>");
         }
         return true;
     }

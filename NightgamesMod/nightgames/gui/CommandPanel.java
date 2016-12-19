@@ -76,7 +76,7 @@ public class CommandPanel {
             row.removeAll();
         }
         POSSIBLE_HOTKEYS.forEach(hotkeyMapping::remove);
-        index = 0;
+        index = 0;  
     }
 
     public void refresh() {
@@ -85,9 +85,11 @@ public class CommandPanel {
     }
 
     public void add(KeyableButton button) {
+        page = 0;
         buttons.add(button);
         use(button);
     }
+
     private void use(KeyableButton button) {
         int effectiveIndex = index - page * POSSIBLE_HOTKEYS.size();
         int currentPage = page;

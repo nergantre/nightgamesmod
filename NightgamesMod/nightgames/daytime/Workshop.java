@@ -52,7 +52,7 @@ public class Workshop extends Activity {
                                                 + "room for a compact oscillating motor.\"</i> That's it? He's just going to put a motor in it? You could have just bought a vibrating dildo at the sex "
                                                 + "shop. <i>\"No. Nonono... no, you don't want to do that. That's a classic beginner's mistake. Crude store bought vibrators just overstimulate nerve "
                                                 + "endings and cause numbness. This magnetic motor will allow me to tune the vibration to the ideal frequency to maximize pleasure without reducing "
-                                                + "sensation over time. It's not cheap, but you wouldn't be coming to me if you weren't willing to shell out a bit.\"</i><p>After a few minutes, he sets "
+                                                + "sensation over time. It's not cheap, but you wouldn't be coming to me if you weren't willing to shell out a bit.\"</i><br/><br/>After a few minutes, he sets "
                                                 + "the dildo on the table in front of you. <i>\"It's on, try touching it.\"</i> What does he mean it's on? The dildo is completely silent and motionless. You "
                                                 + "pick up the dildo, but immediately drop it in surprise. It's vibrating, but that doesn't feel like vibration you've ever experienced, it's almost "
                                                 + "like a current running through your arm. Jett clearly knows what he's doing. You're not going to question his pricing again.");
@@ -110,7 +110,7 @@ public class Workshop extends Activity {
         } else if (choice.equals("Upgrade Strapon: $2500")) {
             if (player.money >= Item.Strapon2.getPrice()) {
                 Global.gui().message(
-                                "[Placeholder]<br>Jett upgrades your strapon with a more flexible body and a vibration feature.");
+                                "[Placeholder]<br/>Jett upgrades your strapon with a more flexible body and a vibration feature.");
                 player.money -= Item.Strapon2.getPrice();
                 player.consume(Item.Strapon, 1, false);
                 player.gain(Item.Strapon2);
@@ -126,7 +126,7 @@ public class Workshop extends Activity {
                 Global.gui().message(
                                 "They say that geniuses make poor teachers, but Jett disproves that theory. He explains the principles behind his work in a way that you "
                                                 + "can easily follow. Despite his unfriendly demeanor, he answers any questions you have without complaint. After about an hour of intense lecture, you "
-                                                + "feel like you've gotten the benefits of a week of classes.<p><i>\"Some of this equipment is likely to consume battery power rapidly. If you need to "
+                                                + "feel like you've gotten the benefits of a week of classes.<br/><br/><i>\"Some of this equipment is likely to consume battery power rapidly. If you need to "
                                                 + "recharge during a match, there are a few compatible charging stations in the Mechanical Engineering workshops.\"</i>");
                 player.money -= 1000 * (player.getPure(Attribute.Science) + 1);
                 player.mod(Attribute.Science, 1);

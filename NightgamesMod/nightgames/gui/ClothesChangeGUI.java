@@ -14,7 +14,6 @@ import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -36,6 +35,8 @@ public class ClothesChangeGUI extends JPanel {
     private JLabel exposureLabel;
     DefaultListModel<Clothing> closetListModel;
     DefaultListModel<Clothing> outfitListModel;
+    private ClothingList outfitList;
+    private ClothingList closetList;
 
     private void removeAllClothing() {
         character.closet.addAll(character.outfitPlan);
@@ -56,6 +57,9 @@ public class ClothesChangeGUI extends JPanel {
         character.closet.add(article);
         character.change();
         refreshLists();
+        if (outfitListModel.size() > 0 ) {
+            outfitList.setSelectedIndex(0);
+        }
     }
 
     private void add(Clothing article) {
@@ -86,6 +90,9 @@ public class ClothesChangeGUI extends JPanel {
         character.change();
         // refresh the ClothingLists
         refreshLists();
+        if (closetListModel.size() > 0 ) {
+            closetList.setSelectedIndex(0);
+        }
     }
 
     private void refreshLists() {
@@ -98,7 +105,7 @@ public class ClothesChangeGUI extends JPanel {
         tempList.sort(new ClothingSorter());
         tempList.forEach(article -> outfitListModel.addElement(article));
         DecimalFormat format = new DecimalFormat("#.##");
-        appearanceLabel.setText("Appearance: " + format.format(character.outfit.getHotness()));
+        appearanceLabel.setText("Attractiveness: " + format.format(character.body.getHotness(Global.getCharacterByName("Angel"))));
         exposureLabel.setText("Exposure: " + format.format(character.outfit.getExposure()));
         Global.gui().refresh();
     }
@@ -118,12 +125,12 @@ public class ClothesChangeGUI extends JPanel {
 
         int width = Global.gui().getWidth();
         int height = Global.gui().getHeight();
-        int strutSize = (height - 400) / 3;
+        int strutSize = (height - 500) / 3;
         int listWidth = (width - 400) / 3;
 
         Box closetBox = Box.createVerticalBox();
         closetListModel = new DefaultListModel<>();
-        JList<Clothing> closetList = new ClothingList(closetListModel);
+        closetList = new ClothingList(closetListModel);
         closetList.setBackground(GUIColors.bgLight);
         closetList.setForeground(GUIColors.textColorLight);
         closetList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -156,7 +163,7 @@ public class ClothesChangeGUI extends JPanel {
         Box outfitBox = Box.createVerticalBox();
         outfitBox.setOpaque(false);
         outfitListModel = new DefaultListModel<>();
-        JList<Clothing> outfitList = new ClothingList(outfitListModel);
+        outfitList = new ClothingList(outfitListModel);
         outfitList.setBackground(GUIColors.bgLight);
         outfitList.setForeground(GUIColors.textColorLight);
         outfitList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -214,6 +221,8 @@ public class ClothesChangeGUI extends JPanel {
         miscPanel.add(btnOk);
         miscPanel.setAlignmentX(CENTER_ALIGNMENT);
         centerChangePanel.add(miscPanel);
+        centerChangePanel.add(Box.createVerticalStrut(20));
+        centerChangePanel.add(Box.createVerticalGlue());
         centerPanel.setOpaque(false);
         add(leftPanel, BorderLayout.WEST);
         add(centerPanel, BorderLayout.CENTER);

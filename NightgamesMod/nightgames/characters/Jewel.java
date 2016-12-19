@@ -154,9 +154,9 @@ public class Jewel extends BasePersonality {
                             c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
                                             + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
                                             + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
-                                            + "idea.<br>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
+                                            + "idea.<br/>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
                                             + "and more <b>worthy</b> than you are, and it's clear that my going <b>easy></b> on you has given you a swelled sense of your "
-                                            + "own ability.</i>\"<br>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
+                                            + "own ability.</i>\"<br/>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
                                             + "from Jewel's past- perhaps something she kept hearing growing up among a mostly-male military related to stereotypes about girls being "
                                             + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
                                             + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
@@ -304,7 +304,7 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String bbLiner(Combat c, Character other) {
-        return "Jewel gently pats your injured testicles. <br><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
+        return "Jewel gently pats your injured testicles. <br/><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
                         + "I could never concentrate on fighting.\"</i>";
     }
 
@@ -371,53 +371,53 @@ public class Jewel extends BasePersonality {
         }
         if (character.has(Trait.fighter) && character.get(Attribute.Ki) >= 10) {
             String message = "Your duel with Jewel is rapidly reaching its conclusion and it's not going that well for you. Something seems different about her, her moves have an additional level of "
-                            + "coordination that is made worse by her already monstrous strength. But the worst thing is that she is throwing powerful moves at you like they were nothing!<p>"
+                            + "coordination that is made worse by her already monstrous strength. But the worst thing is that she is throwing powerful moves at you like they were nothing!<br/><br/>"
                             + "All of this has culminated in the situation you find yourself in now, namely pinned to the ground by Jewel as "
                             + (other.hasDick() ? "she jerks you off," : "she fingers you,")
-                            + " her teasing bringing you very rapidly to orgasm.<p>"
+                            + " her teasing bringing you very rapidly to orgasm.<br/><br/>"
                             + "You give one more push against the woman on top of you trying to dislodge her but with another firm shove you find yourself once more pinned by Jewel. With "
-                            + "this you are unable to stop Jewel from bringing you to climax and you groan in pleasure as you do so.<p>"
-                            + "Once you are finished you look up to see Jewel grinning down at you.<br>"
-                            + "<i>\"Well, you didn't put up much of a fight did ya?\"</i> She taunts, <i>\"must have really wanted me to be on top.\"</i><br>"
+                            + "this you are unable to stop Jewel from bringing you to climax and you groan in pleasure as you do so.<br/><br/>"
+                            + "Once you are finished you look up to see Jewel grinning down at you.<br/>"
+                            + "<i>\"Well, you didn't put up much of a fight did ya?\"</i> She taunts, <i>\"must have really wanted me to be on top.\"</i><br/>"
                             + "You feel yourself flush slightly from the embarrassment, but you are unable to complain as you can't deny that you did enjoy yourself. ";
             if (other.hasDick()) {
-                message += "As all of this occurs Jewel has yet to fully release your dick and you soon feel yourself becoming hard again.<p>"
+                message += "As all of this occurs Jewel has yet to fully release your dick and you soon feel yourself becoming hard again.<br/><br/>"
                                 + "When Jewel notices your returning hard-on, her face flashes through surprise before fixing itself in a predatory smile. <i>\"You never do disappoint.\"</i> She quips as "
                                 + "she moves to align herself with your now fully erect cock. As she does so, you feel a smirk make itself onto your face. However it doesn't last because as soon "
                                 + "as your dick enters Jewel, you are unable to stop the gasp of yelp of surprise as the sensation hits you. Jewel's insides are incredibly hot! It's to the point where you "
-                                + "aren't sure if it feels too hot or if its the best thing you've felt. As such, you make a strangled gasping sound as Jewel fully sheathes you in herself.<p>"
+                                + "aren't sure if it feels too hot or if its the best thing you've felt. As such, you make a strangled gasping sound as Jewel fully sheathes you in herself.<br/><br/>"
                                 + "Only when you are fully inside her does Jewel notice the 'unique' expression that must be adorning your face. ";
             } else if (other.hasPussy()) {
-                message += "As all of this occurs Jewel has yet to withdraw her roving hands from your cunt.<p>"
+                message += "As all of this occurs Jewel has yet to withdraw her roving hands from your cunt.<br/><br/>"
                                 + "When Jewel notices your pussy moistening and your body flushing again, her face flashes through surprise before fixing itself in a predatory smile. "
                                 + "<i>\"You never do disappoint.\"</i> She quips as she moves to align her cunt with yours. As she does so, you feel a smirk make itself onto your face. "
                                 + "However it doesn't last because as soon as your girl parts touch, you are unable to stop the gasp of yelp of surprise as the sensation hits you. "
                                 + "Jewel's pussy is incredibly hot! It's to the point where you aren't sure if it feels too hot or if its the best thing you've felt. "
-                                + "As such, you make a strangled gasping sound as Jewel starts grinding into you.<p> Only after pressing her pussy against yours for a good minute does Jewel notice the "
+                                + "As such, you make a strangled gasping sound as Jewel starts grinding into you.<br/><br/> Only after pressing her pussy against yours for a good minute does Jewel notice the "
                                 + "'unique' expression that must be adorning your face. ";
             }
             message += "<i>\"Hey, what's wrong?\"</i> She asks momentarily dropping "
                             + "her grin but quickly regains it as understanding spreads across her face. <i>\"Ahhhh,\"</i> She exclaims, leaning down so that her face is close to yours, <i>\"Is it a bit "
                             + "too warm for you down there?\"</i> She asks, her face full of mock sympathy. You are still slightly off kilter from the unique feeling of Jewel's molten warmth, so you "
-                            + "can only demurely shake you head as you look upwards at Jewel.<p>"
+                            + "can only demurely shake you head as you look upwards at Jewel.<br/><br/>"
                             + "<i>\"Good,\"</i> she breathes as she begins to grind her hips against yours, <i>\"Because I don't think I'd stop anyway.\"</i>";
             if (other.hasDick()) {
-                message += "With this said Jewel begins to ride you hard, jackhammering down onto you ruthlessly.<p>"
+                message += "With this said Jewel begins to ride you hard, jackhammering down onto you ruthlessly.<br/><br/>"
                                 + "The sensations that this brings are overwhelming. Whenever your penis is extracted from Jewel, the cold air makes you gasp. But when you are fully inside her, the "
-                                + "heat is nearly unbearable. Because of this, you don't know whether to tell Jewel to stop or beg her to keep going.<p>"
+                                + "heat is nearly unbearable. Because of this, you don't know whether to tell Jewel to stop or beg her to keep going.<br/><br/>"
                                 + "It's probably a moot point anyway as Jewel is in her own world above you, slamming your length in and out of her overheated canal and soon you begin to notice her "
-                                + "breathing becoming more ragged and her pace reaching a crescendo.<p>"
+                                + "breathing becoming more ragged and her pace reaching a crescendo.<br/><br/>"
                                 + "With a mewl of pleasure Jewel climaxes above you, bringing you fully inside as she does so. The sensation of her superheated walls clamping down on you is too much "
-                                + "and you find yourself coming once again.<p>";
+                                + "and you find yourself coming once again.<br/><br/>";
             } else if (other.hasPussy()) {
-                message += "With this said Jewel begins to scissor you, grinding down onto you ruthlessly.<p>"
-                                + "The sensations that this brings are overwhelming. The heat is nearly unbearable and because of this, you don't know whether to tell Jewel to stop or beg her to keep going.<p>"
+                message += "With this said Jewel begins to scissor you, grinding down onto you ruthlessly.<br/><br/>"
+                                + "The sensations that this brings are overwhelming. The heat is nearly unbearable and because of this, you don't know whether to tell Jewel to stop or beg her to keep going.<br/><br/>"
                                 + "It's probably a moot point anyway as Jewel is in her own world above you, sliding her cunt across yours, and soon you begin to notice her "
-                                + "breathing becoming more ragged and her pace reaching a crescendo.<p>"
-                                + "With a mewl of pleasure Jewel climaxes above you, pressing her superheated nether lips against yours and making you come yet again.<p>";
+                                + "breathing becoming more ragged and her pace reaching a crescendo.<br/><br/>"
+                                + "With a mewl of pleasure Jewel climaxes above you, pressing her superheated nether lips against yours and making you come yet again.<br/><br/>";
             }
             message += "After you both catch your breath, Jewel stands and extracts you from herself. You can't help the groan of discomfort that escapes you when your privates are exposed to "
-                            + "the cold once again. Jewel laughs at your discomfort and looks down at you as she collects her clothes.<p>"
+                            + "the cold once again. Jewel laughs at your discomfort and looks down at you as she collects her clothes.<br/><br/>"
                             + "<i>\"Better be careful,\"</i> She taunts, <i>\"If you don't step up your game, you're never gonna beat me. Then again, I do so enjoy fucking you, so feel free to be my bitch "
                             + "whenever you want.\"</i> Jewel turns on her heel and you just about catch the sight of her grinning face before she walks away, leaving you to try and recover from the "
                             + "hurricane that just passed by.";
@@ -427,20 +427,20 @@ public class Jewel extends BasePersonality {
             return "Jewel rocks her hips on top of you, full of confidence and in complete control. She reaches behind her with one hand to play with your balls, as if to prove "
                             + "you're completely at her mercy. Her powerful inner muscles squeeze your cock in time with her movements, creating an irresistable sensation. You moan as "
                             + "you pass the point of no return, but in one swift motion, she moves off your dick and finishes you off by hand. Your semen spills onto your stomach fruitlessly, "
-                            + "leaving Jewel's body untouched. <p><i>\"That was a good effort, but losers don't get to cum inside me.\"</i> She crawls up your body until she's straddling your face and "
+                            + "leaving Jewel's body untouched. <br/><br/><i>\"That was a good effort, but losers don't get to cum inside me.\"</i> She crawls up your body until she's straddling your face and "
                             + "her wet pussy is just inches away. <i>\"Besides, you still have work to do and I'm not so cruel as to give you a mouthful of spunk.\"</i> She presses her pussy against "
                             + "your mouth. Her musky scent and tangy taste flood your senses, but you remember to do your job properly. You alternate between licking her clit and sticking your "
-                            + "tongue into her entrance until you feel her body shudder. You get a faceful of her love juice. <p>Jewel hops to her feet, apparently recovering from her orgasm in just "
+                            + "tongue into her entrance until you feel her body shudder. You get a faceful of her love juice. <br/><br/>Jewel hops to her feet, apparently recovering from her orgasm in just "
                             + "a couple seconds. <i>\"You're a good loser at least, but if you really want me, you're going to need to do better than that.\"</i> At that, she walks away without a "
                             + "second glance in your direction.";
         } else if (c.getStance().vaginallyPenetratedBy(c, other, character)) {
             return "Jewel fucks you passionately from behind. Her " + character.body.getRandomCock().describe(character) + " jackhammers into your poor cunt, While holding your body down with one hand, the red head plays with your clit with the other, "
                             + "as if to prove you're completely at her mercy. She teases you with thrusts of varying depth, sometimes quick and shallow, sometimes slow and deep, creating an irresistable sensation in your pussy. "
                             + "You moan as you pass the point of no return, but in one swift motion, she pulls out and finishes you off by hand, leaving you rather surprised and a bit unfulfilled "
-                            + "<p><i>\"That was a good effort, but losers deserve some punishments.\"</i> She crawls up your body until she's straddling your face and "
+                            + "<br/><br/><i>\"That was a good effort, but losers deserve some punishments.\"</i> She crawls up your body until she's straddling your face and "
                             + "her still-hard cock is just inches away from your mouth. <i>\"Be a good little cockwhore and take care of this will you?\"</i> She forces her cock into your lips, and you service her without resisting. "
                             + "You alternate between licking her shaft and sucking her off until you feel her body shudder. You get a mouthful of her spunk as she cums in you hard. "
-                            + "<p>Jewel hops to her feet, apparently recovering from her orgasm in just a couple seconds. <i>\"You're a good loser at least, but if you really want to win, you're going to need to do better than that.\"</i> "
+                            + "<br/><br/>Jewel hops to her feet, apparently recovering from her orgasm in just a couple seconds. <i>\"You're a good loser at least, but if you really want to win, you're going to need to do better than that.\"</i> "
                             + "At that, she walks away without a second glance in your direction.";
         } else {
             String message = "";
@@ -460,7 +460,7 @@ public class Jewel extends BasePersonality {
                 character.arousal.empty();
                 if (other.hasDick()) {
                     message += "<i>\"Still, you were at least able to turn me on this much. Maybe you deserve a "
-                                    + "reward.\"</i><p>She prods your rapidly softening dick with a frown. <i>\"If you'd held on just a little longer, you could have cum inside me. Oh well, I can at least give "
+                                    + "reward.\"</i><br/><br/>She prods your rapidly softening dick with a frown. <i>\"If you'd held on just a little longer, you could have cum inside me. Oh well, I can at least give "
                                     + "you a show.\"</i> She stands up and straddles your head, giving you a clear view of her soaked pussy. She parts her lower lips with her fingers and caresses her entrance "
                                     + "with a soft moan. You watch, captivated by her masturbation as she slips two fingers into herself and begins pumping them in and out. The sight is enough to revitalize "
                                     + "your erection and soon your dick is straining with need. <i>\"Are you going to give me a show too? Well, go ahead.\"</i> At her prompting, you take your cock in your hand and "
@@ -468,7 +468,7 @@ public class Jewel extends BasePersonality {
                                     + "When you shoot your load into the air, drops of her love juice spray down on your face as she moans and climaxes.";
                 } else {
                     message += "<i>\"Still, you were at least able to turn me on this much. Maybe you deserve a "
-                                    + "reward.\"</i><p>She prods your rapidly spent body with a frown. <i>\"If you'd held on just a little longer, you could have cum with me. Oh well, I can at least give "
+                                    + "reward.\"</i><br/><br/>She prods your rapidly spent body with a frown. <i>\"If you'd held on just a little longer, you could have cum with me. Oh well, I can at least give "
                                     + "you a show.\"</i> She stands up and straddles your head, giving you a clear view of her soaked pussy. She parts her lower lips with her fingers and caresses her entrance "
                                     + "with a soft moan. You watch, captivated by her masturbation as she slips two fingers into herself and begins pumping them in and out. The sight is enough to revitalize "
                                     + "you and soon your pussy is pulsing with need. <i>\"Are you going to give me a show too? Well, go ahead.\"</i> At her prompting, you put your fingers inside yourself and "
@@ -497,15 +497,15 @@ public class Jewel extends BasePersonality {
             return "Jewel falters as her arousal begins to overwhelm her. You manage to force her to the ground and pin her hands. You press your thigh against her slick pussy, "
                             + "making her moan in pleasure. You rub her with your leg and suck on her neck until she can't resist grinding against you. She climaxes with a scream and you kiss "
                             + "her on the lips to quiet her. You start to get off her, but her voice stops you. <i>\"Don't tell me you're done already. I can keep going for another couple rounds "
-                            + "at least.\"</i><p>She's talking big, considering she clearly just orgasmed a moment ago. The fight is yours. <i>\"Yes, technically you won, but how victorious can you "
+                            + "at least.\"</i><br/><br/>She's talking big, considering she clearly just orgasmed a moment ago. The fight is yours. <i>\"Yes, technically you won, but how victorious can you "
                             + "really feel when I'm not satisfied yet?\"</i> She spreads her lower lips lewdly in a clear invitation. <i>\"Are you going to shrivel up and run away when there's a hot "
                             + "pussy waiting for rematch?\"</i> You knew Jewel gets off on a challenge, but she really turns into an insatiable slut when you beat her. She gives you a challenging "
-                            + "grin. <i>\"Don't try to pretend you're any less horny than I am. Also I should warn you that I can kick really hard, even from this position.\"</i><p>She doesn't need to "
+                            + "grin. <i>\"Don't try to pretend you're any less horny than I am. Also I should warn you that I can kick really hard, even from this position.\"</i><br/><br/>She doesn't need to "
                             + "threaten you when she's offering you her gorgeous naked body. You thrust deep into her in a single push and she lets out a gasp of pleasure. You indulge yourself in "
                             + "fondling her big, perky breasts and pinching her nipples. Jewel lifts her hips to give you a better angle and you respond by pounding her pussy wildly. She is an "
                             + "orgasm ahead of you, but you know she'll cum again in no time when she's being fucked this hard. She's moaning in time with your thrusts and probably wouldn't be "
                             + "able to keep her hips up if you weren't supporting her. You feel your climax approaching and bury yourself deep in Jewel. Her pussy clenches around your spurting "
-                            + "cock, squeezing out every drop of your seed.<p>Jewel goes completely limp and you collapse next to her. She better be satisfied after that, because you have nothing "
+                            + "cock, squeezing out every drop of your seed.<br/><br/>Jewel goes completely limp and you collapse next to her. She better be satisfied after that, because you have nothing "
                             + "left to give. She suddenly grabs your head and pulls you into a forceful kiss. <i>\"You're fucking amazing. There aren't a lot of men I'd concede defeat to, but I like "
                             + "being under you.\"</i> She practically hops back to her feet. Jesus, her recovery speed is inhuman. <i>\"Of course, next time I'm going to have to throw you to the ground "
                             + "and ravage you. I promise you'll love it.\"</i>";
@@ -514,34 +514,34 @@ public class Jewel extends BasePersonality {
             return "You fuck Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and wraps her legs tightly around your hips. Judging by her moaning, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck. You feel a small tremor run through her body in response, followed by a much stronger shudder when she orgasms moments later. Her vaginal walls "
-                            + "tightly squeeze your cock as her toned body tenses up.<p>Jewel goes limp in the aftermath of her climax and you brush her disheveled hair from her face. <i>\"You're still "
+                            + "tightly squeeze your cock as her toned body tenses up.<br/><br/>Jewel goes limp in the aftermath of her climax and you brush her disheveled hair from her face. <i>\"You're still "
                             + "horny, aren't you?\"</i> Your unsatisfied erection is still fully buried inside her. You're definitely going to have to do something about that once she's ready to continue. "
                             + "Jewel clicks her tongue disapprovingly. <i>\"Don't wait for my permission. My body is all yours.\"</i> That catches you by surprise. She made quite a sexy declaration, but "
                             + "Jewel doesn't seem like a girl who would freely submit herself to someone else's will. <i>\"Oh, don't get me wrong. As soon as we part, we're back to being opponents. Next "
                             + "time I kick your ass, I'll do whatever I want to you. It's only fair that it works both ways.\"</i> Really? She's ok with anything? She shrugs, unconcerned. <i>\"If you tried "
                             + "something really nasty, I bet our chaperones would intervene. Still, I think I can take any fetish that you might have. I'll just have to return it tenfold next time.\"</i> "
-                            + "Well, you weren't planning on anything bizarre, but the idea of dominating Jewel a little....<p>You flip Jewel over and put her on her hands and knees. You position yourself "
+                            + "Well, you weren't planning on anything bizarre, but the idea of dominating Jewel a little....<br/><br/>You flip Jewel over and put her on her hands and knees. You position yourself "
                             + "behind her and give her a light swat on the butt. She lets out a yelp of surprise and looks back at you with an expression of amusement and arousal. You penetrate her in "
                             + "a single, fast thrust, eliciting another surprised noise. You pound her pussy vigorously and fondle her soft breasts from behind. Jewel obviously loves this violent "
                             + "treatment. She's moaning with abandon, but it doesn't hide the wet sounds from her soaked pussy. As you fuck her doggy-style, you feel your orgasm building and Jewel "
                             + "seems to be in the same state. You maul her tits and thrust completely into her as you shoot your load. She screams in ecstasy when she cums and you both collapse to "
-                            + "the floor. <p>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
+                            + "the floor. <br/><br/>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
                             + "yes, a combination of submission and pleasure. I'm sure I'll think of something good.\"</i>";
         } else if (c.getStance().vaginallyPenetratedBy(c, other, character)) {
             return "You ride Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and buckles her hips against you. Judging by her grunting, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck while skillfully manipulating your hips, grinding against her hardness. You feel a small tremor run through her body in response, followed by a much stronger "
-                            + "shudder when she unloads her milky cum into your greedy hole. <p>Jewel goes limp in the aftermath of her climax and you brush her disheveled hair from her face. <i>\"You're still "
+                            + "shudder when she unloads her milky cum into your greedy hole. <br/><br/>Jewel goes limp in the aftermath of her climax and you brush her disheveled hair from her face. <i>\"You're still "
                             + "horny, aren't you?\"</i> Your unsatisfied pussy twitches against her. You're definitely going to have to do something about that once she's ready to continue. "
                             + "Jewel clicks her tongue disapprovingly. <i>\"Don't wait for my permission. My body is all yours.\"</i> You're pretty surprised at her permission, but you suppose she's "
                             + "[placeholder]She screams in ecstasy when she cums and you both collapse to "
-                            + "the floor. <p>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
+                            + "the floor. <br/><br/>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
                             + "yes, a combination of submission and pleasure. I'm sure I'll think of something good.\"</i>";
         } else if (other.hasDick()) {
             return "Jewel trembles and her moans rapidly increase in pitch. You take a dominant position on top of her with one hand knuckles deep in her flooded pussy and the other groping "
                             + "her beautiful breast. She's obviously on the verge of defeat, but she refuses to give in. She grits her teeth and endures the pleasure while desperately grasping at your "
                             + "erection. You redouble your efforts, stroking and kissing her most sensitive spots. She arches her back and "
-                            + "shudders in orgasm, then goes limp so suddenly you think she may have passed out. <p>When you lean over her to check that she's ok, she grabs you and rolls "
+                            + "shudders in orgasm, then goes limp so suddenly you think she may have passed out. <br/><br/>When you lean over her to check that she's ok, she grabs you and rolls "
                             + "on top of you. She smashes her lips against yours and forces her tongue into your mouth. <i>\"You win round 1,\"</i> she says as she lines up your cock with her wet "
                             + "entrance. <i>\"Time for round 2.\"</i> She impales herself on your dick, crying out in delight. She leans forward and shakes her breasts in front of you until you grasp "
                             + "and fondle them. As she rides you, you feel your own pleasure building to a peak. "
@@ -550,7 +550,7 @@ public class Jewel extends BasePersonality {
             return "Jewel trembles and her moans rapidly increase in pitch. You take a dominant position on top of her with one hand knuckles deep in her flooded pussy and the other groping "
                             + "her beautiful breast. She's obviously on the verge of defeat, but she refuses to give in. She grits her teeth and endures the pleasure while desperately grasping at your "
                             + "clit. You redouble your efforts, stroking and kissing her most sensitive spots. She arches her back and "
-                            + "shudders in orgasm, then goes limp so suddenly you think she may have passed out. <p>When you lean over her to check that she's ok, she grabs you and rolls "
+                            + "shudders in orgasm, then goes limp so suddenly you think she may have passed out. <br/><br/>When you lean over her to check that she's ok, she grabs you and rolls "
                             + "on top of you. She smashes her lips against yours and forces her tongue into your mouth. <i>\"You win round 1,\"</i> she says, pinning hands against the ground. "
                             + "<i>\"Time for round 2.\"</i> She presses her thigh against your slick pussy, and you find yourself arcing your back with pleasure. "
                             + "She rubs your sensitive clit with her leg and sucks on your neck until you can't resist grinding against her. She rides you sweetly, her pussy hot against your hip. "
@@ -578,17 +578,17 @@ public class Jewel extends BasePersonality {
             return "You and Jewel grind against each other, both on the verge of climax, both desperate to push the other over first. At the same instant you feel your ejaculation "
                             + "hit, Jewel tenses and cries out in ecstacy. The two of you spend your afterglow in a sweaty, sticky embrace before she pushes herself up and sits on your chest. "
                             + "<i>\"It's nice to find someone who can keep up with me.\"</i> She leans down and kisses you passionately, leaving you breathless when she finally lets you go. <i>\"Just "
-                            + "remember that next time we fight, I'll make you beg for mercy.\"</i><p>She stands up, looking no worse for wear and gathers up all your clothes. She tosses you "
+                            + "remember that next time we fight, I'll make you beg for mercy.\"</i><br/><br/>She stands up, looking no worse for wear and gathers up all your clothes. She tosses you "
                             + "her clothes and walks away humming a tune to herself.";
         }
         return "Your fight with Jewel is quickly approaching the end. You can tell she's extremely aroused, but you're also on the verge of cumming. You need to get a dominant "
                         + "position and fast. You recklessly lunge at her and manage to knock her off her feet. Before she can recover, you press your advantage by lifting up her hips and "
                         + "pushing her knees up to her chest. With Jewel effectively pinned, you are free to eat out her defenseless pussy. You feel her whole body tremble as you circle your "
-                        + "tongue around her swollen love bud.<p>Grappling with Jewel while your cock is ready to burst is certainly a risky gamble, but it paid off this time. Despite her "
+                        + "tongue around her swollen love bud.<br/><br/>Grappling with Jewel while your cock is ready to burst is certainly a risky gamble, but it paid off this time. Despite her "
                         + "persistent struggles, she has no way to retaliate from this position. You're sure you can finish her off before she manages to squirm free. Jewel grits her teeth "
                         + "to hold back her pleasure as you push your tongue inside her quiverring entrance. She really is persistent. She should just relax and enjoy her inevitable orgasm "
                         + "instead of continuing to struggle. Just as she starts to shudder in climax, she manages to jerk out of your grip. Before you can react, you feel a wave of pleasure "
-                        + "overwhelm your senses.<p>You try to understand what just happened, still dazed from your unexpected orgasm. Jewel is lying on the floor in front of you with one "
+                        + "overwhelm your senses.<br/><br/>You try to understand what just happened, still dazed from your unexpected orgasm. Jewel is lying on the floor in front of you with one "
                         + "hand on your dick and your semen splattered on her face. She must have grabbed your cock and finished you off the moment she broke free. That's quite a feat, considering"
                         + "she was mid-orgasm at the time. Jewel lets out an exhausted laugh as she wipes the cum off her face. <i>\"That was the best fight I've had in a long time. I couldn't "
                         + "keep from cumming, but I don't mind a draw when it's that intense.\"</i> ";
@@ -660,7 +660,7 @@ public class Jewel extends BasePersonality {
                             + "anything, she sweeps you legs out from under you and deposits you on the floor next to "
                             + assist.name() + ". She traps your arms in her thighs, leaving "
                             + "you defenseless. By this time, " + assist.name()
-                            + " has recovered and looks ready to take revenge.<br>";
+                            + " has recovered and looks ready to take revenge.<br/>";
         } else {
             return "You wrestle with " + target.name()
                             + " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
@@ -668,7 +668,7 @@ public class Jewel extends BasePersonality {
                             + " doesn't have a chance to follow up. Jewel has arrived, seemingly out "
                             + "of nowhere, and before " + target.name()
                             + " can react, Jewel slaps her on the pussy. She crumples in pain, almost mirroring you, and can't put up any defense "
-                            + "when Jewel restrains her arms. You pull yourself back up so you can take advantage of your helpless opponent.<br>";
+                            + "when Jewel restrains her arms. You pull yourself back up so you can take advantage of your helpless opponent.<br/>";
         }
     }
 

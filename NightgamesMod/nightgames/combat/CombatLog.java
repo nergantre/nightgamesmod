@@ -137,7 +137,7 @@ class CombatLog {
         boolean first, second = false;
         if (!(first = cbt.resolveSkill(firstSkill, secondCharacter))) {
             // only use second skill if an orgasm didn't happen
-            cbt.write("<br>");
+            cbt.write("<br/>");
             second = cbt.resolveSkill(secondSkill, firstCharacter);
         }
         sb.append(String.format("%s went first: %s%s", firstCharacter.getName(), first ? "orgasm" : "normal", linebreak));

@@ -575,7 +575,7 @@ public abstract class Character extends Observable implements Cloneable {
             }
         }
         if (other != null && other.has(Trait.sadist) && !is(Stsflag.masochism)) {
-            c.write("<br>"+Global.capitalizeFirstLetter(
+            c.write("<br/>"+Global.capitalizeFirstLetter(
                             String.format("%s blows hits all the right spots and %s to some masochistic tendencies.", 
                                             other.nameOrPossessivePronoun(), subjectAction("awaken"))));
             add(c, new Masochistic(this));
@@ -1643,7 +1643,7 @@ public abstract class Character extends Observable implements Cloneable {
             "<b>" + opponent.makeOrgasmLiner(c, this) + "</b>";
         orgasmed = true;
         if (times == 1) {
-            c.write(this, "<br>");
+            c.write(this, "<br/>");
         }
         if (opponent == this) {
             resolvePreOrgasmForSolo(c, opponent, selfPart, times);
@@ -2799,9 +2799,9 @@ public abstract class Character extends Observable implements Cloneable {
             b.append(a.name() + " " + att.get(a) + ", ");
         }
         b.append("</b>");
-        b.append("<br>Max Stamina " + stamina.max() + ", Max Arousal " + arousal.max() + ", Max Mojo " + mojo.max()
+        b.append("<br/>Max Stamina " + stamina.max() + ", Max Arousal " + arousal.max() + ", Max Mojo " + mojo.max()
                         + ", Max Willpower " + willpower.max() + ".");
-        b.append("<br>");
+        b.append("<br/>");
         if (human()) {
             // ALWAYS GET JUDGED BY ANGEL. lol.
             body.describeBodyText(b, Global.getCharacterByName("Angel"), notableOnly);
@@ -2809,12 +2809,12 @@ public abstract class Character extends Observable implements Cloneable {
             body.describeBodyText(b, Global.getPlayer(), notableOnly);
         }
         if (getTraits().size() > 0) {
-            b.append("<br>Traits:<br>");
+            b.append("<br/>Traits:<br/>");
             List<Trait> traits = new ArrayList<>(getTraits());
             traits.sort((first, second) -> first.toString().compareTo(second.toString()));
             for (Trait t : traits) {
                 b.append(t + ": " + t.getDesc());
-                b.append("<br>");
+                b.append("<br/>");
             }
         }
         b.append("</p>");

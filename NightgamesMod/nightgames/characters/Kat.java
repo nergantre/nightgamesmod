@@ -476,10 +476,10 @@ public class Kat extends BasePersonality {
                             + "<i>\"Nyyaaaa!\"</i> she meows in ecstasy, breaking the kiss. Her fingers return to your shaft and resume pumping it furiously. You seize the opportunity to regain "
                             + "lost ground and teasingly nibble on her ultra-sensitive ear, letting your tongue dance over the edge of it. Suddenly your gut clenches as you feel the first "
                             + "waves of an orgasm begin to build at the base of your cock. You're going to cum, you're going to-<br/><br/>"
-                            + "<i>\"NYYAAAAAAAAAAAAAA!\"</i><br>"
+                            + "<i>\"NYYAAAAAAAAAAAAAA!\"</i><br/>"
                             + "Kat's squeals echo down the corridors as a climax crashes through her body, making her spasm and writhe in ecstasy. You explode at the same time, shooting "
                             + "thick streams of cum over her belly. The two of you lean against each other in the wake of the climax.<br/><br/>"
-                            + "Kat recovers a little bit quicker than you and scampers away down the corridor.<br>"
+                            + "Kat recovers a little bit quicker than you and scampers away down the corridor.<br/>"
                             + "<i>\"See ya around!\"</i>";
         }
     }

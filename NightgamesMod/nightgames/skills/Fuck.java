@@ -141,7 +141,7 @@ public class Fuck extends Skill {
                                 + " {other:body-part:pussy}. At the last moment before thrusting in, however,"
                                 + " {self:pronoun-action:shift|shifts} to the tantalizing hole next door,"
                                 + " and {self:action:sink|sinks} the hard rod into {other:name-possessive}"
-                                + " hot ass instead.<br>", getSelf(), target, premessage));
+                                + " hot ass instead.<br/>", getSelf(), target, premessage));
                 new AssFuck(getSelf()).resolve(c, target);
                 
                 return true;

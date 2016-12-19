@@ -79,11 +79,11 @@ public class Daytime {
             Global.gui()
                   .message("In the morning, you receive a call from a restricted number. You are not at all surprised to hear the voice of your anonymous Benefactor again. It did seem about time for him to call again. <i>\"Hello "
                                   + player.name() + ". Have you been keeping busy? You've been putting "
-                                  + "on a good show in your matches, but when we last spoke, you had many questions. Are you any closer to finding your answers?\"</i><p>"
+                                  + "on a good show in your matches, but when we last spoke, you had many questions. Are you any closer to finding your answers?\"</i><br/><br/>"
                                   + "That's an odd question since it depends on whether or not he has become more willing to talk. Who else is going to fill you in about this "
                                   + "apparently clandestine organization. <i>\"Oh don't become lazy now. I chose you for this Game, in part, for your drive and initiative. Are "
                                   + "you limited to just the information that has been handed to you? Just because Aesop does not have the answers for sale does not mean there "
-                                  + "are no clues. Will you simply give up?\"</i><p>"
+                                  + "are no clues. Will you simply give up?\"</i><br/><br/>"
                                   + "You know he's trying to provoke you, but it's working anyway. If he's offering a challenge, you'll show him you can track him down. The next "
                                   + "time you speak to this Benefactor, it will be in person. <i>\"Excellent!\"</i> His voice has only a trace of mockery in it. <i>\"You are "
                                   + "already justifying your new rank, which is what I am calling you about, incidently. Perhaps you can put your increased pay rate or the trust "
@@ -99,7 +99,7 @@ public class Daytime {
             time = 12;
         } else {
             Global.gui()
-                  .message("You try to get as much sleep as you can before your morning classes.<p>You're done with classes by mid-afternoon and have the rest of the day free.");
+                  .message("You try to get as much sleep as you can before your morning classes.<br/><br/>You're done with classes by mid-afternoon and have the rest of the day free.");
             time = 15;
         }
         return false;

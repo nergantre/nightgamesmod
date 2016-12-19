@@ -266,11 +266,11 @@ public class Body implements Cloneable {
             }
         }
         if (previous == null) {
-            b.append("nothing notable.<br>");
+            b.append("nothing notable.<br/>");
         } else {
             b.append("and ");
             b.append(Global.prependPrefix(previous.prefix(), previous.fullDescribe(character)));
-            b.append(".<br>");
+            b.append(".<br/>");
         }
         b.append(formatHotnessText(other));
     }
@@ -1161,7 +1161,7 @@ public class Body implements Cloneable {
             part = character.body.getRandom("skin");
         }
         if (character.has(Trait.spiritphage)) {
-            c.write(character, "<br><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
+            c.write(character, "<br/><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
@@ -1171,7 +1171,7 @@ public class Body implements Cloneable {
         }
         if (opponent.has(Trait.hypnoticsemen)) {
             c.write(character, Global.format(
-                            "<br><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",
+                            "<br/><b>{other:NAME-POSSESSIVE} hypnotic semen takes its toll on {self:name-possessive} willpower, rendering {self:direct-object} doe-eyed and compliant.</b>",
                             character, opponent));
             character.loseWillpower(c, 10 + Global.random(10));
         }

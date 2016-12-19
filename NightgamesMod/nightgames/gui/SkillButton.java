@@ -26,24 +26,24 @@ public class SkillButton extends KeyableButton {
         this.action = action;
         int actualAccuracy = target.getChanceToHit(action.getSelf(), c, action.accuracy(c, target));
         int clampedAccuracy = Math.min(100, Math.max(0, actualAccuracy));
-        String text = "<html>" + action.describe(c) + " <p>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
+        String text = "<html>" + action.describe(c) + " <br/><br/>Accuracy: " + (actualAccuracy >=150 ? "---" : clampedAccuracy + "%") + "</p>";
         Color bgColor = action.type(c).getColor();
         getButton().setBackground(bgColor);
         getButton().setForeground(foregroundColor(bgColor));
 
         if (action.getMojoCost(c) > 0) {
             setBorder(new LineBorder(Color.RED, 3));
-            text += "<br>Mojo cost: " + action.getMojoCost(c);
+            text += "<br/>Mojo cost: " + action.getMojoCost(c);
         } else if (action.getMojoBuilt(c) > 0) {
             setBorder(new LineBorder(new Color(53, 201, 255), 3));
-            text += "<br>Mojo generated: " + action.getMojoBuilt(c) + "%";
+            text += "<br/>Mojo generated: " + action.getMojoBuilt(c) + "%";
         } else {
             setBorder(new LineBorder(getButton().getBackground(), 3));
         }
         if (!action.user()
                    .cooldownAvailable(action)) {
             getButton().setEnabled(false);
-            text += String.format("<br>Remaining Cooldown: %d turns", action.user()
+            text += String.format("<br/>Remaining Cooldown: %d turns", action.user()
                                                                             .getCooldown(action));
             getButton().setForeground(Color.WHITE);
             getButton().setBackground(getBackground().darker());
