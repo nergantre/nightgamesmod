@@ -120,7 +120,7 @@ public class Invitation extends Skill {
         } else {
             if (hasDivinity()) {
                 return Global.format(
-                                "{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT-ACTION:obey|obeys} and {other:action:hug|hugs} {self:direct-action} close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tells {other:name-do} to fuck {self:direct-object}, to which {other:pronoun} promptly, lovingly {other:action:comply|complies}.",
+                                "{self:SUBJECT} commands {other:direct-object} to embrace {self:direct-object}. {other:SUBJECT-ACTION:obey|obeys} and {other:action:hug|hugs} {self:direct-object} close to {other:reflective}. {self:NAME} follows up on {self:possessive} earlier command and tells {other:name-do} to fuck {self:direct-object}, to which {other:pronoun} promptly, lovingly {other:action:comply|complies}.",
                                 getSelf(), target);
             }
             return Global.format(
