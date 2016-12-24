@@ -68,7 +68,7 @@ public class Yui extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 3;
         character.getGrowth().arousal = 4;
-        character.getGrowth().willpower = .4f;
+        character.getGrowth().willpower = 1.4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
         preferredAttributes.add(c -> c.get(Attribute.Ninjutsu) < 60 && c.getLevel() >= 10 ? Optional.of(Attribute.Ninjutsu)  : Optional.empty());

@@ -648,6 +648,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = new Combat(player, enemy, player.location());
         combat.addObserver(this);
+        combat.setBeingObserved(true);
         loadPortrait(combat, player, enemy);
         showPortrait();
         return combat;
@@ -766,6 +767,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = new Combat(player, enemy, player.location(), code);
         combat.addObserver(this);
+        combat.setBeingObserved(true);
         message(combat.getMessage());
         loadPortrait(combat, player, enemy);
         showPortrait();
@@ -773,7 +775,6 @@ public class GUI extends JFrame implements Observer {
     }
 
     // Combat spectate ???
-
     public void watchCombat(Combat c) {
         showPortrait();
         combat = c;
@@ -1497,7 +1498,7 @@ public class GUI extends JFrame implements Observer {
     }
 
     private KeyableButton locatorButton(final Action event, final String choice, final Character self) {
-        RunnableButton button = new RunnableButton("Start the match", () -> {
+        RunnableButton button = new RunnableButton(choice, () -> {
             ((Locate) event).handleEvent(self, choice);
         });
         return button;
@@ -1512,6 +1513,7 @@ public class GUI extends JFrame implements Observer {
         });
         return button;
     }
+
     public void changeClothes(Character player, Activity event, String backOption) {
         clothesPanel.removeAll();
         clothesPanel.add(new ClothesChangeGUI(player, event, backOption));

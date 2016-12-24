@@ -80,13 +80,13 @@ public class Grind extends Thrust {
             if (getLabel(c).equals(divineName)) {
                 return Global.format(
                                 "{self:SUBJECT-ACTION:fill|fills} {self:possessive} pussy with divine power until it's positively dripping with glowing golden mists. {self:PRONOUN} {self:action:then grind|grinds} against {other:direct-object} with {self:possessive} "
-                                                + getSelfOrgan(c).fullDescribe(getSelf())
+                                                + getSelfOrgan(c, target).fullDescribe(getSelf())
                                                 + ", stimulating {other:possessive} entire manhood, completely obliterating any resistance from {other:possessive} mind.",
                                 getSelf(), target);
             }
             return Global.format(
                             "{self:SUBJECT-ACTION:grind|grinds} against {other:direct-object} with {self:possessive} "
-                                            + getSelfOrgan(c).fullDescribe(getSelf())
+                                            + getSelfOrgan(c, target).fullDescribe(getSelf())
                                             + ", stimulating {other:possessive} entire manhood and bringing {other:direct-object} closer to climax.",
                             getSelf(), target);
         } else {

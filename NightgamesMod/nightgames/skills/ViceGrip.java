@@ -37,7 +37,7 @@ public class ViceGrip extends Thrust {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        BodyPart selfO = getSelfOrgan(c);
+        BodyPart selfO = getSelfOrgan(c, target);
         BodyPart targetO = getTargetOrgan(c, target);
         Result result = Result.normal;
 

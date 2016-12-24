@@ -19,10 +19,9 @@ public class DissolvingTrap extends Trap {
         super("Dissolving Trap", owner);
     }
 
-
     @Override
     public void trigger(Character target) {
-        if (!target.check(Attribute.Perception, 20 - target.get(Attribute.Perception) + target.baseDisarm())) {
+        if (!target.check(Attribute.Perception, 25 + target.baseDisarm())) {
             if (target.human()) {
                 Global.gui().message(
                                 "You spot a liquid spray trap in time to avoid setting it off. You carefully manage to disarm the trap and pocket the potion.");

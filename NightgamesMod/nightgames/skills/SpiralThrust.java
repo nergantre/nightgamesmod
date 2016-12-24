@@ -86,7 +86,7 @@ public class SpiralThrust extends Thrust {
             return Global.format("As you bounce on " + target.name()
                             + "'s steaming pole, you feel a power welling up inside you. You put everything you have into moving your hips circularly, "
                             + "rubbing every inch of her cock with your hot slippery "
-                            + getSelfOrgan(c).fullDescribe(getSelf()) + ".", getSelf(), target);
+                            + getSelfOrgan(c, target).fullDescribe(getSelf()) + ".", getSelf(), target);
         } else {
             return "As you thrust into " + target.name()
                             + "'s hot pussy, you feel a power welling up inside you. You put everything you have into moving your hips circularly "
@@ -96,7 +96,7 @@ public class SpiralThrust extends Thrust {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        BodyPart selfO = getSelfOrgan(c);
+        BodyPart selfO = getSelfOrgan(c, target);
         if (modifier == Result.anal) {
             return String.format("%s drills into %s ass with extraordinary power. %s head seems to go"
                             + " blank and %s %s face down to the ground as %s arms turn to jelly and give out.",

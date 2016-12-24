@@ -130,7 +130,7 @@ public class Jewel extends BasePersonality {
         growth.arousal = 3;
         growth.bonusStamina = 3;
         growth.bonusArousal = 1;
-        growth.willpower = 1.2f;
+        growth.willpower = 1.7f;
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_ANAL_FOCUS) 
@@ -150,7 +150,7 @@ public class Jewel extends BasePersonality {
                             useAnal();
                             return true;
                         }),
-                        new CombatSceneChoice("You'd rather be on top- you think you can take her [Hard Mode]", (c, self, other) -> {
+                        new CombatSceneChoice("Rather be on top- you can take her [Hard Mode]", (c, self, other) -> {
                             c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
                                             + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
                                             + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
@@ -434,7 +434,7 @@ public class Jewel extends BasePersonality {
                             + "a couple seconds. <i>\"You're a good loser at least, but if you really want me, you're going to need to do better than that.\"</i> At that, she walks away without a "
                             + "second glance in your direction.";
         } else if (c.getStance().vaginallyPenetratedBy(c, other, character)) {
-            return "Jewel fucks you passionately from behind. Her " + character.body.getRandomCock().describe(character) + " jackhammers into your poor cunt, While holding your body down with one hand, the red head plays with your clit with the other, "
+            return "Jewel fucks you passionately from behind. Her " + character.body.getRandomInsertable().describe(character) + " jackhammers into your poor cunt, While holding your body down with one hand, the red head plays with your clit with the other, "
                             + "as if to prove you're completely at her mercy. She teases you with thrusts of varying depth, sometimes quick and shallow, sometimes slow and deep, creating an irresistable sensation in your pussy. "
                             + "You moan as you pass the point of no return, but in one swift motion, she pulls out and finishes you off by hand, leaving you rather surprised and a bit unfulfilled "
                             + "<br/><br/><i>\"That was a good effort, but losers deserve some punishments.\"</i> She crawls up your body until she's straddling your face and "

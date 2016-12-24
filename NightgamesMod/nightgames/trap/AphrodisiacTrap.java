@@ -8,6 +8,7 @@ import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Flatfooted;
+import nightgames.status.Horny;
 
 public class AphrodisiacTrap extends Trap {
 
@@ -18,10 +19,14 @@ public class AphrodisiacTrap extends Trap {
     public AphrodisiacTrap(Character owner) {
         super("Aphrodisiac Trap", owner);
     }
-    
+
+    public void setStrength(Character user) {
+        setStrength(user.get(Attribute.Cunning) + user.get(Attribute.Science) + user.getLevel() / 2);
+    }
+
     @Override
     public void trigger(Character target) {
-        if (!target.check(Attribute.Perception, 15 + target.baseDisarm())) {
+        if (!target.check(Attribute.Perception, 20 + target.baseDisarm())) {
             if (target.human()) {
                 Global.gui().message(
                                 "You spot a liquid spray trap in time to avoid setting it off. You carefully manage to disarm the trap and pocket the potion.");
@@ -38,7 +43,7 @@ public class AphrodisiacTrap extends Trap {
                                 target.name() + " is caught in your trap and sprayed with aphrodisiac. She flushes bright red and presses a hand against her crotch. It seems like "
                                                 + "she'll start masturbating even if you don't do anything.");
             }
-            target.tempt(40);
+            target.addNonCombat(new Horny(target, (30 + getStrength()) / 10, 10, "Aphrodisiac Trap"));
             target.location().opportunity(target, this);
         }
     }

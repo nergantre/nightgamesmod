@@ -18,7 +18,7 @@ public class AiriTime extends BaseNPCTime {
         knownFlag = "Airi";
         giftedString = "\"Uhm... thank you!\"";
         giftString = "\"Oh wow... for me? th-thanks...!\"";
-        transformationOptionString = "Error";
+        transformationOptionString = "Transformation";
         advTrait = null;
         transformationIntro = "[Placeholder]<br/>You ask Airi about bodily transformations. You figure if anyone knew, it would be someone who can freely manipulate their own body.";
         loveIntro = "[Placeholder]<br/>Airi greets you at the door and flies into your arms. She looks pretty happy to see you.";
@@ -50,6 +50,7 @@ public class AiriTime extends BaseNPCTime {
                             + "You hesitantly touch the distended goo cock and without warning Airi lets out a soft cry and her cock spews "
                             + "blue viscous cum all over your hand. The cock's coloring fades back into her pale flesh tone as it softens, "
                             + "but you know that she now packs a powerful new weapon!";
+            growCock.additionalRequirements = "Free";
             growCock.effect = (c, self, other) -> {
                 other.body.add(BasicCockPart.big);
                 return true;
@@ -61,8 +62,8 @@ public class AiriTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Airi: Remove her cock";
-            removeCock.scene = "<br/>Airi frowns when you ask her if she can remove her new cock, \"<i>If you didn't like it, don't ask me for one in the first place... "
-                            + "I guess you {other:guy}s are fickle. ...Fine, I'll do it but you're going to help me...</i>\""
+            removeCock.scene = "<br/>Airi frowns when you ask her if she can remove her new cock, \"<i>If you didn't like it, don't ask me for one in the first place. "
+                            + "I guess you {other:guy}s are fickle. Fine, I'll do it but you're going to help me...</i>\""
                             + "<br/><br/>"
                             + "You're happy that she agreed, and tell her you'll do anything you can to help! However, as soon as you speak, the devilish grin on her face tells you that you made a poor choice. "
                             + "Stammering, you back towards her door, hoping to escape before she can get any ideas. Without you noticing though, two ropes of slime wrap around your feet and send you tumbling to the ground. "
@@ -83,6 +84,7 @@ public class AiriTime extends BaseNPCTime {
                             + "Recovering from her orgasm, Airi gets up off you and slowly returns to her human form. You notice that her cock has disappeared like she promised. "
                             + "Groaning a bit, you realize that the act of cumming probably liquified her gooey rod and sent it straight down your throat. She literally made you eat her cock. "
                             + "Before you leave, Airi gives you an apologetic pat and whispers in your ear, <i>\"Some advice... I'd recommend using the bathroom <b>alone</b> the next time you need to go...\"</i> Aw man, that's not cool.";
+            removeCock.additionalRequirements = "Free";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;

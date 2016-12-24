@@ -25,22 +25,14 @@ public class OrgasmicThrust extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null && getSelf().canAct()
+        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canAct()
                         && c.getStance().canthrust(c, getSelf()) && c.getStance().havingSexOtherNoStrapped(c, getSelf());
     }
 
-    public BodyPart getSelfOrgan(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
-            return getSelf().body.getRandomInsertable();
-        }
-        return null;
-    }
-
-    public BodyPart getTargetOrgan(Combat c, Character target) {
-        if (c.getStance().anallyPenetratedBy(c, c.getOpponent(getSelf()), getSelf())) {
-            return target.body.getRandom("ass");
-        } else if (c.getStance().vaginallyPenetratedBy(c, c.getOpponent(getSelf()), getSelf())){
-            return target.body.getRandomPussy();
+    public BodyPart getSelfOrgan(Combat c, Character target) {
+        BodyPart part = super.getSelfOrgan(c, target);
+        if (part != null && part.isType("cock")) {
+            return part;
         }
         return null;
     }

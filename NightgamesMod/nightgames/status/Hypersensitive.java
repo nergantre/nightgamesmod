@@ -30,7 +30,11 @@ public class Hypersensitive extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, boolean replaced) {
-        return String.format("%s now hypersensitive.\n", affected.subjectAction("are", "is"));
+        if (!replaced) {
+            return String.format("%s now hypersensitive.\n", affected.subjectAction("are", "is"));
+        } else {
+            return "";
+        }
     }
 
     @Override

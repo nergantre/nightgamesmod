@@ -17,7 +17,7 @@ public class Bathe extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.location().bath();
+        return user.location().bath() && !user.bound();
     }
 
     @Override

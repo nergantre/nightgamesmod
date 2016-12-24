@@ -115,7 +115,7 @@ public class Charm extends Skill {
             }
             return message;
         } else {
-            return getSelf().getName() + " flashes a dazzling smile at "+target.subject()+", charming " + target.directObject() + " instantly";
+            return getSelf().getName() + " flashes a dazzling smile at "+target.nameDirectObject()+", charming " + target.directObject() + " instantly";
         }
     }
 
@@ -145,7 +145,7 @@ public class Charm extends Skill {
             }
             return message;
         } else {
-            return getSelf().getName() + " flashes a dazzling smile at "+target.subject()+", charming you instantly.";
+            return getSelf().getName() + " flashes a dazzling smile at "+target.nameDirectObject()+", charming " + target.directObject() + " instantly.";
         }
     }
 

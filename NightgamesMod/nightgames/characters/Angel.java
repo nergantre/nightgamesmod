@@ -170,7 +170,7 @@ public class Angel extends BasePersonality {
                         }),
                         new CombatSceneChoice("Answer: Why not both? [Hard Mode]", (c, self, other) -> {
                             c.write(Global.format("You tell her that the Angel you know wouldn't even think of choosing between either of them. "
-                                            + "The Angel you know could do gather a following within a day even while maintaining her close friendships. She's just amazing like that. "
+                                            + "The Angel you know could gather a following within a day even while maintaining her close friendships. She's just amazing like that. "
                                             + "<br/>For the first time since you've gotten to know her, Angel seems to blush. \"<i>Enough flattery " + other.getName() + ", it wont make me go any easier on you. "
                                                             + "But you know, you're right. Why should I choose? They should be happy to grovel for me. I <b>am</b> a Goddess after all.</i>\"", self, other));
                             useWorship();

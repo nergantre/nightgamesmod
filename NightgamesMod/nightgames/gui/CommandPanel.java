@@ -22,7 +22,7 @@ public class CommandPanel {
                     'q', 'w', 'e', 'r', 't', 'y',
                     'a', 's', 'd', 'f' , 'g', 'h',
                     'z', 'x', 'c', 'v', 'b', 'n'); 
-    private static final Set<String> DEFAULT_CHOICES = new HashSet<>(Arrays.asList("Next", "Leave", "Back"));
+    private static final Set<String> DEFAULT_CHOICES = new HashSet<>(Arrays.asList("Wait", "Nothing", "Next", "Leave", "Back"));
     private static final int ROW_LIMIT = 6;
 
     private JPanel panel;
@@ -43,7 +43,8 @@ public class CommandPanel {
         rows[1] = new JPanel();
         rows[2] = new JPanel();
         for (JPanel row : rows) {
-            FlowLayout layout = new FlowLayout();
+            FlowLayout layout;
+            layout = new FlowLayout();
             layout.setVgap(0);
             layout.setHgap(4);
             row.setLayout(layout);
@@ -100,7 +101,7 @@ public class CommandPanel {
             Character hotkey = POSSIBLE_HOTKEYS.get(effectiveIndex);
             register(hotkey, button);
             if (DEFAULT_CHOICES.contains(button.getText()) && !hotkeyMapping.containsKey(' ')) {
-                hotkeyMapping.put(' ', button);
+                hotkeyMapping.put(' ', button); 
             }
         } else if (effectiveIndex == -1) {
             KeyableButton leftPage = new RunnableButton("<<<", () -> setPage(currentPage - 1));

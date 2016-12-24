@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import nightgames.characters.body.BodyPart;
@@ -9,6 +10,8 @@ import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatScene;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -23,6 +26,10 @@ public class Airi extends BasePersonality {
      *
      */
     private static final long serialVersionUID = -8169646189131720872L;
+    private static final String AIRI_PARASITISM_FOCUS = "AiriParasitismFocus";
+    private static final String AIRI_TRANSFORMATION_FOCUS = "AiriTransformationFocus";
+    private static final String AIRI_QUEEN_SLIME_FOCUS = "AiriQueenSlimeFocus";
+    private static final String AIRI_SLIME_CARRIER_FOCUS = "AiriSlimeCarrierFocus";
 
     public Airi() {
         this(Optional.empty(), Optional.empty());
@@ -68,9 +75,53 @@ public class Airi extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 1;
         character.getGrowth().arousal = 1;
-        character.getGrowth().willpower = 1.5f;
+        character.getGrowth().willpower = 2.5f;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 1;
+        character.addCombatScene(new CombatScene((c, self, other) -> {
+            return self.getLevel() >= 10 && !Global.checkFlag(AIRI_PARASITISM_FOCUS) && !Global.checkFlag(AIRI_TRANSFORMATION_FOCUS);
+        }, (c, self, player) -> Global.format("[Placeholder ]Airi pick parasite or transformation"
+                        + "", self, player),
+                Arrays.asList(
+                        new CombatSceneChoice("[Placeholder] Parasite.", (c, self, other) -> {
+                            c.write("");
+                            useSex();
+                            return true;
+                        }),
+                        new CombatSceneChoice("Tell her you love her sex drive", (c, self, other) -> {
+                            c.write("");
+                            useNymphomania();
+                            return true;
+                        }),
+                        new CombatSceneChoice("[Placeholder] Both? [Hard Mode]", (c, self, other) -> {
+                            c.write("");
+                            useNymphomania();
+                            useSex();
+                            character.getGrowth().extraAttributes += 1;
+                            // some compensation for the added difficulty. She gets 6 traits and 2 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39},Global.getPlayer());
+                            return true;
+                        })
+                    )
+                ));
+        character.addCombatScene(new CombatScene((c, self, other) -> {
+            return self.getLevel() >= 20 && !Global.checkFlag(AIRI_QUEEN_SLIME_FOCUS) && !Global.checkFlag(AIRI_SLIME_CARRIER_FOCUS)
+                            && (Global.checkFlag(AIRI_PARASITISM_FOCUS) || Global.checkFlag(AIRI_TRANSFORMATION_FOCUS));
+        }, (c, self, player) -> "",
+                Arrays.asList(
+                        new CombatSceneChoice("Queen Slime", (c, self, other) -> {
+                            c.write("");
+                            useFollowers();
+                            return true;
+                        }),
+                        new CombatSceneChoice("Slime Carrier", (c, self, other) -> {
+                            c.write(Global.format("", self, other));
+                            useWorship();
+                            return true;
+                        })
+                    )
+                ));
+
         character.getGrowth().addTrait(0, Trait.dexterous);
         character.getGrowth().addTrait(0, Trait.imagination);
         character.getGrowth().addTrait(0, Trait.softheart);
@@ -90,6 +141,26 @@ public class Airi extends BasePersonality {
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
     
+    private void useFollowers() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private void useWorship() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private void useSex() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private void useNymphomania() {
+        // TODO Auto-generated method stub
+        
+    }
+
     @Override
     public void eot(Combat c, Character opponent, Skill last) {
         // always replace with gooey/slime versions of genitals.
