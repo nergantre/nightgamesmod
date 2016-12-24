@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -82,8 +83,8 @@ public class Offer extends Skill {
             target.body.pleasure(getSelf(), getSelf().body.getRandomCock(), target.body.getRandomPussy(),
                             Global.random(5) + getSelf().get(Attribute.Perception), c, this);
         }
-        if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
-            Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+        if (getSelf().human() && ((Player)getSelf()).checkAddiction(AddictionType.MIND_CONTROL, target)) {
+            ((Player)getSelf()).unaddictCombat(AddictionType.MIND_CONTROL, 
                             target, Addiction.MED_INCREASE, c);
             c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
         }
@@ -97,7 +98,7 @@ public class Offer extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.negative;
+        return Tactics.misc;
     }
 
     @Override

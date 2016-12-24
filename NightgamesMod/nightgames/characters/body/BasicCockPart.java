@@ -10,6 +10,8 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Sensitized;
 
 public enum BasicCockPart implements CockPart {
@@ -79,9 +81,17 @@ public enum BasicCockPart implements CockPart {
 
     @Override
     public double getHotness(Character self, Character opponent) {
-        double hotness = Math.log(size / 4 + 1) / Math.log(2) - 1;
+        double hotness = Math.log(size / 4 + 1) / Math.log(6) - .45;
         if (!opponent.hasPussy()) {
             hotness /= 2;
+        }
+        Clothing bottom = self.getOutfit().getTopOfSlot(ClothingSlot.top);
+        if (bottom == null) {
+            if (self.hasPussy()) {
+                hotness += .05;
+            } else {
+                hotness += .1;
+            }
         }
         return hotness;
     }
@@ -266,6 +276,9 @@ public enum BasicCockPart implements CockPart {
 
     @Override
     public BodyPart applyMod(CockMod mod) {
+        if (mod == CockMod.error) {
+            return this;
+        }
         return new ModdedCockPart(this, mod);
     }
 }

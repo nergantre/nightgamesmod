@@ -163,7 +163,7 @@
         ],
         "describe": [
             {
-                "text": "{self:name} can only be described as an green amazoness sprouting from a tree.<br>While her body beneath her thighs are invisible to you, her voluptuous upper body extends out from a giant flower blooming on the side of the large tree in the courtyard. Her long hair is a deeper shade of green and extends down to the small of her back. Numerous fleshy red flowers adorn her body, each one lewdly slightly opening and closing as if breathing. <br>She looks at you with a hungry look in her eyes."
+                "text": "{self:name} can only be described as an green amazoness sprouting from a tree.<br/>While her body beneath her thighs are invisible to you, her voluptuous upper body extends out from a giant flower blooming on the side of the large tree in the courtyard. Her long hair is a deeper shade of green and extends down to the small of her back. Numerous fleshy red flowers adorn her body, each one lewdly slightly opening and closing as if breathing. <br/>She looks at you with a hungry look in her eyes."
             }
         ],
         "startBattle": [

@@ -1,11 +1,12 @@
 package nightgames.status;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -16,8 +17,8 @@ import nightgames.status.addiction.AddictionType;
 
 public class DarkChaos extends Status {
 
-    public DarkChaos() {
-        super("Dark Chaos", Global.getPlayer());
+    public DarkChaos(Player affected) {
+        super("Dark Chaos", affected);
         flag(Stsflag.debuff);
     }
 
@@ -35,11 +36,11 @@ public class DarkChaos extends Status {
     public void tick(Combat c) {
         if (c == null)
             return;
-        float odds = Global.getPlayer().getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
+        float odds = ((Player)affected).getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
                         / 4;
         if (odds > Math.random()) {
-            Effect e = Effect.pick(c);
-            e.execute(c);
+            Effect e = Effect.pick(c, affected);
+            e.execute(c, affected);
         }
     }
 
@@ -105,7 +106,8 @@ public class DarkChaos extends Status {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new DarkChaos();
+        assert newAffected instanceof Player;
+        return new DarkChaos((Player) newAffected);
     }
 
      @Override public JsonObject saveToJson() {
@@ -115,29 +117,29 @@ public class DarkChaos extends Status {
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new DarkChaos();
+        return new DarkChaos(null);
     }
 
     private enum Effect {
-        HORNY(() -> new Horny(Global.getPlayer(), 3.f, 5, "Reyka's Corruption"),
+        HORNY((affected) -> new Horny(affected, 3.f, 5, "Reyka's Corruption"),
                         "The corruption settles into your genitals, inflaming your lusts."),
-        HYPER(() -> new Hypersensitive(Global.getPlayer()),
+        HYPER((affected) -> new Hypersensitive(affected),
                         "The corruption flows across your skin, leaving it much more sensitive."),
-        CHARMED(() -> new Charmed(Global.getPlayer()),
+        CHARMED((affected) -> new Charmed(affected),
                         "The blackness subverts your mind, making it unthinkable for you to harm your opponent."),
-        SHAMED(() -> new Shamed(Global.getPlayer()), "The blackness plants a deep sense of shame in your mind."),
-        FALLING(() -> new Falling(Global.getPlayer()),
+        SHAMED((affected) -> new Shamed(affected), "The blackness plants a deep sense of shame in your mind."),
+        FALLING((affected) -> new Falling(affected),
                         "The darkness interferes with your balance, sending you falling to the ground."),
-        FLATFOOTED(() -> new Flatfooted(Global.getPlayer(), 1),
+        FLATFOOTED((affected) -> new Flatfooted(affected, 1),
                         "The darkness clouds your mind, distracting you from the fight."),
-        FRENZIED(() -> new Frenzied(Global.getPlayer(), 3), "The corruption senses what you're doing, and is compelling"
+        FRENZIED((affected) -> new Frenzied(affected, 3), "The corruption senses what you're doing, and is compelling"
                         + " you to fuck as hard as you can.");
 
-        private final Supplier<? extends Status> supplier;
+        private final Function<Character, ? extends Status> effect;
         private final String message;
 
-        private Effect(Supplier<? extends Status> supplier, String message) {
-            this.supplier = supplier;
+        private Effect(Function<Character, ? extends Status> supplier, String message) {
+            this.effect = supplier;
             this.message = message;
         }
 
@@ -147,17 +149,16 @@ public class DarkChaos extends Status {
             return true;
         }
 
-        void execute(Combat c) {
+        void execute(Combat c, Character affected) {
             if (this == FALLING)
-                c.setStance(new StandingOver(c.getOpponent(Global.getPlayer()), Global.getPlayer()));
+                c.setStance(new StandingOver(c.getOpponent(affected), affected));
             else
-                Global.getPlayer()
-                      .addlist.add(supplier.get());
-            c.write(Global.getPlayer(), message);
+                affected.addlist.add(effect.apply(affected));
+            c.write(affected, message);
         }
 
-        static Effect pick(Combat c) {
-            if (c.getStance().inserted(Global.getPlayer()))
+        static Effect pick(Combat c, Character affected) {
+            if (c.getStance().inserted(affected))
                 return FRENZIED;
             Effect picked;
             do {

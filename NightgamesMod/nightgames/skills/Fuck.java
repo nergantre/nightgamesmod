@@ -141,7 +141,7 @@ public class Fuck extends Skill {
                                 + " {other:body-part:pussy}. At the last moment before thrusting in, however,"
                                 + " {self:pronoun-action:shift|shifts} to the tantalizing hole next door,"
                                 + " and {self:action:sink|sinks} the hard rod into {other:name-possessive}"
-                                + " hot ass instead.<br>", getSelf(), target, premessage));
+                                + " hot ass instead.<br/>", getSelf(), target, premessage));
                 new AssFuck(getSelf()).resolve(c, target);
                 
                 return true;
@@ -160,8 +160,8 @@ public class Fuck extends Skill {
             if (getSelf().has(Trait.insertion)) {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(getSelf(), selfO, targetO, m, c, this);
-            getSelf().body.pleasure(target, targetO, selfO, otherm, c, this);
+            target.body.pleasure(getSelf(), selfO, targetO, otherm, c, this);
+            getSelf().body.pleasure(target, targetO, selfO, m, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));

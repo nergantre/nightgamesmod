@@ -13,7 +13,7 @@ import nightgames.skills.petskills.GoblinTease;
 
 public class FGoblin extends Pet {
     public FGoblin(Character owner, int pow, int ac) {
-        super("Fetish Goblin", owner, Ptype.fgoblin, pow, ac);
+        super("fetish goblin", owner, Ptype.fgoblin, pow, ac);
     }
 
     @Override

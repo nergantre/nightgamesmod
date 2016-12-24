@@ -40,7 +40,7 @@ public class PullOut extends Skill {
         if (!user.human()) {
             return false;
         }
-        Player p = Global.getPlayer();
+        Player p = (Player) user;
         Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
         if (!addiction.isPresent()) {
             return false;

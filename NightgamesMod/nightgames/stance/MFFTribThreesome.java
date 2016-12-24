@@ -174,7 +174,7 @@ public class MFFTribThreesome extends Position {
 
     @Override
     public double pheromoneMod(Character self) {
-        return 2;
+        return 3;
     }
     
     @Override

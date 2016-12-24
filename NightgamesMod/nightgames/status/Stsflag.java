@@ -69,5 +69,8 @@ public enum Stsflag {
     bombed, 
     maglocked, 
     hogtied, 
-    collared
+    collared,
+    disabling,
+    pheromones,
+    piercingOdor
 }

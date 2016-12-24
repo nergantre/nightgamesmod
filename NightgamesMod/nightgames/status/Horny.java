@@ -12,7 +12,7 @@ import nightgames.skills.damage.DamageType;
 
 public class Horny extends DurationStatus {
     private float magnitude;
-    private String source;
+    protected String source;
 
     public static Status getWithPsycologicalType(Character from, Character target, float magnitude, int duration, String source) {
         return new Horny(target, (float) from.modifyDamage(DamageType.temptation, target, magnitude), duration, source);
@@ -89,8 +89,8 @@ public class Horny extends DurationStatus {
         assert s instanceof Horny;
         Horny other = (Horny) s;
         assert other.source.equals(source);
-        setDuration(Math.max(other.getDuration(), getDuration()));
-        magnitude += other.magnitude;
+        setDuration(other.getDuration());
+        magnitude = other.magnitude;
     }
 
     @Override
@@ -165,6 +165,12 @@ public class Horny extends DurationStatus {
     @Override public Status loadFromJson(JsonObject obj) {
         return new Horny(null, obj.get("magnitude").getAsFloat(), obj.get("duration").getAsInt(),
                         obj.get("source").getAsString());
+    }
+    public float getMagnitude() {
+        return magnitude;
+    }
+    public void setMagnitude(float magnitude) {
+        this.magnitude = magnitude;
     }
 
 }

@@ -103,8 +103,8 @@ public class Airi extends BasePersonality {
             if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
                 character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
                 c.write(character, 
-                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
-                                                character, opponent, character.body.getRandomPussy()));
+                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey cock.",
+                                                character, opponent, character.body.getRandomCock()));
             }
         }
     }
@@ -151,7 +151,7 @@ public class Airi extends BasePersonality {
                 character.addTemporaryTrait(Trait.autonomousPussy, 999);
             }
             if (character.level >= 36) {
-                character.addTemporaryTrait(Trait.entrallingjuices, 999);
+                character.addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
             if (character.level >= 39) {
                 character.addTemporaryTrait(Trait.energydrain, 999);
@@ -221,15 +221,15 @@ public class Airi extends BasePersonality {
         character.arousal.empty();
         opponent.arousal.empty();
         character.purge(c);
-        return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br><br>"
-                        + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you barely manage to hold on. Unfortunately--or perhaps fortunately--for you, Airi is not finished. She also covers your chest with her own sticky breasts and engulfs your nipples inside hers. Although it’s just slime, you feel as if her lips are on your nipples, sucking them and rolling the tips around inside her mouth.<br><br>"
-                        + "As you’re being overloaded with sensations, Airi brings her face close to yours and whispers in your ear.<i>\"Cum… cum… cum…\"</i> With a groan of agonising pleasure, you come hard, firing ropes of your seed inside her translucent depths.<br><br>"
-                        + "Panting with exertion from the aftershocks of your orgasm, you see your cum floating around in her body quickly getting absorbed and disappearing into nothing. Sensing danger, you glance at Airi's face <i>\"...Not enough... I need more food...\"</i><br><br>"
-                        + "This time Airi engulfs your whole body, leaving only your face outside, facing the sky. Try as you might, you can't even move your neck to see what's happening below. Feeling frightened at what she might do, you tense up your body to attempt to resist. <i>\"Are you... ready..? I'll begin...\"</i> Whatever you expected, it was not this. Her whole body begins to churn around your own, both massaging and licking every square inch of you. You feel a tendril of slime enter your ass and press against your prostate. At the same time two tendrils of slime enter your ears and attach themselves to something deep inside your head. In seconds, you feel Airi literally inside your head.<br><br>"
-                        + "<i>\"Cum...\"</i> An orgasm like nothing you felt before tears through your body, searing your head until your vision turns white.<br><br>"
-                        + "<i>\"Cum...\"</i> Another climax wracks you, suspending all your thoughts.<br><br>"
-                        + "<i>\"Cum...\"</i> Your cum turns thin, flowing out like water.<br><br>"
-                        + "<i>\"Give yourself... to me...\"</i> One final orgasm leaves you out cold. When you come to, you see Airi has left, taking your boxers like that. Wow, you're not sure how many more of these you can endure.<br><br>";
+        return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br/><br/>"
+                        + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you barely manage to hold on. Unfortunately--or perhaps fortunately--for you, Airi is not finished. She also covers your chest with her own sticky breasts and engulfs your nipples inside hers. Although it’s just slime, you feel as if her lips are on your nipples, sucking them and rolling the tips around inside her mouth.<br/><br/>"
+                        + "As you’re being overloaded with sensations, Airi brings her face close to yours and whispers in your ear.<i>\"Cum… cum… cum…\"</i> With a groan of agonising pleasure, you come hard, firing ropes of your seed inside her translucent depths.<br/><br/>"
+                        + "Panting with exertion from the aftershocks of your orgasm, you see your cum floating around in her body quickly getting absorbed and disappearing into nothing. Sensing danger, you glance at Airi's face <i>\"...Not enough... I need more food...\"</i><br/><br/>"
+                        + "This time Airi engulfs your whole body, leaving only your face outside, facing the sky. Try as you might, you can't even move your neck to see what's happening below. Feeling frightened at what she might do, you tense up your body to attempt to resist. <i>\"Are you... ready..? I'll begin...\"</i> Whatever you expected, it was not this. Her whole body begins to churn around your own, both massaging and licking every square inch of you. You feel a tendril of slime enter your ass and press against your prostate. At the same time two tendrils of slime enter your ears and attach themselves to something deep inside your head. In seconds, you feel Airi literally inside your head.<br/><br/>"
+                        + "<i>\"Cum...\"</i> An orgasm like nothing you felt before tears through your body, searing your head until your vision turns white.<br/><br/>"
+                        + "<i>\"Cum...\"</i> Another climax wracks you, suspending all your thoughts.<br/><br/>"
+                        + "<i>\"Cum...\"</i> Your cum turns thin, flowing out like water.<br/><br/>"
+                        + "<i>\"Give yourself... to me...\"</i> One final orgasm leaves you out cold. When you come to, you see Airi has left, taking your boxers like that. Wow, you're not sure how many more of these you can endure.<br/><br/>";
     }
 
     @Override
@@ -293,13 +293,13 @@ public class Airi extends BasePersonality {
     @Override
     public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br><br>"
-                            + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you cum in seconds, spilling the proof of your defeat inside her tendril.<br><br>";
+            return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br/><br/>"
+                            + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you cum in seconds, spilling the proof of your defeat inside her tendril.<br/><br/>";
         } else {
             return "Airi flows over to " + target.name()
                             + ". Her slime pools into a long and flexible appendage and worms itself inside "
                             + target.possessivePronoun()
-                            + " depths. The appendage starts to twist and squirm inside her poor victim and almost instantly causes her victim to scream out in pleasure.<br><br>";
+                            + " depths. The appendage starts to twist and squirm inside her poor victim and almost instantly causes her victim to scream out in pleasure.<br/><br/>";
         }
     }
 
@@ -307,12 +307,12 @@ public class Airi extends BasePersonality {
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return Global.format(
-                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br><br>"
+                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br/><br/>"
                                             + "Suddenly, you feel something grasp your ankles and pull you off balance. You brace yourself for the fall, but after a second, you only feel softness on your back. It’s Airi. She somehow snuck up on you and tripped you into falling on top of her. She quickly engulfs your hands and legs in her slime and presents your helpless body to {other:name}’s ministrations.",
                             character, assist);
         } else {
             return Global.format(
-                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br><br>"
+                            "Your fight with {other:name} seemed to have ran into a stalemate. Neither of you is willing to get close enough to each other for anything substantial to happen. You just continue to trade taunts whilst waiting for an opportunity.<br/><br/>"
                                             + "Suddenly, a blue blob appears in your line of sight. It’s Airi! More swiftly than you would expect, Airi moves to {other:name}’s side and engulfs her body in her own. After dissolving her clothing with her slime, Airi surfaces only {other:name-possessive} torso and sex, presenting her to you. Well, presented with a gift on a silver platter, you’re not going to refuse!",
                             character, target);
         }
@@ -338,7 +338,7 @@ public class Airi extends BasePersonality {
     @Override
     public String night() {
         return "You walk back to your dorm after the match, and decide to take a shower after all that exertion. Who knew sex fighting a bunch of girls would be so exhausting? You strip off your shirt and boxers and head straight into the bathroom. As you flip on the lights, you notice that the tub seems already filled with water. Just as you wonder if you forgot to drain the tub from last night, the liquid in the tub quivers and… stands up. "
-                        + "<br><br>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>";
+                        + "<br/><br/>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>";
     }
 
     public void advance() {

@@ -4,8 +4,10 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.stance.StandingOver;
 
 public class Falling extends Status {
@@ -41,7 +43,14 @@ public class Falling extends Status {
         if (!c.getStance().prone(affected)) {
             c.setStance(new StandingOver(c.getOpponent(affected), affected));
         }
-        affected.add(new Stunned(affected));
+        if (affected.has(Trait.NimbleRecovery)) {
+            c.write(Global.format("{self:NAME-POSSESSIVE} nimble body expertly breaks the fall.", affected, c.getOpponent(affected)));
+            affected.add(c, new Stunned(affected, 0, true));
+        } else if (affected.has(Trait.Unwavering)) {
+            c.write(Global.format("{self:SUBJECT-ACTION:go|goes} down but the fall seems to hardly affect {self:direct-object}.", affected, c.getOpponent(affected)));
+        } else {
+            affected.add(c, new Stunned(affected));            
+        }
         return 0;
     }
 

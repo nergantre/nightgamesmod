@@ -18,14 +18,14 @@ public class Dominance extends Addiction {
 
     private int originalWill;
 
-    public Dominance(Character cause, float magnitude) {
-        super("Dominance", cause, magnitude);
+    public Dominance(Player affected, Character cause, float magnitude) {
+        super(affected, "Dominance", cause, magnitude);
         flags.add(Stsflag.victimComplex);
         originalWill = -1;
     }
 
-    public Dominance(Character cause) {
-        this(cause, .01f);
+    public Dominance(Player affected, Character cause) {
+        this(affected, cause, .01f);
     }
 
     public static boolean mojoIsBlocked(Combat c) {
@@ -66,9 +66,7 @@ public class Dominance extends Addiction {
     public void endNight() {
         super.endNight();
 
-        Global.getPlayer()
-              .getWillpower()
-              .setTemporaryMax(originalWill);
+        affected.getWillpower().setTemporaryMax(originalWill);
         originalWill = -1;
     }
 
@@ -222,12 +220,12 @@ public class Dominance extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Dominance(newAffected, magnitude);
+        return new Dominance((Player) newAffected, newOther, magnitude);
     }
 
     @Override
     public Status loadFromJson(JsonObject obj) {
-        return new Dominance(Global.getCharacterByType(obj.get("cause")
+        return new Dominance(Global.getPlayer(), Global.getCharacterByType(obj.get("cause")
                                                           .getAsString()),
                         (float) obj.get("magnitude")
                                    .getAsInt());

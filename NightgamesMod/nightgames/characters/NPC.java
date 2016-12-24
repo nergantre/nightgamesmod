@@ -45,7 +45,7 @@ import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.status.Enthralled;
-import nightgames.status.Horny;
+import nightgames.status.Pheromones;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.trap.Trap;
@@ -90,9 +90,9 @@ public class NPC extends Character {
     public String describe(int per, Combat c) {
         String description = ai.describeAll(c, this);
         for (Status s : status) {
-            description = description + "<br>" + s.describe(c);
+            description = description + "<br/>" + s.describe(c);
         }
-        description = description + "<p>";
+        description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
         return description;
@@ -106,53 +106,53 @@ public class NPC extends Character {
             }
         }
         if (per >= 9) {
-            visible = visible + "Her arousal is at " + arousal.percent() + "%<br>";
+            visible = visible + "Her arousal is at " + arousal.percent() + "%<br/>";
         }
         if (per >= 8) {
-            visible = visible + "Her stamina is at " + stamina.percent() + "%<br>";
+            visible = visible + "Her stamina is at " + stamina.percent() + "%<br/>";
         }
         if (per >= 9) {
-            visible = visible + "Her willpower is at " + willpower.percent() + "%<br>";
+            visible = visible + "Her willpower is at " + willpower.percent() + "%<br/>";
         }
         if (per >= 7) {
-            visible = visible + "She looks " + mood.name() + "<br>";
+            visible = visible + "She looks " + mood.name() + "<br/>";
         }
         if (per >= 7 && per < 9) {
             if (arousal.percent() >= 75) {
                 visible = visible
-                                + "She's dripping with arousal and breathing heavily. She's at least 3/4 of the way to orgasm<br>";
+                                + "She's dripping with arousal and breathing heavily. She's at least 3/4 of the way to orgasm<br/>";
             } else if (arousal.percent() >= 50) {
-                visible = visible + "She's showing signs of arousal. She's at least halfway to orgasm<br>";
+                visible = visible + "She's showing signs of arousal. She's at least halfway to orgasm<br/>";
             } else if (arousal.percent() >= 25) {
-                visible = visible + "She's starting to look noticeably arousal, maybe a quarter of her limit<br>";
+                visible = visible + "She's starting to look noticeably arousal, maybe a quarter of her limit<br/>";
             }
             if (willpower.percent() <= 75) {
-                visible = visible + "She still seems ready to fight.<br>";
+                visible = visible + "She still seems ready to fight.<br/>";
             } else if (willpower.percent() <= 50) {
-                visible = visible + "She seems a bit unsettled, but she still has some spirit left in her.<br>";
+                visible = visible + "She seems a bit unsettled, but she still has some spirit left in her.<br/>";
             } else if (willpower.percent() <= 25) {
-                visible = visible + "Her eyes seem glazed over and ready to give in.<br>";
+                visible = visible + "Her eyes seem glazed over and ready to give in.<br/>";
             }
         }
         if (per >= 6 && per < 8) {
             if (stamina.percent() <= 33) {
-                visible = visible + "She looks a bit unsteady on her feet<br>";
+                visible = visible + "She looks a bit unsteady on her feet<br/>";
             } else if (stamina.percent() <= 66) {
-                visible = visible + "She's starting to look tired<br>";
+                visible = visible + "She's starting to look tired<br/>";
             }
         }
         if (per >= 3 && per < 7) {
             if (arousal.percent() >= 50) {
-                visible = visible + "She's showing clear sign of arousal. You're definitely getting to her.<br>";
+                visible = visible + "She's showing clear sign of arousal. You're definitely getting to her.<br/>";
             }
             if (willpower.percent() <= 50) {
-                visible = visible + "She seems a bit distracted and unable to look you in the eye.<br>";
+                visible = visible + "She seems a bit distracted and unable to look you in the eye.<br/>";
 
             }
         }
         if (per >= 4 && per < 6) {
             if (stamina.percent() <= 50) {
-                visible = visible + "She looks pretty tired<br>";
+                visible = visible + "She looks pretty tired<br/>";
             }
         }
 
@@ -161,9 +161,9 @@ public class NPC extends Character {
         }
         
         if (per >= 6 && status.size() > 0) {
-            visible += "List of statuses:<br><i>";
+            visible += "List of statuses:<br/><i>";
             visible += status.stream().map(Status::toString).collect(Collectors.joining(", "));
-            visible += "</i><br>";
+            visible += "</i><br/>";
         }
         
         return visible;
@@ -527,11 +527,11 @@ public class NPC extends Character {
     }
     
     private void pickAndDoAction(Collection<Action> available, Collection<Action> moves, Collection<Movement> radar) {
-        available.removeIf(a -> a == null || !a.usable(this));
         if (available.isEmpty()) {
             available.addAll(Global.getActions());
             available.addAll(moves);
         }
+        available.removeIf(a -> a == null || !a.usable(this));
         if (location.humanPresent()) {
             Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
         } else {
@@ -770,14 +770,14 @@ public class NPC extends Character {
         super.eot(c, opponent, last);
         ai.eot(c, opponent, last);
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br>You see " + name()
+            c.write(opponent, "<br/>You see " + name()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
-            add(c, Horny.getWithBiologicalType(opponent, this, opponent.getPheromonePower(), 10,
-                            opponent.nameOrPossessivePronoun() + " pheromones"));
+            add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (has(Trait.RawSexuality)) {
-            tempt(c, opponent, getArousal().max() / 20);
-            opponent.tempt(c, this, opponent.getArousal().max() / 20);
+            c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
+            temptNoSkillNoSource(c, opponent, getArousal().max() / 20);
+            opponent.temptNoSkillNoSource(c, this, opponent.getArousal().max() / 20);
         }
         if (c.getStance().dom(this)) {
             emote(Emotion.dominant, 20);

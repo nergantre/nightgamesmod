@@ -85,14 +85,14 @@ public class Paizuri extends Skill {
             target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .05 + (0.01 * breasts.size) + getSelf().get(Attribute.Fetish) * .01));
         }
         if (getSelf().has(Trait.temptingtits)) {
-            target.tempt(c, getSelf(), getSelf().body.getRandom("breasts"), m/5);
+            target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("breasts"), m/5, this);
         }
         return true;
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 28 && user.hasBreasts();
+        return user.get(Attribute.Seduction) >= 20 && user.hasBreasts();
     }
 
     @Override

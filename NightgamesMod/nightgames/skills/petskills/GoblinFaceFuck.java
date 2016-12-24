@@ -34,7 +34,7 @@ public class GoblinFaceFuck extends SimpleEnemySkill {
                         + "{self:SUBJECT} then wipes her leaking cock on {other:name-possessive} forehead, smearing {other:direct-object} with precum. "
                         + "{other:NAME-POSSESSIVE} face flushes with shame as the goblin marks {other:direct-object} with her fluids.", getSelf(), target));
         getSelf().body.pleasure(target, target.body.getRandom("skin"), getSelf().body.getRandomCock(), 10, c);
-        target.add(new Shamed(target));
+        target.add(c, new Shamed(target));
         return true;
     }
 

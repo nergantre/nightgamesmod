@@ -26,10 +26,12 @@ public class ReverseMount extends AbstractBehindStance {
 
     @Override
     public String image() {
-        if (bottom.hasPussy()) {
-            return "mount_m.jpg";
+        if (bottom.hasDick() && !top.hasDick()) {
+            return "rmount_f.jpg";
+        } else if (!bottom.hasDick() && !top.hasDick()) {
+            return "rmount_ff.jpg";
         } else {
-            return "mount_f.jpg";
+            return "rmount_m.jpg";
         }
     }
 

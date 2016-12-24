@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -34,8 +35,8 @@ public abstract class Addiction extends Status {
 
     protected boolean inWithdrawal;
 
-    protected Addiction(String name, Character cause, float magnitude) {
-        super(name, Global.getPlayer());
+    protected Addiction(Player affected, String name, Character cause, float magnitude) {
+        super(name, affected);
         this.name = name;
         this.cause = cause;
         this.magnitude = magnitude;
@@ -46,8 +47,8 @@ public abstract class Addiction extends Status {
         flags = EnumSet.noneOf(Stsflag.class);
     }
 
-    protected Addiction(String name, Character cause) {
-        this(name, cause, .01f);
+    protected Addiction(Player affected, String name, Character cause) {
+        this(affected, name, cause, .01f);
     }
 
     @Override
@@ -158,7 +159,7 @@ public abstract class Addiction extends Status {
         if (inWithdrawal) {
             Optional<Status> opt = withdrawalEffects();
             if (opt.isPresent() && !affected.has(opt.get()))
-                affected.add(opt.get().instance(affected, cause));
+                affected.addNonCombat(opt.get().instance(affected, cause));
         }
     }
 
@@ -251,8 +252,8 @@ public abstract class Addiction extends Status {
               .message(describeIncrease());
     }
 
-    public static Addiction load(AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
-        Addiction a = type.build(cause, mag);
+    public static Addiction load(Player player, AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
+        Addiction a = type.build(player, cause, mag);
         a.magnitude = mag;
         a.combatMagnitude = combat;
         a.overloading = overloading;
@@ -265,6 +266,6 @@ public abstract class Addiction extends Status {
     }
 
     public boolean wasCausedBy(Character target) {
-        return target.getType().equals(cause.getType());
+        return target != null && target.getType().equals(cause.getType());
     }
 }

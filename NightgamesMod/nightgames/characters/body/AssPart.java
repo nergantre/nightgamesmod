@@ -7,6 +7,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
+import nightgames.status.Trance;
 
 public class AssPart extends GenericBodyPart {
     /**
@@ -72,7 +73,7 @@ public class AssPart extends GenericBodyPart {
                             self, opponent));
             bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
             if (self.has(Trait.tight)) {
-                opponent.pain(c, opponent, Math.min(30, self.get(Attribute.Power)));
+                opponent.pain(c, self, Math.min(30, self.get(Attribute.Power)));
             }
         }
         if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
@@ -81,8 +82,8 @@ public class AssPart extends GenericBodyPart {
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
                                 + " body.", self, opponent));
                 opponent.drain(c, self, self.getLevel());
-                opponent.add(new Abuff(opponent, Attribute.Power, -3, 10));
-                self.add(new Abuff(self, Attribute.Power, 3, 10));
+                opponent.add(c, new Abuff(opponent, Attribute.Power, -3, 10));
+                self.add(c, new Abuff(self, Attribute.Power, 3, 10));
             } else {
                 c.write(self, Global.format("The feel of {self:name-possessive} ass around"
                                 + " {other:name-possessive} {other:body-part:cock} drains"
@@ -118,6 +119,18 @@ public class AssPart extends GenericBodyPart {
             if (opponent.has(Trait.anatomyknowledge)) {
                 bonus += 5;
             }
+        }
+        if (self.has(Trait.buttslut)) {
+            bonus += 10;
+            if (Global.random(4) == 0 && self.is(Stsflag.trance)) {
+                c.write(opponent, Global.format(
+                                "The foreign object rummaging around inside {self:name-possessive} ass <i><b>just feels so right</b></i>. {self:SUBJECT-ACTION:feel|feels} {self:reflective} slipping into a trance!",
+                                                self, opponent));
+                self.add(c, new Trance(self, 3, false));
+            }
+            c.write(opponent, Global.format(
+                            "The foreign object rummaging around inside {self:name-possessive} ass feels so <i>right</i>. {self:SUBJECT} can't help moaning in time with the swelling pleasure.",
+                                            self, opponent));
         }
         return bonus;
     }

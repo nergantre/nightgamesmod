@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
@@ -80,8 +81,8 @@ public class Masturbate extends Skill {
                 c.write(getSelf(), deal(c, 0, Result.weak, target));
             } else {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-                if (Global.getPlayer().checkAddiction(AddictionType.MIND_CONTROL, target)) {
-                    Global.getPlayer().unaddictCombat(AddictionType.MIND_CONTROL, 
+                if (((Player)getSelf()).checkAddiction(AddictionType.MIND_CONTROL, target)) {
+                    ((Player)getSelf()).unaddictCombat(AddictionType.MIND_CONTROL, 
                                     target, Addiction.MED_INCREASE, c);
                     c.write(getSelf(), "Touching yourself amuses Mara, reducing her control over you.");
                 }

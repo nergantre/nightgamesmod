@@ -46,6 +46,14 @@ public class DebugGUIPanel extends JPanel {
                 output.setText(list.get(1) + " is not a valid charater");
             }
         }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.move (\\w+)", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                target.travel(Global.getMatch().getAreas().stream().filter(area -> area.name.toLowerCase().contains(list.get(2))).findAny().get());
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            }
+        }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.addTrait (\\w+)", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
@@ -139,9 +147,9 @@ public class DebugGUIPanel extends JPanel {
                     }
                 }
                 String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
-                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\n%s\n%s",
+                output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\nAttractiveness: %.01f\n%s\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
-                                target.getMojo().toString(), target.getWillpower().toString(), attString, sb.toString()));
+                                target.getMojo().toString(), target.getWillpower().toString(), target.body.getHotness(Global.getPlayer()), attString, sb.toString()));
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             }

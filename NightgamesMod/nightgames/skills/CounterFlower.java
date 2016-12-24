@@ -12,7 +12,7 @@ import nightgames.stance.FlowerSex;
 public class CounterFlower extends CounterBase {
     public CounterFlower(Character self) {
         super("Flower Counter", self, 5,
-                        Global.format("<b>The giant flower at the base of {self:name-possessive} legs are open, with the petals waving invitingly.",
+                        Global.format("<b>The giant flower at the base of {self:name-possessive} legs are open, with the petals waving invitingly.</b>",
                                         self, self),
                         2);
         addTag(SkillTag.fucking);

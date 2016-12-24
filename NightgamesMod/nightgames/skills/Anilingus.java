@@ -88,7 +88,7 @@ public class Anilingus extends Skill {
             target.buildMojo(c, n);
         }
         if (selfm > 0) {
-            getSelf().tempt(c, target, target.body.getRandom("ass"), selfm);
+            getSelf().temptWithSkill(c, target, target.body.getRandom("ass"), selfm, this);
         }
         return result != Result.miss;
     }

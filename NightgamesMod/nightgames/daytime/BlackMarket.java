@@ -82,7 +82,7 @@ public class BlackMarket extends Store {
                                                         + "of your soul. Rin chants softly and wraps a talisman around a wooden rod. The presence inside you looms and seems ready to devour you, when suddenly she "
                                                         + "strikes the artifact with the rod. A shock runs through your consciousness, and the sense of danger disappears. The dark power is still present, but it "
                                                         + "seems tame now, willing to obey your command should you call for it. <i>\"The ritual is complete. You can keep the artifact as a souvenir, but all its "
-                                                        + "power is in you now.\"</i><p>");
+                                                        + "power is in you now.\"</i><br/><br/>");
                         player.mod(Attribute.Dark, 1);
                         acted = true;
                         trained = true;
@@ -105,7 +105,7 @@ public class BlackMarket extends Store {
                                         "You select one of the S&M toys and pay Rin for it. She picks up the toy - a leather riding crop - and gives you a small wicked smile. <i>\"Good "
                                                         + "choice. This one will grant you the masochism fetish if used properly. I'm quite good with these. Get undressed and we'll get started.\"</i> Your trepidation "
                                                         + "must show on your face, because her smiles becomes slightly more reassuring. <i>\"Sometimes the path to power can be painful. The gifts in these items may "
-                                                        + "bring you victory, but there's no easy way to unlock them. Besides, you'll enjoy it before we're through. That's the whole point after all.\"</i><p>");
+                                                        + "bring you victory, but there's no easy way to unlock them. Besides, you'll enjoy it before we're through. That's the whole point after all.\"</i><br/><br/>");
                         player.mod(Attribute.Fetish, 1);
                         acted = true;
                         trained = true;

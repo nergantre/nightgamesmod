@@ -38,7 +38,7 @@ public class FaceSit extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
-                        && c.getStance().reachTop(getSelf()) && !c.getStance().penetrated(c, getSelf())
+                        && c.getStance().prone(target) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
                         && !getSelf().has(Trait.shy);
     }
@@ -50,7 +50,7 @@ public class FaceSit extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().has(Trait.entrallingjuices) && Global.random(4) == 0 && !target.wary()) {
+        if (getSelf().has(Trait.enthrallingjuices) && Global.random(4) == 0 && !target.wary()) {
             writeOutput(c, Result.special, target);
             target.add(c, new Enthralled(target, getSelf(), 5));
         } else {
@@ -79,8 +79,8 @@ public class FaceSit extends Skill {
             n *= 1.5;
         }
 
-        target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
-        target.tempt(c, getSelf(), getSelf().body.getRandom("pussy"), (int) Math.round(n / 2));
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2), this);
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("pussy"), (int) Math.round(n / 2), this);
 
         target.loseWillpower(c, 5);
         target.add(c, new Shamed(target));
@@ -106,11 +106,7 @@ public class FaceSit extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().isFaceSitting(getSelf())) {
-            return Tactics.positioning;
-        } else {
-            return Tactics.pleasure;
-        }
+        return Tactics.pleasure;
     }
 
     @Override

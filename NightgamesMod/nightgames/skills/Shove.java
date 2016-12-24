@@ -133,7 +133,7 @@ public class Shove extends Skill {
         return String.format("%s strikes %s in the chest with %s palm, staggering %s footing. Suddenly %s "
                         + "%s tears and falls off %s in tatters.", getSelf().subject(),
                         target.nameDirectObject(), getSelf().possessivePronoun(),
-                        target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
+                        target.possessivePronoun(), target.nameOrPossessivePronoun(),
                         target.getOutfit().getTopOfSlot(ClothingSlot.top).getName(),
                         target.directObject());
     }

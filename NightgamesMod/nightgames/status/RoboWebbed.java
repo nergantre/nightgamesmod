@@ -50,7 +50,7 @@ public class RoboWebbed extends DurationStatus {
             affected.tempt(dmg);
             affected.location().opportunity(affected, trap);
         } else {
-            affected.tempt(c, dmg);
+            affected.temptNoSkillNoTempter(c, dmg);
         }
     }
     

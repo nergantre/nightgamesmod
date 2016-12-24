@@ -12,4 +12,6 @@ public interface Loot {
     void pickup(Character owner);
 
     String getID();
+
+    String getDesc();
 }

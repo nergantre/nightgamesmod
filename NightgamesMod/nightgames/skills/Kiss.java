@@ -9,6 +9,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
+import nightgames.skills.damage.Staleness;
 import nightgames.stance.Stance;
 import nightgames.status.Lovestruck;
 
@@ -17,7 +18,8 @@ public class Kiss extends Skill {
     private static final int divineCost = 30;
 
     public Kiss(Character self) {
-        super("Kiss", self);
+        // kiss starts off strong, but becomes stale fast. It recovers pretty quickly too, but makes spamming it less effective
+        super("Kiss", self, 0, Staleness.build().withDefault(1.0).withFloor(.20).withDecay(.50).withRecovery(.10));
         addTag(SkillTag.usesMouth);
         addTag(SkillTag.pleasure);
     }
@@ -45,7 +47,7 @@ public class Kiss extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        int accuracy = c.getStance().en == Stance.neutral ? 50 : 100;
+        int accuracy = c.getStance().en == Stance.neutral ? 70 : 100;
         if (getSelf().has(Trait.romantic)) {
             accuracy += 20;
         }
@@ -54,7 +56,7 @@ public class Kiss extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = Global.random(6, 10);
+        int m = Global.random(8, 12);
         if (!target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.miss, target);
             return false;
@@ -75,11 +77,11 @@ public class Kiss extends Skill {
             res = Result.weak;
         }
         if (deep) {
-            m += 5;
+            m += 3;
             res = Result.special;
         }
         if (getSelf().has(Trait.experttongue)) {
-            m += 5;
+            m += 3;
             res = Result.special;
         }
         if (getSelf().has(Trait.soulsucker)) {
@@ -87,7 +89,7 @@ public class Kiss extends Skill {
         }
         if (getLabel(c).equals(divineString)) {
             res = Result.divine;
-            m += 20;
+            m += 15;
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {

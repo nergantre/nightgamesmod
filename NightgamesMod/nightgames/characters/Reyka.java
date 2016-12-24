@@ -63,7 +63,7 @@ public class Reyka extends BasePersonality {
         self.body.add(TailPart.demonic);
         self.body.add(WingsPart.demonic);
         self.body.add(EarPart.pointed);
-        self.body.add(new FacePart(1.5, 1.1));
+        self.body.add(new FacePart(0.5, 1.1));
         self.initialGender = CharacterSex.female;
     }
 
@@ -75,8 +75,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
                         ? Optional.of(Attribute.Dark) : Optional.empty());
-        preferredAttributes
-                        .add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
+        preferredAttributes.add(c -> c.get(Attribute.Dark) > c.get(Attribute.Fetish) + 10 && c.get(Attribute.Fetish) < 50
                                         ? Optional.of(Attribute.Fetish) : Optional.empty());
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 
@@ -182,11 +181,11 @@ public class Reyka extends BasePersonality {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "
-                            + "pleasure in making a boy a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
-                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet boy slut?\"</i> Your only response is to cum. Hard. Ropes "
-                            + "of cum fall to the ground below you.<p>Reyka pouts as she pulls out <i>\"Such a good waste of semen though.\"</i> she tuts. <i>\"Looks like you "
+                            + "pleasure in making a " + Global.getPlayer().boyOrGirl() + " a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
+                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet " + Global.getPlayer().boyOrGirl() + " slut?\"</i> Your only response is to cum. Hard. Ropes "
+                            + "of cum fall to the ground below you.<br/><br/>Reyka pouts as she pulls out <i>\"Such a good waste of semen though.\"</i> she tuts. <i>\"Looks like you "
                             + "still owe me a meal.\"</i> She smirks in a way that makes your eyes flash quickly left to right, looking for an escape route. Reyka is too quick "
-                            + "however and soon you find yourself pinned with your still hard cock buried deep in her pussy.<p>She rides you until you cum again and she "
+                            + "however and soon you find yourself pinned with your still hard cock buried deep in her pussy.<br/><br/>She rides you until you cum again and she "
                             + "has cum twice herself. She stands up and begins collecting her clothes and her spoils as the victor. She turns to you. <i>\"The offer still "
                             + "stands; you'd make a great sub if you're ever interested in broadening your sexual horizons. Open minded men are hard to find.\"</i> She admits "
                             + "smiling. You shake your head; you don't think that sort of thing would really suit you. Her smile deflates some but she nods her head and "
@@ -202,7 +201,7 @@ public class Reyka extends BasePersonality {
                         + " you feel something shift in you, as if something that was there all"
                         + " along but has always gone unnoticed by you suddenly got yanked on."
                         + " Just before you pass out, you see her wings enveloping you both"
-                        + " in a dark, warm cocoon.<p> After what seems like an eternity,"
+                        + " in a dark, warm cocoon.<br/><br/> After what seems like an eternity,"
                         + " but what actually lasted for only a few minutes, you wake up and"
                         + " drowsily look around. You can see Reyka sitting cross-legged a few feet"
                         + " away, her wings folded neatly behind her back and her eyes fixed on" + " yours."
@@ -216,7 +215,7 @@ public class Reyka extends BasePersonality {
                         + " your soul now, I wouldn't be able to drink from you again. So I simply"
                         + " took a little nibble into it and let you recover. I will expect you to"
                         + " repay this kindness soon, and there is only one thing I will accept"
-                        + " as payment. I'll leave you to figure out what it is.\"</i><p> With that,"
+                        + " as payment. I'll leave you to figure out what it is.\"</i><br/><br/> With that,"
                         + " she walks off, her hips, barely covered by her short miniskirt,"
                         + " seductively waving good-bye. For now.";
     }
@@ -224,23 +223,23 @@ public class Reyka extends BasePersonality {
     @Override
     public String defeat(Combat paramCombat, Result flag) {
         character.arousal.empty();
-        if (character.has(Trait.succubus) && character.get(Attribute.Dark) >= 6) {
+        if (character.has(Trait.lacedjuices) && Global.random(3) == 0 ) {
             return "Reyka shivers as she approaches her climax and her legs fall open defenselessly. You can't resist taking advantage of this opening to deliver the "
                             + "coup de grace. You grab hold of her thighs and run your tongue across her wet pussy. Her love juice is surprisingly sweet and almost intoxicating, "
                             + "but you stay focused on your goal. You ravage her vulnerable love button with your tongue and a flood of tasty wetness hits you as she cums. You "
                             + "prolong her climax by continuing to lick her while lapping up as much of her love juice as you can. The taste seems almost familiar, but you can't "
-                            + "quite place it. Sweet and tangy like a desert wine? Not a perfect comparison, but not far off.<p>Reyka should be coming down from her peak, but "
+                            + "quite place it. Sweet and tangy like a desert wine? Not a perfect comparison, but not far off.<br/><br/>Reyka should be coming down from her peak, but "
                             + "she's still moaning quite passionately. Oh well, it can't hurt to drink up the last of her love juice. You're the one who made her juice herself, so "
                             + "it seems only fair. It is very tasty. Intoxicating was the word that came to mind early, but addictive seems to fit too. Reyka's flower is mostly "
-                            + "clean, but you stick your tongue deep inside to be sure. There seems to be some fresh love juice in this bit... and this one.... Here too.<p>Reyka's "
+                            + "clean, but you stick your tongue deep inside to be sure. There seems to be some fresh love juice in this bit... and this one.... Here too.<br/><br/>Reyka's "
                             + "pussy tenses up and you're treated to another flood of her wonderful flavor. You can't let this much juice go to waste. You diligantly continue to "
                             + "lick Reyka's trembling girl parts as she squeals in passion. You feel her hands grip your hair desperately and you have to hold her hips to keep her "
                             + "from squirming away. She's producing a decent amount of delicious nectar, but it occurs to you that she'll probably give you more if you focus on her "
                             + "clit. You target her pearl and lick it rapidly until she screams in pleasure and rewards you with another surge of juice. This seems like the best "
-                            + "way to get more of her wonderful juice. You could just stay here drinking this stuff all night, and you just may.<p>You suddenly feel Reyka's tail wrap "
+                            + "way to get more of her wonderful juice. You could just stay here drinking this stuff all night, and you just may.<br/><br/>You suddenly feel Reyka's tail wrap "
                             + "tightly around your balls. Your head jerks up in surprise and her thighs clamp together on it, holding you out of reach of her delicious honey pot. "
                             + "<i>\"Down lover\"</i> Reyka admonishes you as she covers her groin protectively. <i>\"I appreciate the dedication, but after a couple orgasms, I need a chance to "
-                            + "catch my breath.\"</i> You feel your head clear a bit and realize you completely fell victim to her addictive love juice.<p>Reyka uses her grip on your "
+                            + "catch my breath.\"</i> You feel your head clear a bit and realize you completely fell victim to her addictive love juice.<br/><br/>Reyka uses her grip on your "
                             + "head to force you onto your back. <i>\"I do love being eaten out, but right now I'm ready to be filled.\"</i> She releases the head scissor and positions herself "
                             + "over your dick before dropping her hips to engulf you to the hilt. A jolt goes through you and you realize exactly how horny you are. In addition to "
                             + "not having any relief, Reyka's fluids have started to affect you. You're incredibly hard and sensitive, but even though Reyka is riding you intensely, "
@@ -259,7 +258,7 @@ public class Reyka extends BasePersonality {
                         + " in orgasm, the sound reverberating through your soul, the amount of"
                         + " fluids gushing into your willing mouth nearly drown you. After a few"
                         + " seconds she rolls off of you, although you don't notice it, having passed"
-                        + " out from the overdose of aphrodisiacs.<p>You come to your senses just"
+                        + " out from the overdose of aphrodisiacs.<br/><br/>You come to your senses just"
                         + " in time to see Reyka drinking down the load of cum you are shooting"
                         + " into her mouth. Somehow, you keep from passing out as she drinks"
                         + " some of your energy and soon, you see her face hovering over yours."
@@ -301,7 +300,7 @@ public class Reyka extends BasePersonality {
                         + "few syllables, but nothing quite coherent. <i>\"No preference? Then I guess I will simply choose for you.\"</i> She brings her spade-tipped tail between "
                         + target.name() + "s "
                         + "legs and starts running the very tip rapidly across her labia. When it is sufficiently wet, she moves it slightly upwards and moves it briskly back and forth over "
-                        + target.name() + "'s clit.<p>" + target.name()
+                        + target.name() + "'s clit.<br/><br/>" + target.name()
                         + ", at first scared, now has her eyes closed and begins moaning feverishly. Just when she has almost reached her climax, "
                         + "Reyka digs her tail deep into " + target.name() + "'s drooling pussy. This sends "
                         + target.name() + " loudly over the edge. Her screams of pleasure are almost deafening, "
@@ -346,7 +345,7 @@ public class Reyka extends BasePersonality {
                         + " painting. Her arms are slim and end in long-fingered,"
                         + " soft hands, nails polished shining red. Underneath, her long and"
                         + " perfectly formed legs and delicate feet stand in an imposing posture."
-                        + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br>"
+                        + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br/>"
                         + " Her gaze speaks of indescribable pleasure, but your mind reminds you"
                         + " of the cost of indulging in a succubus' body: Give her half a chance"
                         + " and she will suck out your very soul.";
@@ -387,7 +386,7 @@ public class Reyka extends BasePersonality {
 
     @Override
     public String startBattle(Character self, Character other) {
-        return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><p>"
+        return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><br/><br/>"
                         + "Reyka strikes a seductive pose and the devilish smile"
                         + " on her face reveals just what, or more specifically,"
                         + " who she intends that morsel to be.";
@@ -402,11 +401,11 @@ public class Reyka extends BasePersonality {
     @Override
     public String night() {
         return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
-                        + "what guy would when having this much sex with several different girls? Still, a weekend would "
+                        + "what " + Global.getPlayer().guyOrGirl() + " would when having this much sex with several different girls? Still, a weekend would "
                         + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
                         + "<i>\"Listen, " + Global.getPlayer().name()
                         + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
-                        + "of guys and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
+                        + "of " + Global.getPlayer().guyOrGirl() + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
                         + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
                         + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
                         + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "

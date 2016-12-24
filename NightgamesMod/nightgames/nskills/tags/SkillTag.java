@@ -49,6 +49,7 @@ public abstract class SkillTag {
                     (results, value) -> results.getCombat().getStance().oral(results.getSelf().getCharacter(), results.getCombat().getOpponent(results.getSelf().getCharacter())), "Oral");
     public final static SkillTag insertion = new NameOnlySkillTag("Insertion");
     public final static SkillTag fucking = new NameOnlySkillTag("Fucking");
+    public final static SkillTag thrusting = new NameOnlySkillTag("Thrusting");
     public final static SkillTag anal = new NameOnlySkillTag("Anal");
     public final static SkillTag reachUpperBody = new BothRequirementSkillTag(
                     (results, value) -> results.getCombat().getStance().reachTop(results.getSelf().getCharacter()),

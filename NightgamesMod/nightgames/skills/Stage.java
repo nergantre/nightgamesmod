@@ -54,20 +54,20 @@ public enum Stage {
         Stage stage = stageOf(ch);
         if (ch.human()) {
             if (stage == FOREPLAY) {
-                return "You don't feel quite ready to get all hot and heavy yet.<br>";
+                return "You don't feel quite ready to get all hot and heavy yet.<br/>";
             }
             if (stage == FINISHER) {
-                return "You are pumped, ready to finish this!<br>";
+                return "You are pumped, ready to finish this!<br/>";
             }
             return "";
         } else {
             if (stage == FOREPLAY) {
-                return Global.capitalizeFirstLetter(ch.pronoun()) + " does not seem particularly passionate yet.<br>";
+                return Global.capitalizeFirstLetter(ch.pronoun()) + " does not seem particularly passionate yet.<br/>";
             }
             if (stage == FINISHER) {
                 return Global.capitalizeFirstLetter(ch.pronoun()) + 
                                 " is completely absorbed in the fight, giving it " + ch.possessivePronoun()
-                                + " all.<br>";
+                                + " all.<br/>";
             }
             return "";
         }

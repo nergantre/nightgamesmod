@@ -423,7 +423,7 @@ public class Decider {
         Global.debugSimulation += 1;
         Character newSkillUser = getCopyFromCombat(c, c2, skillUser);
         Character newObserver = getCopyFromCombat(c, c2, fitnessObserver);
-        Character newOpponent = c2.getOpponent(newObserver);
+        Character newOpponent = c2.getOpponent(newSkillUser);
         Character newTarget = getCopyFromCombat(c, c2, target);
 
         effect.execute(c2, newSkillUser, newTarget);

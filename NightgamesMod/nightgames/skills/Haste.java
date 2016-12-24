@@ -34,8 +34,8 @@ public class Haste extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().add(new Primed(getSelf(), -1));
-        getSelf().add(new Abuff(getSelf(), Attribute.Speed, 10, 6));
+        getSelf().add(c, new Primed(getSelf(), -1));
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Speed, 10, 6));
         writeOutput(c, Result.normal, target);
         return true;
     }

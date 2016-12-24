@@ -18,7 +18,7 @@ public class CombatSceneButton extends JButton {
         super(label);
         setFont(new Font("Baskerville Old Face", 0, 18));
         addActionListener(arg0 -> {
-            c.write("<br>");
+            c.write("<br/>");
             choice.choose(c, npc);
             c.updateMessage();
             Global.gui().next(c);

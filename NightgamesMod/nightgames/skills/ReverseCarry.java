@@ -48,8 +48,8 @@ public class ReverseCarry extends Carry {
                 otherm += Math.min(getSelf().get(Attribute.Seduction) / 4, 40);
             }
             c.setStance(new Jumped(getSelf(), target), getSelf(), getSelf().canMakeOwnDecision());
-            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), m, c, this);
-            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), otherm, c, this);
+            target.body.pleasure(getSelf(), getSelfOrgan(), getTargetOrgan(target), otherm, c, this);
+            getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m, c, this);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), premessage + deal(c, premessage.length(), Result.miss, target));
@@ -83,7 +83,7 @@ public class ReverseCarry extends Carry {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        String subject = (damage > 0 ? "" : target.subject() + " ");
+        String subject = (damage > 0 ? "" : getSelf().subject() + " ");
         if (modifier == Result.miss) {
             return String.format("%sjumps onto %s, but %s %s %s back onto the floor.",
                             subject, target.nameDirectObject(), target.pronoun(),

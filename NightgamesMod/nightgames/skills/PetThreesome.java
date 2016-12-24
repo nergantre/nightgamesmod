@@ -28,12 +28,12 @@ public class PetThreesome extends Skill {
     }
 
     public BodyPart getSelfOrgan(Character fucker, Combat c) {
-        BodyPart res = fucker.body.getRandomPussy();
+        BodyPart res = fucker.body.getRandomCock();
         return res;
     }
 
     public BodyPart getTargetOrgan(Character target) {
-        return target.body.getRandomCock();
+        return target.body.getRandomPussy();
     }
 
     public boolean fuckable(Combat c, Character target) {
@@ -69,6 +69,7 @@ public class PetThreesome extends Skill {
     protected Character getMaster(Combat c) {
         return getSelf();
     }
+
     @Override
     public boolean resolve(Combat c, Character target) {
         int m = 5 + Global.random(5);
@@ -92,7 +93,7 @@ public class PetThreesome extends Skill {
                                     target, master.subjectAction("are", "is")));
                     c.setStance(new FFMCowgirlThreesome(fucker, master, target), getSelf(), true);
                 }
-            } else if (selfO.isType("cock") && master.useFemalePronouns()) {
+            } else if (selfO.isType("cock") && !master.hasDick()) {
                 c.write(getSelf(), Global.format("While %s holding {other:name-do} down, "
                                 + "{self:subject} mounts {other:direct-object} and pierces "
                                 + "{other:direct-object} with {self:possessive} cock in the missionary position.", fucker, 
@@ -121,8 +122,8 @@ public class PetThreesome extends Skill {
             if (fucker.has(Trait.insertion)) {
                 otherm += Math.min(fucker.get(Attribute.Seduction) / 4, 40);
             }
-            target.body.pleasure(fucker, selfO, targetO, m, c, this);
-            fucker.body.pleasure(target, targetO, selfO, otherm, c, this);
+            target.body.pleasure(fucker, selfO, targetO, otherm, c, this);
+            fucker.body.pleasure(target, targetO, selfO, m, c, this);
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to pull {other:name-do} into a threesome but {other:pronoun-action:are|is} not aroused enough yet.", 
                             getSelf(), target));

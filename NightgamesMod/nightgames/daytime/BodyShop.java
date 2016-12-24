@@ -496,7 +496,7 @@ public class BodyShop extends Activity {
         }
         for (ShopSelection s : selection) {
             if (s.choice.equals(choice)) {
-                Global.gui().message("<br>You've selected " + s.choice
+                Global.gui().message("<br/>You've selected " + s.choice
                                 + ". While wondering if this was such a great idea, you follow the proprietor into the back room...");
                 s.buy(player);
                 player.money -= s.price;
@@ -505,7 +505,7 @@ public class BodyShop extends Activity {
             }
         }
         Global.gui().message(
-                        "<br>You have some second thoughts about letting some stranger play with your body. You think up some excuse and quickly leave the shack.");
+                        "<br/>You have some second thoughts about letting some stranger play with your body. You think up some excuse and quickly leave the shack.");
         done(false);
     }
 

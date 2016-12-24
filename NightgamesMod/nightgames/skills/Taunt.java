@@ -40,7 +40,7 @@ public class Taunt extends Skill {
             m += 4;
             chance += .25;
         } 
-        target.tempt(c, getSelf(), (int) Math.round(m));
+        target.temptNoSource(c, getSelf(), (int) Math.round(m), this);
         if (Global.randomdouble() < chance) {
             target.add(c, new Shamed(target));
         }
@@ -52,7 +52,7 @@ public class Taunt extends Skill {
             c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
                             + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
                             , getSelf(), target));
-            target.add(new Enthralled(target, getSelf(), 1));
+            target.add(c, new Enthralled(target, getSelf(), 1, false));
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

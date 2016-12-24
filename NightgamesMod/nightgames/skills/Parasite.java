@@ -37,7 +37,7 @@ public class Parasite extends Skill {
             deal(c, 0, Result.normal, target);
         }
         
-        target.add(new Parasited(target, getSelf()));
+        target.add(c, new Parasited(target, getSelf()));
         
         return true;
     }

@@ -4,9 +4,11 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
@@ -106,10 +108,14 @@ public enum BreastsPart implements BodyPart {
 
     @Override
     public double getHotness(Character self, Character opponent) {
-        double hotness = -.25 + size * .3 * self.getOutfit()
+        Clothing top = self.getOutfit().getTopOfSlot(ClothingSlot.top);
+        double hotness = -.1 + Math.sqrt(size) * .15 * self.getOutfit()
                                                 .getExposure(ClothingSlot.top);
         if (!opponent.hasDick()) {
             hotness /= 2;
+        }
+        if (top == null) {
+            hotness += .1;
         }
         return Math.max(0, hotness);
     }
@@ -203,9 +209,9 @@ public enum BreastsPart implements BodyPart {
             if (self.has(Trait.magicmilk)) {
                 float addictionLevel;
                 Addiction addiction;
-                if (opponent.human()) {
-                    Global.getPlayer().addict(AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
-                    addiction = Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).get();
+                if (opponent.human() && opponent instanceof Player) {
+                    ((Player)opponent).addict(AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
+                    addiction = ((Player)opponent).getAddiction(AddictionType.MAGIC_MILK).get();
                     addictionLevel = addiction.getMagnitude();
                 } else {
                     addictionLevel = 0;
@@ -244,7 +250,7 @@ public enum BreastsPart implements BodyPart {
     
                 }
                 if (addiction != null)
-                    opponent.tempt(c, self, this, (int) (15 + addiction.getMagnitude() * 35));
+                    opponent.temptNoSkill(c, self, this, (int) (15 + addiction.getMagnitude() * 35));
     
                 if (opponent.is(Stsflag.magicmilkcraving)) {
                     // temporarily relieve craving
@@ -264,7 +270,7 @@ public enum BreastsPart implements BodyPart {
                                 Global.format("The power seems to leave {other:name-possessive} body as {other:pronoun-action:sip|sips} {self:possessive} cloying cream.",
                                                 self, opponent));
                 opponent.weaken(c, opponent.getStamina().max() / 10);
-                opponent.add(new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
+                opponent.add(c, new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
             }
         }
         return 0;

@@ -2,6 +2,7 @@ package nightgames.characters.body;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -64,7 +65,7 @@ public class MouthPart extends GenericBodyPart {
                                     "As {other:name-possessive} " + fluid
                                                     + " flow down your throat, your entire mind fogs up. "
                                                     + "You forget where you are, why you're here, and what you're doing. "
-                                                    + "The only thing left in you is an primal need to obtain more of {other:possessive} fluids.",
+                                                    + "The only thing left in you is a primal need to obtain more of {other:possessive} fluids.",
                                     self, opponent)));
                 } else {
                     c.write(self, Global.capitalizeFirstLetter(Global.format(
@@ -88,9 +89,9 @@ public class MouthPart extends GenericBodyPart {
         if (self.has(Trait.experttongue)) {
             if (Global.random(6) == 0 && !opponent.wary() && damage > 5) {
                 if (!self.human()) {
-                    c.write(opponent, "<br>Your mind falls into a pink colored fog from the tongue lashing.");
+                    c.write(opponent, "<br/>Your mind falls into a pink colored fog from the tongue lashing.");
                 } else {
-                    c.write(opponent, "<br>" + opponent.name()
+                    c.write(opponent, "<br/>" + opponent.name()
                                     + "'s mind falls into a pink colored fog from the tongue lashing.");
                 }
                 opponent.add(c, new Trance(opponent));
@@ -99,28 +100,28 @@ public class MouthPart extends GenericBodyPart {
                             * self.getArousal().percent() / 100.0;
         }
         if (self.has(Trait.sweetlips) && c.getStance().sub(self)) {
-            c.write(opponent, Global.format("<br>{self:name-possessive} enticing lips turns {other:direct-object} on as {other:subject-action:force|forces} {other:reflective} into them.",
+            c.write(opponent, Global.format("<br/>{self:name-possessive} enticing lips turns {other:direct-object} on as {other:subject-action:force|forces} {other:reflective} into them.",
                             self, opponent));
-            opponent.tempt(c, self, this, (int) self.modifyDamage(DamageType.temptation, opponent, damage));
+            opponent.temptNoSkill(c, self, this, (int) self.modifyDamage(DamageType.temptation, opponent, damage));
         }
         if (self.has(Trait.catstongue)) {
-            c.write(opponent, Global.format("<br>{self:name-possessive} abrasive tongue produces an unique sensation.",
+            c.write(opponent, Global.format("<br/>{self:name-possessive} abrasive tongue produces an unique sensation.",
                             self, opponent));
 
             bonus += Global.random(3) + 4;
             opponent.pain(c, opponent, 8 + Global.random(10), false, true);
         }
-        if (self.has(Trait.corrupting)) {
-            opponent.add(c, new PartiallyCorrupted(self));
+        if (self.has(Trait.corrupting) && opponent.human()) {
+            opponent.add(c, new PartiallyCorrupted((Player) opponent, self));
         }
         if (self.has(Trait.soulsucker) && target.isGenital()) {
             if (!self.human()) {
                 c.write(opponent,
-                                "<br>You feel faint as her lips touch you, as if your will to fight is being sucked out through your "
+                                "<br/>You feel faint as her lips touch you, as if your will to fight is being sucked out through your "
                                                 + target.describe(opponent) + " into her mouth.");
             } else {
                 c.write(opponent,
-                                "<br>As your lips touch " + opponent.getName()
+                                "<br/>As your lips touch " + opponent.getName()
                                                 + ", you instinctively draw in her spirit, forcing her energy through "
                                                 + target.describe(opponent) + " into your mouth.");
             }

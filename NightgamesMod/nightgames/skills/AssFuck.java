@@ -11,6 +11,8 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.stance.Anal;
 import nightgames.stance.AnalProne;
+import nightgames.stance.BehindFootjob;
+import nightgames.stance.Stance;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.IgnoreOrgasm;
@@ -38,7 +40,7 @@ public class AssFuck extends Fuck {
                         && (c.getStance().behind(getSelf())
                                         || (c.getStance().prone(target) && !c.getStance().mobile(target)))
                         && getSelf().canAct()
-                        && (getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant)
+                        && (getTargetOrgan(target).isReady(target) || target.has(Trait.buttslut) || getSelf().has(Item.Lubricant)
                                         || getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready)
                                         || getSelf().has(Trait.assmaster))
                         && (!target.hasPussy() || !PullOut.blockedByAddiction(getSelf()));
@@ -91,13 +93,14 @@ public class AssFuck extends Fuck {
                 c.write(getSelf(), receive(c, premessage.length(), Result.normal, target));
             }
         }
-        
+
         boolean voluntary = getSelf().canMakeOwnDecision();
         if (c.getStance().behind(getSelf())) {
             if (getSelf().getType().equals("Eve")) {
                 c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
             } else {
-                c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);
+                if (c.getStance().enumerate() == Stance.behindfootjob) {c.setStance(new BehindFootjob(getSelf(),target));}
+                else {c.setStance(new Anal(getSelf(), target), getSelf(), voluntary);}
             }
         } else {
             c.setStance(new AnalProne(getSelf(), target), getSelf(), voluntary);
@@ -111,7 +114,11 @@ public class AssFuck extends Fuck {
             getSelf().body.pleasure(target, getTargetOrgan(target), getSelfOrgan(), m / 2, c, this);
         }
         getSelf().emote(Emotion.dominant, 100);
-        target.emote(Emotion.desperate, 50);
+        if (!target.has(Trait.analTraining1) && !target.has(Trait.shameless)) {
+            target.emote(Emotion.desperate, 50);
+        } else {
+            target.emote(Emotion.horny, 25);
+        }
         if (!target.has(Trait.Unflappable)) {
             target.add(c, new Flatfooted(target, 1));
         }
@@ -130,7 +137,7 @@ public class AssFuck extends Fuck {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 15;
+        return user.get(Attribute.Seduction) >= 15 || target.has(Trait.buttslut);
     }
 
     @Override

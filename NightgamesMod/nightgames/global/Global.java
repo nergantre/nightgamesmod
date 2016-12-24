@@ -162,8 +162,7 @@ public class Global {
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global(boolean headless) {
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
+        //debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -271,6 +270,11 @@ public class Global {
         return gui;
     }
 
+    /**
+     * WARNING DO NOT USE THIS IN ANY COMBAT RELATED CODE.
+     * IT DOES NOT TAKE INTO ACCOUNT THAT THE PLAYER GETS CLONED. WARNING. WARNING.
+     * @return
+     */
     public static Player getPlayer() {
         return human;
     }
@@ -353,7 +357,6 @@ public class Global {
         getSkillPool().add(new WaterForm(ch));
         getSkillPool().add(new DarkTendrils(ch));
         getSkillPool().add(new Dominate(ch));
-        getSkillPool().add(new FlashStep(ch));
         getSkillPool().add(new Illusions(ch));
         getSkillPool().add(new Glamour(ch));
         getSkillPool().add(new LustAura(ch));
@@ -405,7 +408,6 @@ public class Global {
         getSkillPool().add(new FaceSit(ch));
         getSkillPool().add(new Smother(ch));
         getSkillPool().add(new BreastSmother(ch));
-        getSkillPool().add(new Purr(ch));
         getSkillPool().add(new MutualUndress(ch));
         getSkillPool().add(new Surrender(ch));
         getSkillPool().add(new ReverseFuck(ch));
@@ -508,6 +510,7 @@ public class Global {
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
         getSkillPool().add(new PetThreesome(ch));
+        getSkillPool().add(new ReversePetThreesome(ch));
         getSkillPool().add(new PetInitiatedThreesome(ch));
         getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Honeypot(ch));
@@ -802,7 +805,7 @@ public class Global {
     public static void startMatch() {
         Global.getPlayer().getAddictions().forEach(a -> {
             Optional<Status> withEffect = a.startNight();
-            withEffect.ifPresent(s -> Global.getPlayer().add(s));
+            withEffect.ifPresent(s -> Global.getPlayer().addNonCombat(s));
         });
         Global.gui().startMatch();
         match.round();
@@ -1290,6 +1293,7 @@ public class Global {
         match = null;
         human = new Player("Dummy");
         gui.purgePlayer();
+        xpRate = 1.0;
         gui.createCharacter();
     }
 
@@ -1373,6 +1377,24 @@ public class Global {
             }
             return "";
         });
+        matchActions.put("if-female", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.useFemalePronouns() ? third : "";
+            }
+            return "";
+        });
+        matchActions.put("if-male", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.useFemalePronouns() ? "" : third;
+            }
+            return "";
+        });
+        matchActions.put("if-human", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return self.human() ? third : "";
+            }
+            return "";
+        });
         matchActions.put("subject", (self, first, second, third) -> {
             if (self != null) {
                 return self.subject();
@@ -1429,6 +1451,19 @@ public class Global {
             return "";
         });
 
+        matchActions.put("balls-vulva", (self, first, second, third) -> {
+            if (self != null) {
+                if (self.hasBalls()) {
+                    return "testicles";
+                } else if (self.hasPussy()) {
+                    return "vulva";
+                } else {
+                    return "crotch";
+                }
+            }
+            return "";
+        });
+
         matchActions.put("master", (self, first, second, third) -> {
             if (self.useFemalePronouns()) {
                 return "mistress";
@@ -1439,6 +1474,12 @@ public class Global {
 
         matchActions.put("girl", (self, first, second, third) -> {
                 return self.guyOrGirl();
+        });
+        matchActions.put("guy", (self, first, second, third) -> {
+            return self.guyOrGirl();
+        });
+        matchActions.put("boy", (self, first, second, third) -> {
+            return self.boyOrGirl();
         });
     }
 

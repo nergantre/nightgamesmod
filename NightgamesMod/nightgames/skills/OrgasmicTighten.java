@@ -77,10 +77,10 @@ public class OrgasmicTighten extends Thrust {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (c.getStance().en == Stance.anal) {
-            return Global.format("While cumming {self:NAME-POSSESSIVE} spasming backdoor seems to urge {other:name-do} to do the same.",
+            return Global.format("While cumming {self:name-possessive} spasming backdoor seems to urge {other:name-do} to do the same.",
                             getSelf(), target);
         } else {
-            return Global.format("While cumming {self:NAME-POSSESSIVE} spasming honeypot seems to urge {other:name-do} to do the same.",
+            return Global.format("While cumming {self:name-possessive} spasming honeypot seems to urge {other:name-do} to do the same.",
                             getSelf(), target);
         }
     }

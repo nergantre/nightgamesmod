@@ -18,9 +18,11 @@ public class Growth implements Cloneable {
     public float bonusStamina;
     public int attributes[];
     public int bonusAttributes;
+    public int extraAttributes;
     public float willpower;
     public float bonusWillpower;
     private Map<Integer, List<Trait>> traits;
+    private Map<Integer, Integer> traitPoints;
     public Map<Integer, List<BodyPart>> bodyParts;
 
     public Growth() {
@@ -29,6 +31,7 @@ public class Growth implements Cloneable {
         bonusStamina = 2;
         bonusArousal = 3;
         bonusAttributes = 1;
+        extraAttributes = 0;
         willpower = .5f;
         bonusWillpower = .25f;
         attributes = new int[10];
@@ -36,6 +39,7 @@ public class Growth implements Cloneable {
         attributes[0] = 3;
         traits = new HashMap<>();
         bodyParts = new HashMap<>();
+        traitPoints = new HashMap<>();
     }
 
     public void addTrait(int level, Trait trait) {
@@ -43,6 +47,15 @@ public class Growth implements Cloneable {
             traits.put(level, new ArrayList<Trait>());
         }
         traits.get(level).add(trait);
+    }
+
+    public void addTraitPoints(int[] levels, Character charfor) {
+        if (!(charfor instanceof Player)) return;
+        for (int level : levels) {
+            if (!(traitPoints.containsKey(level))) traitPoints.put(level, 0);
+            traitPoints.put(level,traitPoints.get(level)+1);
+            if (charfor.level <= level) ((Player)charfor).traitPoints+=1;
+        }
     }
 
     public void addBodyPart(int level, BodyPart part) {
@@ -78,8 +91,9 @@ public class Growth implements Cloneable {
         character.getStamina().gain(stamina);
         character.getArousal().gain(arousal);
         character.getWillpower().gain(willpower);
+        if (traitPoints.containsKey(character.level) && character instanceof Player) ((Player)character).traitPoints+=traitPoints.get(character.level);
 
-        character.availableAttributePoints += attributes[Math.min(character.rank, attributes.length-1)];
+        character.availableAttributePoints += attributes[Math.min(character.rank, attributes.length-1)] + extraAttributes;
 
         if (Global.checkFlag(Flag.hardmode)) {
             character.getStamina().gain(bonusStamina);

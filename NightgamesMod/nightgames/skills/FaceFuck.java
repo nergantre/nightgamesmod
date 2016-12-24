@@ -24,7 +24,7 @@ public class FaceFuck extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().reachTop(getSelf())
+        return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().prone(target)
                         && (getSelf().crotchAvailable() && getSelf().hasDick() || getSelf().has(Trait.strapped))
                         && !c.getStance().inserted(getSelf()) && c.getStance().front(getSelf())
                         && !c.getStance().behind(target);
@@ -99,7 +99,7 @@ public class FaceFuck extends Skill {
                             + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                             + "and tongue while you thrust your hips.";
             if (modifier == Result.upgrade) {
-                m += "<br>Additionally, your upgraded vibrocock thoroughly stimulates her throat.";
+                m += "<br/>Additionally, your upgraded vibrocock thoroughly stimulates her throat.";
             }
         } else {
             if (target.body.getRandom("mouth").isErogenous()) {
@@ -108,14 +108,14 @@ public class FaceFuck extends Skill {
                                 + target.name()
                                 + " has transformed her mouth into a second female genitalia; its soft hot walls, its ridges and folds slide across your dick delightfully as you thrust into her.";
                 if (modifier == Result.reverse) {
-                    m += "<br>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
+                    m += "<br/>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
                 }
             } else {
                 m = "You grab hold of " + target.name()
                                 + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                                 + "and tongue while you thrust your hips.";
                 if (modifier == Result.reverse) {
-                    m += "<br>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";
+                    m += "<br/>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";
                 }
             }
         }

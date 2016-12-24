@@ -33,7 +33,7 @@ public class SlimeOil extends SimpleEnemySkill {
                                         + "The slime suddenly pounces on {other:name-do} and wraps itself around {other:direct-object}. "
                                         + "It doesn't seem to be attacking {other:direct-object} as much as giving you a hug, "
                                         + "but it leaves {other:direct-object} covered in slimy residue", getSelf(), target));
-            target.add(new Oiled(target));
+            target.add(c, new Oiled(target));
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT} launches itself towards {other:name-do}, but {other:SUBJECT-ACTION:sidestep|sidesteps} it handily.",
                             getSelf(), target));

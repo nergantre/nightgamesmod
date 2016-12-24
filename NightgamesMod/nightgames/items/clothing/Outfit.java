@@ -247,7 +247,7 @@ public class Outfit {
             sb.append("Under {self:possessive} " + over.getName() + ", ");
         }
         if (top == null && bottom == null && others.isEmpty()) {
-            sb.append("{self:subject-action:are|is} completely naked.<br>");
+            sb.append("{self:subject-action:are|is} completely naked.<br/>");
         } else {
             boolean addedTop = false;
             if (top == null && bottom == null) {
@@ -260,17 +260,17 @@ public class Outfit {
                     described.add(top);
                 }
                 if (bottom == null) {
-                    sb.append(" but {self:possessive} crotch is clearly visible.<br>");
+                    sb.append(" but {self:possessive} crotch is clearly visible.<br/>");
                 } else {
                     if (bottom != top) {
                         sb.append(" and ");
                         if (!addedTop) {
                             sb.append("wearing ");
                         }
-                        sb.append(bottom.pre() + bottom.getName() + ".<br>");
+                        sb.append(bottom.pre() + bottom.getName() + ".<br/>");
                         described.add(bottom);
                     } else {
-                        sb.append(".<br>");
+                        sb.append(".<br/>");
                     }
                 }
             }
@@ -301,11 +301,11 @@ public class Outfit {
                 }
             }
         }
-        sb.append("<br>");
+        sb.append("<br/>");
         if (Global.isDebugOn(DebugFlags.DEBUG_CLOTHING)) {
             for (Clothing article : equipped) {
                 sb.append(article);
-                sb.append("<br>");
+                sb.append("<br/>");
             }
         }
         return Global.capitalizeFirstLetter(Global.format(sb.toString(), c, c));

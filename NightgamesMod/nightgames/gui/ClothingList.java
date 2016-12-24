@@ -19,6 +19,6 @@ public class ClothingList extends JList<Clothing> {
     public String getToolTipText(java.awt.event.MouseEvent event) {
         int location = locationToIndex(event.getPoint());
         Clothing article = getModel().getElementAt(location);
-        return article.getToolTip();
+        return article.getDesc();
     }
 }

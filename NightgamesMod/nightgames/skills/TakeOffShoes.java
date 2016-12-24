@@ -33,7 +33,7 @@ public class TakeOffShoes extends Skill {
 
     @Override
     public float priorityMod(Combat c) {
-        return 0.0f;
+        return c.getOpponent(getSelf()).body.getFetish("feet").isPresent() && c.getOpponent(getSelf()).body.getFetish("feet").get().magnitude > .25 ? 1.0f : -5.0f;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class TakeOffShoes extends Skill {
         getSelf().strip(ClothingSlot.feet, c);
         if (target.body.getFetish("feet").isPresent() && target.body.getFetish("feet").get().magnitude > .25) {
             writeOutput(c, Result.special, target);
-            target.tempt(c, getSelf(), getSelf().body.getRandom("feet"), Global.random(17, 26));
+            target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("feet"), Global.random(17, 26), this);
         } else {
             writeOutput(c, Result.normal, target);
         }
