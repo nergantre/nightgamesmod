@@ -121,7 +121,7 @@ public class SuccubusSurprise extends Skill {
                         + " %s to pull out, but ", target.nameOrPossessivePronoun(),
                         getSelf().name(), getSelf().subject(), getSelf().possessivePronoun(),
                         target.subjectAction("follow"), getSelf().possessivePronoun(), 
-                        target.subjectAction("look"), getSelf().name(), getSelf().directObject(),
+                        target.possessivePronoun(), getSelf().name(), getSelf().directObject(),
                         getSelf().pronoun(), Global.capitalizeFirstLetter(getSelf().possessivePronoun()),
                         getSelf().possessivePronoun(), 
                         Global.capitalizeFirstLetter(target.subjectAction("try", "tries")));

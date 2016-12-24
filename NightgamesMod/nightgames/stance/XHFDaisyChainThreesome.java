@@ -1,28 +1,54 @@
 package nightgames.stance;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class FFMCowgirlThreesome extends FemdomSexStance {
+public class XHFDaisyChainThreesome extends MaledomSexStance {
     protected Character domSexCharacter;
 
-    public FFMCowgirlThreesome(Character domSexCharacter, Character top, Character bottom) {
-        super(top, bottom, Stance.reversecowgirl);
+    public XHFDaisyChainThreesome(Character domSexCharacter, Character top, Character bottom) {
+        super(top, bottom, Stance.doggy);
         this.domSexCharacter = domSexCharacter;
     }
 
     @Override
     public Character domSexCharacter(Combat c) {
         return domSexCharacter;
+    }
+
+    @Override
+    public boolean inserted(Character c) {
+        return c == domSexCharacter || c == top;
+    }
+
+    @Override
+    public boolean canthrust(Combat c, Character self) {
+        return domSexCharacter(c) == self || top == self || self.has(Trait.powerfulhips);
+    }
+
+    @Override
+    public void checkOngoing(Combat c) {
+        if (!c.getOtherCombatants().contains(domSexCharacter)) {
+            c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
+            c.setStance(new Neutral(top, bottom));
+        }
+    }
+
+    @Override
+    public float priorityMod(Character self) {
+        return super.priorityMod(self) + 3;
     }
 
     @Override
@@ -37,8 +63,34 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
     public List<BodyPart> partsFor(Combat combat, Character c) {
         if (c == domSexCharacter(combat)) {
             return topParts(combat);
+        } else if (c == top) {
+            return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                            .collect(Collectors.toList());
         }
         return c.equals(bottom) ? bottomParts() : Collections.emptyList();
+    }
+
+    @Override
+    public List<BodyPart> bottomParts() {
+        ArrayList<BodyPart> list = new ArrayList<>();
+        list.add(bottom.body.getRandomPussy());
+        list.add(bottom.body.getRandomCock());
+        return list.stream().filter(part -> part != null && part.present())
+                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean vaginallyPenetratedBy(Combat c, Character self, Character other) {
+        return (self == bottom && other == domSexCharacter) || (self == top && other == bottom);
+    }
+
+    @Override
+    public Character getPenetratedCharacter(Combat c, Character self) {
+        if (self == bottom) {
+            return top;
+        } else {
+            return super.getPenetratedCharacter(c, self);
+        }
     }
 
     public Character getPartner(Combat c, Character self) {
@@ -57,8 +109,9 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
         if (top.human()) {
             return "";
         } else {
-            return String.format("%s is holding %s down while %s fucking %s in the Cowgirl position.",
-                            top.subject(), bottom.nameDirectObject(), domSexCharacter(c).subjectAction("are", "is"), bottom.directObject());
+            return Global.format("{self:subject-action:are|is} fucking {other:name-do} from behind "
+                            + "while {master:subject} is riding {other:possessive} dick, "
+                            + "creating a {other:name}-sandwich.", domSexCharacter, bottom);
         }
     }
 
@@ -69,16 +122,12 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
 
     @Override
     public String image() {
-        if (bottom.useFemalePronouns()) {
-            return "ThreesomeFFMCowgirl_futa.jpg";
-        } else {
-            return "ThreesomeFFMCowgirl.jpg";
-        }
+        return "ThreesomeHHFDaisyChain.jpg";
     }
 
     @Override
     public boolean kiss(Character c, Character target) {
-        return false;
+        return c != bottom && c != domSexCharacter && c != top;
     }
 
     @Override
@@ -93,7 +142,7 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c != bottom;
+        return true;
     }
 
     @Override
@@ -108,38 +157,25 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
 
     @Override
     public boolean behind(Character c) {
-        return c == bottom;
+        return c == domSexCharacter;
     }
 
     @Override
     public Position insertRandom(Combat c) {
-        return new ReverseMount(top, bottom);
+        return new Mount(top, bottom);
     }
 
     @Override
     public Position reverse(Combat c, boolean writeMessage) {
         if (writeMessage) {
-            c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, domSexCharacter));
+            c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
         }
         return new Neutral(bottom, top);
     }
-
-    @Override
-    public void checkOngoing(Combat c) {
-        if (!c.getOtherCombatants().contains(domSexCharacter)) {
-            c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
-            c.setStance(new Neutral(top, bottom));
-        }
-    }
-
-    @Override
-    public float priorityMod(Character self) {
-        return super.priorityMod(self) + 3;
-    }
-
+    
     @Override
     public int dominance() {
-        return 3;
+        return 4;
     }
 
     @Override

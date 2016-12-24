@@ -68,7 +68,7 @@ public class Maya extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 2;
         character.getGrowth().arousal = 5;
-        character.getGrowth().willpower = 1;
+        character.getGrowth().willpower = 2.0f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 5;
         character.getGrowth().addTrait(0, Trait.darkpromises);

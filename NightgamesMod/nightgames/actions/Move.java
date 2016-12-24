@@ -17,7 +17,7 @@ public class Move extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return true;
+        return !user.bound();
     }
 
     @Override

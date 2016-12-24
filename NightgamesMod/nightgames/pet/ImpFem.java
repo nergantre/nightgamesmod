@@ -3,7 +3,12 @@ package nightgames.pet;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
+import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
+import nightgames.skills.Grind;
+import nightgames.skills.Piston;
+import nightgames.skills.PussyGrind;
+import nightgames.skills.Thrust;
 import nightgames.skills.petskills.ImpAssault;
 import nightgames.skills.petskills.ImpFacesit;
 import nightgames.skills.petskills.ImpSemenSquirt;
@@ -58,9 +63,10 @@ public class ImpFem extends Pet {
                                 + "semi-solid body. The slime writhes more and more before it suddenly shudders, then slowly melts into a puddle.");
                 break;
             default:
-                break;
+                (new ImpTease(getSelf())).resolve(c, opponent.getSelf());
+                return;
         }
-        c.removePet(getSelf());
+        c.removePet(opponent.getSelf());
     }
 
     @Override
@@ -85,8 +91,17 @@ public class ImpFem extends Pet {
         PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), getPower());
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(110);
+        if (getPower() > 30) {
+            self.body.add(PussyPart.succubus);            
+        } else {
+            self.body.add(PussyPart.normal);
+        }
         self.body.finishBody(CharacterSex.female);
         self.learn(new ImpAssault(self));
+        self.learn(new Thrust(self));
+        self.learn(new Grind(self));
+        self.learn(new Piston(self));
+        self.learn(new PussyGrind(self));
         self.learn(new ImpTease(self));
         self.learn(new ImpStrip(self));
         self.learn(new ImpFacesit(self));

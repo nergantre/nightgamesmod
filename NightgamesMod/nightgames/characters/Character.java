@@ -1070,7 +1070,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void tick(Combat c) {
         body.tick(c);
-        status.stream().filter(s -> c != null || s.lingering()).collect(Collectors.toList()).forEach(s -> s.tick(c));
+        status.stream().collect(Collectors.toList()).forEach(s -> s.tick(c));
         countdown(temporaryAddedTraits);
         countdown(temporaryRemovedTraits);
     }
@@ -1315,8 +1315,6 @@ public abstract class Character extends Observable implements Cloneable {
     public boolean rollPheromones(Combat c) {
         double chance = getPheromonesChance(c);
         double roll = Global.randomdouble();
-        // System.out.println("Pheromones: rolled " + Global.formatDecimal(roll)
-        // + " vs " + chance + ".");
         return roll < chance;
     }
 
@@ -1407,12 +1405,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean bound() {
-        for (Status s : getStatuses()) {
-            if (s.flags().contains(Stsflag.bound)) {
-                return true;
-            }
-        }
-        return false;
+        return is(Stsflag.bound);
     }
 
     public void free() {
@@ -1437,15 +1430,19 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.freeSpirit)) {
             total += 5;
         }
-        if (from.has(Trait.Clingy)) {
-            total -= 5;
+        if (from != null) {
+            if (from.has(Trait.Clingy)) {
+                total -= 5;
+            }
+            if (from.has(Trait.FeralStrength) && is(Stsflag.feral)) {
+                total += 5;
+            }
         }
-        if (from.has(Trait.FeralStrength) && is(Stsflag.feral)) {
-            total += 5;
-        }
-        int stanceMod = c.getStance().escape(c, this);
-        if (stanceMod < 0) {
-            total += stanceMod;
+        if (c != null) {
+            int stanceMod = c.getStance().escape(c, this);
+            if (stanceMod < 0) {
+                total += stanceMod;
+            }
         }
         return total;
     }
@@ -1637,7 +1634,7 @@ public abstract class Character extends Observable implements Cloneable {
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
-        String opponentOrgasmLiner = opponent == null || opponent == this ? "" : 
+        String opponentOrgasmLiner = (opponent == null || opponent == this || opponent.isPet()) ? "" : 
             "<b>" + opponent.makeOrgasmLiner(c, this) + "</b>";
         orgasmed = true;
         if (times == 1) {
@@ -1767,7 +1764,7 @@ public abstract class Character extends Observable implements Cloneable {
     private void resolvePreOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart,
                     int times, int total) {
         if (c.getStance().inserted(this) && !has(Trait.strapped)) {
-            Character partner = c.getStance().getPartner(c, this);
+            Character partner = c.getStance().getPenetratedCharacter(c, this);
             if (times == 1) {
                 c.write(this, Global.format(
                                 "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:name-do}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
@@ -2105,12 +2102,17 @@ public abstract class Character extends Observable implements Cloneable {
             }
         }
 
-        if (has(Trait.apostles) && c.getCombatantData(this).getIntegerFlag(APOSTLES_COUNT) == 4) {
-            List<Personality> possibleApostles = Arrays.asList(new Mei(), new Caroline(), new Sarah());
-            CharacterPet pet = new CharacterPet(this, Global.pickRandom(possibleApostles).get().getCharacter(), getLevel() - 5, getLevel()/4);
-            c.write(this, Global.format(Global.pickRandom(ANGEL_APOSTLES_QUOTES).get(), this, opponent));
-            c.addPet(this, pet.getSelf());
-            c.getCombatantData(this).setIntegerFlag(APOSTLES_COUNT, 0);
+        if (canRespond() && has(Trait.apostles) && c.getCombatantData(this).getIntegerFlag(APOSTLES_COUNT) >= 4) {
+            List<Personality> possibleApostles = Arrays.asList(new Mei(), new Caroline(), new Sarah())
+                            .stream()
+                            .filter(possible -> !c.getOtherCombatants().contains(possible))
+                            .collect(Collectors.toList());
+            if (!possibleApostles.isEmpty()) {
+                CharacterPet pet = new CharacterPet(this, Global.pickRandom(possibleApostles).get().getCharacter(), getLevel() - 5, getLevel()/4);
+                c.write(this, Global.format(Global.pickRandom(ANGEL_APOSTLES_QUOTES).get(), this, opponent));
+                c.addPet(this, pet.getSelf());
+                c.getCombatantData(this).setIntegerFlag(APOSTLES_COUNT, 0);
+            }
         }
         if (c.getPetsFor(this).size() < getPetLimit()) {
             c.getCombatantData(this).setIntegerFlag(APOSTLES_COUNT, c.getCombatantData(this).getIntegerFlag(APOSTLES_COUNT) + 1);
@@ -2177,7 +2179,6 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void upkeep() {
-        status.removeIf(s -> !s.lingering());
         getTraits().forEach(trait -> {
             if (trait.status != null) {
                 Status newStatus = trait.status.instance(this, null);
@@ -2197,9 +2198,6 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (has(Trait.exhibitionist) && mostlyNude()) {
             mojo.restore(2);
-        }
-        if (bound()) {
-            free();
         }
         dropStatus(null, null);
         if (has(Trait.QuickRecovery)) {
@@ -2802,7 +2800,7 @@ public abstract class Character extends Observable implements Cloneable {
         b.append("<br/>");
         if (human()) {
             // ALWAYS GET JUDGED BY ANGEL. lol.
-            body.describeBodyText(b, Global.getCharacterByName("Angel"), notableOnly);
+            body.describeBodyText(b, Global.getCharacterByType("Angel"), notableOnly);
         } else {
             body.describeBodyText(b, Global.getPlayer(), notableOnly);
         }
@@ -3170,7 +3168,13 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String reflectivePronoun() {
-        return possessivePronoun() + "self";
+        String self = possessivePronoun() + "self";
+        if (self.equals("hisself")) {
+            // goddammit english.
+            return "himself";
+        } else {
+            return self;
+        }
     }
 
     public boolean clothingFuckable(BodyPart part) {
@@ -3605,7 +3609,7 @@ public abstract class Character extends Observable implements Cloneable {
     public void unflagStatus(Stsflag flag) {
         statusFlags.remove(flag);
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -3694,5 +3698,9 @@ public abstract class Character extends Observable implements Cloneable {
     
     public Collection<Action> allowedActions() {
         return status.stream().flatMap(s -> s.allowedActions().stream()).collect(Collectors.toSet());
+    }
+
+    public boolean isHypnotized() {
+        return is(Stsflag.drowsy) || is(Stsflag.enthralled) || is(Stsflag.charmed) || is(Stsflag.trance);
     }
 }

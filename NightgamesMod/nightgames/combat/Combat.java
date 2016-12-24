@@ -679,7 +679,9 @@ public class Combat extends Observable implements Cloneable {
                 return;
 
         }
-        updateAndClearMessage();
+        if (beingObserved) {
+            updateAndClearMessage();
+        }
     }
 
     private void pickSkills() {
@@ -766,7 +768,7 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public boolean doAction(Character self, Character target, Skill action) {
-        if (!shouldAutoresolve()) {
+        if (beingObserved) {
             Global.gui().clearText();
         }
 
@@ -805,10 +807,11 @@ public class Combat extends Observable implements Cloneable {
     private CombatPhase doPetActions() {
         Set<PetCharacter> alreadyBattled = new HashSet<>();
         if (otherCombatants.size() > 0) {
-            for (PetCharacter pet : otherCombatants) {
-                if (alreadyBattled.contains(pet)) { continue; }
-                for (PetCharacter otherPet : otherCombatants) {
-                    if (alreadyBattled.contains(otherPet)) { continue; }
+            ArrayList<PetCharacter> pets = new ArrayList<>(otherCombatants);
+            for (PetCharacter pet : pets) {
+                if (!otherCombatants.contains(pet) || alreadyBattled.contains(pet)) { continue; }
+                for (PetCharacter otherPet : pets) {
+                    if (!otherCombatants.contains(pet) || alreadyBattled.contains(otherPet)) { continue; }
                     if (!pet.getSelf().owner().equals(otherPet.getSelf().owner()) && Global.random(2) == 0) {
                         petbattle(pet.getSelf(), otherPet.getSelf());
                         alreadyBattled.add(pet);
@@ -1044,8 +1047,9 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void updateAndClearMessage() {
-        Global.gui()
-              .clearText();
+        if (beingObserved) {
+            Global.gui().clearText();
+        }
         combatMessageChanged = true;
         setChanged();
         this.notifyObservers();
@@ -1128,7 +1132,7 @@ public class Combat extends Observable implements Cloneable {
 
     private void next() {
         if (phase != CombatPhase.FINISHED) {
-            if (shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) && phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
+            if (!beingObserved || shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) && phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
                 turn();
             } else {
                 Global.gui().next(this);

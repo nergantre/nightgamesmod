@@ -127,7 +127,7 @@ public class Cassie extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 2;
         character.getGrowth().arousal = 4;
-        character.getGrowth().willpower = .4f;
+        character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
 

@@ -38,28 +38,31 @@ public class Thrust extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelfOrgan(c) != null && getTargetOrgan(c, target) != null && getSelf().canRespond()
+        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canRespond()
                         && c.getStance().canthrust(c, getSelf()) && c.getStance().havingSexOtherNoStrapped(c, getSelf());
     }
 
-    public BodyPart getSelfOrgan(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
+    public BodyPart getSelfOrgan(Combat c, Character target) {
+        if (c.getStance().penetratedBy(c, target, getSelf())) {
             return getSelf().body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))) {
+        } else if (c.getStance().anallyPenetratedBy(c, getSelf(), target)) {
             return getSelf().body.getRandom("ass");
-        } else {
+        } else if (c.getStance().vaginallyPenetratedBy(c, getSelf(), target)) {
             return getSelf().body.getRandomPussy();
+        } else {
+            return null;
         }
     }
 
     public BodyPart getTargetOrgan(Combat c, Character target) {
-        if (c.getStance().inserted(target)) {
+        if (c.getStance().penetratedBy(c, getSelf(), target)) {
             return target.body.getRandomInsertable();
-        } else if (c.getStance().anallyPenetratedBy(c, c.getOpponent(getSelf()), getSelf())) {
+        } else if (c.getStance().anallyPenetratedBy(c, target, getSelf())) {
             return target.body.getRandom("ass");
-        } else {
+        } else if (c.getStance().vaginallyPenetratedBy(c, target, getSelf())) {
             return target.body.getRandomPussy();
         }
+        return null;
     }
 
     public int[] getDamage(Combat c, Character target) {
@@ -104,7 +107,7 @@ public class Thrust extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        BodyPart selfO = getSelfOrgan(c);
+        BodyPart selfO = getSelfOrgan(c, target);
         BodyPart targetO = getTargetOrgan(c, target);
         Result result;
         if (c.getStance().inserted(target)) {
@@ -192,7 +195,7 @@ public class Thrust extends Skill {
                             + "%s dick is gradually driving %s to %s limit.", getSelf().subject(),
                             getSelf().possessivePronoun(), target.nameDirectObject(),
                             target.directObject(), getSelf().nameOrPossessivePronoun(),
-                            getSelfOrgan(c).describe(getSelf()),
+                            getSelfOrgan(c, target).describe(getSelf()),
                             target.nameOrPossessivePronoun(), target.directObject(),
                             target.possessivePronoun());
         } else {

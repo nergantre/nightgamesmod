@@ -147,7 +147,6 @@ public class NPC extends Character {
             }
             if (willpower.percent() <= 50) {
                 visible = visible + "She seems a bit distracted and unable to look you in the eye.<br/>";
-
             }
         }
         if (per >= 4 && per < 6) {

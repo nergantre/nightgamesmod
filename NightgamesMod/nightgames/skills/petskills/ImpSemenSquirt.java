@@ -30,7 +30,7 @@ public class ImpSemenSquirt extends SimpleEnemySkill {
     public boolean resolve(Combat c, Character target) {
         int m = Global.random(3,6) + getSelf().getLevel() / 5;
         c.write(getSelf(), Global.format("{self:SUBJECT} masturbates frantically until {self:pronoun} cums intensely. "
-                        + "{self:SUBJECT} aims {self:POSSESSIVE} spurting cock at {other:name-do}, "
+                        + "{self:PRONOUN} aims {self:possessive} spurting cock at {other:name-do}, "
                         + "hitting {other:direct-object} in the face with a thick load of semen. "
                         + "{other:SUBJECT-ACTION:flush|flushes} bright red and {other:action:look|looks} stunned "
                         + "as the aphrodisiac laden fluid overwhelms {other:possessive} senses.", getSelf(), target));

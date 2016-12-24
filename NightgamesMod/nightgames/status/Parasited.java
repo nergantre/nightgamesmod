@@ -1,10 +1,16 @@
 package nightgames.status;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -17,6 +23,11 @@ public class Parasited extends Status {
     private Character other;
     private double time;
     private int stage;
+    static List<Attribute> DEBUFFABLE_ATTS = Arrays.asList(
+                    Attribute.Power,
+                    Attribute.Seduction,
+                    Attribute.Cunning
+    );
 
     public Parasited(Character affected, Character other) {
         super("parasited", affected);
@@ -42,7 +53,7 @@ public class Parasited extends Status {
 
     @Override
     public float fitnessModifier() {
-        return -10;
+        return -40;
     }
 
     @Override
@@ -52,11 +63,14 @@ public class Parasited extends Status {
 
     @Override
     public void tick(Combat c) {
-        if (time >= 3) {
+        if (c == null) {
+            return;
+        }
+        if (time >= 3 && other.has(Trait.NeuralLink)) {
             if (stage < 3) {
                 stage = 3;
                 Global.gui().message(c, other,
-                                Global.format("Suddenly, {self:pronoun-action:hear|hears} a disembodied but familiar voice. \"Testing... testing... Ah good, looks like it has worked.\"",
+                                Global.format("Suddenly, {self:pronoun-action:hear|hears} a disembodied but familiar voice. \"Testing... testing... Good, looks like it worked.\"",
                                 affected, other));
                 Global.gui().message(c, affected,
                                 Global.format("{self:SUBJECT}... {self:action:seem|seems} to be hearing {other:name-possessive} voice inside {self:possessive} head. That's not good.",
@@ -64,7 +78,6 @@ public class Parasited extends Status {
                 Global.gui().message(c, other,
                                 Global.format("{other:NAME} gives {self:name-do} a satisfied smile and {other:possessive} disembodied voice echoes again inside {self:possessive} head, \"{self:NAME}, don't worry... I have connected myself with your brain... We will have so much fun together...\"",
                                 affected, other));
-                
             }
             switch(Global.random(8)) {
                 case 0:
@@ -86,6 +99,7 @@ public class Parasited extends Status {
                                     Global.format("With no input from {self:possessive} consciousness, {self:name-possessive} body mechanically walks up to {self:name-possessive} body and presses itself into {other:possessive} slime. While immobilized by {self:possessive} inability to send signals through {self:possessive} locomotive nerves, {self:name-possessive} body slowly sinks into {other:name-possessive} crystal blue body.",
                                     affected, other));
                     c.setStance(new Engulfed(other, affected));
+                    affected.add(c, new Frenzied(affected, 2));
                     break;
                 case 2:
                 case 3:
@@ -117,7 +131,6 @@ public class Parasited extends Status {
                                     affected, other));
                     (new Masturbate(affected)).resolve(c, other);
             }
-            affected.add(c, new Frenzied(affected, 1000));
         } else if (time >= 2) {
             if (stage < 2) {
                 stage = 2;
@@ -146,13 +159,31 @@ public class Parasited extends Status {
             affected.loseWillpower(c, 1);
         } else {
             if (!c.shouldAutoresolve())
-            Global.gui().message(c, affected, Global.format("A part of {other:name-possessive} slime is lodged inside {self:name-possessive} head. It doesn't feel uncomfortable, but {self:pronoun-action:are|is} scared of the implications.",
+            Global.gui().message(c, affected, Global.format("A part of {other:name-possessive} slime is lodged inside {self:name-possessive} head. It doesn't feel too uncomfortable, but {self:pronoun-action:are|is} scared of the implications.",
                             affected, other));
+            affected.emote(Emotion.desperate, 5);
+            affected.emote(Emotion.nervous, 5);
         }
 
-        affected.emote(Emotion.desperate, 10);
-        affected.emote(Emotion.nervous, 10);
-        time += .25;
+        time += .2;
+        if (other.has(Trait.Voracity)) {
+            c.write(Global.format("The parasite seems to be sapping your strength to sustain itself", affected, other));
+            affected.weaken(c, 5 * (1 + stage));
+            time += .05;
+        }
+        if (other.has(Trait.BefuddlingFragrance)) {
+            List<Attribute> debuffable = DEBUFFABLE_ATTS.stream()
+                              .filter(att -> affected.get(att) > 10)
+                              .collect(Collectors.toList());
+            Optional<Attribute> att = Global.pickRandom(debuffable);
+            String message = Global.format("Somehow {self:pronoun-action:feel|seems} %s than before, maybe the parasite is doing something to {self:direct-object}?", affected, other, att.get().getLowerPhrase());
+            if (c != null && att.isPresent()) {
+                c.write(affected, message);
+            } else {
+                Global.gui().message(message);                
+            }
+            affected.add(c, new Abuff(affected, att.get(), -1, 10));
+        }
     }
 
     @Override

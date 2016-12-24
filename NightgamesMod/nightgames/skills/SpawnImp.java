@@ -12,7 +12,7 @@ public class SpawnImp extends Skill {
     private Ptype gender;
 
     public SpawnImp(Character self, Ptype gender) {
-        super("Summon Imp", self);
+        super("Summon Imp (" + gender.name() + ")", self);
         this.gender = gender;
     }
 

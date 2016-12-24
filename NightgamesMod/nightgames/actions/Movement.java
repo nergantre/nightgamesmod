@@ -26,6 +26,7 @@ public enum Movement {
     scavenge(" begin scrounging through some boxes in the corner."),
     craft(" start mixing various liquids. Whatever it is doesn't look healthy."),
     wait(" loitering nearby"),
+    struggle(" is struggling against her bondage"),
     resupply(" heads for one of the safe rooms, probably to get a change of clothes."),
     oil(" rubbing body oil on every inch of her skin. Wow, you wouldn't mind watching that again."),
     enerydrink(" opening an energy drink and downing the whole thing."),

@@ -9,6 +9,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.stance.StandingOver;
+import nightgames.status.Flatfooted;
 import nightgames.status.Winded;
 
 public class SpringTrap extends Trap {
@@ -74,6 +75,7 @@ public class SpringTrap extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location(), new StandingOver(attacker, victim)));
         attacker.location().remove(this);
     }

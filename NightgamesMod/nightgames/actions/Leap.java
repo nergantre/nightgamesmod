@@ -13,7 +13,7 @@ public class Leap extends Move {
     }
     
     public boolean usable(Character user) {
-        return user.getPure(Attribute.Ninjutsu)>=5;
+        return user.getPure(Attribute.Ninjutsu)>=5 && !user.bound();
     }
 
 }

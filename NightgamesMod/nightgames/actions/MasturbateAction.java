@@ -18,7 +18,7 @@ public class MasturbateAction extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.getArousal().get() >= 15;
+        return user.getArousal().get() >= 15 && !user.bound();
     }
 
     @Override

@@ -16,17 +16,19 @@ public class TemptressRide extends Thrust {
     }
 
     @Override
-    public BodyPart getSelfOrgan(Combat c) {
-        if (c.getStance().vaginallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))) {
-            return getSelf().body.getRandomPussy();
+    public BodyPart getSelfOrgan(Combat c, Character target) {
+        BodyPart part = super.getSelfOrgan(c, target);
+        if (part != null && part.isType("pussy")) {
+            return part;
         }
         return null;
     }
 
     @Override
     public BodyPart getTargetOrgan(Combat c, Character target) {
-        if (c.getStance().inserted(target)) {
-            return target.body.getRandomInsertable();
+        BodyPart part = super.getTargetOrgan(c, target);
+        if (part != null && part.isType("cock")) {
+            return part;
         }
         return null;
     }

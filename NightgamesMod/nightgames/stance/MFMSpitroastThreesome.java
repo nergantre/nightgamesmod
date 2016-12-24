@@ -95,10 +95,7 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
 
     @Override
     public String image() {
-        if (top.useFemalePronouns() || domSexCharacter.useFemalePronouns()) {
-            return "ThreesomeMFMDoublePenFuta.jpg";
-        }
-        return "ThreesomeMFMDoublePen.jpg";
+        return "ThreesomeMFMSpitroast.jpg";
     }
 
     @Override

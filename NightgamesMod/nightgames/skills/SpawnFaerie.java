@@ -13,7 +13,7 @@ public class SpawnFaerie extends Skill {
     private Ptype gender;
 
     public SpawnFaerie(Character self, Ptype gender) {
-        super("Summon Faerie", self);
+        super("Summon Faerie (" + gender.name() + ")", self);
         this.gender = gender;
     }
 

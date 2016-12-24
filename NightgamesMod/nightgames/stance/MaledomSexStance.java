@@ -69,7 +69,7 @@ public abstract class MaledomSexStance extends Position {
 
     @Override
     public List<BodyPart> topParts(Combat c) {
-        return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+        return Arrays.asList(domSexCharacter(c).body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
     }
 

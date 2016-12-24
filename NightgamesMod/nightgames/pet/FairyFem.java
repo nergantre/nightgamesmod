@@ -56,9 +56,10 @@ public class FairyFem extends Pet {
                                 + "violently and sprays liquid from the tip until the entire creature is a puddle on the floor.");
                 break;
             default:
-                break;
+                (new FairyTease(getSelf())).resolve(c, opponent.getSelf());
+                return;
         }
-        c.removePet(getSelf());
+        c.removePet(opponent.getSelf());
     }
 
     @Override
@@ -79,6 +80,7 @@ public class FairyFem extends Pet {
         PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), growth, getPower());
         // fairies are about 20 centimeters tall
         self.body.setHeight(20);
+        self.body.makeGenitalOrgans(CharacterSex.female);
         self.body.finishBody(CharacterSex.female);
         self.learn(new FairyEnergize(self));
         self.learn(new FairyHeal(self));
