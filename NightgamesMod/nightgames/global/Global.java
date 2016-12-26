@@ -1601,6 +1601,9 @@ public class Global {
         /*
          * TODO Lots of FTC bugs right now, will disable it for the time being.
          * Enable again once some of the bugs are sorted out.
+        
+        if (checkFlag(Flag.NoFTC)) return MatchType.NORMAL;
+        
         if (human.getLevel() < 15)
             return MatchType.NORMAL;
         if (!checkFlag(Flag.didFTC))
