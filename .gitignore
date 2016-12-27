@@ -12,3 +12,5 @@ build
 CombatStats*
 NightgamesMod/.settings
 combatlogs
+**/Thumbs.db
+**/.DS_Store

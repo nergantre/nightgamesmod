@@ -95,7 +95,8 @@
 			    <include name="starts/**"/>
 			    <include name="changelog.txt"/>
 			    <include name="changelog_dndw.txt"/>
-		        <exclude name="**/Thumbs.db"/>
+                <exclude name="**/Thumbs.db"/>
+                <exclude name="**/.DS_Store"/>
 			</fileset>
 		</copy>
 	</target>
