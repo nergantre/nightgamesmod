@@ -1060,7 +1060,7 @@ public class GUI extends JFrame implements Observer {
     public void next(Activity event) {
         event.next();
         clearCommand();
-        commandPanel.add(eventButton(event, "Next"));
+        commandPanel.add(eventButton(event, "Next", null));
         commandPanel.refresh();
     }
 
@@ -1075,7 +1075,12 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void choose(Activity event, String choice) {
-        commandPanel.add(eventButton(event, choice));
+        commandPanel.add(eventButton(event, choice, null));
+        commandPanel.refresh();
+    }
+
+    public void choose(Activity event, String choice, String tooltip) {
+        commandPanel.add(eventButton(event, choice, tooltip));
         commandPanel.refresh();
     }
 
@@ -1397,10 +1402,14 @@ public class GUI extends JFrame implements Observer {
         });
     }
 
-    private KeyableButton eventButton(Activity event, String choice) {
-        return new RunnableButton(choice, () -> {
+    private KeyableButton eventButton(Activity event, String choice, String tooltip) {
+        RunnableButton button = new RunnableButton(choice, () -> {
             event.visit(choice);
         });
+        if (tooltip != null) {
+        	button.getButton().setToolTipText(tooltip);
+        }
+        return button;
     }
 
     private KeyableButton itemButton(Activity event, Loot i) {
