@@ -28,7 +28,7 @@ public class StartConfiguration {
     public PlayerConfiguration player;
     private Collection<NpcConfiguration> npcs;
     public NpcConfiguration npcCommon;
-    private Collection<Flag> flags;
+    private Collection<String> flags;
 
     private StartConfiguration() {
     }
@@ -45,7 +45,7 @@ public class StartConfiguration {
         return enabled;
     }
 
-    public Collection<Flag> getFlags() {
+    public Collection<String> getFlags() {
         return flags;
     }
 
@@ -93,7 +93,7 @@ public class StartConfiguration {
             }
         });
         JsonArray flags = root.getAsJsonArray("flags");
-        cfg.flags = JsonUtils.collectionFromJson(flags, Flag.class);
+        cfg.flags = JsonUtils.collectionFromJson(flags, String.class);
         return cfg;
     }
 

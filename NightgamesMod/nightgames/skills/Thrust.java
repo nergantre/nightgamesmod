@@ -109,6 +109,13 @@ public class Thrust extends Skill {
     public boolean resolve(Combat c, Character target) {
         BodyPart selfO = getSelfOrgan(c, target);
         BodyPart targetO = getTargetOrgan(c, target);
+        if (selfO == null || targetO == null) {
+        	System.err.println("Something very odd happened during thrust, stance is " + c.getStance());
+        	System.err.println(getSelf().save().toString());
+        	System.err.println(target.save().toString());
+        	c.write("Something very weird happened, please make a bug report with the logs.");
+        	return false;
+        }
         Result result;
         if (c.getStance().inserted(target)) {
             result = Result.reverse;
@@ -117,7 +124,6 @@ public class Thrust extends Skill {
         } else {
             result = Result.normal;
         }
-
 
         writeOutput(c, result, target);
 

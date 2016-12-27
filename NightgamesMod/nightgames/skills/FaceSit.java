@@ -40,7 +40,8 @@ public class FaceSit extends Skill {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
                         && c.getStance().prone(target) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
-                        && !getSelf().has(Trait.shy);
+                        && !getSelf().has(Trait.shy)
+                        && c.getStance().reachTop(getSelf());
     }
 
     @Override

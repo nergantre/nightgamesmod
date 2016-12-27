@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.pet.PetCharacter;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
@@ -123,8 +124,15 @@ public enum CockMod implements BodyPartMod {
                                 opponent.nameOrPossessivePronoun(), self.nameDirectObject());
                 amtDrained = 3;
             }
-            if (amtDrained != 0) {
-                opponent.drainWillpower(c, self, (int) self.modifyDamage(DamageType.drain, opponent, amtDrained));
+            int strength = (int) self.modifyDamage(DamageType.drain, opponent, amtDrained);
+        	if (amtDrained != 0) {
+        		if (self.isPet()) {
+	                Character master = ((PetCharacter) self).getSelf().owner();
+	                c.write(self, Global.format("The stolen strength seems to flow through to {self:possessive} {other:master} through {self:possessive} infernal connection.", self, master));
+	                opponent.drainWillpower(c, master, strength);
+	            } else {
+	                opponent.drainWillpower(c, self, strength);
+                }
             }
             c.write(self, message);
         } else if (this.countsAs(self, bionic)) {

@@ -233,7 +233,7 @@ public class Global {
     public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
                     CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
         Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
-        Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
+        Collection<String> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
         human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         if(human.has(Trait.largereserves)) {
             human.getWillpower().gain(20);
@@ -249,7 +249,7 @@ public class Global {
         // Add starting characters to players
         players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
         if (!cfgFlags.isEmpty()) {
-            flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
+            flags = cfgFlags.stream().collect(Collectors.toSet());
         }
         Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
         configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
@@ -1661,5 +1661,13 @@ public class Global {
 
     public static void setTraitRequirements(TraitTree traitRequirements) {
         Global.traitRequirements = traitRequirements;
-    }    
+    }
+
+	public static void writeIfCombat(Combat c, Character self, String string) {
+		if (c == null) {
+			gui().message(string);
+		} else {
+			c.write(self, string);
+		}
+	}    
 }

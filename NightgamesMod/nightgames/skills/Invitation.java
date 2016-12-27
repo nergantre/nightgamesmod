@@ -21,6 +21,7 @@ public class Invitation extends Skill {
         super("Invitation", self, 6);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.petDisallowed);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class Invitation extends Skill {
         boolean insertable = c.getStance().insert(c, getSelf(), getSelf()) != c.getStance()
                         || c.getStance().insert(c, target, getSelf()) != c.getStance();
         return insertable && getSelf().canRespond() && getSelf().crotchAvailable() && target.crotchAvailable()
-                        && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
+                        && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick()) && !target.isPet();
     }
 
     @Override

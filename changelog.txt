@@ -1,3 +1,25 @@
+2.4.5.5
+Bug fixes:
+- Fixed a crash bug with mind control
+- Fixed a crash bug with invitation
+	- (may be related to pets, but it may still show up. I changed it to display an error message instead of outright crashing)
+- Fixed fiery pussy making the owner of the dick hurt himself instead of the opponent hurting him
+- Fixed dirty fighter affecting self inflicted pain
+- Fixed willpower losses displaying for all NPCs when out of combat
+- Frottage and Ass fuck now requires being able to reach bottom
+- Facefuck and facesit now requires being able to reach top
+- Deflate knot now requires user to be able to respond
+- PC usage of smoke bomb is no longer free
+- NPCs now no longer summon a female imp when trying to summon a male one.
+	- Same with faeries
+
+Minor:
+- Eve prefers no cock mod now instead of primal. Not sure when this snuck in. Maybe in the next major release she'll get a custom one.
+- Made it more clear that pet's succubus pussies are supposed to share the stat gains with her master, not just buff the master.
+- Made incubus cock now drain willpower for the master as well
+- Made start configuration load flags as strings instead of flags
+	- (so now you can use the CHARACTER_NAMEDisabled flags with start configurations)
+
 2.4.5.4
 New:
 - Added some new threesome sex stances:

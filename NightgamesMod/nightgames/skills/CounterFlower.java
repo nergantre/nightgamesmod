@@ -17,6 +17,7 @@ public class CounterFlower extends CounterBase {
                         2);
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.counter);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class CounterFlower extends CounterBase {
     @Override
     public void resolveCounter(Combat c, Character target) {
         target.nudify();
-        if (target.hasDick() && getSelf().hasPussy()) {
+        if (target.hasDick() && getSelf().hasPussy() && !target.isPet()) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
             } else {

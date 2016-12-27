@@ -553,6 +553,7 @@ public class Encounter implements Serializable, IEncounter {
                 break;
             case smoke:
                 fightOrFlight(self, false, Optional.of(smokeMessage(self)));
+                self.consume(Item.SmokeBomb, 1);
                 break;
             default:
                 return;

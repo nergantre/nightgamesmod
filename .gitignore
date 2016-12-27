@@ -9,6 +9,7 @@ bin
 build
 .classpath
 .project
+.settings
 CombatStats*
 NightgamesMod/.settings
 combatlogs
