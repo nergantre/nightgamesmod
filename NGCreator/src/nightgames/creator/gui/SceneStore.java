@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,95 +19,57 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import nightgames.characters.custom.DataBackedNPCData;
+import nightgames.characters.custom.NPCData;
 import nightgames.creator.req.CreatorRequirement;
+import nightgames.creator.req.RequirementType;
+import nightgames.requirements.AndRequirement;
+import nightgames.requirements.NotRequirement;
+import nightgames.requirements.OrRequirement;
+import nightgames.requirements.Requirement;
+import nightgames.requirements.ReverseRequirement;
 
-class SceneStore {
+public class SceneStore {
 
-	static final Collection<String> REQUIRED_LINES = Arrays.asList("hurt", "naked", "stunned", "taunt", "tempt",
+	public static final Collection<String> REQUIRED_LINES = Arrays.asList("hurt", "naked", "stunned", "taunt", "tempt",
 			"orgasm", "makeOrgasm", "describe", "startBattle", "night", "victory", "draw", "defeat", "victory3p",
 			"victory3pAssist", "intervene3p", "intervene3pAssist");
 
-	Map<String, List<Scene>> scenes;
+	private Map<String, List<Scene>> scenes;
 
 	SceneStore() {
 		scenes = new HashMap<>();
 		REQUIRED_LINES.forEach(s -> scenes.put(s, new ArrayList<>()));
+		scenes.put("recruitment intro", new ArrayList<>());
+		scenes.put("recruitment confirmation", new ArrayList<>());
 	}
 
-	boolean loadFromJson(JsonObject json) {
-		return false;
+	void addScene(String situation, String text, List<Requirement> reqs) {
+		List<Scene> list = scenes.putIfAbsent(situation, new ArrayList<>());
+		list.add(new Scene(situation, text, reqs));
 	}
 
-	boolean buildFromGui(String situation, String text, Optional<CreatorRequirement> reqs) {
-		assert scenes.containsKey(situation);
-		Scene scene = new Scene(situation, text, reqs);
-		if (scenes.get(situation).contains(scene)) {
-			return false;
-		}
-		scenes.get(situation).add(scene);
-		return true;
+	List<Scene> getScenes(String situation) {
+		return scenes.get(situation);
 	}
-
-	void loadAllFromJson(JsonObject json) {
-		scenes.clear();
-		json.entrySet().forEach(e -> {
-			List<Scene> scenes = new ArrayList<>();
-			JsonArray arr = e.getValue().getAsJsonArray();
-			arr.forEach(raw -> {
-				JsonObject obj = raw.getAsJsonObject();
-				Optional<CreatorRequirement> req;
-				if (obj.has("requirements")) {
-					req = Optional.of(CreatorRequirement.fromJson(obj.get("requirements").getAsJsonObject()));
-				} else {
-					req = Optional.empty();
-				}
-				Scene scene = new Scene(e.getKey(), obj.get("text").getAsString(), req);
-				scenes.add(scene);
-			});
-			this.scenes.put(e.getKey(), scenes);
-		});
-	}
-
-	void insertAllIntoJson(JsonObject json) {
-		JsonObject lines = new JsonObject();
-		REQUIRED_LINES.forEach(s -> {
-			JsonArray arr = new JsonArray();
-			List<Scene> scenes = this.scenes.get(s);
-			if (scenes.isEmpty()) {
-				JsonObject obj = new JsonObject();
-				obj.addProperty("text", "!!NOT WRITTEN!!");
-				arr.add(obj);
-			} else {
-				scenes.forEach(scene -> {
-					JsonObject obj = new JsonObject();
-					obj.addProperty("text", scene.getText());
-					if (scene.getReqs().isPresent()) {
-						JsonObject req = new JsonObject();
-						scene.getReqs().get().toJson(req);
-						obj.add("requirements", req);
-					}
-					arr.add(obj);
-				});
+	
+	public Optional<Scene> getAny() {
+		for (String sit : REQUIRED_LINES) {
+			if (scenes.get(sit).size() > 0) {
+				return Optional.of(scenes.get(sit).get(0));
 			}
-			lines.add(s, arr);
-		});
-	}
-
-	public static void main(String[] args) throws IOException {
-		JsonParser parser = new JsonParser();
-		JsonObject json = parser.parse(Files.newBufferedReader(new File("characters/samantha.json").toPath()))
-				.getAsJsonObject();
-		SceneStore ss = new SceneStore();
-		ss.loadAllFromJson(json.get("lines").getAsJsonObject());
-		ss.scenes.values().stream().flatMap(List::stream).forEach(System.out::println);
+		}
+		return Optional.empty();
 	}
 
 	class Scene {
 		private String situation;
 		private String text;
-		private Optional<CreatorRequirement> reqs;
+		private List<Requirement> reqs;
 
-		Scene(String situation, String text, Optional<CreatorRequirement> reqs) {
+		Scene(String situation, String text, List<Requirement> reqs) {
 			this.situation = situation;
 			this.text = text;
 			this.reqs = reqs;
@@ -132,12 +95,42 @@ class SceneStore {
 			this.text = text;
 		}
 
-		Optional<CreatorRequirement> getReqs() {
+		List<Requirement> getReqs() {
 			return reqs;
 		}
 
-		void setReqs(Optional<CreatorRequirement> reqs) {
+		void setReqs(List<Requirement> reqs) {
 			this.reqs = reqs;
+		}
+
+		void fillTree(TreeView<CreatorRequirement> tree) {
+			TreeItem<CreatorRequirement> root = new TreeItem<>(CreatorRequirement.ROOT);
+			reqs.stream().map(r -> itemFor(r, false)).forEach(root.getChildren()::add);
+			root.getChildren().forEach(i -> i.setExpanded(true));
+			root.setExpanded(true);
+			tree.setRoot(root);
+		}
+
+		private TreeItem<CreatorRequirement> itemFor(Requirement req, boolean reversed) {
+			if (req instanceof ReverseRequirement) {
+				Requirement sub = ((ReverseRequirement) req).getReversedRequirement();
+				return itemFor(sub, !reversed);
+			} else if (req instanceof NotRequirement) {
+				Requirement sub = ((NotRequirement) req).getNegatedRequirement();
+				return itemFor(sub, reversed);
+			} else if (req instanceof AndRequirement) {
+				TreeItem<CreatorRequirement> root = new TreeItem<>(CreatorRequirement.fromReqs(req, reversed));
+				((AndRequirement) req).getSubRequirements().stream().map(r -> CreatorRequirement.fromReqs(r, reversed))
+						.map(TreeItem<CreatorRequirement>::new).forEach(root.getChildren()::add);
+				return root;
+			} else if (req instanceof OrRequirement) {
+				TreeItem<CreatorRequirement> root = new TreeItem<>(CreatorRequirement.fromReqs(req, reversed));
+				((OrRequirement) req).getSubRequirements().stream().map(r -> CreatorRequirement.fromReqs(r, reversed))
+						.map(TreeItem<CreatorRequirement>::new).forEach(root.getChildren()::add);
+				return root;
+			} else {
+				return new TreeItem<>(CreatorRequirement.fromReqs(req, reversed));
+			}
 		}
 
 		@Override
@@ -183,10 +176,11 @@ class SceneStore {
 		private SceneStore getOuterType() {
 			return SceneStore.this;
 		}
-		
+
 		public String toString() {
-			return String.format("[Reqs: %s, sit: %s, text: %s]", reqs.toString(), situation, getBrief());
+			return getBrief();
 		}
 
 	}
+
 }

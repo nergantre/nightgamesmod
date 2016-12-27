@@ -21,4 +21,8 @@ public class ResultRequirement extends BaseRequirement {
     @Override public boolean meets(Combat c, Character self, Character other) {
         return c != null && c.state == result;
     }
+    
+    public Result getResult() {
+        return result;
+    }
 }

@@ -37,6 +37,7 @@ public abstract class BaseRequirement implements Requirement {
     private Object getFieldValue(Field f) {
         Object value;
         try {
+            f.setAccessible(true);
             value = f.get(this);
         } catch (IllegalAccessException e) {
             e.printStackTrace();

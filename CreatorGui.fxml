@@ -26,8 +26,6 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#reset" text="New" />
-                  <MenuItem fx:id="menuDisplay" mnemonicParsing="false" onAction="#displayJson" text="Display JSON" />
                   <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
                   <Menu fx:id="loadMenu" mnemonicParsing="false" text="Load">
                     <items>
@@ -208,22 +206,22 @@
                               </HBox>
                               <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
                                  <children>
-                                    <Label text="Wings:">
+                                    <Label prefHeight="18.0" prefWidth="48.0" text="Wings:">
                                        <font>
                                           <Font name="Segoe UI Bold" size="14.0" />
                                        </font>
                                     </Label>
                                     <ChoiceBox fx:id="wings" prefWidth="150.0" />
-                                    <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
-                                       <children>
-                                          <Label text="Hotness:">
-                                             <font>
-                                                <Font name="Segoe UI Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                          <TextField fx:id="hotness" prefHeight="25.0" prefWidth="24.0" promptText="Name" text="1" />
-                                       </children>
-                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="27.0" prefWidth="482.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Hotness:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="hotness" prefHeight="25.0" prefWidth="24.0" promptText="Name" text="1" />
                                  </children>
                               </HBox>
                            </children></VBox>
@@ -630,61 +628,204 @@
                   </HBox>
                </content>
             </Tab>
-            <Tab text="Scenes">
+            <Tab fx:id="sceneTab" text="Scenes">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TabPane prefHeight="747.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
-                           <tabs>
-                              <Tab text="Requirements">
-                                 <content>
-                                    <VBox prefHeight="710.0" prefWidth="1000.0">
-                                       <children>
-                                          <AnchorPane prefHeight="747.0" prefWidth="1000.0">
-                                             <children>
-                                                <TreeView fx:id="reqTree" prefHeight="666.0" prefWidth="1000.0" />
-                                                <Button layoutX="471.0" layoutY="683.0" mnemonicParsing="false" onAction="#validateRequirements" text="Validate" />
-                                             </children>
-                                          </AnchorPane>
-                                       </children>
-                                    </VBox>
-                                 </content>
-                              </Tab>
-                              <Tab text="Text">
-                                 <content>
-                                    <AnchorPane>
-                                       <children>
-                                          <SplitPane dividerPositions="0.496" layoutY="44.0" prefHeight="700.0" prefWidth="1000.0">
-                                             <items>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                   <children>
-                                                      <TextArea fx:id="rawText" onKeyReleased="#parseText" prefHeight="698.0" prefWidth="492.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                                   <children>
-                                                      <TextFlow fx:id="parsedText" prefHeight="698.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                             </items>
-                                          </SplitPane>
-                                          <ChoiceBox fx:id="selfBox" layoutX="90.0" layoutY="14.0" prefWidth="150.0" />
-                                          <ChoiceBox fx:id="otherBox" layoutX="350.0" layoutY="14.0" prefWidth="150.0" />
-                                          <Label layoutX="58.0" layoutY="18.0" text="Self:" />
-                                          <Label layoutX="310.0" layoutY="18.0" text="Other:" />
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                           </tabs>
-                        </TabPane>
+                        <VBox layoutX="3.0" layoutY="5.0" prefHeight="259.0" prefWidth="466.0">
+                           <children>
+                              <HBox prefHeight="40.0" prefWidth="466.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Scene Type:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="sceneType" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="40.0" prefWidth="466.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Scene Number:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="sceneIdx" prefHeight="25.0" prefWidth="62.0" />
+                                    <Button fx:id="sceneAdd" mnemonicParsing="false" onAction="#addScene" text="Add New">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="sceneRemove" mnemonicParsing="false" onAction="#removeScene" text="Delete">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="sceneMove" mnemonicParsing="false" onAction="#moveScene" text="Move Up">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="40.0" prefWidth="466.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Other Character:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="otherBox" prefHeight="25.0" prefWidth="178.0" />
+                                 </children></HBox>
+                           </children>
+                        </VBox>
+                        <TreeView fx:id="reqTree" layoutX="479.0" layoutY="2.0" prefHeight="261.0" prefWidth="517.0" />
+                        <SplitPane dividerPositions="0.5" layoutX="5.0" layoutY="264.0" prefHeight="479.0" prefWidth="991.0">
+                           <items>
+                              <TextArea fx:id="rawText" prefHeight="200.0" prefWidth="200.0" promptText="Scene Text" wrapText="true" />
+                              <TextArea fx:id="parsedText" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Parsed Text" wrapText="true" />
+                           </items>
+                        </SplitPane>
                      </children>
                   </AnchorPane>
               </content>
             </Tab>
             <Tab text="Other Data">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <Label text="Recruitment Cost:">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="recruitmentCost" prefHeight="25.0" prefWidth="60.0" />
+                           </children>
+                        </HBox>
+                        <VBox layoutX="14.0" layoutY="349.0" prefHeight="382.0" prefWidth="445.0">
+                           <children>
+                              <HBox prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+                                 <children>
+                                    <ChoiceBox fx:id="startItem" prefWidth="150.0" />
+                                    <Label text="Amount:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="startItemAmount" prefHeight="25.0" prefWidth="31.0" />
+                                    <Button fx:id="startItemAdd" mnemonicParsing="false" onAction="#addStartItem" text="Add">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="startItemRemove" mnemonicParsing="false" onAction="#removeStartItem" text="Remove">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <ListView fx:id="startItemList" prefHeight="351.0" prefWidth="445.0" />
+                           </children>
+                        </VBox>
+                        <VBox layoutX="469.0" layoutY="349.0" prefHeight="382.0" prefWidth="517.0">
+                           <children>
+                              <HBox prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+                                 <children>
+                                    <ChoiceBox fx:id="purchaseItem" prefWidth="150.0" />
+                                    <Label text="Amount (Max):">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="purchaseItemAmount" prefHeight="25.0" prefWidth="31.0" />
+                                    <Button fx:id="purchaseItemAdd" mnemonicParsing="false" onAction="#addPurchaseItem" text="Add">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="purchaseItemRemove" mnemonicParsing="false" onAction="#removePurchaseItem" text="Remove">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <ListView fx:id="purchaseItemList" prefHeight="351.0" prefWidth="531.0" />
+                           </children>
+                        </VBox>
+                        <Line endX="250.0" layoutY="50.0" />
+                        <Line layoutX="250.0" startY="325.0" />
+                        <ListView fx:id="modList" layoutX="483.0" layoutY="14.0" prefHeight="305.0" prefWidth="503.0" />
+                        <Label layoutX="387.0" layoutY="16.0" text="AI Modifiers">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <VBox layoutX="259.0" layoutY="51.0" prefHeight="271.0" prefWidth="296.0">
+                           <children>
+                              <HBox prefHeight="30.0" prefWidth="445.0" spacing="15.0">
+                                 <children>
+                                    <Label text="Type:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="modType" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Value:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="modValue" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="30.0" prefWidth="445.0" spacing="10.0">
+                                 <children>
+                                    <Label text="Weight:">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="modWeight" prefHeight="25.0" prefWidth="42.0" />
+                                 </children>
+                              </HBox>
+                              <Button fx:id="modAdd" mnemonicParsing="false" onAction="#addAiMod" text="Add">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="modRemove" mnemonicParsing="false" onAction="#removeAiMod" text="Remove Selected">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <Line endX="1000.0" layoutY="325.0" />
+                        <Label layoutX="14.0" layoutY="331.0" text="Starting Items:">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="469.0" layoutY="333.0" text="Preferred Purchase Item:">
+                           <font>
+                              <Font name="Segoe UI Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="verificationTab" text="Verification">
+              <content>
+                <AnchorPane fx:id="verificationPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
         </tabs>

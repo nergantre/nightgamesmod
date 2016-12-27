@@ -33,17 +33,18 @@ final class Parser {
 		this.other = other;
 	}
 	
-	void parse(String raw, TextFlow tf) {
-		tf.getChildren().clear();
+	String parse(String raw) {
+		StringBuilder sb = new StringBuilder();
 		if (self == null) {
-			tf.getChildren().add(new Text("<<set characters to parse the scene>>\n\n"));
-			tf.getChildren().add(new Text(raw));
+			sb.append("<<set characters to parse the scene>>\n\n");
+			sb.append(raw);
 		} else {
-			tf.getChildren().add(new Text(escape(Global.format(raw, self, other))));
+			sb.append(escape(Global.format(raw, self, other)));
 		}
+		return sb.toString();
 	}
 	
-	public static String escape(String base) {
+	static String escape(String base) {
 		String res = base.replaceAll("\"", "\\\\\"");
 		res = res.replaceAll("\\r?\\n", "<br/>");
 		res = res.replaceAll("\\\\", "\\\\");

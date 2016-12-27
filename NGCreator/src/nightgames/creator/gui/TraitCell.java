@@ -1,6 +1,5 @@
 package nightgames.creator.gui;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
@@ -14,7 +13,6 @@ public class TraitCell extends ListCell<TraitBean> {
 	private HBox box;
 	private Label label;
 	private TextField field;
-	private ChangeListener<String> listener;
 	
 	public TraitCell() {
 		box = new HBox(20);
@@ -24,6 +22,15 @@ public class TraitCell extends ListCell<TraitBean> {
 		field.setMaxWidth(40);
 		field.setMinWidth(40);
 		CreatorGui.setFieldNumericOnly(field);
+		field.focusedProperty().addListener((obs, old, nw) -> {
+			if (!nw) {
+				try {
+					getItem().setLevel(Integer.parseInt(field.getText()));
+				} catch (NumberFormatException e) {
+					
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -37,18 +44,8 @@ public class TraitCell extends ListCell<TraitBean> {
 			box.getChildren().addAll(label, field);
 			label.setText(trait.getTrait().toString());
 			field.setText(trait.getLevel() + "");
-			if (listener != null) {
-				field.textProperty().removeListener(listener);
-			}
-			listener = (obs, old, nw) -> {
-				try {
-					trait.setLevel(Integer.parseInt(nw));
-				} catch (NumberFormatException e) {
-					// NOP
-				}
-			};
+			setGraphic(box);
 		}
-		setGraphic(box);
 	}
 	
 }

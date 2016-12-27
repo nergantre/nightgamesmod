@@ -16,4 +16,8 @@ public class NotRequirement extends BaseRequirement {
     @Override public boolean meets(Combat c, Character self, Character other) {
         return !req.meets(c, self, other);
     }
+    
+    public Requirement getNegatedRequirement() {
+        return req;
+    }
 }

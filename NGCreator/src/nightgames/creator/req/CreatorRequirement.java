@@ -3,11 +3,7 @@ package nightgames.creator.req;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
@@ -23,6 +19,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Result;
 import nightgames.items.Item;
+import nightgames.requirements.*;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
 
@@ -35,6 +32,7 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 	private ChoiceBox<String> charBox;
 	private HBox box;
 	private boolean dirty;
+	private boolean built = false;
 
 	public CreatorRequirement() {
 		this(RequirementType.DOM, true);
@@ -55,7 +53,7 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 
 	private void update(ObservableValue<? extends RequirementType> obs, RequirementType old, RequirementType nw) {
 		type = nw;
-		if (old != nw) {
+		if (old != nw && built) {
 			buildBox();
 			fireValueChangedEvent();
 		}
@@ -76,6 +74,7 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 		typeBox.getSelectionModel().select(type);
 		type.getArguments().stream().filter(RequirementArgument::hasControl)
 		.map(RequirementArgument::buildControl).forEach(box.getChildren()::add);
+		built = true;
 	}
 
 	public HBox getBox() {
@@ -177,7 +176,7 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 			break;
 
 		case LEVEL:
-		case ORGASMS:
+		case ORGASM:
 			wrapReverse(toFill, getNumber(2));
 			break;
 
@@ -230,10 +229,10 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 		
 		switch (type) {
 		case RESULT:
-			req.setChosenItem(1, Result.valueOf(entry.getValue().getAsString()));
+			req.setString(1,entry.getValue().getAsString());
 			break;
 		case POSITION:
-			req.setChosenItem(1, Stance.valueOf(entry.getValue().getAsString()));
+			req.setString(1,entry.getValue().getAsString());
 			break;
 		case RANDOM:
 			req.setNumber(1, entry.getValue().getAsDouble());
@@ -244,32 +243,78 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 			//TODO
 			break;
 		case LEVEL:
-		case ORGASMS:
+		case ORGASM:
 			req.setNumber(2, entry.getValue().getAsDouble());
 			break;
 		case ATTRIBUTE:
-			req.setChosenItem(2, Attribute.valueOf(entry.getValue().getAsJsonObject().get("att").getAsString()));
+			req.setString(2, entry.getValue().getAsJsonObject().get("att").getAsString());
 			req.setNumber(3, entry.getValue().getAsJsonObject().get("value").getAsDouble());
 			break;
 		case BODY:
 			req.setString(2, entry.getValue().getAsString());
 			break;
 		case ITEM:
-			req.setChosenItem(2, Item.valueOf(entry.getValue().getAsJsonObject().get("item").getAsString()));
+			req.setString(2, entry.getValue().getAsJsonObject().get("item").getAsString());
 			break;
 		case MOOD:
-			req.setChosenItem(1, Emotion.valueOf(entry.getValue().getAsString()));
+			req.setString(1, entry.getValue().getAsString());
 			break;
 		case STATUS:
-			req.setChosenItem(1, Stsflag.valueOf(entry.getValue().getAsString()));
+			req.setString(1, entry.getValue().getAsString());
 			break;
 		case TRAIT:
-			req.setChosenItem(1, Trait.valueOf(entry.getValue().getAsString()));
+			req.setString(1, entry.getValue().getAsString());
 			break;
 		default:
 			//NOP
 		}
 		
 		return req;
+	}
+	
+	public static CreatorRequirement fromReqs(Requirement req, boolean reversed) {
+		CreatorRequirement creq = new CreatorRequirement(RequirementType.typeOf(req), true);
+		if (creq.type.isCharacterSpecific()) {
+			creq.charBox.getSelectionModel().select(reversed ? 1 : 0);
+		}
+		switch (creq.type) {
+		case ATTRIBUTE:
+			creq.setChosenItem(2, ((AttributeRequirement) req).getAtt().toString());
+			creq.setNumber(3, ((AttributeRequirement) req).getAmount());
+			break;
+		case BODY:
+			creq.setString(2, ((BodyPartRequirement) req).getType());
+			break;
+		case ITEM:
+			creq.setChosenItem(2, ((ItemRequirement) req).getItemAmount().item.toString());
+			break;
+		case LEVEL:
+			creq.setNumber(2, ((LevelRequirement) req).getLevel());
+			break;
+		case MOOD:
+			creq.setChosenItem(2, ((MoodRequirement) req).getMood().toString());
+			break;
+		case ORGASM:
+			creq.setNumber(2, ((OrgasmRequirement) req).getCount());
+			break;
+		case POSITION:
+			creq.setChosenItem(1, ((PositionRequirement) req).getPosition().toString());
+			break;
+		case RANDOM:
+			creq.setNumber(1, ((RandomRequirement) req).getThreshold());
+			break;
+		case RESULT:
+			creq.setChosenItem(1, ((ResultRequirement) req).getResult().toString());
+			break;
+		case STATUS:
+			creq.setChosenItem(2, ((StatusRequirement) req).getFlag().toString());
+			break;
+		case TRAIT:
+			creq.setChosenItem(2, ((TraitRequirement) req).getTrait().toString());
+			break;
+		default:
+			break;
+		}
+		return creq;
 	}
 }

@@ -17,4 +17,8 @@ public class OrgasmRequirement extends BaseRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return self.orgasms >= number;
     }
+    
+    public int getCount() {
+        return number;
+    }
 }

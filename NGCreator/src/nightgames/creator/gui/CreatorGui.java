@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -30,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.dooapp.fxform.FXForm;
 import com.google.gson.Gson;
@@ -42,13 +44,16 @@ import com.google.gson.JsonPrimitive;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
-
+import javafx.event.Event;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
@@ -59,7 +64,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import nightgames.creator.model.AiMod;
 import nightgames.creator.model.AttributeIntPair;
+import nightgames.creator.model.ItemAmount;
 import nightgames.creator.model.MouthType;
 import nightgames.creator.model.TraitBean;
 import nightgames.creator.req.CreatorRequirement;
@@ -67,11 +74,14 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.requirements.JsonRequirementSaver;
+import nightgames.requirements.RequirementSaver;
 import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.NPC;
+import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
@@ -88,6 +98,7 @@ import nightgames.characters.custom.CustomNPC;
 import nightgames.characters.custom.DataBackedNPCData;
 import nightgames.characters.custom.JsonSourceNPCDataLoader;
 import nightgames.characters.custom.NPCData;
+import nightgames.characters.custom.effect.MoneyModEffect;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -95,7 +106,7 @@ import javafx.scene.layout.VBox;
 
 public class CreatorGui extends Application {
 
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
 	@SuppressWarnings("serial")
 	private static final Map<String, String> FORMAT_HELP = new HashMap<String, String>() {
@@ -133,16 +144,6 @@ public class CreatorGui extends Application {
 	private MenuItem menuNew;
 	@FXML
 	private MenuItem menuDisplay;
-	@FXML
-	private TextArea rawText;
-	@FXML
-	private TextFlow parsedText;
-	@FXML
-	private TreeView<CreatorRequirement> reqTree;
-	@FXML
-	private ChoiceBox<Character> selfBox;
-	@FXML
-	private ChoiceBox<Character> otherBox;
 	@FXML
 	private ListView<Clothing> outfit;
 	@FXML
@@ -195,7 +196,63 @@ public class CreatorGui extends Application {
 			willpowerBonus, attrBonus;
 
 	@FXML
+	private TextField recruitmentCost;
+	@FXML
+	private ChoiceBox<Item> startItem;
+	@FXML
+	private TextField startItemAmount;
+	@FXML
+	private Button startItemAdd;
+	@FXML
+	private Button startItemRemove;
+	@FXML
+	private ListView<ItemAmount> startItemList;
+	@FXML
+	private ChoiceBox<Item> purchaseItem;
+	@FXML
+	private TextField purchaseItemAmount;
+	@FXML
+	private Button purchaseItemAdd;
+	@FXML
+	private Button purchaseItemRemove;
+	@FXML
+	private ListView<ItemAmount> purchaseItemList;
+	@FXML
+	private ChoiceBox<AiMod.Type> modType;
+	@FXML
+	private ChoiceBox<String> modValue;
+	@FXML
+	private TextField modWeight;
+	@FXML
+	private Button modAdd;
+	@FXML
+	private Button modRemove;
+	@FXML
+	private ListView<AiMod<?>> modList;
+
+	@FXML
+	private ChoiceBox<String> sceneType;
+	@FXML
+	private ChoiceBox<Integer> sceneIdx;
+	@FXML
+	private ChoiceBox<Character> otherBox;
+	@FXML
+	private Button sceneAdd, sceneDelete, sceneMove;
+	@FXML
+	private TreeView<CreatorRequirement> reqTree;
+	@FXML
+	private TextArea rawText, parsedText;
+
+	@FXML
 	private Menu loadMenu;
+	@FXML
+	private Tab sceneTab, verificationTab;
+	@FXML
+	private AnchorPane verificationPane;
+	private VerificationList verification;
+
+	private ObjectProperty<NPC> currentChar = new SimpleObjectProperty<>();
+	private SceneStore store = new SceneStore();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -206,19 +263,24 @@ public class CreatorGui extends Application {
 		reqTree.setCellFactory(t -> new ReqCell());
 		reqTree.setRoot(new TreeItem<>(CreatorRequirement.ROOT));
 		Global.rebuildCharacterPool(Optional.empty());
-		fillCharacterBoxes();
+		setupScenes();
 		setupGeneric();
 		setupOutfit();
 		setupBody();
 		setupAttrs();
 		setupTraits();
 		setupLoad();
+		setupItems();
+		setupAiMods();
+		setupVerification();
 
-		Alert beta = new Alert(AlertType.INFORMATION, "Please note that this tool is far from finished."
-				+ " Proceed with caution, and please let me (dndw) know if you have any feedback so far.");
-		beta.setTitle("Beta Status");
-		beta.showAndWait();
-		
+		/*
+		 * Alert beta = new Alert(AlertType.INFORMATION,
+		 * "Please note that this tool is far from finished." +
+		 * " Proceed with caution, and please let me (dndw) know if you have any feedback so far."
+		 * ); beta.setTitle("Beta Status"); beta.showAndWait();
+		 */
+
 		Scene scene = new Scene(mainPane);
 		stage = primaryStage;
 		primaryStage.setTitle("Night Games - Scene Creator");
@@ -316,34 +378,82 @@ public class CreatorGui extends Application {
 	}
 
 	private void setupLoad() {
-		Global.getCharacters().stream().filter(c -> c instanceof NPC).map(c -> {
+		Global.allNPCs().stream().map(c -> {
 			MenuItem item = new MenuItem(c.name);
 			item.setOnAction(e -> load(c));
 			return item;
 		}).forEach(loadMenu.getItems()::add);
 	}
 
-	private void fillCharacterBoxes() {
-		selfBox.setItems(FXCollections.observableArrayList(Global.allNPCs()));
-		otherBox.setItems(FXCollections.observableArrayList(Global.allNPCs()));
-		selfBox.getSelectionModel().select(0);
-		otherBox.getSelectionModel().select(1);
-		selfBox.getSelectionModel().selectedItemProperty().addListener((obs, old, nw) -> {
-			parser.setSelf(nw);
-			parseText(null);
+	private void setupItems() {
+		startItem.getItems().addAll(Item.values());
+		purchaseItem.getItems().addAll(Item.values());
+		setFieldNumericOnly(startItemAmount);
+		setFieldNumericOnly(purchaseItemAmount);
+	}
+
+	private void setupAiMods() {
+		modType.getItems().addAll(AiMod.Type.values());
+		modType.getSelectionModel().selectedItemProperty().addListener((obs, old, nw) -> {
+			modValue.getItems().clear();
+			modValue.getItems()
+					.addAll(nw.build().getUniverse().stream().map(Object::toString).collect(Collectors.toSet()));
+			modValue.getSelectionModel().select(nw.build().getValue().toString());
+			modValue.getItems().sort(Comparator.naturalOrder());
 		});
+		modType.getSelectionModel().select(AiMod.Type.SKILL);
+
+	}
+
+	private void setupScenes() {
+		otherBox.setItems(FXCollections.observableArrayList(Global.allNPCs()));
+		otherBox.getSelectionModel().select(1);
 		otherBox.getSelectionModel().selectedItemProperty().addListener((obs, old, nw) -> {
 			parser.setOther(nw);
 			parseText(null);
 		});
-		parser.setSelf(selfBox.getSelectionModel().getSelectedItem());
+		sceneTab.setOnSelectionChanged(this::updateCharacter);
+		currentChar.addListener((obs, old, nw) -> parser.setSelf(nw));
 		parser.setOther(otherBox.getSelectionModel().getSelectedItem());
+
+		sceneIdx.getSelectionModel().selectedItemProperty().addListener((obs, old, nw) -> {
+			try {
+				SceneStore.Scene scene = store.getScenes(sceneType.getValue()).get(nw);
+				rawText.setText(scene.getText());
+				scene.fillTree(reqTree);
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
+		});
+
+		sceneType.getItems().addAll(SceneStore.REQUIRED_LINES);
+		sceneType.getItems().addAll("recruitment intro", "recruitment confirmation");
+		sceneType.getItems().sort(Comparator.naturalOrder());
+		sceneType.getSelectionModel().select(0);
+		sceneType.getSelectionModel().selectedItemProperty().addListener((obs, old, nw) -> {
+			rawText.setText("");
+			parsedText.setText("");
+			sceneIdx.getItems().clear();
+			if (store.getScenes(nw).isEmpty()) {
+				addScene(null);
+			} else {
+				IntStream.range(0, store.getScenes(nw).size()).forEach(sceneIdx.getItems()::add);
+				sceneIdx.getSelectionModel().selectFirst();
+			}
+		});
+	}
+
+	private void setupVerification() {
+		verificationTab.setOnSelectionChanged(this::updateCharacter);
+		verification = new VerificationList();
+		verificationPane.getChildren().add(verification);
+		currentChar.addListener(o -> verification.update(createJson()));
 	}
 
 	@FXML
 	public void reset(ActionEvent event) {
 		rawText.setText("");
-		parsedText.getChildren().clear();
+		parsedText.setText("");
 		reqTree.setRoot(new TreeItem<>(CreatorRequirement.ROOT));
 	}
 
@@ -453,7 +563,7 @@ public class CreatorGui extends Application {
 
 	@FXML
 	public void parseText(KeyEvent event) {
-		parser.parse(rawText.getText(), parsedText);
+		parsedText.setText(parser.parse(rawText.getText()));
 	}
 
 	@FXML
@@ -588,10 +698,10 @@ public class CreatorGui extends Application {
 					TraitBean bean = new TraitBean();
 					bean.setLevel(e.getKey());
 					bean.setTrait(t);
-					bean.levelProperty().addListener(o -> {
-						growthList.add(new TraitBean());
-						growthList.remove(new TraitBean());
-					});
+					// bean.levelProperty().addListener(o -> {
+					// growthList.add(new TraitBean());
+					// growthList.remove(new TraitBean());
+					// });
 					return bean;
 				})).collect(Collectors.toSet()));
 		staminaBase.setText(ch.getGrowth().stamina + "");
@@ -602,12 +712,52 @@ public class CreatorGui extends Application {
 		mojoBonus.setText("0");
 		willpowerBase.setText(ch.getGrowth().willpower + "");
 		willpowerBonus.setText(ch.getGrowth().bonusWillpower + "");
+
+		NPC npc = ((NPC) ch);
+		if (npc.ai instanceof CustomNPC) {
+			NPCData data = ((CustomNPC) npc.ai).getData();
+			data.getStartingItems().stream().map(ItemAmount::new).forEach(startItemList.getItems()::add);
+			data.getPurchasedItems().stream().map(ItemAmount::new).forEach(purchaseItemList.getItems()::add);
+
+			data.getAiModifiers().getAttackMods().entrySet().stream()
+					.map(e -> new AiMod.Skill(e.getKey(), e.getValue())).forEach(modList.getItems()::add);
+			data.getAiModifiers().getPositionMods().entrySet().stream()
+					.map(e -> new AiMod.Position(e.getKey(), e.getValue())).forEach(modList.getItems()::add);
+			data.getAiModifiers().getSelfStatusMods().entrySet().stream()
+					.map(e -> new AiMod.SelfStatus(e.getKey(), e.getValue())).forEach(modList.getItems()::add);
+			data.getAiModifiers().getOppStatusMods().entrySet().stream()
+					.map(e -> new AiMod.OpponentStatus(e.getKey(), e.getValue())).forEach(modList.getItems()::add);
+
+			data.getCharacterLines().forEach((key, scenes) -> scenes.forEach(ent -> {
+				if (!sceneType.getItems().contains(key))
+					sceneType.getItems().add(key);
+				store.addScene(key, ent.getRawLine(), ent.getRequirements());
+			}));
+			Optional<SceneStore.Scene> initial = store.getAny();
+			if (initial.isPresent()) {
+				rawText.setText(initial.get().getText());
+				initial.get().fillTree(reqTree);
+			}
+			if (data.getRecruitment().effects.size() > 0) {
+				recruitmentCost.setText(-((MoneyModEffect) data.getRecruitment().effects.get(0)).getAmount() + "");
+			}
+			store.getScenes("recruitment intro").clear();
+			store.addScene("recruitment intro", data.getRecruitment().introduction, data.getRecruitment().requirement);
+			store.getScenes("recruitment confirmation").clear();
+			store.addScene("recruitment confirmation", data.getRecruitment().confirm, Collections.emptyList());
+		}
 	}
 
 	@FXML
-	private void save() {
+	private void updateCharacter(Event evt) {
+		CustomNPC pers = new CustomNPC(JsonSourceNPCDataLoader.load(createJson()));
+		currentChar.set(new NPC(pers.getData().getName(), pers.getData().getStats().level, pers));
+	}
+
+	private JsonObject createJson() {
 		JsonObject root = new JsonObject();
 		root.addProperty("name", name.getText());
+		root.addProperty("type", "CustomNPC" + name.getText());
 		root.addProperty("sex", sex.getSelectionModel().getSelectedItem().name());
 		root.addProperty("trophy", trophy.getSelectionModel().getSelectedItem().name());
 		root.addProperty("plan", "hunting");
@@ -615,8 +765,9 @@ public class CreatorGui extends Application {
 
 		JsonObject outfit = new JsonObject();
 		JsonArray top = new JsonArray();
-		this.outfit.getItems().forEach(c -> top.add(c.getName()));
+		this.outfit.getItems().forEach(c -> top.add(c.getID()));
 		outfit.add("top", top);
+		outfit.add("bottom", new JsonArray());
 		root.add("outfit", outfit);
 
 		JsonObject stats = new JsonObject();
@@ -678,7 +829,7 @@ public class CreatorGui extends Application {
 		parts.add(breasts);
 
 		JsonObject ears = new JsonObject();
-		ears.addProperty("class", "nightgames.characters.body.EarsPart");
+		ears.addProperty("class", "nightgames.characters.body.EarPart");
 		ears.addProperty("enum", this.ears.getValue().name());
 		parts.add(ears);
 
@@ -691,7 +842,7 @@ public class CreatorGui extends Application {
 		mouth.addProperty("pleasure", 1);
 		mouth.addProperty("sensitivity", 1);
 		parts.add(mouth);
-		
+
 		JsonObject ass = new JsonObject();
 		ass.addProperty("class", "nightgames.characters.body.AssPart");
 		ass.addProperty("desc", "ass");
@@ -699,7 +850,7 @@ public class CreatorGui extends Application {
 		ass.addProperty("pleasure", 1.1);
 		ass.addProperty("sensitivity", 1);
 		parts.add(ass);
-		
+
 		BasicCockPart cockSize = this.cockSize.getValue();
 		if (cockSize != null) {
 			JsonObject cock = new JsonObject();
@@ -718,7 +869,7 @@ public class CreatorGui extends Application {
 			}
 			parts.add(cock);
 		}
-		
+
 		PussyPart pussy = this.pussy.getValue();
 		if (pussy != null) {
 			JsonObject pussyObj = new JsonObject();
@@ -726,29 +877,187 @@ public class CreatorGui extends Application {
 			pussyObj.addProperty("enum", pussy.name());
 			parts.add(pussyObj);
 		}
-
 		body.add("parts", parts);
 		body.addProperty("hotness", Double.parseDouble(hotness.getText()));
 		root.add("body", body);
-		root.add("lines", new JsonObject());
-		root.add("mood", new JsonObject());
-		root.add("recruitment", new JsonObject());
-		root.add("portraits", new JsonObject());
-		root.add("ai-modifiers", new JsonArray());
-		
+
+		JsonObject items = new JsonObject();
+		JsonArray initial = new JsonArray();
+		startItemList.getItems().stream().map(ia -> {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("item", ia.getItem().name());
+			obj.addProperty("amount", ia.getAmount());
+			return obj;
+		}).forEach(initial::add);
+		items.add("initial", initial);
+
+		JsonArray purchase = new JsonArray();
+		purchaseItemList.getItems().stream().map(ia -> {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("item", ia.getItem().name());
+			obj.addProperty("amount", ia.getAmount());
+			return obj;
+		}).forEach(purchase::add);
+		items.add("purchase", purchase);
+		root.add("items", items);
+
+		JsonArray aimods = new JsonArray();
+		modList.getItems().stream().map(m -> {
+			JsonObject obj = new JsonObject();
+			obj.addProperty("type", m.getName());
+			obj.addProperty("value", m.valueAsString());
+			obj.addProperty("weight", m.getWeight());
+			return obj;
+		}).forEach(aimods::add);
+		root.add("ai-modifiers", aimods);
+
+		JsonObject lines = new JsonObject();
+		SceneStore.REQUIRED_LINES.forEach(sit -> {
+			JsonArray arr = new JsonArray();
+			store.getScenes(sit).forEach(scene -> {
+				JsonObject obj = new JsonObject();
+				obj.addProperty("text", scene.getText());
+				JsonObject reqs = new JsonObject();
+				JsonRequirementSaver saver = new JsonRequirementSaver();
+				scene.getReqs().stream().map(saver::saveRequirement).forEach(saved -> reqs.add(saved.key, saved.data));
+				obj.add("requirements", reqs);
+				arr.add(obj);
+			});
+			lines.add(sit, arr);
+		});
+		root.add("lines", lines);
+		// root.add("mood", new JsonObject());
+		JsonObject recruitment = new JsonObject();
+		recruitment.addProperty("introduction", "");
+		recruitment.addProperty("confirm", "");
+		JsonArray effects = new JsonArray();
+		JsonObject effect = new JsonObject();
+		int cost;
+		try {
+			cost = Integer.parseInt(recruitmentCost.getText());
+		} catch (NumberFormatException e) {
+			cost = 1000;
+		}
+		effect.addProperty("modMoney", cost);
+		effects.add(effect);
+		recruitment.add("cost", effects);
+		JsonObject requirements = new JsonObject();
+		requirements.addProperty("level", 10);
+		recruitment.add("requirements", requirements);
+		recruitment.addProperty("action", name.getText() + ": $" + cost);
+		root.add("recruitment", recruitment);
+
+		root.add("portraits", new JsonArray());
+
+		return root;
+	}
+
+	@FXML
+	private void save() {
 		FileChooser fc = new FileChooser();
 		fc.setSelectedExtensionFilter(new ExtensionFilter("JSON Characters", ".json"));
 		File file = fc.showSaveDialog(stage);
 		if (file != null) {
 			try {
 				try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
-					writer.write(GSON.toJson(root));
+					writer.write(GSON.toJson(createJson()));
 				}
 			} catch (IOException e) {
 				Alert a = new Alert(AlertType.ERROR, "Unable to save file! Error: " + e);
 				a.showAndWait();
 				e.printStackTrace();
 			}
+		}
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@FXML
+	private void addAiMod(ActionEvent evt) {
+		AiMod mod = modType.getValue().build();
+		mod.setValue(mod.fromString(modValue.getValue()));
+		mod.setWeight(Double.parseDouble(modWeight.getText()));
+		modList.getItems().add(mod);
+	}
+
+	@FXML
+	private void removeAiMod(ActionEvent evt) {
+		AiMod<?> mod = modList.getSelectionModel().getSelectedItem();
+		if (mod != null) {
+			modList.getItems().remove(mod);
+		}
+	}
+
+	@FXML
+	private void addStartItem(ActionEvent evt) {
+		Item item = startItem.getValue();
+		int amt;
+		try {
+			amt = Integer.parseInt(startItemAmount.getText());
+		} catch (NumberFormatException e) {
+			return;
+		}
+		if (item != null) {
+			ItemAmount ia = new ItemAmount(item, amt);
+			startItemList.getItems().add(ia);
+		}
+	}
+
+	@FXML
+	private void removeStartItem(ActionEvent evt) {
+		ItemAmount selected = startItemList.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			startItemList.getItems().remove(selected);
+		}
+	}
+
+	@FXML
+	private void addPurchaseItem(ActionEvent evt) {
+		Item item = purchaseItem.getValue();
+		int amt;
+		try {
+			amt = Integer.parseInt(purchaseItemAmount.getText());
+		} catch (NumberFormatException e) {
+			return;
+		}
+		if (item != null) {
+			ItemAmount ia = new ItemAmount(item, amt);
+			purchaseItemList.getItems().add(ia);
+		}
+	}
+
+	@FXML
+	private void removePurchaseItem(ActionEvent evt) {
+		ItemAmount selected = purchaseItemList.getSelectionModel().getSelectedItem();
+		if (selected != null) {
+			purchaseItemList.getItems().remove(selected);
+		}
+	}
+
+	@FXML
+	private void addScene(ActionEvent evt) {
+		store.addScene(sceneType.getValue(), "", new ArrayList<>());
+		sceneIdx.getItems().add(sceneIdx.getItems().size());
+		sceneIdx.getSelectionModel().select(sceneIdx.getItems().size() - 1);
+	}
+
+	@FXML
+	private void removeScene(ActionEvent evt) {
+		int idx = sceneIdx.getValue();
+		List<SceneStore.Scene> scenes = store.getScenes(sceneType.getValue());
+		if (scenes.size() < 1)
+			return;
+		scenes.remove(idx);
+		sceneIdx.getItems().clear();
+		IntStream.range(0, scenes.size()).forEach(sceneIdx.getItems()::add);
+		sceneIdx.getSelectionModel().selectFirst();
+	}
+
+	@FXML
+	private void moveScene(ActionEvent evt) {
+		int idx = sceneIdx.getValue();
+		if (idx > 0) {
+			Collections.swap(store.getScenes(sceneType.getValue()), idx, idx - 1);
+			sceneIdx.getSelectionModel().select(idx - 1);
 		}
 	}
 
@@ -771,7 +1080,11 @@ public class CreatorGui extends Application {
 			context.getItems().add(add);
 
 			remove = new MenuItem("Remove");
-			remove.setOnAction(e -> getTreeItem().getParent().getChildren().remove(getTreeItem()));
+			remove.setOnAction(e -> {
+				if (getTreeItem().getParent() != null) {
+					getTreeItem().getParent().getChildren().remove(getTreeItem());
+				}
+			});
 			context.getItems().add(remove);
 			setContextMenu(context);
 		}
@@ -782,7 +1095,7 @@ public class CreatorGui extends Application {
 			setGraphic(empty ? null : item.getBox());
 			if (getTreeItem() != null) {
 				if (getTreeItem().getParent() == null) {
-					context.getItems().remove(remove);
+					// context.getItems().remove(remove);
 				}
 				// this.setStyle("-fx-background-color:" +
 				// (getTreeItem().getValue().isDirty() ? "red" : "white"));

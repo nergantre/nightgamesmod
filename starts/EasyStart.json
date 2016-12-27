@@ -1,0 +1,23 @@
+{
+	"name":"Easier Start",
+	"summary":"The player starts with extra attribute points and a few beneficial traits. All other characters are at their defaults.",
+	"enabled":true,
+	"player": {
+		"attributes": {
+			"Power":5,
+			"Seduction":5,
+			"Cunning":5
+		},
+		"attribute_points": 10,
+		"money": 1000,
+		"traits": [
+			"pussyhandler",
+			"fastLearner",
+			"expertGoogler"
+		]
+	},
+	"npcs": [
+	],
+	"all_npcs":{},
+	"flags":[]
+}

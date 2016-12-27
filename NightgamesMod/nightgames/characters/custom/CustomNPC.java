@@ -219,4 +219,8 @@ public class CustomNPC extends BasePersonality {
                         .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
     }
+    
+    public NPCData getData() {
+        return data;
+    }
 }
