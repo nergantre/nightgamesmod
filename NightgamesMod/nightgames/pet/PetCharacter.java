@@ -27,6 +27,9 @@ import nightgames.status.Status;
 import nightgames.trap.Trap;
 
 public class PetCharacter extends Character {
+    
+    public static final PetCharacter DUMMY = new PetCharacter();
+    
     private static final Set<SkillTag> PET_UNUSABLE_TAG = new HashSet<>();
     static {
         PET_UNUSABLE_TAG.add(SkillTag.suicidal);
@@ -126,6 +129,14 @@ public class PetCharacter extends Character {
         this.stamina.fill();
     }
 
+    private PetCharacter() {
+        super("{{{DUMMY}}}", 1);
+    }
+    
+    public boolean isDummy() {
+        return self == null;
+    }
+    
     public PetCharacter cloneWithOwner(Character owner) throws CloneNotSupportedException {
         PetCharacter clone = (PetCharacter) clone();
         clone.self = getSelf().cloneWithOwner(owner);
@@ -304,7 +315,7 @@ public class PetCharacter extends Character {
     }
 
     public boolean isPetOf(Character other) {
-        return other != null && ownerType.equals(other.getType());
+        return other != null && !isDummy() && ownerType.equals(other.getType());
     }
 
     public Pet getSelf() {

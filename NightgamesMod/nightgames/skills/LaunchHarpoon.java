@@ -33,6 +33,11 @@ public class LaunchHarpoon extends Skill {
     }
     
     @Override
+    public float priorityMod(Combat c) {
+        return 5.f;
+    }
+    
+    @Override
     public int getMojoCost(Combat c) {
         int cost = 20;
         if (getSelf().has(Trait.yank)) {

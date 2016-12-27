@@ -428,7 +428,7 @@ public enum Trait {
 
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
-    temptingass("Tempting Ass", "Opponent's can't help butt fuck it"), // ... sorry
+    temptingass("Tempting Ass", "Opponents can't help butt fuck it"), // ... sorry
     disablingblows("Disabling Blows", "Painful attacks may reduce Power"),
     takedown("Takedown", "Expert at tackling weary opponents"),
     indomitable("Indomitable", "Plainly refuses to be dominated"),
@@ -452,6 +452,8 @@ public enum Trait {
     maglocks("MagLocks", "Has MagLocks, which are very good at binding opponents' limbs together"),
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     roboweb("RoboWeb", "Improved Spiderweb trap"),
+    octo("Octo", "Has robotic arms mounted onto their back"),
+
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {

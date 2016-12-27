@@ -95,6 +95,10 @@ public class NPC extends Character {
         description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
+        if (roboManager != null) {
+            description += "<p>You can see " + roboManager.describeArms() + " strapped behind "
+                                + possessivePronoun() + " back.<br/>";
+        }
         return description;
     }
 
