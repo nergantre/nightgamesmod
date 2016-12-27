@@ -1,3 +1,8 @@
+2.4.5.5.b
+GUI:
+- Redid the status panel a bit. The status panel should now scroll and the inventory was moved to its own window
+	- once again, stopgap solution
+
 2.4.5.5.a
 Minor:
 
