@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -182,12 +184,27 @@ public class Global {
             OutputStream ostream = new TeeStream(System.out, fstream);
             System.setErr(new PrintStream(estream));
             System.setOut(new PrintStream(ostream));
+    		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+    		InputStream stream = loader.getResourceAsStream("build.properties");
+
+            System.out.println("=============================================");
+            System.out.println("Nightgames Mod");
+    		if (stream != null) {
+    			Properties prop = new Properties();
+    			prop.load(stream);
+    			System.out.println("version: " + prop.getProperty("version"));
+    			System.out.println("buildtime: " + prop.getProperty("buildtime"));
+    			System.out.println("builder: " + prop.getProperty("builder"));
+    		} else {
+    			System.out.println("dev-build");
+    		}
+            System.out.println(new Timestamp(jdate.getTime()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        System.out.println("=============================================");
-        System.out.println("Night games");
-        System.out.println(new Timestamp(jdate.getTime()));
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
         setTraitRequirements(new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml")));
         current = null;

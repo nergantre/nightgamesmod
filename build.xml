@@ -5,7 +5,7 @@
     <property name="source" value="NightgamesMod"/>
 	<property name="build-root" location="build"/>
 	<property name="classes" location="${build-root}/classes"/>
-	<property name="output" location="${build-root}/out"/>
+	<property name="stage" location="${build-root}/stage"/>
 	<property name="dist" location="${build-root}"/>
     <path id="nightgamesmod.classpath">
         <pathelement location="bin"/>
@@ -16,7 +16,7 @@
     <target name="init">
         <tstamp/>
         <mkdir dir="${classes}"/>
-        <mkdir dir="${output}"/>
+        <mkdir dir="${stage}"/>
         <mkdir dir="${dist}"/>
     </target>
     <target name="clean">
@@ -25,21 +25,19 @@
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project,create_run_jar,copy-assets" name="build"/>
     <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="${classes}" includeantruntime="false" srcdir="${source}">
-            <classpath refid="nightgamesmod.classpath"/>
-        </javac>
-    </target>
 
 	<available file=".git" type="dir" property="git.present"/>
 
-	<target name="git.revision" description="Store git revision in ${repository.version}" if="git.present">
+	<target name="git.info" description="Store git revision in ${repository.version}" if="git.present">
 	    <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
 	        <arg value="describe"/>
 	        <arg value="--tags"/>
 	        <arg value="--always"/>
 	        <arg value="HEAD"/>
+	    </exec>
+		<exec executable="git" outputproperty="git.username" failifexecutionfails="false" errorproperty="">
+	        <arg value="config"/>
+	        <arg value="user.name"/>
 	    </exec>
 	    <condition property="repository.version" value="${git.revision}" else="unknown">
 	        <and>
@@ -47,10 +45,36 @@
 	            <length string="${git.revision}" trim="yes" length="0" when="greater"/>
 	        </and>
 	    </condition>
+	    <condition property="repository.user" value="${git.username}" else="unknown">
+	        <and>
+	            <isset property="git.username"/>
+	            <length string="${git.username}" trim="yes" length="0" when="greater"/>
+	        </and>
+	    </condition>
 	</target>
 
+	<target depends="git.info" name="buildinfo">
+	    <tstamp>
+	        <format property="builtat" pattern="MM/dd/yyyy hh:mm aa" timezone="America/Los_Angeles"/>
+	    </tstamp>
+
+	    <propertyfile file="${classes}/build.properties"
+	        comment="Generated file, do not edit this or it will be replaced">
+	        <entry key="buildtime" value="${builtat}"/>
+	        <entry key="builder" value="${repository.user}"/>
+	        <entry key="version" value="${repository.version}"/>
+	    </propertyfile>
+	</target>
+
+    <target depends="init,buildinfo" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${classes}" includeantruntime="false" srcdir="${source}">
+            <classpath refid="nightgamesmod.classpath"/>
+        </javac>
+    </target>
+
     <target name="create_run_jar">
-        <jar destfile="${output}/NightgamesMod.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${stage}/NightgamesMod.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="nightgames.global.Global"/>
                 <attribute name="Class-Path" value="."/>
@@ -61,8 +85,9 @@
             <zipfileset excludes="META-INF/*.SF" src="${source}/js.jar"/>
         </jar>
     </target>
+
 	<target name="copy-assets">
-		<copy todir="${output}">
+		<copy todir="${stage}">
 		    <fileset dir=".">  
 			    <include name="assets/**"/>
 			    <include name="characters/**"/>
@@ -70,25 +95,24 @@
 			    <include name="starts/**"/>
 			    <include name="changelog.txt"/>
 			    <include name="changelog_dndw.txt"/>
-		    	<exclude name="**/thumbs.db"/>
+		        <exclude name="**/Thumbs.db"/>
 			</fileset>
 		</copy>
 	</target>
 
-	<target depends="build,git.revision" name="package">
+	<target depends="build,git.info" name="package">
 		<loadresource property="package-version">
 		  <propertyresource name="repository.version"/>
 		  <filterchain>
 		    <tokenfilter>
 		      <filetokenizer/>
-		      <replacestring from="-" to="_"/>
 		      <replacestring from="." to="_"/>
 		      <replacestring from=" " to="_"/>
 		    </tokenfilter>
 		  </filterchain>
 		</loadresource>
 		<zip destfile="${dist}/NightgamesMod_${package-version}.zip"
-		       basedir="${output}"
+		       basedir="${stage}"
 		/>
 	</target>
 </project>
