@@ -33,4 +33,12 @@ public class CustomStringEntry {
     public String getLine(Combat c, Character self, Character other) {
         return Global.format(line, self, other);
     }
+    
+    public String getRawLine() {
+        return line;
+    }
+    
+    public List<Requirement> getRequirements() {
+        return new ArrayList<>(requirements);
+    }
 }

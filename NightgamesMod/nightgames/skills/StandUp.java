@@ -16,7 +16,7 @@ public class StandUp extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().getUp(getSelf()) && !c.getStance().mobile(target)
-                        && !c.getStance().inserted();
+                        && !c.getStance().havingSex(c, getSelf());
     }
 
     @Override

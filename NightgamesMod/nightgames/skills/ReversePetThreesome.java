@@ -5,8 +5,17 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 
 public class ReversePetThreesome extends PetThreesome {
+    public ReversePetThreesome(String name, Character self, int cooldown) {
+        super(name, self, cooldown);
+    }
+
     public ReversePetThreesome(Character self) {
         super("Reverse Threesome", self, 0);
+    }
+
+    @Override
+    public boolean usable(Combat c, Character target) {
+        return super.usable(c, target);
     }
 
     public BodyPart getSelfOrgan(Character fucker, Combat c) {
@@ -15,6 +24,14 @@ public class ReversePetThreesome extends PetThreesome {
     }
 
     public BodyPart getTargetOrgan(Character target) {
-        return target.body.getRandomCock();
+        if (target.hasDick()) {
+            return target.body.getRandomCock();            
+        }
+        return target.body.getRandomPussy();
+    }
+
+    @Override
+    public Skill copy(Character user) {
+        return new ReversePetThreesome(user);
     }
 }

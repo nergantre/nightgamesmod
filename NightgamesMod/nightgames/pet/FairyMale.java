@@ -52,9 +52,10 @@ public class FairyMale extends Pet {
                                 + "only shudder once before going still.");
                 break;
             default:
-                break;
+                (new FairyTease(getSelf())).resolve(c, opponent.getSelf());
+                return;
         }
-        c.removePet(getSelf());
+        c.removePet(opponent.getSelf());
     }
 
     @Override
@@ -79,6 +80,7 @@ public class FairyMale extends Pet {
         self.learn(new FairyKick(self));
         self.learn(new FairyShield(self));
         self.body.setHeight(22);
+        self.body.makeGenitalOrgans(CharacterSex.male);
         self.body.finishBody(CharacterSex.male);
         setSelf(self);
     }

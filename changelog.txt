@@ -1,3 +1,105 @@
+2.4.5.5.b
+GUI:
+- Redid the status panel a bit. The status panel should now scroll and the inventory was moved to its own window
+	- once again, stopgap solution
+
+2.4.5.5.a
+Minor:
+
+- Shortened some of the longer text choices as a stopgap measure to stop buttons from getting hidden.
+	- Will need to come back to this later for a real solution...
+
+2.4.5.5
+Bug fixes:
+- Fixed a crash bug with mind control
+- Fixed a crash bug with invitation
+	- (may be related to pets, but it may still show up. I changed it to display an error message instead of outright crashing)
+- Fixed fiery pussy making the owner of the dick hurt himself instead of the opponent hurting him
+- Fixed dirty fighter affecting self inflicted pain
+- Fixed willpower losses displaying for all NPCs when out of combat
+- Frottage and Ass fuck now requires being able to reach bottom
+- Facefuck and facesit now requires being able to reach top
+- Deflate knot now requires user to be able to respond
+- PC usage of smoke bomb is no longer free
+- NPCs now no longer summon a female imp when trying to summon a male one.
+	- Same with faeries
+
+Minor:
+- Eve prefers no cock mod now instead of primal. Not sure when this snuck in. Maybe in the next major release she'll get a custom one.
+- Made it more clear that pet's succubus pussies are supposed to share the stat gains with her master, not just buff the master.
+- Made incubus cock now drain willpower for the master as well
+- Made start configuration load flags as strings instead of flags
+	- (so now you can use the CHARACTER_NAMEDisabled flags with start configurations)
+
+2.4.5.4
+New:
+- Added some new threesome sex stances:
+	- XHF Daisy Chain (master fucking the target futa from behind with a cock and pet fucking target futa from the front with pussy)
+	- Reverse XHF Daisy Chain (pet fucking the target futa from behind with a cock and master fucking target futa from the front with pussy)
+	- FFX Trib (pet scissoring with the opponent while the master is holding her)
+- Added a "Struggle" action when you are bound outside of combat.
+- Added a minor new skill "Imaginary Bounds" that require 9 Hypnosis
+	- Most likely you wont see this skill at all, it's for future use
+- You can now summon both Male and Female versions of imps and faeries
+	- This was actually a bug fix, but I'll put it in new since people tend to skip over the bugs
+- Threesome skills now automatically strip off all of the pet's bottom clothing until his/her crotch is available
+- Added asshandler to the trait tree so you can actually get the later Fetish feats.
+
+Balance:
+- (Spoiler) Robo-web is now a binding. This is currently not in the game yet though, so still pending dndw' Mara changes.
+- Minor pets now cannot instantly vanquish human pets. They will now use their default tease skill upon "catching" them
+- Imps now get succubus pussy/incubus cock at level > 30
+- Changed how the Bound status works
+	- Struggling will no longer decrease the toughness by 50-66%
+		- Instead, it decreases toughness by 5 + your (cunning + power + level) / 20
+- Made traps actually scale with stats
+	- Most of them scale with Cunning and level, but some scale with arcane and/or dark
+
+Bug fixes:
+	- Fixed a ton of bugs with pets
+		- Angel now does not summon two of the same Apostles at once
+		- Actually gave non-human pets genitals so they can be used in threesomes
+		- Fixed thrust to use the right genitals when in threesomes
+		- Pets can no longer use Stand Up and when their master is in a dominant position.
+		- Fixed not being able to select ReverseThreesome
+			- For those curious, ReverseThreesome.copy was returning Threesome. GAH.
+		- Threesome skills can no longer be used when the target is mobile.
+		- Fixed some pets' skills so they don't just spam the same two skills over and over.
+		- Fixed the double penetration stance so the master can actually use anal thrusting skills.
+		- Fixed the spit roast and double pen images (They were swapped. Woops)
+	- Fixed text randomly disappearing/being blank when in encounters
+	- Fixed traps instantly unbinding you
+		- For those of you curious, the Bound status is non-lingering, so it gets removed immediately after application since it's a non-combat status...
+	- Trib can no longer be used while already scissoring
+	- Pussy grind no longer sets stance to Tribadism
+	- Fixed a crash bug when pets were vanquishing each other during skill usage
+	- Fixed some text issues.
+	- Added sub/dom bonuses to held oral and held paizuri stances, so they are no longer as attractive to characters with the submissive trait
+	- Made the autonomous pussy trait require having a pussy.
+	- Removed the skimpy trait from latex pants
+		- You were able to fuck with it on... which seems a bit weird
+	- Fixed a bug where the closet crashes if you rename Angel.
+	- Fixed a bug where the back button does not show up as <<<
+		- For those of you who are curious, since it was getting converted to html, <<< was getting treated as html tags... :|
+	- Fixed a bug where locator would display choices as "Start the match" instead of the character's names
+	- Fixed the fetish goblin using the wrong text display and not actually removing pets after vanquishing them.
+
+Minor:
+	- Added the ability to press up on the debug console to scroll through the command history
+	- Space bar will now automatically select Wait/Nothing in battle in addition to Next/Leave/Back outside of battle.
+
+2.4.5.3
+Bug fixes:
+- Fixed some more UI bugs and quirks
+	- Hopefully most of the buttons should be good now.
+- Fixed a crash bug that occurs if you rename Angel
+- Fixed a crash bug that can occur if Jewel wins while fucking someone with a strap-on
+- Made the "Airi has entered the game" message play only if she is not already a part of the game (basically any starts that include her but doesn't set the Airi flag...)
+- Changed Airi's transformation option choice from "Error" to "Transformation"
+
+Minor:
+- Changed "Pet Initiated Threesome" to only be usable when the stance has been in place for 2 or more turns.This hopefully stops the pet from preempting the master with a threesome prematurely.
+
 2.4.5.2
 Bug fixes:
 - Removed the "I LOVE RANDOM TEXT" from the item buttons that were used in testing... fuck.

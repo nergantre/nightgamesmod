@@ -38,4 +38,8 @@ public class MoneyModEffect implements CustomEffect {
     @Override public int hashCode() {
         return amount;
     }
+    
+    public int getAmount() {
+        return amount;
+    }
 }

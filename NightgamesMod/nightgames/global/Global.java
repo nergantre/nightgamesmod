@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -109,6 +111,7 @@ import nightgames.modifier.standard.PacifistModifier;
 import nightgames.modifier.standard.UnderwearOnlyModifier;
 import nightgames.modifier.standard.VibrationModifier;
 import nightgames.modifier.standard.VulnerableModifier;
+import nightgames.pet.PetCharacter;
 import nightgames.pet.Ptype;
 import nightgames.skills.*;
 import nightgames.start.NpcConfiguration;
@@ -162,9 +165,6 @@ public class Global {
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global(boolean headless) {
-        debug[DebugFlags.DEBUG_SCENE.ordinal()] = true;
-        debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
-        debug[DebugFlags.DEBUG_PET.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -183,12 +183,27 @@ public class Global {
             OutputStream ostream = new TeeStream(System.out, fstream);
             System.setErr(new PrintStream(estream));
             System.setOut(new PrintStream(ostream));
+    		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+    		InputStream stream = loader.getResourceAsStream("build.properties");
+
+            System.out.println("=============================================");
+            System.out.println("Nightgames Mod");
+    		if (stream != null) {
+    			Properties prop = new Properties();
+    			prop.load(stream);
+    			System.out.println("version: " + prop.getProperty("version"));
+    			System.out.println("buildtime: " + prop.getProperty("buildtime"));
+    			System.out.println("builder: " + prop.getProperty("builder"));
+    		} else {
+    			System.out.println("dev-build");
+    		}
+            System.out.println(new Timestamp(jdate.getTime()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        System.out.println("=============================================");
-        System.out.println("Night games");
-        System.out.println(new Timestamp(jdate.getTime()));
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
         setTraitRequirements(new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml")));
         current = null;
@@ -217,7 +232,7 @@ public class Global {
     public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
                     CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
         Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
-        Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
+        Collection<String> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
         human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         if(human.has(Trait.largereserves)) {
             human.getWillpower().gain(20);
@@ -233,7 +248,7 @@ public class Global {
         // Add starting characters to players
         players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
         if (!cfgFlags.isEmpty()) {
-            flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
+            flags = cfgFlags.stream().collect(Collectors.toSet());
         }
         Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
         configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
@@ -514,6 +529,7 @@ public class Global {
         getSkillPool().add(new PetThreesome(ch));
         getSkillPool().add(new ReversePetThreesome(ch));
         getSkillPool().add(new PetInitiatedThreesome(ch));
+        getSkillPool().add(new PetInitiatedReverseThreesome(ch));
         getSkillPool().add(new FlyCatcher(ch));
         getSkillPool().add(new Honeypot(ch));
         getSkillPool().add(new TakeOffShoes(ch));
@@ -546,6 +562,7 @@ public class Global {
         actionPool.add(new BushAmbush());
         actionPool.add(new PassAmbush());
         actionPool.add(new TreeAmbush());
+        actionPool.add(new nightgames.actions.Struggle());
         buildTrapPool();
         for (Trap t : trapPool) {
             actionPool.add(new SetTrap(t));
@@ -880,7 +897,7 @@ public class Global {
                                         + "are running. You're a bit jealous when you notice that the machines here are free, while yours are coin-op. There's a tunnel here that connects to the basement of the "
                                         + "Dining Hall.",
                         Movement.laundry, new MapDrawHint(new Rectangle(17, 15, 8, 2), "Laundry", false));
-        Area engineering = new Area("Engineering Building",
+        Area engineering = new Area("Engineering",
                         "You are in the Science and <b>Engineering Building</b>. Most of the lecture rooms are in other buildings; this one is mostly "
                                         + "for specialized rooms and labs. The first floor contains workshops mostly used by the Mechanical and Electrical Engineering classes. The second floor has "
                                         + "the Biology and Chemistry Labs. There's a third floor, but that's considered out of bounds.",
@@ -894,7 +911,7 @@ public class Global {
                                         + "with half-finished projects. A few dozen Mechanical Engineering students use this workshop each week, but it's well stocked enough that no one would miss "
                                         + "some materials that might be of use to you.",
                         Movement.workshop, new MapDrawHint(new Rectangle(17, 0, 8, 3), "Workshop", false));
-        Area libarts = new Area("Liberal Arts Building",
+        Area libarts = new Area("Liberal Arts",
                         "You are in the <b>Liberal Arts Building</b>. There are three floors of lecture halls and traditional classrooms, but only "
                                         + "the first floor is in bounds. The Library is located directly out back, and the side door is just a short walk from the pool.",
                         Movement.la, new MapDrawHint(new Rectangle(5, 5, 5, 7), "L&A", false));
@@ -1303,6 +1320,10 @@ public class Global {
         return !players.isEmpty();
     }
 
+    public static boolean characterTypeInGame(String type) {
+        return players.stream().anyMatch(c -> type.equals(c.getType()));
+    }
+
     public static float randomfloat() {
         return (float) rng.nextDouble();
     }
@@ -1487,7 +1508,7 @@ public class Global {
 
     public static String format(String format, Character self, Character target, Object... strings) {
         // pattern to find stuff like {word:otherword:finalword} in strings
-        Pattern p = Pattern.compile("\\{((?:self)|(?:other))(?::([^:}]+))?(?::([^:}]+))?\\}");
+        Pattern p = Pattern.compile("\\{((?:self)|(?:other)|(?:master))(?::([^:}]+))?(?::([^:}]+))?\\}");
         format = String.format(format, strings);
 
         Matcher matcher = p.matcher(format);
@@ -1504,6 +1525,8 @@ public class Global {
                 character = self;
             } else if (first.equals("other")) {
                 character = target;
+            } else if (first.equals("master") && self instanceof PetCharacter) {
+                character = ((PetCharacter)self).getSelf().owner();
             }
             String replacement = matcher.group(0);
             boolean caps = false;
@@ -1637,5 +1660,13 @@ public class Global {
 
     public static void setTraitRequirements(TraitTree traitRequirements) {
         Global.traitRequirements = traitRequirements;
-    }    
+    }
+
+	public static void writeIfCombat(Combat c, Character self, String string) {
+		if (c == null) {
+			gui().message(string);
+		} else {
+			c.write(self, string);
+		}
+	}    
 }

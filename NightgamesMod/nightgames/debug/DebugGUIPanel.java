@@ -1,6 +1,9 @@
 package nightgames.debug;
 
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import nightgames.characters.Character;
 import nightgames.characters.Attribute;
@@ -21,6 +26,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.Item;
 
+@SuppressWarnings("unused")
 public class DebugGUIPanel extends JPanel {
     /**
      *
@@ -49,15 +55,21 @@ public class DebugGUIPanel extends JPanel {
         consoleCommands.add(new DebugCommand("(\\w+)\\.move (\\w+)", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
-                target.travel(Global.getMatch().getAreas().stream().filter(area -> area.name.toLowerCase().contains(list.get(2))).findAny().get());
+                target.travel(Global.getMatch().getAreas().stream().filter(area -> area.name.toLowerCase().contains(list.get(2).toLowerCase())).findAny().get());
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             }
         }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.addTrait (\\w+)", (output, list) -> {
             try {
-                Character target = Global.getCharacterByType(list.get(1));
-                target.add(Trait.valueOf(list.get(2)));
+            	Character target = Global.getCharacterByType(list.get(1));
+            	if (list.get(2).equals("all")) {
+            		for (Trait t : Trait.values()) {
+            			target.add(t);
+            		}
+            	} else {
+	                target.add(Trait.valueOf(list.get(2)));
+            	}
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {
@@ -157,6 +169,8 @@ public class DebugGUIPanel extends JPanel {
     }
 
     private JTextArea out;
+    private static List<String> oldCommands = new ArrayList<>();
+    private static int index = 0 ;
 
     public DebugGUIPanel() {
         add(new JLabel("Debuggers"));
@@ -181,9 +195,37 @@ public class DebugGUIPanel extends JPanel {
         add(out);
 
         JTextField console = new JTextField();
+        console.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                index = oldCommands.size();
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_UP && !oldCommands.isEmpty()) {
+                    if (index == oldCommands.size() && !console.getText().isEmpty()) {
+                        oldCommands.add(console.getText());
+                    }
+                    if (index > 0) {
+                        index -= 1;
+                    }
+                    console.setText(oldCommands.get(index));
+                }
+                if (e.getKeyCode() == KeyEvent.VK_DOWN && !oldCommands.isEmpty()) {
+                    if (index < oldCommands.size() - 1) {
+                        index += 1;
+                    }
+                    console.setText(oldCommands.get(Math.min(oldCommands.size() - 1, index)));
+                }
+            }
+        });
         console.addActionListener(action -> {
             out.setText("");
             String command = console.getText();
+            if (!command.isEmpty()) {
+                oldCommands.add(command);
+            }
+            index = oldCommands.size();
             Optional<DebugCommand> opt =
                             consoleCommands.stream().filter(cc -> cc.checkAndExecute(out, command)).findFirst();
             if (!opt.isPresent()) {

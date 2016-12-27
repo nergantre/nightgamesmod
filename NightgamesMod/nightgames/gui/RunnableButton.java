@@ -11,7 +11,7 @@ class RunnableButton extends KeyableButton {
         super(formatHTMLMultiline(text, ""));
         this.text = text;
         resetFontSize();
-        
+
         getButton().addActionListener((evt) -> runnable.run());
     }
 
@@ -24,7 +24,7 @@ class RunnableButton extends KeyableButton {
     }
 
     private static String formatHTMLMultiline(String original, String hotkeyExtra) {
-        String out = WordUtils.wrap(original, 20, "<br/>", false);
+        String out = WordUtils.wrap(original.replace("<", "&lt").replace(">", "&gt"), Math.max(30, original.length() * 2 / 3), "<br/>", false);
         // do not word wrap the hotkey extras, since it looks pretty bad.
         return String.format("<html><center>%s%s</center></html>", out, hotkeyExtra);
     }

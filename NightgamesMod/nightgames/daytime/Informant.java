@@ -90,7 +90,7 @@ public class Informant extends Activity {
             done(acted);
             return;
         }
-        if (choice.equals("Purchasing supplies: Free")) {
+        if (choice.equals("Purchasing supplies")) {
             Global.gui()
                   .message("<i>\"As you were probably told when you entered, there are rules restricting the clothes you can wear to a match. If everyone wore a bunch of hard to remove layers, "
                                   + "it would bog the matches down. Other than that, you're allowed to bring just about any tools and toys you want. Most of the higher rank players carry an arsenal of various useful items.\"</i> "
@@ -106,7 +106,7 @@ public class Informant extends Activity {
             acted = true;
             return;
         }
-        if (choice.equals("The Competition: Free")) {
+        if (choice.equals("The Competition")) {
             Global.gui()
                   .message("<i>\"Looking for advice about girls? If you don't have any older brothers to ask, I might be able to help.\"</i><br/>Aesop laughs a bit at his own crappy joke.<br/><i>\"In all seriousness, you should definitely "
                                   + "get to know your enemies. This isn't a zero-sum game, everyone who participates can make some money. Obviously there would be issues if you tried to doctor the "
@@ -123,7 +123,7 @@ public class Informant extends Activity {
             acted = true;
             return;
         }
-        if (choice.equals("Sharpening the mind: $200")) {
+        if (choice.equals("Meditation: $200")) {
             if (player.money >= 200) {
                 Global.gui()
                       .message("You ask if Aesop has any advice on how to condition yourself mentally. Picking up details in the environment and your opponents' behavior seems to be an important "
@@ -326,7 +326,7 @@ public class Informant extends Activity {
                       .message("You don't have enough money<br/><br/>");
             }
         }
-        if (choice.equals("Advanced Equipment: $2500")) {
+        if (choice.equals("Tech: $2500")) {
             if (player.money >= 2500) {
                 Global.gui()
                       .message("You're interested in the technology Aesop mentioned. A handful of zipties and a rubber dildo will only get you so far. <i>\"You're going to want to meet "
@@ -538,15 +538,15 @@ public class Informant extends Activity {
         }
         if (!Global.checkFlag(Flag.basicStores)) {
             Global.gui()
-                  .choose(this, "Purchasing supplies: Free");
+                  .choose(this, "Purchasing supplies");
         }
         if (!Global.checkFlag(Flag.girlAdvice)) {
             Global.gui()
-                  .choose(this, "The Competition: Free");
+                  .choose(this, "The Competition");
         }
         if (!Global.checkFlag(Flag.meditation)) {
             Global.gui()
-                  .choose(this, "Sharpening the mind: $200");
+                  .choose(this, "Meditation: $200");
         }
         if (Global.checkFlag(Flag.basicStores) && !Global.checkFlag(Flag.blackMarket)) {
             Global.gui()
@@ -583,7 +583,7 @@ public class Informant extends Activity {
             }
             if (!Global.checkFlag(Flag.workshop)) {
                 Global.gui()
-                      .choose(this, "Advanced Equipment: $2500");
+                      .choose(this, "Tech: $2500");
             }
             if (!Global.checkFlag(Flag.magicstore)) {
                 Global.gui()

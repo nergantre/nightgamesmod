@@ -1,0 +1,243 @@
+Achilles Jewels (Starting Weakness) - Increased stamina damage from attacks targeting your balls
+Addictive Fluids - Cause Fluid Addiction when the opponent ingests fluids. (Fluid Addiction forces the target to use oral skills if possible)
+Affectionate (Kat daytime sex) - Increases rate of gaining affection.
+Aikido Novice (Kat daytime sparring) - Improves counterattack rate.
+Always Ready - No arousal threshold for having sex. (Default is %15 percent of max for cocks, varying amounts (<15%) for the various pussy types.)
+Anal Fanatic - Causes Frenzied and Ignore Orgasm for 4 turns to self when fucking someone's ass.
+Anal Training (3 levels) - Increases pleasure to target when using your ass.
+Anatomical Knowledge (unavailable for now) - Combines Dick Handler, Ass Handler and Pussy Handler.
+Apostles (Angel Follower focus) - Automatically gets followers to act as pets in matches.
+Ass Handler - Increased pleasure to asses.
+Ass Master - Does not need lube for anal, and boosts pleasure during it. (To both parties)
+Augmented Pheromones (upgrades Pheromones) - Causes Horny to opponents when they are within smelling distance of your genitals. (Basically anything except the neutral position)
+Autonomous Ass/Pussy - Causes the respective hole to passively pleasure any cocks inside of them.
+Befuddling Fragrance (Kat Pheromones focus) - Being affected by pheromones will reduce Attributes over time.
+Beguiling Breasts (Cassie Breasts focus) - Causes a 50-turn Trance to the opponent and any pets they have the first time your breasts are exposed in combat. (The 50 turns cancel on orgasm, so this basically forces an orgasm within a couple of turns)
+Bewitching Bottom (Jewel Anal focus) - Causes ass fetishes to be more likely and more powerful for your opponents.
+Biting Words (unavailable?) - Increased chance to cause Shamed when using Taunt.
+Bomber (Mara General Tech focus) - Allows the use of Pheromone Bombs
+Boundless Energy - Increased passive stamina gain
+Brass Balls - The opposite of Achilles Jewels, reduces damage to balls.
+Breeder (Kat Addiction) - Unlocks Bite, which causes the Breeder addiction.
+Calm - Chance to resist arousal-over-time effects. (Like Horny)
+Carnal Virtuoso - Causes the opponent to cum twice in a row.
+Cat's Tongue - Increases pleasure from using mouth, also causes some stamina damage. (Guess who gets this?)
+Catwalk (Kat Speed focus) - Can randomly cause Alluring when changing positions.
+Cautious - Better chance of evading traps.
+CeilingStalker (Airi Mimicry focus) - Can ambush from the ceilings.
+Clairvoyance (Reyka daytime sparring) - Passively increases evasion.
+Clingy (unavailable) - Makes Escape more difficult for the opponent.
+Commanding Voice (Jewel Mental focus) - Has a chance to cause Trance/Stun when using Tempt/Taunt, respectively.
+Complex Aroma (Kat Pheromones focus) - Pheromones can stack more often before being replaced.
+Conducive Toy (Mara Harpoon focus) - Makes Stun Blast cheaper and more powerful while the target is wearing the harpoon toy.
+Confident - Reduces Mojo loss rate out of combat.
+Confident Dom (Jewel Physical focus) - Attributes grow stronger while dominant.
+Congregation (Angel Followers focus) - Doubles the pet limit.
+Corrupting (Reyka Addiction) - Successive oral skills have a chance to cause Corruption, Reyka's addiction.
+Cross Counter (Kat Speed focus) - Has a chance to counter the opponent's counters. Yes, really.
+Cute - Reduces stamina damage based on Seduction level.
+Dark Promises - Whisper can cause Enthralled
+Deft Hands - Increases pleasure when using hands.
+Demigodess (Angel Advanced Class) - Unlocks Angel's angelic-ness.
+Desensitized (Reyka daytime sex) - Slightly reduces sensitivity to all body parts.
+Desensitized 2 - Same as Desensitized; they stack.
+Devotee Fervor (Angel Followers focus) - Pets sometimes act twice in one turn.
+Dexterous (Starting Strength) - Can use hands through underwear, boosts pleasure when using hands.
+Dick Handler - Increases pleasure to dicks.
+Direct (Jewel) - Blocks Strip Tease, Take Off Shoes, Whisper, and some traps.
+Dirty Fighter (Jewel daytime sparring) - Increases stamina damage to submissive opponents, allows Kick to be used while the opponent is standing over you.
+Disabling Blows (Jewel Martial focus) - Stamina attacks have a chance to reduce Power slightly.
+Disciplinarian (Angel daytime sparring) - Spank does increased damage and has a chance to cause Shamed.
+Divinity - Builds Divine Charge when an opponent cums inside of her. (Angel gets this, and Airi too when she mimics Angel)
+Dominatrix (Jewel Addiction) - Causes being stunned to cause the Domination addiction.
+Draining Ass (Jewel Anal focus) - Drains stamina (and sometimes Power) when being fucked in the ass.
+Drug-laced Precum (unavailable?) - Causes Sensitized when someone gets in contact with your precum.
+Dryad - Enables the use of the Flower Counter. (Available to Rosea, and to Airi when she is mimicking Rosea)
+Edger (Jewel Martial+Physical focus) - Unlocks Edge, which causes high temptation damage.
+Enchanting Voice (Cassie Enchantress focus) - Occasionally causes opponent to execute a random Command (as if they were Enthralled. Maya also gets this trait.)
+Energy Drain - Drains considerable stamina when the opponent climaxes during sex.
+Enthralling Juices - Causes Cunnilingus and Facesit to have a chance to Enthrall the licker. (This should also include oral skills used on dicks, but it doesn't. Oops.)
+Erophage (Angel Nymphomania focus) - Adds (extra) Divine Charge on opponent orgasm.
+Event (unavailable) - Basically a marker for Maya. Causes rewards for beating her to be quintupled.
+Exhibitionist (Starting Strength) - Causes passive mojo gain while nude and decreased decay out of combay.
+Experienced (Starting Strength) - Reduces recoil pleasure from sex skills.
+Expert Googler - Improves the rate at which Watch Porn increases maximum arousal.
+Expert Tongue (Angel daytime sex) - Gives a chance for oral skills to cause Trance and increases pleasure from Kiss.
+Fae Friend (Mara daytime special) - Reduces mojo cost for Spawn Faerie.
+Fakeout (Airi daytime sparring/games) - Improves counterattack rate.
+Fallen Angel (unavailable) - Advanced trait for Mei, one of Angel's friends/apostles/pets. Unlocks a new description to mark her transformation to a succubus at level 30.
+Fast Diffusion (Kat Pheromones focus) - Pheromones are more likely to affect the opponent, even from a distance.
+Fast Learner - Improves XP gain by 20%.
+Fearless (Jewel daytime games) - Unlocks Bravado, which reduces arousal and increases stamina. Also one of very few things which can increase your own willpower.
+Fetish Trainer (unavailable?) - Can cause fetishes with regular skills, not just ones made for the specific purpose of doing so.
+Fighter (Jewel advanced trait) - Gives Jewel her Ki-based upgrade.
+Fitness Nut - Makes exercise more effective at increasing maximum stamina
+Foot Fetishist (Starting Weakness) - Gives a permanent foot fetish at 25% intensity.
+Frenzy Scent (Kat Pheromones focus) - Pheromones get a chance to cause Frenzied in the opponent.
+Immobile (unavailable) - Cannot move out of combat. Exclusive to Rosea. (Trees can have sex, but they cannot walk, apparently.)
+Feral Agility (Kat Speed focus) - Bonus to Cunning, evasion and counter chance while Feral.
+Feral Strength (Kay Power focus) - Bonus to Power and grip strength while Feral.
+Free Spirit - Better at escaping pins, has a chance to resist mind control.
+Frenzying Juices - Bodily fluids have a chance of causing Frenzied.
+Genuflection (Angel Worship focus) - Instead of standing up, opponents will sometimes kneel.
+Gluttony - Increases damage from draining. Unique to Mei, one of Angel's friends.
+Graceful - Chance to resist knockdowns.
+Grappler (Jewel Martial focus) - Harder for opponent to escape pins.
+Hair Trigger (Starting Weakness) - Increases all sensitivity. This is a rather powerful effect, basically a 'hardcore mode'.
+Harpoon Toy (Mara Harpoon focus) - Unlocks Mara's new toy.
+Hawk Eye - Boosts accuracy.
+Healer - SHOULD cause a pet to boost its master's stamina (i think), but unimplemented.
+Heeldrop (Mara daytime sparring) - Makes Stomp much more powerful.
+Hole Control - Boosts pleasure caused by pussy.
+Hypnotic Semen - When cum comes in contact with the opponent's body, it reduces their willpower.
+Imagination (Starting Weakness) - Increases temptation damage from certain skills.
+Immobile (unavailable) - Cannot move outside of combat. Unique to Rosea.
+Imposter (Airi Mimicry focus) - Can appear like a different combatant.
+Indomitable (Jewel Physical focus) - Strongly reduces willpower loss from being in a submissive position.
+Inebriating Toxins (Airi Parasite focus) - Parasite drains attributes per turn.
+Insatiable (Starting Weakness) - Causes 20% of maximum arousal to remain after orgasm. Jewel and Eve start with this.
+Insertion Master - Causes extra pleasure when initiating sex.
+Inspirational (Angel Followers+Sex focus) - Copies certain traits from Angel to her followers if she has them herself. The traits are mostly sex-related ones.
+Intense Suction (Mara Harpoon focus) - The Harpoon toy may cause a double orgasm.
+Jackhammer (Kat Frenzy focus) - After using a fuck skill, has a 50% chance of doing an additional Wild Thrust/Wild Ride.
+Judo Novice (Cassie daytime sparring) - Unlocks Hip Throw.
+Kabbalah (unavailable) - Advanced trait for Caroline, one of Angel's friends. Marks her transition down the Arcane path.
+Laced Juices - Causes opponents to suffer temptation damage when ingesting bodily fluids.
+Lactating - Does what you'd expect. Drinking milk causes temptation damage, and also triggers any other fluid-related traits (like Laced Juices). There are also some milk-specific traits which depend on this one.
+Last Stand (Angel Nymphomania focus) - Triggers Orgasmic Tighten or Orgasmic Thrust when cumming during sex. These cause serious pleasure damage.
+Leadership (Angel Followers focus) - Causes pets to level up faster than normal.
+Lethargic - Reduces mojo gain by 75%. Exclusive to Rosea.
+Level Drainer - Has a chance to drain XP (and levels) from opponents if they climax during sex. This replaces the regular Level Drain skill. Given to the player in the Drain Challenge start, and not otherwise attainable.
+Lickable (Starting Weakness) - Increases pleasure received from oral skills.
+Limb Training (3 levels) - Increases pleasure damage caused with hands or feet.
+Locator (Reyka daytime games) - Unlocks Locate, which sacrifices a trophy and causes arousal in order to learn the location of an opponent out of combat.
+Mad Scientist (Mara advanced class) - Unlocks Mara's Science-based upgrade.
+Magic Eye Arousal (Cassie Enchantress focus / Angel Worship focus)- Randomly causes arousal damage at the end of some turns.
+Magic Eye Enthrall (Cassie Enchantress focus) - Randomly causes Enthrallment.
+Magic Eye Trance (Cassie Enchantress focus) - Randomly causes Trance.
+Magic Eye Frenzy (Cassie Enchantress focus) - Randomly causes Frenzied.
+Magic Milk (Cassie addiction, unlocked through Breast focus) - Causes Cassie's milk to be super addictive.
+MagLocks (Mara General Tech focus) - Unlocks MagLocks, which can bind/immobilize targets at the cost of batteries per turn.
+Mandate of Heaven (Angel Worship+Nymphomania focus) - Causes Object of Worship to trigger more often if Angel uses temptation skills.
+Masquerade (Airi Mimicry focus) - Improves quaility of mimicry.
+Heels Master (listed as masterheels) - Gives a 1 in 3 chance of resisting knockdowns while wearing heels.
+Mental Fortress (Jewel Mental focus) - Gets a chance to resist mind-controlling effects.
+Mimic Clothing (Airi Slime Queen + Parasite focus) - Clones can transform themselves into clothing for the opponent.
+Mimic BodyPart (Airi Slime Queen + Mimicry focus) - Clones can transform themselves into body parts for the opponent.
+Mind Controller (Mara Addiction) - Allows Mara to 'addict' opponents by looking into their eyes as they cum. Thwarted by blindfolds.
+Mind Control Resistance (unavailable) - Temporary trait which gives players under Mara's control to resist attempts at mind control from others.
+Mindless Desire (Kat Frenzy focus) - Lowers opponents' charisma (and by extension, tempation damage) while Frenzied.
+Misdirection (Cassie daytime games) - Unlocks Diversion, which sacrifices an article of clothing in order to get behind the opponent.
+Mojo Master - Gives +20 max mojo. Pretty underwhelming, I think.
+Naive (Starting Weakness) - Chance not to get Cynical, which normally prevents the chaining of mental effects.
+Natural Growth (unavailable) - Will always be 2 levels above the most powerful character which does not have this trait or Unnatural Growth.
+Natural Top (Jewel Martial focus) - Increases dominance of stances by 50% while in the dominant role.
+Neural Link (Airi Parasite focus) - Well-developed Parasites cause mind control effects.
+Nimble Recovery (Kat Speed focus) - Will get stunned far less than normal when falling to the ground.
+Nimble Toes - Increased pleasure damage from using feet.
+Ninja (unavailable) - Does not seem to do anything.
+Noblesse Oblige (Airi Slime Queen focus) - Slime clones are stronger.
+None (unavailable) - Definitely does not do anything.
+Nymphomania (Angel Nymphomania focus) - Sometimes restores some willpower upon orgasm. Kat also gets this.
+Obedient (unavailable) - Does not do anything.
+Object of Worship (Angel Worship focus) - Periodically forces the opponent to use Worship skills.
+Oblivious - Almost completely nullifies temptation damage.
+Obsequious Appeal (Cassie Submissive focus) - Doubles temptation damage from submissive positions.
+Oiled Ass - Always ready to take it up the ass. Increases pleasure as well.
+Opportunist (unavailable) - Unimplemented.
+Overwhelming Presence - Causes passive stamina damage each turn.
+Parasite (Airi Parasite focus) - Unlocks the very dangerous Parasite skill.
+Personal Inertia - Increases duration of all status effects by a third.
+Petite - Can't use Carry or Tackle. When carried, the carrier does not fall over when low on stamina.
+Pheromones - Causes Horny (temptation over time) when the opponent is in close proximity.
+Piety (Angel Worship+Sex focus) - Worship can force the opponent to concede a dominant position.
+Piercing Odor (Kat Pheromones focus) - Pheromones can affect opponents who are Calm.
+Piledriver (Kat Frenzy focus) - Has a chance to cause a 1-turn stun when using fuck skills.
+Pimp Hand (Starting Strength) - Improves Slap, also slightly boosts pleasure when using hands.
+Pokerface (Angel daytime games) - Unlocks the recovery skill Bluff.
+Pole Control - Increased damage from using a cock.
+Powerful Cheeks (Jewel Anal focus) - Makes it more difficult for the opponent to pull out of one's ass.
+Powerful Hips - Can use dominant sex skills from the submissive position.
+Primal Heat (Kat Frenzy focus) - Bonus to seduction while Frenzied. (Scales with Animism.)
+Pro Heels - Eliminates the negative impacts of wearing heels. (easier to knock down, lower speed)
+Protective - Shields a pet's owner from harmful status effects. Unique to Caroline, one of Angel's friends.
+Pussy Handler - Bonus pleasure when targeting pussy,
+Quick Recovery - Recovers stamina more rapidly out of combat.
+Rapid Meiosis (Airi Slime Queen focus) - Creates clones upon orgasm.
+Raw Sexuality - Causes passive temptation damage to all parties in combat.
+Repressed - Halves Seduction. Unique to Airi in her human form.
+Resourceful - Sometimes does not remove an item after using it.
+Responsive - Increased recoil pleasure to opponent from sex skills used by them.
+Resurrection - Has to be defeated twice in order to be eliminated. Unique to Sarah, one of Angel's friends.
+Revered (Angel Worship focus) - Increases chances of Worship.
+RoboWeb (Mara General Tech focus) - Unlocks a very powerful trap.
+Romantic (Starting Strength) - Improves Kiss, also boosts charisma. (which makes things like Strip Tease more powerful)
+Roper Aspect (Airi Slime Carrier + Parasite focus) - Slime Carrier has "additional capabilities"
+Rut (Kat Frenzy focus) - Arousal damage is halved while frenzied, can randomly get frenzied while over half arousal.
+Sacrosanct (Angel Worship focus) - Causes Alluring when hurt. (Which blocks stamina attacks for one turn)
+Sadist - When causing pain, also causes Masochistic (which causes pleasure when hurt).
+Sedative Cream (Cassie Breasts focus) - Milk drains stamina.
+Sex Training (3 levels) - Increases pleasure when using genitalia.
+Sexual Dynamo (Angel Nymphomania focus) - Gains mojo from pleasure, and Seduction from orgasms.
+Sexual Groove - Passive mojo gain in combat.
+Sexual Momentum - Restores willpower when causing an orgasm through sex.
+Shameless - Won't be Shamed or Distracted, also unlocks some ass-related stuff.
+Showmanship (Angel Followers+Nymphomania focus) - Pets may use worship skills on their master, which causes temptation for the opponent.
+Shy - Won't do certain 'forward' skills. (Like Face Sit, Strip Tease, Taunt...)
+Silvertongue (Cassie daytime sex) - Increases pleasure from oral skills.
+Skeptical - Chance to resist mental effects.
+Slime - Is a Slime. Unlocks the Slime attribute, reduces pain and unlocks some other Slime-related stuff.
+Slime Carrier (Airi Slime Carrier focus) - Instead of transforming into a slime, gets a permanent slime lower body. There is much more to this, check the forum.
+Slime Royalty (Airi Slime Queen focus) - Can create clones of themselves.
+Slimification - Turns into a slime when cumming with lowered willpower.
+SM Queen - Effectively doubles willpower loss from stance dominance.
+Sneaky - Better at hiding out of combat.
+Soft Hearted - Should block some violent skills, but doesn't.
+Soul Sucker - Lip-to-skin contact drains willpower as mojo.
+Split Sentience (Airi Slime Carrier focus) - Slime Carrier gets more powerful when the main body is disabled.
+Spider (Mara daytime games) - Unlocks the Spiderweb Trap.
+Spiral (Jewel daytime sex) - Unlocks Spiral Thrust.
+Spiritphage - Getting cum on your skin boosts your basic attributes.
+Sprinter - Better chance at escaping combat.
+Stable Form (Starting Strength) - Prevents permanent body modification from skills only.
+Steady - Immune to knockdowns. Unique to Rosea.
+Sticky Finale (Airi Slime Queen focus) - Slime clones explode when defeated.
+Strapped (temporary) - Currently wearing a strap-on dildo.
+Strong Willed - Reduces willpower loss from orgasm.
+Suave - Bonus temptation vs girls.
+Submissive (Cassie Submissive focus) - Boosts pleasure inflicted from a submissive position, but also reduces willpower damage from dominance.
+Succubus - Unlocks a few minor succubus-related things. Most effects are handled through body parts.
+Succubus Aspect (Airi Slime Carrier + Mimicry focus) - Main body has "additional capabilities"
+Supplicant - Does nothing, should affect worship. Unique to Caroline, one of Angel's friends.
+Sweet Lips (Cassie Mouth focus) - Adds temptation damage whenever oral skills cause pleasure.
+Symbiosis (Airi Slime Carrier focus) - Slime Carrier can heal the character and build mojo for them. 
+Sympathetic - NPC's are more likely to help sympathetic characters in threeways.
+Tactician (Angel Followers focus) - Pets have +50% arousal and stamina.
+Takedown (Jewel Takedown foucs) - Tackle always hits, does increased damage and causes Winded when used against tired opponents (<20% stamina).
+Tease (Kat daytime games) - Gain mojo when evading attacks.
+Tempting Ass (Jewel Anal focus) - Gain a chance to cause Frenzied when the opponent has Ass Fuck available, and a chance to turn a regular Fuck into Ass Fuck.
+Tempting Tits (Cassie Breast focus) - Cause tempt damage to opponent when they can see your tits.
+Temptress (unavailable) - Marker for Samantha. Unlocks her special skills.
+Testosterone - Gain min(20, 10 + level/4) Power as long as you have balls.
+Tickle Monster (Mara daytime sex) - Tickle always hits, does increased damage and may cause a 1-turn stun.
+Ticklish (Starting Weakness) - Take increased damage from Tickle.
+Tight - Contrary to the actual description, this does not boost damage. Instead, it unlocks Deny Orgasm and Tighten (which would otherwise require high Power/Seduction respectively) and makes pulling out more difficult.
+Tongue Training (3 levels) - Boosts oral pleasure.
+Toymaster - Gets a bonus when using toys.
+Training Collar (Mara General Tech focus) - Gives Mara a Training Collar to put on the player, a description of which this margin is too narrow to contain.
+Treasure Seeker - Makes opening item caches easier.
+Undisciplined - Blocks Arm Bar and Maneuver, prevents Wait from upgrading to Focus.
+Unflappable - Don't get distracted for a turn when anally penetrated.
+Unnatural Growth - Like Natural Growth, but 5 levels ahead of average instead of 2.
+Unquestionable (Jewel Mental focus) - Randomly causes 1-turn stuns to opponent while dominant.
+Unsatisfied (Kat Frenzy focus) - Becomes almost immune to arousal which is not caused by fucking while at high arousal or low willpower.
+Unstable Genome (Airi Mimicry focus) - Gains Attributes when transforming.
+Untamed (Kat Power focus) - When using Wild Thrust or Wild Ride from a submissive position, has a chance to flip to the dominant position.
+Unwavering (Kat Power focus) - Will not get stunned when knocked down.
+Vaginal Tongue - Marker indicating the prescene of the said organ.
+Valkyrie (unavailable) - Marker for the upgrade to Sarah, one of Angel's friends.
+Voracity (Airi Parasite focus) - Parasites will drain Stamina in order to grow faster.
+Witch (Cassie advanced class) - Marks Cassie's transition to a witch.
+Wrassler (Starting Strength) - Can cause more pain before that pain starts reducing arousal.
+Yank (Mara Harpoon focus) - Allows Mara to Yank on her Harpoon when it is connected to her opponent's crotch, hopefully pulling them to the ground.
+Zeal Inspiring (Angel addiction, Sex focus) - Causes the Zeal addiction when an opponent cums inside of her. (Twice? this might be a tad broken...)

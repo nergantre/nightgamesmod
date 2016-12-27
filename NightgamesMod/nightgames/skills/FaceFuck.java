@@ -27,7 +27,8 @@ public class FaceFuck extends Skill {
         return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().prone(target)
                         && (getSelf().crotchAvailable() && getSelf().hasDick() || getSelf().has(Trait.strapped))
                         && !c.getStance().inserted(getSelf()) && c.getStance().front(getSelf())
-                        && !c.getStance().behind(target);
+                        && !c.getStance().behind(target)
+                        && c.getStance().reachTop(getSelf());
     }
 
     @Override
@@ -134,14 +135,14 @@ public class FaceFuck extends Skill {
             m = String.format("%s forces her strapon cock into %s mouth and fucks %s face with it. "
                             + "It's only rubber, but the position is still humiliating. %s not "
                             + "to gag on the artificial member while %s revels in her dominance.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().subject()), target.nameOrPossessivePronoun(), target.possessivePronoun(),
                             target.subjectAction("try", "tries"), getSelf().subject());
         } else if (modifier == Result.upgrade) {
             m = String.format("%s moves slightly towards %s, pushing her strapon against %s lips. %s to keep %s"
                             + " mouth closed but %s pinches %s nose shut, "
                             + "and pushes in the rubbery invader as %s for air. After a few sucks, %s"
                             + " %s to break free, although %s %s still shivering "
-                            + "with a mix of arousal and humiliation.", getSelf().subject(), target.nameDirectObject(),
+                            + "with a mix of arousal and humiliation.", Global.capitalizeFirstLetter(getSelf().subject()), target.nameDirectObject(),
                             target.possessivePronoun(), target.subjectAction("try", "tries"), target.possessivePronoun(),
                             getSelf().subject(), target.possessivePronoun(), target.subjectAction("gasp"),
                             target.pronoun(), target.action("manage"), target.pronoun(), target.action("are", "is"));

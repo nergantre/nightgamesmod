@@ -9,6 +9,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
+import nightgames.global.DebugFlags;
 import nightgames.global.Encs;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -190,7 +191,6 @@ public class Encounter implements Serializable, IEncounter {
                     if (p1.human() || p2.human())
                         Global.gui().message(p1Guaranteed.get());
                     startFightTimer();
-                    Global.gui().refresh();
                     this.fight = Global.gui().beginCombat(p1, p2);
                 } else if (p2Guaranteed.isPresent()) {
                     if (p1.human() || p2.human())
@@ -214,8 +214,6 @@ public class Encounter implements Serializable, IEncounter {
                                   .message("You quickly try to escape, but " + p1.name()
                                                   + " is quicker. She corners you and attacks.");
                         }
-                        Global.gui()
-                              .refresh();
                         this.fight = Global.gui()
                                            .beginCombat(p1, p2);
                     } else {
@@ -229,7 +227,6 @@ public class Encounter implements Serializable, IEncounter {
                     if (p1.human() || p2.human())
                         Global.gui().message(p2Guaranteed.get());
                     startFightTimer();
-                    Global.gui().refresh();
                     this.fight = Global.gui().beginCombat(p1, p2);
                 } else if (p1Guaranteed.isPresent()) {
                     if (p1.human() || p2.human())
@@ -286,16 +283,9 @@ public class Encounter implements Serializable, IEncounter {
         startFightTimer();
         target.addNonCombat(new Flatfooted(target, 3));
         if (p1.human() || p2.human()) {
-            fight = Global.gui()
-                          .beginCombat(attacker, target, 0);
-            if (target.human()) {
-                Global.gui()
-                      .message(attacker.name() + " catches you by surprise and attacks!");
-            }
+            fight = Global.gui().beginCombat(attacker, target, 0);
+            Global.gui().message(Global.format("{self:SUBJECT-ACTION:catch|catches} {other:name-do} by surprise and {self:action:attack|attacks}!", attacker, target));
         } else {
-            // this.fight=new NullGUI().beginCombat(p1,p2);
-            Global.gui()
-                  .refresh();
             fight = new Combat(attacker, target, location, 0);
         }
     }
@@ -329,8 +319,6 @@ public class Encounter implements Serializable, IEncounter {
             }
         }
         if (p1.human() || p2.human()) {
-            Global.gui()
-                  .refresh();
             fight = Global.gui()
                           .beginCombat(p1, p2, 1);
         } else {
@@ -523,48 +511,24 @@ public class Encounter implements Serializable, IEncounter {
             Global.gui()
                   .message("Before you have a chance to recover, " + opportunist.name() + " pounces on you.");
         }
-        Global.gui()
-              .refresh();
         trap.capitalize(opportunist, target, this);
     }
 
     public void engage(Combat fight) {
         this.fight = fight;
         if (fight.p1.human() || fight.p2.human()) {
-            Global.gui()
-                  .watchCombat(fight);
+            Global.gui().watchCombat(fight);
         }
     }
 
     public void parse(Encs choice, Character self, Character target) {
-        switch (choice) {
-            case ambush:
-                ambush(self, target);
-                break;
-            case showerattack:
-                showerambush(self, target);
-                break;
-            case aphrodisiactrick:
-                aphrodisiactrick(self, target);
-                break;
-            case stealclothes:
-                steal(self, target);
-                break;
-            case fight:
-                fightOrFlight(self, true, Optional.empty());
-                break;
-            case flee:
-                fightOrFlight(self, false, Optional.empty());
-                break;
-            case smoke:
-                fightOrFlight(self, false, Optional.of(smokeMessage(self)));
-                break;
-            default:
-                return;
-        }
+        parse(choice, self, target, null);
     }
 
     public void parse(Encs choice, Character self, Character target, Trap trap) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println(Global.format("{self:name} uses %s (%s) on {other:name-do}", self, target, choice, trap));
+        }
         switch (choice) {
             case ambush:
                 ambush(self, target);
@@ -589,6 +553,7 @@ public class Encounter implements Serializable, IEncounter {
                 break;
             case smoke:
                 fightOrFlight(self, false, Optional.of(smokeMessage(self)));
+                self.consume(Item.SmokeBomb, 1);
                 break;
             default:
                 return;

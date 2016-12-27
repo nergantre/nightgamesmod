@@ -20,4 +20,8 @@ public class SpecificBodyPartRequirement extends BaseRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return self.body.contains(part);
     }
+    
+    public BodyPart getPart() {
+        return part;
+    }
 }

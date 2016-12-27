@@ -15,6 +15,7 @@ public class CounterRide extends CounterBase {
                         "{self:SUBJECT-ACTION:invite|invites} the opponent with {self:possessive} body.", self, self));
         addTag(SkillTag.fucking);
         addTag(SkillTag.positioning);
+        addTag(SkillTag.counter);
     }
 
     @Override
@@ -24,6 +25,10 @@ public class CounterRide extends CounterBase {
 
     @Override
     public void resolveCounter(Combat c, Character target) {
+    	if (target.isPet()) {
+    		c.write("Something weird happened, pets shouldn't trigger counters.");
+    		return;
+    	}
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else {

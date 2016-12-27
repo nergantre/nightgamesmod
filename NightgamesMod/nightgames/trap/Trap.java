@@ -8,10 +8,11 @@ public abstract class Trap implements Deployable {
     
     protected Character owner;
     private final String name;
-    
+    private int strength;
     protected Trap(String name, Character owner) {
         this.name = name;
         this.owner = owner;
+        this.setStrength(0);
     }
     
     protected abstract void trigger(Character target);
@@ -33,7 +34,19 @@ public abstract class Trap implements Deployable {
         }
         return false;
     }
-    
+
+    public void setStrength(Character user) {
+        this.strength = user.getLevel();
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
     @Override
     public final Character owner() {
         return owner;
@@ -52,4 +65,5 @@ public abstract class Trap implements Deployable {
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         // NOP
     }
+
 }

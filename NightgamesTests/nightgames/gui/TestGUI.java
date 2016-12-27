@@ -31,6 +31,7 @@ public class TestGUI extends GUI {
     public Combat beginCombat(Character p1, Character p2) {
         combat = new Combat(p1, p2, p1.location());
         combat.addObserver(this);
+        combat.setBeingObserved(true);
         return combat;
     }
 

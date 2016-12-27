@@ -44,6 +44,10 @@ public class Outfit {
     }
 
     /* public information api */
+    public Collection<Clothing> getAll() {
+        return outfit.values().stream().flatMap(List::stream).filter(c -> c != null).collect(Collectors.toSet());
+    }
+    
     public boolean slotOpen(ClothingSlot slot) {
         return outfit.get(slot).isEmpty() || !outfit.get(slot).stream()
                         .anyMatch(article -> article != null && !article.is(ClothingTrait.open));

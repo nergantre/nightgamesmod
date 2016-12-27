@@ -393,6 +393,39 @@ public enum Trait {
     MindlessDesire("Mindless Desire", "When frenzied, opponents have lower effective charisma"),
     Unsatisfied("Unsatisfied", "Hard to finish off without fucking"),
 
+    // Airi Unique Traits
+    // Parasitism - debuffs and control
+    Parasite("Parasite", "Implants a parasite with a kiss"),
+    Voracity("Voracity", "Drains stamina to speed up parasite growth rate"),
+    NeuralLink("Neural Link", "Parasites can mind control after being established"),
+    InebriatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
+
+    // Transformation/Mimicry - self buffs
+    Imposter("Imposter", "Can appear like a different combatant"),
+    UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
+    CeilingStalker("Ceiling Stalker", "Can ambush from the ceilings"),
+    Masquerade("Masquerade", "Improves quality of mimicry"),
+
+    // Queen Slime - Clones build
+    SlimeRoyalty("Slime Royalty", "Can now divide the body"),
+    RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
+    // + parasite 
+    MimicClothing("Mimic: Clothing", "Clones can transform themselves into clothing for the opponent."),
+    // + transformation
+    MimicBodyPart("Mimic: BodyPart", "Clones can transform themselves into extra body parts for the opponent."),
+    StickyFinale("Sticky Finale", "Clones explode when defeated"),
+    NoblesseOblige("Noblesse Oblige", "Clones are stronger"),
+
+    // Slime Carrier - Immortal pet build
+    SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),
+    Symbiosis("Symbiosis", "Slime carrier can heal and build mojo for the host"),
+    // + parasite
+    RoperAspect("Roper Aspect", "Slime Carrier has additional capabilities"),
+    // + transformation
+    SuccubusAspect("Succubus Aspect", "Main body has additional capabilities"),
+    // autonomous pussy
+    SplitSentience("Split Sentience", "Slime carrier powers up when main body is disabled."),
+
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
     temptingass("Tempting Ass", "Opponents can't help butt fuck it"), // ... sorry

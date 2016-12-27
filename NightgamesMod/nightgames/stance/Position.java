@@ -59,7 +59,7 @@ public abstract class Position implements Cloneable {
             if (self.has(Trait.submissive) && sub(self)) {
                 return bonus;
             }
-            if (!self.has(Trait.submissive) && dom(self)) {
+            if ((!self.has(Trait.submissive) || self.has(Trait.flexibleRole)) && dom(self)) {
                 return bonus;
             }
         }
@@ -91,7 +91,7 @@ public abstract class Position implements Cloneable {
     public abstract boolean behind(Character c);
 
     public boolean getUp(Character c) {
-        return mobile(c);
+        return mobile(c) && c == top;
     }
 
     public boolean front(Character c) {
@@ -262,6 +262,10 @@ public abstract class Position implements Cloneable {
     public boolean penetrated(Combat combat, Character c) {
         return vaginallyPenetrated(combat, c) || anallyPenetrated(combat, c);
     }
+    
+    public Character getPenetratedCharacter(Combat c, Character self) {
+        return getPartner(c, self);
+    }
 
     public boolean vaginallyPenetrated(Combat combat, Character c) {
         List<BodyPart> parts = partsFor(combat, c);
@@ -293,12 +297,12 @@ public abstract class Position implements Cloneable {
         return vaginallyPenetratedBy(c, inserted, inserter) || anallyPenetratedBy(c, inserted, inserter);
     }
 
-    public boolean vaginallyPenetratedBy(Combat c, Character self, Character other) {
-        if (other != getPartner(c, self)) {
+    public boolean vaginallyPenetratedBy(Combat c, Character inserted, Character inserter) {
+        if (inserter != getPartner(c, inserted)) {
             return false;
         }
-        List<BodyPart> parts = partsFor(c, self);
-        List<BodyPart> otherParts = partsFor(c, other);
+        List<BodyPart> parts = partsFor(c, inserted);
+        List<BodyPart> otherParts = partsFor(c, inserter);
         return BodyPart.hasType(parts, "pussy")
                         && (BodyPart.hasType(otherParts, "cock") || BodyPart.hasType(otherParts, "strapon"));
     }

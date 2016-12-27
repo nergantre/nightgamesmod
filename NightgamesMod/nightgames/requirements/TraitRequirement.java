@@ -34,4 +34,8 @@ public class TraitRequirement extends BaseRequirement {
     @Override public int hashCode() {
         return super.hashCode() * 31 + trait.hashCode();
     }
+    
+    public Trait getTrait() {
+        return trait;
+    }
 }

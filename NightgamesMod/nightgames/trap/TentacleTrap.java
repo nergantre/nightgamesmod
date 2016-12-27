@@ -5,6 +5,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.Flatfooted;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Oiled;
 
@@ -36,6 +37,7 @@ public class TentacleTrap extends Trap {
                                 + "back into the floor. She'll left shivering, sticky, and unsatisfied. In effect, she's already defeated.");
             }
             target.tempt(target.getArousal().max());
+            target.getWillpower().set(target.getWillpower().max() / 3);;
             target.calm(null, 1);
             target.addNonCombat(new Oiled(target));
             target.addNonCombat(new Hypersensitive(target));
@@ -74,6 +76,7 @@ public class TentacleTrap extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }

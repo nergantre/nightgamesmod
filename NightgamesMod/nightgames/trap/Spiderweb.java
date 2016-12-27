@@ -1,5 +1,6 @@
 package nightgames.trap;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
@@ -17,7 +18,11 @@ public class Spiderweb extends Trap {
     public Spiderweb(Character owner) {
         super("Spiderweb", owner);
     }
-    
+
+    public void setStrength(Character user) {
+        setStrength(user.get(Attribute.Cunning) + user.get(Attribute.Science) + user.getLevel() / 2);
+    }
+
     @Override
     public void trigger(Character target) {
         if (target.human()) {

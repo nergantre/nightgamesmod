@@ -270,7 +270,7 @@ public class Struggle extends Skill {
             } else if (c.shouldPrintReceive(target, c)) {
                 if (c.getStance().behind(target)) {
                     c.write(getSelf(), String.format("%s struggles to gain a more dominant position, but with"
-                                    + " %s behind %s, holding %s waist firmly, there is nothing %s can do.",
+                                    + " %s behind %s holding %s waist firmly, there is nothing %s can do.",
                                     getSelf().subject(), target.subject(), getSelf().directObject(),
                                     getSelf().possessivePronoun(), getSelf().pronoun()));
                 } else {

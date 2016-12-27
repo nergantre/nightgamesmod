@@ -3,7 +3,14 @@ package nightgames.pet;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
+import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.ModdedCockPart;
 import nightgames.combat.Combat;
+import nightgames.skills.Grind;
+import nightgames.skills.Piston;
+import nightgames.skills.PussyGrind;
+import nightgames.skills.Thrust;
 import nightgames.skills.petskills.ImpAssault;
 import nightgames.skills.petskills.ImpFacesit;
 import nightgames.skills.petskills.ImpSemenSquirt;
@@ -54,9 +61,10 @@ public class ImpMale extends Pet {
                                 + "fluid, the slime's color darkens and it gradually solidifies, unable to move.");
                 break;
             default:
-                break;
+                (new ImpTease(getSelf())).resolve(c, opponent.getSelf());
+                return;
         }
-        c.removePet(getSelf());
+        c.removePet(opponent.getSelf());
     }
 
     @Override
@@ -76,8 +84,17 @@ public class ImpMale extends Pet {
         PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), new Growth(), getPower());
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(115);
+        if (getPower() > 30) {
+            self.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.incubus));
+        } else {
+            self.body.add(BasicCockPart.big);
+        }
         self.body.finishBody(CharacterSex.male);
         self.learn(new ImpAssault(self));
+        self.learn(new Thrust(self));
+        self.learn(new Grind(self));
+        self.learn(new Piston(self));
+        self.learn(new PussyGrind(self));
         self.learn(new ImpTease(self));
         self.learn(new ImpStrip(self));
         self.learn(new ImpFacesit(self));

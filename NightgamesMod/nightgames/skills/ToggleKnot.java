@@ -26,7 +26,7 @@ public class ToggleKnot extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return isActive(target) || getSelf().canAct() && c.getStance().inserted(getSelf());
+        return (getSelf().canRespond() && isActive(target)) || (getSelf().canAct() && c.getStance().inserted(getSelf()));
     }
 
     @Override

@@ -1,0 +1,134 @@
+\documentclass[a4paper]{article}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\graphicspath{{.}}
+
+\newcommand{\verifiernote}[2]{
+	\begin{center}
+		\framebox{\ifthenelse{\equal{warn}{#1}}
+			{\includegraphics[width=4mm,height=4mm]{warning}  Verifier Warning: }
+			{\includegraphics[width=4mm, height=4mm]{error}  Verifier Error: \hspace{5mm}}
+			\begin{tabular}{p{10cm}}#2\end{tabular}}
+	\end{center}
+}
+
+\begin{document}
+\title{Night Games Creator Manual}
+\maketitle
+\section{Introduction}
+This document describes the use of the Night Games Creator. The Creator, for short, is a tool which allows you to create or modify custom characters for the game. It can also display most information about the hard-coded characters, but it cannot modify them.
+
+To begin, make sure the NG Creator.jar file is in the same directory as the game, and run it just as you would the game. The normal game screen will pop up for a few moments, and then the creator will show. You may want to begin by loading a character from the menu bar: File > Load > Samantha (for example).
+
+The rest of this document will describe the different features of the Creator. Your characters will be automatically checked by the Verifier. You can see the results of the verification in the tab with that name. In this document, the following boxes will tell you what the Verifier checks, and how it will report these issues:
+\verifiernote{error}{If you don't fix this, the character probably won't load}
+\verifiernote{warn}{If you don't fix this, non-fatal weirdness might ensue}
+You should probably fix any issues the Verifier shows unless you are sure what you're doing can't hurt.\\
+
+Once you are finished with your character, save it in the "characters" folder. If it's a new character, you'll also have to edit the included.json file so your new character will be loaded.\\
+
+Please ask any questions in the Nightgames Mod thread at \url{https://forum.fenoxo.com/forums/other-adult-games.23/}.
+\section{Generic Data}
+\subsection{Basics}
+This paragraph deals with the upper-left corner of the Generic tab. Here, the basic character data can be entered.
+
+
+\textbf{Name} The character's name. It is recommended, but not required, that this consists only of letters. Entering parseable tags as the name will have weird results.
+\verifiernote{error}{The name cannot be empty}
+
+\textbf{Sex} The character's listed sex. This doesn't have much of an effect anymore as sex is typically determined by examining the body.
+
+
+\textbf{Trophy} The item this character's opponent will get when defeating them. There are no custom items yet, and so no custom trophies. Just pick anything.
+
+
+\textbf{Default Portrait} This \textit{will} specify the default portrait at some point, but portraits are not supported yet.
+
+\textbf{Starting Level} The level the character will have in their first match.
+
+\textbf{Stamina} The character's initial Stamina cap.
+
+\textbf{Arousal} The character's initial Arousal cap.
+
+\textbf{Mojo} The character's initial Mojo cap.
+
+\textbf{Willpower} The character's initial Willpower cap.
+\verifiernote{warn}{Stamina, Arousal, Mojo and Willpower will be sanity-checked}
+
+\subsection{Clothing}
+The bottom-left section of the Generic tab defines the initial outfit of the character. New articles can be added by selecting one in the drop-down box and clicking the Add button. They can be removed by selecting them and then clicking the Remove Selected button. The order in which clothing is specified is irrelevant. Every article of clothing in the game has a layer and one or more slots. This information is available in the files in the "clothing" folder, but you generally won't need it as long as the articles have logical names. For example, you probably can't have two bras, and a bra tends to go below a shirt.
+\verifiernote{error}{You cannot have multiple items occupying the same slot and layer}
+\verifiernote{warn}{Duplicates in this list are pointless}
+\subsection{Attributes}
+The top-right section of the Generic tab lists the different attribute points. Power, Seduction and Cunning are the basic stats, and should probably be between 3 and 10 at level 1. Perception and Speed are special stats which cannot be upgraded normally. Values less than 2 or greater than 10 might have weird results.
+\verifiernote{warn}{Extreme values for Perception and Speed are very unwise}
+All the other attributes are advanced ones. No one character should probably have more than one or two of these. The Willpower attribute here can be safely ignored.
+\subsection{Body}
+The final quarter of the Generic tab specifies the character's initial body. The options are mostly self-explanatory. Empty boxes mean no body part of that type will be present. The hotness value should ideally be somewhere between 0.5 - 3, it heavily influences temptation damage caused by the character. 
+\verifiernote{warn}{Cock types are only sensible if a cock length is also specified}
+\verifiernote{warn}{Genderless characters usually don't play very well}
+\verifiernote{warn}{High hotness values can cause massive temptation damage}
+\section{Traits and Growth}
+This tab shows the initial traits, the traits the character will acquire later, and how many points they will get for various purposes on level up.
+\subsection{Traits}
+The two lists on the sides of the tab contain the traits. A list of all traits with a brief explanation of each will also be included with the game. Traits in the left list will be given to the character immediately. The ones in the right list will be granted when the character reaches the level specified in the box next to the trait name. Selecting a trait and clicking the Remove Selected button will remove the trait from whichever list it is in.
+\verifiernote{warn}{Having the same trait in both lists is pointless}
+\verifiernote{warn}{A level below the character's starting level is also pointless}
+\subsection{Growth}
+These list the amount of points the character will get towards the respective attributes per level up. The "Bonus" fields contain the extra points the character will get when Hard Mode is active. Bonus Attribute Points are the extra attribute points the character will get in Hard Mode.
+\verifiernote{warn}{These values should not be too high}
+\section{Scenes}
+This tab can be used to write and modify all text related to the character.
+\subsection{Structure}
+The Scene Type box has a list of all situations for which text has to be provided.
+\verifiernote{error}{At least one scene has to be specified for every situation}
+More than one scene can be added per situation: the Scene Number box can be used to switch between them. The order of scenes is important: the first scene from the top for which the requirements check out will be selected. The buttons next to the Scene Number box do exactly what you'd expect.\\
+
+Note that the "Recruitment Introduction" and "Recruitment Confirmation" situation are not like the others. Check the Recruitment section for details.
+\subsection{Parser}
+The Night Games Mod uses a parser to write variable text in scenes. This works by using predefined tags like this one: \{self:pronoun\}. A full list of tags, and a more extensive explanation of them, is available within the Creator under the Help menu. Tags will not be automatically verified. "self" will refer to the character being created. To test "other" tags, you can select a character in the Other Character box. For example, writing \{other:name\} when Jewel is selected will print "Jewel" in the Parsed Text box. Enter your text in the left box, and the parser will automatically update the right one with the parsed result. You are advised to always use tags instead of pronouns and the like, since gender can tend to be a bit malleable in this game. If you want to only see female pronouns, you can enable that option in the game itself.
+\subsection{Requirements}
+Requirements determine whether or not a scene can be displayed. The table below lists all available requirements. The \textbf{Name} is the name as it appears in the Creator. The \textbf{Arguments} column lists the additional information the requirement needs. These will be added automatically, you just need to select the proper values. \textbf{Subrequirements} will have to be added manually by right-clicking the parent requirement and selecting Add Subrequirement. Requirements can be removed in the same way, just click Remove in the context menu. The top-level requirement cannot be removed or altered. If a scene only has the top-level requirement, it will always be selected if checked.
+
+Here are some additional points:
+\verifiernote{error}{Every requirement \textit{must} have the right amount of subrequirements, check the table.}
+\verifiernote{error}{You cannot have multiple requirements of the same type at the top level}
+\verifiernote{warn}{If a scene has no requirements, any additional scenes for the same situation listed below that one will never be selected}
+
+  \noindent\begin{tabular}{|l|c|r|}
+  	\hline
+  	\textbf{Name} & \textbf{Argument(s)} & \textbf{Subrequirements} \\
+  	\hline
+  	The combatants are fucking anally & none & none \\
+  	The following are ALL true: & none & At least one \\
+  	has at least this value for this attribute & this/other, attribute, amount & none \\
+  	has this body part: & this/other, part type & none \\
+  	is dominant in this position & this/other & none \\
+  	is penetrating their opponent & this/other & none \\
+  	has this item: & this/other, item & none \\
+  	is at least this level: & this/other, level & none \\
+  	has this mood: & this/other, mood & none \\
+  	The following is NOT true: & none & Exactly one \\
+  	has had at least this many orgasms: & this/other, amount & none \\
+  	At least one of the following is true: & none & At least one \\
+  	The combatants are in this position: & position & none \\
+  	is prone on the ground & this/other & none \\
+  	A random chance of ... \% succeeds: & odds & none \\
+  	The fight is over, and had this result & result & none \\
+  	has this status condition: & this/other, status & none \\
+  	is submissive in this position & this/other & none \\
+  	has this trait: & this/other, trait & none \\
+  	is currently winning & this/other & none \\
+  	\hline
+  \end{tabular}
+\section{Other Data}
+\subsection{Recruitment}
+Recruitment defines the requirements and scenes for unlocking the character in-game. On this tab, you just need to enter the price Aesop (the Informant) will charge for the information. In the Scenes tab, there are two special situations for recruitment: Introduction and Confirmation. The former is the text Aesop will give to describe the character. Try to make it both descriptive and 'lore-friendly'. Remember that it's Aesop talking, not you. The requirements for the Introduction will be the requirements that decide whether or not the character can be unlock. Note that Aesop will not offer any custom characters to a player below level 10, even if the requirements would allow them. The Confirmation text is the scene which displays after the player has chosen to unlock the character. The requirements for the Confirmation scene are ignored.
+\verifiernote{warn}{Neither the Introduction nor the Confirmation should be empty}
+\subsection{Items}
+The bottom half of this tab allows you to specify the items that character starts with, and the ones they will try to purchase during the day. The two lists work very similarly. Select the item in the drop-down box, enter an amount, and click the Add button. Select an entry and click Remove to get rid of it.
+\subsection{AI Modifiers}
+The AI Modifiers are a mechanism designed to let you tweak the AI system to prefer (or avoid) certain skills or situations. There are four types: SKILL, POSITION, SELF\_STAT and OPP\_STAT. The first two are self-explanatory. SELF\_STAT refers to statuses affecting the character you're working on, OPP\_STAT refers to those affecting the opponent. For every type, you need to enter a value and a weight. The values change based on the type, obviously. The weight determines how much the AI gets poked. For skills, the weight should probably be between -2 and 2, unless you really need an extreme preference. The weights can be a bit higher (or lower) for statuses, and even more so for positions. You can check the AI Modifiers for Samantha if you want an example, and you can also have a look at the data/DefaultAiModifications.json file to see the tweaks the standard characters get.
+\end{document}

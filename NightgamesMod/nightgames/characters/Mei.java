@@ -61,7 +61,7 @@ public class Mei extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 3;
         character.getGrowth().arousal = 5;
-        character.getGrowth().willpower = .4f;
+        character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
 

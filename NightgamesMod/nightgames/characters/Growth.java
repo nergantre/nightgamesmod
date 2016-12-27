@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import nightgames.characters.body.BodyPart;
 import nightgames.global.Flag;
@@ -32,7 +34,7 @@ public class Growth implements Cloneable {
         bonusArousal = 3;
         bonusAttributes = 1;
         extraAttributes = 0;
-        willpower = .5f;
+        willpower = 1.0f;
         bonusWillpower = .25f;
         attributes = new int[10];
         Arrays.fill(attributes, 4);
@@ -49,6 +51,10 @@ public class Growth implements Cloneable {
         traits.get(level).add(trait);
     }
 
+    public Map<Integer, List<Trait>> getTraits() {
+        return new HashMap<>(traits);
+    }
+    
     public void addTraitPoints(int[] levels, Character charfor) {
         if (!(charfor instanceof Player)) return;
         for (int level : levels) {

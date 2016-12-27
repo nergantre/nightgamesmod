@@ -130,7 +130,7 @@ public class Player extends Character {
         if (Global.gui().combat != null && (Global.gui().combat.p1.human() || Global.gui().combat.p2.human())) {
             body.describeBodyText(b, Global.gui().combat.getOpponent(this), false);
         } else {
-            body.describeBodyText(b, Global.getCharacterByName("Angel"), false);
+            body.describeBodyText(b, Global.getCharacterByType("Angel"), false);
         }
         if (getTraits().size() > 0) {
             b.append("<br/>Traits:<br/>");
@@ -365,21 +365,23 @@ public class Player extends Character {
                 if (!allowedActions().isEmpty()) {
                     allowedActions().forEach(a -> gui.addAction(a, this));
                 } else {
+                    List<Action> possibleActions = new ArrayList<>();
                     for (Area path : location.adjacent) {
-                        gui.addAction(new Move(path), this);
+                        possibleActions.add(new Move(path));
                     }
                     if (getPure(Attribute.Cunning) >= 28) {
                         for (Area path : location.shortcut) {
-                            gui.addAction(new Shortcut(path), this);
+                            possibleActions.add(new Shortcut(path));
                         }
                     }
 
                     if(getPure(Attribute.Ninjutsu)>=5){
                         for(Area path:location.jump){
-                            gui.addAction(new Leap(path),this);
+                            possibleActions.add(new Leap(path));
                         }
                     }
-                    for (Action act : Global.getActions()) {
+                    possibleActions.addAll(Global.getActions());
+                    for (Action act : possibleActions) {
                         if (act.usable(this) 
                                         && Global.getMatch().condition.allowAction(act, this, Global.getMatch())) {
                             gui.addAction(act, this);
@@ -957,12 +959,12 @@ public class Player extends Character {
     @Override
     public int getEscape(Combat c, Character other) {
         int escape = super.getEscape(c, other);
-        if (checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
+        if (c != null && checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;
     }
-    
+
     @Override
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
