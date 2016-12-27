@@ -27,7 +27,8 @@ public class FaceFuck extends Skill {
         return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().prone(target)
                         && (getSelf().crotchAvailable() && getSelf().hasDick() || getSelf().has(Trait.strapped))
                         && !c.getStance().inserted(getSelf()) && c.getStance().front(getSelf())
-                        && !c.getStance().behind(target);
+                        && !c.getStance().behind(target)
+                        && c.getStance().reachTop(getSelf());
     }
 
     @Override
@@ -99,7 +100,7 @@ public class FaceFuck extends Skill {
                             + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                             + "and tongue while you thrust your hips.";
             if (modifier == Result.upgrade) {
-                m += "<br>Additionally, your upgraded vibrocock thoroughly stimulates her throat.";
+                m += "<br/>Additionally, your upgraded vibrocock thoroughly stimulates her throat.";
             }
         } else {
             if (target.body.getRandom("mouth").isErogenous()) {
@@ -108,14 +109,14 @@ public class FaceFuck extends Skill {
                                 + target.name()
                                 + " has transformed her mouth into a second female genitalia; its soft hot walls, its ridges and folds slide across your dick delightfully as you thrust into her.";
                 if (modifier == Result.reverse) {
-                    m += "<br>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
+                    m += "<br/>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
                 }
             } else {
                 m = "You grab hold of " + target.name()
                                 + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                                 + "and tongue while you thrust your hips.";
                 if (modifier == Result.reverse) {
-                    m += "<br>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";
+                    m += "<br/>Her skillful tongue works its magic on your cock though, and you find yourself on the verge of orgasm way quicker than you would like.";
                 }
             }
         }
@@ -134,14 +135,14 @@ public class FaceFuck extends Skill {
             m = String.format("%s forces her strapon cock into %s mouth and fucks %s face with it. "
                             + "It's only rubber, but the position is still humiliating. %s not "
                             + "to gag on the artificial member while %s revels in her dominance.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().subject()), target.nameOrPossessivePronoun(), target.possessivePronoun(),
                             target.subjectAction("try", "tries"), getSelf().subject());
         } else if (modifier == Result.upgrade) {
             m = String.format("%s moves slightly towards %s, pushing her strapon against %s lips. %s to keep %s"
                             + " mouth closed but %s pinches %s nose shut, "
                             + "and pushes in the rubbery invader as %s for air. After a few sucks, %s"
                             + " %s to break free, although %s %s still shivering "
-                            + "with a mix of arousal and humiliation.", getSelf().subject(), target.nameDirectObject(),
+                            + "with a mix of arousal and humiliation.", Global.capitalizeFirstLetter(getSelf().subject()), target.nameDirectObject(),
                             target.possessivePronoun(), target.subjectAction("try", "tries"), target.possessivePronoun(),
                             getSelf().subject(), target.possessivePronoun(), target.subjectAction("gasp"),
                             target.pronoun(), target.action("manage"), target.pronoun(), target.action("are", "is"));

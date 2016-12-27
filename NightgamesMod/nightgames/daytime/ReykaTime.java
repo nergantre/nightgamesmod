@@ -33,8 +33,8 @@ public class ReykaTime extends BaseNPCTime {
         giftedString = "\"Awww thanks!\"";
         giftString = "\"A present? You shouldn't have!\"";
         transformationOptionString = "Demonic Rituals";
-        loveIntro = "[Placeholder]<br>You head down to the chapel basement. Reyka shows you a cute smile when she realizes that you've come to visit.";
-        transformationIntro = "<br>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
+        loveIntro = "[Placeholder]<br/>You head down to the chapel basement. Reyka shows you a cute smile when she realizes that you've come to visit.";
+        transformationIntro = "<br/>Reyka seems a bit shocked at your request. <i>You want to become a demon?</i> "
                         + "She looks a bit worried when she responds. You quickly reassure her that you don't necessarily want the whole package, corrupted soul and all. "
                         + "You just want some of the fun bits that she had made such good use of. Seeing the conversation directed back to sex, Reyka quickly recovers her saucy grin, "
                         + "<i>\"You've been having some fun I see? Alright, I can do that for you, but you have to bring me some ingredients. I can't do everything myself! "
@@ -53,7 +53,7 @@ public class ReykaTime extends BaseNPCTime {
             growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
             growCock.additionalRequirements = "";
             growCock.option = "Reyka: Grow a cock";
-            growCock.scene = "[Placeholder]<br>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
+            growCock.scene = "[Placeholder]<br/>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
             growCock.effect = (c, self, other) -> {
                 other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.incubus));
@@ -67,7 +67,7 @@ public class ReykaTime extends BaseNPCTime {
             removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
             removeCock.additionalRequirements = "";
             removeCock.option = "Reyka: Remove her cock";
-            removeCock.scene = "<br>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
+            removeCock.scene = "<br/>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
                             + "Taking the FemDrafts you offer her, she drinks them one after another and waits with her cock still proudly erect. "
                             + "Soon enough though, the organ starts shrinking back into her body as if being absorbed by her lower lips. "
                             + "Finally the cock head retreats into her fleshy hood, becoming indistinguishable from her old clitoris.";
@@ -99,7 +99,7 @@ public class ReykaTime extends BaseNPCTime {
                         + "her tail. She pours the thick liquids on her hands and mixes them together. She applies half of the "
                         + "mixture on your cock (which almost makes you cum due to her ministrations), and massages the rest "
                         + "into her cunt. Finally, she draws a familiar rune on your lower belly that you recognize as the orgasm "
-                        + "seal she uses in the night games.<br><br>"
+                        + "seal she uses in the night games.<br/><br/>"
                         + "As Reyka finishes with her preparations, you finally realize what she's about to do. Remembering the last "
                         + "time she fucked you within an inch of your life, you start to scramble off of her couch, in an mad attempt "
                         + "to escape. As if she read your mind, Reyka unfurls her wings and jumps on you as you almost reach the stairs "
@@ -107,7 +107,7 @@ public class ReykaTime extends BaseNPCTime {
                         + "mount you. Grinning devilishly, she purrs <i>\"Oh no {other:name}, we'll be having none "
                         + "of that. You paid for this yourself, and it would be SUCH a waste for us to stop now. Don't you agree "
                         + "{other:name}?\"</i> Resigned to your fate, you can only nod obediently as she rubs her goopy slit against "
-                        + "your rock hard erection<br><br>"
+                        + "your rock hard erection<br/><br/>"
                         + "After 6 hours of messy sex in which Reyka fucked you unconscious 17 times, you wake up cuddled in Reyka's "
                         + "bountiful bosoms. You quickly notice that Reyka has been awake and smiling at your groggy expression while you wake up. "
                         + "As you somehow start to get hard again when you smell Reyka's intoxicating scent, you realize that your penis feels very different. "
@@ -156,7 +156,7 @@ public class ReykaTime extends BaseNPCTime {
         });
         demonTail.option = "Spade Tail";
         demonTail.scene =
-                        "[Placeholder]<br>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
+                        "[Placeholder]<br/>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
         demonTail.effect = (c, self, other) -> {
             self.body.addReplace(TailPart.demonic, 1);
             return true;
@@ -198,7 +198,7 @@ public class ReykaTime extends BaseNPCTime {
         succubusPussy.additionalRequirements = "A normal pussy";
         succubusPussy.option = "Succubus Pussy";
         succubusPussy.scene =
-                        "[Placeholder]<br>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
+                        "[Placeholder]<br/>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
         succubusPussy.effect = (c, self, other) -> {
             self.body.addReplace(PussyPart.succubus, 1);
             return true;
@@ -256,14 +256,14 @@ public class ReykaTime extends BaseNPCTime {
                   .message("You were going to ask Aesop where to find Reyka, but while on your way "
                                   + "there you noticed a dim pink haze protruding from a window leading into "
                                   + "the campus chapel's basement. The irony of a demon living beneath a church "
-                                  + "is definitely Reyka's style, so you go over to investigate.<p>"
+                                  + "is definitely Reyka's style, so you go over to investigate.<br/><br/>"
                                   + "You go to the back of the chapel, looking for the priest. You find him "
                                   + "setting a pot of tea and gently tap him on the shoulder. <i>\"Oh! You scared me, my son! "
                                   + "I'm sorry but I'm a bit jumpy these days... Anyway, what can I do for you?\"</i> You "
                                   + "inquire with as much subtlety as you can muster whether the church has any long term housing, perhaps in the basement. "
                                   + "The priest's eyes go wide in shock as you say this. Trembling, he slowly "
                                   + "raises his arm, finger outstretched, pointing towards a narrow door. Soon "
-                                  + "after, he briskly walks away, leaving you alone facing the basement door.<p>"
+                                  + "after, he briskly walks away, leaving you alone facing the basement door.<br/><br/>"
                                   + "Taking care to be as quiet as possible, you walk down the stairs. There "
                                   + "is more of that haze here, it smells mildly like strawberries. "
                                   + "When you reach the bottom, you take a look around. There is a large pile "
@@ -290,7 +290,7 @@ public class ReykaTime extends BaseNPCTime {
                                   + "observe the results. It breaks a few relationships here and there and even creates a few "
                                   + "new ones, I'm a regular Cupid. Then I thought, 'well, " + player.name()
                                   + " is pretty nice, perhaps "
-                                  + "I could have some fun with him.', so here I am. Are you interested?\"<p>"
+                                  + "I could have some fun with him.', so here I am. Are you interested?\"<br/><br/>"
                                   + "You are frozen for a moment, staring into those deep eyes of hers. 'Pretty nice'? "
                                   + "What's that supposed to mean? As you ponder this, she apparantly gets slightly annoyed by "
                                   + "your inaction and presses herself into you even harder. She leans over and whispers in you ear: "
@@ -406,7 +406,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "in your current position, you lean in and kiss her. You've obviously kissed her plenty of times already "
                                       + "during the fights, some of them even voluntarily, but this one is different. This is a kiss with "
                                       + "emotion behind it and Reyka senses this too. She seems quite startled of a moment, but soon returns "
-                                      + "your kiss passionately. Her tongue forces it's way into your mouth and twists and turns around your own.<p>"
+                                      + "your kiss passionately. Her tongue forces it's way into your mouth and twists and turns around your own.<br/><br/>"
                                       + "The aphrodisiacs in her saliva are already starting to get to you, so you decide it's probably best "
                                       + "to act quickly, while your mind is still your own. You hurry downward and pull up the miniskirt she "
                                       + "always seems to be wearing. Also as per usual, she has forgone any further means of covering up, not "
@@ -418,7 +418,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "you are in given how her juices have had somewhat disquieting effects on you in the past. Reyka by now "
                                       + "is desperate for more stimulation, and has no problem screaming out profanities to that effect. It's quite "
                                       + "possible any people upstairs may hear her; that'd be something to see. She's getting close; you can tell "
-                                      + "by her wings and tail popping into existence as she can no longer summon the will to hide them.<p>"
+                                      + "by her wings and tail popping into existence as she can no longer summon the will to hide them.<br/><br/>"
                                       + "While her juices have not taken control of you, they've certainly had other effects as you are rock "
                                       + "hard. You move up her body and deeply kiss her once more. Simultaneously, you position your dick at "
                                       + "her entrance and thrust all the way in in one go. The sudden invasion sends her over the edge. Her "
@@ -438,7 +438,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "a deluge of cum into her. Strangely, though, you don't feel any of the tiredness you've come to expect "
                                       + "from Reyka; it just feels like an incredible orgasm. When you finally finish you roll off to the side, "
                                       + "catching your breath. Reyka rolls onto her side, putting her arms around your neck and a leg across your "
-                                      + "waist.<p>"
+                                      + "waist.<br/><br/>"
                                       + "After a few minutes you ask her what the transformation thing is all about. <i>\"Normally when succubi have "
                                       + "sex, it feels good, but in the same way you feel good having a really nice meal. What we just did "
                                       + "had true emotion in it, from both of us. Demons have souls, did you know that? They're just a bit... "
@@ -450,7 +450,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "again, does the same and you share a final kiss before you leave.");
                 if (!player.has(Trait.desensitized)) {
                     Global.gui()
-                          .message("<p><b>Having been in the maelstrom that is Reyka's pussy while she was orgasming, you are sure "
+                          .message("<br/><br/><b>Having been in the maelstrom that is Reyka's pussy while she was orgasming, you are sure "
                                           + "nothing else will ever come close to those feelings. Your sexual endurance has permanently increased.</b>");
                     player.add(Trait.desensitized);
                     npc.getGrowth().addTrait(0, Trait.desensitized);
@@ -461,7 +461,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "to Reyka to say this, however,  you see a quick flash of red in her eyes. Your mind fogs over for "
                                       + "a moment. When you try to recall what you where saying, Reyka instead whispers in your ear: <i>\"How about "
                                       + "we go and have a little private fun somewhere?\"</i> This sounds like an excellent idea you, so you accept "
-                                      + "and follow her as she leads you over to that wonderfully cozy basement room of hers.<p>"
+                                      + "and follow her as she leads you over to that wonderfully cozy basement room of hers.<br/><br/>"
                                       + "You reach the room without incident, save for the sad look the priest gave you on your way in. "
                                       + "As soon as you reach the bottom of the stairs, Reyka pulls your arm, hard. The force of the pull "
                                       + "flings you onto the bed, which stands at the center of the intricate pattern of symbols drawn on the "
@@ -483,7 +483,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "settles down, impaling herself fully, brushes a hand over the symbol she previously drew and with "
                                       + "a final smile and squeeze, sends you blasting over the edge. It is beyond anything you have ever felt. "
                                       + "It feels like all your energy is drained out of you, replaced by pure ecstasy. After what "
-                                      + "feels like hours the feeling dissipates, leaving only weariness in its wake.<p>"
+                                      + "feels like hours the feeling dissipates, leaving only weariness in its wake.<br/><br/>"
                                       + "Mustering all your strength, you look up to see Reyka already dressed. While brushing her hair, "
                                       + "she asks: <i>\"You remember that moment right before I let you cum? That's when I'd usually ask you "
                                       + "to give up your soul. As you'll understand, they never refuse at that point. But given all of our "
@@ -492,7 +492,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "if I could get my hands on one of those strap-ons, you might be...\"</i> taking this worrying prospect as "
                                       + "your cue, you quickly stumble up the stairs. After taking a quick breather and cup of coffee in the "
                                       + "chapel's kitchen, you walk back home, still drowsy. You probably shouldn't do that too often, "
-                                      + "lest she changes her mind about your value to her.<br>"
+                                      + "lest she changes her mind about your value to her.<br/>"
                                       + "Then again, you realize you didn't have any choice from the start. ");
             }
             Global.gui()
@@ -508,7 +508,7 @@ public class ReykaTime extends BaseNPCTime {
                                           + "say I admire your courage. Tell you what, if you do a little something for me, "
                                           + "I'll teach you a little trick, give you a fighting chance. Come with me.\"</i> "
                                           + "You are certainly intrigued and the prospect of learning something is more appealing "
-                                          + "than waking up sore again in places you really shouldn't be sore, so you follow her.<p>"
+                                          + "than waking up sore again in places you really shouldn't be sore, so you follow her.<br/><br/>"
                                           + "You end up at the library, of all places, and Reyka leads you to the back. In front of "
                                           + "an old limestone archway leading to a secluded section, she stops. <i>\"See this?\"</i> she asks, pointing "
                                           + "towards a small sigil carved into the stone. <i>\"I can't pass by that, or touch it. So you "
@@ -516,7 +516,7 @@ public class ReykaTime extends BaseNPCTime {
                                           + "You've never seen the sigil before, it just looks like a random scribble, but you figure "
                                           + "demonic 'tricks' are worth removing a scribble. You press the knife into the limestone "
                                           + "and scratch over it. Soon enough, Reyka pats you on the shoulder and walks past you into "
-                                          + "the aisle of books. She quickly returns, dusty tome in hand, and gestures you to follow.<p>"
+                                          + "the aisle of books. She quickly returns, dusty tome in hand, and gestures you to follow.<br/><br/>"
                                           + "This time, she led you to her basement room beneath the chapel. Only slightly feeling like "
                                           + "a sacrificial lamb, you watch as she puts the book away and turns to face you. <i>\"You are probably "
                                           + "curious as to what I'll teach you, but first there is a little something to take care of.\"</i> After "
@@ -535,7 +535,7 @@ public class ReykaTime extends BaseNPCTime {
                                           + "then do something about it. Useful right? Now, about those rules; Creepy Voice told me they were made "
                                           + "because none of the other competitors could do what I do. Keep things at least somewhat fair, you know? "
                                           + "With you having this ability now, I can use it in the fights too, so we both win! But for now, you "
-                                          + "just need some practice, so let's start!\"</i>.<p>"
+                                          + "just need some practice, so let's start!\"</i>.<br/><br/>"
                                           + "You spend another half hour in the basement, trying to distinguish between the mild "
                                           + "musical hints preceding all kinds of slaps and punches to your face, intermixed with caresses "
                                           + "and licks everywhere else. You still need more practice, but <b>you have learned to tune in to "
@@ -546,7 +546,7 @@ public class ReykaTime extends BaseNPCTime {
                     Global.gui()
                           .message("<i>\"Ah, good. By now, you may have figured out that there really isn't that much room to grow, "
                                           + "I can only do so much for a mortal such as yourself. Still, it's always fun getting a "
-                                          + "little practice in, so let's go to the gym.\"</i><p>"
+                                          + "little practice in, so let's go to the gym.\"</i><br/><br/>"
                                           + "In the gym, you go to the same room you've already gotten your ass kicked a couple times. "
                                           + "This time, though, you feel a lot more confident. You get into your starting position, "
                                           + "and concentrate on the faint music. It's so soft you don't even notice it unless you "
@@ -560,7 +560,7 @@ public class ReykaTime extends BaseNPCTime {
                                           + "When you look up, you see Reyka with an almost cute smile, holding out her hand. "
                                           + "<i>\"I just wanted to make sure you remember who's boss here, but you did well.\"</i> You latch "
                                           + "on to her hand and she pulls you up, dusting of your shoulders. <i>\"I'll give you a few minutes "
-                                          + "to catch your breath and then we'll go about defending against some... different moves.\"</i><p>"
+                                          + "to catch your breath and then we'll go about defending against some... different moves.\"</i><br/><br/>"
                                           + "When you have recovered from Reyka's disproportionately sharp punch, you retake your "
                                           + "position opposite her and wait for her to explain the rules of this second round. "
                                           + "So here's the deal, I am not going to go all out on you, that wouldn't be any sport. "
@@ -606,7 +606,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "Here, I can do what I want, and I want you.\"</i> You're not convinced. After all, demons are known for "
                                       + "their incessant lying. But you will need some terms of your own: If you do bring her down, she has to "
                                       + "follow your commands instead. Reyka seems to have to struggle not to burst out laughing at the "
-                                      + "suggestion, but agrees to your proposal.<p>"
+                                      + "suggestion, but agrees to your proposal.<br/><br/>"
                                       + "After a quick warming-up, you stand at one edge of the mat, looking straight at Reyka on the opposite side. "
                                       + "One brief countdown later, you start cautiously approaching Reyka. She has taken up a defensive "
                                       + "posture, but her wry smile tells you she is not worried in the least. Eager to take advantage of "
@@ -617,7 +617,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "first attack: you attempt to make a move and she dodges impossibly quickly. Finally, she decides "
                                       + "she's had enough fun for now and latches onto your outstretched arm, effortlessly throwing you down. "
                                       + "The back of your head slams down on the mat hard, and the world begins to fade. Just before you pass out, "
-                                      + "you see Reyka standing over you with a hungry look in her eyes and a menacing smile.<p>"
+                                      + "you see Reyka standing over you with a hungry look in her eyes and a menacing smile.<br/><br/>"
                                       + "You wake up in your own bed. Your alarm clock tells you it has been a surprisingly short time since "
                                       + "you got beaten by Reyka. Given her nature, though, a short time is probably all she needs to do some damage. "
                                       + "As you groggily get up, you become aware of the fact your entire body feels sore, particularly "
@@ -661,7 +661,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "with a devilish grin on her face. You are not so sure if you are all that lucky, but hey, it "
                                       + "could be worse. You just hope she won't drag you to a family dinner some time, that brother of "
                                       + "hers doesn't sound like the type of guy you would get along with. That, and the cuisine would "
-                                      + "probably not be to your liking.<p>"
+                                      + "probably not be to your liking.<br/><br/>"
                                       + "Arriving at the dorm, Reyka says the rules will be the same as last time, only she wont fly "
                                       + "this time. She hands you a ring, presumably hers although you haven't seen it before. <i>\"Make sure "
                                       + "to be somewhere private when you try and trace me, would you? We wouldn't want to draw any attention.\"</i> "
@@ -678,7 +678,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "your nostrils. It smells... different. You are somewhat worried about what you just breathed in, but "
                                       + "at least the flames are gone. You remember you should be trying to get to Reyka, she'll be on her way "
                                       + "over here by now. You walk towards the exit, only to see Reyka already walking by the doorway. "
-                                      + "How did she get here so quickly, especially without the use of her wings...<p>"
+                                      + "How did she get here so quickly, especially without the use of her wings...<br/><br/>"
                                       + "Seeing you, Reyka quickly ducks into a hallway to the side and you run after her. At this rate, she'll beat "
                                       + "you to the showers, so you try to find a different route and cut her off. While running, you notice "
                                       + "a stirring in your groin. Images of previous encounters with Reyka come to mind, but you cast them aside"
@@ -722,11 +722,11 @@ public class ReykaTime extends BaseNPCTime {
                                       + "You aren't sure what bothers you most, what she had said, or the casual tone in which she had "
                                       + "said it. Still, you think you can play in on those predatory instincts of hers. So, demonic "
                                       + "hide and seek it is. You explain the rules to her. <i>\"That won't cut it. I have to exert myself "
-                                      + "finding you and not get to have a little snack? Oh, no. Not happening.\"</i> Ah, well, baby steps.<p>"
+                                      + "finding you and not get to have a little snack? Oh, no. Not happening.\"</i> Ah, well, baby steps.<br/><br/>"
                                       + "So it's going to be a good old stalk: You start at your dorm, Reyka in the student union. At "
                                       + "a predetermined time, you will try to get to the engineering department and she will try to catch "
                                       + "you. If she does, you'll have to go with her to her place and get the life sucked out of you. "
-                                      + "Well, some of it at least... You hope this will open the way to some more innocuous games.<p>"
+                                      + "Well, some of it at least... You hope this will open the way to some more innocuous games.<br/><br/>"
                                       + "You quickly get to your starting position and when the moment comes, you start running. "
                                       + "You figure you'll be easy to catch in the Quad, so you decide to go through the tunnel and "
                                       + "the cafeteria. There, you can take the back exit - off-limits during the night - and make your way "
@@ -740,7 +740,7 @@ public class ReykaTime extends BaseNPCTime {
                                       + "look at her again, her wings are gone. You ask why she was allowed to use them here in the first place, "
                                       + "since you thought she was not allowed to display any demonic traits in public. <i>\"I'm not, but no one "
                                       + "ever comes back here. Except for deliveries and shady deals, neither of which take place at this hour. "
-                                      + "Now come along!\"</i><p>"
+                                      + "Now come along!\"</i><br/><br/>"
                                       + "When you return to your room, you feel like you got run over by a train. Reyka exercises some restraint "
                                       + "with her feeding when she beats you at night, since it makes it all the more fun for her should you run into "
                                       + "her again. She didn't do so just now. Still, after a quick meal and a hot shower, you are ready to go back "

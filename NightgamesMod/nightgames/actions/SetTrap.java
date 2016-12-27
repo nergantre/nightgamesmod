@@ -19,13 +19,14 @@ public class SetTrap extends Action {
     @Override
     public boolean usable(Character user) {
         return trap.recipe(user) && !user.location().open() && trap.requirements(user)
-                        && user.location().env.size() < 5;
+                        && user.location().env.size() < 5 && !user.bound();
     }
 
     @Override
     public Movement execute(Character user) {
         try {
             Trap newTrap = trap.getClass().newInstance();
+            newTrap.setStrength(user);
             user.location().place(newTrap);
             String message = newTrap.setup(user);
             if (user.human()) {

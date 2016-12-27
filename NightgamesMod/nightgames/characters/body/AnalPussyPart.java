@@ -17,7 +17,7 @@ public class AnalPussyPart extends AssPart {
     public AnalPussyPart(double size) {
         super("anal pussy",
                         "Instead of a normal sphincter, {self:possessive} round butt is crowned by a slobbering second pussy.",
-                        .5, 2.2, 1.3, size, true);
+                        .2, 2.2, 1.3, size, true);
     }
 
     public AnalPussyPart() {

@@ -13,10 +13,10 @@ import nightgames.global.Global;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class MFFTribThreesome extends Position {
+public class FFXTribThreesome extends Position {
     private Character domSexCharacter;
 
-    public MFFTribThreesome(Character domSexCharacter, Character top, Character bottom) {
+    public FFXTribThreesome(Character domSexCharacter, Character top, Character bottom) {
         super(top, bottom, Stance.trib);
         this.domSexCharacter = domSexCharacter;
     }
@@ -91,7 +91,11 @@ public class MFFTribThreesome extends Position {
 
     @Override
     public String image() {
-        return "ThreesomeMFFTrib.jpg";
+        if (top.useFemalePronouns()) {
+            return "ThreesomeFFFTrib.jpg";
+        } else {
+            return "ThreesomeMFFTrib.jpg";
+        }
     }
 
     @Override

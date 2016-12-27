@@ -90,7 +90,7 @@ public class LevelDrain extends Drain {
                                     + " XP!\n");
                 }
                 getSelf().gainXP(xpStolen);
-                target.tempt(c, getSelf(), target.getArousal().max());
+                target.temptNoSource(c, getSelf(), target.getArousal().max(), this);
                 break;
             default:
                 break;

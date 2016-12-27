@@ -7,9 +7,6 @@ import nightgames.status.Buzzed;
 import nightgames.status.Oiled;
 
 public class Use extends Action {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6212525023016041538L;
     private Item item;
 
@@ -27,7 +24,7 @@ public class Use extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.has(item);
+        return user.has(item) && !user.bound();
     }
 
     @Override

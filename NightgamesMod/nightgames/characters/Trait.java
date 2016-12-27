@@ -231,6 +231,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
+    flexibleRole("Flexible Roles", "Okay at being the dom."), // Cassie gets this when she takes both specializations to remove the submissive negatives
     naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
@@ -253,6 +254,7 @@ public enum Trait {
     immobile("Immobile", "Unable to move."), // Cannot move
     lethargic("Lethargic", "Very low mojo gain from normal methods.", new Lethargic(null, 999, .75)), // 25% mojo gain
     hairtrigger("Hair Trigger", "Very quick to shoot. Not for beginners."),
+    buttslut("Buttslut", "Extremely weak to anal pleasure."),
     obedient("Obedient", "Easy to order around."),
     cursed("Cursed", "Restricts some skills. The name is probably a plot point. The suspense is killing me."),
 
@@ -319,7 +321,8 @@ public enum Trait {
     brassballs("Brass Balls", "Can take a kick."),
     largereserves("Large Reserves", "You have more willpower than normal people. Start with 20 extra willpower."), //applys on new game start. Will not do anything if added later.
     attractive("Attractive", "Hotter than the average person."),
-    
+    unpleasant("Unpleasant", "Less attractive than the average person."),
+
     Clingy("Clingy", "Harder to escape"),
     fakeout("Fakeout", "Easier to counter"),
     repressed("Repressed", "Sexually represssed, lower seduction"),
@@ -389,6 +392,39 @@ public enum Trait {
     Piledriver("Piledriver", "Chance to stun when fucking"),
     MindlessDesire("Mindless Desire", "When frenzied, opponents have lower effective charisma"),
     Unsatisfied("Unsatisfied", "Hard to finish off without fucking"),
+
+    // Airi Unique Traits
+    // Parasitism - debuffs and control
+    Parasite("Parasite", "Implants a parasite with a kiss"),
+    Voracity("Voracity", "Drains stamina to speed up parasite growth rate"),
+    NeuralLink("Neural Link", "Parasites can mind control after being established"),
+    InebriatatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
+
+    // Transformation/Mimicry - self buffs
+    Imposter("Imposter", "Can appear like a different combatant"),
+    UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
+    CeilingStalker("Ceiling Stalker", "Can ambush from the ceilings"),
+    Masquerade("Masquerade", "Improves quality of mimicry"),
+
+    // Queen Slime - Clones build
+    SlimeRoyalty("Slime Royalty", "Can now divide the body"),
+    RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
+    // + parasite 
+    MimicClothing("Mimic: Clothing", "Clones can transform themselves into clothing for the opponent."),
+    // + transformation
+    MimicBodyPart("Mimic: BodyPart", "Clones can transform themselves into extra body parts for the opponent."),
+    StickyFinale("Sticky Finale", "Clones explode when defeated"),
+    NoblesseOblige("Noblesse Oblige", "Clones are stronger"),
+
+    // Slime Carrier - Immortal pet build
+    SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),
+    Symbiosis("Symbiosis", "Slime carrier can heal and build mojo for the host"),
+    // + parasite
+    RoperAspect("Roper Aspect", "Slime Carrier has additional capabilities"),
+    // + transformation
+    SuccubusAspect("Succubus Aspect", "Main body has additional capabilities"),
+    // autonomous pussy
+    SplitSentience("Split Sentience", "Slime carrier powers up when main body is disabled."),
 
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),

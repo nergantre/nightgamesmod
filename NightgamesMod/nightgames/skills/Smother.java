@@ -63,7 +63,7 @@ public class Smother extends Skill {
             n *= 1.5;
         }
 
-        target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2), this);
         target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 25)));
 
         target.loseWillpower(c, Math.max(10, target.getWillpower().max() * 10 / 100 ));

@@ -69,7 +69,11 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
 
     @Override
     public String image() {
-        return "ThreesomeFFMCowgirl.jpg";
+        if (bottom.useFemalePronouns()) {
+            return "ThreesomeFFMCowgirl_futa.jpg";
+        } else {
+            return "ThreesomeFFMCowgirl.jpg";
+        }
     }
 
     @Override
@@ -115,7 +119,7 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
     @Override
     public Position reverse(Combat c, boolean writeMessage) {
         if (writeMessage) {
-            c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, top));
+            c.write(bottom, Global.format("{self:SUBJECT-ACTION:manage|manages} to unbalance {other:name-do} and push {other:direct-object} off {self:reflective}.", bottom, domSexCharacter));
         }
         return new Neutral(bottom, top);
     }
@@ -132,7 +136,6 @@ public class FFMCowgirlThreesome extends FemdomSexStance {
     public float priorityMod(Character self) {
         return super.priorityMod(self) + 3;
     }
-
 
     @Override
     public int dominance() {

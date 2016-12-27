@@ -19,7 +19,7 @@ public class TemptationSkillEffect extends AbstractRollBasedSkillEffect {
                                                       .filter(part -> withPart.isPresent() && part.isType(withPart.get()))
                                                       .findAny();
             if (roll > .01) {
-                self.tempt(results.getCombat(), other, maybeSelfPart.orElse(null), (int) roll);;
+                self.temptNoSkill(results.getCombat(), other, maybeSelfPart.orElse(null), (int) roll);;
             }
             return true;
         });

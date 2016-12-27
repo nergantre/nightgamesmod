@@ -14,7 +14,7 @@ public class PassAmbush extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.location().id() == Movement.ftcPass && user.state != State.inPass;
+        return user.location().id() == Movement.ftcPass && user.state != State.inPass && !user.bound();
     }
 
     @Override

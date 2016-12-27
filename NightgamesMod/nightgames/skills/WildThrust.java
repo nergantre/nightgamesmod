@@ -38,7 +38,7 @@ public class WildThrust extends Thrust {
     @Override
     public boolean resolve(Combat c, Character target) {
         boolean effective = super.resolve(c, target);
-        if (effective && getSelf().has(Trait.Untamed) && Global.random(5) == 0 ) {
+        if (effective && c.getStance().sub(getSelf()) && getSelf().has(Trait.Untamed) && Global.random(4) == 0 ) {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:fuck|fucks} {other:name-do} with such abandon that it leaves {other:direct-object} "
                             + "momentarily dazed. {self:SUBJECT-ACTION:do|does} not let this chance slip and {self:action:rotate|rotates} {self:possessive} body so that {self:pronoun-action:are|is} on top!", getSelf(), target));
             c.setStance(c.getStance().reverse(c, false));

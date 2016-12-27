@@ -13,7 +13,7 @@ public class SpawnFaerie extends Skill {
     private Ptype gender;
 
     public SpawnFaerie(Character self, Ptype gender) {
-        super("Summon Faerie", self);
+        super("Summon Faerie (" + gender.name() + ")", self);
         this.gender = gender;
     }
 
@@ -53,7 +53,11 @@ public class SpawnFaerie extends Skill {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
+            if (gender == Ptype.fairyfem) {
+                c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
+            } else {
+                c.addPet(getSelf(), new FairyMale(getSelf(), power, ac).getSelf());
+            }
         }
         return true;
     }
@@ -90,10 +94,17 @@ public class SpawnFaerie extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
-                        + " a small, naked girl with butterfly wings appears in %s palm.",
-                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
-                        getSelf().possessivePronoun());
+    	if (gender == Ptype.fairyfem) {
+	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
+	                        + " a small, naked girl with butterfly wings appears in %s palm.",
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
+	                        getSelf().possessivePronoun());
+    	} else {
+	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
+	                        + " a small, naked boy with butterfly wings appears in %s palm.",
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
+	                        getSelf().possessivePronoun());
+    	}
     }
 
 }

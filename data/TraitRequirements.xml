@@ -29,6 +29,14 @@
 		</Requirements>
 	</Trait>
 	<Trait>
+		<Name>asshandler</Name>
+		<Requirements>
+			<AttributeReq type="Fetish">20</AttributeReq>
+			<LevelReq>20</LevelReq>
+			<TraitReq>analFanatic</TraitReq>
+		</Requirements>
+	</Trait>
+	<Trait>
 		<Name>fetishTrainer</Name>
 		<Requirements>
 			<AttributeReq type="Fetish">15</AttributeReq>
@@ -247,6 +255,7 @@
 	<Trait>
 		<Name>autonomousPussy</Name>
 		<Requirements>
+			<BodypartReq>pussy</BodypartReq>
 			<AttributeReq type="Seduction">70</AttributeReq>
 			<TraitReq>alwaysready</TraitReq>
 			<TraitReq>sexTraining3</TraitReq>
@@ -523,7 +532,6 @@
 	<Trait>
 		<Name>sexTraining1</Name>
 		<Requirements>
-				<BodypartReq>pussy</BodypartReq>
 				<LevelReq>5</LevelReq>
 		</Requirements>
 	</Trait>

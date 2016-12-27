@@ -30,7 +30,11 @@ public class Anal extends AnalSexStance {
 
     @Override
     public String image() {
-        if (bottom.hasPussy()) {
+        if (top.hasDick() && top.useFemalePronouns() && bottom.hasDick() && bottom.useFemalePronouns()) {
+            return "futa_futa_doggy.jpg";
+        } else if (!bottom.hasDick() && top.useFemalePronouns()) {
+            return "futa_doggy.jpg";
+        } else if (!bottom.hasDick()) {
             return "analf.jpg";
         } else {
             return "pegging.jpg";
@@ -116,14 +120,14 @@ public class Anal extends AnalSexStance {
         if (top.has(Trait.strapped)) {
             if (writeMessage) {
                 c.write(bottom, Global.format(
-                                "As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} strapon, {self:subject-action:force|forces} {self:possesive} hips back and knock {other:direct-object} off balance. {self:SUBJECT-ACTION:quickly pull|quickly pulls} {other:possessive} fake cock out of {self:possessive} bottom while sitting on top of {other:direct-object}.",
+                                "As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} strapon, {self:subject-action:force|forces} {self:possessive} hips back and knock {other:direct-object} off balance. {self:SUBJECT-ACTION:quickly pull|quickly pulls} {other:possessive} fake cock out of {self:possessive} bottom while sitting on top of {other:direct-object}.",
                                 bottom, top));
             }
             return new ReverseMount(bottom, top);
         } else {
             if (writeMessage) {
                 c.write(bottom, Global.format(
-                                "As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} {other:body-part:cock}, {self:subject-action:force|forces} {self:possesive} hips back and knock {other:direct-object} off balance. {self:SUBJECT-ACTION:quickly manuever|quickly manuevers} {self:reflective} on top of {other:direct-object}, now fucking {other:direct-object} back in an anal cowgirl position.",
+                                "As {other:subject-action:are|is} thrusting into {self:name-do} with {other:possessive} {other:body-part:cock}, {self:subject-action:force|forces} {self:possessive} hips back and knock {other:direct-object} off balance. {self:SUBJECT-ACTION:quickly manuever|quickly manuevers} {self:reflective} on top of {other:direct-object}, now fucking {other:direct-object} back in an anal cowgirl position.",
                                 bottom, top));
             }
             return new AnalCowgirl(bottom, top);

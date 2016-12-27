@@ -381,6 +381,7 @@ public class CreationGUI extends JPanel {
         WeaknessBox.setBackground(new Color(0, 10, 30));
         WeaknessBox.setForeground(new Color(240, 240, 255));
         WeaknessBox.addItem(Trait.insatiable);
+        WeaknessBox.addItem(Trait.unpleasant);
         WeaknessBox.addItem(Trait.imagination);
         WeaknessBox.addItem(Trait.achilles);
         WeaknessBox.addItem(Trait.ticklish);
@@ -392,6 +393,7 @@ public class CreationGUI extends JPanel {
         WeaknessBox.addItem(Trait.pussywhipped);
         WeaknessBox.addItem(Trait.cockcraver);
         WeaknessBox.addItem(Trait.hairtrigger);
+        WeaknessBox.addItem(Trait.buttslut);
         WeaknessBox.addActionListener(
                         arg0 -> WeaknessDescription.setText(((Trait) WeaknessBox.getSelectedItem()).getDesc()));
         verticalBox.add(WeaknessBox);

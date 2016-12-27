@@ -27,6 +27,11 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
     }
 
     @Override
+    public boolean inserted(Character c) {
+        return c == domSexCharacter;
+    }
+
+    @Override
     public void checkOngoing(Combat c) {
         if (!c.getOtherCombatants().contains(domSexCharacter)) {
             c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
@@ -90,10 +95,7 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
 
     @Override
     public String image() {
-        if (top.useFemalePronouns() || domSexCharacter.useFemalePronouns()) {
-            return "ThreesomeMFMDoublePenFuta.jpg";
-        }
-        return "ThreesomeMFMDoublePen.jpg";
+        return "ThreesomeMFMSpitroast.jpg";
     }
 
     @Override

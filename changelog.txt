@@ -1,3 +1,194 @@
+2.4.5.5.b
+GUI:
+- Redid the status panel a bit. The status panel should now scroll and the inventory was moved to its own window
+	- once again, stopgap solution
+
+2.4.5.5.a
+Minor:
+
+- Shortened some of the longer text choices as a stopgap measure to stop buttons from getting hidden.
+	- Will need to come back to this later for a real solution...
+
+2.4.5.5
+Bug fixes:
+- Fixed a crash bug with mind control
+- Fixed a crash bug with invitation
+	- (may be related to pets, but it may still show up. I changed it to display an error message instead of outright crashing)
+- Fixed fiery pussy making the owner of the dick hurt himself instead of the opponent hurting him
+- Fixed dirty fighter affecting self inflicted pain
+- Fixed willpower losses displaying for all NPCs when out of combat
+- Frottage and Ass fuck now requires being able to reach bottom
+- Facefuck and facesit now requires being able to reach top
+- Deflate knot now requires user to be able to respond
+- PC usage of smoke bomb is no longer free
+- NPCs now no longer summon a female imp when trying to summon a male one.
+	- Same with faeries
+
+Minor:
+- Eve prefers no cock mod now instead of primal. Not sure when this snuck in. Maybe in the next major release she'll get a custom one.
+- Made it more clear that pet's succubus pussies are supposed to share the stat gains with her master, not just buff the master.
+- Made incubus cock now drain willpower for the master as well
+- Made start configuration load flags as strings instead of flags
+	- (so now you can use the CHARACTER_NAMEDisabled flags with start configurations)
+
+2.4.5.4
+New:
+- Added some new threesome sex stances:
+	- XHF Daisy Chain (master fucking the target futa from behind with a cock and pet fucking target futa from the front with pussy)
+	- Reverse XHF Daisy Chain (pet fucking the target futa from behind with a cock and master fucking target futa from the front with pussy)
+	- FFX Trib (pet scissoring with the opponent while the master is holding her)
+- Added a "Struggle" action when you are bound outside of combat.
+- Added a minor new skill "Imaginary Bounds" that require 9 Hypnosis
+	- Most likely you wont see this skill at all, it's for future use
+- You can now summon both Male and Female versions of imps and faeries
+	- This was actually a bug fix, but I'll put it in new since people tend to skip over the bugs
+- Threesome skills now automatically strip off all of the pet's bottom clothing until his/her crotch is available
+- Added asshandler to the trait tree so you can actually get the later Fetish feats.
+
+Balance:
+- (Spoiler) Robo-web is now a binding. This is currently not in the game yet though, so still pending dndw' Mara changes.
+- Minor pets now cannot instantly vanquish human pets. They will now use their default tease skill upon "catching" them
+- Imps now get succubus pussy/incubus cock at level > 30
+- Changed how the Bound status works
+	- Struggling will no longer decrease the toughness by 50-66%
+		- Instead, it decreases toughness by 5 + your (cunning + power + level) / 20
+- Made traps actually scale with stats
+	- Most of them scale with Cunning and level, but some scale with arcane and/or dark
+
+Bug fixes:
+	- Fixed a ton of bugs with pets
+		- Angel now does not summon two of the same Apostles at once
+		- Actually gave non-human pets genitals so they can be used in threesomes
+		- Fixed thrust to use the right genitals when in threesomes
+		- Pets can no longer use Stand Up and when their master is in a dominant position.
+		- Fixed not being able to select ReverseThreesome
+			- For those curious, ReverseThreesome.copy was returning Threesome. GAH.
+		- Threesome skills can no longer be used when the target is mobile.
+		- Fixed some pets' skills so they don't just spam the same two skills over and over.
+		- Fixed the double penetration stance so the master can actually use anal thrusting skills.
+		- Fixed the spit roast and double pen images (They were swapped. Woops)
+	- Fixed text randomly disappearing/being blank when in encounters
+	- Fixed traps instantly unbinding you
+		- For those of you curious, the Bound status is non-lingering, so it gets removed immediately after application since it's a non-combat status...
+	- Trib can no longer be used while already scissoring
+	- Pussy grind no longer sets stance to Tribadism
+	- Fixed a crash bug when pets were vanquishing each other during skill usage
+	- Fixed some text issues.
+	- Added sub/dom bonuses to held oral and held paizuri stances, so they are no longer as attractive to characters with the submissive trait
+	- Made the autonomous pussy trait require having a pussy.
+	- Removed the skimpy trait from latex pants
+		- You were able to fuck with it on... which seems a bit weird
+	- Fixed a bug where the closet crashes if you rename Angel.
+	- Fixed a bug where the back button does not show up as <<<
+		- For those of you who are curious, since it was getting converted to html, <<< was getting treated as html tags... :|
+	- Fixed a bug where locator would display choices as "Start the match" instead of the character's names
+	- Fixed the fetish goblin using the wrong text display and not actually removing pets after vanquishing them.
+
+Minor:
+	- Added the ability to press up on the debug console to scroll through the command history
+	- Space bar will now automatically select Wait/Nothing in battle in addition to Next/Leave/Back outside of battle.
+
+2.4.5.3
+Bug fixes:
+- Fixed some more UI bugs and quirks
+	- Hopefully most of the buttons should be good now.
+- Fixed a crash bug that occurs if you rename Angel
+- Fixed a crash bug that can occur if Jewel wins while fucking someone with a strap-on
+- Made the "Airi has entered the game" message play only if she is not already a part of the game (basically any starts that include her but doesn't set the Airi flag...)
+- Changed Airi's transformation option choice from "Error" to "Transformation"
+
+Minor:
+- Changed "Pet Initiated Threesome" to only be usable when the stance has been in place for 2 or more turns.This hopefully stops the pet from preempting the master with a threesome prematurely.
+
+2.4.5.2
+Bug fixes:
+- Removed the "I LOVE RANDOM TEXT" from the item buttons that were used in testing... fuck.
+- Made the default closet UI size a bit smaller to make sure the buttons weren't getting cut off.
+
+Minor:
+- Changed the closet UI to use your entire body's attractiveness score instead of just the outfits.
+	- Trivia:
+		- Since beauty is in the eyes of the beholder... I had to make the attractiveness score based on a character's opinion. Who is Angel. 
+		- So yes, Angel's going to always judge your outfits. Hope you're not feeling shy.
+
+2.4.5.1
+Bug fixes:
+- Fixed a bug where leaving a choice prompt on the second page would make you unable to continue with no buttons appearing.
+- Fixed some word alignment issues
+- Fixed missing feat button tooltips
+- Word wrapped long button text to fix button crowding (sorry this may look kind of shitty right now, but it's the best I can do on short notice)
+
+2.4.5
+New:
+- Added a new skill Reverse Threesome which does exactly what the current threesome does (use pet's pussy if it exists to fuck the opponent).
+- Changed the Threesome skill to use the pet's dick if one exists to penetrate the opponent.
+- The 4 starting girls will now use their respective cock mods when they get to level 10 if they are already hermaphrodites
+- Reworked some of the UI. You can now filter skills by tactics as well as use more keys for hotkeys.
+	- Switch between tactics with 0-9
+	- Pick skills/commands with qwerty,asdfgh,zxcvbn.
+	- for those with azerty/dvorak keyboards... I'm sorry :\
+- Made your attractiveness display a bit more apparent in the combat and status descriptions, since it now factors more into the damage formula
+- Added a new Weakness: "Unpleasant"
+	- lowers your attractiveness by 25%
+- Added a new Weakness: "Buttslut"
+	- drastically increases anal pleasure damage received
+	- chance to become entranced when receiving anal pleasure
+	- upon seeing a erect cock or a strapon for the first time, automatically offers your own ass
+- Added some more stance images, mostly for futas/shemales
+
+Balance:
+- Changed the tempt modifiers of statuses to only apply to temptation damage instead of to any arousal based damage.
+	- This changes Bondage, Charmed, Cynical, Enthralled, Frenzied, IceStance, InducedEuphoria, Lovestruck, Shamed, Stunned, Winded, and MagicMilkAddiction
+	- More specifically the damage message should actually tell you how much damage you did, instead of pleasuring someone for 100 when they're stunned, but they actually take 0.
+- Desensitized 2 will no longer affected arousal over time / pure arousal damage.
+- Made temptation damage respect the staleness modifier like pleasure damage does
+- Made non-pheromone arousal over time not compound when from the same source.
+	- Each source of arousal over time will be replaced with the newest one when applied.
+- Submissive now only reduces your pleasure damage when in a dominant position by 1/3rd instead of 2/3rds.
+	- Now only increases pleasure in a submissive position by 50% instead of 100%
+	- Added a new Trait "Flexible Roles" that will remove the dominant penalty from the Submissive trait.
+		- This is only used by Cassie when you pick "Both" in her second specialization
+- Dark Tendrils now cost 20% of your maximum arousal (minor nerf from 15%)
+- Nerfed seduction bonus to charisma. It's still useful, but hopefully not as overwhelming as before
+	- A quirk of this is that being more attractive is now more effective, since it accounts for a bigger portion of the pleasure/temptation formula
+		- Nerfed most of the underwear "hotness" parameters so that keeping them on isn't always way more attractive than taking them off even for the most basic types
+	- Changed the attractiveness formulas a bit for breasts and cocks.
+		- They are generally less than they were before, but get bonuses from being completely uncovered (completely topless/bottomless)
+- Nerfed Angel's and Reyka's attractiveness (lol)
+	- Reyka's face in particular had such a high "hotness" rating that it was single handedly doubling her early game damage. 
+	- Angel's face was in a similar situation but not quite as bad (or would you say good?).
+	- So I had to hit them a bit with the ugly stick. Sorry dndw.
+- Made shemale start's breasts a bit larger (b -> d)
+- Made herms and shemale start's faces a bit more feminine (this affects no parts of gameplay yet)
+- Made shemales start with bra + panties instead of boxers
+- Changed maneuver's mojo cost to 15
+	- Also merged it with Flash Step (uses flash step if you have > 15% stamina and at least 6 Ki)
+- Merged Purr and Charm
+
+Bug fixes:
+- fixed a bug where everyone was getting the effects of "Brute's Charisma"
+	- Added some of your Power and Ki to your effective seduction when determining pleasure and temptation damage while dominant.
+- fixed a bug where temptation damage outside combat wasn't using the oblivious / unsatisfied traitsS
+- fixed a crash bug related to Angel's Zeal addiction
+- fixed a bug where pets that are player based (simulacrum mainly) always display as level 1
+- fixed bug with simulacrum where it would mention dicks when you didn't have a dick (used on a female PC)
+	- Note that by default simulacrum creates a hermaphrodite copy of females. If you would like it to create a male version instead, you can edit the data/globalflags.json file
+		- Change "femaleTGIntoHerm" to true
+	- Eventually this will have a UI for it.
+- fixed a bug where thrusting as a hermaphrodite in a threesome will rub your pussies together instead.
+- fixed a bug where the Futa++20 start would crash the game
+
+2.4.4.2
+Bug fixes:
+- fixed a bug that was causing consistent crashes when the player was inflicted with dominance addiction (may affect other addictions too)
+
+2.4.4.1
+Bug fixes:
+- Typos (reports courtesy of dndw)
+- Actually implemented the Piercing Odor trait
+- Untamed now only flips sexual positions when you are in a submissive position.
+	- Also increase chance to 25%
+
 2.4.4
 New:
 - Added specializations for Kat.

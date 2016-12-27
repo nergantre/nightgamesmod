@@ -28,17 +28,17 @@ public class GoblinTease extends SimpleEnemySkill {
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             int m = (int) (Global.random(10, 16) + Math.sqrt(getSelf().getLevel()) / 2);
-            if (target.crotchAvailable() && !c.getStance().penisInserted(target) && target.hasDick()) {
+            if (target.hasDick() && target.clothingFuckable(target.body.getRandom("cock")) && !c.getStance().penisInserted(target)) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} steps over {other:name-possessive} dick and starts massaging it with "
                                 + "{self:possessive} latex-covered foot.",
                                     getSelf(), target));
                 target.body.pleasure(getSelf(), getSelf().body.getRandom("feet"), target.body.getRandomCock(), m, c);
-            } else if (target.hasPussy() && target.crotchAvailable() && !c.getStance().vaginallyPenetrated(c, target)) {
+            } else if (target.hasPussy() && target.clothingFuckable(target.body.getRandom("pussy")) && !c.getStance().vaginallyPenetrated(c, target)) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} pulls the humming vibrator our of {self:possessive} wet hole and "
                                 + "thrusts it between {other:name-possessive} legs.",
                                 getSelf(), target));
                 target.body.pleasure(getSelf(), ToysPart.dildo, target.body.getRandomPussy(), m, c);
-            } else if (target.crotchAvailable() && !c.getStance().anallyPenetrated(c, target)) {
+            } else if (target.body.has("ass") && target.clothingFuckable(target.body.getRandom("ass")) && !c.getStance().anallyPenetrated(c, target)) {
                 if (Global.random(2) == 0) {
                     c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:jump|jumps} in surprise as {other:pronoun} suddenly feel something solid penetrating {other:possessive} asshole. "
                                     + "{self:SUBJECT} got behind {other:direct-object} during the fight and delivered a sneak attack with an anal dildo. Before {other:pronoun} can retaliate "
@@ -53,6 +53,10 @@ public class GoblinTease extends SimpleEnemySkill {
                                     getSelf(), target));
                     target.body.pleasure(getSelf(), ToysPart.analbeads, target.body.getRandomAss(), m * 1.5, c);
                 }
+            } else {
+                c.write(getSelf(), Global.format("The fetish goblin fiddles with {other:name-possessive} chest, teasing {other:possessive} nipples with her vibrator..",
+                                getSelf(), target));
+                target.body.pleasure(getSelf(), ToysPart.vibrator, target.body.getRandomBreasts(), m, c);
             }
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT} stays at the edge of battle and touches herself absentmindedly.", getSelf(), target));

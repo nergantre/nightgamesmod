@@ -89,8 +89,8 @@ public class Horny extends DurationStatus {
         assert s instanceof Horny;
         Horny other = (Horny) s;
         assert other.source.equals(source);
-        setDuration(Math.max(other.getDuration(), getDuration()));
-        magnitude += other.magnitude;
+        setDuration(other.getDuration());
+        magnitude = other.magnitude;
     }
 
     @Override

@@ -55,7 +55,7 @@ public class Feral extends Status {
         if (affected.getArousal().percent() < 40) {
             affected.removelist.add(this);
         }
-        int ignoreOrgasmChance = Math.min(5, 2 + affected.get(Attribute.Animism) / 10);
+        int ignoreOrgasmChance = Math.max(5, 10 - affected.get(Attribute.Animism) / 20);
         if (Global.random(ignoreOrgasmChance) != 0) {
             affected.addlist.add(new IgnoreOrgasm(affected, 0));
         }

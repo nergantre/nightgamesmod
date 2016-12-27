@@ -40,7 +40,8 @@ public class AssFuck extends Fuck {
                         && (c.getStance().behind(getSelf())
                                         || (c.getStance().prone(target) && !c.getStance().mobile(target)))
                         && getSelf().canAct()
-                        && (getTargetOrgan(target).isReady(target) || getSelf().has(Item.Lubricant)
+                        && c.getStance().reachBottom(getSelf())
+                        && (getTargetOrgan(target).isReady(target) || target.has(Trait.buttslut) || getSelf().has(Item.Lubricant)
                                         || getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready)
                                         || getSelf().has(Trait.assmaster))
                         && (!target.hasPussy() || !PullOut.blockedByAddiction(getSelf()));
@@ -137,7 +138,7 @@ public class AssFuck extends Fuck {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 15;
+        return user.get(Attribute.Seduction) >= 15 || target.has(Trait.buttslut);
     }
 
     @Override

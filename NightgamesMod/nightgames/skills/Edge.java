@@ -78,7 +78,7 @@ public class Edge extends Skill {
                             + " {other:possessive} energy quite rapidly.", getSelf(), target));
             target.weaken(c, Math.min(30, Global.random((target.getArousal().percent() - 100) / 10)));
         }
-        target.tempt(c, getSelf(), getSelf().body.getRandom("hands"), 20 + Global.random(8));
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("hands"), 20 + Global.random(8), this);
         target.emote(Emotion.horny, 30);
         getSelf().emote(Emotion.confident, 15);
         getSelf().emote(Emotion.dominant, 15);

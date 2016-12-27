@@ -78,21 +78,23 @@ public class Player extends Character {
         finishCharacter(pickedTraits, selectedAttributes);
     }
 
-    public Character clone() throws CloneNotSupportedException {
-        Player clone = (Player) super.clone();
-        clone.addictions = new ArrayList<>();
-        for (Addiction addiction : addictions) {
-            clone.addictions.add((Addiction) addiction.instance(clone, null));
+    @Override
+    public void finishClone(Character other) {
+        super.finishClone(other);
+        List<Addiction> oldaddictions = addictions;
+        addictions = new ArrayList<>();
+        for (Status s : oldaddictions) {
+            addictions.add((Addiction)s.instance(this, other));
         }
-        return clone;
     }
+
     public void applyBasicStats(Character self) {
         self.getStamina().setMax(80);
         self.getArousal().setMax(80);
         self.getWillpower().setMax(self.willpower.max());
         self.availableAttributePoints = 0;
         self.setTrophy(Item.PlayerTrophy);
-        if (initialGender == CharacterSex.female || initialGender == CharacterSex.herm) {
+        if (initialGender.considersItselfFeminine()) {
             outfitPlan.add(Clothing.getByID("bra"));
             outfitPlan.add(Clothing.getByID("panties"));
         } else {
@@ -125,9 +127,13 @@ public class Player extends Character {
 
     public String describeStatus() {
         StringBuilder b = new StringBuilder();
-        body.describeBodyText(b, this, false);
+        if (Global.gui().combat != null && (Global.gui().combat.p1.human() || Global.gui().combat.p2.human())) {
+            body.describeBodyText(b, Global.gui().combat.getOpponent(this), false);
+        } else {
+            body.describeBodyText(b, Global.getCharacterByType("Angel"), false);
+        }
         if (getTraits().size() > 0) {
-            b.append("<br>Traits:<br>");
+            b.append("<br/>Traits:<br/>");
             List<Trait> traits = new ArrayList<>(getTraits());
             traits.sort((first, second) -> first.toString()
                                                 .compareTo(second.toString()));
@@ -136,7 +142,7 @@ public class Player extends Character {
                            .collect(Collectors.joining(", ")));
         }
         if (status.size() > 0) {
-            b.append("<br><br>Statuses:<br>");
+            b.append("<br/><br/>Statuses:<br/>");
             List<Status> statuses = new ArrayList<>(status);
             statuses.sort((first, second) -> first.name.compareTo(second.name));
             b.append(statuses.stream()
@@ -150,14 +156,14 @@ public class Player extends Character {
     public String describe(int per, Combat c) {
         String description = "<i>";
         for (Status s : status) {
-            description = description + s.describe(c) + "<br>";
+            description = description + s.describe(c) + "<br/>";
         }
         description = description + "</i>";
         description = description + outfit.describe(this);
         if (per >= 5 && status.size() > 0) {
-            description += "<br>List of statuses:<br><i>";
+            description += "<br/>List of statuses:<br/><i>";
             description += status.stream().map(Status::toString).collect(Collectors.joining(", "));
-            description += "</i><br>";
+            description += "</i><br/>";
         }
         description += Stage.describe(this);
         
@@ -255,7 +261,7 @@ public class Player extends Character {
         String arousal;
         String stamina;
         if (opponent.state == State.webbed) {
-            gui.message("She is naked and helpless.<br>");
+            gui.message("She is naked and helpless.<br/>");
             return;
         }
         if (get(Attribute.Perception) >= 6) {
@@ -340,7 +346,7 @@ public class Player extends Character {
                     gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
                 }
             }
-            gui.message(location.description + "<p>");
+            gui.message(location.description + "<br/><br/>");
             for (Deployable trap : location.env) {
                 if (trap.owner() == this) {
                     gui.message("You've set a " + trap.toString() + " here.");
@@ -359,21 +365,23 @@ public class Player extends Character {
                 if (!allowedActions().isEmpty()) {
                     allowedActions().forEach(a -> gui.addAction(a, this));
                 } else {
+                    List<Action> possibleActions = new ArrayList<>();
                     for (Area path : location.adjacent) {
-                        gui.addAction(new Move(path), this);
+                        possibleActions.add(new Move(path));
                     }
                     if (getPure(Attribute.Cunning) >= 28) {
                         for (Area path : location.shortcut) {
-                            gui.addAction(new Shortcut(path), this);
+                            possibleActions.add(new Shortcut(path));
                         }
                     }
 
                     if(getPure(Attribute.Ninjutsu)>=5){
                         for(Area path:location.jump){
-                            gui.addAction(new Leap(path),this);
+                            possibleActions.add(new Leap(path));
                         }
                     }
-                    for (Action act : Global.getActions()) {
+                    possibleActions.addAll(Global.getActions());
+                    for (Action act : possibleActions) {
                         if (act.usable(this) 
                                         && Global.getMatch().condition.allowAction(act, this, Global.getMatch())) {
                             gui.addAction(act, this);
@@ -398,7 +406,7 @@ public class Player extends Character {
         getStamina().gain(getGrowth().stamina);
         getArousal().gain(getGrowth().arousal);
         availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
-        gui.message("You've gained a Level!<br>Select which attributes to increase.");
+        gui.message("You've gained a Level!<br/>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10 /*|| (Global.checkFlag(Flag.SuperTraitMode) && ((level < 10 && getLevel()%2 == 0) || (getLevel() % 3 != 0 && level > 10)))*/) {
             traitPoints += 1;
         }
@@ -437,6 +445,7 @@ public class Player extends Character {
     @Override
     public void craft() {
         int roll = Global.random(10);
+        Global.gui().message("You spend some time crafting some potions with the equipment.");
         if (check(Attribute.Cunning, 25)) {
             if (roll == 9) {
                 gain(Item.Aphrodisiac);
@@ -553,7 +562,7 @@ public class Player extends Character {
                         + "gives you away, you quickly lunge and grab " + target.name()
                         + " from behind. She freezes in surprise for just a second, but that's all you need to "
                         + "restrain her arms and leave her completely helpless. Both your hands are occupied holding her, so you focus on kissing and licking the "
-                        + "sensitive nape of her neck.<p>");
+                        + "sensitive nape of her neck.<br/><br/>");
     }
 
     @Override
@@ -579,7 +588,7 @@ public class Player extends Character {
                                             + " or two, you may have joined the wrong competition. You take just "
                                             + "the glans into your mouth, attacking the most senstitive area with "
                                             + "your tongue. %s lets out a gasp and shudders. That's a more promising "
-                                            + "reaction.<p>You continue your oral assault until you hear a breathy "
+                                            + "reaction.<br/><br/>You continue your oral assault until you hear a breathy "
                                             + "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
                                             + "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
                                             + "missing you.", target.name(),
@@ -699,19 +708,19 @@ public class Player extends Character {
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br>Whenever you're near " + opponent.name()
+            c.write(opponent, "<br/>Whenever you're near " + opponent.name()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
             add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (opponent.has(Trait.sadist) && !is(Stsflag.masochism)) {
-            c.write("<br>"+Global.capitalizeFirstLetter(
+            c.write("<br/>"+Global.capitalizeFirstLetter(
                             String.format("%s seem to shudder in arousal at the thought of pain.", subject())));
             add(c, new Masochistic(this));
         }
         if (has(Trait.RawSexuality)) {
             c.write(this, Global.format("{self:NAME-POSSESSIVE} raw sexuality turns both of you on.", this, opponent));
-            tempt(c, opponent, arousal.max() / 25);
-            opponent.tempt(c, this, opponent.arousal.max() / 25);
+            temptNoSkillNoSource(c, opponent, arousal.max() / 25);
+            opponent.temptNoSkillNoSource(c, this, opponent.arousal.max() / 25);
         }
         if (has(Trait.slime)) {
             if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
@@ -950,12 +959,12 @@ public class Player extends Character {
     @Override
     public int getEscape(Combat c, Character other) {
         int escape = super.getEscape(c, other);
-        if (checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
+        if (c != null && checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
             escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
         }
         return escape;
     }
-    
+
     @Override
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {

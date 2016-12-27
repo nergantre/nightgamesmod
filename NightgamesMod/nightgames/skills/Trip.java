@@ -10,7 +10,7 @@ import nightgames.status.Falling;
 
 public class Trip extends Skill {
     public Trip(Character self) {
-        super("Trip", self, 1);
+        super("Trip", self, 2);
         addTag(SkillTag.positioning);
         addTag(SkillTag.knockdown);
     }

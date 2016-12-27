@@ -11,7 +11,7 @@
 	  "slots" : ["top", "bottom"],
 	  "shops" : ["Boutique"],
 	  "sex" : ["female"],
-	  "hotness":0.65,
+	  "hotness":0.35,
       "name":"samdress",
       "toughness":8,
       "exposure":0.6
@@ -27,7 +27,7 @@
 	  "slots" : ["bottom"],
 	  "shops" : ["Boutique"],
 	  "sex" : ["all"],
-	  "hotness":0.85,
+	  "hotness":0.45,
       "name":"lacythong",
       "toughness":7,
       "exposure":0.9

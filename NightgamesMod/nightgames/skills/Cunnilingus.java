@@ -60,7 +60,7 @@ public class Cunnilingus extends Skill {
                 i = -2;
             } else if (target.has(Trait.lacedjuices)) {
                 i = -1;
-                getSelf().tempt(c, target, 5);
+                getSelf().temptNoSource(c, target, 5, this);
             }
             if (facesitting) {
                 results = Result.reverse;

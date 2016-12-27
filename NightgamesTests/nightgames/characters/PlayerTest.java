@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests relating to the Player character class.
- * <p>
+ * <br/><br/>
  *
  */
 public class PlayerTest {

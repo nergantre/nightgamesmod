@@ -1,11 +1,13 @@
 package nightgames.stance;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -23,6 +25,16 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     @Override
     public Character domSexCharacter(Combat c) {
         return domSexCharacter;
+    }
+
+    @Override
+    public boolean inserted(Character c) {
+        return c == domSexCharacter || c == top;
+    }
+
+    @Override
+    public boolean canthrust(Combat c, Character self) {
+        return domSexCharacter(c) == self || top == self || self.has(Trait.powerfulhips);
     }
 
     @Override
@@ -50,6 +62,9 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     public List<BodyPart> partsFor(Combat combat, Character c) {
         if (c == domSexCharacter(combat)) {
             return topParts(combat);
+        } else if (c == top) {
+            return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                            .collect(Collectors.toList());
         }
         return c.equals(bottom) ? bottomParts() : Collections.emptyList();
     }
@@ -62,10 +77,6 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
     @Override
     public boolean anallyPenetratedBy(Combat c, Character self, Character other) {        
         return self == bottom && other == top;
-    }
-
-    public boolean inserted(Character c) {
-        return c == top || c == domSexCharacter;
     }
 
     public Character getPartner(Combat c, Character self) {
@@ -96,7 +107,10 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
 
     @Override
     public String image() {
-        return "ThreesomeMFMSpitroast.jpg";
+        if (top.useFemalePronouns() || domSexCharacter.useFemalePronouns()) {
+            return "ThreesomeMFMDoublePenFuta.jpg";
+        }
+        return "ThreesomeMFMDoublePen.jpg";
     }
 
     @Override

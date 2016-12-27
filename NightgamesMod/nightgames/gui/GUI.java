@@ -7,10 +7,13 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -47,8 +51,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -76,20 +83,21 @@ import nightgames.daytime.Store;
 import nightgames.debug.DebugGUIPanel;
 import nightgames.global.*;
 import nightgames.items.Item;
+import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
 import nightgames.modifier.standard.NoModifier;
 import nightgames.skills.Skill;
+import nightgames.skills.TacticGroup;
+import nightgames.skills.Tactics;
 import nightgames.trap.Trap;
 
 @SuppressWarnings("unused")
 public class GUI extends JFrame implements Observer {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 451431916952047183L;
     public Combat combat;
-    private ArrayList<ArrayList<SkillButton>> skills;
-    JPanel commandPanel;
+    private Map<TacticGroup, List<SkillButton>> skills;
+    private TacticGroup currentTactics;
+    CommandPanel commandPanel;
     private JTextPane textPane;
     private JLabel stamina;
     private JLabel arousal;
@@ -143,13 +151,14 @@ public class GUI extends JFrame implements Observer {
     private JMenuItem mntmQuitMatch;
     private boolean skippedFeat;
     public NgsChooser saveFileChooser;
+    private Box groupBox;
+	private JFrame inventoryFrame;
 
     private final static String USE_PORTRAIT = "PORTRAIT";
     private final static String USE_MAP = "MAP";
     private final static String USE_NONE = "NONE";
     private static final String USE_MAIN_TEXT_UI = "MAIN_TEXT";
     private static final String USE_CLOSET_UI = "CLOSET";
-    private static final Set<String> defaultChoices = new HashSet<>(Arrays.asList("Next", "Leave", "Back"));
 
     public GUI() {
 
@@ -474,15 +483,16 @@ public class GUI extends JFrame implements Observer {
         menuBar.add(mntmQuitMatch);
         mntmCredits.addActionListener(arg0 -> {
             JPanel panel = new JPanel();
-            panel.add(new JLabel("<html>Night Games created by The Silver Bard<br>"
-                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br>" + "Upgraded Strapon created by MotoKuchoma<br>"
-                            + "Strapon victory scenes created by Legion<br>" + "Advanced AI by Jos<br>"
-                            + "Magic Training scenes by Legion<br>" + "Jewel 2nd Victory scene by Legion<br>"
-                            + "Video Games scenes 1-9 by Onyxdime<br>"
-                            + "Kat Penetration Victory and Defeat scenes by Onyxdime<br>"
-                            + "Kat Non-Penetration Draw scene by Onyxdime<br>"
-                            + "Mara/Angel threesome scene by Onyxdime<br>"
-                            + "Footfetish expansion scenes by Sakruff<br>" + "Mod by Nergantre<br>"
+            panel.add(new JLabel("<html>Night Games created by The Silver Bard<br/>"
+                            + "Reyka and Samantha and a whole lot of stuff created by DNDW<br/>" + "Upgraded Strapon created by MotoKuchoma<br/>"
+                            + "Strapon victory scenes created by Legion<br/>" + "Advanced AI by Jos<br/>"
+                            + "Magic Training scenes by Legion<br/>" + "Jewel 2nd Victory scene by Legion<br/>"
+                            + "Video Games scenes 1-9 by Onyxdime<br/>"
+                            + "Kat Penetration Victory and Defeat scenes by Onyxdime<br/>"
+                            + "Kat Non-Penetration Draw scene by Onyxdime<br/>"
+                            + "Mara/Angel threesome scene by Onyxdime<br/>"
+                            + "Footfetish expansion scenes by Sakruff<br/>"
+                            + "Mod by Nergantre<br/>"
                             + "A ton of testing by Bronzechair</html>"));
             Object[] options = {"OK", "DEBUG"};
             Object[] okOnly = {"OK"};
@@ -591,16 +601,22 @@ public class GUI extends JFrame implements Observer {
         debug.addActionListener(arg0 -> Global.getMatch().resume());
 
         // commandPanel - visible, contains the player's command buttons
+        groupBox = Box.createHorizontalBox();
+        groupBox.setBackground(GUIColors.bgDark);
+        groupBox.setBorder(new CompoundBorder());
+        JPanel groupPanel = new JPanel();
+        gamePanel.add(groupPanel);
 
-        commandPanel = new JPanel();
-        commandPanel.setBackground(GUIColors.bgDark);
-        commandPanel.setPreferredSize(new Dimension(width, 120));
-        commandPanel.setMinimumSize(new Dimension(width, 120));
+        commandPanel = new CommandPanel(width);
+        groupPanel.add(groupBox);
+        groupPanel.add(commandPanel.getPanel());
+        gamePanel.add(groupPanel);
+        groupPanel.setBackground(GUIColors.bgDark);
+        groupPanel.setBorder(new CompoundBorder());
 
-        commandPanel.setBorder(new CompoundBorder());
-        gamePanel.add(commandPanel);
-
-        skills = new ArrayList<>();
+        skills = new HashMap<>();
+        clearCommand();
+        currentTactics = TacticGroup.all;
         createCharacter();
         setVisible(true);
         pack();
@@ -611,39 +627,15 @@ public class GUI extends JFrame implements Observer {
              * Space bar will select the first option, unless they are in the default actions list.
              */
             @Override
-            public void keyTyped(KeyEvent e) {
-                Component children[] = commandPanel.getComponents();
-                ArrayList<JButton> choices = new ArrayList<>();
-                for (Component child : children) {
-                    if (!(child instanceof JButton || child instanceof SkillButton)) {
-                        return;
-                    }
-                    JButton button = child instanceof JButton ? (JButton) child : ((SkillButton) child).getButton();
-                    if (button.isEnabled()) {
-                        choices.add(button);
-                    }
-                }
-                char val = e.getKeyChar();
-                int index = (int) val - (int) '0';
-                if (index >= 0 && index <= 9) {
-                    if (index == 0) {
-                        index = 10;
-                    }
-                    if (choices.size() > 0) {
-                        index = Global.clamp(index - 1, 0, choices.size() - 1);
-                        JButton choice = choices.get(index);
-                        choice.doClick();
-                    }
-                } else if (val == 'b' || val == ' ') {
-                    Optional<JButton> defaultButton = choices.stream().filter(choice -> defaultChoices.contains(choice.getText())).findFirst();
-                    if (defaultButton.isPresent()) {
-                        defaultButton.get().doClick();
-                    }
+            public void keyReleased(KeyEvent e) {
+                Optional<KeyableButton> buttonOptional = commandPanel.getButtonForHotkey(e.getKeyChar());
+                if (buttonOptional.isPresent()) {
+                    buttonOptional.get().call();
                 }
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {}
 
             @Override
             public void keyPressed(KeyEvent e) {}
@@ -663,6 +655,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = new Combat(player, enemy, player.location());
         combat.addObserver(this);
+        combat.setBeingObserved(true);
         loadPortrait(combat, player, enemy);
         showPortrait();
         return combat;
@@ -781,6 +774,7 @@ public class GUI extends JFrame implements Observer {
         showPortrait();
         combat = new Combat(player, enemy, player.location(), code);
         combat.addObserver(this);
+        combat.setBeingObserved(true);
         message(combat.getMessage());
         loadPortrait(combat, player, enemy);
         showPortrait();
@@ -788,7 +782,6 @@ public class GUI extends JFrame implements Observer {
     }
 
     // Combat spectate ???
-
     public void watchCombat(Combat c) {
         showPortrait();
         combat = c;
@@ -918,6 +911,18 @@ public class GUI extends JFrame implements Observer {
             mainPanel.validate();
         });
         bio.add(stsbtn);
+
+    	inventoryFrame = new JFrame("Inventory");
+        inventoryFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        inventoryFrame.setVisible(false);
+        inventoryFrame.setLocationByPlatform(true);
+        inventoryFrame.setResizable(true);
+        inventoryFrame.setMinimumSize(new Dimension(800, 100));
+
+        JButton inventoryButton = new JButton("Inventory");
+        inventoryButton.addActionListener(arg0 -> {
+            toggleInventory();
+        });
         loclbl = new JLabel();
         loclbl.setFont(new Font("Sylfaen", 1, 16));
         loclbl.setForeground(GUIColors.textColorLight);
@@ -934,6 +939,7 @@ public class GUI extends JFrame implements Observer {
         cashLabel.setFont(new Font("Sylfaen", 1, 16));
         cashLabel.setForeground(new Color(33, 180, 42));
         bio.add(cashLabel);
+        bio.add(inventoryButton);
         removeClosetGUI();
         topPanel.validate();
         showNone();
@@ -989,7 +995,7 @@ public class GUI extends JFrame implements Observer {
         HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
         try {
             editorKit.insertHTML(doc, doc.getLength(),
-                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
+                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
@@ -1003,7 +1009,7 @@ public class GUI extends JFrame implements Observer {
         HTMLEditorKit editorKit = (HTMLEditorKit) textPane.getEditorKit();
         try {
             editorKit.insertHTML(doc, doc.getLength(),
-                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br>",
+                            "<font face='Georgia'><font color='white'><font size='" + fontsize + "'>" + text + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
@@ -1013,161 +1019,159 @@ public class GUI extends JFrame implements Observer {
 
     public void clearCommand() {
         skills.clear();
-        commandPanel.removeAll();
-        commandPanel.revalidate();
-        commandPanel.repaint();
+        Arrays.stream(TacticGroup.values()).forEach(tactic -> skills.put(tactic, new ArrayList<>()));
+        groupBox.removeAll();
+        commandPanel.reset();
     }
 
     public void addSkill(Combat com, Skill action, Character target) {
-        int index = 0;
-        boolean placed = false;
-        while (!placed) {
-            if (skills.size() <= index) {
-                skills.add(new ArrayList<>());
-            }
-            if (skills.get(index).size() >= 25) {
-                index++;
-            } else {
-                SkillButton btn = new SkillButton(com, action, target);
-                int others = skills.get(index).size();
-                if (index == 0 && others < 9) {
-                    btn.addIndex(others+1);
-                }
-                skills.get(index).add(btn);
-                placed = true;
-            }
-        }
+        SkillButton btn = new SkillButton(com, action, target);
+        skills.get(action.type(com).getGroup()).add(btn);
     }
 
-    public void showSkills(int index) {
-        for (SkillButton button : skills.get(index)) {
-            commandPanel.add(button);
+    public void showSkills() {
+        commandPanel.reset();
+        int i = 1;
+        for (TacticGroup group : TacticGroup.values()) {
+            SwitchTacticsButton tacticsButton = new SwitchTacticsButton(group);
+            commandPanel.register(java.lang.Character.forDigit(i % 10, 10), tacticsButton);
+            groupBox.add(tacticsButton);
+            groupBox.add(Box.createHorizontalStrut(4));
+            i += 1;
         }
-        if (index > 0) {
-            commandPanel.add(new PageButton("<-", index - 1));
+        List<SkillButton> flatList = new ArrayList<>();
+        for (TacticGroup group : TacticGroup.values()) {
+            skills.get(group).forEach(flatList::add);
         }
-        if (skills.size() > index + 1) {
-            commandPanel.add(new PageButton("->", index + 1));
+        if (currentTactics == TacticGroup.all || flatList.size() <= 6 || skills.get(currentTactics).size() == 0) {
+            flatList.forEach(this::addToCommandPanel);
+        } else {
+            for (SkillButton button : skills.get(currentTactics)) {
+                addToCommandPanel(button);
+            }
         }
         Global.getMatch().pause();
-        commandPanel.repaint();
-        commandPanel.revalidate();
+        commandPanel.refresh();
+    }
+
+    private void addToCommandPanel(KeyableButton button) {
+        commandPanel.add(button);
     }
 
     public void addAction(Action action, Character user) {
         commandPanel.add(new ActionButton(action, user));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void addActivity(Activity act) {
-        commandPanel.add(new ActivityButton(act));
-        commandPanel.revalidate();
+        commandPanel.add(activityButton(act));
+        commandPanel.refresh();
     }
 
     public void next(Combat combat) {
         refresh();
         clearCommand();
-        commandPanel.add(new NextButton(combat));
+        commandPanel.add(nextButton(combat));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void next(Activity event) {
         event.next();
         clearCommand();
-        commandPanel.add(new EventButton(event, "Next"));
-        commandPanel.revalidate();
+        commandPanel.add(eventButton(event, "Next", null));
+        commandPanel.refresh();
     }
 
     public void choose(Combat c, Character npc, String message, CombatSceneChoice choice) {
-        commandPanel.add(new CombatSceneButton(message, c, npc, choice));
-        commandPanel.revalidate();
+        commandPanel.add(combatSceneButton(message, c, npc, choice));
+        commandPanel.refresh();
     }
 
     public void choose(String choice) {
         commandPanel.add(new SceneButton(choice));
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void choose(Activity event, String choice) {
-        commandPanel.add(new EventButton(event, choice));
-        commandPanel.revalidate();
+        commandPanel.add(eventButton(event, choice, null));
+        commandPanel.refresh();
+    }
+
+    public void choose(Activity event, String choice, String tooltip) {
+        commandPanel.add(eventButton(event, choice, tooltip));
+        commandPanel.refresh();
     }
 
     public void choose(Action event, String choice, Character self) {
-        commandPanel.add(new LocatorButton(event, choice, self));
-        commandPanel.revalidate();
+        commandPanel.add(locatorButton(event, choice, self));
+        commandPanel.refresh();
     }
 
-    public void sale(Store shop, Item i) {
-        commandPanel.add(new ItemButton(shop, i));
-        commandPanel.revalidate();
-    }
-
-    public void sale(Store shop, Clothing i) {
-        commandPanel.add(new ItemButton(shop, i));
-        commandPanel.revalidate();
+    public void sale(Store shop, Loot i) {
+        commandPanel.add(itemButton(shop, i));
+        commandPanel.refresh();
     }
 
     public void promptFF(IEncounter enc, Character target) {
         clearCommand();
-        commandPanel.add(new EncounterButton("Fight", enc, target, Encs.fight));
-        commandPanel.add(new EncounterButton("Flee", enc, target, Encs.flee));
+        commandPanel.add(encounterButton("Fight", enc, target, Encs.fight));
+        commandPanel.add(encounterButton("Flee", enc, target, Encs.flee));
         if (item(Item.SmokeBomb, 1).meets(null, Global.human, null)) {
-            commandPanel.add(new EncounterButton("Smoke Bomb", enc, target, Encs.smoke));
+            commandPanel.add(encounterButton("Smoke Bomb", enc, target, Encs.smoke));
         }
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void promptAmbush(IEncounter enc, Character target) {
         clearCommand();
-        commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.ambush));
-        commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
+        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.ambush));
+        commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void promptOpportunity(IEncounter enc, Character target, Trap trap) {
         clearCommand();
-        commandPanel.add(new EncounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
-        commandPanel.add(new EncounterButton("Wait", enc, target, Encs.wait));
+        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
+        commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void promptShower(IEncounter encounter, Character target) {
         clearCommand();
-        commandPanel.add(new EncounterButton("Suprise Her", encounter, target, Encs.showerattack));
+        commandPanel.add(encounterButton("Suprise Her", encounter, target, Encs.showerattack));
         if (!target.mostlyNude()) {
-            commandPanel.add(new EncounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
+            commandPanel.add(encounterButton("Steal Clothes", encounter, target, Encs.stealclothes));
         }
         if (Global.human.has(Item.Aphrodisiac)) {
-            commandPanel.add(new EncounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
+            commandPanel.add(encounterButton("Use Aphrodisiac", encounter, target, Encs.aphrodisiactrick));
         }
-        commandPanel.add(new EncounterButton("Do Nothing", encounter, target, Encs.wait));
+        commandPanel.add(encounterButton("Do Nothing", encounter, target, Encs.wait));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void promptIntervene(IEncounter enc, Character p1, Character p2) {
         clearCommand();
-        commandPanel.add(new InterveneButton(enc, p1));
-        commandPanel.add(new InterveneButton(enc, p2));
-        commandPanel.add(new WatchButton(enc));
+        commandPanel.add(interveneButton(enc, p1));
+        commandPanel.add(interveneButton(enc, p2));
+        commandPanel.add(watchButton(enc));
         Global.getMatch().pause();
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
-    public void prompt(String message, ArrayList<JButton> choices) {
+    public void prompt(String message, List<KeyableButton> choices) {
         clearText();
         clearCommand();
         message(message);
-        for (JButton button : choices) {
+        for (KeyableButton button : choices) {
             commandPanel.add(button);
         }
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void ding() {
@@ -1177,25 +1181,25 @@ public class GUI extends JFrame implements Observer {
             clearCommand();
             for (Attribute att : player.att.keySet()) {
                 if (Attribute.isTrainable(player, att) && player.getPure(att) > 0) {
-                    commandPanel.add(new AttributeButton(att));
+                    commandPanel.add(attributeButton(att));
                 }
             }
-            commandPanel.add(new AttributeButton(Attribute.Willpower));
+            commandPanel.add(attributeButton(Attribute.Willpower));
             if (Global.getMatch() != null) {
                 Global.getMatch().pause();
             }
-            commandPanel.revalidate();
+            commandPanel.refresh();
         } else if (player.traitPoints > 0 && !skippedFeat) {
             clearCommand();
             message("You've earned a new perk. Select one below.");
             for (Trait feat : Global.getFeats(player)) {
                 if (!player.has(feat)) {
-                    commandPanel.add(new FeatButton(feat));
+                    commandPanel.add(featButton(feat));
                 }
-                commandPanel.revalidate();
+                commandPanel.refresh();
             }
-            commandPanel.add(new SkipFeatButton());
-            commandPanel.revalidate();
+            commandPanel.add(skipFeatButton());
+            commandPanel.refresh();
         } else {
             skippedFeat = false;
             clearCommand();
@@ -1244,9 +1248,9 @@ public class GUI extends JFrame implements Observer {
         showNone();
         mntmQuitMatch.setEnabled(false);
         Global.endNightForSave();
-        commandPanel.add(new SleepButton());
+        commandPanel.add(sleepButton());
         commandPanel.add(new SaveButton());
-        commandPanel.revalidate();
+        commandPanel.refresh();
     }
 
     public void refresh() {
@@ -1287,8 +1291,40 @@ public class GUI extends JFrame implements Observer {
             System.err.println("Unknown time of day: " + Global.getTime());
         }
         displayStatus();
+        List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
+                .map(Map.Entry::getKey).collect(Collectors.toList());
+
+	    JPanel inventoryPane = new JPanel();
+	    inventoryPane.setLayout(new GridLayout(0, 5));
+	    inventoryPane.setSize(new Dimension(400, 800));
+	    inventoryPane.setBackground(GUIColors.bgDark);
+
+	    Map<Item, Integer> items = player.getInventory();
+	    int count = 0;
+	
+	    for (Item i : availItems) {
+	        JLabel label = new JLabel(i.getName() + ": " + items.get(i) + "\n");
+	        label.setForeground(GUIColors.textColorLight);
+	        label.setToolTipText(i.getDesc());
+	        inventoryPane.add(label);
+	        count++;
+	    }
+	    inventoryFrame.getContentPane().removeAll();
+        inventoryFrame.getContentPane().add(BorderLayout.CENTER, inventoryPane);
+        inventoryFrame.pack();
     }
 
+    private void toggleInventory() {
+    	EventQueue.invokeLater(() -> {
+    		if (!inventoryFrame.isVisible()) {
+	    		refresh();
+		        inventoryFrame.setVisible(true);
+    		} else {
+    			inventoryFrame.setVisible(false);
+    		}
+    	});
+    }
+    
     public void displayStatus() {
         statusPanel.removeAll();
         statusPanel.repaint();
@@ -1298,99 +1334,63 @@ public class GUI extends JFrame implements Observer {
             statusPanel.setMaximumSize(new Dimension(height, width / 6));
             System.out.println("STATUS PANEL");
         }
-        JPanel statsPanel = new JPanel();
-
-        JPanel currentStatusPanel = new JPanel();
-        JPanel inventoryPane = new JPanel();
-        inventoryPane.setSize(400, 1000);
+        JPanel statsPanel = new JPanel(new GridLayout(0, 3));
 
         Player player = Global.human;
-        List<Item> availItems = player.getInventory().entrySet().stream().filter(entry -> (entry.getValue() > 0))
-                        .map(Map.Entry::getKey).collect(Collectors.toList());
 
-        JScrollPane scrollInventory = new JScrollPane(inventoryPane);
-        inventoryPane.setLayout(new GridLayout(availItems.size() / 3, 3));
-        statusPanel.add(scrollInventory);
-
+        statusPanel.add(statsPanel);
+        statsPanel.setPreferredSize(new Dimension(400, 200));
         JSeparator sep = new JSeparator();
         sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
         statusPanel.add(sep);
-        statusPanel.add(statsPanel);
-
-        sep = new JSeparator();
-        sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
-
-        statusPanel.add(sep);
-        statusPanel.add(currentStatusPanel);
-        sep = new JSeparator();
-        sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
-
-        currentStatusPanel.setBackground(GUIColors.bgDark);
-        statsPanel.setBackground(GUIColors.bgLight);
-        inventoryPane.setBackground(GUIColors.bgLight);
-
-        Map<Item, Integer> items = player.getInventory();
         int count = 0;
-
-        ArrayList<JLabel> itmlbls = new ArrayList<>();
-        for (Item i : availItems) {
-            JLabel dirtyTrick = new JLabel(i.getName() + ": " + items.get(i) + "\n");
-
-            dirtyTrick.setForeground(GUIColors.textColorLight);
-
-            itmlbls.add(count, dirtyTrick);
-
-            itmlbls.get(count).setToolTipText(i.getDesc());
-            inventoryPane.add(itmlbls.get(count));
-            count++;
-        }
-
-        count = 0;
+        statsPanel.setBackground(GUIColors.bgLight);
         ArrayList<JLabel> attlbls = new ArrayList<>();
         for (Attribute a : Attribute.values()) {
             int amt = player.get(a);
             if (amt > 0) {
-
                 JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
 
                 dirtyTrick.setForeground(GUIColors.textColorLight);
 
                 attlbls.add(count, dirtyTrick);
 
-                // attlbls.add(count, new JLabel(a.name() + ": " + amt));
-                // //stats are gray due to this
                 statsPanel.add(attlbls.get(count));
                 count++;
             }
         }
 
         // statusText - body, clothing and status description
-
         JTextPane statusText = new JTextPane();
         DefaultCaret caret = (DefaultCaret) statusText.getCaret();
-        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         statusText.setBackground(GUIColors.bgLight);
         statusText.setEditable(false);
         statusText.setContentType("text/html");
-        statusText.setPreferredSize(new Dimension(400, mainPanel.getHeight() / 2));
-        statusText.setMaximumSize(new Dimension(400, mainPanel.getHeight() / 2));
-        if (width < 720) {
-            statusText.setSize(new Dimension(height, width / 6));
-        }
         HTMLDocument doc = (HTMLDocument) statusText.getDocument();
         HTMLEditorKit editorKit = (HTMLEditorKit) statusText.getEditorKit();
         try {
             editorKit.insertHTML(doc, doc.getLength(),
                             "<font face='Georgia'><font color='white'><font size='3'>"
-                                            + player.getOutfit().describe(player) + "<br>" + player.describeStatus()
-                                            + "<br>",
+                                            + player.getOutfit().describe(player) + "<br/>" + player.describeStatus()
+                                            + "<br/>",
                             0, 0, null);
         } catch (BadLocationException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        currentStatusPanel.add(statusText);
+        JScrollPane scrollPane = new JScrollPane(statusText);
+        scrollPane.setBackground(GUIColors.bgLight);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        JPanel currentStatusPanel = new JPanel(new GridLayout());
+        statusPanel.setPreferredSize(new Dimension(400, height));
+        currentStatusPanel.setMaximumSize(new Dimension(400, 2000));
+        currentStatusPanel.setPreferredSize(new Dimension(400, 2000));
+        currentStatusPanel.setBackground(GUIColors.bgLight);
+        statusPanel.add(currentStatusPanel);
+        currentStatusPanel.add(scrollPane);
+        statusPanel.setBackground(GUIColors.bgLight);
         if (width < 720) {
             currentStatusPanel.setSize(new Dimension(height, width / 6));
             System.out.println("Oh god so tiny");
@@ -1411,234 +1411,132 @@ public class GUI extends JFrame implements Observer {
         }
     }
 
-    private class NextButton extends JButton {
-
-        private static final long serialVersionUID = 6773730244369679822L;
-        private Combat combat;
-
-        public NextButton(Combat combat) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.combat = combat;
-            setText("Next");
-            addActionListener(arg0 -> {
-                clearCommand();
-                GUI.NextButton.this.combat.turn();
-            });
-        }
+    private KeyableButton nextButton(Combat combat) {
+        return new RunnableButton("Next", () -> {
+            clearCommand();
+            combat.turn();
+        });
     }
 
-    private class EventButton extends JButton {
-
-        private static final long serialVersionUID = 7130158464211753531L;
-        protected Activity event;
-        protected String choice;
-
-        public EventButton(Activity event, String choice) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.event = event;
-            this.choice = choice;
-            setText(choice);
-            addActionListener(arg0 -> GUI.EventButton.this.event.visit(GUI.EventButton.this.choice));
+    private KeyableButton eventButton(Activity event, String choice, String tooltip) {
+        RunnableButton button = new RunnableButton(choice, () -> {
+            event.visit(choice);
+        });
+        if (tooltip != null) {
+        	button.getButton().setToolTipText(tooltip);
         }
+        return button;
     }
 
-    private class ItemButton extends GUI.EventButton {
-
-        private static final long serialVersionUID = 3200753975433797292L;
-
-        public ItemButton(Activity event, Item i) {
-            super(event, i.getName());
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setToolTipText(i.getDesc());
-        }
-
-        public ItemButton(Activity event, Clothing i) {
-            super(event, i.getName());
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setToolTipText(i.getToolTip());
-        }
+    private KeyableButton itemButton(Activity event, Loot i) {
+        RunnableButton button = new RunnableButton(Global.capitalizeFirstLetter(i.getName()), () -> {
+            event.visit(i.getName());
+        });
+        button.getButton().setToolTipText(i.getDesc());
+        return button;
     }
 
-    private class AttributeButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -8860455413688200054L;
-        private Attribute att;
-
-        public AttributeButton(Attribute att) {
-            super();
-            Player player = Global.human;
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.att = att;
-            setText(att.name());
-            addActionListener(arg0 -> {
-                clearTextIfNeeded();
-                player.mod(GUI.AttributeButton.this.att, 1);
-                player.availableAttributePoints -= 1;
-                refresh();
-                ding();
-            });
-        }
+    private KeyableButton attributeButton(Attribute att) {
+        RunnableButton button = new RunnableButton(att.name(), () -> {
+            clearTextIfNeeded();
+            Global.getPlayer().mod(att, 1);
+            Global.getPlayer().availableAttributePoints -= 1;
+            refresh();
+            ding();
+        });
+        return button;
     }
 
-    private class FeatButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 4576009707142466815L;
-        private Trait feat;
-
-        public FeatButton(Trait feat) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.feat = feat;
-            setText(feat.toString());
-            setToolTipText(feat.getDesc());
-            addActionListener(arg0 -> {
-                Player player = Global.human;
-                player.add(FeatButton.this.feat);
-                clearTextIfNeeded();
-                Global.gui().message("Gained feat: " + FeatButton.this.feat);
-                Global.gui().message(Global.gainSkills(player));
-                player.traitPoints -= 1;
-                refresh();
-                ding();
-            });
-        }
+    private KeyableButton featButton(Trait trait) {
+        RunnableButton button = new RunnableButton(trait.toString(), () -> {
+            clearTextIfNeeded();
+            Global.gui().message("Gained feat: " + trait.toString());
+            Global.getPlayer().add(trait);
+            Global.gui().message(Global.gainSkills(Global.getPlayer()));
+            Global.getPlayer().traitPoints -= 1;
+            refresh();
+            ding();
+        });
+        button.getButton().setToolTipText(trait.getDesc());
+        return button;
     }
 
-    private class SkipFeatButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4949332486895844480L;
-
-        public SkipFeatButton() {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText("Skip");
-            setToolTipText("Save the trait point for later.");
-            addActionListener(arg0 -> {
-                skippedFeat = true;
-                clearTextIfNeeded();
-                ding();
-            });
-        }
+    private KeyableButton skipFeatButton() {
+        RunnableButton button = new RunnableButton("Skip", () -> {
+            skippedFeat = true;
+            clearTextIfNeeded();
+            ding();
+        });
+        button.getButton().setToolTipText("Save the trait point for later.");
+        return button;
     }
 
-    private class InterveneButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 7410615523447227147L;
-        private IEncounter enc;
-        private Character assist;
-
-        public InterveneButton(IEncounter enc2, Character assist) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.enc = enc2;
-            this.assist = assist;
-            setText("Help " + assist.name());
-            addActionListener(arg0 -> GUI.InterveneButton.this.enc
-                            .intrude(Global.human, GUI.InterveneButton.this.assist));
-        }
-    }
-    
-    private class WatchButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 7410615523557227147L;
-        public WatchButton(IEncounter enc) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText("Watch them fight");
-            addActionListener(arg0 -> enc.watch());
-        }
+    private KeyableButton interveneButton(IEncounter enc, Character assist) {
+        RunnableButton button = new RunnableButton("Help " + assist.getName(), () -> {
+            enc.intrude(Global.getPlayer(), assist);
+        });
+        return button;
     }
 
-    private class ActivityButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4459591680742071519L;
-        private Activity act;
-
-        public ActivityButton(Activity act) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            this.act = act;
-            setText(act.toString());
-            addActionListener(arg0 -> GUI.ActivityButton.this.act.visit("Start"));
-        }
+    private KeyableButton encounterButton(String label, IEncounter enc, Character target, Encs choice) {
+        RunnableButton button = new RunnableButton(label, () -> {
+            enc.parse(choice, Global.getPlayer(), target);
+            Global.getMatch().resume();
+        });
+        return button;
     }
 
-    private class SleepButton extends JButton {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1669023447753258615L;
-
-        public SleepButton() {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText("Go to sleep");
-            addActionListener(arg0 -> Global.startDay());
-        }
+    private KeyableButton encounterButton(String label, IEncounter enc, Character target, Encs choice, Trap trap) {
+        RunnableButton button = new RunnableButton(label, () -> {
+            enc.parse(choice, Global.getPlayer(), target, trap);
+            Global.getMatch().resume();
+        });
+        return button;
     }
 
-
-    private class MatchButton extends JButton {
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3899760251122030064L;
-
-        public MatchButton() {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText("Start the match");
-            addActionListener(arg0 -> Global.setUpMatch(new NoModifier()));
-        }
-    }
-    
-    private class LocatorButton extends JButton {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 8284888109704181827L;
-
-        public LocatorButton(final Action event, final String choice, final Character self) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText(choice);
-            addActionListener(evt -> ((Locate) event).handleEvent(self, choice));
-        }
+    private KeyableButton watchButton(IEncounter enc) {
+        RunnableButton button = new RunnableButton("Watch them fight", () -> {
+            enc.watch();
+        });
+        return button;
     }
 
-    private class PageButton extends JButton {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1291939812301193206L;
-        private int page;
+    private KeyableButton activityButton(Activity act) {
+        RunnableButton button = new RunnableButton(act.toString(), () -> {
+            act.visit("Start");
+        });
+        return button;
+    }
 
-        public PageButton(String label, int page) {
-            super();
-            setFont(new Font("Baskerville Old Face", 0, 18));
-            setText(label);
-            this.page = page;
-            addActionListener(arg0 -> {
-                commandPanel.removeAll();
-                showSkills(PageButton.this.page);
-            });
-        }
+    private KeyableButton sleepButton() {
+        RunnableButton button = new RunnableButton("Go to sleep", () -> {
+            Global.startDay();
+        });
+        return button;
+    }
+
+    private KeyableButton matchButton() {
+        RunnableButton button = new RunnableButton("Start the match", () -> {
+            Global.setUpMatch(new NoModifier());
+        });
+        return button;
+    }
+
+    private KeyableButton locatorButton(final Action event, final String choice, final Character self) {
+        RunnableButton button = new RunnableButton(choice, () -> {
+            ((Locate) event).handleEvent(self, choice);
+        });
+        return button;
+    }
+
+    private KeyableButton combatSceneButton(String label, Combat c, nightgames.characters.Character npc, CombatSceneChoice choice) {
+        RunnableButton button = new RunnableButton(label, () -> {
+            c.write("<br/>");
+            choice.choose(c, npc);
+            c.updateMessage();
+            Global.gui().next(c);
+        });
+        return button;
     }
 
     public void changeClothes(Character player, Activity event, String backOption) {
@@ -1663,4 +1561,13 @@ public class GUI extends JFrame implements Observer {
         }
     }
 
+    public int nSkillsForGroup(TacticGroup group) {
+        return skills.get(group).size();
+    }
+
+    public void switchTactics(TacticGroup group) {
+        groupBox.removeAll();
+        currentTactics = group;
+        Global.gui().showSkills();
+    }
 }

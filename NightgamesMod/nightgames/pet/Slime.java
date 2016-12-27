@@ -10,6 +10,10 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.skills.Grind;
+import nightgames.skills.Piston;
+import nightgames.skills.PussyGrind;
+import nightgames.skills.Thrust;
 import nightgames.skills.petskills.SlimeJob;
 import nightgames.skills.petskills.SlimeMelt;
 import nightgames.skills.petskills.SlimeOil;
@@ -49,6 +53,8 @@ public class Slime extends Pet {
                 + "the faerie girl's limbs before she can escape. More appendages attach to her breasts and groin as the slime starts to vibrate. The faerie lets out a "
                 + "high pitched moan and squirms against her bonds until she shudders in orgasm and vanishes.");
             }
+        } else if (opponent instanceof CharacterPet) { 
+            (new SlimeJob(getSelf())).resolve(c, opponent.getSelf());
         } else {
             if (!opponent.hasDick()) {
                 c.write(getSelf(), Global.format("{self:SUBJECT} gathers around {other:name-possessive} ankles. With unexpected speed, it surges up {other:possessive} legs and simultaneously penetrates {other:possessive} pussy and "
@@ -60,7 +66,7 @@ public class Slime extends Pet {
                                 + "{other:PRONOUN} ejaculates into the slime and disappears.", getSelf(), opponent.getSelf()));
             }
         }
-        c.removePet(getSelf());
+        c.removePet(opponent.getSelf());
     }
 
     @Override
@@ -93,6 +99,10 @@ public class Slime extends Pet {
         self.body.add(new TentaclePart("tentacles", "body", "slime", 0, 1, 1));
         // don't finish the body as a slime, it wont have normal body parts.
         self.learn(new SlimeJob(self));
+        self.learn(new Thrust(self));
+        self.learn(new Grind(self));
+        self.learn(new Piston(self));
+        self.learn(new PussyGrind(self));
         self.learn(new SlimeOil(self));
         self.learn(new SlimeMelt(self));
         self.learn(new SlimeTrip(self));

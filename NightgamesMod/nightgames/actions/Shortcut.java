@@ -18,7 +18,7 @@ public class Shortcut extends Move {
 
     @Override
     public boolean usable(Character user) {
-        return user.getPure(Attribute.Cunning) >= 28;
+        return user.getPure(Attribute.Cunning) >= 28 && !user.bound();
     }
 
 }

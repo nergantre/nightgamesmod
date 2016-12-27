@@ -60,7 +60,7 @@ public class Eve extends BasePersonality {
         // somewhat androgynous face
         self.body.add(new FacePart(.1, .9));
         self.initialGender = CharacterSex.shemale;
-        preferredCockMod = CockMod.primal;
+        preferredCockMod = CockMod.error;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class Eve extends BasePersonality {
                             + "She grabs your exposed dick and starts to vigorously stroke you off."
                             + " The simulation from both ends makes you feel like you're melting. "
                             + "You can't control your muscles, much less struggle. All you can do "
-                            + "is give your body to Eve as she uses you like a sexdoll.<p>Eve "
+                            + "is give your body to Eve as she uses you like a sexdoll.<br/><br/>Eve "
                             + "presses her heavy breasts against your back and you hear her"
                             + " ragged breathing in your ear. She's pegging you for her own "
                             + "enjoyment, but you're obviously the one who will break first. A "
@@ -185,7 +185,7 @@ public class Eve extends BasePersonality {
                             + "realize you were such a quick shot.\"</i> She quickens her pace, "
                             + "thrusting with abandon. Her hand, which was just giving you such "
                             + "amazing pleasure, moves to a more sadistic goal. She grabs your "
-                            + "sensitive testicles and squeezes them hard.<p>You cry out and the "
+                            + "sensitive testicles and squeezes them hard.<br/><br/>You cry out and the "
                             + "pain causes your ass to clench up involuntarily. Eve buries her "
                             + "cock deep in your ass and you feel her hot seed fill you. You slump "
                             + "to the floor as she releases you, defeated and spent. <i>\"You make"
@@ -197,7 +197,7 @@ public class Eve extends BasePersonality {
                         + "cock. You feel pleasure rapidly building in your abdomen as you pass"
                         + " the point of no return. You can't hold back anymore. You're about to"
                         + " ejaculate in her hands. She grins evily and fondles your balls softly"
-                        + " while continuing her handjob. <p>You suddenly feel a powerful shock "
+                        + " while continuing her handjob. <br/><br/>You suddenly feel a powerful shock "
                         + "run through you. It's a pleasurable sensation, but lacks the sense of "
                         + "release you get from an orgasm and leaves you unsatisfied. You try to "
                         + "sit up to figure out what happened, but your body doesn't obey. You can't"
@@ -209,14 +209,14 @@ public class Eve extends BasePersonality {
                         + "nervous system by denying your orgasm. It's not a very useful technique"
                         + " because it only works on someone who is about to cum. But it does let"
                         + " me play with you much longer, so it's also the best technique.\"</i> "
-                        + "<p>You're still fully erect and leaking pre-cum, but she's abandoned "
+                        + "<br/><br/>You're still fully erect and leaking pre-cum, but she's abandoned "
                         + "your dick and you can't lift a finger to help yourself. <i>\"Do you want"
                         + " to cum? Not quite yet. I'm still preparing you.\"</i> You feel a "
                         + "churning in your testicles and the urge to ejaculate suddenly increases."
                         + " It feels like she's turned up your semen production, leaving you "
                         + "even more pent-up. It's making your balls much more sensitive, so her"
                         + " fondling is giving you a lot of pleasure, but no release. If she's"
-                        + " trying to drive you insane, she's doing a pretty good job of it.<p>Eve"
+                        + " trying to drive you insane, she's doing a pretty good job of it.<br/><br/>Eve"
                         + " suddenly lets go of your junk and straddles your waist. She rubs "
                         + "her slit along your cock while idly stroking herself. <i>\"Are you "
                         + "feeling desperate yet? You're almost ready for the big moment. You "
@@ -226,7 +226,7 @@ public class Eve extends BasePersonality {
                         + " why you're feeling so unnaturally horny. It's not just the physical"
                         + " pleasure. You're getting incredibly turned on from being at Eve's "
                         + "mercy, and the fact that she's torturing you and keeping you on edge"
-                        + ".<p>So that's it. She's imbued you with masochism. <i>\"Bingo!\"</i> "
+                        + ".<br/><br/>So that's it. She's imbued you with masochism. <i>\"Bingo!\"</i> "
                         + "Eve slams her knee into your sensitive balls. You're hit with "
                         + "simultaneous waves of pleasure and agony. A fountain of cum shoots "
                         + "from your cock, even as you're busy curling up into the fetal position."
@@ -241,7 +241,7 @@ public class Eve extends BasePersonality {
     public String defeat(Combat c, Result flag) {
         return "As you pleasure Eve, she gradually stops fighting back, apparently more interested in enjoying her orgasm than in the outcome of the fight. You grab her throbbing "
                         + "cock and pump it rapidly. She lets out a scream of pleasure as she cums and fires powerful jets of semen into the air. She relaxes on the floor with a blissful "
-                        + "expression, idly playing with her own fluids and occasionally licking them off her fingers. <p>You wave your unsatisfied erection in front of her face to remind her "
+                        + "expression, idly playing with her own fluids and occasionally licking them off her fingers. <br/><br/>You wave your unsatisfied erection in front of her face to remind her "
                         + "that she still owes you an orgasm. Eve smiles up at you lewdly. <i>\"Don't worry, " + c.getOpponent(character).boyOrGirl() + ". I'll get you off properly, but I don't want you just sitting back and enjoying "
                         + "it. Sucking you dry is bound to get me all hot and bothered again, and I don't plan to walk away with a boner. Make sure you give as good as you get.\"</i> She's pretty "
                         + "demanding for a loser. Fortunately for her, you're in a generous mood. Eve seems eager to hold up her side of the deal. She takes most of your cock into her mouth "
@@ -265,24 +265,24 @@ public class Eve extends BasePersonality {
                         + " she pulls your hand between her legs and shoves your fingers into "
                         + "her soaked pussy. Is she that confident? She's put your fingers "
                         + "exactly where you want them. Instead of questioning it, you just "
-                        + "start pumping and fingering her.<p>Once you start pleasuring her, "
+                        + "start pumping and fingering her.<br/><br/>Once you start pleasuring her, "
                         + "she releases your right hand. She strokes your dick with one hand "
                         + "and her own with the other. She moans with abandon from the pleasure "
                         + "being inflicted on both her male and female parts. If she's going to "
                         + "get herself off, your best plan is going to be to just outlast her. "
                         + "Unfortunately, her masturbation hasn't detracted at all from her "
                         + "handjob skill. You quickly feel your ejaculation start to build, "
-                        + "despite your best efforts.<p><i>\"Fuck! I'm cumming!\"</i> Eve cries "
+                        + "despite your best efforts.<br/><br/><i>\"Fuck! I'm cumming!\"</i> Eve cries "
                         + "out in pleasure just as your resistance gives way. Her girl parts "
                         + "squeeze your fingers as both your dicks spurt in unision. A wave of "
                         + "pleasure washes over you and you find yourself transfixed by her "
-                        + "gorgeous face twisted in pleasure.<p>You both lie on the floor, "
+                        + "gorgeous face twisted in pleasure.<br/><br/>You both lie on the floor, "
                         + "drained of energy and fluids. Eve looks ready to take a nap, but you"
                         + " feel compelled to ask her why she gave up her win at the last minute. "
                         + "She looks at you, tiredly, apparently not understanding your question. "
                         + "She totally had you beat, but she forced a draw by making herself "
                         + "cum at the same time. Did she take pity on you? That doesn't sound"
-                        + " like Eve.<p>She yawns and tries to find a more comfortable position. "
+                        + " like Eve.<br/><br/>She yawns and tries to find a more comfortable position. "
                         + "<i>\"A draw pays just as good as a win and is way more satisfying."
                         + " Why deprive myself of a good orgasm?\"</i> A draw isn't really the"
                         + " same as a win. Eve probably doesn't care about losing her clothes, "
@@ -342,7 +342,7 @@ public class Eve extends BasePersonality {
                         + "response to the enticing scene. Eve grins at you confidently. <i>\"Jealous? I'm sure you wish your cock was buried deep in this tight, wet cunt, but I got "
                         + "here first.\"</i> She thrusts her hips several times for emphasis. <i>\"You could always go for the back door.\"</i> "
                         + target.name() + " frantically shakes her "
-                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br>"
+                        + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br/>"
                         + "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly "
                         + target.name() + "'s soft butt is rubbing firmly and pleasurably against your erection. "
                         + "Shit. She's going to make you cum too, even when you're helping her. <i>\"Don't let go of her, or you won't get credit for her orgasm.\"</i> Unable to struggle "
@@ -359,7 +359,7 @@ public class Eve extends BasePersonality {
                             + "suspects too much, but the hard bulge hitting your ass does. The last thing you want to do is expose your ass to Eve, but fortunately she doesn't have a "
                             + "firm grip on you yet. You jerk forward to try to escape her grasp. <i>\"Stop squirming!\"</i> She slams her knee up between your legs, hitting you squarely "
                             + "in the balls. The intense pain takes all the fight out of you and you go limp in her arms. <i>\"Are you done struggling or do you need another kick?\"</i> "
-                            + "You meekly shake your head and let her secure her grip.<br>";
+                            + "You meekly shake your head and let her secure her grip.<br/>";
         }
 
         return "Your fight with " + target.name()
@@ -368,9 +368,9 @@ public class Eve extends BasePersonality {
                         + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
                         + " tries to get back to her feet, but Eve easily forces her onto her back. "
                         + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + c.getOpponent(character).boyOrGirl() + ".\"</i> "
-                        + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br>"
+                        + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br/>"
                         + "Apparently you've been forgotten. Oh well. " + target.name()
-                        + "'s pussy looks pretty lonely. Looks like this will be your win.<br>";
+                        + "'s pussy looks pretty lonely. Looks like this will be your win.<br/>";
 
     }
 

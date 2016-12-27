@@ -48,7 +48,7 @@ public class Tribadism extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return fuckable(c, target) && c.getStance().mobile(getSelf()) && !c.getStance().mobile(target)
-                        && getSelf().canAct();
+                        && getSelf().canAct() && c.getStance().en != Stance.trib;
     }
 
     @Override
@@ -56,9 +56,7 @@ public class Tribadism extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         writeOutput(c, Result.normal, target);
-        if (c.getStance().en != Stance.trib) {
-            c.setStance(new TribadismStance(getSelf(), target), getSelf(), true);
-        }
+        c.setStance(new TribadismStance(getSelf(), target), getSelf(), true);
         int otherm = 10;
         int m = 10;
         target.body.pleasure(getSelf(), selfO, targetO, m, c, this);

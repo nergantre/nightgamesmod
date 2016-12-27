@@ -6,6 +6,7 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
+import nightgames.status.Flatfooted;
 
 public class IllusionTrap extends Trap {
 
@@ -16,7 +17,11 @@ public class IllusionTrap extends Trap {
     public IllusionTrap(Character owner) {
         super("Illusion Trap", owner);
     }
-    
+
+    public void setStrength(Character user) {
+        setStrength(user.get(Attribute.Arcane) + user.getLevel() / 2);
+    }
+
     @Override
     public void trigger(Character target) {
         if (target.human()) {
@@ -28,9 +33,9 @@ public class IllusionTrap extends Trap {
             Global.gui().message("There's a flash of pink light and " + target.name() + " flushes with arousal.");
         }
         if (target.has(Trait.imagination)) {
-            target.tempt(25);
+            target.tempt(25 + getStrength());
         }
-        target.tempt(25);
+        target.tempt(25 + getStrength());
         target.location().opportunity(target, this);
     }
 
@@ -53,6 +58,7 @@ public class IllusionTrap extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker,victim,attacker.location()));
         victim.location().remove(this);
     }

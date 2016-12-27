@@ -8,6 +8,7 @@ import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
@@ -107,10 +108,14 @@ public enum BreastsPart implements BodyPart {
 
     @Override
     public double getHotness(Character self, Character opponent) {
-        double hotness = -.25 + size * .3 * self.getOutfit()
+        Clothing top = self.getOutfit().getTopOfSlot(ClothingSlot.top);
+        double hotness = -.1 + Math.sqrt(size) * .15 * self.getOutfit()
                                                 .getExposure(ClothingSlot.top);
         if (!opponent.hasDick()) {
             hotness /= 2;
+        }
+        if (top == null) {
+            hotness += .1;
         }
         return Math.max(0, hotness);
     }
@@ -245,7 +250,7 @@ public enum BreastsPart implements BodyPart {
     
                 }
                 if (addiction != null)
-                    opponent.tempt(c, self, this, (int) (15 + addiction.getMagnitude() * 35));
+                    opponent.temptNoSkill(c, self, this, (int) (15 + addiction.getMagnitude() * 35));
     
                 if (opponent.is(Stsflag.magicmilkcraving)) {
                     // temporarily relieve craving

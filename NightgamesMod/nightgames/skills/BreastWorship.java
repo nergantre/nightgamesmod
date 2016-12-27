@@ -45,7 +45,7 @@ public class BreastWorship extends Skill {
             getSelf().body.pleasure(getSelf(), getSelf().body.getRandom("hands"), getSelf().body.getRandomHole(), m, c, this);
         }
         if (results == Result.special) {
-            getSelf().tempt(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2);
+            getSelf().temptWithSkill(c, target, target.body.getRandomBreasts(), (3 + target.body.getRandomBreasts().size) * 2, this);
             target.buildMojo(c, 10);
         } else {
             target.buildMojo(c, 5);

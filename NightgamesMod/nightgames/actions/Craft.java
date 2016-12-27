@@ -17,7 +17,7 @@ public class Craft extends Action {
 
     @Override
     public boolean usable(Character user) {
-        return user.location().potions() && user.get(Attribute.Cunning) > 5;
+        return user.location().potions() && user.get(Attribute.Cunning) > 15 && !user.bound();
     }
 
     @Override

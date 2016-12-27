@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.global.Global;
 import nightgames.items.Item;
+import nightgames.status.Flatfooted;
 
 public class StripMine extends Trap {
     
@@ -58,6 +59,7 @@ public class StripMine extends Trap {
 
     @Override
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
+        victim.addNonCombat(new Flatfooted(victim, 1));
         enc.engage(new Combat(attacker, victim, attacker.location()));
         attacker.location().remove(this);
     }

@@ -40,7 +40,8 @@ public class FaceSit extends Skill {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
                         && c.getStance().prone(target) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
-                        && !getSelf().has(Trait.shy);
+                        && !getSelf().has(Trait.shy)
+                        && c.getStance().reachTop(getSelf());
     }
 
     @Override
@@ -79,8 +80,8 @@ public class FaceSit extends Skill {
             n *= 1.5;
         }
 
-        target.tempt(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2));
-        target.tempt(c, getSelf(), getSelf().body.getRandom("pussy"), (int) Math.round(n / 2));
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("ass"), (int) Math.round(n / 2), this);
+        target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("pussy"), (int) Math.round(n / 2), this);
 
         target.loseWillpower(c, 5);
         target.add(c, new Shamed(target));

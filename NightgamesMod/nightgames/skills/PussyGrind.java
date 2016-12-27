@@ -5,7 +5,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.stance.TribadismStance;
 
 public class PussyGrind extends Skill {
 
@@ -41,7 +40,6 @@ public class PussyGrind extends Skill {
         BodyPart selfO = getSelfOrgan();
         BodyPart targetO = getTargetOrgan(target);
         writeOutput(c, Result.normal, target);
-        c.setStance(new TribadismStance(getSelf(), target), getSelf(), true);
         int m = 10 + Global.random(10);
         int otherm = 5 + Global.random(6);
         target.body.pleasure(getSelf(), selfO, targetO, m, c, this);

@@ -36,13 +36,19 @@ public class Pheromones extends Horny {
     private int stacks;
 
     public Pheromones(Character affected, Character other, float magnitude, int duration, String source) {
-        super(affected, magnitude, duration, Global.capitalizeFirstLetter(other.nameOrPossessivePronoun()) + source);
+        super(affected, magnitude, duration, other.nameOrPossessivePronoun() + source);
         this.sourceCharacter = other;
         this.stacks = 1;
         flag(Stsflag.horny);
         flag(Stsflag.pheromones);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        if (sourceCharacter.has(Trait.PiercingOdor)) {
+            flag(Stsflag.piercingOdor);
+            if (!affected.has(Trait.calm)) {
+                setMagnitude(getMagnitude() * 1.25f);
+            }
+        }
     }
 
     @Override

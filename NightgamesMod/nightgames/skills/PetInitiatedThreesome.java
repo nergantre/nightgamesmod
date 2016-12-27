@@ -32,7 +32,7 @@ public class PetInitiatedThreesome extends PetThreesome {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return super.usable(c, target) && getSelf() instanceof PetCharacter;
+        return super.usable(c, target) && c.getStance().time >= 2 && getSelf() instanceof PetCharacter;
     }
 
     @Override

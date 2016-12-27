@@ -48,7 +48,7 @@ public class Whisper extends Skill {
         } else {
             writeOutput(c, Result.normal, target);
         }
-        target.tempt(c, getSelf(), m);
+        target.temptNoSource(c, getSelf(), m, this);
         target.emote(Emotion.horny, 30);
         return true;
     }

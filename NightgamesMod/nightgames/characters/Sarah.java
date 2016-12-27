@@ -58,7 +58,7 @@ public class Sarah extends BasePersonality {
     public void setGrowth() {
         character.getGrowth().stamina = 5;
         character.getGrowth().arousal = 3;
-        character.getGrowth().willpower = .4f;
+        character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
 
@@ -185,7 +185,7 @@ public class Sarah extends BasePersonality {
                 return Global.format("{self:SUBJECT} emerges from the pillar of light and stands at attention. "
                                 + "Angel walks over to {self:direct-object} and kisses her on the cheek. <i>\"Sarah dear, let's teach {other:direct-object} the proper way to worship a Goddess.\"<i>", self, other);
             } else {
-                return Global.format("{self:SUBJECT} opens her glassy eyes stands silently while Angel coos, <i>\"Mmmm we're going to show you a good time.\"</i>", self, other);
+                return Global.format("{self:SUBJECT} opens her glassy eyes and stands silently while Angel coos, <i>\"Mmmm we're going to show you a good time.\"</i>", self, other);
             }
         }
         return Global.format("{self:SUBJECT} impassively scans the situation and with an approving look from Angel, she gets ready to attack.</i>", self, other);
