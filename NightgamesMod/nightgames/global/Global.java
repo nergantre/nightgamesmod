@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -24,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -182,12 +184,27 @@ public class Global {
             OutputStream ostream = new TeeStream(System.out, fstream);
             System.setErr(new PrintStream(estream));
             System.setOut(new PrintStream(ostream));
+    		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+    		InputStream stream = loader.getResourceAsStream("build.properties");
+
+            System.out.println("=============================================");
+            System.out.println("Nightgames Mod");
+    		if (stream != null) {
+    			Properties prop = new Properties();
+    			prop.load(stream);
+    			System.out.println("version: " + prop.getProperty("version"));
+    			System.out.println("buildtime: " + prop.getProperty("buildtime"));
+    			System.out.println("builder: " + prop.getProperty("builder"));
+    		} else {
+    			System.out.println("dev-build");
+    		}
+            System.out.println(new Timestamp(jdate.getTime()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        System.out.println("=============================================");
-        System.out.println("Night games");
-        System.out.println(new Timestamp(jdate.getTime()));
+        } catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
         setTraitRequirements(new TraitTree(ResourceLoader.getFileResourceAsStream("data/TraitRequirements.xml")));
         current = null;
@@ -216,7 +233,7 @@ public class Global {
     public static void newGame(String playerName, Optional<StartConfiguration> config, List<Trait> pickedTraits,
                     CharacterSex pickedGender, Map<Attribute, Integer> selectedAttributes) {
         Optional<PlayerConfiguration> playerConfig = config.map(c -> c.player);
-        Collection<Flag> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
+        Collection<String> cfgFlags = config.map(StartConfiguration::getFlags).orElse(new ArrayList<>());
         human = new Player(playerName, pickedGender, playerConfig, pickedTraits, selectedAttributes);
         if(human.has(Trait.largereserves)) {
             human.getWillpower().gain(20);
@@ -232,7 +249,7 @@ public class Global {
         // Add starting characters to players
         players.addAll(characterPool.values().stream().filter(npc -> npc.isStartCharacter).collect(Collectors.toList()));
         if (!cfgFlags.isEmpty()) {
-            flags = cfgFlags.stream().map(Flag::name).collect(Collectors.toSet());
+            flags = cfgFlags.stream().collect(Collectors.toSet());
         }
         Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
         configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
@@ -1644,5 +1661,13 @@ public class Global {
 
     public static void setTraitRequirements(TraitTree traitRequirements) {
         Global.traitRequirements = traitRequirements;
-    }    
+    }
+
+	public static void writeIfCombat(Combat c, Character self, String string) {
+		if (c == null) {
+			gui().message(string);
+		} else {
+			c.write(self, string);
+		}
+	}    
 }

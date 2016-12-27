@@ -53,7 +53,11 @@ public class SpawnImp extends Skill {
             if (target.human()) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
             }
-            c.addPet(getSelf(), new ImpFem(getSelf(), power, ac).getSelf());
+            if (gender == Ptype.impfem) {
+                c.addPet(getSelf(), new ImpFem(getSelf(), power, ac).getSelf());
+            } else {
+                c.addPet(getSelf(), new ImpMale(getSelf(), power, ac).getSelf());
+            }
         }
         return true;
     }
@@ -91,11 +95,18 @@ public class SpawnImp extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s spreads out %s dark aura and a demonic imp appears next to %s"
-                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
-                        + "silver skin and a long flexible tail. It's naked, clearly female, and "
-                        + "surprisingly attractive given its inhuman features.",
-                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+    	if (gender == Ptype.impfem) {
+	        return String.format("%s spreads out %s dark aura and a demonic imp appears next to %s"
+	                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
+	                        + "silver skin and a long flexible tail. It's naked, clearly female, and "
+	                        + "surprisingly attractive given its inhuman features.",
+	                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+    	} else {
+	        return String.format("%s spreads out %s dark aura and a demonic imp appears next to %s"
+	                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
+	                        + "silver skin and a long flexible tail. It's naked, clearly male, and "
+	                        + "surprisingly attractive given its inhuman features.",
+	                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+    	}
     }
-
 }

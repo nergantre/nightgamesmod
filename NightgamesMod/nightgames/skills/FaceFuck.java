@@ -27,7 +27,8 @@ public class FaceFuck extends Skill {
         return getSelf().canAct() && c.getStance().dom(getSelf()) && c.getStance().prone(target)
                         && (getSelf().crotchAvailable() && getSelf().hasDick() || getSelf().has(Trait.strapped))
                         && !c.getStance().inserted(getSelf()) && c.getStance().front(getSelf())
-                        && !c.getStance().behind(target);
+                        && !c.getStance().behind(target)
+                        && c.getStance().reachTop(getSelf());
     }
 
     @Override

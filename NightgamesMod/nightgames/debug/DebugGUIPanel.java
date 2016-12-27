@@ -62,8 +62,14 @@ public class DebugGUIPanel extends JPanel {
         }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.addTrait (\\w+)", (output, list) -> {
             try {
-                Character target = Global.getCharacterByType(list.get(1));
-                target.add(Trait.valueOf(list.get(2)));
+            	Character target = Global.getCharacterByType(list.get(1));
+            	if (list.get(2).equals("all")) {
+            		for (Trait t : Trait.values()) {
+            			target.add(t);
+            		}
+            	} else {
+	                target.add(Trait.valueOf(list.get(2)));
+            	}
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {

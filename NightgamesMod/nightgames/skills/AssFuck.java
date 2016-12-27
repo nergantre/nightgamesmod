@@ -40,6 +40,7 @@ public class AssFuck extends Fuck {
                         && (c.getStance().behind(getSelf())
                                         || (c.getStance().prone(target) && !c.getStance().mobile(target)))
                         && getSelf().canAct()
+                        && c.getStance().reachBottom(getSelf())
                         && (getTargetOrgan(target).isReady(target) || target.has(Trait.buttslut) || getSelf().has(Item.Lubricant)
                                         || getSelf().getArousal().percent() > 50 || getSelf().has(Trait.alwaysready)
                                         || getSelf().has(Trait.assmaster))

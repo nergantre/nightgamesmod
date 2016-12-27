@@ -33,7 +33,7 @@ public class BodyShop extends Activity {
         int price;
 
         ShopSelection(String choice, int price) {
-            this.choice = choice + " (" + price + ")";
+            this.choice = choice;
             this.price = price;
         }
 
@@ -62,7 +62,7 @@ public class BodyShop extends Activity {
 
     private void addBodyPartMod(String name, final BodyPart part, final BodyPart normal, int growPrice, int removePrice,
                     final int priority, final boolean onlyReplace) {
-        selection.add(new ShopSelection("Body Mod: " + name, growPrice) {
+        selection.add(new ShopSelection(name, growPrice) {
             @Override
             void buy(Character buyer) {
                 buyer.body.addReplace(part, 1);
@@ -88,7 +88,7 @@ public class BodyShop extends Activity {
             }
         });
 
-        selection.add(new ShopSelection("Body Mod: Remove " + name, removePrice) {
+        selection.add(new ShopSelection("Remove " + name, removePrice) {
             @Override
             void buy(Character buyer) {
                 if (normal == null) {
@@ -447,13 +447,13 @@ public class BodyShop extends Activity {
             }
         });
 
-        addTraitMod("Vaginal Mod: Grow Tongue", "Vaginal Mod: Remove Tongue", Trait.vaginaltongue, 10000, 10000,
+        addTraitMod("Vaginal Tongue", "Remove V.Tongue", Trait.vaginaltongue, 10000, 10000,
                         character -> character.hasPussy());
-        addTraitMod("Fluids Mod: Laced Juices", "Fluids Mod: Remove Laced Juices", Trait.lacedjuices, 1000, 1000,
+        addTraitMod("Laced Juices", "Remove L.Juices", Trait.lacedjuices, 1000, 1000,
                         noRequirement);
-        addTraitMod("Breast Mod: Permanent Lactation", "Breast Mod: Stop Lactating", Trait.lactating, 1000, 1000,
+        addTraitMod("Permanent Lactation", "Stop Lactating", Trait.lactating, 1000, 1000,
                         noRequirement);
-        addTraitMod("Scent Mod: Pheromones", "Scent Mod: Remove Pheromones", Trait.augmentedPheromones, 1500, 1500,
+        addTraitMod("Pheromones", "Remove Pheromones", Trait.augmentedPheromones, 1500, 1500,
                         noRequirement);
         addBodyPartMod("Fused Boots",
                         new GenericBodyPart("Fused Boots",
@@ -478,7 +478,8 @@ public class BodyShop extends Activity {
         Global.gui().message("You have :$" + player.money + " to spend.");
         for (ShopSelection s : selection) {
             if (s.available(player) && player.money >= s.price) {
-                Global.gui().choose(this, s.choice);
+                Global.gui().choose(this, s.choice, "Price: $" + s.price);
+                Global.gui().message(s.choice + ": $" + s.price);
             }
         }
         Global.gui().choose(this, "Leave");

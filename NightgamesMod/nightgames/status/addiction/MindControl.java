@@ -398,7 +398,7 @@ public class MindControl extends Addiction {
                         .percent() > 5) {
                 int amt = getSeverity().ordinal() * (Global.random(6) + 1);
                 affected.weaken(c, (int) cause.modifyDamage(DamageType.temptation, affected, amt));
-                c.write(affected, "You keep fighting your own body to do as you want, and it's tiring you rapidly.");
+                Global.writeIfCombat(c, affected, "You keep fighting your own body to do as you want, and it's tiring you rapidly.");
             }
         }
 

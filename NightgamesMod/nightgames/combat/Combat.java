@@ -1428,6 +1428,7 @@ public class Combat extends Observable implements Cloneable {
             return p1;
         }
         System.err.println("Tried to get an opponent for " + self.getName() + " which does not exist in combat.");
+        Thread.dumpStack();
         return Global.noneCharacter();
     }
 
