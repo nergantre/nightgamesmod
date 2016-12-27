@@ -398,7 +398,7 @@ public enum Trait {
     Parasite("Parasite", "Implants a parasite with a kiss"),
     Voracity("Voracity", "Drains stamina to speed up parasite growth rate"),
     NeuralLink("Neural Link", "Parasites can mind control after being established"),
-    InebriatatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
+    InebriatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),
