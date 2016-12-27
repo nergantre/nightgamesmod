@@ -1434,9 +1434,12 @@ public abstract class Character extends Observable implements Cloneable {
             if (from.has(Trait.Clingy)) {
                 total -= 5;
             }
-            if (from.has(Trait.FeralStrength) && is(Stsflag.feral)) {
-                total += 5;
+            if (from.has(Trait.FeralStrength) && from.is(Stsflag.feral)) {
+                total -= 5;
             }
+        }
+        if (has(Trait.FeralStrength) && is(Stsflag.feral)) {
+            total += 5;
         }
         if (c != null) {
             int stanceMod = c.getStance().escape(c, this);
