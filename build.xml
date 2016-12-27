@@ -114,9 +114,14 @@
 				</tokenfilter>
 			</filterchain>
 		</loadresource>
-		<zip destfile="${dist}/NightgamesMod_${package-version}.zip" basedir="${stage}" excludes="**/nightgames_log.txt"/>
+		<zip destfile="${dist}/NightgamesMod_${package-version}.zip" basedir="${stage}" excludes="**/nightgames_log.txt" />
 	</target>
 
 	<target depends="clean-stage,package" name="repackage">
+	</target>
+
+	<target depends="build" name="run">
+		<java jar="${stage}/NightgamesMod.jar" fork="true" failonerror="true" maxmemory="256m">
+		</java>
 	</target>
 </project>
