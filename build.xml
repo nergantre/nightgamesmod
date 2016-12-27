@@ -3,8 +3,10 @@
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="source" value="NightgamesMod"/>
-	<property name="build" location="build/bin"/>
-	<property name="dist" location="build/release"/>
+	<property name="build-root" location="build"/>
+	<property name="classes" location="${build-root}/classes"/>
+	<property name="output" location="${build-root}/out"/>
+	<property name="dist" location="${build-root}"/>
     <path id="nightgamesmod.classpath">
         <pathelement location="bin"/>
         <pathelement location="NightgamesMod/commons-lang3-3.5.jar"/>
@@ -13,36 +15,54 @@
     </path>
     <target name="init">
         <tstamp/>
-        <mkdir dir="${build}"/>
+        <mkdir dir="${classes}"/>
+        <mkdir dir="${output}"/>
         <mkdir dir="${dist}"/>
     </target>
     <target name="clean">
-        <delete dir="build"/>
-        <delete file="NightgamesMod.jar"/>
+        <delete dir="${build-root}"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project,create_run_jar,copy-assets" name="build"/>
     <target name="build-subprojects"/>
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="${build}" includeantruntime="false" srcdir="${source}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${classes}" includeantruntime="false" srcdir="${source}">
             <classpath refid="nightgamesmod.classpath"/>
         </javac>
     </target>
+
+	<available file=".git" type="dir" property="git.present"/>
+
+	<target name="git.revision" description="Store git revision in ${repository.version}" if="git.present">
+	    <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
+	        <arg value="describe"/>
+	        <arg value="--tags"/>
+	        <arg value="--always"/>
+	        <arg value="HEAD"/>
+	    </exec>
+	    <condition property="repository.version" value="${git.revision}" else="unknown">
+	        <and>
+	            <isset property="git.revision"/>
+	            <length string="${git.revision}" trim="yes" length="0" when="greater"/>
+	        </and>
+	    </condition>
+	</target>
+
     <target name="create_run_jar">
-        <jar destfile="${dist}/NightgamesMod.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="${output}/NightgamesMod.jar" filesetmanifest="mergewithoutmain">
             <manifest>
                 <attribute name="Main-Class" value="nightgames.global.Global"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="${build}"/>
+            <fileset dir="${classes}"/>
             <zipfileset excludes="META-INF/*.SF" src="${source}/commons-lang3-3.5.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${source}/gson-2.7.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="${source}/js.jar"/>
         </jar>
     </target>
 	<target name="copy-assets">
-		<copy todir="${dist}">
+		<copy todir="${output}">
 		    <fileset dir=".">  
 			    <include name="assets/**"/>
 			    <include name="characters/**"/>
@@ -53,5 +73,22 @@
 		    	<exclude name="**/thumbs.db"/>
 			</fileset>
 		</copy>
+	</target>
+
+	<target depends="build,git.revision" name="package">
+		<loadresource property="package-version">
+		  <propertyresource name="repository.version"/>
+		  <filterchain>
+		    <tokenfilter>
+		      <filetokenizer/>
+		      <replacestring from="-" to="_"/>
+		      <replacestring from="." to="_"/>
+		      <replacestring from=" " to="_"/>
+		    </tokenfilter>
+		  </filterchain>
+		</loadresource>
+		<zip destfile="${dist}/NightgamesMod_${package-version}.zip"
+		       basedir="${output}"
+		/>
 	</target>
 </project>
