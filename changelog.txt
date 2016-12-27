@@ -1,3 +1,9 @@
+2.4.5.5.a
+Minor:
+
+- Shortened some of the longer text choices as a stopgap measure to stop buttons from getting hidden.
+	- Will need to come back to this later for a real solution...
+
 2.4.5.5
 Bug fixes:
 - Fixed a crash bug with mind control
