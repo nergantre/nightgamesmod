@@ -6,6 +6,7 @@ nightgames_log.txt
 .idea
 out
 bin
+build
 .classpath
 .project
 CombatStats*
