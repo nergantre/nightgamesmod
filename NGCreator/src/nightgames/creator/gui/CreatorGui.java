@@ -928,8 +928,8 @@ public class CreatorGui extends Application {
 		root.add("lines", lines);
 		// root.add("mood", new JsonObject());
 		JsonObject recruitment = new JsonObject();
-		recruitment.addProperty("introduction", "");
-		recruitment.addProperty("confirm", "");
+		recruitment.addProperty("introduction", store.getScenes("recruitment intro").get(0).getText());
+		recruitment.addProperty("confirm", store.getScenes("recruitment confirmation").get(0).getText());
 		JsonArray effects = new JsonArray();
 		JsonObject effect = new JsonObject();
 		int cost;
@@ -942,7 +942,9 @@ public class CreatorGui extends Application {
 		effects.add(effect);
 		recruitment.add("cost", effects);
 		JsonObject requirements = new JsonObject();
-		requirements.addProperty("level", 10);
+		JsonRequirementSaver saver = new JsonRequirementSaver();
+		store.getScenes("recruitment intro").get(0).getReqs().stream().map(saver::saveRequirement)
+				.forEach(s -> requirements.add(s.key, s.data));
 		recruitment.add("requirements", requirements);
 		recruitment.addProperty("action", name.getText() + ": $" + cost);
 		root.add("recruitment", recruitment);
