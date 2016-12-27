@@ -5,6 +5,9 @@ nightgames_log.txt
 *.iml
 .idea
 out
+bin
+.classpath
+.project
 CombatStats*
 NightgamesMod/.settings
 combatlogs
