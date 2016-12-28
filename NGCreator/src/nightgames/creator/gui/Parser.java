@@ -1,7 +1,5 @@
 package nightgames.creator.gui;
 
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import nightgames.global.Global;
 import nightgames.characters.Character;
 

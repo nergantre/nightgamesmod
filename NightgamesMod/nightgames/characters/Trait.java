@@ -394,11 +394,11 @@ public enum Trait {
     Unsatisfied("Unsatisfied", "Hard to finish off without fucking"),
 
     // Airi Unique Traits
-    // Parasitism - debuffs and control
-    Parasite("Parasite", "Implants a parasite with a kiss"),
-    Voracity("Voracity", "Drains stamina to speed up parasite growth rate"),
-    NeuralLink("Neural Link", "Parasites can mind control after being established"),
-    InebriatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
+    // Slime debuff - builds up slime on to an opponent when coming into contact. This slows them down and eventually petrifies them.
+    VolatileSubstrate("Volatile Substrate", "Slimes those who get come into contact"),
+    EnduringAdhesive("Enduring Adhesive", "Slime buildup lasts longer"),
+    ParasiticBond("Parasitic Bond", "Slime buildup drains stamina"),
+    PetrifyingPolymers("Petrifying Polymers", "Slime buildup eventually petrifies the target"),
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),

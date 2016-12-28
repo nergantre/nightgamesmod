@@ -14,14 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import nightgames.characters.Attribute;
-import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
-import nightgames.combat.Result;
-import nightgames.items.Item;
 import nightgames.requirements.*;
-import nightgames.stance.Stance;
-import nightgames.status.Stsflag;
 
 public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementType> {
 

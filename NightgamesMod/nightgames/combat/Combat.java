@@ -58,6 +58,7 @@ import nightgames.status.Braced;
 import nightgames.status.Collared;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
+import nightgames.status.Drowsy;
 import nightgames.status.Enthralled;
 import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
@@ -973,6 +974,7 @@ public class Combat extends Observable implements Cloneable {
 
     boolean resolveSkill(Skill skill, Character target) {
         boolean orgasmed = false;
+        boolean madeContact = false;
         if (Skill.skillIsUsable(this, skill, target)) {
             boolean success;
             if (!target.human() || !target.is(Stsflag.blinded)) {
@@ -985,6 +987,7 @@ public class Combat extends Observable implements Cloneable {
                 if (!resolveCrossCounter(skill, target, 25)) {
                     target.counterattack(skill.user(), skill.type(this), this);
                 }
+                madeContact = true;
                 success = false;
             } else if (target.is(Stsflag.counter) && skill.makesContact()) {
                 write("Countered!");
@@ -998,9 +1001,11 @@ public class Combat extends Observable implements Cloneable {
                         s.resolveSkill(this, skill.user());
                     }
                 }
+                madeContact = true;
                 success = false;
             } else {
                 success = Skill.resolve(skill, this, target);
+                madeContact |= success && skill.makesContact();
             }
             if (success) {
                 if (skill.getTags(this).contains(SkillTag.thrusting) && skill.user().has(Trait.Jackhammer) && Global.random(2) == 0) {
@@ -1030,6 +1035,10 @@ public class Combat extends Observable implements Cloneable {
                                 skill.user(), target));
                 skill.user().pain(this, null, Global.random(10, 40));
             }
+            if (madeContact) {
+            	resolveContactBonuses(skill.user(), target);
+            	resolveContactBonuses(target, skill.user());
+            }
             checkStamina(target);
             checkStamina(skill.user());
             orgasmed = checkOrgasm(skill.user(), target, skill);
@@ -1042,7 +1051,13 @@ public class Combat extends Observable implements Cloneable {
         return orgasmed;
     }
 
-    private boolean checkOrgasm(Character user, Character target, Skill skill) {
+    private void resolveContactBonuses(Character contacted, Character contacter) {
+		if (contacted.has(Trait.VolatileSubstrate)) {
+			contacter.add(this, new Drowsy(contacter));
+		}
+	}
+
+	private boolean checkOrgasm(Character user, Character target, Skill skill) {
         return target.orgasmed || user.orgasmed;
     }
 

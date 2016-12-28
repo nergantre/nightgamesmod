@@ -1668,5 +1668,13 @@ public class Global {
 		} else {
 			c.write(self, string);
 		}
-	}    
+	}
+
+	public static void writeFormattedIfCombat(Combat c, String string, Character self, Character other, Object ...args) {
+		if (c == null) {
+			gui().message(format(string, self, other, args));
+		} else {
+			c.write(self, format(string, self, other, args));
+		}
+	}
 }

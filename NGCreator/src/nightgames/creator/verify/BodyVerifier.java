@@ -3,7 +3,6 @@ package nightgames.creator.verify;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import nightgames.characters.body.Body;

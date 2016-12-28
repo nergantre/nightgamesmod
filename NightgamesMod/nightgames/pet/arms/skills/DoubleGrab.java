@@ -43,5 +43,4 @@ public class DoubleGrab extends MultiArmMove {
         c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 2);
         target.add(c, new Bound(target, 75, owner.nameOrPossessivePronoun() + " Grabbers"));
     }
-    
 }

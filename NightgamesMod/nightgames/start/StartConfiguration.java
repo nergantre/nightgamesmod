@@ -17,7 +17,6 @@ import com.google.gson.JsonParseException;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.CharacterSex;
-import nightgames.global.Flag;
 import nightgames.items.clothing.Clothing;
 import nightgames.json.JsonUtils;
 
