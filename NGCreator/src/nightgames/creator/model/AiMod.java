@@ -105,7 +105,7 @@ public abstract class AiMod<T> {
 
 	@Override
 	public String toString() {
-		return "Type: " + name.get() + " // Value: " + value.get() + " // Weight: " + weight.get();
+		return "Type: " + name.get() + " // Value: " + valueAsString() + " // Weight: " + weight.get();
 	}
 
 	public enum Type {
@@ -143,6 +143,7 @@ public abstract class AiMod<T> {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Class<? extends nightgames.skills.Skill> fromString(String str) {
+			str = str.replaceAll("class ", "");
 			try {
 				return (Class<? extends nightgames.skills.Skill>) Class.forName(str);
 			} catch (ClassNotFoundException e) {
