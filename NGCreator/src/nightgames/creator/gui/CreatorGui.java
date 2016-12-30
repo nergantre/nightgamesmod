@@ -116,12 +116,6 @@ public class CreatorGui extends Application {
 		}
 	};
 
-	static {
-		new Global(true);
-		Global.newGame("", Optional.empty(), Collections.emptyList(), CharacterSex.male, Collections.emptyMap());
-		Global.rebuildCharacterPool(Optional.empty());
-	}
-
 	private Stage stage;
 
 	@FXML
@@ -1070,14 +1064,16 @@ public class CreatorGui extends Application {
 			context = new ContextMenu();
 			MenuItem add = new MenuItem("Add Subrequirement");
 			add.setOnAction(e -> {
-				getTreeItem().getChildren().add(new TreeItem<>(new CreatorRequirement()));
-				getTreeItem().setExpanded(true);
+				if (getTreeItem() != null) {
+					getTreeItem().getChildren().add(new TreeItem<>(new CreatorRequirement()));
+					getTreeItem().setExpanded(true);
+				}
 			});
 			context.getItems().add(add);
 
 			remove = new MenuItem("Remove");
 			remove.setOnAction(e -> {
-				if (getTreeItem().getParent() != null) {
+				if (getTreeItem() != null && getTreeItem().getParent() != null) {
 					getTreeItem().getParent().getChildren().remove(getTreeItem());
 				}
 			});
@@ -1124,6 +1120,10 @@ public class CreatorGui extends Application {
 	}
 
 	public static void main(String[] args) {
+		new Global(true);
+		Global.newGame("", Optional.empty(), Collections.emptyList(), CharacterSex.male, Collections.emptyMap());
+		Global.rebuildCharacterPool(Optional.empty());
+		System.out.println("asdf");
 		launch(args);
 	}
 }
