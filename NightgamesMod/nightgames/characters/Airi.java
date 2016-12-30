@@ -85,18 +85,18 @@ public class Airi extends BasePersonality {
                 Arrays.asList(
                         new CombatSceneChoice("[Placeholder] Parasite.", (c, self, other) -> {
                             c.write("");
-                            useSex();
+                            useParasitism();
                             return true;
                         }),
                         new CombatSceneChoice("Tell her you love her sex drive", (c, self, other) -> {
                             c.write("");
-                            useNymphomania();
+                            useTransformation();
                             return true;
                         }),
                         new CombatSceneChoice("[Placeholder] Both? [Hard Mode]", (c, self, other) -> {
                             c.write("");
-                            useNymphomania();
-                            useSex();
+                            useParasitism();
+                            useTransformation();
                             character.getGrowth().extraAttributes += 1;
                             // some compensation for the added difficulty. She gets 6 traits and 2 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
                             Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39},Global.getPlayer());
@@ -111,12 +111,12 @@ public class Airi extends BasePersonality {
                 Arrays.asList(
                         new CombatSceneChoice("Queen Slime", (c, self, other) -> {
                             c.write("");
-                            useFollowers();
+                            useSlimeQueen();
                             return true;
                         }),
                         new CombatSceneChoice("Slime Carrier", (c, self, other) -> {
                             c.write(Global.format("", self, other));
-                            useWorship();
+                            useSlimeCarrier();
                             return true;
                         })
                     )
@@ -141,23 +141,23 @@ public class Airi extends BasePersonality {
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
     
-    private void useFollowers() {
-        // TODO Auto-generated method stub
+    private void useTransformation() {
+        Global.setFlag(AIRI_TRANSFORMATION_FOCUS, true);
         
     }
 
-    private void useWorship() {
-        // TODO Auto-generated method stub
+    private void useParasitism() {
+        Global.setFlag(AIRI_PARASITISM_FOCUS, true);
         
     }
 
-    private void useSex() {
-        // TODO Auto-generated method stub
+    private void useSlimeQueen() {
+        Global.setFlag(AIRI_QUEEN_SLIME_FOCUS, true);
         
     }
 
-    private void useNymphomania() {
-        // TODO Auto-generated method stub
+    private void useSlimeCarrier() {
+        Global.setFlag(AIRI_SLIME_CARRIER_FOCUS, true);
         
     }
 

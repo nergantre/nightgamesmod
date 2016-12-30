@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.pet.Fairy;
 import nightgames.pet.FairyFem;
 import nightgames.pet.FairyMale;
 import nightgames.pet.Ptype;
@@ -44,10 +45,15 @@ public class SpawnFaerie extends Skill {
         int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-            if (gender == Ptype.fairyfem) {
-                c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
-            } else {
-                c.addPet(getSelf(), new FairyMale(getSelf(), power, ac).getSelf());
+            switch (gender) {
+                case fairyfem:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyfem, power, ac).getSelf());
+                case fairymale:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairymale, power, ac).getSelf());
+                case fairyherm:
+                default:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyherm, power, ac).getSelf());
+
             }
         } else {
             if (target.human()) {
