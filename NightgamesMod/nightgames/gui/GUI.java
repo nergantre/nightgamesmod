@@ -196,8 +196,8 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmNewgame = new JMenuItem("New Game");
 
-        mntmNewgame.setForeground(Color.WHITE);
-        mntmNewgame.setBackground(GUIColors.bgGrey);
+        //mntmNewgame.setForeground(Color.WHITE);
+        //mntmNewgame.setBackground(GUIColors.bgGrey);
         mntmNewgame.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmNewgame.addActionListener(arg0 -> {
@@ -218,8 +218,8 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmLoad = new JMenuItem("Load"); // Initializer
 
-        mntmLoad.setForeground(Color.WHITE); // Formatting
-        mntmLoad.setBackground(GUIColors.bgGrey);
+        //mntmLoad.setForeground(Color.WHITE); // Formatting
+        //mntmLoad.setBackground(GUIColors.bgGrey);
         mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmLoad.addActionListener(arg0 -> Global.loadWithDialog());
@@ -229,8 +229,8 @@ public class GUI extends JFrame implements Observer {
         // menu bar - options
 
         JMenuItem mntmOptions = new JMenuItem("Options");
-        mntmOptions.setForeground(Color.WHITE);
-        mntmOptions.setBackground(GUIColors.bgGrey);
+        //mntmOptions.setForeground(Color.WHITE);
+        //mntmOptions.setBackground(GUIColors.bgGrey);
 
         menuBar.add(mntmOptions);
 
@@ -462,16 +462,16 @@ public class GUI extends JFrame implements Observer {
         // menu bar - credits
 
         JMenuItem mntmCredits = new JMenuItem("Credits");
-        mntmCredits.setForeground(Color.WHITE);
-        mntmCredits.setBackground(GUIColors.bgGrey);
+        //mntmCredits.setForeground(Color.WHITE);
+        //mntmCredits.setBackground(GUIColors.bgGrey);
         menuBar.add(mntmCredits);
 
         // menu bar - quit match
 
         mntmQuitMatch = new JMenuItem("Quit Match");
         mntmQuitMatch.setEnabled(false);
-        mntmQuitMatch.setForeground(Color.WHITE);
-        mntmQuitMatch.setBackground(GUIColors.bgGrey);
+        //mntmQuitMatch.setForeground(Color.WHITE);
+        //mntmQuitMatch.setBackground(GUIColors.bgGrey);
         mntmQuitMatch.addActionListener(arg0 -> {
             int result = JOptionPane.showConfirmDialog(GUI.this,
                             "Do you want to quit for the night? Your opponents will continue to fight and gain exp.",
@@ -930,8 +930,8 @@ public class GUI extends JFrame implements Observer {
         loclbl.setFont(new Font("Sylfaen", 1, 16));
         loclbl.setForeground(GUIColors.textColorLight);
 
-        stsbtn.setBackground(new Color(85, 98, 112));
-        stsbtn.setForeground(GUIColors.textColorLight);
+        //stsbtn.setBackground(new Color(85, 98, 112));
+        //stsbtn.setForeground(GUIColors.textColorLight);
         bio.add(loclbl);
 
         timeLabel = new JLabel();
