@@ -28,58 +28,62 @@ public class Fairy extends Pet {
     public String describe() {
         return null;
     }
+    
+    private int getNum(Ptype thistype, Ptype othertype) {
+        return 10*thistype.ordinal() + othertype.ordinal();
+    }
 
     @Override
     public void vanquish(Combat c, Pet opponent) {
         int switcher = 10 * this.gender.ordinal() + opponent.type().ordinal();//there are fewer than 10 pet types. 0,1,2 are fem,herm,male
         //unfortunately Java doesn't support dynamically evaluated switch constants, so it has to be if/else.
-        if (switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.fairyfem.ordinal()) {
+        if (switcher == getNum(Ptype.fairyfem, Ptype.fairyfem)) {
             c.write(getSelf(), "The two faeries circle around each other vying for the upper hand. " + own()
                             + "faerie catches " + opponent.own() + "faerie by the hips and starts to eat her out. "
                             + opponent.own()
                             + " fae struggles to break free, but can barely keep flying as she rapidly reaches orgasm and vanishes.");
-        } else if (switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.fairymale.ordinal() 
-                || switcher == 10 * Ptype.fairyherm.ordinal() + Ptype.fairymale.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairyfem, Ptype.fairymale) 
+                || switcher == getNum(Ptype.fairyherm, Ptype.fairymale)) {
             c.write(getSelf(), "The faeries zip through the air like a couple dogfighting planes. " + opponent.own()
                             + "male manages to catch the female's hands, but you see her foot shoot up decisively "
                             + "between his legs. The stricken male tumbles lazily to the floor and vanishes in midair.");
-        } else if (switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.impfem.ordinal() 
-                || switcher == 10 * Ptype.fairyherm.ordinal() + Ptype.impfem.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairyfem, Ptype.impfem) 
+                || switcher == getNum(Ptype.fairyherm, Ptype.impfem)) {
             c.write(getSelf(), own() + " faerie flies between the legs of " + opponent.own()
                             + "imp, slipping both arms into the larger pussy. The imp trembles as falls to the floor as the faerie puts her entire "
                             + "upper body into pleasuring her. " + own()
                             + "faerie is forcefully expelled by the imp's orgasm just before the imp vanishes.");
-        } else if (switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.impmale.ordinal() 
-                || switcher == 10 * Ptype.fairyherm.ordinal() + Ptype.impmale.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairyfem, Ptype.impmale) 
+                || switcher == getNum(Ptype.fairyherm, Ptype.impmale)) {
             c.write(getSelf(), opponent.own() + "imp grabs at " + own()
                             + "faerie, but the nimble sprite changes direct in midair and darts between the imp's legs. You can't see exactly what happens next, "
                             + "but the imp clutches his groin in pain and disappears.");
-        } else if (switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.slime.ordinal() 
-                || switcher == 10 * Ptype.fairyherm.ordinal() + Ptype.slime.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairyfem, Ptype.slime) 
+                || switcher == getNum(Ptype.fairyherm, Ptype.slime)) {
             c.write(getSelf(), own() + "fae glows with magic as it circles " + opponent.own()
                             + "slime rapidly. The slime begins to tremble and slowly elongates into the shape of a crude phallis. It shudders "
                             + "violently and sprays liquid from the tip until the entire creature is a puddle on the floor.");
-        } else if (switcher == 10 * Ptype.fairymale.ordinal() + Ptype.fairyfem.ordinal()
-                || switcher == 10 * Ptype.fairymale.ordinal() + Ptype.fairyherm.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairymale, Ptype.fairyfem)
+                || switcher == getNum(Ptype.fairymale, Ptype.fairyherm)) {
             c.write(getSelf(), own() + "faerie boy chases " + opponent.own()
                             + "faerie and catches her from behind. He plays with the faerie girl's pussy and nipples while she's unable to retaliate. As she "
                             + "orgasms, she vanishes with a sparkle.");
-        } else if (switcher == 10 * Ptype.fairyherm.ordinal() + Ptype.fairyherm.ordinal()
-                || switcher == 10 * Ptype.fairyfem.ordinal() + Ptype.fairyherm.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairyherm, Ptype.fairyherm)
+                || switcher == getNum(Ptype.fairyfem, Ptype.fairyherm)) {
                                 c.write(getSelf(), own() + "faerie chases " + opponent.own()
                                 + "faerie and catches her from behind. He plays with the faerie's pussy, dick, and nipples while she's unable to retaliate. As she "
                                 + "orgasms, she vanishes with a sparkle.");
-        } else if (switcher == 10 * Ptype.fairymale.ordinal() + Ptype.fairymale.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairymale, Ptype.fairymale)) {
             c.write(getSelf(), "");
-        } else if (switcher == 10 * Ptype.fairymale.ordinal() + Ptype.impfem.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairymale, Ptype.impfem)) {
             c.write(getSelf(), own() + " faerie gets under " + opponent.own()
                             + "imp's guard and punches her squarely in her comparatively large clitoris. The imp shrieks in pain and collapses before "
                             + "vanishing.");
-        } else if (switcher == 10 * Ptype.fairymale.ordinal() + Ptype.impmale.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairymale, Ptype.impmale)) {
             c.write(getSelf(), own() + " faerie gets under " + opponent.own()
                             + "imp's guard and punches him squarely in his comparatively large jewels. The imp shrieks in pain and collapses before "
                             + "vanishing.");
-        } else if (switcher == 10 * Ptype.fairymale.ordinal() + Ptype.slime.ordinal()) {
+        } else if (switcher == getNum(Ptype.fairymale, Ptype.slime)) {
             c.write(getSelf(), own() + " Glows as he surrounds himself with magic before charging at "
                             + opponent.own()
                             + "slime like a tiny missile. The slime splashes more than it explodes, it's pieces "
@@ -100,7 +104,7 @@ public class Fairy extends Pet {
             c.write(captor, Global.format("{other:SUBJECT-ACTION:manage|manages} to catch {self:name-do} and starts pleasuring her with the tip of {other:possessive} finger. The sensitive fae clings to the probing finger desperately as she thrashes "
                             + "in ecstasy. Before %s can do anything to help, {self:subject} vanishes in a burst of orgasmic magic.", getSelf(), captor, owner().subject()));
         }
-        if (captor.human()) {
+        if (captor.human() && gender == Ptype.fairymale) {
             c.write(captor, "You snag " + getSelf().getName() + " out of the air. He squirms in your hand, but has no chance of breaking free. You lick the fae from his chest to small prick and the little thing squeals "
                             + "in pleasure. The taste is surprisingly sweet and makes your tongue tingle. You continue lapping up the flavor until he climaxes and disappears.");
         } else {

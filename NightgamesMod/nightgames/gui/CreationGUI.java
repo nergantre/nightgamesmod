@@ -349,7 +349,7 @@ public class CreationGUI extends JPanel {
 
         StrengthBox = new JComboBox<>();
         StrengthBox.setBackground(new Color(0, 10, 30));
-        //StrengthBox.setForeground(new Color(240, 240, 255));
+        StrengthBox.setForeground(new Color(0, 200, 0));
         StrengthBox.addItem(Trait.romantic);
         StrengthBox.addItem(Trait.exhibitionist);
         StrengthBox.addItem(Trait.dexterous);
@@ -383,7 +383,7 @@ public class CreationGUI extends JPanel {
 
         WeaknessBox = new JComboBox<>();
         WeaknessBox.setBackground(new Color(0, 10, 30));
-        //WeaknessBox.setForeground(new Color(240, 240, 255));
+        WeaknessBox.setForeground(new Color(240, 50, 50));
         WeaknessBox.addItem(Trait.insatiable);
         WeaknessBox.addItem(Trait.unpleasant);
         WeaknessBox.addItem(Trait.imagination);
@@ -417,7 +417,7 @@ public class CreationGUI extends JPanel {
         verticalBox.add(new JLabel("Exp Rate"));
         JComboBox<String> ExpBox = new JComboBox<>();
         ExpBox.setBackground(new Color(0, 10, 30));
-        //ExpBox.setForeground(new Color(240, 240, 255));
+        ExpBox.setForeground(new Color(200, 200, 0));
         ExpBox.addItem("Slow");
         ExpBox.addItem("Normal");
         ExpBox.addItem("Fast");

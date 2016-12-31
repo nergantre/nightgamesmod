@@ -1331,8 +1331,10 @@ public class GUI extends JFrame implements Observer {
     public void displayStatus() {
         statusPanel.removeAll();
         statusPanel.repaint();
-        statusPanel.setPreferredSize(new Dimension(400, mainPanel.getHeight()));
+        //statusPanel.setPreferredSize(new Dimension(400, mainPanel.getHeight()));
+        statusPanel.setPreferredSize(new Dimension(width/4, mainPanel.getHeight()));
 
+        
         if (width < 720) {
             statusPanel.setMaximumSize(new Dimension(height, width / 6));
             System.out.println("STATUS PANEL");
@@ -1342,7 +1344,9 @@ public class GUI extends JFrame implements Observer {
         Player player = Global.human;
 
         statusPanel.add(statsPanel);
-        statsPanel.setPreferredSize(new Dimension(400, 200));
+        //statsPanel.setPreferredSize(new Dimension(400, 200));
+        statsPanel.setPreferredSize(new Dimension(width/4, 200));
+
         JSeparator sep = new JSeparator();
         sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
         statusPanel.add(sep);
@@ -1387,9 +1391,13 @@ public class GUI extends JFrame implements Observer {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         JPanel currentStatusPanel = new JPanel(new GridLayout());
-        statusPanel.setPreferredSize(new Dimension(400, height));
-        currentStatusPanel.setMaximumSize(new Dimension(400, 2000));
-        currentStatusPanel.setPreferredSize(new Dimension(400, 2000));
+//        statusPanel.setPreferredSize(new Dimension(400, height));
+//        currentStatusPanel.setMaximumSize(new Dimension(400, 2000));
+//        currentStatusPanel.setPreferredSize(new Dimension(400, 2000));
+        statusPanel.setPreferredSize(new Dimension(width/4, height));
+        currentStatusPanel.setMaximumSize(new Dimension(width/4, 2000));
+        currentStatusPanel.setPreferredSize(new Dimension(width/4, 2000));
+        
         currentStatusPanel.setBackground(GUIColors.bgLight);
         statusPanel.add(currentStatusPanel);
         currentStatusPanel.add(scrollPane);
