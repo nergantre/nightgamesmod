@@ -303,4 +303,11 @@ public enum Item implements Loot {
     public ItemAmount amount(int amount) {
         return new ItemAmount(this, amount);
     }
+    
+    public boolean usable(Character by) {
+        switch (this) {
+            case SuccubusDraft: return !by.has(Trait.succubus);
+            default: return true;
+        }
+    }
 }

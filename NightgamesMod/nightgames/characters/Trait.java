@@ -453,7 +453,10 @@ public enum Trait {
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     roboweb("RoboWeb", "Improved Spiderweb trap"),
     octo("Octo", "Has robotic arms mounted onto their back"),
+    stabilized("Stabilized", "Supported by RoboArms"),
 
+    stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
+    
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {

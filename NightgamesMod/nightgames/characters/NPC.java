@@ -34,6 +34,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
@@ -95,8 +96,8 @@ public class NPC extends Character {
         description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
-        if (roboManager != null) {
-            description += "<p>You can see " + roboManager.describeArms() + " strapped behind "
+        if (has(Trait.octo)) {
+            description += "<p>You can see " + RoboArmManager.getManagerFor(this).describeArms() + " strapped behind "
                                 + possessivePronoun() + " back.<br/>";
         }
         return description;

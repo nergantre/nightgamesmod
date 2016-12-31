@@ -56,17 +56,17 @@ public class Kiss extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        int m = Global.random(8, 12);
+        int m = Global.random(6, 10);
         if (!target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.miss, target);
             return false;
         }
         boolean deep = getLabel(c).equals("Deep Kiss");
         if (getSelf().has(Trait.romantic)) {
-            m += 3;
+            m += 2;
             // if it's an advanced kiss.
             if (!getLabel(c).equals("Kiss")) {
-                m += 3;
+                m += 2;
             }
         }
         Result res = Result.normal;
@@ -77,11 +77,11 @@ public class Kiss extends Skill {
             res = Result.weak;
         }
         if (deep) {
-            m += 3;
+            m += 2;
             res = Result.special;
         }
         if (getSelf().has(Trait.experttongue)) {
-            m += 3;
+            m += 2;
             res = Result.special;
         }
         if (getSelf().has(Trait.soulsucker)) {
@@ -89,7 +89,7 @@ public class Kiss extends Skill {
         }
         if (getLabel(c).equals(divineString)) {
             res = Result.divine;
-            m += 15;
+            m += 12;
         }
         writeOutput(c, res, target);
         if (res == Result.upgrade) {

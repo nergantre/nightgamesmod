@@ -14,6 +14,7 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.StraponStrategy;
+import nightgames.skills.strategy.TechStrategy;
 import nightgames.skills.strategy.UseToyStrategy;
 import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.start.NpcConfiguration;
@@ -43,6 +44,7 @@ public class Mara extends BasePersonality {
         self.addPersonalStrategy(new UseToyStrategy());
         self.addPersonalStrategy(new StraponStrategy());
         self.addPersonalStrategy(new WindUpStrategy());
+        self.addPersonalStrategy(new TechStrategy());
     }
 
     @Override

@@ -32,6 +32,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.Pet;
 import nightgames.pet.PetCharacter;
+import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
@@ -593,7 +594,7 @@ public class Combat extends Observable implements Cloneable {
             }
         }
         if (self.has(Trait.octo)) {
-            self.roboManager.act(this, other);
+            RoboArmManager.getManagerFor(self).act(this, other);
         }
     }
 

@@ -58,6 +58,7 @@ import nightgames.json.JsonUtils;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.PetCharacter;
+import nightgames.pet.arms.ArmType;
 import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Command;
 import nightgames.skills.AssFuck;
@@ -135,7 +136,6 @@ public abstract class Character extends Observable implements Cloneable {
     public int cloned;
     private Map<Integer, LevelUpData> levelPlan;
     private Growth growth;
-    public RoboArmManager roboManager;
     
     public Character(String name, int level) {
         this.name = name;
@@ -1851,33 +1851,34 @@ public abstract class Character extends Observable implements Cloneable {
                                             + opponent.possessivePronoun() + " ego.</b>"));
             opponent.restoreWillpower(c, 10 + Global.random(10));
         }
-        if (opponent.has(Trait.leveldrainer) && ((c.getStance()
+        if (opponent.has(Trait.leveldrainer) && !has(Trait.leveldrainer) && ((c.getStance()
                                                   .penetratedBy(c, opponent, this)
                         && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
-            if (Global.random(10) < 8 && getLevel() > 1 && getLevel() <= opponent.getLevel()
-                            && !c.getCombatantData(opponent).getBooleanFlag("has_drained")) {
+            if (getLevel() > 1 && !c.getCombatantData(opponent).getBooleanFlag("has_drained")) {
                 c.getCombatantData(opponent).toggleFlagOn("has_drained", true);
                 if (c.getStance().en != Stance.trib)
-                    c.write(opponent, Global.capitalizeFirstLetter(String.format("%s %s contracts around %s %s, reinforcing"
+                    c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s contracts around %s %s, reinforcing"
                             + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
-                                                    + " left considerably more powerful, at %s expense.",
+                                                    + " left considerably more powerful, at %s expense.</b>",
                                     opponent.nameOrPossessivePronoun(),
                                     c.getStance().insertablePartFor(c, opponent).describe(opponent),
                                     nameOrPossessivePronoun(),
                             c.getStance().insertedPartFor(c, this).describe(this), possessivePronoun(), possessivePronoun(),
                             opponent.subjectAction("are", "is"), nameOrPossessivePronoun())));
                 else
-                    c.write(opponent, Global.capitalizeFirstLetter(String.format("%s greedy %s sucks itself tightly to"
-                                + " %s %s, drawing in %s strength and experience along with the pleasure of %s orgasm.",
+                    c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s greedy %s sucks itself tightly to"
+                                + " %s %s, drawing in %s strength and experience along with the pleasure of %s orgasm.</b>",
                                 opponent.nameOrPossessivePronoun(), opponent.body.getRandomPussy().describe(opponent),
                                 nameOrPossessivePronoun(), body.getRandomPussy().describe(this), possessivePronoun(),
                                 possessivePronoun())));
                 int xpStolen = getXP();
                 c.write(dong());
+                xp = Math.max(xp, getXPReqToNextLevel() - 1);
                 opponent.gainXP(Math.min(opponent.getXPReqToNextLevel(), xpStolen));
+               Global.gui().systemMessage(opponent.name + " drained " + name + " (" + xpStolen + ")");
             } else {
-                c.write(opponent, Global.capitalizeFirstLetter(String.format("%s %s pulses, but fails to"
-                                                + " draw in %s experience.", opponent.nameOrPossessivePronoun(),
+                c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s pulses, but fails to"
+                                                + " draw in %s experience.</b>", opponent.nameOrPossessivePronoun(),
                                 opponent.body.getRandomPussy().describe(opponent),
                                 nameOrPossessivePronoun())));
             }
@@ -2662,6 +2663,9 @@ public abstract class Character extends Observable implements Cloneable {
         int dc = 10 + getStamina().get() / 10 + getStamina().percent() / 5;
         if (is(Stsflag.braced)) {
             dc += getStatus(Stsflag.braced).value();
+        }
+        if (has(Trait.stabilized)) {
+            dc += 10;
         }
         if (has(ClothingTrait.heels) && !has(Trait.proheels)) {
             dc -= 7;
@@ -3518,8 +3522,13 @@ public abstract class Character extends Observable implements Cloneable {
             placeNinjaStash(m);
         }
         if (has(Trait.octo)) {
-            roboManager = new RoboArmManager(this);
-            roboManager.selectArms();
+            RoboArmManager manager = RoboArmManager.getManagerFor(this);
+            manager.selectArms();
+            if (manager.getActiveArms().stream().anyMatch(a -> a.getType() == ArmType.STABILIZER)) {
+                add(Trait.stabilized);
+            } else {
+                remove(Trait.stabilized);
+            }
         }
     }
 

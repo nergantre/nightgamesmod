@@ -1,0 +1,42 @@
+{
+	"name":"Reverse Drain Challenge [Hard Mode]",
+	"summary":"Just like Reverse Drain Challenge, but more difficult. This one is *really* hard.",
+	"enabled":true,
+	"player": {
+		"gender":"male",
+		"attributes": {
+			"Power":10,
+			"Seduction":10,
+			"Cunning":10,
+			"Perception":5,
+			"Speed":5
+		},
+		"clothing": [],
+		"level": 7,
+		"attribute_points": 6,
+		"traits": ["limbTraining1", "tongueTraining1", "sexTraining1"],
+		"trait_choice": true
+	},
+	"npcs": [
+		{
+			"type":"Cassie",
+			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "softheart", "imagination", "romantic"]
+		},
+		{
+			"type":"Jewel",
+			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "wrassler", "direct", "insatiable"]
+		},
+		{
+			"type":"Angel",
+			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "undisciplined", "lickable"]
+		},
+		{
+			"type":"Mara",
+			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "petite", "dexterous", "ticklish"]
+		}
+	],
+	"all_npcs" : {
+		
+	},
+	"flags": []
+}

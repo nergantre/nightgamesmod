@@ -123,8 +123,10 @@ public class ThrowDraft extends Skill {
                 c.write(target, "...But nothing happened (Stable Form).");
             } else {
                 boolean eventful = false;
-                for (ItemEffect e : used.getEffects()) {
-                    eventful = e.use(c, target, getSelf(), used) || eventful;
+                if (used.usable(target)) {
+                    for (ItemEffect e : used.getEffects()) {
+                        eventful |= e.use(c, target, getSelf(), used);
+                    }
                 }
                 if (!eventful) {
                     c.write(getSelf(), "...But nothing happened.");

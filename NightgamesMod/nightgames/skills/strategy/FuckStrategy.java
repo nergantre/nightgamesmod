@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
@@ -19,6 +20,9 @@ public class FuckStrategy extends AbstractStrategy {
         double weight = 1;
         if (self.getMood().equals(Emotion.horny)) {
             weight *= 2;
+        }
+        if (self.has(Trait.leveldrainer)) {
+            weight *= 4;
         }
         return weight;
     }

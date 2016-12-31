@@ -130,6 +130,6 @@ public abstract class SkillTag {
     public final static SkillTag miss = new NameOnlySkillTag("Miss");
     public final static SkillTag petDisallowed = new NameOnlySkillTag("PetDisallowed");
     public final static SkillTag worship = new WorshipSkillTag();
-    public static final SkillTag facesit = new NameOnlySkillTag("Facesitting");
+    public final static SkillTag facesit = new NameOnlySkillTag("Facesitting");
 
 }

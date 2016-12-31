@@ -21,20 +21,54 @@ public class RoboArmManager {
 
     private static final List<MultiArmMove> MULTI_MOVES = Arrays.asList(new DoubleGrab());
 
+    private static Map<Character, RoboArmManager> managers;
+    public static RoboArmManager getManagerFor(Character ch) {
+        managers.putIfAbsent(ch, new RoboArmManager(ch));
+        return managers.get(ch);
+    }
+    
     private final Character owner;
     private List<RoboArm> arms;
 
-    public RoboArmManager(Character owner) {
+    private RoboArmManager(Character owner) {
         this.owner = owner;
         arms = new ArrayList<>();
     }
 
     public void selectArms() {
         arms.clear();
-        // TODO
-        arms.add(new Grabber(this, owner));
-        arms.add(new Grabber(this, owner));
-        arms.add(new Stripper(this, owner));
+        if (owner.level < 20) {
+            if (Global.randomdouble() < .5) {
+                arms.add(new Grabber(this, owner));
+                arms.add(new Grabber(this, owner));
+            } else {
+                arms.add(new Stripper(this, owner));
+                arms.add(new Stripper(this, owner));
+            }
+        } else {
+            double r = Global.randomdouble();
+            if (r > .75) {
+                arms.add(new Grabber(this, owner));
+                arms.add(new Grabber(this, owner));
+                arms.add(new HeatCannon(this, owner));
+                arms.add(new Stripper(this, owner));
+            } else if (r > .5) {
+                arms.add(new Grabber(this, owner));
+                arms.add(new Grabber(this, owner));
+                arms.add(new Stabilizer(this, owner));
+                arms.add(new Stabilizer(this, owner));
+            } else if (r > .25) {
+                arms.add(new HealCannon(this, owner));
+                arms.add(new Stripper(this, owner));
+                arms.add(new DefabCannon(this, owner));
+                arms.add(new HeatCannon(this, owner));
+            } else {
+                arms.add(new Stabilizer(this, owner));
+                arms.add(new Stabilizer(this, owner));
+                arms.add(new HeatCannon(this, owner));
+                arms.add(new DefabCannon(this, owner));
+            }
+        }
     }
 
     public int armCount() {
@@ -44,18 +78,23 @@ public class RoboArmManager {
     public List<RoboArm> getActiveArms() {
         return new ArrayList<>(arms);
     }
-    
+
     public String describeArms() {
-        Map<ArmType, List<RoboArm>> grouped = arms.stream().collect(Collectors.groupingBy(RoboArm::getType));
+        Map<ArmType, List<RoboArm>> grouped = arms.stream()
+                                                  .collect(Collectors.groupingBy(RoboArm::getType));
         int counter = 0;
         StringBuilder sb = new StringBuilder();
-        
+
         for (Map.Entry<ArmType, List<RoboArm>> e : grouped.entrySet()) {
-            int amt = e.getValue().size();
+            int amt = e.getValue()
+                       .size();
             sb.append(amt == 1 ? "a" : amt);
-            sb.append(" ").append(e.getKey().getName());
-            if (amt > 1) sb.append('s');
-            
+            sb.append(" ")
+              .append(e.getKey()
+                       .getName());
+            if (amt > 1)
+                sb.append('s');
+
             counter++;
             if (counter == grouped.size() - 1) {
                 sb.append(" and ");
@@ -65,7 +104,7 @@ public class RoboArmManager {
         }
         return sb.toString();
     }
-    
+
     private List<RoboArm> handleMultiArmMoves(Combat c, Character target) {
         List<RoboArm> remaining = arms;
         Collections.shuffle(MULTI_MOVES);
