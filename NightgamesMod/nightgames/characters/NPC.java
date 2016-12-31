@@ -180,8 +180,10 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        gainXP(getVictoryXP(target));
-        target.gainXP(getDefeatXP(this));
+        if (!has(Trait.leveldrainer))
+            gainXP(getVictoryXP(target));
+        if (!target.has(Trait.leveldrainer))
+            target.gainXP(getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -204,8 +206,10 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        gainXP(getDefeatXP(target));
-        target.gainXP(getVictoryXP(this));
+        if (!has(Trait.leveldrainer))
+            gainXP(getDefeatXP(target));
+        if (!target.has(Trait.leveldrainer))
+            target.gainXP(getVictoryXP(this));
         arousal.empty();
         if (!target.human() || !Global.getMatch().condition.name().equals("norecovery")) {
             target.arousal.empty();
@@ -380,8 +384,10 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        gainXP(getVictoryXP(target));
-        target.gainXP(getVictoryXP(this));
+        if (!has(Trait.leveldrainer))
+            gainXP(getVictoryXP(target));
+        if (!target.has(Trait.leveldrainer))
+            target.gainXP(getVictoryXP(this));
         arousal.empty();
         target.arousal.empty();
         if (this.has(Trait.insatiable)) {
@@ -530,11 +536,11 @@ public class NPC extends Character {
     }
     
     private void pickAndDoAction(Collection<Action> available, Collection<Action> moves, Collection<Movement> radar) {
-        available.removeIf(a -> a == null || !a.usable(this));
         if (available.isEmpty()) {
             available.addAll(Global.getActions());
             available.addAll(moves);
         }
+        available.removeIf(a -> a == null || !a.usable(this));
         if (location.humanPresent()) {
             Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
         } else {
