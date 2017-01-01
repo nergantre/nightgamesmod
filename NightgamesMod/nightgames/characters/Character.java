@@ -1854,7 +1854,8 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.has(Trait.leveldrainer) && !has(Trait.leveldrainer) && ((c.getStance()
                                                   .penetratedBy(c, opponent, this)
                         && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
-            if (getLevel() > 1 && !c.getCombatantData(opponent).getBooleanFlag("has_drained")) {
+            if (getLevel() > 1 && !c.getCombatantData(opponent).getBooleanFlag("has_drained") 
+                            || Global.checkFlag(Flag.hardmode)) {
                 c.getCombatantData(opponent).toggleFlagOn("has_drained", true);
                 if (c.getStance().en != Stance.trib)
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s contracts around %s %s, reinforcing"
@@ -1874,8 +1875,15 @@ public abstract class Character extends Observable implements Cloneable {
                 int xpStolen = getXP();
                 c.write(dong());
                 xp = Math.max(xp, getXPReqToNextLevel() - 1);
-                opponent.gainXP(Math.min(opponent.getXPReqToNextLevel(), xpStolen));
-               Global.gui().systemMessage(opponent.name + " drained " + name + " (" + xpStolen + ")");
+                
+                int gained;
+                if (Global.checkFlag(Flag.hardmode)) {
+                    drain(c, opponent, 30 + Global.random(50));
+                    gained = opponent.getXPReqToNextLevel() + xpStolen;
+                } else {
+                    gained = Math.max(opponent.getXPReqToNextLevel(), xpStolen);
+                }
+                opponent.gainXP(gained);
             } else {
                 c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s pulses, but fails to"
                                                 + " draw in %s experience.</b>", opponent.nameOrPossessivePronoun(),

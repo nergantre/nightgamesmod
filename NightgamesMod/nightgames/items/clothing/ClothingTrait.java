@@ -26,6 +26,7 @@ public enum ClothingTrait {
     harpoonDildo("Harpoon Dildo", "Has a dildo stuck inside"),
     harpoonOnahole("Harpoon Onahole", "Has an onahole stuck on"),
     persistent("Persistent", "Difficult to remove"),
+    infrasound("Infrasound", "Produces inaubible, subconciously hypnotic instructions"),
     none("", "");
 
     private String name;

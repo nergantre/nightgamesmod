@@ -22,8 +22,7 @@ public class RipBlindfold extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance()
                                       .reachTop(getSelf())
-                        && target.is(Stsflag.blinded) && ((Blinded) target.getStatus(Stsflag.blinded)).getCause()
-                                                                                                      .equals("a blindfold");
+                        && target.is(Stsflag.blinded) && target.getStatus(Stsflag.blinded) instanceof Blinded;
     }
 
     @Override

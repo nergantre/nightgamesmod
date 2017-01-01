@@ -135,6 +135,10 @@ public class Outfit {
         Collections.shuffle(slotsAvailable);
         return slotsAvailable.get(0);
     }
+    
+    public Collection<Clothing> getArticlesWithTrait(ClothingTrait attribute) {
+        return equipped.stream().filter(article -> article.is(attribute)).collect(Collectors.toSet());
+    }
 
     public boolean has(Trait t) {
         return equipped.stream().anyMatch(article -> article.buffs(t));

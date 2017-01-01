@@ -14,29 +14,30 @@
 		"clothing": [],
 		"level": 7,
 		"attribute_points": 6,
-		"traits": ["limbTraining1", "tongueTraining1", "sexTraining1"],
+		"traits": ["limbTraining1", "tongueTraining1", "sexTraining1", "Rut"],
 		"trait_choice": true
 	},
 	"npcs": [
 		{
 			"type":"Cassie",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "softheart", "imagination", "romantic"]
+			"traits":["softheart", "imagination", "romantic"]
 		},
 		{
 			"type":"Jewel",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "wrassler", "direct", "insatiable"]
+			"traits":["wrassler", "direct", "insatiable"]
 		},
 		{
 			"type":"Angel",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "undisciplined", "lickable"]
+			"traits": ["undisciplined", "lickable"]
 		},
 		{
 			"type":"Mara",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "sexTraining1", "lastStand", "Unsatisfied", "petite", "dexterous", "ticklish"]
+			"traits":["petite", "dexterous", "ticklish"]
 		}
 	],
 	"all_npcs" : {
-		
+		"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "Rut"],
+		"body": { "genitals": {"pussy": "succubus"}}
 	},
-	"flags": []
+	"flags": ["hardmode"]
 }

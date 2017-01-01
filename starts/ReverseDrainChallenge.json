@@ -20,23 +20,23 @@
 	"npcs": [
 		{
 			"type":"Cassie",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "softheart", "imagination", "romantic"]
+			"traits":["softheart", "imagination", "romantic"]
 		},
 		{
 			"type":"Jewel",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "wrassler", "direct", "insatiable"]
+			"traits":["wrassler", "direct", "insatiable"]
 		},
 		{
 			"type":"Angel",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "undisciplined", "lickable"]
+			"traits":["undisciplined", "lickable"]
 		},
 		{
 			"type":"Mara",
-			"traits":["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "petite", "dexterous", "ticklish"]
+			"traits":["petite", "dexterous", "ticklish"]
 		}
 	],
 	"all_npcs" : {
-		
+		"traits": ["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied"]
 	},
 	"flags": []
 }

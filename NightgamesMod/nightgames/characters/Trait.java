@@ -454,6 +454,8 @@ public enum Trait {
     roboweb("RoboWeb", "Improved Spiderweb trap"),
     octo("Octo", "Has robotic arms mounted onto their back"),
     stabilized("Stabilized", "Supported by RoboArms"),
+    hypnovisor("Hypno Visor", "Has a fancy Hypno Visor to further her mind control"),
+    ControlledRelease("Controlled Release", "Can use mind control to tempt opponents"),
 
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
     

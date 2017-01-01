@@ -31,6 +31,9 @@ public class ToggleBlindfold extends Skill {
     }
 
     private boolean canRemove() {
+        if (!(getSelf().getStatus(Stsflag.blinded) instanceof Blinded)) {
+            return false;
+        }
         Blinded status = (Blinded) getSelf().getStatus(Stsflag.blinded);
         assert status != null;
         return status.getCause()

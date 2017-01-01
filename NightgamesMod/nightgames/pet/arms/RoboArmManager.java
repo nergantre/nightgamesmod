@@ -3,6 +3,7 @@ package nightgames.pet.arms;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,7 +22,7 @@ public class RoboArmManager {
 
     private static final List<MultiArmMove> MULTI_MOVES = Arrays.asList(new DoubleGrab());
 
-    private static Map<Character, RoboArmManager> managers;
+    private static Map<Character, RoboArmManager> managers = new HashMap<>();
     public static RoboArmManager getManagerFor(Character ch) {
         managers.putIfAbsent(ch, new RoboArmManager(ch));
         return managers.get(ch);

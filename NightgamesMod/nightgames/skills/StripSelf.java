@@ -29,12 +29,12 @@ public class StripSelf extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean hasClothes = subChoices().size() > 0;
+        boolean hasClothes = subChoices(c).size() > 0;
         return hasClothes && getSelf().canAct() && c.getStance().mobile(getSelf()) && !getSelf().isPet();
     }
 
     @Override
-    public Collection<String> subChoices() {
+    public Collection<String> subChoices(Combat c) {
         return getSelf().getOutfit().getAllStrippable().stream().map(clothing -> clothing.getName())
                         .collect(Collectors.toList());
     }
@@ -49,9 +49,9 @@ public class StripSelf extends Skill {
         Clothing clothing = null;
         int diff = getSelf().stripDifficulty(target);
         if (!choice.isEmpty() && Global.random(50) < diff) {
-            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to remove a particularly"
-                            + " persistent item from {self:possessive} body, but it stubbornly sticks"
-                            + " to {self:direct-object}.", getSelf(), target));
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to remove the %s"
+                            + " from {self:possessive} body, but it stubbornly sticks"
+                            + " to {self:direct-object}.", getSelf(), target, choice));
             return false;
         }
         if (getSelf().human()) {
