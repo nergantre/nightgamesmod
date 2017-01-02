@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FFMCowgirlThreesome;
 import nightgames.stance.FFMFacesittingThreesome;
 import nightgames.stance.FFXTribThreesome;
@@ -20,6 +21,8 @@ import nightgames.stance.ReverseXHFDaisyChainThreesome;
 public class PetThreesome extends Skill {
     public PetThreesome(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.fucking);
     }
 
     @Override
@@ -28,7 +31,7 @@ public class PetThreesome extends Skill {
     }
 
     public PetThreesome(Character self) {
-        super("Threesome", self);
+        this("Threesome", self, 0);
     }
 
     public BodyPart getSelfOrgan(Character fucker, Combat c) {

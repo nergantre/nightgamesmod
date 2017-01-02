@@ -19,7 +19,6 @@ import nightgames.pet.arms.skills.Idle;
 import nightgames.pet.arms.skills.MultiArmMove;
 
 public class RoboArmManager {
-
     private static final List<MultiArmMove> MULTI_MOVES = Arrays.asList(new DoubleGrab());
 
     private static Map<Character, RoboArmManager> managers = new HashMap<>();
@@ -90,12 +89,8 @@ public class RoboArmManager {
             int amt = e.getValue()
                        .size();
             sb.append(amt == 1 ? "a" : amt);
-            sb.append(" ")
-              .append(e.getKey()
-                       .getName());
-            if (amt > 1)
-                sb.append('s');
-
+            sb.append(" ").append(e.getKey().getName());
+            if (amt > 1) sb.append('s');
             counter++;
             if (counter == grouped.size() - 1) {
                 sb.append(" and ");

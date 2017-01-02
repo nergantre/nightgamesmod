@@ -1,18 +1,5 @@
 package nightgames.creator.gui;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Menu;
-import javafx.scene.control.ChoiceBox;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +8,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -29,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -50,6 +35,17 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
@@ -58,30 +54,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-
-import javafx.scene.text.TextFlow;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import nightgames.creator.model.AiMod;
-import nightgames.creator.model.AttributeIntPair;
-import nightgames.creator.model.ItemAmount;
-import nightgames.creator.model.MouthType;
-import nightgames.creator.model.TraitBean;
-import nightgames.creator.req.CreatorRequirement;
-import nightgames.global.Global;
-import nightgames.items.Item;
-import nightgames.items.clothing.Clothing;
-import nightgames.items.clothing.ClothingSlot;
-import nightgames.requirements.JsonRequirementLoader;
-import nightgames.requirements.JsonRequirementSaver;
-import nightgames.requirements.RequirementSaver;
-import nightgames.Resources.ResourceLoader;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.NPC;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
@@ -95,14 +77,19 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.characters.custom.CustomNPC;
-import nightgames.characters.custom.DataBackedNPCData;
 import nightgames.characters.custom.JsonSourceNPCDataLoader;
 import nightgames.characters.custom.NPCData;
 import nightgames.characters.custom.effect.MoneyModEffect;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import nightgames.creator.model.AiMod;
+import nightgames.creator.model.ItemAmount;
+import nightgames.creator.model.MouthType;
+import nightgames.creator.model.TraitBean;
+import nightgames.creator.req.CreatorRequirement;
+import nightgames.global.Global;
+import nightgames.items.Item;
+import nightgames.items.clothing.Clothing;
+import nightgames.requirements.JsonRequirementLoader;
+import nightgames.requirements.JsonRequirementSaver;
 
 public class CreatorGui extends Application {
 
@@ -129,12 +116,6 @@ public class CreatorGui extends Application {
 
 		}
 	};
-
-	static {
-		new Global(true);
-		Global.newGame("", Optional.empty(), Collections.emptyList(), CharacterSex.male, Collections.emptyMap());
-		Global.rebuildCharacterPool(Optional.empty());
-	}
 
 	private Stage stage;
 
@@ -1086,10 +1067,6 @@ public class CreatorGui extends Application {
 		}
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-
 	private class ReqCell extends TreeCell<CreatorRequirement> {
 
 		private final ContextMenu context;
@@ -1099,14 +1076,16 @@ public class CreatorGui extends Application {
 			context = new ContextMenu();
 			MenuItem add = new MenuItem("Add Subrequirement");
 			add.setOnAction(e -> {
-				getTreeItem().getChildren().add(new TreeItem<>(new CreatorRequirement()));
-				getTreeItem().setExpanded(true);
+				if (getTreeItem() != null) {
+					getTreeItem().getChildren().add(new TreeItem<>(new CreatorRequirement()));
+					getTreeItem().setExpanded(true);
+				}
 			});
 			context.getItems().add(add);
 
 			remove = new MenuItem("Remove");
 			remove.setOnAction(e -> {
-				if (getTreeItem().getParent() != null) {
+				if (getTreeItem() != null && getTreeItem().getParent() != null) {
 					getTreeItem().getParent().getChildren().remove(getTreeItem());
 				}
 			});
@@ -1150,5 +1129,13 @@ public class CreatorGui extends Application {
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void main(String[] args) {
+		new Global(true);
+		Global.newGame("", Optional.empty(), Collections.emptyList(), CharacterSex.male, Collections.emptyMap());
+		Global.rebuildCharacterPool(Optional.empty());
+		System.out.println("asdf");
+		launch(args);
 	}
 }

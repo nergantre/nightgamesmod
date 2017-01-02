@@ -1604,6 +1604,9 @@ public class Global {
         /*
          * TODO Lots of FTC bugs right now, will disable it for the time being.
          * Enable again once some of the bugs are sorted out.
+        
+        if (checkFlag(Flag.NoFTC)) return MatchType.NORMAL;
+        
         if (human.getLevel() < 15)
             return MatchType.NORMAL;
         if (!checkFlag(Flag.didFTC))
@@ -1671,5 +1674,13 @@ public class Global {
 		} else {
 			c.write(self, string);
 		}
-	}    
+	}
+
+	public static void writeFormattedIfCombat(Combat c, String string, Character self, Character other, Object ...args) {
+		if (c == null) {
+			gui().message(format(string, self, other, args));
+		} else {
+			c.write(self, format(string, self, other, args));
+		}
+	}
 }

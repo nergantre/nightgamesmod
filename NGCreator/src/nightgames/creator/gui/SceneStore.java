@@ -1,8 +1,5 @@
 package nightgames.creator.gui;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,21 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import nightgames.characters.custom.DataBackedNPCData;
-import nightgames.characters.custom.NPCData;
 import nightgames.creator.req.CreatorRequirement;
-import nightgames.creator.req.RequirementType;
 import nightgames.requirements.AndRequirement;
 import nightgames.requirements.NotRequirement;
 import nightgames.requirements.OrRequirement;

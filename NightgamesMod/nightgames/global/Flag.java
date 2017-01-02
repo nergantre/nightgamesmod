@@ -78,6 +78,7 @@ public enum Flag {
     femaleTGIntoHerm, 
     SuperTraitMode,
     AutoNext,
+    NoFTC
     ;
     
     public static boolean exists(String flag) {

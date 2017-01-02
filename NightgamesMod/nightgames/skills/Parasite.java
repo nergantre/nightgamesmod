@@ -1,7 +1,7 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -16,7 +16,7 @@ public class Parasite extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.has(Trait.Parasite);
+        return user.get(Attribute.Slime) >= 21;
     }
 
     @Override

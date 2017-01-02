@@ -5,7 +5,6 @@ import java.util.List;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.skills.ArmSkill;
 
 public abstract class RoboArm {

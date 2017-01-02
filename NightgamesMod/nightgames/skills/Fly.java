@@ -56,7 +56,7 @@ public class Fly extends Fuck {
         if (getSelf().human()) {
             c.write(getSelf(), premessage + deal(c, premessage.length(), result, target));
         } else if (c.shouldPrintReceive(target, c)) {
-            c.write(getSelf(), premessage + receive(c, premessage.length(), result, getSelf()));
+            c.write(getSelf(), premessage + receive(c, premessage.length(), result, target));
         }
         if (result == Result.normal) {
             getSelf().emote(Emotion.dominant, 50);

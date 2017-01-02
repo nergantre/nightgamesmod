@@ -7,7 +7,6 @@ import nightgames.global.Global;
 import nightgames.pet.arms.RoboArm;
 
 public class Idle extends ArmSkill {
-
     public Idle() {
         super("Idle", 0);
     }
@@ -19,5 +18,4 @@ public class Idle extends ArmSkill {
         }
         return true;
     }
-
 }
