@@ -1812,6 +1812,18 @@ public abstract class Character extends Observable implements Cloneable {
             MindControl.Result res = new MindControl.Result(opponent, c.getStance());
             String message = res.getDescription();
             if (res.hasSucceeded()) {
+                if (opponent.has(Trait.EyeOpener) && outfit.has(ClothingTrait.harpoonDildo)) {
+                    message += "Below, the vibrations of the dildo reach a powerful crescendo,"
+                                    + " and your eyes open wide in shock, a perfect target for "
+                                    + " what's coming next.";
+                    ((Player)this).addict(AddictionType.MIND_CONTROL, opponent, Addiction.LOW_INCREASE);
+                } else if (opponent.has(Trait.EyeOpener) && outfit.has(ClothingTrait.harpoonOnahole)) {
+                    message += "The warm sheath around your dick suddenly tightens, pulling incredibly"
+                                    + ", almost painfully tight around the shaft. At the same time, it starts"
+                                    + " vibrating powerfully. The combined assault causes your eyes to open"
+                                    + " wide and defenseless."; 
+                    ((Player)this).addict(AddictionType.MIND_CONTROL, opponent, Addiction.LOW_INCREASE);
+                }
                 message += "While your senses are overwhelmed by your violent orgasm, the deep pools of Mara's eyes"
                                 + " swirl and dance. You helplessly stare at the intricate movements and feel a strong"
                                 + " pressure on your mind as you do. When your orgasm dies down, so do the dancing patterns."
@@ -3537,6 +3549,10 @@ public abstract class Character extends Observable implements Cloneable {
             } else {
                 remove(Trait.stabilized);
             }
+        }
+        if (has(Trait.RemoteControl)) {
+            int currentCount = inventory.get(Item.RemoteControl);
+            gain(Item.RemoteControl, 2 - currentCount + get(Attribute.Science) / 10);
         }
     }
 

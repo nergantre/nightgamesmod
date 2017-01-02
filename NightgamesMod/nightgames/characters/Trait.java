@@ -456,7 +456,9 @@ public enum Trait {
     stabilized("Stabilized", "Supported by RoboArms"),
     hypnovisor("Hypno Visor", "Has a fancy Hypno Visor to further her mind control"),
     ControlledRelease("Controlled Release", "Can use mind control to tempt opponents"),
-
+    RemoteControl("Remote Control", "Can deploy a fancy hypnosis trap"),
+    EyeOpener("Eye Opener", "The harpoon toy enhances mind control"),
+    
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
     
     // Item
