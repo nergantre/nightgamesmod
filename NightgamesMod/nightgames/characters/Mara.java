@@ -198,7 +198,7 @@ public class Mara extends BasePersonality {
                                                                             + " Uhhh. Ok. That was weird. {self:name} walks away, arms raised over"
                                                                             + " {self:possessive} head and laughing maniacally. This is going to"
                                                                             + " be interesting, that's for sure.",
-                                                            self, other));
+                                                            self, other, character.useFemalePronouns() ? "ness" : ""));
                                             useMindControl();
                                             useOcto();
                                             character.getGrowth().extraAttributes += 1;
