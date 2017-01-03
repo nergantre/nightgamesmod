@@ -460,6 +460,12 @@ public enum Trait {
     RemoteControl("Remote Control", "Can deploy a fancy hypnosis trap"),
     EyeOpener("Eye Opener", "The harpoon toy enhances mind control"),
     
+    //Reyka Disabling Focus
+    SuccubusWarmth("Succubus's Warmth", "Why would you even want to escape?"),
+    Pacification("Pacification", "Milk may cause Charmed"),
+    DemonsEmbrace("Demon's Embrace", "Can wrap up opponent in wings"),
+    VampireWings("Vampire Wings", "Contact with wings drains Power"),
+    
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
     
     // Item

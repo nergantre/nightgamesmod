@@ -31,7 +31,10 @@ public enum Stance {
     flowertrap,
     coiled,
     upsidedownmaledom,
-    upsidedownfemdom, kneeling,;
+    upsidedownfemdom, 
+    kneeling, 
+    succubusembrace,
+    incubusembrace;
 
     public SkillTag getSkillTag() {
         return new BothRequirementSkillTag((result, value) -> result.getCombat().getStance().en == this, Global.capitalizeFirstLetter(name())+"Position");
