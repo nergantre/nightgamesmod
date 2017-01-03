@@ -6,7 +6,7 @@ import java.util.Collections;
 import com.google.gson.JsonObject;
 
 import nightgames.actions.Action;
-import nightgames.actions.MasturbateAction;
+import nightgames.actions.ControlledMasturbation;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
@@ -28,7 +28,7 @@ public class RemoteMasturbation extends DurationStatus {
 
     @Override
     public Collection<Action> allowedActions() {
-        return Collections.singleton(new MasturbateAction());
+        return Collections.singleton(new ControlledMasturbation());
     }
 
     @Override
@@ -46,14 +46,14 @@ public class RemoteMasturbation extends DurationStatus {
         return controller.name + " is remotely directing " + affected.nameOrPossessivePronoun()
                         + " hands to masturbate fiercely.";
     }
-
+    
     @Override
-    public int mod(Attribute a) {
-        return 0;
+    public boolean mindgames() {
+        return true;
     }
 
     @Override
-    public int regen(Combat c) {
+    public int mod(Attribute a) {
         return 0;
     }
 

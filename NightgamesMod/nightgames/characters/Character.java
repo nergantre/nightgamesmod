@@ -3551,7 +3551,7 @@ public abstract class Character extends Observable implements Cloneable {
             }
         }
         if (has(Trait.RemoteControl)) {
-            int currentCount = inventory.get(Item.RemoteControl);
+            int currentCount = inventory.getOrDefault(Item.RemoteControl, 0);
             gain(Item.RemoteControl, 2 - currentCount + get(Attribute.Science) / 10);
         }
     }

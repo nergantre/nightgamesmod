@@ -57,6 +57,7 @@ public class Match {
         areaList.add(map.get("Tunnel"));
         areaList.add(map.get("Workshop"));
         areaList.add(map.get("Pool"));
+        map.get("Lab").place(new nightgames.trap.RemoteControl(Global.getCharacterByType("Mara")));
         combatants.forEach(character -> {
             if (character.has(Trait.immobile)) {
                 character.place(map.get("Courtyard"));

@@ -37,7 +37,7 @@ public class RoboArmManager {
 
     public void selectArms() {
         arms.clear();
-        if (owner.level < 20) {
+        if (owner.level < 30) {
             if (Global.randomdouble() < .5) {
                 arms.add(new Grabber(this, owner));
                 arms.add(new Grabber(this, owner));

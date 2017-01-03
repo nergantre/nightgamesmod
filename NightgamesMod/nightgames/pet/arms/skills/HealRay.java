@@ -9,7 +9,7 @@ import nightgames.pet.arms.RoboArm;
 public class HealRay extends ArmSkill {
 
     public HealRay() {
-        super("Heal Ray", 20);
+        super("Heal Ray", 30);
     }
 
     @Override

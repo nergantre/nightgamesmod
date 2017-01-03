@@ -10,7 +10,7 @@ import nightgames.pet.arms.RoboArm;
 public class HeatRay extends ArmSkill {
 
     public HeatRay() {
-        super("Heat Ray", 20);
+        super("Heat Ray", 30);
     }
 
     @Override

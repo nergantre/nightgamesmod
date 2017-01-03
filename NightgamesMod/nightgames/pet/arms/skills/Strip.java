@@ -16,7 +16,7 @@ import nightgames.pet.arms.RoboArm;
 public class Strip extends ArmSkill {
 
     public Strip() {
-        super("Strip", 10);
+        super("Strip", 20);
     }
 
     @Override

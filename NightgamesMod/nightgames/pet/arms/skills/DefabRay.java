@@ -12,7 +12,7 @@ import nightgames.pet.arms.RoboArm;
 public class DefabRay extends ArmSkill {
 
     public DefabRay() {
-        super("Defabrication Ray", 20);
+        super("Defabrication Ray", 30);
     }
     
     @Override

@@ -14,7 +14,7 @@ import nightgames.skills.damage.DamageType;
 public class ToyAttack extends ArmSkill {
 
     public ToyAttack(String name, int level) {
-        super("Toy Attack", 10);
+        super("Toy Attack", 20);
     }
 
     @Override

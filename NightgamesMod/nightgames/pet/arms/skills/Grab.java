@@ -15,7 +15,7 @@ public class Grab extends ArmSkill {
     public static final String FLAG = "AttachedGrabberCount";
     
     public Grab() {
-        super("Grab", 10);
+        super("Grab", 20);
     }
 
     @Override
