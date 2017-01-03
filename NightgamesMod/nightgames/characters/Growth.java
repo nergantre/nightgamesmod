@@ -41,6 +41,7 @@ public class Growth implements Cloneable {
         traits = new HashMap<>();
         bodyParts = new HashMap<>();
         traitPoints = new HashMap<>();
+        clothing = new HashMap<>();
     }
 
     public void addTrait(int level, Trait trait) {
