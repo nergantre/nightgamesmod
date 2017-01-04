@@ -33,7 +33,7 @@ public class SuccubusEmbrace extends FemdomSexStance {
         return Global.format("{self:name} is sitting on top of you, with your"
                         + " {other:body-part:cock} nestled deep within {self:possessive}"
                         + " {self:body-part:pussy}. {self:POSSESSIVE} {self:body-part:wings}"
-                        + " are wrapped around your back, pressing %s.", top, bottom);
+                        + " are wrapped around your back, pressing %s.", top, bottom, breastDesc);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class SuccubusEmbrace extends FemdomSexStance {
 
     @Override
     public String image() {
-        return "";
+        return "succubus_embrace.jpg";
     }
 
 }

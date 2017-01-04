@@ -542,6 +542,8 @@ public class Global {
         getSkillPool().add(new HypnoVisorRemove(ch));
         getSkillPool().add(new StripMinor(ch));
         getSkillPool().add(new DemandArousal(ch));
+        getSkillPool().add(new Embrace(ch));
+        getSkillPool().add(new SuccubusNurse(ch));
         
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -1168,7 +1170,7 @@ public class Global {
         characterPool.put(eve.getCharacter().getType(), eve.getCharacter());
         characterPool.put(maya.getCharacter().getType(), maya.getCharacter());
         characterPool.put(yui.getCharacter().getType(), yui.getCharacter());
-        debugChars.add(mara.getCharacter());
+        debugChars.add(reyka.getCharacter());
     }
     
     public static void loadWithDialog() {
