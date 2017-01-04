@@ -134,7 +134,7 @@ public class Mara extends BasePersonality {
                                                             + " you were trying really hard to get there. I'll just have "
                                                             + "to work extra hard to live up to your expectations, then. It's"
                                                             + " unhealthy to work on one thing all the time anyway. Just make"
-                                                            + " sure you do your part, {self:name}. I will expect a good, driven"
+                                                            + " sure you do your part, {other:name}. I will expect a good, driven"
                                                             + " test subject for my creations, and you just volunteered yourself.\"</i>"
                                                             + " As she turns and walks away, mumbling ideas to herself, you say that"
                                                             + " you did no such thing. Your words fall on deaf ears, though. Have"
@@ -198,7 +198,7 @@ public class Mara extends BasePersonality {
                                                                             + " Uhhh. Ok. That was weird. {self:name} walks away, arms raised over"
                                                                             + " {self:possessive} head and laughing maniacally. This is going to"
                                                                             + " be interesting, that's for sure.",
-                                                            self, other, character.useFemalePronouns() ? "ness" : ""));
+                                                            self, other, character.useFemalePronouns() ? "ess" : ""));
                                             useMindControl();
                                             useOcto();
                                             character.getGrowth().extraAttributes += 1;
