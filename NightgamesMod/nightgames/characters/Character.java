@@ -1627,7 +1627,16 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void doOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
-        int total = this != opponent && opponent != null && opponent.has(Trait.carnalvirtuoso) ? 2 : 1;
+        int total = 1;
+        if (this != opponent && opponent != null) {
+            if (opponent.has(Trait.carnalvirtuoso)) {
+                total++;
+            }
+            if (opponent.has(Trait.intensesuction) && (outfit.has(ClothingTrait.harpoonDildo)
+                            || outfit.has(ClothingTrait.harpoonOnahole)) && Global.random(3) == 0) {
+                total++;
+            }
+        }
         for (int i = 1; i <= total; i++) {
             resolveOrgasm(c, opponent, selfPart, opponentPart, i, total);
         }
