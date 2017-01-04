@@ -22,7 +22,7 @@ public class MimicAngel extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Slime) >= 10;
+        return user.human() && user.get(Attribute.Slime) >= 10;
     }
 
     @Override

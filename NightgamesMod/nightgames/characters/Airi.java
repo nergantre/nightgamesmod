@@ -49,7 +49,7 @@ public class Airi extends BasePersonality {
     public void applyBasicStats(Character self) {
         self.change();
         self.setTrophy(Item.AiriTrophy);
-        preferredCockMod = CockMod.slimy;
+        preferredCockMod = CockMod.error;
 
         self.outfitPlan.add(Clothing.getByID("shirt"));
         self.outfitPlan.add(Clothing.getByID("bra"));

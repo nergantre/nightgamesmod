@@ -24,7 +24,7 @@ public class MimicCat extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Slime) >= 10;
+        return user.human() && user.get(Attribute.Slime) >= 10;
     }
 
     @Override
@@ -51,6 +51,7 @@ public class MimicCat extends Skill {
         getSelf().addTemporaryTrait(Trait.nymphomania, 10);
         getSelf().addTemporaryTrait(Trait.lacedjuices, 10);
         getSelf().addTemporaryTrait(Trait.catstongue, 10);
+        getSelf().addTemporaryTrait(Trait.FrenzyScent, 10);
         getSelf().body.temporaryAddOrReplacePartWithType(TailPart.slimeycat, 10);
         getSelf().body.temporaryAddOrReplacePartWithType(EarPart.cat, 10);
         BreastsPart part = getSelf().body.getBreastsAbove(BreastsPart.a.size);

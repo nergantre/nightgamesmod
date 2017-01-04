@@ -25,7 +25,7 @@ public class MimicSuccubus extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Slime) >= 10;
+        return user.human() && user.get(Attribute.Slime) >= 10;
     }
 
     @Override
@@ -52,6 +52,7 @@ public class MimicSuccubus extends Skill {
         getSelf().addTemporaryTrait(Trait.soulsucker, 10);
         getSelf().addTemporaryTrait(Trait.energydrain, 10);
         getSelf().addTemporaryTrait(Trait.spiritphage, 10);
+        getSelf().addTemporaryTrait(Trait.vaginaltongue, 10);
         getSelf().body.temporaryAddOrReplacePartWithType(WingsPart.demonicslime, 10);
         getSelf().body.temporaryAddOrReplacePartWithType(TailPart.demonicslime, 10);
         getSelf().body.temporaryAddOrReplacePartWithType(EarPart.pointed, 10);

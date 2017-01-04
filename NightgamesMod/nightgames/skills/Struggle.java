@@ -33,6 +33,9 @@ public class Struggle extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
+        if (!getSelf().canRespond()) {
+            return false;
+        }
         if (target.hasStatus(Stsflag.cockbound) || target.hasStatus(Stsflag.knotted)) {
             return false;
         }
@@ -132,7 +135,9 @@ public class Struggle extends Skill {
                         target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
                                         + target.get(Attribute.Power) - getSelf().get(Attribute.Power)
                                         - getSelf().escape(c, target) + diffMod)) {
-            if (getSelf().human()) {
+            if (c.getStance().reverse(c, true) != c.getStance()) {
+                c.setStance(c.getStance().reverse(c, false));
+            } else if (getSelf().human()) {
                 if (knotted) {
                     c.write(getSelf(), "With a herculean effort, you painfully force "
                                     + target.possessivePronoun()

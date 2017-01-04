@@ -499,6 +499,7 @@ public class Global {
         getSkillPool().add(new Pray(ch));
         getSkillPool().add(new Prostrate(ch));
         getSkillPool().add(new DarkKiss(ch));
+        getSkillPool().add(new SlimeMimicry(ch));
         getSkillPool().add(new MimicAngel(ch));
         getSkillPool().add(new MimicCat(ch));
         getSkillPool().add(new MimicDryad(ch));
