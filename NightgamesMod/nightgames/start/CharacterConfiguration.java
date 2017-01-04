@@ -1,7 +1,6 @@
 package nightgames.start;
 
-import static nightgames.start.ConfigurationUtils.mergeOptionals;
-
+import static nightgames.start.ConfigurationUtils.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -65,7 +64,7 @@ public abstract class CharacterConfiguration {
         level = mergeOptionals(primaryConfig.level, secondaryConfig.level);
         xp = mergeOptionals(primaryConfig.xp, secondaryConfig.xp);
         clothing = mergeOptionals(primaryConfig.clothing, secondaryConfig.clothing);
-        traits = mergeOptionals(primaryConfig.traits, secondaryConfig.traits);
+        traits = mergeCollections(primaryConfig.traits, secondaryConfig.traits);
         if (primaryConfig.body.isPresent()) {
             if (secondaryConfig.body.isPresent()) {
                 body = Optional.of(new BodyConfiguration(primaryConfig.body.get(), secondaryConfig.body.get()));

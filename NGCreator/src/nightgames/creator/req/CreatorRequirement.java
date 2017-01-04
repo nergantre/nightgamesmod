@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
 import javafx.beans.property.ReadOnlyObjectPropertyBase;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
 import nightgames.requirements.*;
 
@@ -133,6 +135,14 @@ public class CreatorRequirement extends ReadOnlyObjectPropertyBase<RequirementTy
 	
 	private void setNumber(int idx, double nr) {
 		((TextField) getBox().getChildren().get(idx)).setText("" + nr);
+	}
+	
+	public static JsonObject allToJson(TreeItem<CreatorRequirement> treeItem) {
+		JsonObject obj = new JsonObject();
+		if (treeItem.getValue() == ROOT) {
+			treeItem.getChildren().forEach(i -> i.getValue().toJson(obj));
+		}
+		return obj;
 	}
 	
 	public void toJson(JsonObject toFill) {

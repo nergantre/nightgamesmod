@@ -8,12 +8,15 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
+import nightgames.combat.CombatScene;
+import nightgames.combat.CombatSceneChoice;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.StraponStrategy;
+import nightgames.skills.strategy.TechStrategy;
 import nightgames.skills.strategy.UseToyStrategy;
 import nightgames.skills.strategy.WindUpStrategy;
 import nightgames.start.NpcConfiguration;
@@ -25,6 +28,11 @@ public class Mara extends BasePersonality {
      *
      */
     private static final long serialVersionUID = -3812726803607189573L;
+
+    private static final String MARA_GENERAL_TECH_FOCUS = "MaraGeneralTechFocus";
+    private static final String MARA_HARPOON_FOCUS = "MaraHarpoonFocus";
+    private static final String MARA_OCTO_FOCUS = "MaraOctoFocus";
+    private static final String MARA_MIND_CONTROL_FOCUS = "MaraMindControlFocus";
 
     public Mara() {
         this(Optional.empty(), Optional.empty());
@@ -43,6 +51,7 @@ public class Mara extends BasePersonality {
         self.addPersonalStrategy(new UseToyStrategy());
         self.addPersonalStrategy(new StraponStrategy());
         self.addPersonalStrategy(new WindUpStrategy());
+        self.addPersonalStrategy(new TechStrategy());
     }
 
     @Override
@@ -73,13 +82,138 @@ public class Mara extends BasePersonality {
         character.getGrowth().arousal = 4;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 2;
-        preferredAttributes.add(c -> c.getRank() >= 4 && c.get(Attribute.Temporal) < 20 
+
+        character.addCombatScene(new CombatScene(
+                        (c, self, other) -> self.getLevel() >= 10 && !Global.checkFlag(MARA_GENERAL_TECH_FOCUS)
+                                        && !Global.checkFlag(MARA_HARPOON_FOCUS),
+                        (c, self, other) -> Global.format(
+                                        "You see {self:name} fiddling with the device on her arm"
+                                                        + " as you both recover from your match. <i>\"Damn thing is on the fritz"
+                                                        + " again... Let me just...\"</i> A shrill beep sounds, and something"
+                                                        + " whirrs to life inside. <i>\"There we go. I really should work on the"
+                                                        + " reliability. That will leave me with plenty of time to add new goodies."
+                                                        + " Mmm... What do you think, {other:name}? Should I invest resources into"
+                                                        + " one really fancy toy, or should I divide my time over several simpeler ones?",
+                                        self, other),
+                        Arrays.asList(new CombatSceneChoice("Quality", (c, self, other) -> {
+                            c.write(Global.format(
+                                            "You tell {self:direct-object} there would be no point to slavering"
+                                                            + " away on mediocre devices. Instead, {self:pronoun} should devote {self:reflective}"
+                                                            + " to one, truly inspired invention to show {self:possessive} true prowess."
+                                                            + " <i>\"Yes... You're right!\"</i> %s You yelp and stumble backward, asking her"
+                                                            + " what she's doing. <i>\"I'm going to create the best sex toy this world will"
+                                                            + " ever see, of course! And since you convinced me to do so, it's only fair"
+                                                            + " that I get it tailored to suit you </i>just<i> right. Trust me, {other:name},"
+                                                            + " you're going to enjoy this!\"</i>",
+                                            self, other,
+                                            other.hasDick() ? "{self:PRONOUN} whips out a tape measure from... somewhere..."
+                                                            + " and starts measuring up your {other:body-part:cock}."
+                                                            : "{self:PROUNOUN} reaches down and sticks a finger into"
+                                                                            + " your still-bare, still-wet {other:body-part:pussy},"
+                                                                            + " wriggling it around a bit inside."));
+                            useHarpoon();
+                            return true;
+                        }), new CombatSceneChoice("Quantity", (c, self, other) -> {
+                            c.write(Global.format(
+                                            "You weigh in that one toy, no matter how good it is,"
+                                                            + " is bound to get boring eventually. Instead, {self:pronoun}"
+                                                            + " should create a more diverse arsenal. \"<i>Interesting... I"
+                                                            + " do have plenty of ideas to keep things fresh, that's for sure.</i>\""
+                                                            + " {self:PRONOUN} grins at you mischievously. <i>\"All of them are"
+                                                            + " delightfully naughty. You'll help me beta-test, right? Ah,"
+                                                            + " who am I kidding. Like you have any choice in the matter!</i>\"",
+                                            self, other));
+                            useGeneralTech();
+                            return true;
+                        }), new CombatSceneChoice("You have faith she can do both [Hard Mode]", (c, self, other) -> {
+                            c.write(Global.format(
+                                            "{self:name} is a genius. Surely, if anyone"
+                                                            + " could create a true masterpiece and still have time"
+                                                            + " left for side projects, it would be her. <i>\"Aww, flatterer!"
+                                                            + " If you hadn't already gotten in my pants just now, I'd think"
+                                                            + " you were trying really hard to get there. I'll just have "
+                                                            + "to work extra hard to live up to your expectations, then. It's"
+                                                            + " unhealthy to work on one thing all the time anyway. Just make"
+                                                            + " sure you do your part, {other:name}. I will expect a good, driven"
+                                                            + " test subject for my creations, and you just volunteered yourself.\"</i>"
+                                                            + " As she turns and walks away, mumbling ideas to herself, you say that"
+                                                            + " you did no such thing. Your words fall on deaf ears, though. Have"
+                                                            + " you perhaps shot yourself in the foot there?",
+                                            self, other));
+                            useGeneralTech();
+                            useHarpoon();
+                            character.getGrowth().extraAttributes += 1;
+                            Global.getPlayer()
+                                  .getGrowth().addTraitPoints(new int[] {12, 39}, Global.getPlayer());
+                            return true;
+                        }))));
+
+        character.addCombatScene(new CombatScene(
+                        (c, self, other) -> self.getLevel() >= 10 && !Global.checkFlag(MARA_OCTO_FOCUS)
+                                        && !Global.checkFlag(MARA_MIND_CONTROL_FOCUS),
+                        (c, self, other) -> Global.format(
+                                        "You and {self:name} are both getting back up after your match,"
+                                                        + " cleaning yourselves as much as possible before moving on. <i>\"Hey, {other:name}."
+                                                        + " Perhaps you can help settle a little dispute I've been having with a friend."
+                                                        + " Who's better: Mesmero, or Doctor Octopus?\"</i>",
+                                        self, other),
+                        Arrays.asList(new CombatSceneChoice("Mesmero", (c, self, other) -> {
+                            c.write(Global.format(
+                                            "You don't know why, but the idea of mind control has always"
+                                                            + " turned you on. You answer {self:name} confidently, and are met"
+                                                            + " with a wide grin. <i>\"Ohhh, just what I thought. You want someone"
+                                                            + " pulling your strings, don't you. Among other parts of your anatomy,"
+                                                            + " of course... Well, I'll make sure to be ready to oblige next time we"
+                                                            + " meet. Maybe I'll even let you remember the occasion! Then again, I'm"
+                                                            + " sure your surprised look will be something I want to see more than once..."
+                                                            + " Decisions, decisions.\"</i> What... exactly did you just sign up for?",
+                                            self, other));
+                            useMindControl();
+                            return true;
+                        }), new CombatSceneChoice("Doctor Octopus", (c, self, other) -> {
+                            c.write(Global.format(
+                                            "Oh, that's no contest! The good doctor could probably engineer"
+                                                            + " one of his arms to block mind control, and then still have more"
+                                                            + " left to deal with his enemies. <i>\"Interesting. Yes, I can see"
+                                                            + " your point. Extra arms to hold you in place. Extra arms to"
+                                                            + " remove your clothes. Extra arms with sex toys mounted at the end."
+                                                            + " The possibilities are limitless! You've been a good test subject"
+                                                            + " so far, {other:name}, so I'll let you test all my new arm designs"
+                                                            + " as well! See you soon!</i>\" Well, shit. As if the two hands she"
+                                                            + " has right now weren't dangerous enough...",
+                                            self, other));
+                            useOcto();
+                            return true;
+                        }), new CombatSceneChoice("What are these strange things you speak of? [Hard Mode]",
+                                        (c, self, other) -> {
+                                            c.write(Global.format(
+                                                            "<i>\"{other:name}. Seriously. You are going to need a crash course"
+                                                                            + " in comic books, my friend. This cannot stand. But since your feeble"
+                                                                            + " mind obviously cannot comprehend this most fascinating art form, I'm"
+                                                                            + " going to have to give practical demonstrations if I am to have any"
+                                                                            + " hope of properly educating you. Maybe once the Games are over, I'll"
+                                                                            + " ask Cassie to draw a comic about me. This moment will be forever recorded"
+                                                                            + " as the moment when I transformed from {self:name}, the brilliant scientist,"
+                                                                            + " into {self:name} the supervillain%s! Bask in my presence and weep!</i>\""
+                                                                            + " Uhhh. Ok. That was weird. {self:name} walks away, arms raised over"
+                                                                            + " {self:possessive} head and laughing maniacally. This is going to"
+                                                                            + " be interesting, that's for sure.",
+                                                            self, other, character.useFemalePronouns() ? "ess" : ""));
+                                            useMindControl();
+                                            useOcto();
+                                            character.getGrowth().extraAttributes += 1;
+                                            Global.getPlayer()
+                                                  .getGrowth().addTraitPoints(new int[] {21, 48}, Global.getPlayer());
+                                            return true;
+                                        }))));
+
+        preferredAttributes.add(c -> c.getRank() >= 4 && c.get(Attribute.Temporal) < 20
                         ? Optional.of(Attribute.Temporal) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) < 15 ? Optional.of(Attribute.Science) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Science) >= 15 && c.get(Attribute.Fetish) < 50
                         ? Optional.of(Attribute.Fetish) : Optional.empty());
-        preferredAttributes
-                        .add(c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
+        preferredAttributes.add(
+                        c -> c.get(Attribute.Cunning) < 100 ? Optional.of(Attribute.Cunning) : Optional.empty());
         character.getGrowth().addTrait(0, Trait.petite);
         character.getGrowth().addTrait(0, Trait.dexterous);
         character.getGrowth().addTrait(0, Trait.ticklish);
@@ -89,7 +223,6 @@ public class Mara extends BasePersonality {
         character.getGrowth().addTrait(12, Trait.dickhandler);
         character.getGrowth().addTrait(15, Trait.sexTraining1);
         character.getGrowth().addTrait(18, Trait.pussyhandler);
-        character.getGrowth().addTrait(20, Trait.mindcontroller);
         character.getGrowth().addTrait(21, Trait.tongueTraining1);
         character.getGrowth().addTrait(24, Trait.limbTraining2);
         character.getGrowth().addTrait(27, Trait.tight);
@@ -103,20 +236,52 @@ public class Mara extends BasePersonality {
         character.getGrowth().addTrait(51, Trait.desensitized2);
     }
 
+    private void useGeneralTech() {
+        Global.flag(MARA_GENERAL_TECH_FOCUS);
+        character.getGrowth().addTrait(10, Trait.bomber);
+        character.getGrowth().addTrait(19, Trait.maglocks);
+        character.getGrowth().addTrait(26, Trait.trainingcollar);
+        character.getGrowth().addTrait(37, Trait.roboweb);
+    }
+
+    private void useHarpoon() {
+        Global.flag(MARA_HARPOON_FOCUS);
+        character.getGrowth().addTrait(10, Trait.harpoon);
+        character.getGrowth().addTrait(19, Trait.yank);
+        character.getGrowth().addTrait(26, Trait.conducivetoy);
+        character.getGrowth().addTrait(37, Trait.intensesuction);
+    }
+
+    private void useOcto() {
+        Global.flag(MARA_OCTO_FOCUS);
+        character.getGrowth().addTrait(20, Trait.octo); // upgrades itself (in RoboArmManager)
+    }
+
+    private void useMindControl() {
+        Global.flag(MARA_MIND_CONTROL_FOCUS);
+        character.getGrowth().addTrait(20, Trait.mindcontroller);
+        character.getGrowth().addTrait(29, Trait.infrasound);
+        character.getGrowth()
+                 .addClothing(29, Clothing.getByID("infrasoundnecklace"));
+        character.getGrowth().addTrait(40, Trait.ControlledRelease);
+        if (Global.checkFlag(MARA_GENERAL_TECH_FOCUS)) {
+            character.getGrowth().addTrait(53, Trait.RemoteControl);
+        } else {
+            character.getGrowth().addTrait(53, Trait.EyeOpener);
+        }
+    }
+
     @Override
     protected void onLevelUp() {
         if (character.rank >= 4) {
-            
+
         }
     }
-    
+
     @Override
     public void rest(int time) {
         if (character.rank == 1 && !character.has(Trait.madscientist)) {
             advance();
-        }
-        if (character.rank == 2 && !character.has(Trait.madscientist)) {
-            character.body.add(new GenericBodyPart("mechanical tentacles", "Four large mechanically feelers are attached to {self:possessive} back.", 1, 1.0, 0.0, true, "mechtentacles", ""));
         }
         super.rest(time);
         if (!(character.has(Item.Onahole) || character.has(Item.Onahole2)) && character.money >= 300) {
@@ -140,22 +305,28 @@ public class Mara extends BasePersonality {
             character.money -= 600;
         }
         if (character.money > 0 && character.rank >= 1) {
-            Global.getDay().visit("Body Shop", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("Body Shop", character, Global.random(character.money));
         }
         if (character.money > 0 && character.rank >= 1) {
-            Global.getDay().visit("Workshop", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("Workshop", character, Global.random(character.money));
         }
         if (character.money > 0) {
-            Global.getDay().visit("Hardware Store", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("Hardware Store", character, Global.random(character.money));
         }
         if (character.money > 0) {
-            Global.getDay().visit("Black Market", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("Black Market", character, Global.random(character.money));
         }
         if (character.money > 0) {
-            Global.getDay().visit("XXX Store", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("XXX Store", character, Global.random(character.money));
         }
         if (character.money > 0) {
-            Global.getDay().visit("Bookstore", character, Global.random(character.money));
+            Global.getDay()
+                  .visit("Bookstore", character, Global.random(character.money));
         }
         Decider.visit(character);
         int r;
@@ -163,9 +334,11 @@ public class Mara extends BasePersonality {
         for (int i = 0; i < time; i++) {
             r = Global.random(8);
             if (r == 1) {
-                Global.getDay().visit("Exercise", this.character, 0);
+                Global.getDay()
+                      .visit("Exercise", this.character, 0);
             } else if (r == 0) {
-                Global.getDay().visit("Browse Porn Sites", this.character, 0);
+                Global.getDay()
+                      .visit("Browse Porn Sites", this.character, 0);
             }
         }
     }
@@ -174,7 +347,9 @@ public class Mara extends BasePersonality {
         character.getGrowth().addTrait(10, Trait.madscientist);
         character.body.addReplace(PussyPart.cybernetic, 1);
         if (character.hasDick()) {
-            character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.bionic), 1);
+            character.body.addReplace(character.body.getRandomCock()
+                                                    .applyMod(CockMod.bionic),
+                            1);
         }
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("bra"));
@@ -185,7 +360,8 @@ public class Mara extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("pantyhose"));
         character.outfitPlan.add(Clothing.getByID("boots"));
         character.mod(Attribute.Science, 1);
-        character.getGrowth().addOrRemoveTraits(character);
+        character.getGrowth()
+                 .addOrRemoveTraits(character);
     }
 
     @Override
@@ -218,7 +394,8 @@ public class Mara extends BasePersonality {
     public String victory(Combat c, Result flag) {
         Character target = c.getOpponent(character);
         character.arousal.empty();
-        if (c.getStance().anallyPenetrated(c, target)) {
+        if (c.getStance()
+             .anallyPenetrated(c, target)) {
             return "The sensations coming from your prostate are too much as your arms give out below you. Mara doesn't let up either, grinding the head of the strap on over your "
                             + "prostate. <i>\"I've read that the prostate is the male equivalent of a g-spot,\"</i> she pants as she continues her assault on your ass. <i>\"I'd like to see if I can "
                             + "make you come without stimulating your penis.\"</i> she continues. You don't really listen as your brain is about to short circuit and your dick is about to give "
@@ -237,7 +414,10 @@ public class Mara extends BasePersonality {
                             + "floor, spent, but Mara isn't finished with you. She pulls out a bottle of lubricant and starts to grease you up. She takes her time with it, teasing and tickling you "
                             + "as she goes, stopping from time to time to place light kisses. Between her enticing behavior and her naked body pressed against you, your erection recovers in record "
                             + "time.<br/><br/>Mara makes herself comfortable sitting on your lap and slides your lubed up dick between her thighs. As she leans against your chest, you can feel her hot slit "
-                            + "pressing against your member. Her finger teases the head of your penis, which is poking out of her lap. <i>\"It's a good thing you're such a horny " + c.getOpponent(character).boyOrGirl() + ". If you couldn't get it "
+                            + "pressing against your member. Her finger teases the head of your penis, which is poking out of her lap. <i>\"It's a good thing you're such a horny "
+                            + c.getOpponent(character)
+                               .boyOrGirl()
+                            + ". If you couldn't get it "
                             + "up again, I would have to settle for grinding on your leg.\"</i> As she says this, she starts to rub her clit along the length of your penis. She keeps her legs clamped "
                             + "tightly together so that her movements stimulate your entire shaft. You contribute by licking and sucking the side of her neck to draw out soft moans of pleasure. You "
                             + "support your upper body with your left arm, which leaves your right hand free to play with Mara's small breasts and nipples. Her grinding becomes more needy as she "
@@ -249,35 +429,36 @@ public class Mara extends BasePersonality {
                             + "involuntarily, but she manages to maintain both the kiss and her grip on your cock. The intense stimulation blows away your endurance and your head goes blank as you "
                             + "cover her hands with your seed. Mara breaks the kiss and leaves you completely exhausted.";
         }
-        if (c.getStance().vaginallyPenetrated(c, character)) {
-            if(character.has(Item.ShockGlove)&&Global.random(2)==0){
+        if (c.getStance()
+             .vaginallyPenetrated(c, character)) {
+            if (character.has(Item.ShockGlove) && Global.random(2) == 0) {
                 return "You've got Mara just where you want her. Your arms are wrapped around her, holding her in place as you thrust your cock into her tight pussy over and over. Her moans are getting louder and louder, and you can feel her breath "
-                        + "quickening. You're getting close to cumming, but she's definitely closer. She returns your embrace, squeezing her body against yours, stroking your back with her hands. Her hands creep down to grasp your buttocks. "
-                        + "All of a sudden, she grins deviously, and she whispers...<br/><br/>"
-                        + "<i>\"Time for an experiment. Surprise!\"</i><br/>"
-                        + "Suddenly, you feel a poking sensation in your ass. You feel the pressure of her fingers touching your prostate. Wait... is that the hand that she's wearing her shock glove on...?<br/><br/>"
-                        + "<b>BZZT!</b> A sharp jolt of pain tears through you as Mara forces electricity through her shock glove and into your ass. You thrash around desperately, but somehow the lithe girl is "
-                        + "able to keep her finger pressed against your prostate. You feel an intense pressure welling in your abdomen.<br/><br/>"
-                        + "Your orgasm hits you like a brick wall. The pain in your rear gives way to pleasure as the pressure in your abdomen releases. Your cock twitches over and over, and you can feel your seed filling up Mara's insides.<br/><br/>"
-                        + "When your orgasm finally subsides, Mara stands. Thick globs of white cum drip out of her. <i>\"Wow, you came a LOT!\"</i> she remarks happily. <i>\"Just like my research indicated.\"</i> She reaches for her soaked flower. "
-                        + "<i>\"Now, I can't go into my next fight this horny. You just hold that sexy, defeated pose. I'll handle myself.\"</i> Exhausted, you can do little more than lie there as Mara masturbates over you.<br/><br/>"
-                        + "After a few moments of pleasuring herself, Mara suddenly has a revelation. She spreads her pussy lips open and brings her dangerous, gloved hand near her exposed clit. She takes a deep breathe to bolster "
-                        + "her courage and giggles nervously. <i>\"This is probably either the best or worst idea I've even had. It looked like it felt great on your prostate... What's good for the goose, right..?\"</i> Before you can respond, "
-                        + "she touches an electrified finger to her sensitive love bud. Her whole body goes rigid and she lets out a scream of... probably pleasure?... as she shudders in orgasm.<br/><br/>"
-                        + "Finally, it's over. The reckless minx collapses next to you, panting. She rolls over and rests her head on your shoulder, then says, <i>\"That felt scary good, but I bet I don't need to tell you that... "
-                        + "I'm just worried I might get addicted to that kind of stimulation.\"</i> "
-                        + "She pecks your lips with a light kiss, then stands. <i>\"Come visit me every once in a while, okay? I'm working on some new tools that need... testing.\"</i>";
-            }else{
-                return "Mara's pussy is so tight and wet. She skillfully rides your dick, overwhelming you with pleasure. <i>\"Are you going to cum before me?\"</i> She's panting with pleasure, "+
-                    "but still sounds confident. <i>\"Go ahead and fill me up. I don't mind.\"</i> Her permission is irrelevant. She's making you cum and there's nothing you can do about it. "+
-                    "You throw your head back and moan as you shoot your load into her tight womb.<br/><br/>"
-                    + "Mara slides off your cock as your seed slowly leaks out of her. <i>\"Was I too good "+
-                    "for you to hold back? You made quite a mess down here.\"</i> She stirs her entrance with her finger, making a wet sound. She still looks pretty horny and you recall that "+
-                    "she hasn't climaxed yet. She smiles and gives you a quick kiss. <i>\"Don't worry, I'll give myself a hand.\"</i> She inserts a second finger, using your ejaculate as a "+
-                    "lubricant. <i>\"Playing with semen would probably be a little gross to you, right? It's actually turning me on.\"</i> She lets out a quiet moan and gives you a needy "+
-                    "look. <i>\"Just don't leave, ok? I'd feel lonely masturbating on my own.\"</i> You hug Mara's petite body, feeling her tremble while she continues to play with herself. "+
-                    "You kiss her neck and stroke her body, which seems to heighten her pleasure. You judge she is on the verge of orgasm and kiss her passionately, while playing with "+
-                    "her nipples. She moans against your mouth and shudders in your arms as she climaxes.";
+                                + "quickening. You're getting close to cumming, but she's definitely closer. She returns your embrace, squeezing her body against yours, stroking your back with her hands. Her hands creep down to grasp your buttocks. "
+                                + "All of a sudden, she grins deviously, and she whispers...<br/><br/>"
+                                + "<i>\"Time for an experiment. Surprise!\"</i><br/>"
+                                + "Suddenly, you feel a poking sensation in your ass. You feel the pressure of her fingers touching your prostate. Wait... is that the hand that she's wearing her shock glove on...?<br/><br/>"
+                                + "<b>BZZT!</b> A sharp jolt of pain tears through you as Mara forces electricity through her shock glove and into your ass. You thrash around desperately, but somehow the lithe girl is "
+                                + "able to keep her finger pressed against your prostate. You feel an intense pressure welling in your abdomen.<br/><br/>"
+                                + "Your orgasm hits you like a brick wall. The pain in your rear gives way to pleasure as the pressure in your abdomen releases. Your cock twitches over and over, and you can feel your seed filling up Mara's insides.<br/><br/>"
+                                + "When your orgasm finally subsides, Mara stands. Thick globs of white cum drip out of her. <i>\"Wow, you came a LOT!\"</i> she remarks happily. <i>\"Just like my research indicated.\"</i> She reaches for her soaked flower. "
+                                + "<i>\"Now, I can't go into my next fight this horny. You just hold that sexy, defeated pose. I'll handle myself.\"</i> Exhausted, you can do little more than lie there as Mara masturbates over you.<br/><br/>"
+                                + "After a few moments of pleasuring herself, Mara suddenly has a revelation. She spreads her pussy lips open and brings her dangerous, gloved hand near her exposed clit. She takes a deep breathe to bolster "
+                                + "her courage and giggles nervously. <i>\"This is probably either the best or worst idea I've even had. It looked like it felt great on your prostate... What's good for the goose, right..?\"</i> Before you can respond, "
+                                + "she touches an electrified finger to her sensitive love bud. Her whole body goes rigid and she lets out a scream of... probably pleasure?... as she shudders in orgasm.<br/><br/>"
+                                + "Finally, it's over. The reckless minx collapses next to you, panting. She rolls over and rests her head on your shoulder, then says, <i>\"That felt scary good, but I bet I don't need to tell you that... "
+                                + "I'm just worried I might get addicted to that kind of stimulation.\"</i> "
+                                + "She pecks your lips with a light kiss, then stands. <i>\"Come visit me every once in a while, okay? I'm working on some new tools that need... testing.\"</i>";
+            } else {
+                return "Mara's pussy is so tight and wet. She skillfully rides your dick, overwhelming you with pleasure. <i>\"Are you going to cum before me?\"</i> She's panting with pleasure, "
+                                + "but still sounds confident. <i>\"Go ahead and fill me up. I don't mind.\"</i> Her permission is irrelevant. She's making you cum and there's nothing you can do about it. "
+                                + "You throw your head back and moan as you shoot your load into her tight womb.<br/><br/>"
+                                + "Mara slides off your cock as your seed slowly leaks out of her. <i>\"Was I too good "
+                                + "for you to hold back? You made quite a mess down here.\"</i> She stirs her entrance with her finger, making a wet sound. She still looks pretty horny and you recall that "
+                                + "she hasn't climaxed yet. She smiles and gives you a quick kiss. <i>\"Don't worry, I'll give myself a hand.\"</i> She inserts a second finger, using your ejaculate as a "
+                                + "lubricant. <i>\"Playing with semen would probably be a little gross to you, right? It's actually turning me on.\"</i> She lets out a quiet moan and gives you a needy "
+                                + "look. <i>\"Just don't leave, ok? I'd feel lonely masturbating on my own.\"</i> You hug Mara's petite body, feeling her tremble while she continues to play with herself. "
+                                + "You kiss her neck and stroke her body, which seems to heighten her pleasure. You judge she is on the verge of orgasm and kiss her passionately, while playing with "
+                                + "her nipples. She moans against your mouth and shudders in your arms as she climaxes.";
             }
         } else {
             target.arousal.set(target.arousal.max() * 2 / 3);
@@ -314,13 +495,24 @@ public class Mara extends BasePersonality {
                             + "she's cumming. You lean in and kiss her gently as she catches her breath.<br/><br/>After you've both recovered enough to get back to your feet, Mara punches you weakly "
                             + "in the chest. <i>\"You jerk! Do you have any idea how long this stuff lasts? How am I suppose to win my next fight when I'm this sensitive?\"</i> She pulls your head down "
                             + "to her height and kisses you passionately before storming off.";
-        } else if (c.getStance().vaginallyPenetrated(c, character)) {
+        } else if (c.getStance()
+                    .vaginallyPenetrated(c, character)) {
             return "You bury yourself deep into Mara's tight pussy as she screams in pleasure. Her hot folds shudder and squeeze your cock, confirming she's reached her climax. "
                             + "The sensation is amazing, but you're not in danger of cumming with her. You gently stroke her head while spasms of pleasure continue to run through her small body. "
                             + "It occurs to you -not for the first time- that she's really cute, even when she's not trying to be.<br/><br/>As Mara catches her breath, you see realization slowly dawn "
-                            + "on her. <i>\"You didn't cum? Why not?\"</i> She actually looks a little hurt. <i>\"Every " + c.getOpponent(character).boyOrGirl() + " I've been with said it feels really good and tight inside me. They never outlast "
-                            + "me.\"</i> Every " + c.getOpponent(character).boyOrGirl() + " she's been with? Mara struck you as a bit of an introvert. How many " + c.getOpponent(character).guyOrGirl() + "s has she been with? <br/>She gives you a flick on the forehead. <i>\"Don't be mean. "
-                            + "I've only slept with a few " + c.getOpponent(character).boyOrGirl() + "s. It's not like you're a virgin either.\"</i> Fair enough, but if she's upset that you didn't cum inside her, you're eager to remedy that. "
+                            + "on her. <i>\"You didn't cum? Why not?\"</i> She actually looks a little hurt. <i>\"Every "
+                            + c.getOpponent(character)
+                               .boyOrGirl()
+                            + " I've been with said it feels really good and tight inside me. They never outlast "
+                            + "me.\"</i> Every " + c.getOpponent(character)
+                                                    .boyOrGirl()
+                            + " she's been with? Mara struck you as a bit of an introvert. How many "
+                            + c.getOpponent(character)
+                               .guyOrGirl()
+                            + "s has she been with? <br/>She gives you a flick on the forehead. <i>\"Don't be mean. "
+                            + "I've only slept with a few " + c.getOpponent(character)
+                                                               .boyOrGirl()
+                            + "s. It's not like you're a virgin either.\"</i> Fair enough, but if she's upset that you didn't cum inside her, you're eager to remedy that. "
                             + "\n\nYou pull most of the way out in preparation for a big thrust, but Mara yelps in alarm. <i>\"Wait!\"</i> She slides her butt backward, causing your dick to fall out completely, "
                             + "and curls up protectively. <i>\"I get really sensitive down there after I orgasm. Give me a minute or two to recover before we continue. In the meantime we can always chat, "
                             + "or maybe kiss?\"</i> You'd feel pretty silly trying to have a conversation while kneeling over her with a painfully hard boner. You lean down and press your lips against "
@@ -458,8 +650,9 @@ public class Mara extends BasePersonality {
                                             + "that. Do you want to be next?\"</i>",
                             target.name(), target.name(), target.name(), target.possessivePronoun(),
                             target.possessivePronoun(), target.possessivePronoun(), target.name(), target.pronoun(),
-                            target.possessivePronoun(), target.possessivePronoun(), Global.capitalizeFirstLetter(target.possessivePronoun()),
-                            target.name(), target.possessivePronoun(), target.directObject(), target.pronoun(),
+                            target.possessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.name(),
+                            target.possessivePronoun(), target.directObject(), target.pronoun(),
                             Global.capitalizeFirstLetter(target.possessivePronoun()));
         }
         return "Mara approaches " + target.name()
@@ -498,12 +691,17 @@ public class Mara extends BasePersonality {
 
     @Override
     public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.", character, other);
+        return Global.format(
+                        "{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.",
+                        character, other);
     }
 
     @Override
     public boolean fit() {
-        return character.getStamina().percent() >= 75 && character.getArousal().percent() <= 10
+        return character.getStamina()
+                        .percent() >= 75
+                        && character.getArousal()
+                                    .percent() <= 10
                         && !character.mostlyNude();
     }
 
@@ -536,11 +734,9 @@ public class Mara extends BasePersonality {
 
     @Override
     public String orgasmLiner(Combat c) {
-        final String finalLines[] = {
-                        "<i>\"NNnnnn..! Oh man I can't take much more!\"</i>",
-                        "<i>\"Ngh! Slow down! please!\"</i>",
-                        "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",
-                        };
+        final String finalLines[] =
+                        {"<i>\"NNnnnn..! Oh man I can't take much more!\"</i>", "<i>\"Ngh! Slow down! please!\"</i>",
+                                        "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",};
         switch (character.orgasms) {
             case 0:
                 return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
@@ -549,17 +745,16 @@ public class Mara extends BasePersonality {
             case 2:
                 return "<i>\"AAAHHH!\"</i> Mara tries to catch her breath, \"There's... no way... you can keep this up!\"";
             default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
+                return Global.pickRandom(Arrays.asList(finalLines))
+                             .get();
         }
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        final String finalLines[] = {
-                        "<i>\"Cumming again? You " + target.boyOrGirl()+ "s are too easy.\"</i>",
+        final String finalLines[] = {"<i>\"Cumming again? You " + target.boyOrGirl() + "s are too easy.\"</i>",
                         "<i>\"You're simply inexhaustible aren't you? Let's test that theory... for science.\"</i>",
-                        "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",
-                        };
+                        "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",};
         switch (target.orgasms) {
             case 0:
                 return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
@@ -568,7 +763,10 @@ public class Mara extends BasePersonality {
             case 2:
                 return "<i>\"Oh man, not many people lasted to three. I got more coming for you though!\"</i>";
             default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
+                return Global.pickRandom(Arrays.asList(finalLines))
+                             .get();
         }
     }
+
+
 }

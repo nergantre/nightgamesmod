@@ -240,7 +240,8 @@ public enum Item implements Loot {
     Flag("Flag", 0, "A small red ribbon. Worth points.", "The "),
     Blindfold("Blindfold", 50, "A blindfold one might use to sleep.", "a "),
     Needle("Drugged Needle", 10, "A thin needle coated in a mixture of aphrodisiacs and sedatives", "a "),
-    SmokeBomb("Smoke Bomb", 20, "For those quick getaways", "a ");
+    SmokeBomb("Smoke Bomb", 20, "For those quick getaways", "a "),
+    RemoteControl("Remote Control", 999, "Not in the traditional sense.", "a ");
 
     /**
      * The Item's display name.
@@ -302,5 +303,12 @@ public enum Item implements Loot {
 
     public ItemAmount amount(int amount) {
         return new ItemAmount(this, amount);
+    }
+    
+    public boolean usable(Character by) {
+        switch (this) {
+            case SuccubusDraft: return !by.has(Trait.succubus);
+            default: return true;
+        }
     }
 }

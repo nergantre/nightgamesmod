@@ -88,6 +88,7 @@ import nightgames.creator.req.CreatorRequirement;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.requirements.JsonRequirementLoader;
 import nightgames.requirements.JsonRequirementSaver;
 
 public class CreatorGui extends Application {
@@ -421,6 +422,16 @@ public class CreatorGui extends Application {
 				sceneIdx.getSelectionModel().selectFirst();
 			}
 		});
+
+		rawText.setOnKeyTyped(e -> {
+			store.getScenes(sceneType.getValue()).get(sceneIdx.getValue()).setText(rawText.getText());
+		});
+		reqTree.setOnMouseExited(e -> {
+			JsonObject obj = CreatorRequirement.allToJson(reqTree.getRoot());
+			JsonRequirementLoader loader = new JsonRequirementLoader();
+			store.getScenes(sceneType.getValue()).get(sceneIdx.getValue()).setReqs(loader.loadRequirements(obj));
+		});
+
 	}
 
 	private void setupVerification() {
@@ -626,6 +637,7 @@ public class CreatorGui extends Application {
 	}
 
 	private void load(Character ch) {
+		store.clear();
 		name.setText(ch.name);
 		sex.getSelectionModel().select(ch.initialGender);
 		trophy.getSelectionModel().select(ch.getTrophy());
@@ -936,7 +948,7 @@ public class CreatorGui extends Application {
 		JsonRequirementSaver saver = new JsonRequirementSaver();
 		if (!store.getScenes("recruitment intro").isEmpty())
 			store.getScenes("recruitment intro").get(0).getReqs().stream().map(saver::saveRequirement)
-				.forEach(s -> requirements.add(s.key, s.data));
+					.forEach(s -> requirements.add(s.key, s.data));
 		recruitment.add("requirements", requirements);
 		recruitment.addProperty("action", name.getText() + ": $" + cost);
 		root.add("recruitment", recruitment);

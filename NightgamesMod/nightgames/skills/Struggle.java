@@ -40,11 +40,11 @@ public class Struggle extends Skill {
             return false;
         }
         if (getSelf().hasStatus(Stsflag.cockbound) || getSelf().hasStatus(Stsflag.knotted)) {
-            return true;
+            return getSelf().canRespond();
         }
-        return (!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound()
+        return ((!c.getStance().mobile(getSelf()) && !c.getStance().dom(getSelf()) || getSelf().bound()
                         || getSelf().is(Stsflag.maglocked))
-                        || hasSingleGrabber(c, target)
+                        || hasSingleGrabber(c, target))
                         && getSelf().canRespond();
     }
 

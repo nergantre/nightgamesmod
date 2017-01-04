@@ -2,6 +2,7 @@ package nightgames.combat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,9 +30,11 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.Pet;
 import nightgames.pet.PetCharacter;
+import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
@@ -595,7 +598,29 @@ public class Combat extends Observable implements Cloneable {
             }
         }
         if (self.has(Trait.octo)) {
-            self.roboManager.act(this, other);
+            RoboArmManager.getManagerFor(self).act(this, other);
+        }
+        if (self.has(Trait.mindcontroller) && other.human()) {
+            Collection<Clothing> infra = self.outfit.getArticlesWithTrait(ClothingTrait.infrasound);
+            float magnitude = infra.size() * (Addiction.LOW_INCREASE / 6);
+            if (magnitude > 0) {
+                ((Player) other).addict(AddictionType.MIND_CONTROL, self, magnitude);
+                if (Global.random(3) == 0) {
+                    Addiction add = ((Player) other).getAddiction(AddictionType.MIND_CONTROL).orElse(null);
+                    Clothing source = (Clothing) infra.toArray()[0];
+                    boolean knows = (add != null && add.atLeast(Severity.MED)) || other.get(Attribute.Cunning) >= 30
+                                    || other.get(Attribute.Science) >= 10;
+                                String msg = "<i>You hear a soft buzzing, just at the edge of your hearing. ";
+                    if (knows) {
+                        msg += Global.format("Although you can't understand it, the way it draws your"
+                                        + " attention to {self:name-possessive} %s must mean it's"
+                                        + " influencing you somehow!", self, other, source.getName());
+                    } else {
+                        msg += "It's probably nothing, though.</i>";
+                    }   
+                    write(other, msg);
+                }
+            }
         }
     }
 

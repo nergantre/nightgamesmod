@@ -69,6 +69,9 @@ public class PullOut extends Skill {
                 baseDifficulty += 7 * fetish.get().magnitude;
             }
         }
+        if (target.has(Trait.stronghold)) {
+            baseDifficulty += 5;
+        }
         int powerMod = Math.min(20, Math.max(5, target.get(Attribute.Power) - getSelf().get(Attribute.Power)));
         if (c.getStance().en == Stance.anal) {
             if (!target.has(Trait.powerfulcheeks)) {

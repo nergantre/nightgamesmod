@@ -453,7 +453,15 @@ public enum Trait {
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     roboweb("RoboWeb", "Improved Spiderweb trap"),
     octo("Octo", "Has robotic arms mounted onto their back"),
-
+    stabilized("Stabilized", "Supported by RoboArms"),
+    infrasound("Infrasound", "Gets a mind-controlling necklace"),
+    hypnovisor("Hypno Visor", "Has a fancy Hypno Visor to further her mind control"),
+    ControlledRelease("Controlled Release", "Can use mind control to tempt opponents"),
+    RemoteControl("Remote Control", "Can deploy a fancy hypnosis trap"),
+    EyeOpener("Eye Opener", "The harpoon toy enhances mind control"),
+    
+    stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
+    
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {

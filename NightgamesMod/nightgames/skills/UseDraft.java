@@ -28,15 +28,15 @@ public class UseDraft extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean hasItems = subChoices().size() > 0;
+        boolean hasItems = subChoices(c).size() > 0;
         return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf()) && !getSelf().isPet();
     }
 
     @Override
-    public Collection<String> subChoices() {
+    public Collection<String> subChoices(Combat c) {
         ArrayList<String> usables = new ArrayList<String>();
         for (Item i : getSelf().getInventory().keySet()) {
-            if (getSelf().has(i) && i.getEffects().get(0).drinkable()) {
+            if (getSelf().has(i) && i.getEffects().get(0).drinkable() && i.usable(getSelf())) {
                 usables.add(i.getName());
             }
         }

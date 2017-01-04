@@ -26,10 +26,7 @@ public class SceneStore {
 	private Map<String, List<Scene>> scenes;
 
 	SceneStore() {
-		scenes = new HashMap<>();
-		REQUIRED_LINES.forEach(s -> scenes.put(s, new ArrayList<>()));
-		scenes.put("recruitment intro", new ArrayList<>());
-		scenes.put("recruitment confirmation", new ArrayList<>());
+		clear();
 	}
 
 	void addScene(String situation, String text, List<Requirement> reqs) {
@@ -39,6 +36,13 @@ public class SceneStore {
 
 	List<Scene> getScenes(String situation) {
 		return scenes.get(situation);
+	}
+	
+	void clear() {
+		scenes = new HashMap<>();
+		REQUIRED_LINES.forEach(s -> scenes.put(s, new ArrayList<>()));
+		scenes.put("recruitment intro", new ArrayList<>());
+		scenes.put("recruitment confirmation", new ArrayList<>());
 	}
 	
 	public Optional<Scene> getAny() {

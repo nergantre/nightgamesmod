@@ -539,7 +539,11 @@ public class Global {
         getSkillPool().add(new RemoveBomb(ch));
         getSkillPool().add(new MagLock(ch));
         getSkillPool().add(new Collar(ch));
-
+        getSkillPool().add(new HypnoVisorPlace(ch));
+        getSkillPool().add(new HypnoVisorRemove(ch));
+        getSkillPool().add(new StripMinor(ch));
+        getSkillPool().add(new DemandArousal(ch));
+        
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
         }

@@ -72,6 +72,7 @@ public enum Stsflag {
     collared,
     disabling,
     pheromones,
-    piercingOdor,
+    piercingOdor, 
+    hypnovisor,
     slimed
 }

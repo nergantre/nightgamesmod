@@ -41,6 +41,6 @@ public abstract class RoboArm {
     abstract List<ArmSkill> getSkills(Combat c, Character owner, Character target);
     
     int attackOdds(Combat c, Character owner, Character target) {
-        return Math.min(60, owner.get(Attribute.Science));
+        return (int) Math.min(40, owner.get(Attribute.Science) * .67);
     }
 }

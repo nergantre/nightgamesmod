@@ -24,7 +24,7 @@ public class SubmissiveHold extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) > 15 && user.get(Attribute.Power) >= 15;
+        return (user.get(Attribute.Seduction) > 15 && user.get(Attribute.Power) >= 15) || user.has(Trait.stronghold);
     }
 
     @Override

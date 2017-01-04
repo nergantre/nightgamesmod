@@ -41,13 +41,13 @@ public class ThrowDraft extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        boolean hasItems = subChoices().size() > 0;
+        boolean hasItems = subChoices(c).size() > 0;
         return hasItems && getSelf().canAct() && c.getStance().mobile(getSelf())
                         && (c.getStance().reachTop(getSelf()) || c.getStance().reachBottom(getSelf())) && !getSelf().isPet();
     }
 
     @Override
-    public Collection<String> subChoices() {
+    public Collection<String> subChoices(Combat c) {
         ArrayList<String> usables = new ArrayList<String>();
         for (Item i : getSelf().getInventory().keySet()) {
             if (getSelf().has(i) && i.getEffects().get(0).throwable()) {
@@ -123,8 +123,10 @@ public class ThrowDraft extends Skill {
                 c.write(target, "...But nothing happened (Stable Form).");
             } else {
                 boolean eventful = false;
-                for (ItemEffect e : used.getEffects()) {
-                    eventful = e.use(c, target, getSelf(), used) || eventful;
+                if (used.usable(target)) {
+                    for (ItemEffect e : used.getEffects()) {
+                        eventful |= e.use(c, target, getSelf(), used);
+                    }
                 }
                 if (!eventful) {
                     c.write(getSelf(), "...But nothing happened.");
