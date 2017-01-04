@@ -168,6 +168,8 @@ public class Fuck extends Skill {
             } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), premessage + receive(c, premessage.length(), Result.miss, target));
             }
+            target.body.pleasure(getSelf(), selfO, targetO, 5, c, this);
+            getSelf().body.pleasure(target, targetO, selfO, 5, c, this);
             return false;
         }
         return true;

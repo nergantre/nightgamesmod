@@ -92,6 +92,7 @@ public class CreationGUI extends JPanel {
 
     public CreationGUI() {
         setLayout(new BorderLayout(0, 0));
+        setOpaque(false);
 
         topPanel = new JPanel();
         add(topPanel, BorderLayout.NORTH);

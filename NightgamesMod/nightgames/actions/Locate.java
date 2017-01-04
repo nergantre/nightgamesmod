@@ -38,7 +38,9 @@ public class Locate extends Action {
         gui.clearCommand();
         gui.clearText();
         gui.validate();
-        gui.message("Thinking back to your 'games' with Reyka, you take out a totem to begin a scrying ritual: ");
+        if (self.human()) {
+            gui.message("Thinking back to your 'games' with Reyka, you take out a totem to begin a scrying ritual: ");
+        }
         handleEvent(self, "Start");
         return Movement.locating;
     }

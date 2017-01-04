@@ -67,6 +67,7 @@ import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.SapphicSeduction;
+import nightgames.status.Slimed;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Stunned;
@@ -1078,7 +1079,7 @@ public class Combat extends Observable implements Cloneable {
 
     private void resolveContactBonuses(Character contacted, Character contacter) {
 		if (contacted.has(Trait.VolatileSubstrate)) {
-			contacter.add(this, new Drowsy(contacter));
+			contacter.add(this, new Slimed(contacter, contacted, 1));
 		}
 	}
 
