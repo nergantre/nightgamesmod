@@ -254,7 +254,7 @@ public class Command extends Skill {
                 c.write(getSelf(),
                                 String.format("%s presents %s ass to %s, and %s"
                                                 + " instantly %s towards it and %s it fervently.", getSelf().name(),
-                                                getSelf().possessivePronoun(), target.nameDirectObject(),
+                                                getSelf().possessiveAdjective(), target.nameDirectObject(),
                                                 target.pronoun(), target.action("dive"), target.action("lick")));
                 int m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomAss(),
@@ -268,11 +268,11 @@ public class Command extends Skill {
                 c.write(getSelf(),
                                 String.format("%s holds up %s %s, and %s simply can't resist"
                                                 + " the tantilizing appendage. %s %s head and %s and %s"
-                                                + " it all over.", getSelf().name(), getSelf().possessivePronoun(),
+                                                + " it all over.", getSelf().name(), getSelf().possessiveAdjective(),
                                                 getSelf().body.getRandomCock()
                                                               .describe(getSelf()), target.subject(),
                                                               target.subjectAction("lower"),
-                                                              target.possessivePronoun(), target.action("lick"),
+                                                              target.possessiveAdjective(), target.action("lick"),
                                                               target.action("suck")));
                 m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
@@ -287,9 +287,9 @@ public class Command extends Skill {
                                 "%s spreads %s labia and before %s can"
                                                 + " even tell %s what to do, %s already between %s legs"
                                                 + " slavering away at it.",
-                                getSelf().name(), getSelf().possessivePronoun(), getSelf().pronoun(),
+                                getSelf().name(), getSelf().possessiveAdjective(), getSelf().pronoun(),
                                 target.directObject(), target.subjectAction("are", "is"),
-                                getSelf().possessivePronoun()));
+                                getSelf().possessiveAdjective()));
                 m = target.has(Trait.silvertongue) ? 15 : 10;
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomPussy(),
                                 7 + Global.random(m), c, this);
@@ -313,8 +313,8 @@ public class Command extends Skill {
                                 String.format("%s tells %s to remain still and"
                                                 + " gracefully lies down on %s, %s face right above %ss.",
                                                 getSelf().name(), target.subject(), 
-                                                target.directObject(), getSelf().possessivePronoun(),
-                                                target.possessivePronoun()));
+                                                target.directObject(), getSelf().possessiveAdjective(),
+                                                target.possessiveAdjective()));
                 c.setStance(new Mount(getSelf(), target), target, false);
                 getSelf().buildMojo(c, 5);
                 break;
@@ -324,8 +324,8 @@ public class Command extends Skill {
                                                 + " %s to stay put. Moving a muscle does not even begin to enter"
                                                 + " %s thoughts as %s turns away from %s and sits down on %s"
                                                 + " belly.", getSelf().name(), target.subject(),
-                                                target.directObject(), target.possessivePronoun(), getSelf().pronoun(),
-                                                target.directObject(), target.possessivePronoun()));
+                                                target.directObject(), target.possessiveAdjective(), getSelf().pronoun(),
+                                                target.directObject(), target.possessiveAdjective()));
                 c.setStance(new ReverseMount(getSelf(), target), target, false);
                 getSelf().buildMojo(c, 5);
                 break;
@@ -334,7 +334,7 @@ public class Command extends Skill {
                                 String.format("%s affixes an impressive-looking strapon"
                                                 + " to %s crotch. At first %s a bit intimidated, but once %s"
                                                 + " tells %s that %s the look of it, %s %s practically"
-                                                + " salivating.", getSelf().name(), getSelf().possessivePronoun(),
+                                                + " salivating.", getSelf().name(), getSelf().possessiveAdjective(),
                                                 target.directObject(),
                                                 target.subjectAction("are", "is"), 
                                                 getSelf().subject(), target.subjectAction("like"),
@@ -353,7 +353,7 @@ public class Command extends Skill {
                 c.write(getSelf(),
                                 String.format("Feeling a bit uninspired, %s just tells %s"
                                                 + " to play with %s %s for %s.", getSelf().name(),
-                                                target.subject(), target.possessivePronoun(),
+                                                target.subject(), target.possessiveAdjective(),
                                                 pleasured.describe(target), getSelf().directObject()));
                 target.body.pleasure(target, target.body.getRandom("hands"), pleasured, 10 + Global.random(20), c, this);
                 break;
@@ -363,7 +363,7 @@ public class Command extends Skill {
                                                 + " %s %s elbow into %s gut as hard as %s can."
                                                 + " It hurts, but the look of pure amusement on %s face"
                                                 + " makes everything alright.", target.subjectAction("slam"),
-                                                target.possessivePronoun(), target.possessivePronoun(),
+                                                target.possessiveAdjective(), target.possessiveAdjective(),
                                                 target.pronoun(), getSelf().nameOrPossessivePronoun()));
                 target.pain(c, target, (int) target.modifyDamage(DamageType.physical, target, Global.random(30, 50)));
                 break;
@@ -377,7 +377,7 @@ public class Command extends Skill {
                                 String.format("%s tells %s to remove %s %s for %s."
                                                 + " %s gladly %s, eager to see more of %s perfect physique.",
                                                 getSelf().subject(), target.subject(), 
-                                                getSelf().possessivePronoun(), removed.getName(),
+                                                getSelf().possessiveAdjective(), removed.getName(),
                                                 getSelf().directObject(), 
                                                 Global.capitalizeFirstLetter(target.pronoun()),
                                                 target.action("comply", "complies"),
@@ -395,7 +395,7 @@ public class Command extends Skill {
                                                 + " That would make <i>everything</i> better! %s eagerly %s"
                                                 + " the offending garment.", getSelf().name(), 
                                                 target.subject(), target.pronoun(), 
-                                                target.possessivePronoun(), removed.getName(),
+                                                target.possessiveAdjective(), removed.getName(),
                                                 Global.capitalizeFirstLetter(target.pronoun()),
                                                 target.action("remove")));
                 break;
@@ -422,10 +422,10 @@ public class Command extends Skill {
                                                 getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
                                                 target.directObject(),
                                                 Global.capitalizeFirstLetter(target.pronoun()),
-                                                target.action("throw"), target.reflectivePronoun(), getSelf().possessivePronoun(), 
+                                                target.action("throw"), target.reflectivePronoun(), getSelf().possessiveAdjective(), 
                                                 target.action("worship"),
                                                 getSelf().body.getRandomCock().describe(target),
-                                                target.pronoun(), target.possessivePronoun(),
+                                                target.pronoun(), target.possessiveAdjective(),
                                                 target.reflectivePronoun()));
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomCock(),
                                 10 + Global.random(8), c, this);
@@ -449,10 +449,10 @@ public class Command extends Skill {
                                                 getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
                                                 target.directObject(),
                                                 Global.capitalizeFirstLetter(target.pronoun()),
-                                                target.action("throw"), target.reflectivePronoun(), getSelf().possessivePronoun(), 
+                                                target.action("throw"), target.reflectivePronoun(), getSelf().possessiveAdjective(), 
                                                 target.action("worship"),
                                                 getSelf().body.getRandomPussy().describe(target),
-                                                target.pronoun(), target.possessivePronoun(),
+                                                target.pronoun(), target.possessiveAdjective(),
                                                 target.reflectivePronoun()));
                 getSelf().body.pleasure(target, target.body.getRandom("mouth"), getSelf().body.getRandomPussy(),
                                 10 + Global.random(8), c, this);

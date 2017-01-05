@@ -59,7 +59,7 @@ public class TortoiseWrap extends Skill {
                                         + "in a traditional bondage wrap. %s moans softly as the "
                                         + "rope digs into %s supple skin.",
                         target.name(), nightgames.global.Global.capitalizeFirstLetter(target.pronoun()),
-                        target.possessivePronoun());
+                        target.possessiveAdjective());
     }
 
     @Override
@@ -70,8 +70,8 @@ public class TortoiseWrap extends Skill {
                         + "slightly hinders %s movement. However, the discomfort of "
                         + "the rope wrapping around %s seems to make %s sense of touch more pronounced.",
                         getSelf().name(), target.nameDirectObject(), target.directObject(),
-                        getSelf().pronoun(), target.directObject(), target.possessivePronoun(),
-                        target.pronoun(), target.possessivePronoun());
+                        getSelf().pronoun(), target.directObject(), target.possessiveAdjective(),
+                        target.pronoun(), target.possessiveAdjective());
     }
 
 }

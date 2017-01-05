@@ -280,12 +280,12 @@ public class Yui extends BasePersonality {
             return String.format(
                             "Yui kneels between %s's legs and takes a hold of %s cock. "
                                             + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s blows %s load literally within a second of Yui touching her. Wow.",
-                            target.name(), target.possessivePronoun(), target.name(), target.pronoun(), target.possessivePronoun());
+                            target.name(), target.possessiveAdjective(), target.name(), target.pronoun(), target.possessiveAdjective());
         }
         return String.format(
                         "Yui kneels between %s's legs and hooks two fingers inside %s pussy. "
                                         + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s back arches and lets out a wail within a second of Yui touching her. Wow.",
-                                        target.name(), target.possessivePronoun(), target.name(), target.possessivePronoun());
+                                        target.name(), target.possessiveAdjective(), target.name(), target.possessiveAdjective());
 }
 
     @Override

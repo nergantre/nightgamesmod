@@ -123,12 +123,12 @@ public class Paizuri extends Skill {
         
         if(getSelf().is(Stsflag.oiled)){
             b.append("You rub your oiled tits up and down "
-                            + b.append(target.possessivePronoun()) 
+                            + b.append(target.possessiveAdjective()) 
                             + "'s shaft and teasingly lick the tip.");
         }
         else{
             b.append("You rub them up and down "
-                            + b.append(target.possessivePronoun())
+                            + b.append(target.possessiveAdjective())
                             + "'s shaft and teasingly lick the tip.");
         }
         

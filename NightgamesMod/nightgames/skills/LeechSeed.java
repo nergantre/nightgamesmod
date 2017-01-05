@@ -95,7 +95,7 @@ public class LeechSeed extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s tries to plant a seed in %s with %s tentacle, but %s %s out of the way.",
-                            getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
                             target.pronoun(), target.action("dodge"));
         }
         String hole = "pussy";

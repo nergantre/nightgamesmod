@@ -78,15 +78,15 @@ public class Suckle extends Skill {
             return String.format("%s licks and sucks %s nipples, sending a "
                             + "surge of excitement straight to %s groin.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return String.format("%s licks and sucks %s nipples, drawing forth "
                             + "a gush of breast milk from %s teats. "
                             + "%s drinks deeply of %s milk, gurgling happily as more of the"
                             + " smooth liquid flows down %s throat.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
     }
 

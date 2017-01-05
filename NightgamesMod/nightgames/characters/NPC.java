@@ -101,7 +101,7 @@ public class NPC extends Character {
         description = description + observe(per);
         if (has(Trait.octo)) {
             description += "<p>You can see " + RoboArmManager.getManagerFor(this).describeArms() + " strapped behind "
-                                + possessivePronoun() + " back.<br/>";
+                                + possessiveAdjective() + " back.<br/>";
         }
         return description;
     }

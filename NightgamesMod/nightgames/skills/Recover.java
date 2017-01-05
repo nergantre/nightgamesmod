@@ -68,7 +68,7 @@ public class Recover extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " scrambles back to "+getSelf().possessivePronoun()+" feet.";
+        return getSelf().name() + " scrambles back to "+getSelf().possessiveAdjective()+" feet.";
     }
 
     @Override

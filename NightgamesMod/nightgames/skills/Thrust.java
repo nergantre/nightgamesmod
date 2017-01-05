@@ -180,7 +180,7 @@ public class Thrust extends Skill {
             if (getSelf().has(Trait.strapped)) {
                 res = String.format("%s thrusts her hips, pumping her artificial cock in and out"
                                 + " of %s ass and pushing on %s %s.", getSelf().subject(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                                 target.hasBalls() ? "prostate" : "innermost parts");
                 
             } else {
@@ -191,7 +191,7 @@ public class Thrust extends Skill {
                 res += String.format(" %s penchant for fucking people in the ass makes "
                                 + "%s thrusting that much more powerful, and that much more "
                                 + "intense for the both of %s.", getSelf().nameOrPossessivePronoun(),
-                                getSelf().possessivePronoun(),
+                                getSelf().possessiveAdjective(),
                                 c.bothDirectObject(target));
             }
             return res;
@@ -199,11 +199,11 @@ public class Thrust extends Skill {
             return String.format("%s rocks %s hips against %s, riding %s smoothly and deliberately. "
                             + "Despite the slow pace, the sensation of %s hot %s surrounding "
                             + "%s dick is gradually driving %s to %s limit.", getSelf().subject(),
-                            getSelf().possessivePronoun(), target.nameDirectObject(),
+                            getSelf().possessiveAdjective(), target.nameDirectObject(),
                             target.directObject(), getSelf().nameOrPossessivePronoun(),
                             getSelfOrgan(c, target).describe(getSelf()),
                             target.nameOrPossessivePronoun(), target.directObject(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return Global.format(
                             "{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving {other:direct-object} gasping.",

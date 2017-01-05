@@ -102,7 +102,7 @@ public class SpiralThrust extends Thrust {
                             + " blank and %s %s face down to the ground as %s arms turn to jelly and give out.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
                             Global.capitalizeFirstLetter(target.nameOrPossessivePronoun()),
-                            target.pronoun(), target.action("fall"), target.possessivePronoun());
+                            target.pronoun(), target.action("fall"), target.possessiveAdjective());
         } else if (modifier != Result.reverse) {
             return Global.format(
                             "The movements of {self:name-possessive} cock suddenly change. {self:PRONOUN} suddenly begins "
@@ -112,8 +112,8 @@ public class SpiralThrust extends Thrust {
         } else {
             return String.format("%s begins to move %s hips wildly in circles, rubbing every inch"
                             + " of %s cock with %s hot, %s, bringing %s more pleasure than %s thought possible.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
-                            target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
+                            target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                             (selfO.isType("pussy") ? "slippery pussy walls" : " steaming asshole"),
                             target.directObject(), target.pronoun());
         }

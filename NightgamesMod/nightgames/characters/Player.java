@@ -592,9 +592,9 @@ public class Player extends Character {
                                             + "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
                                             + "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
                                             + "missing you.", target.name(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.name(),
-                            Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(), target.name(),
-                            target.possessivePronoun()));
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.name(),
+                            Global.capitalizeFirstLetter(target.pronoun()), target.possessiveAdjective(), target.name(),
+                            target.possessiveAdjective()));
         } else {
             c.write(target.name()
                             + "'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way "
@@ -675,11 +675,11 @@ public class Player extends Character {
             case stripping:
                 Clothing clothes = target.stripRandom(c);
                 if (clothes != null) {
-                    c.write(this, "You manage to catch " + target.possessivePronoun()
+                    c.write(this, "You manage to catch " + target.possessiveAdjective()
                                     + " hands groping your clothing, and in a swift motion you strip off her "
                                     + clothes.getName() + " instead.");
                 } else {
-                    c.write(this, "You manage to dodge " + target.possessivePronoun()
+                    c.write(this, "You manage to dodge " + target.possessiveAdjective()
                                     + " groping hands and give a retaliating slap in return.");
                     target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
@@ -696,7 +696,7 @@ public class Player extends Character {
                 }
                 break;
             default:
-                c.write(this, "You manage to dodge " + target.possessivePronoun()
+                c.write(this, "You manage to dodge " + target.possessiveAdjective()
                                 + " attack and give a retaliating slap in return.");
                 target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
@@ -754,8 +754,13 @@ public class Player extends Character {
     }
 
     @Override
-    public String possessivePronoun() {
+    public String possessiveAdjective() {
         return "your";
+    }
+    
+    @Override
+    public String possessivePronoun() {
+        return "yours";
     }
 
     @Override

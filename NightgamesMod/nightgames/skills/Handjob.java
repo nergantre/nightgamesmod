@@ -95,10 +95,10 @@ public class Handjob extends Skill {
         int r;
         if (!target.crotchAvailable()) {
             return String.format("%s slips %s hand into %s %s and strokes %s dick.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(),
                             target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format("%s clumsily fondles %s crotch. It's not skillful by"
                             + " any means, but it's also not entirely ineffective.",
@@ -113,15 +113,15 @@ public class Handjob extends Skill {
             else if ((r = Global.random(3)) == 0) {
                 return String.format("%s strokes and teases %s dick, sending shivers of pleasure up %s spine.",
                                 getSelf().subject(), target.nameOrPossessivePronoun(),
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             } else if (r == 1) {
                 return String.format("%s rubs the sensitive head of %s penis and fondles %s balls.",
                                 getSelf().subject(), target.nameOrPossessivePronoun(),
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             } else {
                 return String.format("%s jerks %s off like she's trying to milk every drop of %s cum.",
                                 getSelf().subject(), target.subject(),
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             }
         }
     }

@@ -60,10 +60,10 @@ public class OrgasmSeal extends Skill {
         return String.format("%s makes a complicated gesture and envelopes %s finger tips in a blood red glow. "
                         + "With a nasty grin, %s jams %s finger into %s %s. Strangely it doesn't hurt at all, but"
                         + " when %s withdraws %s finger, %s leaves a glowing pentagram on %s.",
-                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().pronoun(),
-                        getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                        getSelf().subject(), getSelf().possessiveAdjective(), getSelf().pronoun(),
+                        getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                         (target.hasBalls() ? "balls" : "lower abdomen"),
-                        getSelf().pronoun(), target.possessivePronoun(), getSelf().subject(),
+                        getSelf().pronoun(), target.possessiveAdjective(), getSelf().subject(),
                         target.nameDirectObject());
     }
 }

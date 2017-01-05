@@ -64,7 +64,7 @@ public class NursesGloves extends Skill {
         String message;
         message = String.format("With a lecherous grin on %s face, %s snaps on a pair of"
                         + " rubber gloves similar to those you would see at the doctor's.",
-                        getSelf().possessivePronoun(), getSelf().subject());
+                        getSelf().possessiveAdjective(), getSelf().subject());
         return message;
     }
 

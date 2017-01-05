@@ -18,7 +18,7 @@ public class Feral extends Status {
     @Override
     public String describe(Combat c) {
         return String.format("%s seems beyond reason in %s feral lust.\n",
-                        Global.capitalizeFirstLetter(affected.subject()), affected.possessivePronoun());
+                        Global.capitalizeFirstLetter(affected.subject()), affected.possessiveAdjective());
     }
 
     @Override

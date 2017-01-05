@@ -76,11 +76,11 @@ public class Blindside extends Skill {
                                         + "%s eyes fix %s in place as %s leans in and firmly kisses %s, shoving %s tongue down"
                                         + " %s mouth. %s are so absorbed in kissing back, that %s only notice %s ulterior motive"
                                         + " once %s has already swept %s legs out from under %s and %s has landed on top of %s.",
-                        getSelf().possessivePronoun(), getSelf().name(), target.subject(),
-                        Global.capitalizeFirstLetter(getSelf().possessivePronoun()), target.directObject(),
-                        getSelf().pronoun(), target.directObject(), getSelf().possessivePronoun(),
-                        target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()), target.pronoun(),
-                        getSelf().possessivePronoun(), getSelf().pronoun(), target.possessivePronoun(),
+                        getSelf().possessiveAdjective(), getSelf().name(), target.subject(),
+                        Global.capitalizeFirstLetter(getSelf().possessiveAdjective()), target.directObject(),
+                        getSelf().pronoun(), target.directObject(), getSelf().possessiveAdjective(),
+                        target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()), target.pronoun(),
+                        getSelf().possessiveAdjective(), getSelf().pronoun(), target.possessiveAdjective(),
                         target.directObject(), getSelf().pronoun(), target.directObject());
     }
 

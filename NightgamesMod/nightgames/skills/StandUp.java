@@ -59,7 +59,7 @@ public class StandUp extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s relinquishes %s hold on %s and stands back up.",
-                        getSelf().subject(), getSelf().possessivePronoun(),
+                        getSelf().subject(), getSelf().possessiveAdjective(),
                         target.nameDirectObject());
     }
 

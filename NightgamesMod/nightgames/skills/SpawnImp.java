@@ -100,13 +100,13 @@ public class SpawnImp extends Skill {
 	                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
 	                        + "silver skin and a long flexible tail. It's naked, clearly female, and "
 	                        + "surprisingly attractive given its inhuman features.",
-	                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+	                        getSelf().subject(), getSelf().possessiveAdjective(), getSelf().directObject());
     	} else {
 	        return String.format("%s spreads out %s dark aura and a demonic imp appears next to %s"
 	                        + " in a burst of flame. The imp stands about waist height, with bright red hair, "
 	                        + "silver skin and a long flexible tail. It's naked, clearly male, and "
 	                        + "surprisingly attractive given its inhuman features.",
-	                        getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+	                        getSelf().subject(), getSelf().possessiveAdjective(), getSelf().directObject());
     	}
     }
 }

@@ -55,15 +55,15 @@ public class Seeded extends Status {
         } else {
             if (stage > 4) {
                 return Global.capitalizeFirstLetter(String.format(
-                                "A large white lilly grows from " + affected.possessivePronoun() + " %s\n",
+                                "A large white lilly grows from " + affected.possessiveAdjective() + " %s\n",
                                 hole.describe(affected)));
             } else if (stage > 3) {
                 return Global.capitalizeFirstLetter(String.format(
-                                "A small green bud peeks out from " + affected.possessivePronoun() + " %s\n",
+                                "A small green bud peeks out from " + affected.possessiveAdjective() + " %s\n",
                                 hole.describe(affected)));
             }
             return Global.capitalizeFirstLetter(String.format(
-                            "A lemon-sized seed is lodged firmly in " + affected.possessivePronoun() + " %s\n",
+                            "A lemon-sized seed is lodged firmly in " + affected.possessiveAdjective() + " %s\n",
                             hole.describe(affected)));
         }
     }

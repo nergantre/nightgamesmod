@@ -1371,7 +1371,7 @@ public class Global {
         matchActions = new HashMap<>();
         matchActions.put("possessive", (self, first, second, third) -> {
             if (self != null) {
-                return self.possessivePronoun();
+                return self.possessiveAdjective();
             }
             return "";
         });
@@ -1511,6 +1511,12 @@ public class Global {
         });
         matchActions.put("boy", (self, first, second, third) -> {
             return self.boyOrGirl();
+        });
+        matchActions.put("poss-pronoun", (self, first, second, third) -> {
+            if (self != null) {
+                return self.possessivePronoun();
+            }
+            return "";
         });
     }
 

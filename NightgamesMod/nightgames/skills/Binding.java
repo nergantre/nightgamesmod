@@ -64,7 +64,7 @@ public class Binding extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return getSelf().name()
-                        + " gestures at "+target.nameDirectObject()+" and casts a spell. A ribbon of light wraps around "+target.possessivePronoun()+" wrists and holds them in place.";
+                        + " gestures at "+target.nameDirectObject()+" and casts a spell. A ribbon of light wraps around "+target.possessiveAdjective()+" wrists and holds them in place.";
     }
 
 }

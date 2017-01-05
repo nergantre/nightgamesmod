@@ -85,8 +85,8 @@ public class StunBlast extends Skill {
         if (modifier == Result.miss) {
             return String.format("%s covers %s face and points a device in %s direction. Sensing "
                             + "danger, %s %s %s eyes just as the flashbang goes off.", getSelf().subject(),
-                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.action("cover"), target.possessivePronoun());
+                            getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                            target.pronoun(), target.action("cover"), target.possessiveAdjective());
         } else if (modifier == Result.special) {
             return Global.format("{self:SUBJECT} presses a button on {self:possessive} arm device,"
                             + "and a bright flash suddenly travels along {self:possessive} connection to"
@@ -98,7 +98,7 @@ public class StunBlast extends Skill {
             return String.format("%s points a device in %s direction that glows slightly. A sudden "
                             + "flash of light disorients %s and %s ears ring from the blast.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.directObject(), target.possessivePronoun());
+                            target.directObject(), target.possessiveAdjective());
         }
     }
 

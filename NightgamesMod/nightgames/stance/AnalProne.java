@@ -15,17 +15,17 @@ public class AnalProne extends AnalSexStance {
     public String describe(Combat c) {
         if (top.human()) {
             return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
-                            bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
+                            bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());
         } else if (top.has(Trait.strapped)) {
             return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s strapon dildo.",
-                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), bottom.possessivePronoun(),
-                            top.subject(), top.possessivePronoun());
+                            bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), bottom.possessiveAdjective(),
+                            top.subject(), top.possessiveAdjective());
         } else {
             return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s %s.",
-                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), bottom.possessivePronoun(),
-                            top.subject(), top.possessivePronoun(), top.body.getRandomInsertable().describe(top));
+                            bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), bottom.possessiveAdjective(),
+                            top.subject(), top.possessiveAdjective(), top.body.getRandomInsertable().describe(top));
         }
     }
 

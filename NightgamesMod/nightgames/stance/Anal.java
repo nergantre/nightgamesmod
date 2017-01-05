@@ -16,12 +16,12 @@ public class Anal extends AnalSexStance {
         if (top.human()) {
             return String.format("%s behind %s and %s cock in buried in %s ass.",
                             top.subjectAction("are", "is"),
-                            bottom.nameDirectObject(), top.possessivePronoun(),
-                            bottom.possessivePronoun());
+                            bottom.nameDirectObject(), top.possessiveAdjective(),
+                            bottom.possessiveAdjective());
         } else if (top.has(Trait.strapped)) {
             return String.format("%s pegging %s with %s strapon dildo from behind.",
                            top.subjectAction("are", "is"), bottom.nameDirectObject(),
-                           top.possessivePronoun());
+                           top.possessiveAdjective());
         } else {
             return String.format("%s fucking %s in the ass from behind",
                             top.subjectAction("are", "is"), bottom.nameDirectObject());

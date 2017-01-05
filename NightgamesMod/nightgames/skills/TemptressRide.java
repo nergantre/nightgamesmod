@@ -90,8 +90,8 @@ public class TemptressRide extends Thrust {
                                                 + " rubbing it against the soft, tight entrance. Slowly	moving"
                                                 + " %s hips, %s %s driving %s crazy.",
                                 getSelf().subjectAction("are", "is"), target.nameOrPossessivePronoun(),
-                                target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
-                                getSelf().body.getRandomPussy().describe(getSelf()), getSelf().possessivePronoun(),
+                                target.body.getRandomCock().describe(target), getSelf().possessiveAdjective(),
+                                getSelf().body.getRandomPussy().describe(getSelf()), getSelf().possessiveAdjective(),
                                 getSelf().pronoun(), getSelf().action("are", "is"), target.directObject());
             case 1:
                 return String.format(
@@ -100,8 +100,8 @@ public class TemptressRide extends Thrust {
                                                 + " impossible to move at all, but %s %s down hard and eventually"
                                                 + " all of %s %s is lodged firmly inside of %s.",
                                 getSelf().subjectAction("slide"), target.subject(), target.directObject(),
-                                getSelf().possessivePronoun(), getSelf().body.getRandomPussy().describe(getSelf()),
-                                getSelf().pronoun(), getSelf().action("push", "pushes"), target.possessivePronoun(),
+                                getSelf().possessiveAdjective(), getSelf().body.getRandomPussy().describe(getSelf()),
+                                getSelf().pronoun(), getSelf().action("push", "pushes"), target.possessiveAdjective(),
                                 target.body.getRandomCock().describe(target), getSelf().directObject());
             default:
                 return String.format(
@@ -110,10 +110,10 @@ public class TemptressRide extends Thrust {
                                                 + " as if milking it. Overcome with pleasure, %s entire body tenses up and"
                                                 + " %s %s %s head back, trying hard not to cum instantly.",
                                 getSelf().subjectAction("move"), target.nameOrPossessivePronoun(),
-                                target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
-                                getSelf().body.getRandomPussy().describe(getSelf()), target.possessivePronoun(),
-                                target.possessivePronoun(), target.pronoun(), target.action("throw"),
-                                target.possessivePronoun());
+                                target.body.getRandomCock().describe(target), getSelf().possessiveAdjective(),
+                                getSelf().body.getRandomPussy().describe(getSelf()), target.possessiveAdjective(),
+                                target.possessiveAdjective(), target.pronoun(), target.action("throw"),
+                                target.possessiveAdjective());
         }
     }
 

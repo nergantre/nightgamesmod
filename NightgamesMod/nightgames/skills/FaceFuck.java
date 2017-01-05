@@ -135,7 +135,7 @@ public class FaceFuck extends Skill {
             m = String.format("%s forces her strapon cock into %s mouth and fucks %s face with it. "
                             + "It's only rubber, but the position is still humiliating. %s not "
                             + "to gag on the artificial member while %s revels in her dominance.",
-                            Global.capitalizeFirstLetter(getSelf().subject()), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(getSelf().subject()), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             target.subjectAction("try", "tries"), getSelf().subject());
         } else if (modifier == Result.upgrade) {
             m = String.format("%s moves slightly towards %s, pushing her strapon against %s lips. %s to keep %s"
@@ -143,8 +143,8 @@ public class FaceFuck extends Skill {
                             + "and pushes in the rubbery invader as %s for air. After a few sucks, %s"
                             + " %s to break free, although %s %s still shivering "
                             + "with a mix of arousal and humiliation.", Global.capitalizeFirstLetter(getSelf().subject()), target.nameDirectObject(),
-                            target.possessivePronoun(), target.subjectAction("try", "tries"), target.possessivePronoun(),
-                            getSelf().subject(), target.possessivePronoun(), target.subjectAction("gasp"),
+                            target.possessiveAdjective(), target.subjectAction("try", "tries"), target.possessiveAdjective(),
+                            getSelf().subject(), target.possessiveAdjective(), target.subjectAction("gasp"),
                             target.pronoun(), target.action("manage"), target.pronoun(), target.action("are", "is"));
         } else if (target.body.getRandom("mouth").isErogenous()) {
             m = String.format("%s forces %s mouth open and shoves %s %s into it. %s "
@@ -152,11 +152,11 @@ public class FaceFuck extends Skill {
                             + "%s quickly starts moving %s hips, fucking %s mouth. However, %s "
                             + "modified oral orifice was literally designed to squeeze cum; soon %s finds "
                             + "%s ramming with little more than %s own enjoyment in mind.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomCock().describe(getSelf()), target.subjectAction("are", "is"),
-                            getSelf().subject(), getSelf().possessivePronoun(), target.possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(), target.possessiveAdjective(),
                             target.nameOrPossessivePronoun(), getSelf().subject(), getSelf().reflectivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         } else {
             m = String.format("%s forces %s mouth open and shoves %s %s into it. %s "
                             + "momentarily overwhelmed by the strong, musky smell and the taste, but "
@@ -164,10 +164,10 @@ public class FaceFuck extends Skill {
                             + "%s cheeks redden in shame, but %s still %s what you can to pleasure %s. "
                             + "%s may be using you like a sex toy, but %s going to try to scrounge "
                             + "whatever advantage %s can get.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomCock().describe(getSelf()), target.subjectAction("are", "is"),
-                            getSelf().subject(), getSelf().possessivePronoun(), target.possessivePronoun(),
-                            Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                            Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessiveAdjective(),
                             target.pronoun(), target.action("do", "does"), getSelf().nameDirectObject(),
                             Global.capitalizeFirstLetter(getSelf().subject()), target.subjectAction("are", "is"),
                             target.pronoun());

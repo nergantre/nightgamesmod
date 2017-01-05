@@ -95,7 +95,7 @@ public class FTCPrematch implements Scene {
                                     + "! You have the honors tonight. Oh and just so"
                                     + " you know, the Prey competes naked and without items. Get to it!\" "
                                     + prey.name() + " briefly seems nervous, but then shrugs and ditches all of "
-                                    + prey.possessivePronoun()
+                                    + prey.possessiveAdjective()
                                     + " clothing and gets in the van. The rest of you pile in as well,"
                                     + " and a short ride later you arrive at the edge of the forest."
                                     + " Lilly gives everyone their starting positions, and you make"

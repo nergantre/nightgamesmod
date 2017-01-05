@@ -74,7 +74,7 @@ public class Stumble extends Skill {
                         "%s stumbles and falls, grabbing %s to catch %s. Unfortunately, "
                                         + "%s can't keep %s balance and %s %s on top of %s. Maybe that's not so unfortunate.",
                         getSelf().name(), target.nameDirectObject(), getSelf().reflectivePronoun(), 
-                        target.subject(), target.possessivePronoun(), target.pronoun(),
+                        target.subject(), target.possessiveAdjective(), target.pronoun(),
                         target.action("fall"), getSelf().directObject());
     }
 

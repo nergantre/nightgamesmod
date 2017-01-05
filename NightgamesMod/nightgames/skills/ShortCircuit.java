@@ -60,9 +60,9 @@ public class ShortCircuit extends Skill {
                         + "across %s skin. %s indescribably weird. %s has "
                         + "done something to %s sense of touch.", getSelf().subject(),
                         target.nameDirectObject(), target.pronoun(), target.action("feel"),
-                        target.possessivePronoun(),
+                        target.possessiveAdjective(),
                         Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                        getSelf().subject(), target.possessivePronoun());
+                        getSelf().subject(), target.possessiveAdjective());
     }
 
 }

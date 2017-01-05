@@ -103,13 +103,13 @@ public class SpawnFaerie extends Skill {
     	if (gender == Ptype.fairyfem) {
 	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
 	                        + " a small, naked girl with butterfly wings appears in %s palm.",
-	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
-	                        getSelf().possessivePronoun());
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessiveAdjective(),
+	                        getSelf().possessiveAdjective());
     	} else {
 	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
 	                        + " a small, naked boy with butterfly wings appears in %s palm.",
-	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
-	                        getSelf().possessivePronoun());
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessiveAdjective(),
+	                        getSelf().possessiveAdjective());
     	}
     }
 

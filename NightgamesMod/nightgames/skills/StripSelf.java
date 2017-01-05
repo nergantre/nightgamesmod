@@ -95,7 +95,7 @@ public class StripSelf extends Skill {
             c.write(getSelf(), "Skill failed...");
         } else {
             c.write(getSelf(), Global.format(String.format("{self:SUBJECT-ACTION:strip|strips} off %s %s.",
-                            getSelf().possessivePronoun(), clothing.getName()), getSelf(), target));
+                            getSelf().possessiveAdjective(), clothing.getName()), getSelf(), target));
         }
         return true;
     }

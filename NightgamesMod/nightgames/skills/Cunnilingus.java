@@ -184,24 +184,24 @@ public class Cunnilingus extends Skill {
         }
         if (modifier == Result.miss) {
             return String.format("%s tries to tease %s cunt with %s mouth, but %s %s %s face away from %s box.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                             target.pronoun(), target.action("push", "pushes"), getSelf().nameOrPossessivePronoun(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s skilled tongue explores %s pussy, finding and pleasuring %s more sensitive areas. "
                             + "%s repeatedly attacks %s clitoris until %s can't suppress %s pleasured moans.%s",
-                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(getSelf().pronoun()), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.possessivePronoun(), special);
+                            target.pronoun(), target.possessiveAdjective(), special);
         } else if (modifier == Result.reverse) {
             return String.format("%s obediently laps at %s pussy as %s %s on %s face.%s",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.action("sit"), getSelf().possessivePronoun(),
+                            target.pronoun(), target.action("sit"), getSelf().possessiveAdjective(),
                             special);
         }
         return String.format("%s locates and captures %s clit between %s lips and attacks it with %s tongue.%s", 
-                        getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                        getSelf().possessivePronoun(), special);
+                        getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                        getSelf().possessiveAdjective(), special);
     }
     
     @Override

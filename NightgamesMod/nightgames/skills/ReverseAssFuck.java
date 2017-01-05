@@ -122,9 +122,9 @@ public class ReverseAssFuck extends Fuck {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s makes sure %s %s is sufficiently lubricated and pushes %s %s into %s greedy hole.",
-                        getSelf().name(), getSelf().possessivePronoun(), getSelfOrgan().describe(getSelf()), 
+                        getSelf().name(), getSelf().possessiveAdjective(), getSelfOrgan().describe(getSelf()), 
                         target.nameOrPossessivePronoun(),
-                        getTargetOrgan(target).describe(target), getSelf().possessivePronoun());
+                        getTargetOrgan(target).describe(target), getSelf().possessiveAdjective());
     }
 
     @Override

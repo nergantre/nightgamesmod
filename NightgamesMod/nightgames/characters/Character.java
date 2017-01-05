@@ -1712,7 +1712,7 @@ public abstract class Character extends Observable implements Cloneable {
                 if (human()) {
                     c.write(this, "Your mind clears up after your release.");
                 } else {
-                    c.write(this, "You see the light of reason return to " + nameDirectObject() + "  after " + possessivePronoun() + " release.");
+                    c.write(this, "You see the light of reason return to " + nameDirectObject() + "  after " + possessiveAdjective() + " release.");
                 }
                 purgedStatuses.forEach(this::removeStatus);
             }
@@ -1863,7 +1863,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (opponent.has(Trait.erophage)) {
             c.write(Global.capitalizeFirstLetter("<b>" + opponent.subjectAction("flush", "flushes")
                             + " as the feedback from " + nameOrPossessivePronoun() + " orgasm feeds "
-                            + opponent.possessivePronoun() + " divine power.</b>"));
+                            + opponent.possessiveAdjective() + " divine power.</b>"));
             opponent.add(c, new Alluring(opponent, 5));
             opponent.buildMojo(c, 100);
             if (c.getStance().inserted(this) && opponent.has(Trait.divinity)) {
@@ -1874,7 +1874,7 @@ public abstract class Character extends Observable implements Cloneable {
             c.write(Global.capitalizeFirstLetter(
                             "<b>" + opponent.subjectAction("are more composed", "seems more composed") + " as "
                                             + nameOrPossessivePronoun() + " forced orgasm goes straight to "
-                                            + opponent.possessivePronoun() + " ego.</b>"));
+                                            + opponent.possessiveAdjective() + " ego.</b>"));
             opponent.restoreWillpower(c, 10 + Global.random(10));
         }
         if (opponent.has(Trait.leveldrainer) && !has(Trait.leveldrainer)
@@ -1892,7 +1892,7 @@ public abstract class Character extends Observable implements Cloneable {
                                     opponent.nameOrPossessivePronoun(),
                                     c.getStance().insertablePartFor(c, opponent).describe(opponent),
                                     nameOrPossessivePronoun(),
-                            c.getStance().insertedPartFor(c, this).describe(this), possessivePronoun(), possessivePronoun(),
+                            c.getStance().insertedPartFor(c, this).describe(this), possessiveAdjective(), possessiveAdjective(),
                             opponent.pronoun() + opponent.action("are", "is"), nameOrPossessivePronoun())));
                 } else if (c.getStance().penetratedBy(c, this, opponent)) {
                     c.write(opponent, Global.format("{other:NAME-POSSESSIVE} cock pistons rapidly into {self:name-do} as {self:subject-action:cum|cums}, "
@@ -3191,9 +3191,17 @@ public abstract class Character extends Observable implements Cloneable {
         return Emotion.confident;
     }
 
-    public String possessivePronoun() {
+    public String possessiveAdjective() {
         if (useFemalePronouns()) {
             return "her";
+        } else {
+            return "his";
+        }
+    }
+    
+    public String possessivePronoun() {
+        if (useFemalePronouns()) {
+            return "hers";
         } else {
             return "his";
         }
@@ -3220,7 +3228,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String reflectivePronoun() {
-        String self = possessivePronoun() + "self";
+        String self = possessiveAdjective() + "self";
         if (self.equals("hisself")) {
             // goddammit english.
             return "himself";

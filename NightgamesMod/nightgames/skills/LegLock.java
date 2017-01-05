@@ -76,7 +76,7 @@ public class LegLock extends Skill {
                             target.pronoun(), target.action("slip"));
         } else {
             return String.format("%s pulls %s leg across %s body in a painful submission hold.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun());
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective());
         }
     }
 

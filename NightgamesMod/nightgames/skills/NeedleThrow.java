@@ -46,9 +46,9 @@ public class NeedleThrow extends Skill {
             c.write(getSelf(), String.format(
                             "%s %s with one of %s drugged needles. "
                                             + "%s %s with arousal and %s it difficult to stay on %s feet.",
-                            getSelf().subjectAction("hit"), target.subject(), getSelf().possessivePronoun(),
+                            getSelf().subjectAction("hit"), target.subject(), getSelf().possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.pronoun()), target.action("flush", "flushes"),
-                            target.action("find", target.pronoun() + " is finding"), target.possessivePronoun()));
+                            target.action("find", target.pronoun() + " is finding"), target.possessiveAdjective()));
             target.add(c, Horny.getWithBiologicalType(getSelf(), target, 3, 4, getSelf().nameOrPossessivePronoun() + " drugged needle"));
             target.add(c, new Drowsy(target));
         } else {

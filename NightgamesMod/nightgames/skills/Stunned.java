@@ -59,7 +59,7 @@ public class Stunned extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s is on the floor, trying to catch %s breath.",
-                        getSelf().subject(), getSelf().possessivePronoun());
+                        getSelf().subject(), getSelf().possessiveAdjective());
     }
 
     @Override

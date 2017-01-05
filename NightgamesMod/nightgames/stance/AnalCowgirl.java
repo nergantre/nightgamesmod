@@ -22,8 +22,8 @@ public class AnalCowgirl extends AnalSexStance {
                             bottom.nameDirectObject());
         } else {
             return String.format("%s flat on %s back with %s cock buried inside %s ass.",
-                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), top.nameOrPossessivePronoun());
+                            bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), top.nameOrPossessivePronoun());
         }
     }
 
@@ -89,7 +89,7 @@ public class AnalCowgirl extends AnalSexStance {
 
         if (!inserter.hasInsertable()) {
             if (inserter.human()) {
-                c.write("With " + inserter.possessivePronoun()
+                c.write("With " + inserter.possessiveAdjective()
                                 + " pole gone, you groan in frustration and cease your merciless movements.");
             } else {
                 c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");

@@ -109,7 +109,7 @@ public class Fly extends Fuck {
         if (modifier == Result.miss) {
             return String.format("%slunges for %s with a hungry look in %s eyes. However %s other "
                             + "ideas. %s %s %s as %s approaches and %s %s sprawling to the floor.",
-                            subject, target.nameDirectObject(), getSelf().possessivePronoun(),
+                            subject, target.nameDirectObject(), getSelf().possessiveAdjective(),
                             target.subjectAction("have", "has"), target.pronoun(),
                             target.action("trip"), getSelf().nameDirectObject(),
                             getSelf().pronoun(), target.pronoun(), target.action("send"));
@@ -120,11 +120,11 @@ public class Fly extends Fuck {
                             + " Somehow, %s dick ended up inside of %s in the process and"
                             + " the rhythmic movements of %s flying arouse %s to no end.",
                             subject, target.nameDirectObject(), target.directObject(),
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomWings().describe(getSelf()),
                             target.pronoun(), target.subjectAction("are", "is"),
                             getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                             target.directObject());
         }
     }

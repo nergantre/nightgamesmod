@@ -82,11 +82,11 @@ public class ImbueFetish extends Skill {
                         + " needle sticking out. %s the needle, but when %s %s back at %s"
                         + " - who has a maniacal look on %s face - %s %s an unnaturally "
                         + "strong attraction towards %s.",
-                        target.subjectAction("feel"), target.possessivePronoun(), target.pronoun(),
+                        target.subjectAction("feel"), target.possessiveAdjective(), target.pronoun(),
                         target.action("look"), target.pronoun(), target.action("see"),
                         Global.capitalizeFirstLetter(target.subjectAction("remove")),
                         target.pronoun(), target.action("look"), getSelf().nameDirectObject(),
-                        getSelf().possessivePronoun(), target.pronoun(), target.action("feel"),
+                        getSelf().possessiveAdjective(), target.pronoun(), target.action("feel"),
                         chosenFetish);
     }
 

@@ -107,8 +107,8 @@ public class MagicMissile extends Skill {
             return String.format("%s casts a quick spell and fires a bolt of magic into %s vulnerable "
                             + "groin. %s %s injured plums as pain saps the strength from %s "
                             + "legs.", getSelf().subject(), target.nameOrPossessivePronoun(),
-                            Global.capitalizeFirstLetter(target.subjectAction("cup")), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            Global.capitalizeFirstLetter(target.subjectAction("cup")), target.possessiveAdjective(),
+                            target.possessiveAdjective());
         } else {
             return String.format("%s hand glows as %s casts a spell. Before %s can react, %s "
                             + "struck with an impact like a punch in the gut.", getSelf().subject(),

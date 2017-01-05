@@ -120,7 +120,7 @@ public class PetThreesome extends Skill {
                     c.write(getSelf(), Global.format("While %s holding {other:name-do} down with %s ass, "
                                     + "{self:subject} mounts {other:direct-object} and pierces "
                                     + "{self:reflective} with {other:possessive} cock.", fucker, 
-                                    target, master.subjectAction("are", "is"), master.possessivePronoun()));
+                                    target, master.subjectAction("are", "is"), master.possessiveAdjective()));
                     c.setStance(new FFMFacesittingThreesome(fucker, master, target), getSelf(), true);
                 } else {
                     c.write(getSelf(), Global.format("While %s holding {other:name-do} down, "
@@ -163,7 +163,7 @@ public class PetThreesome extends Skill {
                                     + "{other:direct-object} with {self:possessive} cock. "
                                     + "It does not end there however, as %s {other:direct-object} %s cock, "
                                     + "leaving the poor {other:girl} spit-roasted.", fucker, 
-                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action(" feed", " feeds"), master.possessivePronoun()));
+                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action(" feed", " feeds"), master.possessiveAdjective()));
                     c.setStance(new MFMSpitroastThreesome(fucker, master, target), getSelf(), true);
                 }
             }

@@ -106,7 +106,7 @@ public class Nurple extends Skill {
         } else if (modifier == Result.special) {
             return String.format("%s touches %s nipple with %s glove and a jolt of electricity hits %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), target.directObject());
+                            getSelf().possessiveAdjective(), target.directObject());
         } else {
             return String.format("%s twists %s sensitive nipples, giving %s a jolt of pain.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());

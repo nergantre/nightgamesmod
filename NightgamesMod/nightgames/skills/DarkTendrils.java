@@ -90,7 +90,7 @@ public class DarkTendrils extends Skill {
                             target.action("dive"), target.directObject());
         } else if (modifier == Result.weak) {
             return String.format("%s shadow seems to come to life as dark tendrils wrap around %s legs and bring %s to the floor.",
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(), target.directObject());
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(), target.directObject());
         } else {
             return String.format("%s summons shadowy tentacles which snare %s arms and hold %s in place.", 
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());

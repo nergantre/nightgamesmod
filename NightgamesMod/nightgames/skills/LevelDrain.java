@@ -165,7 +165,7 @@ public class LevelDrain extends Drain {
                         + " something far more precious than semen into %s; as more of the ethereal"
                         + " fluid leaves %s, %s ",
                         target.subjectAction("feel"), demon, target.directObject(),
-                        getSelf().subject(), target.possessivePronoun(), target.directObject(),
+                        getSelf().subject(), target.possessiveAdjective(), target.directObject(),
                         target.subject(), target.action("feel"), target.reflectivePronoun(),
                         getSelf().directObject(), target.pronoun(), target.action("realize"),
                         target.pronoun(), target.action("are", "is"), getSelf().nameDirectObject(),
@@ -175,12 +175,12 @@ public class LevelDrain extends Drain {
                 return String.format("%s squeezes %s with %s pussy and starts to milk %s, "
                                 + "but %s suddenly %s %s shudder and moan loudly. "
                                 + "Looks like %s plan backfired.", getSelf().subject(),
-                                target.nameDirectObject(), getSelf().possessivePronoun(),
+                                target.nameDirectObject(), getSelf().possessiveAdjective(),
                                 target.directObject(), target.pronoun(), target.action("feel"),
-                                getSelf().directObject(), getSelf().possessivePronoun());
+                                getSelf().directObject(), getSelf().possessiveAdjective());
             case 1:
                 return base + String.format("%s experiences and memories escape %s mind and flowing into %s.",
-                                target.possessivePronoun(), target.possessivePronoun(), getSelf().directObject());
+                                target.possessiveAdjective(), target.possessiveAdjective(), getSelf().directObject());
             case 2:
                 return base + String.format("%s very being snap loose inside of %s and it seems to flow right "
                                 + "through %s dick and into %s. When it is over %s... empty "
@@ -189,10 +189,10 @@ public class LevelDrain extends Drain {
                                 + " %s has kept on thrusting and %s right on the edge of climax."
                                 + " %s defeat appears imminent, but %s %s already lost something"
                                 + " far more valuable than a simple sex fight...",
-                                target.possessivePronoun(), target.directObject(), target.possessivePronoun(),
+                                target.possessiveAdjective(), target.directObject(), target.possessiveAdjective(),
                                 getSelf().subject(), target.subjectAction("feel"), getSelf().subject(),
                                 getSelf().pronoun(), target.subjectAction("are", "is"), 
-                                Global.capitalizeFirstLetter(target.possessivePronoun()),
+                                Global.capitalizeFirstLetter(target.possessiveAdjective()),
                                 target.pronoun(), target.action("have", "has"));
             default:
                 // Should never happen

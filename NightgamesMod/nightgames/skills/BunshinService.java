@@ -134,9 +134,9 @@ public class BunshinService extends Skill {
             }
         }else if(modifier==Result.critical){
             if(target.hasDick()){
-                return String.format("Your clone attacks %s's sensitive penis, rubbing and stroking %s glans.",target.name(),target.possessivePronoun());
+                return String.format("Your clone attacks %s's sensitive penis, rubbing and stroking %s glans.",target.name(),target.possessiveAdjective());
             }else{
-                return String.format("Your clone slips between %s's legs to lick and suck %s swollen clit.",target.name(),target.possessivePronoun());
+                return String.format("Your clone slips between %s's legs to lick and suck %s swollen clit.",target.name(),target.possessiveAdjective());
             }
         }else{
             return String.format("A clone pinches and teases %s's nipples",target.name());
@@ -162,18 +162,18 @@ public class BunshinService extends Skill {
         }else if(modifier==Result.critical){
             if(target.hasDick()){
                 return String.format("One of the %s clones kneels between %s legs to lick and suck %s cock.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }else{
                 return String.format("One of the %s clones kneels between %s legs to lick %s nether lips.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }
         }else{
             if(getSelf().hasBreasts()){
                 return String.format("A %s clone presses her boobs against %s and teases %s nipples.",getSelf().name(),
-                                target.subject(), target.possessivePronoun());
+                                target.subject(), target.possessiveAdjective());
             }else{
                 return String.format("A %s clone caresses %s chest and teases %s nipples.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }
             
         }

@@ -202,9 +202,9 @@ public class Fuck extends Skill {
         if (modifier == Result.normal) {
             return "you rub the head of your " + selfO.describe(getSelf()) + " around " + target.name()
                             + "'s entrance, causing "+target.directObject()+" to shiver with anticipation. Once you're sufficiently lubricated "
-                            + "with "+target.possessivePronoun()+" wetness, you thrust into "+target.possessivePronoun()+" " + targetO.describe(target)
+                            + "with "+target.possessiveAdjective()+" wetness, you thrust into "+target.possessiveAdjective()+" " + targetO.describe(target)
                             + ". " + target.name()
-                            + " tries to stifle "+target.possessivePronoun()+" pleasured moan as you fill "+target.possessivePronoun()+" in an instant.";
+                            + " tries to stifle "+target.possessiveAdjective()+" pleasured moan as you fill "+target.possessiveAdjective()+" in an instant.";
         } else if (modifier == Result.miss) {
             if (!selfO.isReady(getSelf()) && !targetO.isReady(target)) {
                 return "you're in a good position to fuck " + target.name()
@@ -231,28 +231,28 @@ public class Fuck extends Skill {
         if (modifier == Result.normal) {
             return String.format("%s rubs %s %s against %s wet snatch. " +
                                  "%s slowly but steadily pushes in, forcing %s length into %s hot, wet pussy.", 
-                            getSelf().name(), getSelf().possessivePronoun(), selfO.describe(getSelf()), 
+                            getSelf().name(), getSelf().possessiveAdjective(), selfO.describe(getSelf()), 
                             target.nameOrPossessivePronoun(),
-                            Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessivePronoun(),
-                            target.possessivePronoun());
+                            Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective());
         } else if (modifier == Result.miss) {
             String subject = (damage == 0 ? getSelf().name() + " " : "");
             if (!selfO.isReady(getSelf()) || !targetO.isReady(target)) {
                 String indicative = target.human() ? "yours" : target.nameOrPossessivePronoun();
                 return String.format("%sgrinds %s privates against %ss, but since neither of %s are"
                                 + " very turned on yet, it doesn't accomplish much.",
-                                subject, getSelf().possessivePronoun(), indicative,
+                                subject, getSelf().possessiveAdjective(), indicative,
                                 c.bothDirectObject(target));
             } else if (!targetO.isReady(target)) {
                 return String.format("%stries to push %s %s inside %s pussy, but %s %s not wet enough. "
                                 + "%s simply not horny enough for effective penetration yet.",
-                                subject, getSelf().possessivePronoun(), selfO.describe(getSelf()),
+                                subject, getSelf().possessiveAdjective(), selfO.describe(getSelf()),
                                 target.nameOrPossessivePronoun(), target.pronoun(),
                                 target.action("are", "is"),
                                 Global.capitalizeFirstLetter(target.subjectAction("are", "is")));
             } else {
                 return String.format("%stries to push %s %s into %s ready pussy, but %s is still limp.",
-                                subject, getSelf().possessivePronoun(), selfO.describe(getSelf()),
+                                subject, getSelf().possessiveAdjective(), selfO.describe(getSelf()),
                                 target.nameOrPossessivePronoun(), getSelf().pronoun());
             }
         }

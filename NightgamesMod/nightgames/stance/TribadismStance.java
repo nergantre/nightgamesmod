@@ -16,8 +16,8 @@ public class TribadismStance extends Position {
     @Override
     public String describe(Combat c) {
         return top.subjectAction("are", "is") + " holding " + bottom.nameOrPossessivePronoun() + " legs across "
-                        + top.possessivePronoun() + " chest while grinding " + top.possessivePronoun()
-                        + " soaked cunt into " + bottom.possessivePronoun() + " pussy.";
+                        + top.possessiveAdjective() + " chest while grinding " + top.possessiveAdjective()
+                        + " soaked cunt into " + bottom.possessiveAdjective() + " pussy.";
     }
 
     @Override

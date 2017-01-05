@@ -125,9 +125,9 @@ public class WildThrust extends Thrust {
         } else if (modifier == Result.upgrade) {
             return String.format("%s pistons wildly into %s while pushing %s shoulders on the ground; %s tits "
                             + "are shaking above %s head while %s strapon stimulates %s %s.", getSelf().subject(),
-                            target.nameDirectObject(), target.possessivePronoun(),
-                            Global.capitalizeFirstLetter(getSelf().possessivePronoun()), target.possessivePronoun(),
-                            getSelf().possessivePronoun(), target.possessivePronoun(),
+                            target.nameDirectObject(), target.possessiveAdjective(),
+                            Global.capitalizeFirstLetter(getSelf().possessiveAdjective()), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective(), target.possessiveAdjective(),
                             target.hasBalls() ? "prostate" : "insides");
         } else if (modifier == Result.reverse) {
             return String.format("%s frenziedly bounces on %s cock, relentlessly driving %s both toward orgasm.",

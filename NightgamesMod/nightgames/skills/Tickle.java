@@ -180,21 +180,21 @@ public class Tickle extends Skill {
             return String.format("%s tickles %s nude body mercilessly, gradually working %s way to %s dick and balls. "
                             + "As %s fingers start tormenting %s privates, %s %s to "
                             + "clear %s head enough to keep from cumming immediately.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                            target.possessivePronoun(), getSelf().possessivePronoun(), target.possessivePronoun(),
-                            target.pronoun(), target.action("struggle"), target.possessivePronoun());
+                            target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective(), getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                            target.pronoun(), target.action("struggle"), target.possessiveAdjective());
         } else if (modifier == Result.critical) {
             return String.format("%s teases %s privates with %s feather tickler. After %s stops,"
                             + " %s an unnatural sensitivity where the feathers touched %s.", getSelf().subject(),
-                            target.nameDirectObject(), getSelf().possessivePronoun(), getSelf().pronoun(),
+                            target.nameDirectObject(), getSelf().possessiveAdjective(), getSelf().pronoun(),
                             target.subjectAction("feel"), target.directObject());
         } else if (modifier == Result.strong) {
             return String.format("%s brushes %s tickler over %s balls and teases the sensitive head of %s penis.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun());
+                            getSelf().subject(), getSelf().possessiveAdjective(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective());
         } else if (modifier == Result.item) {
             return String.format("%s runs %s feather tickler across %s nipples and abs.",
-                            getSelf().subject(), getSelf().possessivePronoun(), 
+                            getSelf().subject(), getSelf().possessiveAdjective(), 
                             target.nameOrPossessivePronoun());
         } else if (modifier == Result.weak) {
             return String.format("%s pulls out a feather tickler and teases any exposed skin %s can reach.",
