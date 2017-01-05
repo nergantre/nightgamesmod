@@ -46,7 +46,7 @@ public class ImbueFetish extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         chosenFetish = Global.pickRandom(
-                        POSSIBLE_FETISHES.stream().filter(part -> getSelf().body.has(part)).toArray(String[]::new));
+                        POSSIBLE_FETISHES.stream().filter(part -> getSelf().body.has(part)).toArray(String[]::new)).get();
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
         } else {

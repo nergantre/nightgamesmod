@@ -5,7 +5,6 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.RoboArm;
-import nightgames.pet.arms.RoboArmManager;
 import nightgames.stance.Stance;
 
 public class StabilizerIdle extends ArmSkill {

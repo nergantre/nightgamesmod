@@ -5,15 +5,19 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 
 public class PussyGrind extends Skill {
 
     public PussyGrind(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.petDisallowed);
     }
 
     public PussyGrind(Character self) {
-        super("Pussy Grind", self);
+        this("Pussy Grind", self, 0);
     }
 
     public BodyPart getSelfOrgan() {

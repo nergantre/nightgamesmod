@@ -39,6 +39,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.ToysPart;
 import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatantData;
 import nightgames.combat.IEncounter;
@@ -415,7 +416,7 @@ public abstract class Character extends Observable implements Cloneable {
         getGrowth().levelDown(this);
         levelPlan.remove(getLevel());
         level--;
-        return Global.gainSkills(this);
+        return subject() + " lost a level! <br/>" + Global.gainSkills(this);
     }
 
     public int getXP() {
@@ -1845,6 +1846,10 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
+    public String getRandomLineFor(String lineType, Combat c, Character other) {
+        return "";
+    }
+
     private void resolvePostOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
         if (selfPart != null && opponentPart != null) {
             selfPart.onOrgasmWith(c, this, opponent, opponentPart, true);
@@ -1872,13 +1877,15 @@ public abstract class Character extends Observable implements Cloneable {
                                             + opponent.possessivePronoun() + " ego.</b>"));
             opponent.restoreWillpower(c, 10 + Global.random(10));
         }
-        if (opponent.has(Trait.leveldrainer) && !has(Trait.leveldrainer) && ((c.getStance()
-                                                  .penetratedBy(c, opponent, this)
-                        && !has(Trait.strapped)) || c.getStance().en == Stance.trib)) {
-            if (getLevel() > 1 && !c.getCombatantData(opponent).getBooleanFlag("has_drained") 
-                            || Global.checkFlag(Flag.hardmode)) {
+        if (opponent.has(Trait.leveldrainer) && !has(Trait.leveldrainer)
+                        && (((c.getStance().penetratedBy(c, opponent, this) || c.getStance().penetratedBy(c, this, opponent))
+                                        && !has(Trait.strapped)
+                                        && !opponent.has(Trait.strapped))
+                        || c.getStance().en == Stance.trib)) {
+            if (getLevel() > 1 && (!c.getCombatantData(opponent).getBooleanFlag("has_drained") 
+                            || Global.checkFlag(Flag.hardmode))) {
                 c.getCombatantData(opponent).toggleFlagOn("has_drained", true);
-                if (c.getStance().en != Stance.trib)
+                if (c.getStance().penetratedBy(c, opponent, this)) {
                     c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s contracts around %s %s, reinforcing"
                             + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
                                                     + " left considerably more powerful, at %s expense.</b>",
@@ -1886,17 +1893,25 @@ public abstract class Character extends Observable implements Cloneable {
                                     c.getStance().insertablePartFor(c, opponent).describe(opponent),
                                     nameOrPossessivePronoun(),
                             c.getStance().insertedPartFor(c, this).describe(this), possessivePronoun(), possessivePronoun(),
-                            opponent.subjectAction("are", "is"), nameOrPossessivePronoun())));
-                else
-                    c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s greedy %s sucks itself tightly to"
-                                + " %s %s, drawing in %s strength and experience along with the pleasure of %s orgasm.</b>",
-                                opponent.nameOrPossessivePronoun(), opponent.body.getRandomPussy().describe(opponent),
-                                nameOrPossessivePronoun(), body.getRandomPussy().describe(this), possessivePronoun(),
-                                possessivePronoun())));
+                            opponent.pronoun() + opponent.action("are", "is"), nameOrPossessivePronoun())));
+                } else if (c.getStance().penetratedBy(c, this, opponent)) {
+                    c.write(opponent, Global.format("{other:NAME-POSSESSIVE} cock pistons rapidly into {self:name-do} as {self:subject-action:cum|cums}, "
+                                    + "drawing out {self:possessive} very strength and experience on every return stroke. "
+                                    + "Once it's over, {other:pronoun-action:are|is} left considerably more powerful at {self:possessive} expense.",
+                                    this, opponent));
+                } else {
+                    c.write(opponent, Global.format("{other:NAME-POSSESSIVE} greedy {other:body-part:pussy} sucks itself tightly to {self:name-possessive} {self:body-part:pussy}, "
+                                    + "drawing in {self:possessive} very strength and experience along the pleasures of {self:possessive} orgasm. "
+                                    + "Once it's over, {other:pronoun-action:are|is} left considerably more powerful at {self:possessive} expense.",
+                                    this, opponent));
+                }
+                String leveldrainLiner = opponent.getRandomLineFor(CharacterLine.LEVEL_DRAIN_LINER, c, this);
+                if (!leveldrainLiner.isEmpty()) {
+                    c.write(opponent, leveldrainLiner);
+                }
                 int xpStolen = getXP();
                 c.write(dong());
                 xp = Math.max(xp, getXPReqToNextLevel() - 1);
-                
                 int gained;
                 if (Global.checkFlag(Flag.hardmode)) {
                     drain(c, opponent, 30 + Global.random(50));

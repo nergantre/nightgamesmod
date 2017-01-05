@@ -211,26 +211,6 @@ public class TestAngel extends BasePersonality {
         }
     }
 
-    @Override public String bbLiner(Combat c, Character other) {
-        return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
-    }
-
-    @Override public String nakedLiner(Combat c, Character opponent) {
-        return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
-    }
-
-    @Override public String stunLiner(Combat c, Character opponent) {
-        return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
-    }
-
-    @Override public String taunt(Combat c, Character opponent) {
-        return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
-    }
-
-    @Override public String temptLiner(Combat c, Character opponent) {
-        return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
-    }
-
     @Override public String victory(Combat c, Result flag) {
         character.arousal.empty();
         Character opponent = character.equals(c.p1) ? c.p2 : c.p1;
@@ -443,22 +423,8 @@ public class TestAngel extends BasePersonality {
         }
     }
 
-    @Override public String startBattle(Character self, Character other) {
-        return "Angel licks her lips and stalks you like a predator.";
-    }
-
     @Override public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50;
-    }
-
-    @Override public String night() {
-        return "As you start to head back after the match, Angel grabs your hand and drags you in the other direction. <i>\"You're officially kidnapped, because I haven't had "
-                        + "enough sex yet tonight.\"</i> That makes sense... kinda? You did just finish three hours of intense sex-fighting. If she wants too much more than that, you're "
-                        + "both going to end up pretty sleep deprived. Angel looks like she's struggling to put her thoughts into words. <i>\"I had enough sex in general, but I want some "
-                        + "more time having you all to myself.\"</i> That's quite flattering coming from her, but why you specifically? Angel is openly bisexual, she could just as easily "
-                        + "take one of the other girls back with her. She looks back at you and blushes noticeably. <i>\"It's better with you, and not just because you have a cock. It is "
-                        + "a pretty good fit though. I don't know. It doesn't matter. I'm kidnapping you, so we're going to go back to my room, have sex, and you're going to stay the night "
-                        + "in case I want more sex in the morning.\"</i> You follow without protest. <br/>You lose a lot of sleep, but you don't regret it.";
     }
 
     public void advance() {
@@ -484,14 +450,6 @@ public class TestAngel extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override public String orgasmLiner(Combat c) {
-        return "<i>\"Mmm maybe you do have promise. Care to try that again?\"</i>";
-    }
-
-    @Override public String makeOrgasmLiner(Combat c, Character target) {
-        return "Angel stares you in the eye as your consciousness return from the precipice <i>\"Once isn't enough. I need more. You can do that for me right?\"</i>";
     }
 
     @Override

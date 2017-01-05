@@ -25,14 +25,6 @@ public interface Personality extends Serializable {
 
     void rest(int time);
 
-    String bbLiner(Combat c, Character other);
-
-    String nakedLiner(Combat c, Character opponent);
-
-    String stunLiner(Combat c, Character opponent);
-
-    String taunt(Combat c, Character opponent);
-
     String victory(Combat c, Result flag);
 
     String defeat(Combat c, Result flag);
@@ -51,11 +43,7 @@ public interface Personality extends Serializable {
 
     void ding();
 
-    String startBattle(Character self, Character other);
-
     boolean fit();
-
-    String night();
 
     boolean checkMood(Combat c, Emotion mood, int value);
 
@@ -64,12 +52,6 @@ public interface Personality extends Serializable {
     void pickFeat();
 
     String describeAll(Combat c, Character self);
-
-    String temptLiner(Combat c, Character opponent);
-
-    String orgasmLiner(Combat c);
-
-    String makeOrgasmLiner(Combat c, Character target);
 
     String getType();
 

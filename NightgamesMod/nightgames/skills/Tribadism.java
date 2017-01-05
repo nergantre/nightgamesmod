@@ -5,6 +5,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.stance.TribadismStance;
 
@@ -12,10 +13,13 @@ public class Tribadism extends Skill {
 
     public Tribadism(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.petDisallowed);
     }
 
     public Tribadism(Character self) {
-        super("Tribadism", self);
+        this("Tribadism", self, 0);
     }
 
     public BodyPart getSelfOrgan() {

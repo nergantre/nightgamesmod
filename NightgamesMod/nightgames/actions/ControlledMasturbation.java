@@ -1,11 +1,11 @@
 package nightgames.actions;
 
 import nightgames.characters.Character;
-import nightgames.characters.body.BodyPart;
 import nightgames.global.Global;
 import nightgames.status.Stsflag;
 
 public class ControlledMasturbation extends Action {
+    private static final long serialVersionUID = 3348315784779117715L;
 
     public ControlledMasturbation() {
         super("Be Controlled");
@@ -20,16 +20,12 @@ public class ControlledMasturbation extends Action {
     public Movement execute(Character user) {
         
         String mast;
-        BodyPart part;
         if (user.hasDick()) {
             mast = "stroking {self:possessive} {self:body-part:cock}";
-            part = user.body.getRandomCock();
         } else if (user.hasPussy()) {
             mast = "rubbing {self:possessive} {self:body-part:pussy}";
-            part = user.body.getRandomPussy();
         } else {
             mast = "fingering {self:possessive} ass";
-            part = user.body.getRandomAss();
         }
          
         if (user.human()) {

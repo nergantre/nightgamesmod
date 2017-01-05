@@ -7,6 +7,7 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -26,6 +27,7 @@ public class Eve extends BasePersonality {
 
     public Eve(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Eve", 10, charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -139,29 +141,50 @@ public class Eve extends BasePersonality {
         }
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Eve grins at you and pats her own groin. <i>\"Better you than me, " + c.getOpponent(character).boyOrGirl() + ".\"</i>";
-    }
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Eve grins at you and pats her own groin. <i>\"Better you than me, " + other.boyOrGirl() + ".\"</i>";
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Eve seems more comfortable with her cock and balls hanging out than she was with her clothes on. <i>\"Like what you see? We're just getting started.\"</i>";
-    }
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {other:name}, let's play.\"</i>";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, " + c.getOpponent(character).boyOrGirl() + ". As soon as I catch my breath, your ass is mine.\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "Eve seems more comfortable with her cock and balls hanging out than she was with her clothes on. <i>\"Like what you see? We're just getting started.\"</i>";
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
-    }
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "Eve lets out a soft growl as she lays flat on the floor. <i>\"Enjoy it while you can, " + other.boyOrGirl() + ". As soon as I catch my breath, your ass is mine.\"</i>";
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            return "Eve grins sadistically. <i>\"If you're intimidated by my cock, don't worry. Size isn't everything.\"</i>";
+        });
+
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "Eve grins sadistically. <i>\"I'm an expert at making people like you squeal.\"</i>";
+        });
+
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "";
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            if (c.getStance().anallyPenetrated(c, other)) {
+                return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
+                                + " Eve immediately resumes her thrusting.";
+            }
+            return "<i>\"Ahhh shit! Wouldn't it have been sooo much better to have " + "taken that load up your ass?\"</i>";
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            if (c.getStance().anallyPenetrated(c, self)) {
+                return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
+                                + ", you little ass slut! But you're not done yet!\"</i>";
+            }
+            return "<i>\"That's it! Now, how about you return the favor?\"</i>";
+        });
     }
 
     @Override
@@ -375,22 +398,8 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} gives {other:name-do} a dominant grin and cracks {self:possessive} knuckles. <i>\"Come on {other:name}, let's play.\"</i>", character, other);
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50;
-    }
-
-    @Override
-    public String night() {
-        return "";
-    }
-
-    public void advance() {
-
     }
 
     @Override
@@ -405,23 +414,5 @@ public class Eve extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
-            return "<i>\"Oh fuck! You are one tight little cum bucket! Let's go again!\"</i>"
-                            + " Eve immediately resumes her thrusting.";
-        }
-        return "<i>\"Ahhh shit! Wouldn't it have been sooo much better to have " + "taken that load up your ass?\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
-            return "Eve laughs maniacally as you cum. <i>\"I knew you'd like it"
-                            + ", you little ass slut! But you're not done yet!\"</i>";
-        }
-        return "<i>\"That's it! Now, how about you return the favor?\"</i>";
     }
 }

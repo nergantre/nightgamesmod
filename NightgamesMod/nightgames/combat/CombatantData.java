@@ -152,4 +152,8 @@ public class CombatantData implements Cloneable {
         double amount = Math.max(currentAmount - staleness.decay, Math.min(staleness.floor, currentAmount));
         moveModifiers.put(skill, amount);
     }
+
+    public void increaseIntegerFlag(String key, int i) {
+        setIntegerFlag(key, getIntegerFlag(key) + i);
+    }
 }

@@ -186,9 +186,9 @@ public class CombatStats {
                     c.ding();
                     Character partner;
                     do {
-                        partner = (Character) Global.pickRandom(combatants.toArray());
+                        partner = (Character) Global.pickRandom(combatants.toArray()).get();
                     } while (c == partner);
-                    Daytime.train(partner, c, (Attribute) Global.pickRandom(c.att.keySet().toArray()));
+                    Daytime.train(partner, c, (Attribute) Global.pickRandom(c.att.keySet().toArray()).get());
                 }
                 c.modMoney(level * 500);
                 Global.day = new Daytime(new Player("<player>"));

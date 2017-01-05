@@ -850,7 +850,6 @@ public class GUI extends JFrame implements Observer {
         willpower.setForeground(new Color(68, 170, 85));
         willpower.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
         meter.add(willpower);
-
         try {
             // on macs, the aqua look and feel does not have colored progress bars.
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -890,12 +889,11 @@ public class GUI extends JFrame implements Observer {
         willpowerBar.setMaximum(player.getWillpower().max());
         willpowerBar.setValue(player.getWillpower().get());
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                         | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-
         JPanel bio = new JPanel();
         topPanel.add(bio);
         bio.setLayout(new GridLayout(2, 0, 0, 0));

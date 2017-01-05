@@ -88,7 +88,7 @@ public class FTCPrematch implements Scene {
                 }
             } else {
                 do {
-                    prey = (Character) Global.pickRandom(Global.getCharacters().toArray());
+                    prey = (Character) Global.pickRandom(Global.getCharacters().toArray()).get();
                 } while (prey.human());
                 if (!Global.checkFlag(Flag.didFTC)) {
                     message += "\"No one? Really? Fine, then I'll pick someone. Let's see... " + prey.name()

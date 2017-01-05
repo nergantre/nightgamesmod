@@ -9,7 +9,7 @@ import nightgames.global.Global;
 import nightgames.pet.arms.RoboArm;
 
 public abstract class MultiArmMove {
-
+    @SuppressWarnings("unused")
     private final String name;
 
     MultiArmMove(String name) {

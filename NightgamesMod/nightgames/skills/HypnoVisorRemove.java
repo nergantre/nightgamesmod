@@ -5,7 +5,6 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.skills.damage.Staleness;
 import nightgames.status.Stsflag;
 
 public class HypnoVisorRemove extends Skill {

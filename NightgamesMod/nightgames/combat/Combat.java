@@ -41,19 +41,25 @@ import nightgames.skills.CockWorship;
 import nightgames.skills.Command;
 import nightgames.skills.ConcedePosition;
 import nightgames.skills.FootWorship;
+import nightgames.skills.Grind;
 import nightgames.skills.PetInitiatedThreesome;
+import nightgames.skills.Piston;
+import nightgames.skills.PussyGrind;
 import nightgames.skills.PussyWorship;
 import nightgames.skills.Reversal;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
+import nightgames.skills.Thrust;
 import nightgames.skills.WildThrust;
 import nightgames.stance.Behind;
 import nightgames.stance.Kneeling;
+import nightgames.stance.Mount;
 import nightgames.stance.Neutral;
 import nightgames.stance.Pin;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.stance.TribadismStance;
 import nightgames.status.Abuff;
 import nightgames.status.Alluring;
 import nightgames.status.BodyFetish;
@@ -61,7 +67,6 @@ import nightgames.status.Braced;
 import nightgames.status.Collared;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
-import nightgames.status.Drowsy;
 import nightgames.status.Enthralled;
 import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
@@ -79,7 +84,6 @@ import nightgames.status.addiction.Addiction.Severity;
 import nightgames.status.addiction.AddictionType;
 
 public class Combat extends Observable implements Cloneable {
-    
     private enum CombatPhase {
         PRETURN,
         SKILL_SELECTION,
@@ -91,6 +95,7 @@ public class Combat extends Observable implements Cloneable {
         P1_ACT_SECOND,
         P2_ACT_SECOND,
         UPKEEP,
+        LEVEL_DRAIN,
         RESULTS_SCENE,
         FINISHED,
     }
@@ -354,20 +359,26 @@ public class Combat extends Observable implements Cloneable {
         updateMessage();
     }
 
-    private boolean checkLosses() {
+    private boolean checkLosses(boolean doLosses) {
         if (cloned) {
             return false;
         }
         if (p1.checkLoss(this) && p2.checkLoss(this)) {
-            draw();
+            if (doLosses) {
+                draw();
+            }
             return true;
         }
         if (p1.checkLoss(this)) {
-            victory(p2);
+            if (doLosses) {
+                victory(p2);
+            }
             return true;
         }
         if (p2.checkLoss(this)) {
-            victory(p1);
+            if (doLosses) {
+                victory(p1);
+            }
             return true;
         }
         return false;
@@ -631,10 +642,57 @@ public class Combat extends Observable implements Cloneable {
                     CombatPhase.P1_ACT_SECOND,
                     CombatPhase.P2_ACT_FIRST,
                     CombatPhase.P1_ACT_SECOND);
+
+    private CombatPhase determinePostCombatPhase() {
+        if (p1.has(Trait.leveldrainer) ^ p2.has(Trait.leveldrainer) && !p1.has(Trait.strapped) && !p2.has(Trait.strapped)) {
+            Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
+            Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
+            if (!getCombatantData(drainer).getBooleanFlag("has_drained")) {
+                if (!getStance().havingSex(this)) {
+                    Position mountStance = new Mount(drainer, drained);
+                    if (mountStance.insert(this, drained, drainer) != mountStance) {
+                        write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
+                                        + "on top of {other:direct-object} and inserts {other:possessive} cock into {self:reflective}.", drainer, drained));
+                        setStance(mountStance.insert(this, drained, drainer));
+                    } else if (mountStance.insert(this, drainer, drainer) != mountStance) {
+                        write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
+                                        + "on top of {other:direct-object} and inserts {self:reflective} into {other:possessive} soaking vagina.", drainer, drained));
+                        setStance(mountStance.insert(this, drainer, drainer));
+                    } else if (drainer.hasPussy() && drained.hasPussy()) {
+                        write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
+                                        + "on top of {other:direct-object} and presses {self:possessive} wet snatch on top of {other:possessive}s.", drainer, drained));
+                        setStance(new TribadismStance(drainer, drained));
+                    } else {
+                        write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
+                                        + "on top of {other:direct-object}. However, {self:pronoun} could not figure a "
+                                        + "way to drain {other:possessive} levels.", drainer, drained));
+                        return CombatPhase.RESULTS_SCENE;
+                    }
+                } else if (phase == CombatPhase.LEVEL_DRAIN) {
+                    if (getCombatantData(drainer).getIntegerFlag("level_drain_thrusts") < 10) {
+                        Skill thrustSkill = getStance().en == Stance.trib ? new PussyGrind(drainer) : Global.pickRandom(new Thrust(drainer), new Grind(drainer), new Piston(drainer)).get();
+                        thrustSkill.resolve(this, drained);
+                        getCombatantData(drainer).increaseIntegerFlag("level_drain_thrusts", 1);
+                    } else {
+                        drained.doOrgasm(this, drainer,
+                                        Global.pickRandom(getStance().partsFor(this, drained)).orElse(drained.body.getRandomGenital()),
+                                        Global.pickRandom(getStance().partsFor(this, drainer)).orElse(drainer.body.getRandomGenital()));
+                        getCombatantData(drainer).setBooleanFlag("has_drained", true);
+                    }
+                }
+                return getCombatantData(drainer).getBooleanFlag("has_drained") ? CombatPhase.RESULTS_SCENE : CombatPhase.LEVEL_DRAIN;
+            }
+        }
+        return CombatPhase.RESULTS_SCENE;
+    }
+
     public void turn() {
-        if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses()) {
-            phase = CombatPhase.RESULTS_SCENE;
+        if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses(false)) {
+            phase = determinePostCombatPhase();
             next();
+            if (beingObserved) {
+                updateAndClearMessage();
+            }
             return;
         }
         if ((p1.orgasmed || p2.orgasmed) && phase != CombatPhase.RESULTS_SCENE && SKIPPABLE_PHASES.contains(phase)) {
@@ -701,6 +759,7 @@ public class Combat extends Observable implements Cloneable {
                 }
                 break;
             case RESULTS_SCENE:
+                checkLosses(true);
                 // fall through to the finished case.
                 phase = CombatPhase.FINISHED;
             case FINISHED:

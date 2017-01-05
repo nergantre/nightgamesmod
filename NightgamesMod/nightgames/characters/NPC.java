@@ -20,6 +20,7 @@ import nightgames.actions.Resupply;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
@@ -60,10 +61,12 @@ public class NPC extends Character {
     public boolean isStartCharacter = false;
     private List<CombatStrategy> personalStrategies;
     private List<CombatScene> postCombatScenes;
+    private Map<String, List<CharacterLine>> lines;
 
     public NPC(String name, int level, Personality ai) {
         super(name, level);
         this.ai = ai;
+        this.lines = new HashMap<>();
         fakeHuman = false;
         emotes = new HashMap<>();
         for (Emotion e : Emotion.values()) {
@@ -412,39 +415,53 @@ public class NPC extends Character {
         }
     }
 
+    public String getRandomLineFor(String lineType, Combat c, Character other) {
+        return Global.format(Global.pickRandom(lines.get(lineType)).orElse((cb, sf, ot) -> "").getLine(c, this, other), this, other);
+    }
+
+    public String getRandomLineFor(String lineType, Combat c) {
+        Character other = c == null ? null : c.getOpponent(this);
+        return getRandomLineFor(lineType, c, other);
+    }
+
+    @Override
+    public String challenge(Character other) {
+        return getRandomLineFor(CharacterLine.CHALLENGE, null, other);
+    }
+
     @Override
     public String orgasmLiner(Combat c) {
-        return ai.orgasmLiner(c);
+        return getRandomLineFor(CharacterLine.ORGASM_LINER, c);
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return ai.makeOrgasmLiner(c, target);
+        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c);
     }
 
     @Override
     public String bbLiner(Combat c, Character target) {
-        return ai.bbLiner(c, target);
+        return getRandomLineFor(CharacterLine.BB_LINER, c);
     }
 
     @Override
     public String nakedLiner(Combat c, Character target) {
-        return ai.nakedLiner(c, target);
+        return getRandomLineFor(CharacterLine.NAKED_LINER, c);
     }
 
     @Override
     public String stunLiner(Combat c, Character target) {
-        return ai.stunLiner(c, target);
+        return getRandomLineFor(CharacterLine.STUNNED_LINER, c);
     }
 
     @Override
     public String taunt(Combat c, Character target) {
-        return ai.taunt(c, target);
+        return getRandomLineFor(CharacterLine.TAUNT_LINER, c);
     }
 
     @Override
     public String temptLiner(Combat c, Character target) {
-        return ai.temptLiner(c, target);
+        return getRandomLineFor(CharacterLine.TEMPT_LINER, c);
     }
 
     @Override
@@ -610,11 +627,6 @@ public class NPC extends Character {
     }
 
     @Override
-    public String challenge(Character other) {
-        return ai.startBattle(this, other);
-    }
-
-    @Override
     public void promptTrap(IEncounter enc, Character target, Trap trap) {
         if (ai.attack(target) && (!target.human() || !Global.isDebugOn(DebugFlags.DEBUG_SPECTATE))) {
             enc.trap(this, target, trap);
@@ -623,9 +635,14 @@ public class NPC extends Character {
         }
     }
 
+    public void addLine(String lineType, CharacterLine line) {
+        lines.computeIfAbsent(lineType, type -> new ArrayList<>());
+        lines.get(lineType).add(line);
+    }
+
     @Override
     public void afterParty() {
-        Global.gui().message(ai.night());
+        Global.gui().message(getRandomLineFor(CharacterLine.NIGHT_LINER, null, Global.getPlayer()));
     }
 
     public void daytime(int time) {
@@ -871,7 +888,7 @@ public class NPC extends Character {
         forbidden.forEach(comments::remove);
         if (comments.isEmpty() || comments.size() == 1 && comments.containsKey(CommentSituation.NO_COMMENT))
             return Optional.empty();
-        return Optional.of((String) Global.pickRandom(comments.values().toArray()));
+        return Global.pickRandom(new ArrayList<>(comments.values()));
     }
     
     public Emotion moodSwing() {
@@ -911,6 +928,10 @@ public class NPC extends Character {
         decayMood();
         update();
         notifyObservers();
+    }
+
+    public Map<String, List<CharacterLine>> getLines() {
+        return lines;
     }
 
 }

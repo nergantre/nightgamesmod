@@ -5,7 +5,6 @@ import java.util.Arrays;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.combat.CombatantData;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
@@ -28,8 +27,6 @@ public class Strip extends ArmSkill {
     public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
         boolean sub = c.getStance().dom(owner);
         double accuracy = 10 + owner.get(Attribute.Science);
-        CombatantData data = c.getCombatantData(target);
-
         boolean hasTop = !target.outfit.slotEmpty(ClothingSlot.top);
         boolean hasBottom = !target.outfit.slotEmpty(ClothingSlot.bottom);
         ClothingSlot slot;
@@ -43,7 +40,7 @@ public class Strip extends ArmSkill {
         } else {
             accuracy *= 1.5;
             slot = Global.pickRandom(Arrays.stream(ClothingSlot.values()).filter(s -> !target.outfit.
-                            slotEmpty(s)).toArray(ClothingSlot[]::new));
+                            slotEmpty(s)).toArray(ClothingSlot[]::new)).get();
         }
         
         if (sub || Global.random(100) < accuracy) {

@@ -72,7 +72,7 @@ public class Command extends Skill {
         positioning.retainAll(Arrays.asList(CommandType.MASTER_BEHIND, CommandType.MASTER_MOUNT,
                         CommandType.MASTER_REVERSE_MOUNT, CommandType.MASTER_FACESIT));
         if (!positioning.isEmpty() && Global.random(100) <= 75) {
-            executeCommand(Global.pickRandom(positioning.toArray(new CommandType[] {})), c, target);
+            executeCommand(Global.pickRandom(positioning.toArray(new CommandType[] {})).get(), c, target);
             return true;
         }
 
@@ -80,7 +80,7 @@ public class Command extends Skill {
         Set<CommandType> stripping = new HashSet<>(available);
         stripping.retainAll(Arrays.asList(CommandType.STRIP_MASTER, CommandType.STRIP_SLAVE));
         if (!stripping.isEmpty() && Global.random(100) <= 75) {
-            executeCommand(Global.pickRandom(stripping.toArray(new CommandType[] {})), c, target);
+            executeCommand(Global.pickRandom(stripping.toArray(new CommandType[] {})).get(), c, target);
             return true;
         }
 
@@ -88,7 +88,7 @@ public class Command extends Skill {
         Set<CommandType> oneoff = new HashSet<>(available);
         oneoff.retainAll(Arrays.asList(CommandType.MASTER_STRAPON, CommandType.SUBMIT));
         if (!oneoff.isEmpty() && Global.random(100) <= 75) {
-            executeCommand(Global.pickRandom(oneoff.toArray(new CommandType[] {})), c, target);
+            executeCommand(Global.pickRandom(oneoff.toArray(new CommandType[] {})).get(), c, target);
             return true;
         }
 
@@ -105,12 +105,12 @@ public class Command extends Skill {
         oral.retainAll(Arrays.asList(CommandType.GIVE_ANNILINGUS, CommandType.GIVE_BLOWJOB,
                         CommandType.GIVE_CUNNILINGUS));
         if (!oral.isEmpty() && Global.random(100) <= 75) {
-            executeCommand(Global.pickRandom(oral.toArray(new CommandType[] {})), c, target);
+            executeCommand(Global.pickRandom(oral.toArray(new CommandType[] {})).get(), c, target);
             return true;
         }
 
         // If none chosen yet, just pick anything
-        executeCommand(Global.pickRandom(available.toArray(new CommandType[] {})), c, target);
+        executeCommand(Global.pickRandom(available.toArray(new CommandType[] {})).get(), c, target);
         return true;
     }
 

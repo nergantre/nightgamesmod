@@ -15,22 +15,6 @@ public class BlankPersonality extends BasePersonality {
         super(name, level, Optional.empty(), Optional.empty(), false);
     }
 
-    @Override public String bbLiner(Combat c, Character other) {
-        return null;
-    }
-
-    @Override public String nakedLiner(Combat c, Character opponent) {
-        return null;
-    }
-
-    @Override public String stunLiner(Combat c, Character opponent) {
-        return null;
-    }
-
-    @Override public String taunt(Combat c, Character opponent) {
-        return null;
-    }
-
     @Override public String victory(Combat c, Result flag) {
         return null;
     }
@@ -63,32 +47,12 @@ public class BlankPersonality extends BasePersonality {
         return false;
     }
 
-    @Override public String startBattle(Character self, Character other) {
-        return null;
-    }
-
     @Override public boolean fit() {
         return false;
     }
 
-    @Override public String night() {
-        return null;
-    }
-
     @Override public boolean checkMood(Combat c, Emotion mood, int value) {
         return value >= 100;
-    }
-
-    @Override public String temptLiner(Combat c, Character opponent) {
-        return null;
-    }
-
-    @Override public String orgasmLiner(Combat c) {
-        return null;
-    }
-
-    @Override public String makeOrgasmLiner(Combat c, Character target) {
-        return null;
     }
 
     @Override public void setGrowth() {

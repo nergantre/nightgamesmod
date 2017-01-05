@@ -162,7 +162,7 @@ public class DarkChaos extends Status {
                 return FRENZIED;
             Effect picked;
             do {
-                picked = Global.pickRandom(values());
+                picked = Global.pickRandom(values()).get();
             } while (!picked.possible(c));
             return picked;
         }

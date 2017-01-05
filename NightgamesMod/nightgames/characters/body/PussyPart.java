@@ -111,13 +111,13 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
     @Override
     public String describe(Character c) {
-        String syn = Global.pickRandom(synonyms);
+        String syn = Global.pickRandom(synonyms).get();
         return desc + syn;
     }
 
     @Override
     public String fullDescribe(Character c) {
-        String syn = Global.pickRandom(synonyms);
+        String syn = Global.pickRandom(synonyms).get();
         return desc + syn;
     }
 
