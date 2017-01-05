@@ -106,9 +106,9 @@ public class TemptressStripTease extends StripTease {
                             + " reverie when she plants a soft kiss on %s lips, and %s dreamily"
                             + " %s into her eyes as she gets back into a fighting stance.",
                             getSelf().subject(), target.subjectAction("cease"),
-                            target.possessivePronoun(), target.possessivePronoun(),
+                            target.possessiveAdjective(), target.possessiveAdjective(),
                             target.nameOrPossessivePronoun(), target.subjectAction("are", "is"),
-                            target.possessivePronoun(), target.possessivePronoun(), target.pronoun(),
+                            target.possessiveAdjective(), target.possessiveAdjective(), target.pronoun(),
                             target.action("gaze"));
         } else {
             return String.format("%s takes a few steps back and starts "

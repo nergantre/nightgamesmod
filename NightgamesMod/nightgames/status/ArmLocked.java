@@ -26,7 +26,7 @@ public class ArmLocked extends Status {
         Character opp = c.getOpponent(affected);
         return String.format("%s hands are intertwined with %s, preventing %s escape.",
                         opp.nameOrPossessivePronoun(), !affected.human() && !affected.useFemalePronouns()
-                        ? "his" : affected.possessivePronoun() + "s", affected.possessivePronoun());
+                        ? "his" : affected.possessiveAdjective() + "s", affected.possessiveAdjective());
     }
 
     @Override

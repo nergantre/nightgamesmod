@@ -15,7 +15,7 @@ public class ReverseMount extends AbstractBehindStance {
             return "You are straddling " + bottom.name() + ", with your back to her.";
         } else {
             return String.format("%s is sitting on %s chest, facing %s groin.",
-                            top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
+                            top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());
         }
     }
 

@@ -66,7 +66,7 @@ public class LustAura extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s releases an aura of pure sex. %s %s body becoming hot just being near %s.",
                         getSelf().subject(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                        target.possessivePronoun(), getSelf().directObject());
+                        target.possessiveAdjective(), getSelf().directObject());
     }
 
 }

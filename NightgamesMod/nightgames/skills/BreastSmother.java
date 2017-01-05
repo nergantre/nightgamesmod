@@ -148,7 +148,7 @@ public class BreastSmother extends Skill {
         
         if (getSelf().has(Trait.temptingtits)) {
             b.append("You can't help but groan in pleasure from having your face stuck between ");
-            b.append(getSelf().possessivePronoun());
+            b.append(getSelf().possessiveAdjective());
             b.append(" perfect tits as they take your breath away");           
                           
             if (getSelf().has(Trait.beguilingbreasts)) {

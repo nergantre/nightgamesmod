@@ -55,7 +55,7 @@ public class CatsGrace extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return getSelf().name()
-                        + " focuses for a moment and "+getSelf().possessivePronoun()
+                        + " focuses for a moment and "+getSelf().possessiveAdjective()
                         +" movements start to speed up and become more animalistic.";
     }
 

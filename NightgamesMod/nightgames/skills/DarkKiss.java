@@ -44,7 +44,7 @@ public class DarkKiss extends Skill {
         assert getSelf().human();
         c.write(getSelf(), String.format("You lean in and plant an intense kiss on %s lips. The corruption which Reyka"
                         + " has imbued you with stirs, and greedily draws %s willpower in through your connection, growing"
-                        + " more powerful.", target.nameOrPossessivePronoun(), target.possessivePronoun()));
+                        + " more powerful.", target.nameOrPossessivePronoun(), target.possessiveAdjective()));
 
         Addiction add = ((Player)getSelf()).getAddiction(AddictionType.CORRUPTION)
                         .orElseThrow(() -> new SkillUnusableException(this));

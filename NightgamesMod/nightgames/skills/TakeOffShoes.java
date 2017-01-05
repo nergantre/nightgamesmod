@@ -74,6 +74,6 @@ public class TakeOffShoes extends Skill {
             return Global.format("{self:SUBJECT} takes a moment to slide off {self:possessive} footwear with slow exaggerated motions. {other:SUBJECT-ACTION:gulp|gulps}. "
                             + "While {other:pronoun-action:know|knows} what {self:pronoun} is doing, it changes nothing as desire fills {other:possessive} eyes.", getSelf(), target);
         }
-        return getSelf().subject() + " takes a moment to kick off " + getSelf().possessivePronoun() + " footwear.";
+        return getSelf().subject() + " takes a moment to kick off " + getSelf().possessiveAdjective() + " footwear.";
     }
 }

@@ -95,7 +95,7 @@ public class StripBottom extends Skill {
                             + ".";
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Taking advantage of the situation, you also manage to snag %s %s!",
-                                target.possessivePronoun(), extra.getName());
+                                target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }
@@ -112,7 +112,7 @@ public class StripBottom extends Skill {
                             stripped.getName());
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Before %s can react, %s also strips off %s %s!", target.subject(),
-                                getSelf().name, target.possessivePronoun(), extra.getName());
+                                getSelf().name, target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }

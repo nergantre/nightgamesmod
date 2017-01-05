@@ -700,7 +700,7 @@ public class Jewel extends BasePersonality {
                                             + "</i> You feel a chill run down your back, watching Jewel's display of"
                                             + " dominance, but you're also rock hard. %s lets out a loud moan and "
                                             + "covers Jewel's foot with cum.",
-                            target.name(), target.directObject(), target.possessivePronoun(), target.name(),
+                            target.name(), target.directObject(), target.possessiveAdjective(), target.name(),
                             target.name());
         }
         return "Jewel looks over " + target.name()

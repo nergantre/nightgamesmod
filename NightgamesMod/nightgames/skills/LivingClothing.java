@@ -69,7 +69,7 @@ public class LivingClothing extends Skill {
                         + "knob to the emergency reclothing setting. %s hits the button and dark tentacles"
                         + " squirm out of the device. The created tentacles coils around %s body"
                         + " and wrap themselves into a living suit.", getSelf().subject(),
-                        getSelf().possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()),
+                        getSelf().possessiveAdjective(), Global.capitalizeFirstLetter(getSelf().pronoun()),
                         getSelf().nameOrPossessivePronoun());
         return message;
     }

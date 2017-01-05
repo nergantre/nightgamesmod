@@ -52,8 +52,8 @@ public class ToggleKnot extends Skill {
                 String part = Global.pickRandom(c.getStance().partsFor(c, target)).orElse(Body.nonePart).describe(target);
                 c.write(getSelf(), String.format("%s the intense pressure in %s %s "
                                 + "recede as %s allows %s knot to deflate.", target.subjectAction("feel"),
-                                target.possessivePronoun(), part, getSelf().subject(),
-                                getSelf().possessivePronoun()));
+                                target.possessiveAdjective(), part, getSelf().subject(),
+                                getSelf().possessiveAdjective()));
             }
             target.removeStatus(Stsflag.knotted);
         } else {
@@ -73,9 +73,9 @@ public class ToggleKnot extends Skill {
                     firstPart = String.format("%s pulls %s all the way onto %s cock."
                                     + "As soon as %s pelvis touches %s, something starts happening.",
                                     getSelf().subject(), target.nameDirectObject(),
-                                    getSelf().possessivePronoun(), getSelf().possessivePronoun(),
+                                    getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                                     (target.human() || target.useFemalePronouns()) 
-                                    ? target.possessivePronoun() + "s" : "s");
+                                    ? target.possessiveAdjective() + "s" : "s");
                 }
                 c.write(getSelf() ,String.format("%s A ball swells up at the base of %s dick,"
                                 + " growing to the size of a small apple. %s not"

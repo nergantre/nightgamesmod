@@ -74,9 +74,9 @@ public class Piston extends Thrust {
         } else if (modifier == Result.upgrade) {
             return String.format("%s pistons into %s while pushing %s shoulders on the ground; %s tits"
                             + " are shaking above %s head while %s strapon stimulates %s prostate.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective(),
                             getSelf().nameOrPossessivePronoun(), target.nameOrPossessivePronoun(), 
-                            target.possessivePronoun(), getSelf().possessivePronoun());
+                            target.possessiveAdjective(), getSelf().possessiveAdjective());
         } else if (modifier == Result.reverse) {
             return String.format("%s bounces on %s cock, relentlessly driving %s both toward orgasm.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), 

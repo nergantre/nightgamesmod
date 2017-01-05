@@ -97,7 +97,7 @@ public class BreastGrowth extends Skill {
                                             + "causing them to grow rapidly. %s knees buckle with the new"
                                             + " sensitivity you bestowed on %s boobs.",
                             target.nameOrPossessivePronoun(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.possessivePronoun());
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.possessiveAdjective());
             if (damage > 0) {
                 message += " You realize the effects are permanent!";
             }
@@ -107,7 +107,7 @@ public class BreastGrowth extends Skill {
                                             + "causing small mounds to rapidly grow on %s. %s knees buckle with the"
                                             + " sensitivity you bestowed on %s new boobs.",
                             target.nameOrPossessivePronoun(), target.directObject(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.possessivePronoun());
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.possessiveAdjective());
             if (damage > 0) {
                 message += " You realize the effects are permanent!";
             }
@@ -129,8 +129,8 @@ public class BreastGrowth extends Skill {
                                             + " %s to hold them back with %s hands, but the growth continues untill they are a full cup size"
                                             + " bigger than begore. The new sensations from %s substantially larger breasts make %s tremble.",
                             getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                            target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()),
-                            target.action("try", "tries"), target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("try", "tries"), target.possessiveAdjective(), target.directObject());
             if (damage > 0) {
                 message += Global.capitalizeFirstLetter(target.subjectAction("realize"))
                                 + " the effects are permanent!";
@@ -141,14 +141,14 @@ public class BreastGrowth extends Skill {
                                             + " %s to hold them back with %s hands, but the growth continues untill they are a full A-cup."
                                             + " The new sensations from %s new breasts make %s tremble.",
                             getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                            target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()),
-                            target.action("try", "tries"), target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()),
+                            target.action("try", "tries"), target.possessiveAdjective(), target.directObject());
         } else {
             message = String.format(
                             "%s moving and begins chanting. %s feeling some tingling in %s breasts, "
                                             + "but it quickly subsides as %s %s out of the way.",
                             getSelf().subjectAction("stop"),
-                            Global.capitalizeFirstLetter(target.subjectAction("start")), target.possessivePronoun(),
+                            Global.capitalizeFirstLetter(target.subjectAction("start")), target.possessiveAdjective(),
                             target.pronoun(), target.action("dodge"));
         }
         return message;

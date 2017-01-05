@@ -136,8 +136,8 @@ public class Stomp extends Skill {
                                             + "%s does not seem to realize what you are planning before your foot is already plunging down towards them."
                                             + " When it lands, you feel a sympathetic jolt run up your spine as %s gonads are crushed beneath your foot."
                                             + " %s whimpers in pain, but not as much as you'd expect from such a magnificent impact.",
-                            target.name(), target.body.getRandomCock().describe(target), target.possessivePronoun(),
-                            Global.capitalizeFirstLetter(target.pronoun()), target.possessivePronoun(),
+                            target.name(), target.body.getRandomCock().describe(target), target.possessiveAdjective(),
+                            Global.capitalizeFirstLetter(target.pronoun()), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.pronoun()));
         } else if (modifier == Result.weak) {
             return "You step between " + target.name()
@@ -146,7 +146,7 @@ public class Stomp extends Skill {
             return String.format(
                             "You step between %s's legs and stomp down on %s groin."
                                             + "%s exhales sharply, but does not seem hurt much at all. Somehow.",
-                            target.name(), target.possessivePronoun(), Global.capitalizeFirstLetter(target.pronoun()));
+                            target.name(), target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()));
         } else {
             if (target.hasBalls()) {
                 return "You pull " + target.name()
@@ -167,12 +167,12 @@ public class Stomp extends Skill {
                             + "%s that %s is actually lining up %s targets. Two torrents of pain "
                             + "erupt from %s delicates as %s feet crash down on them.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun(), getSelf().possessivePronoun(),
+                            target.possessiveAdjective(), getSelf().possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("are", "is")),
                             getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
-                            target.directObject(), getSelf().pronoun(), target.possessivePronoun(),
+                            target.directObject(), getSelf().pronoun(), target.possessiveAdjective(),
                             target.subjectAction("realize"), getSelf().pronoun(),
-                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             getSelf().nameOrPossessivePronoun());
         } else if (modifier == Result.strong) {
             return String.format(
@@ -182,25 +182,25 @@ public class Stomp extends Skill {
                                             + " great force. %s often feel much pain from %s balls, but the"
                                             + " enormous impact still hurts a lot.",
                             getSelf().name(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), target.possessivePronoun(),
+                            getSelf().possessiveAdjective(), target.possessiveAdjective(),
                             target.body.getRandomCock().describe(target), 
                             Global.capitalizeFirstLetter(target.subjectAction("were", "was")),
                             getSelf().pronoun(), 
                             Global.capitalizeFirstLetter(target.subjectAction("were", "was")),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.weak2) {
             return String.format("%s forces %s legs open and brutally stomps %s "
                             + "balls. Despite the great blow, %s feel much pain.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun(), target.subjectAction("don't", "doesn't"));
+                            target.possessiveAdjective(), target.subjectAction("don't", "doesn't"));
         } else if (modifier == Result.weak) {
             return String.format("%s grabs %s ankles and stomps down on %s armored groin, doing little damage.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun());
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessiveAdjective());
         } else {
             return String.format("%s grabs %s ankles and stomps down on %s unprotected "
                             + "jewels. %s up in the fetal position, groaning in agony.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun(),
+                            target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("curl")));
         }
     }

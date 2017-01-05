@@ -78,8 +78,8 @@ public class Tear extends Skill {
                     c.write(getSelf(), String.format("%s lunges towards %s and rakes %s nails across %s %s, "
                                     + "shredding the garment. That shouldn't be possible. %s "
                                     + "nails are not that sharp, and if they were, %s surely wouldn't have gotten away unscathed.",
-                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
-                                    target.possessivePronoun(), article.getName(),
+                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
+                                    target.possessiveAdjective(), article.getName(),
                                     Global.capitalizeFirstLetter(getSelf().pronoun()),
                                     target.nameDirectObject()));
                 }
@@ -153,8 +153,8 @@ public class Tear extends Skill {
                     c.write(getSelf(), String.format("%s lunges towards %s and rakes %s nails across %s %s, "
                                     + "shredding the garment. That shouldn't be possible. %s "
                                     + "nails are not that sharp, and if they were, %s surely wouldn't have gotten away unscathed.",
-                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
-                                    target.possessivePronoun(), article.getName(),
+                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
+                                    target.possessiveAdjective(), article.getName(),
                                     Global.capitalizeFirstLetter(getSelf().pronoun()),
                                     target.nameDirectObject()));
                 }
@@ -165,7 +165,7 @@ public class Tear extends Skill {
                 if (target.human() && target.crotchAvailable() && target.hasDick()) {
                     if (target.getArousal().get() >= 15) {
                         c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
-                                        target.nameOrPossessivePronoun(), target.possessivePronoun()));
+                                        target.nameOrPossessivePronoun(), target.possessiveAdjective()));
                     } else {
                         c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));
@@ -190,7 +190,7 @@ public class Tear extends Skill {
                 if (target.human() && target.crotchAvailable()) {
                     if (target.getArousal().get() >= 15) {
                         c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
-                                        target.nameOrPossessivePronoun(), target.possessivePronoun()));
+                                        target.nameOrPossessivePronoun(), target.possessiveAdjective()));
                     } else {
                         c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));

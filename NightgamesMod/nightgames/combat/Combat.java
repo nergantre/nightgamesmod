@@ -258,7 +258,7 @@ public class Combat extends Observable implements Cloneable {
             } else if (victor.human()) {
                 write(victor, "<br/><b>" + loser.nameOrPossessivePronoun()
                                 + " scattered semen lazily oozes into a few magically conjured flasks. "
-                                + "To speed up the process, you milk " + loser.possessivePronoun()
+                                + "To speed up the process, you milk " + loser.possessiveAdjective()
                                 + " out of the last drops " + loser.subject()
                                 + " had to offer. Yum, you just got some leftovers.</b>");
             }
@@ -1130,7 +1130,7 @@ public class Combat extends Observable implements Cloneable {
             lastFailed = false;
         } else {
             write(skill.user()
-                       .possessivePronoun() + " " + skill.getLabel(this) + " failed.");
+                       .possessiveAdjective() + " " + skill.getLabel(this) + " failed.");
             lastFailed = true;
         }
         return orgasmed;
@@ -1621,7 +1621,7 @@ public class Combat extends Observable implements Cloneable {
     public void removePet(PetCharacter self) {
         if (self.has(Trait.resurrection) && !getCombatantData(self).getBooleanFlag("resurrected")) {
             write(self, "Just as " + self.subject() + " was about to disappear, a dazzling light covers " 
-            + self.possessivePronoun() + " body. When the light fades, " + self.pronoun() + " looks completely refreshed!");
+            + self.possessiveAdjective() + " body. When the light fades, " + self.pronoun() + " looks completely refreshed!");
             getCombatantData(self).setBooleanFlag("resurrected", true);
             self.getArousal().empty();
             self.getMojo().empty();

@@ -60,7 +60,7 @@ public class Strapon extends Skill {
                 c.write(getSelf(),
                                 String.format("%s takes off %s %s and straps on a thick rubber "
                                                 + "cock and grins at %s in a way that makes %s feel a bit nervous.",
-                                                getSelf().subject(), getSelf().possessivePronoun(),
+                                                getSelf().subject(), getSelf().possessiveAdjective(),
                                                 unequipped.get(0), target.nameDirectObject(),
                                                 target.directObject()));
             } else printBlinded(c);

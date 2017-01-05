@@ -132,25 +132,25 @@ public class Masturbate extends Skill {
         if (targetO == null) {
             return String.format("%s starts playing with %s, building up %s own arousal.",
                             getSelf().subject(), getSelf().reflectivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
         if (targetO.isType("cock")) {
             if (modifier == Result.weak) {
                 return String.format("%s takes hold of %s flaccid dick, tugging and rubbing it into a full erection.",
-                                getSelf().subject(), getSelf().possessivePronoun());
+                                getSelf().subject(), getSelf().possessiveAdjective());
             } else {
                 return String.format("%s jerks off, building up %s own arousal.",
-                                getSelf().subject(), getSelf().possessivePronoun());
+                                getSelf().subject(), getSelf().possessiveAdjective());
             }
         } else if (targetO.isType("pussy")) {
             return String.format("%s slowly teases her own labia and starts playing with %s.",
                             getSelf().subject(), getSelf().reflectivePronoun());
         } else if (targetO.isType("ass")) {
             return String.format("%s teases %s own asshole and sticks a finger in.",
-                            getSelf().subject(), getSelf().possessivePronoun());
+                            getSelf().subject(), getSelf().possessiveAdjective());
         } else {
             return String.format("%s starts playing with %s, building up %s own arousal.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             getSelf().reflectivePronoun());
         }
     }

@@ -81,14 +81,14 @@ public class ArmBar extends Skill {
         if (modifier == Result.miss) {
             return String.format("%s %s wrist, but %s %s it out of %s grasp.",
                             getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.action("pry", "pries"), getSelf().possessivePronoun());
+                            target.pronoun(), target.action("pry", "pries"), getSelf().possessiveAdjective());
         } else {
             return String.format("%s %s arm between %s legs, forcibly overextending %s elbow. "
                             + "The pain almost makes %s tap out, but %s %s to yank %s arm out of %s grip",
                             getSelf().subjectAction("pull"), target.nameOrPossessivePronoun(), 
-                            getSelf().possessivePronoun(), target.possessivePronoun(), target.pronoun(),
-                            target.pronoun(), target.action("manage"), target.possessivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective(), target.possessiveAdjective(), target.pronoun(),
+                            target.pronoun(), target.action("manage"), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective());
         }
     }
 

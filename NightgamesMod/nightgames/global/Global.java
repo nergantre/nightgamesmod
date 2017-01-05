@@ -1369,7 +1369,7 @@ public class Global {
         matchActions = new HashMap<>();
         matchActions.put("possessive", (self, first, second, third) -> {
             if (self != null) {
-                return self.possessivePronoun();
+                return self.possessiveAdjective();
             }
             return "";
         });

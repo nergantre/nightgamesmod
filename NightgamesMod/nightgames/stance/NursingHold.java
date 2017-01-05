@@ -29,8 +29,8 @@ public class NursingHold extends AbstractFacingStance {
         } else {
             return String.format("%s is holding %s head in %s lap, with %s enticing "
                             + "breasts right in front of %s mouth.", top.subject(),
-                            bottom.nameOrPossessivePronoun(), top.possessivePronoun(),
-                            top.possessivePronoun(), bottom.possessivePronoun());
+                            bottom.nameOrPossessivePronoun(), top.possessiveAdjective(),
+                            top.possessiveAdjective(), bottom.possessiveAdjective());
         }
     }
 

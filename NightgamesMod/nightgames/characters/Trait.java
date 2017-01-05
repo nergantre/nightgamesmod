@@ -552,7 +552,7 @@ public enum Trait {
                 if (s.flags().contains(Stsflag.piercingOdor) && s instanceof Pheromones) {
                     Pheromones pheromones = ((Pheromones)s);
                     pheromones.setMagnitude(pheromones.getMagnitude() / 2);
-                    combat.write(c, "The piercing scent of the pheromones overpowers " + c.possessivePronoun() + " cool-headedness. While it doesn't affect " + c.directObject()+ " as much as it should, it's still impossible to just shrug off.");
+                    combat.write(c, "The piercing scent of the pheromones overpowers " + c.possessiveAdjective() + " cool-headedness. While it doesn't affect " + c.directObject()+ " as much as it should, it's still impossible to just shrug off.");
                     return "";
                 }
                 return "Calm";

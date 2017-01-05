@@ -89,10 +89,10 @@ public class HipThrow extends Skill {
                             + " stable stance than %s and %s has "
                             + "to break away to stay on %s feet.", getSelf().subject(),
                             target.nameOrPossessivePronoun(), target.directObject(),
-                            target.pronoun(), target.action("manage"), target.possessivePronoun(),
-                            getSelf().possessivePronoun(), target.nameDirectObject(),
+                            target.pronoun(), target.action("manage"), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective(), target.nameDirectObject(),
                             getSelf().nameDirectObject(), getSelf().pronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
     }
 

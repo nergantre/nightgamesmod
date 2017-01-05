@@ -97,19 +97,19 @@ public class FTCMatch extends Match {
         Area nBase = new Area("North Base",
                         String.format("You are in a small camp on the northern edge of the forest. "
                                         + "%s %s base here.", north.subjectAction("have", "has"),
-                        north.possessivePronoun()), Movement.ftcNorthBase);
+                        north.possessiveAdjective()), Movement.ftcNorthBase);
         Area wBase = new Area("West Base",
                         String.format("You are in a small camp on the western edge of the forest. "
                                         + "%s %s base here.", west.subjectAction("have", "has"),
-                        west.possessivePronoun()), Movement.ftcWestBase);
+                        west.possessiveAdjective()), Movement.ftcWestBase);
         Area sBase = new Area("South Base",
                         String.format("You are in a small camp on the southern edge of the forest. "
                                         + "%s %s base here.", south.subjectAction("have", "has"),
-                        south.possessivePronoun()), Movement.ftcSouthBase);
+                        south.possessiveAdjective()), Movement.ftcSouthBase);
         Area eBase = new Area("East Base",
                         String.format("You are in a small camp on the eastern edge of the forest. "
                                         + "%s %s base here.", east.subjectAction("have", "has"),
-                        east.possessivePronoun()), Movement.ftcEastBase);
+                        east.possessiveAdjective()), Movement.ftcEastBase);
         Area pBase = new Area("Central Camp",
                         String.format("You are in a clearing in the middle of the forest. There are no"
                                         + " trees here, just a small camp where %s can "

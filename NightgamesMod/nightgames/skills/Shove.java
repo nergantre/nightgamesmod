@@ -84,7 +84,7 @@ public class Shove extends Skill {
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s pushes %s back, but %s %s able to maintain %s balance.",
                                     getSelf().subject(), target.nameDirectObject(), target.pronoun(),
-                                    target.action("are", "is"), target.possessivePronoun()));
+                                    target.action("are", "is"), target.possessiveAdjective()));
                 }
                 success = false;
             }
@@ -132,8 +132,8 @@ public class Shove extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s strikes %s in the chest with %s palm, staggering %s footing. Suddenly %s "
                         + "%s tears and falls off %s in tatters.", getSelf().subject(),
-                        target.nameDirectObject(), getSelf().possessivePronoun(),
-                        target.possessivePronoun(), target.nameOrPossessivePronoun(),
+                        target.nameDirectObject(), getSelf().possessiveAdjective(),
+                        target.possessiveAdjective(), target.nameOrPossessivePronoun(),
                         target.getOutfit().getTopOfSlot(ClothingSlot.top).getName(),
                         target.directObject());
     }

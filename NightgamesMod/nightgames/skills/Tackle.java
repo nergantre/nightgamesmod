@@ -135,7 +135,7 @@ public class Tackle extends Skill {
                             target.pronoun(), target.action("sidestep"));
         } else {
             return String.format("%s bowls %s over and sits triumphantly on %s chest.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective());
         }
     }
 

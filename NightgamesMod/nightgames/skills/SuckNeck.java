@@ -98,15 +98,15 @@ public class SuckNeck extends Skill {
             return String.format("%s goes after %s neck, but %s %s %s back.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
                             target.pronoun(), target.action("push", "pushes"),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s presses %s lips against %s neck. %s gives %s a "
                             + "hickey and %s knees start to go weak. It's like %s strength"
                             + " is being sucked out through "
-                            + "%s skin.", getSelf().subject(), getSelf().possessivePronoun(),
+                            + "%s skin.", getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(), getSelf().subject(),
-                            target.directObject(), target.possessivePronoun(), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            target.directObject(), target.possessiveAdjective(), target.possessiveAdjective(),
+                            target.possessiveAdjective());
         } else {
             return String.format("%s licks and sucks %s neck, biting lightly when %s %s expecting it.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),

@@ -122,16 +122,16 @@ public class Nurse extends Skill {
             return String.format("%s plops %s %s in front of %s face. %s vision suddenly consists of only"
                             + " swaying titflesh. Giggling a bit, %s pokes %s sides and slides %s nipples in"
                             + " %s mouth when %s %s out a yelp.", getSelf().subject(),
-                            getSelf().possessivePronoun(), getSelf().body.getRandomBreasts().fullDescribe(getSelf()),
-                            target.nameOrPossessivePronoun(), Global.capitalizeFirstLetter(target.possessivePronoun()),
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                            target.possessivePronoun(), target.pronoun(), target.action("let"));
+                            getSelf().possessiveAdjective(), getSelf().body.getRandomBreasts().fullDescribe(getSelf()),
+                            target.nameOrPossessivePronoun(), Global.capitalizeFirstLetter(target.possessiveAdjective()),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective(), target.pronoun(), target.action("let"));
         } else {
             return String.format("%s gently strokes %s hair as %s presents her nipples to %s mouth. "
                             + "Presented with the opportunity, %s happily %s on %s breasts.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().pronoun(), target.possessivePronoun(),
-                            target.subject(), target.action("suck"), getSelf().possessivePronoun());
+                            getSelf().pronoun(), target.possessiveAdjective(),
+                            target.subject(), target.action("suck"), getSelf().possessiveAdjective());
         }
     }
 

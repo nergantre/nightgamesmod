@@ -1162,7 +1162,7 @@ public class Body implements Cloneable {
         }
         if (character.has(Trait.spiritphage)) {
             c.write(character, "<br/><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
-                            + " with power as the cum is absorbed by " + character.possessivePronoun() + " "
+                            + " with power as the cum is absorbed by " + character.possessiveAdjective() + " "
                             + part.describe(character) + ".</b>"));
             character.add(c, new Abuff(character, Attribute.Power, 5, 10));
             character.add(c, new Abuff(character, Attribute.Seduction, 10, 10));

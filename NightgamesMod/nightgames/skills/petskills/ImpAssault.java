@@ -54,7 +54,7 @@ public class ImpAssault extends SimpleEnemySkill {
             c.write(getSelf(), String.format("%s tries to kick %s but %s %s %s small legs before they reach %s.",
                             getSelf().subject(), target.nameDirectObject(),
                             target.pronoun(), target.action("catch", "catches"),
-                            getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(),
                             target.directObject()));
             return false;
         }

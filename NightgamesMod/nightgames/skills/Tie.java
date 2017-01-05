@@ -82,7 +82,7 @@ public class Tie extends Skill {
         if (modifier == Result.miss) {
             return String.format("%s tries to tie %s down, but %s %s %s arms free.",
                             getSelf().subject(), target.nameDirectObject(),
-                            target.pronoun(), target.action("keep"), target.possessivePronoun());
+                            target.pronoun(), target.action("keep"), target.possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s restrains %s with a pair of handcuffs.",
                             getSelf().subject(), target.nameDirectObject());

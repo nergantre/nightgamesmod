@@ -577,7 +577,7 @@ public class Angel extends BasePersonality {
                                             + " energy to control %s who is violently shaking in the throes of orgasm."
                                             + " You ease %s to the floor as %s goes completely limp, while Angel licks"
                                             + " the cum from her fingers.",
-                            target.name(), target.name(), target.name(), target.possessivePronoun(), target.name(),
+                            target.name(), target.name(), target.name(), target.possessiveAdjective(), target.name(),
                             target.name(), target.pronoun(), target.name(), target.directObject(), target.pronoun());
         }
         return "You present " + target.name()

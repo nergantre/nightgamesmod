@@ -23,8 +23,8 @@ public class FlyingCowgirl extends FemdomSexStance {
                                         spectated() ? String.format("%s and %s", top.subject(), bottom.subject()) : "You",
                                                         spectated() ? "eachother" : "your partner",
                                                         spectated() ? "their" : "your",
-                        top.subjectAction("are", "is"), bottom.subject(), top.possessivePronoun(),
-                        top.body.getRandomPussy().describe(top), bottom.possessivePronoun(),
+                        top.subjectAction("are", "is"), bottom.subject(), top.possessiveAdjective(),
+                        top.body.getRandomPussy().describe(top), bottom.possessiveAdjective(),
                         bottom.body.getRandomInsertable().describe(bottom));
     }
     

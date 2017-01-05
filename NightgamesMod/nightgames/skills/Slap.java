@@ -139,18 +139,18 @@ public class Slap extends Skill {
             return String.format("%s tries to slap %s but %s %s %s wrist.",
                             getSelf().subject(), target.nameDirectObject(),
                             target.pronoun(), target.action("catch", "catches"),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s palm hits %s in a savage strike that makes %s head ring.",
                             getSelf().nameOrPossessivePronoun(), target.nameDirectObject(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.critical) {
             return String.format("%s hand grows significantly, and then %s swings it powerfully into %s face.",
                             getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
                             target.nameOrPossessivePronoun());
         } else {
             return String.format("%s slaps %s across the face, leaving a stinging heat on %s cheek.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective());
         }
     }
 

@@ -140,7 +140,7 @@ public class Struggle extends Skill {
             } else if (getSelf().human()) {
                 if (knotted) {
                     c.write(getSelf(), "With a herculean effort, you painfully force "
-                                    + target.possessivePronoun()
+                                    + target.possessiveAdjective()
                                     + " knot through your asshole, and the rest of her dick soon follows.");
                     getSelf().removeStatus(Stsflag.knotted);
                     target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, 10));
@@ -151,15 +151,15 @@ public class Struggle extends Skill {
                 if (knotted) {
                     c.write(getSelf(), String.format("%s roughly pulls away from %s, groaning loudly"
                                     + " as the knot in %s dick pops free of %s ass.", getSelf().subject(),
-                                    target.nameDirectObject(), target.possessivePronoun(),
-                                    getSelf().possessivePronoun()));
+                                    target.nameDirectObject(), target.possessiveAdjective(),
+                                    getSelf().possessiveAdjective()));
                     getSelf().removeStatus(Stsflag.knotted);
                     target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                 } else {
                     c.write(getSelf(), String.format("%s pulls away from %s and"
                                     + " %s dick slides out of %s butt.",
                                     getSelf().subject(), target.nameDirectObject(),
-                                    target.possessivePronoun(), getSelf().possessivePronoun()));
+                                    target.possessiveAdjective(), getSelf().possessiveAdjective()));
                 }
             }
             c.setStance(new Neutral(getSelf(), target));
@@ -167,7 +167,7 @@ public class Struggle extends Skill {
         } else {
             if (getSelf().human()) {
                 if (knotted) {
-                    c.write(getSelf(), "You try to force " + target.possessivePronoun()
+                    c.write(getSelf(), "You try to force " + target.possessiveAdjective()
                                     + " dick out of your ass, but the knot at its base is utterly unyielding.");
                 } else {
                     c.write(getSelf(), "You try to pull free, but " + target.name()
@@ -179,8 +179,8 @@ public class Struggle extends Skill {
                                     String.format("%s frantically attempts to get %s cock out of %s ass, "
                                                     + "but %s knot is keeping it inside %s warm depths.",
                                                     getSelf().subject(), target.nameOrPossessivePronoun(),
-                                                    getSelf().possessivePronoun(), target.possessivePronoun(),
-                                                    getSelf().possessivePronoun()));
+                                                    getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                                                    getSelf().possessiveAdjective()));
                 } else {
                     c.write(getSelf(), String.format("%s tries to squirm away, but %s better leverage.",
                                     getSelf().subject(), target.subjectAction("have", "has")));
@@ -277,13 +277,13 @@ public class Struggle extends Skill {
                     c.write(getSelf(), String.format("%s struggles to gain a more dominant position, but with"
                                     + " %s behind %s holding %s waist firmly, there is nothing %s can do.",
                                     getSelf().subject(), target.subject(), getSelf().directObject(),
-                                    getSelf().possessivePronoun(), getSelf().pronoun()));
+                                    getSelf().possessiveAdjective(), getSelf().pronoun()));
                 } else {
                     c.write(getSelf(), String.format("%s tries to roll on top of %s, but %s %s %s superior "
                                     + "upper body strength to maintain %s position.",
                                     getSelf().subject(), target.nameDirectObject(),
-                                    target.pronoun(), target.action("use"), target.possessivePronoun(),
-                                    target.possessivePronoun()));
+                                    target.pronoun(), target.action("use"), target.possessiveAdjective(),
+                                    target.possessiveAdjective()));
                 }
             }
             getSelf().struggle();
@@ -311,7 +311,7 @@ public class Struggle extends Skill {
                     c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s ass "
                                     + "over %s face again, forcing %s to service %s.", getSelf().subject(),
                                     target.nameDirectObject(), target.pronoun(), target.action("drop"),
-                                    target.possessivePronoun(), getSelf().possessivePronoun(),
+                                    target.possessiveAdjective(), getSelf().possessiveAdjective(),
                                     getSelf().directObject(), target.directObject()));
                 }
                 if (target.hasPussy()) {
@@ -329,7 +329,7 @@ public class Struggle extends Skill {
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s position.",
                                     getSelf().subject(), target.nameDirectObject(), target.pronoun(),
-                                    target.action("maintain"), target.possessivePronoun()));
+                                    target.action("maintain"), target.possessiveAdjective()));
                 }
                 target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 10)));
                 getSelf().struggle();
