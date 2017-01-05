@@ -1510,6 +1510,12 @@ public class Global {
         matchActions.put("boy", (self, first, second, third) -> {
             return self.boyOrGirl();
         });
+        matchActions.put("poss-pronoun", (self, first, second, third) -> {
+            if (self != null) {
+                return self.possessivePronoun();
+            }
+            return "";
+        });
     }
 
     public static String format(String format, Character self, Character target, Object... strings) {
