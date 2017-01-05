@@ -6,8 +6,6 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.items.Item;
-import nightgames.skills.damage.Staleness;
 import nightgames.status.HypnoVisor;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;

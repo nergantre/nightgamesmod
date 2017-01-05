@@ -9,6 +9,7 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -28,6 +29,7 @@ public class Reyka extends BasePersonality {
 
     public Reyka(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Reyka", 1, charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -144,34 +146,69 @@ public class Reyka extends BasePersonality {
         character.gain(Item.semen, Global.random(3) + 1);
         buyUpTo(Item.semen, 5);
     }
+    
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
+                            + " the source of my meal might not have been the best idea...\"</i>";
+        });
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
-                        + " the source of my meal might not have been the best idea...\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
+                            + " noticing the radiant ruby ardorning her bellybutton, you feel"
+                            + " sorely tempted to just give in to your desires. The hungry look"
+                            + " on her face as she licks her lips, though, quickly dissuades you" + " from doing so";
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
-                        + " noticing the radiant ruby ardorning her bellybutton, you feel"
-                        + " sorely tempted to just give in to your desires. The hungry look"
-                        + " on her face as she licks her lips, though, quickly dissuades you" + " from doing so";
-    }
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "Reyka is laying on the floor, her wings spread out behind her, panting for breath";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Reyka is laying on the floor, her wings spread out behind her," + " panting for breath";
-    }
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            return "\"You look like you will taste nice. Maybe if you let me have a taste, I will be nice to you too.\"";
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
-    }
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
+                            + "what " + other.guyOrGirl()
+                            + " would when having this much sex with several different girls? Still, a weekend would "
+                            + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
+                            + "<i>\"Listen, " + other.name()
+                            + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
+                            + "of " + other.guyOrGirl()
+                            + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
+                            + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
+                            + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
+                            + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "
+                            + "her like this is like nothing you had ever expected from her. For a moment, you think this is all some "
+                            + "elaborate trick of some sort, but that thought vanishes the instant you see tears welling in her eyes. "
+                            + "<i>\"I just... We demons aren't supposed to feel like this, you know? We don't form relationships. It's all "
+                            + "just a constant power struggle, constant scheming and looking over your shoulder and sleeping with a "
+                            + "knife under your pillow. It has never bothered me before; it's simply what I am. That's what I used to "
+                            + "think, anyway. Now, I'm not so sure... about anything...\"</i> She quitely sobs while saying this, and you "
+                            + "embrace her. You hold her there for some time, before inviting her to spend the night at your place. "
+                            + "You don't even have sex when you get there, you just both lay down in your single bed, close to "
+                            + "each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
+        });
+
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><br/><br/>"
+                            + "Reyka strikes a seductive pose and the devilish smile"
+                            + " on her face reveals just what, or more specifically,"
+                            + " who she intends that morsel to be.";
+        });
     }
 
     @Override
@@ -385,39 +422,9 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><br/><br/>"
-                        + "Reyka strikes a seductive pose and the devilish smile"
-                        + " on her face reveals just what, or more specifically,"
-                        + " who she intends that morsel to be.";
-    }
-
-    @Override
     public boolean fit() {
         return (!character.mostlyNude() || Global.random(3) == 1) && character.getStamina().percent() >= 50
                         && character.getArousal().percent() <= 50;
-    }
-
-    @Override
-    public String night() {
-        return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
-                        + "what " + Global.getPlayer().guyOrGirl() + " would when having this much sex with several different girls? Still, a weekend would "
-                        + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
-                        + "<i>\"Listen, " + Global.getPlayer().name()
-                        + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
-                        + "of " + Global.getPlayer().guyOrGirl() + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
-                        + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
-                        + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
-                        + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "
-                        + "her like this is like nothing you had ever expected from her. For a moment, you think this is all some "
-                        + "elaborate trick of some sort, but that thought vanishes the instant you see tears welling in her eyes. "
-                        + "<i>\"I just... We demons aren't supposed to feel like this, you know? We don't form relationships. It's all "
-                        + "just a constant power struggle, constant scheming and looking over your shoulder and sleeping with a "
-                        + "knife under your pillow. It has never bothered me before; it's simply what I am. That's what I used to "
-                        + "think, anyway. Now, I'm not so sure... about anything...\"</i> She quitely sobs while saying this, and you "
-                        + "embrace her. You hold her there for some time, before inviting her to spend the night at your place. "
-                        + "You don't even have sex when you get there, you just both lay down in your single bed, close to "
-                        + "each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
     }
 
     @Override
@@ -430,15 +437,5 @@ public class Reyka extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
     }
 }

@@ -109,7 +109,7 @@ public class Prematch implements Scene {
         }
         Set<Modifier> modifiers = new HashSet<>(Global.getModifierPool());
         modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
-        return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
+        return Global.pickRandom(modifiers.toArray(new Modifier[] {})).get();
     }
 
     @Override

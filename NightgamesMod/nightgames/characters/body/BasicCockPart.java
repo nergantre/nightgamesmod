@@ -40,7 +40,7 @@ public enum BasicCockPart implements CockPart {
 
     @Override
     public String describe(Character c) {
-        String syn = Global.pickRandom(synonyms);
+        String syn = Global.pickRandom(synonyms).get();
         return Global.maybeString(desc + " ") + (c.hasPussy() ? "girl-" : "") + syn;
     }
 
@@ -51,7 +51,7 @@ public enum BasicCockPart implements CockPart {
 
     @Override
     public String fullDescribe(Character c) {
-        String syn = Global.pickRandom(synonyms);
+        String syn = Global.pickRandom(synonyms).get();
         return desc + " " + (c.hasPussy() ? "girl-" : "") + syn;
     }
 

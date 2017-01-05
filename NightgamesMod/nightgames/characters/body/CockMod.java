@@ -246,7 +246,7 @@ public enum CockMod implements BodyPartMod {
         } else {
             description = name() + (c.hasPussy() ? " girl-" : " ");
         }
-        String syn = Global.pickRandom(BasicCockPart.synonyms);
+        String syn = Global.pickRandom(BasicCockPart.synonyms).get();
         return base.desc + " " + description + syn;
     }
 
@@ -259,7 +259,7 @@ public enum CockMod implements BodyPartMod {
         } else {
             description = name() + (c.hasPussy() ? " girl-" : " ");
         }
-        String syn = Global.pickRandom(BasicCockPart.synonyms);
+        String syn = Global.pickRandom(BasicCockPart.synonyms).get();
         return Global.maybeString(base.desc) + " " + description + syn;
     }
 

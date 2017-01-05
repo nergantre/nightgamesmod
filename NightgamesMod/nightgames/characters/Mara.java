@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -40,6 +40,96 @@ public class Mara extends BasePersonality {
 
     public Mara(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Mara", 1, charConfig, commonConfig, true);
+        constructLines();
+    }
+    
+    private void constructLines () {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> { 
+            return "Mara gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
+                            + "lying just now. I'm not actually that sorry.\"</i>";
+        });
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.";
+        });
+
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> { 
+            return "Mara gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
+         });
+
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> { 
+            return "Mara lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
+         });
+
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> { 
+            return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
+         });
+
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> { 
+            return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
+         });
+
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> { 
+            return "On your way back to your dorm after the match, you feel a sudden weight on your back that almost knocks you off your feet. It turns out to be Mara, who jumped "
+                            + "on your back in her enthusiasm to spend the night together. You give her a piggyback ride back to the dorm, and per her request, head up to the roof. Unsurprisingly, "
+                            + "there's no one here this late at night and there's a good view of the stars. Mara strips off her clothes and dances naked onto the rooftop. <i>\"There's nothing like "
+                            + "being naked in the moonlight. Come on!\"</i> You undress and put your clothes in a neat pile, taking the time to gather up hers as well. You walk up behind her and hold "
+                            + "her while enjoying the view. The night air is slightly cool, but her nude body is warm in your arms. She turns her head to give you a tender kiss before stepping out of "
+                            + "your embrace. <i>\"Have you ever danced naked under the stars?\"</i> It's a strange question, but she looks too lovely in this light to refuse. The two of you dance without any "
+                            + "hint of style or rhythm, not caring how rediculous you'd look to a third party. When you've both tired, you spend some time just looking at the stars together. You "
+                            + "never would have imagined this is how you'd be spending your night, but Mara always finds ways to surprise you. You suddenly realize she's no longer standing next to "
+                            + "you. You spot her back by the door, holding your clothes. She winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch her just "
+                            + "as she reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay her back "
+                            + "before morning.";
+         });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> { 
+            final String finalLines[] =
+                            {"<i>\"NNnnnn..! Oh man I can't take much more!\"</i>", "<i>\"Ngh! Slow down! please!\"</i>",
+                                            "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",};
+            switch (self.orgasms) {
+                case 0:
+                    return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
+                case 1:
+                    return "<i>\"No fair! I'll get you next time!\"</i>";
+                case 2:
+                    return "<i>\"AAAHHH!\"</i> Mara tries to catch her breath, \"There's... no way... you can keep this up!\"";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines))
+                                 .get();
+             }
+         });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> { 
+            final String finalLines[] = {"<i>\"Cumming again? You " + other.boyOrGirl() + "s are too easy.\"</i>",
+                            "<i>\"You're simply inexhaustible aren't you? Let's test that theory... for science.\"</i>",
+                            "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",};
+            switch (other.orgasms) {
+                case 0:
+                    return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
+                case 1:
+                    return "<i>\"Looks like Mr. Happy over here can't help himself! That's twice now, how long can you go?\"</i>";
+                case 2:
+                    return "<i>\"Oh man, not many people lasted to three. I got more coming for you though!\"</i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines))
+                                 .get();
+             }
+         });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "\"<i>Annddd... here it comes!</i>\" Mara happily squeals as the now familiar sensation of your strength entering her flows through the petite girl. "
+                                + "You try struggling out, but Mara simply holds you down with a single hand. \"<i>Now now, don't get antsy! "
+                                + "You know you're already much weaker than me right? So don't struggle and just let me take everything!</i>\"";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "Mara narrows her eyes in pleasure as your strength is absorbed by her " + part + " as you cum. <i>\"Oh {other:boy}, that is some GOOD stuff! Don't be shy, give me some more, yes?\"</i>";
+            } else {
+                return "\"<i>You know {other:NAME}, I don't know why I bothered working so hard before. "
+                                + "Training, studying, preparing took so much time! It's so much <b>easier</b> to just take it from you! "
+                                + "And now that I'm stronger than you, you can't say no anymore can you?</i>\"";
+            }
+        });
     }
 
     @Override
@@ -134,7 +224,7 @@ public class Mara extends BasePersonality {
                                                             + " you were trying really hard to get there. I'll just have "
                                                             + "to work extra hard to live up to your expectations, then. It's"
                                                             + " unhealthy to work on one thing all the time anyway. Just make"
-                                                            + " sure you do your part, {self:name}. I will expect a good, driven"
+                                                            + " sure you do your part, {other:name}. I will expect a good, driven"
                                                             + " test subject for my creations, and you just volunteered yourself.\"</i>"
                                                             + " As she turns and walks away, mumbling ideas to herself, you say that"
                                                             + " you did no such thing. Your words fall on deaf ears, though. Have"
@@ -198,7 +288,7 @@ public class Mara extends BasePersonality {
                                                                             + " Uhhh. Ok. That was weird. {self:name} walks away, arms raised over"
                                                                             + " {self:possessive} head and laughing maniacally. This is going to"
                                                                             + " be interesting, that's for sure.",
-                                                            self, other, character.useFemalePronouns() ? "ness" : ""));
+                                                            self, other, character.useFemalePronouns() ? "ess" : ""));
                                             useMindControl();
                                             useOcto();
                                             character.getGrowth().extraAttributes += 1;
@@ -362,32 +452,6 @@ public class Mara extends BasePersonality {
         character.mod(Attribute.Science, 1);
         character.getGrowth()
                  .addOrRemoveTraits(character);
-    }
-
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Mara gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
-                        + "lying just now. I'm not actually that sorry.\"</i>";
-    }
-
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Mara gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Mara lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
     }
 
     @Override
@@ -690,34 +754,12 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return Global.format(
-                        "{self:SUBJECT} smiles and faces {other:name-do}, practically daring {other:direct-object} to attack.",
-                        character, other);
-    }
-
-    @Override
     public boolean fit() {
         return character.getStamina()
                         .percent() >= 75
                         && character.getArousal()
                                     .percent() <= 10
                         && !character.mostlyNude();
-    }
-
-    @Override
-    public String night() {
-        return "On your way back to your dorm after the match, you feel a sudden weight on your back that almost knocks you off your feet. It turns out to be Mara, who jumped "
-                        + "on your back in her enthusiasm to spend the night together. You give her a piggyback ride back to the dorm, and per her request, head up to the roof. Unsurprisingly, "
-                        + "there's no one here this late at night and there's a good view of the stars. Mara strips off her clothes and dances naked onto the rooftop. <i>\"There's nothing like "
-                        + "being naked in the moonlight. Come on!\"</i> You undress and put your clothes in a neat pile, taking the time to gather up hers as well. You walk up behind her and hold "
-                        + "her while enjoying the view. The night air is slightly cool, but her nude body is warm in your arms. She turns her head to give you a tender kiss before stepping out of "
-                        + "your embrace. <i>\"Have you ever danced naked under the stars?\"</i> It's a strange question, but she looks too lovely in this light to refuse. The two of you dance without any "
-                        + "hint of style or rhythm, not caring how rediculous you'd look to a third party. When you've both tired, you spend some time just looking at the stars together. You "
-                        + "never would have imagined this is how you'd be spending your night, but Mara always finds ways to surprise you. You suddenly realize she's no longer standing next to "
-                        + "you. You spot her back by the door, holding your clothes. She winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch her just "
-                        + "as she reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay her back "
-                        + "before morning.";
     }
 
     @Override
@@ -731,42 +773,4 @@ public class Mara extends BasePersonality {
                 return value >= 100;
         }
     }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        final String finalLines[] =
-                        {"<i>\"NNnnnn..! Oh man I can't take much more!\"</i>", "<i>\"Ngh! Slow down! please!\"</i>",
-                                        "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",};
-        switch (character.orgasms) {
-            case 0:
-                return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
-            case 1:
-                return "<i>\"No fair! I'll get you next time!\"</i>";
-            case 2:
-                return "<i>\"AAAHHH!\"</i> Mara tries to catch her breath, \"There's... no way... you can keep this up!\"";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines))
-                             .get();
-        }
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        final String finalLines[] = {"<i>\"Cumming again? You " + target.boyOrGirl() + "s are too easy.\"</i>",
-                        "<i>\"You're simply inexhaustible aren't you? Let's test that theory... for science.\"</i>",
-                        "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",};
-        switch (target.orgasms) {
-            case 0:
-                return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
-            case 1:
-                return "<i>\"Looks like Mr. Happy over here can't help himself! That's twice now, how long can you go?\"</i>";
-            case 2:
-                return "<i>\"Oh man, not many people lasted to three. I got more coming for you though!\"</i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines))
-                             .get();
-        }
-    }
-
-
 }

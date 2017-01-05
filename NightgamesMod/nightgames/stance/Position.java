@@ -283,7 +283,7 @@ public abstract class Position implements Cloneable {
     }
 
     public boolean havingSex(Combat c) {
-        return penetratedBy(c, domSexCharacter(c), bottom) || penetratedBy(c, bottom, domSexCharacter(c));
+        return penetratedBy(c, domSexCharacter(c), bottom) || penetratedBy(c, bottom, domSexCharacter(c)) || en == Stance.trib;
     }
 
     public boolean havingSex(Combat c, Character self) {

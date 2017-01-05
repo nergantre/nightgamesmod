@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Flag;
@@ -24,10 +25,10 @@ public class Maya extends BasePersonality {
 
     public Maya(int playerLevel, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Maya", 50, charConfig, commonConfig, false);
-
         while (character.getLevel() < playerLevel + 20) {
             character.ding();
         }
+        constructLines();
     }
 
     @Override
@@ -98,24 +99,46 @@ public class Maya extends BasePersonality {
         character.getGrowth().addTrait(0, Trait.cursed);
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Maya looks at you sympathetically. <i>\"Was that painful? Don't worry, you aren't seriously injured. Our Benefactor protects us.\"</i>";
-    }
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Maya looks at you sympathetically. <i>\"Was that painful? Don't worry, you aren't seriously injured. Our Benefactor protects us.\"</i>";
+       });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Maya smiles, unashamed of her nudity. <i>\"Well done. Not many participants are able to get my clothes off anymore. You'll at least be able to look at a naked woman while you orgasm.\"</i>";
-    }
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            if (other.human()) {
+                return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave " + other.boyOrGirl() + ". I'll try not to disappoint you.\"</i>";
+            } else {
+                return "{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.";
+            }
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "You think you see something dangerous flicker in Maya's eyes. <i>\"Well done. I may need to get a little serious.\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "Maya smiles, unashamed of her nudity. <i>\"Well done. Not many participants are able to get my clothes off anymore. You'll at least be able to look at a naked woman while you orgasm.\"</i>";
+       });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "Maya gives you a look of gentle disapproval. <i>\"You aren't putting up much of a fight, are you? Aren't you a little overeager to cum?\"</i>";
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "You think you see something dangerous flicker in Maya's eyes. <i>\"Well done. I may need to get a little serious.\"</i>";
+       });
+
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            return "Maya gives you a look of gentle disapproval. <i>\"You aren't putting up much of a fight, are you? Aren't you a little overeager to cum?\"</i>";
+       });
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "";
+       });
+
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "Maya lowers her voice to a smokey tone as she speaks. <i>\"Shall"
+                            + " I show you what experience can do for a sexfighter?\"</i>";
+       });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            return "<i>\"Oh.. SHIT! Did I just actually... Fuck! Come here and let me return the favor, stud!\"</i>";
+       });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
+       });
     }
 
     @Override
@@ -318,22 +341,8 @@ public class Maya extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        if (other.human()) {
-            return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave " + other.boyOrGirl() + ". I'll try not to disappoint you.\"</i>";
-        } else {
-            return Global.format("{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.", character, other);
-        }
-    }
-
-    @Override
     public boolean fit() {
         return !character.outfit.isNude();
-    }
-
-    @Override
-    public String night() {
-        return "";
     }
 
     @Override
@@ -348,22 +357,6 @@ public class Maya extends BasePersonality {
                 break;
         }
         return value >= 100;
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Maya lowers her voice to a smokey tone as she speaks. <i>\"Shall"
-                        + " I show you what experience can do for a sexfighter?\"</i>";
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "<i>\"Oh.. SHIT! Did I just actually... Fuck! Come here and let me" + " return the favor, stud!\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
     }
 
     @Override

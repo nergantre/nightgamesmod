@@ -121,7 +121,7 @@ public class RoboArmManager {
             ArmSkill skill = Global.pickRandom(arm.getSkills(c, owner, target)
                                                   .stream()
                                                   .filter(s -> s.usable(c, arm, owner, target))
-                                                  .toArray(ArmSkill[]::new));
+                                                  .toArray(ArmSkill[]::new)).get();
             if (skill != null) {
                 c.write(PetCharacter.DUMMY, String.format("<b>%s %s uses %s</b>", owner.nameOrPossessivePronoun(),
                                 arm.getName(), skill.getName()));

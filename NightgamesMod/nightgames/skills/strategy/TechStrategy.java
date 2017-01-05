@@ -8,7 +8,6 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.items.clothing.ClothingTrait;
 import nightgames.skills.Collar;
 import nightgames.skills.LaunchHarpoon;
 import nightgames.skills.MagLock;

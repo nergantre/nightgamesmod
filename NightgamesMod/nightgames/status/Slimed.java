@@ -4,21 +4,23 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Slimed extends DurationStatus {
+    private static final int MAX_STACKS = 50;
     private Character origin;
     private int stacks;
 
-    public Slimed(Character affected, Character other) {
-        super("parasited", affected, 4);
+    public Slimed(Character affected, Character other, int stacks) {
+        super("parasited", affected, other.has(Trait.EnduringAdhesive) ? 4 : 6);
         this.origin = other;
-        this.stacks = 0;
+        this.stacks = stacks;
         // don't auto-remove when cleared.
         requirements.clear();
-        flag(Stsflag.parasited);
+        flag(Stsflag.slimed);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
     }
@@ -26,7 +28,11 @@ public class Slimed extends DurationStatus {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
     	if (replaced) {
-            return Global.format("More pieces of {other:name-possessive} slime are getting stuck to {self:name-possessive} body.\n", affected, origin);
+    	    if (stacks < 0) {
+    	        return "";
+    	    } else {
+    	        return Global.format("More pieces of {other:name-possessive} slime are getting stuck to {self:name-possessive} body.\n", affected, origin);
+    	    }
     	}
         return Global.format("Pieces of {other:name-possessive} slime are stuck to {self:name-possessive} body!\n", affected, origin);
     }
@@ -70,13 +76,19 @@ public class Slimed extends DurationStatus {
         		affected.removeStatus(this);
         	} else {
 	    		Global.writeFormattedIfCombat(c, "{self:SUBJECT-ACTION:shake|shakes} off some of {other:name-possessive} sticky slime.", affected, origin);
-	        	setDuration(4);
+	    		// be lazy and use the same function as the constructor to set the durations
+	        	setDuration((new Slimed(affected, origin, 1)).getDuration());
         	}
         }
-        if (stacks >= 100) {
+        if (stacks >= MAX_STACKS && origin.has(Trait.PetrifyingPolymers)) {
         	Global.writeFormattedIfCombat(c, "There's so much slime on {self:name-do} that it solidifies into a sheet of hard plastic!.", affected, origin);
+        	stacks = 0;
         	affected.removeStatus(this);
         	affected.add(c, new Plasticized(affected));
+        }
+        if (stacks >= 0 && origin.has(Trait.ParasiticBond)) {
+            Global.writeFormattedIfCombat(c, "While not connected directly to {other:direct-object}, {other:name-possessive} slime seems to be eroding {self:name-possessive} stamina while energizing {other:direct-object}", affected, origin);
+            affected.drainStaminaAsMojo(c, origin, 10, 1.0f);
         }
     }
 
@@ -114,7 +126,11 @@ public class Slimed extends DurationStatus {
     public void replace(Status s) {
         Slimed other = (Slimed) s;
         setDuration(Math.max(other.getDuration(), getDuration()));
-        stacks += other.stacks;
+        stacks = Global.clamp(stacks + other.stacks, 0, MAX_STACKS);
+        if (stacks == 0) {
+            setDuration(0);
+            stacks = 0;
+        }
     }
 
     @Override
@@ -148,7 +164,7 @@ public class Slimed extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Slimed(newAffected, newOther);
+        return new Slimed(newAffected, newOther, stacks);
     }
 
     public JsonObject saveToJson() {
@@ -161,7 +177,7 @@ public class Slimed extends DurationStatus {
 
     public Status loadFromJson(JsonObject obj) {
     	// TODO implement me
-        return new Slimed(null, null);
+        return new Slimed(null, null, 0);
     }
 
     @Override

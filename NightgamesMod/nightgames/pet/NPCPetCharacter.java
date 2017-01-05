@@ -1,13 +1,19 @@
 package nightgames.pet;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.Outfit;
 
 public class NPCPetCharacter extends PetCharacter {
     private NPC prototype;
+    private Map<String, List<CharacterLine>> lines;
 
     public NPCPetCharacter(String name, Pet self, NPC prototypeCharacter, int level) throws CloneNotSupportedException {
         super(self, name, prototypeCharacter.getType() + "Pet", prototypeCharacter.getGrowth(), 1);
@@ -24,6 +30,7 @@ public class NPCPetCharacter extends PetCharacter {
         this.mojo.empty();
         this.arousal.empty();
         this.stamina.fill();
+        this.lines = Collections.unmodifiableMap(prototype.getLines());
         Global.learnSkills(this);
     }
 
@@ -34,34 +41,53 @@ public class NPCPetCharacter extends PetCharacter {
         return clone;
     }
 
-    @Override
-    public String bbLiner(Combat c, Character target) {
-        return prototype.bbLiner(c, target);
+    public String getRandomLineFor(String lineType, Combat c, Character other) {
+        return Global.pickRandom(lines.get(lineType)).orElse((cb, sf, ot) -> "").getLine(c, this, other);
     }
 
-    @Override
-    public String nakedLiner(Combat c, Character target) {
-        return prototype.nakedLiner(c, target);
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character target) {
-        return prototype.stunLiner(c, target);
-    }
-
-    @Override
-    public String taunt(Combat c, Character target) {
-        return prototype.taunt(c, target);
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character target) {
-        return prototype.temptLiner(c, target);
+    public String getRandomLineFor(String lineType, Combat c) {
+        Character other = c == null ? null : c.getOpponent(this);
+        return getRandomLineFor(lineType, c, other);
     }
 
     @Override
     public String challenge(Character other) {
-        return prototype.ai.startBattle(this, other);
+        return getRandomLineFor(CharacterLine.CHALLENGE, null, other);
+    }
+
+    @Override
+    public String orgasmLiner(Combat c) {
+        return getRandomLineFor(CharacterLine.ORGASM_LINER, c);
+    }
+
+    @Override
+    public String makeOrgasmLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c);
+    }
+
+    @Override
+    public String bbLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.BB_LINER, c);
+    }
+
+    @Override
+    public String nakedLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.NAKED_LINER, c);
+    }
+
+    @Override
+    public String stunLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.STUNNED_LINER, c);
+    }
+
+    @Override
+    public String taunt(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.TAUNT_LINER, c);
+    }
+
+    @Override
+    public String temptLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.TEMPT_LINER, c);
     }
 
     @Override

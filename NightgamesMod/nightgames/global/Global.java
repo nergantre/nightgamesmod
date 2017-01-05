@@ -499,6 +499,7 @@ public class Global {
         getSkillPool().add(new Pray(ch));
         getSkillPool().add(new Prostrate(ch));
         getSkillPool().add(new DarkKiss(ch));
+        getSkillPool().add(new SlimeMimicry(ch));
         getSkillPool().add(new MimicAngel(ch));
         getSkillPool().add(new MimicCat(ch));
         getSkillPool().add(new MimicDryad(ch));
@@ -1342,9 +1343,10 @@ public class Global {
         }
     }
 
-    public static <T> T pickRandom(T[] arr) {
-        if (arr.length == 0) return null;
-        return arr[Global.random(arr.length)];
+    @SafeVarargs
+    public static <T> Optional<T> pickRandom(T ... arr) {
+        if (arr.length == 0) return Optional.empty();
+        return Optional.of(arr[Global.random(arr.length)]);
     }
     
     public static <T> Optional<T> pickRandom(List<T> list) {

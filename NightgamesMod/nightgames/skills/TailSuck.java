@@ -183,7 +183,7 @@ public class TailSuck extends Skill {
 
     private void drain(Combat c, Character target) {
         Attribute toDrain = Global.pickRandom(target.att.entrySet().stream().filter(e -> e.getValue() != 0)
-                        .map(e -> e.getKey()).toArray(Attribute[]::new));
+                        .map(e -> e.getKey()).toArray(Attribute[]::new)).get();
         target.add(c, new Abuff(target, toDrain, -power(), 20));
         getSelf().add(c, new Abuff(getSelf(), toDrain, power(), 20));
         target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));

@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -10,7 +11,6 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Satiated;
 
 public class LevelDrain extends Drain {
-
     public LevelDrain(Character self) {
         super("Level Drain", self);
 
@@ -60,7 +60,6 @@ public class LevelDrain extends Drain {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-
         int type = Global.centeredrandom(2, getSelf().get(Attribute.Dark) / 20.0f, 2);
         writeOutput(c, type, Result.normal, target);
         switch (type) {
@@ -91,6 +90,10 @@ public class LevelDrain extends Drain {
                 }
                 getSelf().gainXP(xpStolen);
                 target.temptNoSource(c, getSelf(), target.getArousal().max(), this);
+                String levelDrainLine = getSelf().getRandomLineFor(CharacterLine.LEVEL_DRAIN_LINER, c, target);
+                if (!levelDrainLine.isEmpty()) {
+                    c.write(getSelf(), levelDrainLine);
+                }
                 break;
             default:
                 break;

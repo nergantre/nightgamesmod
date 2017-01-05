@@ -9,6 +9,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -37,6 +38,7 @@ public class Airi extends BasePersonality {
 
     public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         super("Airi", 10, charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Airi extends BasePersonality {
     public void applyBasicStats(Character self) {
         self.change();
         self.setTrophy(Item.AiriTrophy);
-        preferredCockMod = CockMod.slimy;
+        preferredCockMod = CockMod.error;
 
         self.outfitPlan.add(Clothing.getByID("shirt"));
         self.outfitPlan.add(Clothing.getByID("bra"));
@@ -69,6 +71,47 @@ public class Airi extends BasePersonality {
         self.getMojo().setMax(100);
         self.getWillpower().setMax(80);
         self.initialGender = CharacterSex.female;
+    }
+
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> self.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "<i>\"Sorry... I hope it didn't hurt too badly...\"</i>");
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> self.has(Trait.slime) ? "" : "<i>Nooo! Don't look at me!</i>");
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> self.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>");
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> self.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Airi giggles, </b> \"Try a bit harder okay?\"</i>");
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> self.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>");
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            if (self.has(Trait.slime)) {
+                return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
+            } else if (self.getWillpower().percent() > 90) {
+                return "<i>\"Aah that was a bit too much! Slow down a bit...\"</i>";
+            } else if (self.getWillpower().percent() > 75) {
+                return "<i>\"Aaahhh... my head's feeling fuzzy...\"</i>";
+            } else {
+                return "<i>\"I need more... Give me more...\"</i>";
+            }
+        });
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> self.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? Let me have some more...\"</i>");
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> "You walk back to your dorm after the match, and decide to take a shower after all that exertion. Who knew sex fighting a bunch of girls would be so exhausting? You strip off your shirt and boxers and head straight into the bathroom. As you flip on the lights, you notice that the tub seems already filled with water. Just as you wonder if you forgot to drain the tub from last night, the liquid in the tub quivers and… stands up. "
+                        + "<br/><br/>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>");
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            if (other.human()) {
+                return character.has(Trait.slime)
+                                ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
+                                : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
+            } else {
+                return "You... will do...";
+            }
+        });
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "{self:SUBJECT} tousles {other:possessive} hair fondly as {other:subject} cum, \"<i>How does it feel... reduced to mere prey...? You're just food... for me now...</i>\"";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "{self:SUBJECT} looks euphoric as your strength is stolen by her demonic " + part + " \"<i>Ahh... your strength... feels good... You have more to spare... please give me more!</i>\"";
+            } else {
+                return "\"<i>{other:NAME}... Did you know...? I'm stronger than you now... But you can't stop... I need all that you have...</i>\"";
+            }
+        });
     }
 
     @Override
@@ -256,32 +299,6 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c, Character other) {
-        return character.has(Trait.slime) ? "Airi grimaces as you fall. <i>\"Apologies... but necessary.... Please understand...\"</i>" : "<i>\"Sorry... I hope it didn't hurt too badly...\"</i>";
-    }
-
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        // always naked in slime form
-        return character.has(Trait.slime) ? "" : "<i>Nooo! Don't look at me!</i>";
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return character.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>";
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return character.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Airi giggles, </b> \"Try a bit harder okay?\"</i>";
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return character.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>";
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         Character opponent;
         if (c.p1 == character) {
@@ -390,26 +407,9 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        if (other.human()) {
-            return character.has(Trait.slime)
-                            ? "Airi's main body rises up from her slime blob and forms the demure beauty you're used to seeing. <i>\"Delicious... Quickly... Give me your seed...\"</i>"
-                            : "You're fighting Airi, a reticent asian girl. She looks pretty normal for now, but you know she's holding a secret.";
-        } else {
-            return "You... will do...";
-        }
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50
                         || character.getArousal().percent() > 50;
-    }
-
-    @Override
-    public String night() {
-        return "You walk back to your dorm after the match, and decide to take a shower after all that exertion. Who knew sex fighting a bunch of girls would be so exhausting? You strip off your shirt and boxers and head straight into the bathroom. As you flip on the lights, you notice that the tub seems already filled with water. Just as you wonder if you forgot to drain the tub from last night, the liquid in the tub quivers and… stands up. "
-                        + "<br/><br/>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>";
     }
 
     public void advance() {
@@ -426,25 +426,6 @@ public class Airi extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        if (character.has(Trait.slime)) {
-            return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
-        } else if (character.getWillpower().percent() > 90) {
-            return "<i>\"Aah that was a bit too much! Slow down a bit...\"</i>";
-        } else if (character.getWillpower().percent() > 75) {
-            return "<i>\"Aaahhh... my head's feeling fuzzy...\"</i>";
-        } else {
-            return "<i>\"I need more... Give me more...\"</i>";
-        }
-        
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return character.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? Let me have some more...\"</i>";
     }
 
     @Override
