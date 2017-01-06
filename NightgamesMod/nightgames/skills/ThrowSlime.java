@@ -13,6 +13,7 @@ import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.Parasited;
+import nightgames.status.Slimed;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
@@ -56,14 +57,20 @@ public class ThrowSlime extends Skill {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:throw|throws} a glob of slime at"
                             + " {other:name-do}, but it is simply absorbed into {other:possessive}"
                             + " equally slimy body. That was rather underwhelming.", getSelf(), target));
+            return false;
         } else {
             HitType type = decideEffect(c, target);
             type.message(c, getSelf(), target);
             if (type != HitType.NONE) {
                 target.add(c, type.build(getSelf(), target));
+                if (getSelf().has(Trait.VolatileSubstrate)) {
+                    target.add(c, new Slimed(target, getSelf(), Global.random(1, 11)));
+                }
+                return true;
+            } else {
+                return false;
             }
         }
-        return true;
     }
 
     @Override
@@ -182,7 +189,7 @@ public class ThrowSlime extends Skill {
                                 + " Your mood does not improve when you feel it seep into your ears, and"
                                 + " beyond. It doesn't hurt, but the shock and the general weirdness of the"
                                 + " situation get to you. You try to shake the slime off, but it just worms around"
-                                + " inside of you while " + self.name() + " observes, giggling."
+                                + " inside of you while " + self.getName() + " observes, giggling."
                                 + " When it's job - whatever it is - is finished, the slime dislodges from"
                                 + " your head and falls to the ground in a harmless puddle. Not nearly as"
                                 + " harmless, however, is the sensation of some left-over slime still "
@@ -236,8 +243,7 @@ public class ThrowSlime extends Skill {
         int slime = getSelf().get(Attribute.Slime);
         int bonus = Math.min(slime, 40) - 20;
 
-        if (!c.getStance()
-              .mobile(target) || !target.canRespond()) {
+        if (!c.getStance().mobile(target) || !target.canRespond()) {
             bonus *= 2;
         }
 

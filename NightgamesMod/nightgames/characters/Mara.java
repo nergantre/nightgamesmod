@@ -130,6 +130,17 @@ public class Mara extends BasePersonality {
                                 + "And now that I'm stronger than you, you can't say no anymore can you?</i>\"";
             }
         });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.madscientist)) {
+                return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
+                                + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
+                                + "you're used to.";
+            } else {
+                return "Mara is short and slender, with a small heart shaped face. She has dark skin, and short, curly black hair. Her size and cute features make her look a few years "
+                                + "younger than she actually is, and she wears a near constant playful smile. She's far from physically intimidating, but her sharp eyes reveal her exceptional intellect.";
+            }
+        });
     }
 
     @Override
@@ -616,18 +627,6 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.madscientist)) {
-            return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
-                            + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
-                            + "you're used to.";
-        } else {
-            return "Mara is short and slender, with a small heart shaped face. She has dark skin, and short, curly black hair. Her size and cute features make her look a few years "
-                            + "younger than she actually is, and she wears a near constant playful smile. She's far from physically intimidating, but her sharp eyes reveal her exceptional intellect.";
-        }
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         Character target;
         if (c.p1 == character) {
@@ -642,7 +641,7 @@ public class Mara extends BasePersonality {
                             + "rides you passionately, too aroused to prevent her own orgasm, but eager to take you with her. It works. Her already tight pussy squeezes your cock as she orgasms, "
                             + "milking you. Pleasure overwhelms you as you fill her womb with your seed.<br/><br/>Mara absentmindedly rubs her abdomen as you both enjoy the afterglow. <i>\"You came so much "
                             + "inside me. It'll be a wonder if I'm not knocked up. If we have a boy, should we name him after you? "
-                            + target.name() + " jr. has a nice ring to it.\"</i> Pregnant?! You "
+                            + target.getName() + " jr. has a nice ring to it.\"</i> Pregnant?! You "
                             + "feel a cold panic grip you as you try to imagine balancing college and caring for a baby. Mara, on the other hand lets out a relaxed giggle. <i>\"You don't need to look "
                             + "so nervous. I was just making a joke. Do you think they'd let us do this without birth control?\"</i> That's right. You do vaguely remember that being mentioned when the "
                             + "competition was explained to you.<br/><br/>You relax, but Mara has gone quiet as she stares at your face thoughtfully. <i>\"You might actually make a good father.\"</i> "
@@ -689,7 +688,7 @@ public class Mara extends BasePersonality {
             } else {
                 return "Mara runs her fingers down the length of your body, tickling you mercilessly. Her probing fingers avoid your nipples and pussy, "
                                 + "focusing instead on the ticklish areas under your arms, behind your knees and on your inner thighs. You squirm against "
-                                + assist.name()
+                                + assist.getName()
                                 + " pleading for mercy. After a few minutes of this, sweet electric shivers wrack your body when Mara's "
                                 + "dancing fingers tease your dripping pussy and your clit. You are unable to decide whether you are being tickled into "
                                 + "submission or fingered to ecstasy. Your oversensitized pussy finally can't take any more and trys clamping onto her "
@@ -712,43 +711,43 @@ public class Mara extends BasePersonality {
                                             + " and shudders in your arms. You release %s and %s collapses, completely"
                                             + " exhausted. Mara grins at you mischievously. <i>\"%s obviously enjoyed "
                                             + "that. Do you want to be next?\"</i>",
-                            target.name(), target.name(), target.name(), target.possessiveAdjective(),
-                            target.possessiveAdjective(), target.possessiveAdjective(), target.name(), target.pronoun(),
+                            target.getName(), target.getName(), target.getName(), target.possessiveAdjective(),
+                            target.possessiveAdjective(), target.possessiveAdjective(), target.getName(), target.pronoun(),
                             target.possessiveAdjective(), target.possessiveAdjective(),
-                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.name(),
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.getName(),
                             target.possessiveAdjective(), target.directObject(), target.pronoun(),
                             Global.capitalizeFirstLetter(target.possessiveAdjective()));
         }
-        return "Mara approaches " + target.name()
-                        + " like a panther claiming its prey. She runs her fingers down the length of " + target.name()
+        return "Mara approaches " + target.getName()
+                        + " like a panther claiming its prey. She runs her fingers down the length of " + target.getName()
                         + "'s body, eliciting a shiver "
-                        + "each time she hits a ticklish spot. Her probing fingers avoid " + target.name()
+                        + "each time she hits a ticklish spot. Her probing fingers avoid " + target.getName()
                         + "'s nipples and pussy, focusing instead on the ticklish areas under her arms, "
-                        + "behind her knees and on her inner thighs. You struggle to hold onto " + target.name()
+                        + "behind her knees and on her inner thighs. You struggle to hold onto " + target.getName()
                         + " as she squirms and pleads for mercy. After a few minutes, her pleas "
                         + "shift in tone and you realise Mara's dancing fingers have moved to her pussy and clit. Her entire body trembles as if unable to decide whether it's being "
                         + "tickled into submission or fingered to ecstasy. You finally hear a breathless gasp as "
-                        + target.name() + " hits her climax and shudders in your arms. You release "
+                        + target.getName() + " hits her climax and shudders in your arms. You release "
                         + "her and she collapses, completely exhausted. Mara grins at you mischeviously. <i>\"She obviously enjoyed that. Do you want to be next?\"</i>";
     }
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "You face off with " + assist.name()
+            return "You face off with " + assist.getName()
                             + ", looking for any opening. Her eyes dart momentarily past you, but before you can decide if her distraction is "
                             + "real or a feint, a small hand reaches between your legs and grabs your nutsack tightly. You can't get a good look at your attacker, clinging to your back, "
                             + "but her small size and mocha skin give away Mara's identity. This information doesn't really help you much, as it's too late to defend yourself."
                             + " She yanks on your jewels, forcing you to your knees. Both girls work to restrain your arms, but it's "
                             + "not really necessary since Mara literally has you by the balls. She releases your abused jewels once the fight has left you and focuses on holding your arms, "
-                            + "while " + assist.name() + " moves to your front.<br/>";
+                            + "while " + assist.getName() + " moves to your front.<br/>";
         } else {
-            return "So far this hasn't been your proudest fight. " + target.name()
+            return "So far this hasn't been your proudest fight. " + target.getName()
                             + " was able to pin you early on and is currently rubbing your dick between her thighs. "
                             + "You've almost given up hope of victory, until you spot Mara creeping up behind her. She seems thoroughly amused by your predicament and makes no "
                             + "move to help you, despite being easily in reach. You give her your best puppy-dog eyes, silently pleading while trying not to give away her presence. "
-                            + "Mara lets you squirm a little longer before winking at you and tickling " + target.name()
-                            + " under her arms. " + target.name() + " lets out a startled yelp "
+                            + "Mara lets you squirm a little longer before winking at you and tickling " + target.getName()
+                            + " under her arms. " + target.getName() + " lets out a startled yelp "
                             + "and jumps in surprise. You use the moment of distraction to push her off balance and Mara immediately secures her arms.<br/>";
         }
     }

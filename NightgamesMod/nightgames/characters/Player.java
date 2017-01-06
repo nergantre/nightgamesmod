@@ -251,7 +251,7 @@ public class Player extends Character {
 
     @Override
     public void faceOff(Character opponent, IEncounter enc) {
-        gui.message("You run into <b>" + opponent.name
+        gui.message("You run into <b>" + opponent.nameDirectObject()
                         + "</b> and you both hesitate for a moment, deciding whether to attack or retreat.");
         assessOpponent(opponent);
         gui.promptFF(enc, opponent);
@@ -299,7 +299,7 @@ public class Player extends Character {
 
     @Override
     public void spy(Character opponent, IEncounter enc) {
-        gui.message("You spot <b>" + opponent.name
+        gui.message("You spot <b>" + opponent.nameDirectObject()
                         + "</b> but she hasn't seen you yet. You could probably catch her off guard, or you could remain hidden and hope she doesn't notice you.");
         assessOpponent(opponent);
         gui.promptAmbush(enc, opponent);
@@ -343,7 +343,7 @@ public class Player extends Character {
             if (Global.checkFlag(Flag.FTC)) {
                 Character holder = ((FTCMatch) Global.getMatch()).getFlagHolder();
                 if (holder != null && !holder.human()) {
-                    gui.message("<b>" + holder.name + " currently holds the Flag.</b></br>");
+                    gui.message("<b>" + holder.subject() + " currently holds the Flag.</b></br>");
                 }
             }
             gui.message(location.description + "<br/><br/>");
@@ -532,11 +532,11 @@ public class Player extends Character {
     public void showerScene(Character target, IEncounter encounter) {
         if (target.location().name.equals("Showers")) {
             gui.message("You hear running water coming from the first floor showers. There shouldn't be any residents on this floor right now, so it's likely one "
-                            + "of your opponents. You peek inside and sure enough, <b>" + target.name()
+                            + "of your opponents. You peek inside and sure enough, <b>" + target.subject()
                             + "</b> is taking a shower and looking quite vulnerable. Do you take advantage "
                             + "of her carelessness?");
         } else if (target.location().name.equals("Pool")) {
-            gui.message("You stumble upon <b>" + target.name
+            gui.message("You stumble upon <b>" + target.nameDirectObject()
                             + "</b> skinny dipping in the pool. She hasn't noticed you yet. It would be pretty easy to catch her off-guard.");
         }
         assessOpponent(target);
@@ -545,7 +545,7 @@ public class Player extends Character {
 
     @Override
     public void intervene(IEncounter enc, Character p1, Character p2) {
-        gui.message("You find <b>" + p1.name() + "</b> and <b>" + p2.name()
+        gui.message("You find <b>" + p1.getName() + "</b> and <b>" + p2.getName()
                         + "</b> fighting too intensely to notice your arrival. If you intervene now, it'll essentially decide the winner.");
         gui.message("Then again, you could just wait and see which one of them comes out on top. It'd be entertaining,"
                         + " at the very least.");
@@ -557,9 +557,9 @@ public class Player extends Character {
         gainXP(getAssistXP(target));
         target.defeated(this);
         assist.gainAttraction(this, 1);
-        c.write("You take your time, approaching " + target.name() + " and " + assist.name() + " stealthily. "
-                        + assist.name() + " notices you first and before her reaction "
-                        + "gives you away, you quickly lunge and grab " + target.name()
+        c.write("You take your time, approaching " + target.getName() + " and " + assist.getName() + " stealthily. "
+                        + assist.getName() + " notices you first and before her reaction "
+                        + "gives you away, you quickly lunge and grab " + target.getName()
                         + " from behind. She freezes in surprise for just a second, but that's all you need to "
                         + "restrain her arms and leave her completely helpless. Both your hands are occupied holding her, so you focus on kissing and licking the "
                         + "sensitive nape of her neck.<br/><br/>");
@@ -591,13 +591,13 @@ public class Player extends Character {
                                             + "reaction.<br/><br/>You continue your oral assault until you hear a breathy "
                                             + "moan, <i>\"I'm gonna cum!\"</i> You hastily remove %s dick out of "
                                             + "your mouth and pump it rapidly. %s shoots %s load into the air, barely "
-                                            + "missing you.", target.name(),
-                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.name(),
-                            Global.capitalizeFirstLetter(target.pronoun()), target.possessiveAdjective(), target.name(),
+                                            + "missing you.", target.getName(),
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.getName(),
+                            Global.capitalizeFirstLetter(target.pronoun()), target.possessiveAdjective(), target.getName(),
                             target.possessiveAdjective()));
         } else {
-            c.write(target.name()
-                            + "'s arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way "
+            c.write(target.nameOrPossessivePronoun()
+                            + " arms are firmly pinned, so she tries to kick you ineffectually. You catch her ankles and slowly begin kissing and licking your way "
                             + "up her legs while gently, but firmly, forcing them apart. By the time you reach her inner thighs, she's given up trying to resist. Since you no "
                             + "longer need to hold her legs, you can focus on her flooded pussy. You pump two fingers in and out of her while licking and sucking her clit. In no "
                             + "time at all, she's trembling and moaning in orgasm.");
@@ -621,7 +621,7 @@ public class Player extends Character {
     @Override
     public void promptTrap(IEncounter enc, Character target, Trap trap) {
         Global.gui()
-              .message("Do you want to take the opportunity to ambush <b>" + target.name() + "</b>?");
+              .message("Do you want to take the opportunity to ambush <b>" + target.getName() + "</b>?");
         assessOpponent(target);
         gui.promptOpportunity(enc, target, trap);
     }
@@ -634,18 +634,18 @@ public class Player extends Character {
     public void counterattack(Character target, Tactics type, Combat c) {
         switch (type) {
             case damage:
-                c.write(this, "You dodge " + target.name()
+                c.write(this, "You dodge " + target.getName()
                                 + "'s slow attack and hit her sensitive tit to stagger her.");
                 target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (!target.crotchAvailable() || !target.hasPussy()) {
-                    c.write(this, "You pull " + target.name()
+                    c.write(this, "You pull " + target.getName()
                                     + " off balance and lick her sensitive ear. She trembles as you nibble on her earlobe.");
                     target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"),
                                     4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                 } else {
-                    c.write(this, "You pull " + target.name() + " to you and rub your thigh against her girl parts.");
+                    c.write(this, "You pull " + target.getName() + " to you and rub your thigh against her girl parts.");
                     target.body.pleasure(this, body.getRandom("feet"), target.body.getRandomPussy(),
                                     4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                 }
@@ -687,10 +687,10 @@ public class Player extends Character {
             case positioning:
                 if (c.getStance()
                      .dom(this)) {
-                    c.write(this, "You outmanuever " + target.name() + " and you exhausted her from the struggle.");
+                    c.write(this, "You outmanuever " + target.getName() + " and you exhausted her from the struggle.");
                     target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
-                    c.write(this, target.name()
+                    c.write(this, target.getName()
                                     + " loses her balance while grappling with you. Before she can fall to the floor, you catch her from behind and hold her up.");
                     c.setStance(new Behind(this, target));
                 }
@@ -708,7 +708,7 @@ public class Player extends Character {
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br/>Whenever you're near " + opponent.name()
+            c.write(opponent, "<br/>Whenever you're near " + opponent.getName()
                             + ", you feel your body heat up. Something in her scent is making you extremely horny.");
             add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
@@ -880,7 +880,7 @@ public class Player extends Character {
         if (addiction.isPresent()) {
             if (dbg) {
                 System.out.printf("Aggravating %s on player by %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getName());
+                                cause.getTrueName());
             }
             Addiction a = addiction.get();
             a.aggravateCombat(mag);
@@ -892,7 +892,7 @@ public class Player extends Character {
         } else {
             if (dbg) {
                 System.out.printf("Creating initial %s on player with %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getName());
+                                cause.getTrueName());
             }
             Addiction addict = type.build(this, cause, Addiction.LOW_THRESHOLD);
             addict.aggravateCombat(mag);
@@ -906,7 +906,7 @@ public class Player extends Character {
         if (addict.isPresent()) {
             if (dbg) {
                 System.out.printf("Alleviating %s on player by %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getName());
+                                cause.getTrueName());
             }
             addict.get().alleviateCombat(mag);
         }

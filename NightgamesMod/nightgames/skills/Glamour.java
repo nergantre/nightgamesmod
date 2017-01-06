@@ -61,7 +61,7 @@ public class Glamour extends Skill {
                         + " but it's still a distraction. At the same "
                         + "time, %s suddenly looks irresistible.", getSelf().subject(),
                         target.nameOrPossessivePronoun(), getSelf().directObject(),
-                        Global.capitalizeFirstLetter(target.pronoun()), getSelf().name(),
+                        Global.capitalizeFirstLetter(target.pronoun()), getSelf().getName(),
                         getSelf().nameDirectObject());
     }
 }

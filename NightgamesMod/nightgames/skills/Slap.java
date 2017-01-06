@@ -11,6 +11,7 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.stance.StandingOver;
+import nightgames.status.Slimed;
 
 public class Slap extends Skill {
 
@@ -42,7 +43,7 @@ public class Slap extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (isSlime()) {
                 writeOutput(c, Result.critical, target);
-                target.pain(c, getSelf(), Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2);
+                target.pain(c, getSelf(), Math.min(80, Global.random(10) + getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Power) / 2));
                 if (c.getStance().en == Stance.neutral && Global.random(5) == 0) {
                     c.setStance(new StandingOver(getSelf(), target), getSelf(), true);
                     c.write(getSelf(),
@@ -50,7 +51,9 @@ public class Slap extends Skill {
                                                     + " enough to throw {other:pronoun} to the ground.", getSelf(),
                                     target));
                 }
-                target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(10, 20)));
+                if (getSelf().has(Trait.VolatileSubstrate)) {
+                    target.add(c, new Slimed(target, getSelf(), Global.random(2, 4)));
+                }
                 target.emote(Emotion.nervous, 40);
                 target.emote(Emotion.angry, 30);
             } else if (getSelf().get(Attribute.Animism) >= 8) {
@@ -121,14 +124,14 @@ public class Slap extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return target.name() + " avoids your slap.";
+            return target.getName() + " avoids your slap.";
         } else if (modifier == Result.special) {
-            return "You channel your bestial power and strike " + target.name() + " with a solid open hand strike.";
+            return "You channel your bestial power and strike " + target.getName() + " with a solid open hand strike.";
         } else if (modifier == Result.critical) {
             return "You let more of your slime flow to your hand, tripling it in size. Then, you lash out and slam "
-                            + target.name() + " in the face.";
+                            + target.getName() + " in the face.";
         } else {
-            return "You slap " + target.name()
+            return "You slap " + target.getName()
                             + "'s cheek; not hard enough to really hurt her, but enough to break her concentration.";
         }
     }

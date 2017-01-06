@@ -48,7 +48,7 @@ public class ReverseStraddle extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You straddle " + target.name() + ", facing her feet.";
+        return "You straddle " + target.getName() + ", facing her feet.";
     }
 
     @Override

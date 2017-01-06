@@ -21,7 +21,7 @@ public class Masochistic extends DurationStatus {
         if (affected.human()) {
             return "Arousing fantasies of being hurt continue to tempt you.";
         } else {
-            return affected.name() + " is still flushed with arousal at the idea of being struck.";
+            return affected.getName() + " is still flushed with arousal at the idea of being struck.";
         }
     }
 

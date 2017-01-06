@@ -103,14 +103,14 @@ public class WildThrust extends Thrust {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.anal || modifier == Result.upgrade) {
-            return "You wildly pound " + target.name()
+            return "You wildly pound " + target.getName()
                             + " in the ass with no regard to technique. She whimpers in pleasure and can barely summon the strength to hold herself off the floor.";
         } else if (modifier == Result.reverse) {
             return Global.format(
                             "{self:SUBJECT-ACTION:bounce|bounces} wildly on {other:name-possessive} cock with no regard to technique, relentlessly driving you both towards orgasm.",
                             getSelf(), target);
         } else {
-            return "You wildly pound your dick into " + target.name()
+            return "You wildly pound your dick into " + target.getName()
                             + "'s pussy with no regard to technique. Her pleasure filled cries are proof that you're having an effect, but you're feeling it "
                             + "as much as she is.";
         }

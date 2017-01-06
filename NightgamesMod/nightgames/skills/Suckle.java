@@ -63,10 +63,10 @@ public class Suckle extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return "You slowly circle your tongue around each of " + target.name()
+            return "You slowly circle your tongue around each of " + target.getName()
                             + "'s nipples, and start sucking like a newborn.";
         } else {
-            return "You slowly circle your tongue around each of " + target.name()
+            return "You slowly circle your tongue around each of " + target.getName()
                             + "'s nipples, and start sucking like a newborn. "
                             + "Her milk slides smoothly down your throat, and you're left with a warm comfortable feeling.";
         }

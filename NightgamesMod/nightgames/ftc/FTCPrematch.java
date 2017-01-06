@@ -26,7 +26,7 @@ public class FTCPrematch implements Scene {
             message += "When you get to the student union, you find it deserted save for"
                             + " a note telling you to go to the parking lot instead. Once you get"
                             + " there, the others, including Lilly, are already waiting next to a van. "
-                            + "\"Nice of you to join us, " + player.name() + ". I've been working for a while"
+                            + "\"Nice of you to join us, " + player.getTrueName() + ". I've been working for a while"
                             + " on devising an alternative match format, and tonight the lot"
                             + " of you get to be my guniea pigs.\" That sounds patently"
                             + " uncomfortable, but you listen on anyway. \"The idea is this: I drop"
@@ -88,21 +88,21 @@ public class FTCPrematch implements Scene {
                 }
             } else {
                 do {
-                    prey = (Character) Global.pickRandom(Global.getCharacters().toArray()).get();
+                    prey = (Character) Global.pickRandom(Global.getParticipants().toArray()).get();
                 } while (prey.human());
                 if (!Global.checkFlag(Flag.didFTC)) {
-                    message += "\"No one? Really? Fine, then I'll pick someone. Let's see... " + prey.name()
+                    message += "\"No one? Really? Fine, then I'll pick someone. Let's see... " + prey.getTrueName()
                                     + "! You have the honors tonight. Oh and just so"
                                     + " you know, the Prey competes naked and without items. Get to it!\" "
-                                    + prey.name() + " briefly seems nervous, but then shrugs and ditches all of "
+                                    + prey.getTrueName() + " briefly seems nervous, but then shrugs and ditches all of "
                                     + prey.possessiveAdjective()
                                     + " clothing and gets in the van. The rest of you pile in as well,"
                                     + " and a short ride later you arrive at the edge of the forest."
                                     + " Lilly gives everyone their starting positions, and you make"
                                     + " your way to yours, ready for the match to begin.";
                 } else {
-                    message += "\"No one? Really? Fine, then I'll pick someone. Let's see..." + prey.name()
-                                    + "! You have the honors tonight.\" Everyone gets into the van, and " + prey.name()
+                    message += "\"No one? Really? Fine, then I'll pick someone. Let's see..." + prey.getTrueName()
+                                    + "! You have the honors tonight.\" Everyone gets into the van, and " + prey.getTrueName()
                                     + " quickly strips naked. Once at the forest, you all "
                                     + "get to your bases and await Lilly's signal.";
                 }

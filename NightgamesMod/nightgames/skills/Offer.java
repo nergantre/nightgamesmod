@@ -110,10 +110,10 @@ public class Offer extends Skill {
                                     "You get on all fours and offer your %s to %s, but %s merely "
                                                     + "chuckles at your meekness. Before you can get back up in shame,"
                                                     + " %s gives you a very satisfying slap on your ass for your troubles.",
-                                    getSelf().hasPussy() ? "pussy" : "ass", target.name(), target.pronoun(), getSelf().pronoun());
+                                    getSelf().hasPussy() ? "pussy" : "ass", target.getName(), target.pronoun(), getSelf().pronoun());
                 } else {
                     return String.format("You wave your %s at %s, but %s ignores you completely.",
-                                    getSelf().body.getRandomCock().describe(getSelf()), target.name(),
+                                    getSelf().body.getRandomCock().describe(getSelf()), target.getName(),
                                     target.pronoun());
                 }
             case normal:
@@ -121,7 +121,7 @@ public class Offer extends Skill {
                                 "You lay flat on your back with your legs together and holding your %s "
                                                 + "straight up with your hand, all ready for %s to mount. %s weighs the situation for only"
                                                 + " a brief moment before sitting down on your awaiting shaft.",
-                                getSelf().body.getRandomCock().describe(getSelf()), target.name(),
+                                getSelf().body.getRandomCock().describe(getSelf()), target.getName(),
                                 Global.capitalizeFirstLetter(target.pronoun()));
             case anal:
                 return String.format(
@@ -129,7 +129,7 @@ public class Offer extends Skill {
                                                 + "your shoulders on the ground and your ass in the air, pointing towards %s."
                                                 + " Reaching back, you spread your butt and softly whimper an invitation for %s"
                                                 + " to stick %s %s into your ass. %s takes pity on you, and plunges in.",
-                                target.name(), target.directObject(), target.possessiveAdjective(),
+                                target.getName(), target.directObject(), target.possessiveAdjective(),
                                 target.body.getRandomInsertable().describe(target),
                                 Global.capitalizeFirstLetter(target.pronoun()));
             default: // special
@@ -137,7 +137,7 @@ public class Offer extends Skill {
                                 "You lay down on your back and spread your legs,"
                                                 + "offering your %s to %s while gazing up at %s powerful %s, hoping "
                                                 + "that %s will soon fill you with it.",
-                                getSelf().body.getRandomPussy().describe(getSelf()), target.name(),
+                                getSelf().body.getRandomPussy().describe(getSelf()), target.getName(),
                                 target.possessiveAdjective(), target.body.getRandomInsertable().describe(target),
                                 target.pronoun());
         }
@@ -152,7 +152,7 @@ public class Offer extends Skill {
                                     "%s gets down and sticks %s ass in the air, offering it up to %s. "
                                                     + "%s not interested, however, and just %s %s. %s seemed to enjoy that, but"
                                                     + " is still disappointed over not getting the fucking %s wanted.",
-                                    getSelf().name(), getSelf().possessiveAdjective(), target.nameDirectObject(),
+                                    getSelf().getName(), getSelf().possessiveAdjective(), target.nameDirectObject(),
                                     Global.capitalizeFirstLetter(target.subjectAction("are","is")),
                                     target.action("spank"), getSelf().directObject(),
                                     Global.capitalizeFirstLetter(getSelf().pronoun()), getSelf().pronoun());
@@ -161,7 +161,7 @@ public class Offer extends Skill {
                                     "%s grabs %s %s and waves it at %s, "
                                                     + "trying to entice %s to mount %s. %s just %s at %s pathetic display, "
                                                     + "destroying %s confidence.",
-                                    getSelf().name(), getSelf().possessiveAdjective(),
+                                    getSelf().getName(), getSelf().possessiveAdjective(),
                                     getSelf().body.getRandomCock().describe(getSelf()), 
                                     target.nameDirectObject(), target.dickPreference(), getSelf().directObject(),
                                     Global.capitalizeFirstLetter(target.subject()), target.action("laugh"),
@@ -172,7 +172,7 @@ public class Offer extends Skill {
                                 "%s gets onto %s back and holds %s %s up for %s appraisal."
                                                 + " %s to %s that it does seem rather appealing, and %s"
                                                 + " to mount %s, enveloping the hard shaft in %s %s.",
-                                getSelf().name(), getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
+                                getSelf().getName(), getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                                 getSelf().body.getRandomCock().describe(getSelf()), target.nameOrPossessivePronoun(),
                                 Global.capitalizeFirstLetter(target.subjectAction("admit")), target.reflectivePronoun(),
                                 target.action("proceed"), getSelf().directObject(), target.possessiveAdjective(),
@@ -182,7 +182,7 @@ public class Offer extends Skill {
                                 "%s gets on the ground and spreads %s ass for %s viewing pleasure,"
                                                 + " practically begging %s to fuck %s. Well, someone has to do it. %s on %s"
                                                 + " knees and %s to it.",
-                                getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                                getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                                 target.directObject(), getSelf().directObject(), 
                                 Global.capitalizeFirstLetter(target.subjectAction("get")),
                                 target.possessiveAdjective(), target.action("get"));
@@ -192,7 +192,7 @@ public class Offer extends Skill {
                                                 + " %s fingers to open up %s labia to %s. %s beady eyes, staring longingly"
                                                 + " at %s %s overwhelm %s, and %s can't help but oblige, getting "
                                                 + "between %s legs and sheathing %s shaft.",
-                                getSelf().name(), getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
+                                getSelf().getName(), getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                                 getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                                 target.nameDirectObject(),
                                 Global.capitalizeFirstLetter(getSelf().possessiveAdjective()), target.possessiveAdjective(),

@@ -17,7 +17,7 @@ public class UpsideDownMaledom extends MaledomSexStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are holding " + bottom.name() + " upsidedown by her legs while fucking her pussy.";
+            return "You are holding " + bottom.getName() + " upsidedown by her legs while fucking her pussy.";
         } else {
             return String.format("%s is holding %s upsidedown by %s legs while fucking %s pussy.",
                             top.subject(), bottom.nameDirectObject(), bottom.possessiveAdjective(),

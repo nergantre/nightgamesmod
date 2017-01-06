@@ -75,16 +75,16 @@ public class HeightenSenses extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "You plant a suggestion in %s's head to increase %s sensitivity. %s accepts the suggestion so easily and strongly that you suspect it may have had a permanent effect.",
-                            new Object[] {target.name(), target.possessiveAdjective(), target.pronoun()});
+                            new Object[] {target.getName(), target.possessiveAdjective(), target.pronoun()});
         }
         if (modifier == Result.miss) {
             return String.format(
                             "You plant a suggestion in %s's head to increase %s sensitivity. Unfortunately, it didn't seem to affect %s much.",
-                            new Object[] {target.name(), target.possessiveAdjective(), target.directObject()});
+                            new Object[] {target.getName(), target.possessiveAdjective(), target.directObject()});
         }
         return String.format(
                         "You plant a suggestion in %s's head to increase %s sensitivity. %s shivers as %s sense of touch is amplified",
-                        new Object[] {getSelf().name(), target.possessiveAdjective(), target.pronoun(),
+                        new Object[] {getSelf().getName(), target.possessiveAdjective(), target.pronoun(),
                                         target.possessiveAdjective()});
     }
 
@@ -95,7 +95,7 @@ public class HeightenSenses extends Skill {
                             "%s explains to %s that %s body, especially %s erogenous zones, have become more"
                             + " sensitive. %s's right. All %s senses feel heightened. %s almost like "
                             + "a superhero. It's ok if this is permanent, right?",
-                            getSelf().name(), target.subject(), target.possessiveAdjective(), 
+                            getSelf().getName(), target.subject(), target.possessiveAdjective(), 
                             target.possessiveAdjective(), getSelf().subject(), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("feel")));
         }
@@ -103,7 +103,7 @@ public class HeightenSenses extends Skill {
             return String.format(
                             "%s explains to %s that %s body, especially %s erogenous zones, have become more"
                             + " sensitive. %s aren't really feeling it though.",
-                            getSelf().name(), target.subject(), target.possessiveAdjective(),
+                            getSelf().getName(), target.subject(), target.possessiveAdjective(),
                             target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("aren't", "isn't")));
         }
@@ -111,7 +111,7 @@ public class HeightenSenses extends Skill {
                         "%s explains to %s that %s body, especially %s erogenous zones, have become more "
                         + "sensitive. %s goosebumps cover %s skin as if %s %s been hit by a "
                         + "Sensitivity Flask. Maybe %s %s and just didn't notice?",
-                        getSelf().name(), target.subject(), target.possessiveAdjective(), 
+                        getSelf().getName(), target.subject(), target.possessiveAdjective(), 
                         target.possessiveAdjective(),
                         Global.capitalizeFirstLetter(target.subjectAction("feel")),
                         target.possessiveAdjective(), target.pronoun(), target.action("have", "has"),

@@ -20,7 +20,7 @@ public class Distorted extends DurationStatus {
         if (affected.human()) {
             return "Your image is distorted, making you hard to hit.";
         } else {
-            return "Multiple " + affected.name()
+            return "Multiple " + affected.getName()
                             + "s appear in front of you. When you focus, you can tell "
                             + "which one is real, but it's still screwing up "+affected.nameOrPossessivePronoun()+" accuracy.";
         }

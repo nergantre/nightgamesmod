@@ -110,13 +110,13 @@ public class Cunnilingus extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to eat out " + target.name() + ", but she pushes your head away.";
+            return "You try to eat out " + target.getName() + ", but she pushes your head away.";
         }
         if (target.getArousal().get() < 10) {
-            return "You run your tongue over " + target.name() + "'s dry vulva, lubricating it with your saliva.";
+            return "You run your tongue over " + target.getName() + "'s dry vulva, lubricating it with your saliva.";
         }
         if (modifier == Result.special) {
-            return "Your skilled tongue explores " + target.name()
+            return "Your skilled tongue explores " + target.getName()
                             + "'s pussy, finding and pleasuring her more sensitive areas. You frequently tease her clitoris until she "
                             + "can't suppress her pleasured moans."
                             + (damage == -1 ? " Under your skilled ministrations, her juices flow freely, and they unmistakably"
@@ -135,7 +135,7 @@ public class Cunnilingus extends Skill {
                                             + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (target.getArousal().percent() > 80) {
-            return "You relentlessly lick and suck the lips of " + target.name()
+            return "You relentlessly lick and suck the lips of " + target.getName()
                             + "'s pussy as she squirms in pleasure. You let up just for a second before kissing her"
                             + " swollen clit, eliciting a cute gasp."
                             + (damage == -1 ? " The highly aroused succubus' vulva is dripping with her "
@@ -146,7 +146,7 @@ public class Cunnilingus extends Skill {
         }
         int r = Global.random(3);
         if (r == 0) {
-            return "You gently lick " + target.name() + "'s pussy and sensitive clit."
+            return "You gently lick " + target.getName() + "'s pussy and sensitive clit."
                             + (damage == -1 ? " As you drink down her juices, they seem to flow "
                                             + "straight down to your crotch, lighting fires when they arrive."
                                             : "")
@@ -154,13 +154,13 @@ public class Cunnilingus extends Skill {
                                             + " somehow she has managed to enthrall you with her juices." : "");
         }
         if (r == 1) {
-            return "You thrust your tongue into " + target.name() + "'s hot vagina and lick the walls of her pussy."
+            return "You thrust your tongue into " + target.getName() + "'s hot vagina and lick the walls of her pussy."
                             + (damage == -1 ? " Your tongue tingles with her juices, clouding your mind with lust."
                                             : "")
                             + (damage == -2 ? " You feel a strange pull on you mind,"
                                             + " somehow she has managed to enthrall you with her juices." : "");
         }
-        return "You locate and capture " + target.name() + "'s clit between your lips and attack it with your tongue."
+        return "You locate and capture " + target.getName() + "'s clit between your lips and attack it with your tongue."
                         + (damage == -1 ? " Her juices taste wonderful and you cannot help but desire more." : "")
                         + (damage == -2 ? " You feel a strange pull on you mind,"
                                         + " somehow she has managed to enthrall you with her juices." : "");

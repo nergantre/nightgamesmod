@@ -11,7 +11,6 @@ import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
 public class Drain extends Skill {
-
     public Drain(Character self) {
         super("Drain", self, 5);
         addTag(SkillTag.drain);
@@ -25,7 +24,7 @@ public class Drain extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Dark) >= 15 || user.has(Trait.energydrain);
+        return user.get(Attribute.Dark) >= 15 || user.has(Trait.energydrain) || (user.has(Trait.leveldrainer) && user.getLevel() >= 10);
     }
 
     @Override
@@ -35,7 +34,11 @@ public class Drain extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 30;
+        return drainsAttributes(c) ? 30 : 0;
+    }
+
+    private boolean drainsAttributes(Combat c) {
+        return getSelf().getMojo().get() >= 30;
     }
 
     @Override
@@ -64,18 +67,23 @@ public class Drain extends Skill {
 
     public boolean resolve(Combat c, Character target, boolean nocost) {
         int strength = Math.max(10, 1 + getSelf().get(Attribute.Dark) / 4);
+        int staminaStrength = 50;
         int type = Math.max(1, Global.centeredrandom(6, getSelf().get(Attribute.Dark) / 3.0, 3));
+        if (!drainsAttributes(c) && type > 2) {
+            type = 1;
+            staminaStrength /= 2;
+        }
 
         writeOutput(c, type, Result.normal, target);
         switch (type) {
             case 0:
-                getSelf().arouse(getSelf().getArousal().max(), c);
+                getSelf().arouse(getSelf().getArousal().max() / 4, c);
             case 1:
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 break;
             case 2:
-                target.loseMojo(c, 20);
-                getSelf().buildMojo(c, 20);
+                target.loseMojo(c, staminaStrength / 2);
+                getSelf().buildMojo(c, staminaStrength / 2);
                 break;
             case 3:
                 steal(c, target, Attribute.Cunning, strength);
@@ -83,7 +91,7 @@ public class Drain extends Skill {
                 break;
             case 4:
                 steal(c, target, Attribute.Power, strength);
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 break;
             case 5:
                 steal(c, target, Attribute.Seduction, strength);
@@ -94,7 +102,7 @@ public class Drain extends Skill {
                 steal(c, target, Attribute.Seduction, strength);
                 steal(c, target, Attribute.Cunning, strength);
                 target.mod(Attribute.Perception, 1);
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 target.loseMojo(c, 10);
                 target.temptNoSource(c, getSelf(), 10, this);
                 break;
@@ -122,7 +130,7 @@ public class Drain extends Skill {
                             ? getSelf().body.getRandom("ass").describe(getSelf())
                             : getSelf().body.getRandomPussy().describe(getSelf());
             String base = "You put your powerful " + muscDesc + " muscles to work whilst" + " transfixing "
-                            + target.name() + "'s gaze with your own, goading " + target.possessiveAdjective()
+                            + target.getName() + "'s gaze with your own, goading " + target.possessiveAdjective()
                             + " energy into " + target.possessiveAdjective() + " cock."
                             + " Soon it erupts from her into your " + partDesc + ", ";
             switch (damage) {
@@ -151,7 +159,7 @@ public class Drain extends Skill {
                     return " but nothing happens, you feel strangely impotent.";
             }
         } else {
-            String base = "With your cock deep inside " + target.name()
+            String base = "With your cock deep inside " + target.getName()
                             + ", you can feel the heat from her core. You draw the energy from her, mining her depths. ";
             switch (damage) {
                 case 4:
@@ -161,13 +169,13 @@ public class Drain extends Skill {
                 case 3:
                     return base + "You draw some of her wit and cunning into yourself.";
                 case 1:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, taking a bit of her energy.";
                 case 2:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, stealing some of her restraint.";
                 case 0:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, but it goes wrong. You feel intense pleasure feeding "
                                     + "back into you and threatening to overwhelm you. You brink the spiritual link as fast as you can, but you're still left on the brink of "
                                     + "climax.";
@@ -234,7 +242,7 @@ public class Drain extends Skill {
                 case 0:
                     return String.format("%s squeezes %s with %s %s and starts to milk %s,"
                                     + " but %s suddenly %s %s shudder and moan loudly."
-                                    + " Looks like %s plan backfired.", getSelf().name(), target.subject(),
+                                    + " Looks like %s plan backfired.", getSelf().getName(), target.subject(),
                                     getSelf().possessiveAdjective(), partDesc, target.directObject(),
                                     target.pronoun(), target.action("feel"), getSelf().directObject(),
                                     target.nameOrPossessivePronoun());

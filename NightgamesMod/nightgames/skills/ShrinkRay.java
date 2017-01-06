@@ -105,10 +105,10 @@ public class ShrinkRay extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
         if (modifier == Result.special) {
-            message = "You aim your shrink ray at " + target.name()
+            message = "You aim your shrink ray at " + target.getName()
                             + "'s cock, shrinking her male anatomy. She turns red and glares at you in humiliation.";
         } else {
-            message = "You point your shrink ray to turn " + target.name()
+            message = "You point your shrink ray to turn " + target.getName()
                             + "'s breasts. She whimpers and covers her chest in shame.";
         }
         if (damage > 0) {

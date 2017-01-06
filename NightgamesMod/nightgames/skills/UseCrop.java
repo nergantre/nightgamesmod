@@ -89,22 +89,22 @@ public class UseCrop extends Skill {
             if (!target.has(Item.Crop)) {
                 return "You lash out with your riding crop, but it fails to connect.";
             } else {
-                return "You try to hit " + target.name() + " with your riding crop, but she deflects it with her own.";
+                return "You try to hit " + target.getName() + " with your riding crop, but she deflects it with her own.";
             }
         } else if (modifier == Result.critical) {
             if (target.hasBalls()) {
-                return "You strike " + target.name()
+                return "You strike " + target.getName()
                                 + "'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, hitting one of her hanging testicles "
                                 + "squarely. She lets out a shriek and clutches her sore nut";
             } else {
-                return "You strike " + target.name()
+                return "You strike " + target.getName()
                                 + "'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, impacting on her sensitive pearl. She "
                                 + "lets out a high pitched yelp and clutches her injured anatomy.";
             }
         } else if (modifier == Result.weak) {
-            return "You hit " + target.name() + " with your riding crop.";
+            return "You hit " + target.getName() + " with your riding crop.";
         } else {
-            return "You strike " + target.name()
+            return "You strike " + target.getName()
                             + "'s soft, bare skin with your riding crop, leaving a visible red mark.";
         }
     }

@@ -160,14 +160,14 @@ public class Thrust extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.anal) {
-            return "You thrust steadily into " + target.name() + "'s ass, eliciting soft groans of pleasure.";
+            return "You thrust steadily into " + target.getName() + "'s ass, eliciting soft groans of pleasure.";
         } else if (modifier == Result.reverse) {
             return Global.format(
                             "You rock your hips against {other:direct-object}, riding her smoothly. "
                                             + "Despite the slow pace, {other:subject} soon starts gasping and mewing with pleasure.",
                             getSelf(), target);
         } else {
-            return "You thrust into " + target.name()
+            return "You thrust into " + target.getName()
                             + " in a slow, steady rhythm. She lets out soft breathy moans in time with your lovemaking. You can't deny you're feeling "
                             + "it too, but by controlling the pace, you can hopefully last longer than she can.";
         }

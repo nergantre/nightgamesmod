@@ -71,7 +71,7 @@ public class ImbueFetish extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         return "You brandish one of your fetish needles - this one imbued with a " + chosenFetish
-                        + " fetish - and stick it in " + target.name()
+                        + " fetish - and stick it in " + target.getName()
                         + "'s arm. The needle is far too thin to cause any harm, but the "
                         + "mind-altering substance immediately takes effect.";
     }

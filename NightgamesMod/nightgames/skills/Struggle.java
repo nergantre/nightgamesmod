@@ -99,9 +99,9 @@ public class Struggle extends Skill {
                 }
             } else if (c.shouldPrintReceive(target, c)) {
                 if (status != null) {
-                    c.write(getSelf(), getSelf().name() + " slips free from the " + status + ".");
+                    c.write(getSelf(), getSelf().getName() + " slips free from the " + status + ".");
                 } else {
-                    c.write(getSelf(), getSelf().name() + " breaks free.");
+                    c.write(getSelf(), getSelf().getName() + " breaks free.");
                 }
             }
             getSelf().free();
@@ -116,10 +116,10 @@ public class Struggle extends Skill {
                 }
             } else if (c.shouldPrintReceive(target, c)) {
                 if (status != null) {
-                    c.write(getSelf(), getSelf().name() + " struggles against the " + status
+                    c.write(getSelf(), getSelf().getName() + " struggles against the " + status
                                     + ", but can't free her hands.");
                 } else {
-                    c.write(getSelf(), getSelf().name() + " struggles, but can't free her hands.");
+                    c.write(getSelf(), getSelf().getName() + " struggles, but can't free her hands.");
                 }
             }
             getSelf().struggle();
@@ -145,7 +145,7 @@ public class Struggle extends Skill {
                     getSelf().removeStatus(Stsflag.knotted);
                     target.pain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.physical, target, 10));
                 } else {
-                    c.write(getSelf(), "You manage to break away from " + target.name() + ".");
+                    c.write(getSelf(), "You manage to break away from " + target.getName() + ".");
                 }
             } else if (c.shouldPrintReceive(target, c)) {
                 if (knotted) {
@@ -170,7 +170,7 @@ public class Struggle extends Skill {
                     c.write(getSelf(), "You try to force " + target.possessiveAdjective()
                                     + " dick out of your ass, but the knot at its base is utterly unyielding.");
                 } else {
-                    c.write(getSelf(), "You try to pull free, but " + target.name()
+                    c.write(getSelf(), "You try to pull free, but " + target.getName()
                                     + " has a good grip on your waist.");
                 }
             } else if (c.shouldPrintReceive(target, c)) {
@@ -261,14 +261,14 @@ public class Struggle extends Skill {
                                 getSelf().body.getRandom("cock"), 8, c, this);
             } else if (getSelf().human()) {
                 if (c.getStance().inserted(getSelf())) {
-                    c.write(getSelf(), "You try to tip " + target.name()
+                    c.write(getSelf(), "You try to tip " + target.getName()
                                     + " off balance, but she drops her hips firmly, pushing your cock deep inside her and pinning you to the floor.");
                 } else {
                     if (knotted) {
                         c.write(getSelf(), "You struggle fruitlessly against the lump of "
                                         + target.nameOrPossessivePronoun() + " knot.");
                     } else {
-                        c.write(getSelf(), "You attempt to get away from " + target.name()
+                        c.write(getSelf(), "You attempt to get away from " + target.getName()
                                         + ", but she drives her cock into you to the hilt, pinning you down.");
                     }
                 }
@@ -296,16 +296,16 @@ public class Struggle extends Skill {
                         + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c, target)))
                         && (!target.has(Trait.grappler) || Global.random(10) >= 2)) {
             if (getSelf().human()) {
-                c.write(getSelf(), "You manage to scrabble out of " + target.name() + "'s grip.");
+                c.write(getSelf(), "You manage to scrabble out of " + target.getName() + "'s grip.");
             } else if (c.shouldPrintReceive(target, c)) {
-                c.write(getSelf(), getSelf().name() + " squirms out from under "+target.nameDirectObject()+".");
+                c.write(getSelf(), getSelf().getName() + " squirms out from under "+target.nameDirectObject()+".");
             }
             c.setStance(new Neutral(getSelf(), target));
             return true;
         } else {
             if (c.getStance().enumerate() == Stance.facesitting) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to free yourself from " + target.name()
+                    c.write(getSelf(), "You try to free yourself from " + target.getName()
                                     + ", but she drops her ass over your face again, forcing you to service her.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s ass "
@@ -324,7 +324,7 @@ public class Struggle extends Skill {
                 return false;
             } else {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to free yourself from " + target.name()
+                    c.write(getSelf(), "You try to free yourself from " + target.getName()
                                     + "'s grasp, but she has you pinned too well.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s struggles against %s, but %s %s %s position.",

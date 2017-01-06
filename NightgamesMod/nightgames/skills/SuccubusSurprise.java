@@ -67,7 +67,7 @@ public class SuccubusSurprise extends Skill {
 
         if (!getSelf().human() && target.human() && !oppHasBlessed
                         && getSelf().getType().equals("CUSTOM_NPCSamantha")) {
-            c.write(getSelf(), "<br/><br/>\"<i>Do you like your surprise, " + target.name() + "? I do.\"</i>");
+            c.write(getSelf(), "<br/><br/>\"<i>Do you like your surprise, " + target.getName() + "? I do.\"</i>");
         }
         return true;
     }
@@ -90,7 +90,7 @@ public class SuccubusSurprise extends Skill {
                                         + " just long enough to bring a very special bottle to your lips. When %s"
                                         + " notices, %s tries and snatch it away, but you already had swallowed"
                                         + " enough. A sultry wave washes over you as the draft takes effect, and you ",
-                        target.name(), target.pronoun(), target.pronoun());
+                        target.getName(), target.pronoun(), target.pronoun());
         if (isArmLock(c.getStance())) {
             result += String.format("grab %s hands and pull %s deeper into you. ", target.possessiveAdjective(),
                             target.directObject());
@@ -102,11 +102,11 @@ public class SuccubusSurprise extends Skill {
             result += String.format(
                             "%s does not seem too worried, and you can see why when"
                                             + " your new succubus pussy fails to steal even the faintest wisp of energy.",
-                            target.name());
+                            target.getName());
         } else {
             result += String.format("Realizing what is going on, %s frantically tries to pull out, "
                             + "but your hold is unrelenting. You grind against %s, and soon the "
-                            + "energy starts flowing.", target.name(), target.directObject());
+                            + "energy starts flowing.", target.getName(), target.directObject());
         }
         return result;
     }
@@ -119,9 +119,9 @@ public class SuccubusSurprise extends Skill {
                         + " there, though, and when %s back at %s, %s has already downed"
                         + " a draft of some kind. %s grin widens as black wings and a tail form on %s back."
                         + " %s to pull out, but ", target.nameOrPossessivePronoun(),
-                        getSelf().name(), getSelf().subject(), getSelf().possessiveAdjective(),
+                        getSelf().getName(), getSelf().subject(), getSelf().possessiveAdjective(),
                         target.subjectAction("follow"), getSelf().possessiveAdjective(), 
-                        target.possessiveAdjective(), getSelf().name(), getSelf().directObject(),
+                        target.possessiveAdjective(), getSelf().getName(), getSelf().directObject(),
                         getSelf().pronoun(), Global.capitalizeFirstLetter(getSelf().possessiveAdjective()),
                         getSelf().possessiveAdjective(), 
                         Global.capitalizeFirstLetter(target.subjectAction("try", "tries")));

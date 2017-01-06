@@ -13,7 +13,7 @@ public class StandingOver extends AbstractFacingStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are standing over " + bottom.name() + ", who is helpless on the ground.";
+            return "You are standing over " + bottom.getName() + ", who is helpless on the ground.";
         } else {
             return String.format("%s flat on %s back, while %s stands over %s.",
                             bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),

@@ -84,13 +84,13 @@ public class Spank extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to spank " + target.name() + ", but "+target.pronoun()+" dodges away.";
+            return "You try to spank " + target.getName() + ", but "+target.pronoun()+" dodges away.";
         }
         if (modifier == Result.special) {
-            return "You bend " + target.name()
+            return "You bend " + target.getName()
                             + " over your knee and spank "+target.directObject()+", alternating between hitting "+target.possessiveAdjective()+" soft butt cheek and "+target.possessiveAdjective()+" sensitive pussy.";
         } else {
-            return "You spank " + target.name() + " on "+target.possessiveAdjective()+" naked butt cheek.";
+            return "You spank " + target.getName() + " on "+target.possessiveAdjective()+" naked butt cheek.";
         }
 
     }

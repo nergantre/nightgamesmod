@@ -44,13 +44,13 @@ public class MindControl extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return cause.name() + " has you completely in " + cause.directObject() + " grasp. Your body moves "
+                return cause.getName() + " has you completely in " + cause.directObject() + " grasp. Your body moves "
                         + "automatically to obey " + cause.directObject() + " commands, now.";
             case LOW:
-                return "You feel a tug on your mind every time " + cause.name() + " speaks, pushing you to do as "
+                return "You feel a tug on your mind every time " + cause.getName() + " speaks, pushing you to do as "
                         + cause.pronoun() + " says.";
             case MED:
-                return "You find your body moving to " + cause.name() + "'s words without any input from your mind.";
+                return "You find your body moving to " + cause.getName() + "'s words without any input from your mind.";
             case NONE:
             default:
                 return ""; // hide
@@ -61,13 +61,13 @@ public class MindControl extends Addiction {
     protected String describeDecrease() {
         switch (getSeverity()) {
             case LOW:
-                return cause.name() + "'s control is weakening, and only " + cause.directObject() + " strongest commands"
+                return cause.getName() + "'s control is weakening, and only " + cause.directObject() + " strongest commands"
                         + " have a noticable effect.";
             case MED:
-                return "You feel as if " + cause.name() + "'s words do not bury themselves as deeply into your psyche as before."
+                return "You feel as if " + cause.getName() + "'s words do not bury themselves as deeply into your psyche as before."
                         + " Can you resist " + cause.directObject() + "?";
             case NONE:
-                return "At last that invisible string tying you to " + cause.name() + " snaps, and you are back in control"
+                return "At last that invisible string tying you to " + cause.getName() + " snaps, and you are back in control"
                         + " of your mind.";
             case HIGH:
             default:
@@ -79,12 +79,12 @@ public class MindControl extends Addiction {
     protected String describeWithdrawal() {
         switch (getSeverity()) {
             case HIGH:
-                return "<b>You are now constantly fighting your own body to keep from doing " + cause.name() + "'s will.</b>";
+                return "<b>You are now constantly fighting your own body to keep from doing " + cause.getName() + "'s will.</b>";
             case LOW:
-                return "<b>Your body tries to steer you towards " + cause.name() + " all the time, and it's taking"
+                return "<b>Your body tries to steer you towards " + cause.getName() + " all the time, and it's taking"
                         + " serious effort to resist.</b>";
             case MED:
-                return "<b>Keeping your body in line and away from " + cause.name() + " is getting really difficult know,"
+                return "<b>Keeping your body in line and away from " + cause.getName() + " is getting really difficult know,"
                         + " and it's a severe strain on your stamina.</b>";
             case NONE:
             default:
@@ -94,12 +94,12 @@ public class MindControl extends Addiction {
 
     @Override
     protected String describeCombatIncrease() {
-        return cause.name() + "'s words weigh increasingly heavily on you, and it's getting harder to resist.";
+        return cause.getName() + "'s words weigh increasingly heavily on you, and it's getting harder to resist.";
     }
 
     @Override
     protected String describeCombatDecrease() {
-        return "Doing " + cause.name() + "'s bidding relieves some of the pressure in your mind.";
+        return "Doing " + cause.getName() + "'s bidding relieves some of the pressure in your mind.";
     }
 
     @Override
@@ -122,10 +122,10 @@ public class MindControl extends Addiction {
     @Override
     public String describeMorning() {
         return "Your hand shoots to your hardening dick as soon as you wake up. You have know idea how,"
-                + " but you somehow know it's what " + cause.name() + " wants you to do, and your body is responding"
+                + " but you somehow know it's what " + cause.getName() + " wants you to do, and your body is responding"
                 + " accordingly. You force your hand to your side and awkwardly get dressed. Whenever you're"
                 + " not paying attention, it shoots back and rubs your crotch again, though. Perhaps you"
-                + " can persuade " + cause.name() + " to go a little easier on you? Then again, maybe not.";
+                + " can persuade " + cause.getName() + " to go a little easier on you? Then again, maybe not.";
     }
 
     @Override
@@ -136,10 +136,10 @@ public class MindControl extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return "There " + cause.pronoun() + " is! " + cause.name() + " does not look pleased after you haven't visited "
+            return "There " + cause.pronoun() + " is! " + cause.getName() + " does not look pleased after you haven't visited "
                     + cause.directObject() + " all day.";
         }
-        return "Your breathing accelerates when you see " + cause.name() + "; you know what power " + cause.pronoun()
+        return "Your breathing accelerates when you see " + cause.getName() + "; you know what power " + cause.pronoun()
                 + " has over you...";
     }
 
@@ -147,14 +147,14 @@ public class MindControl extends Addiction {
     public String describe(Combat c) {
         switch (getCombatSeverity()) {
             case HIGH:
-                return "Every word " + cause.name() + " speaks rings of truth to you, even though " + cause.pronoun() + "'s"
+                return "Every word " + cause.getName() + " speaks rings of truth to you, even though " + cause.pronoun() + "'s"
                         + " telling you to submit to " + cause.directObject() + ". Your body trembles, and you will soon"
                         + " be forced to obey.";
             case LOW:
-                return cause.name() + " keeps saying things for you to do, and you don't know how"
+                return cause.getName() + " keeps saying things for you to do, and you don't know how"
                                 + " long you'll be able to resist " + cause.directObject() + ".";
             case MED:
-                return cause.name() + "'s words are starting to have a greater pull on you. You won't hold out much longer.";
+                return cause.getName() + "'s words are starting to have a greater pull on you. You won't hold out much longer.";
             case NONE:
             default:
                 return "";
@@ -167,7 +167,7 @@ public class MindControl extends Addiction {
         super.tick(c);
         if (!affected.is(Stsflag.enthralled) && Global.randomdouble() < magnitude / 3) {
             affected.addlist.add(new Enthralled(affected, cause, 3));
-            c.write(cause, cause.name() + "'s constant urging overcomes your defences, washing away all of your resistance.");
+            c.write(cause, cause.getName() + "'s constant urging overcomes your defences, washing away all of your resistance.");
         }
     }
 
@@ -250,12 +250,12 @@ public class MindControl extends Addiction {
             if (Global.getPlayer()
                       .is(Stsflag.blinded)) {
                 succeeded = false;
-                description = "Since you can't see, you are protected from " + controller.name() + "'s controlling gaze.";
+                description = "Since you can't see, you are protected from " + controller.getName() + "'s controlling gaze.";
             } else
                 switch (pos.en) {
                     case cowgirl:
                         succeeded = true;
-                        description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                        description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.getName() + "'s"
                                         + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
                                         + " not having it, though. " + controller.pronoun() + " grabs your head"
                                         + " and forces your eyelids open with " + controller.directObject()+ " thumbs. ";
@@ -263,14 +263,14 @@ public class MindControl extends Addiction {
                     case anal:
                         if (pos instanceof AnalCowgirl) {
                             succeeded = true;
-                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.getName() + "'s"
                                             + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
                                             + " not having it, though. " + controller.pronoun() + " grabs your head"
                                             + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                             break;
                         } else if (pos instanceof Anal) {
                             succeeded = false;
-                            description = "Since you're not facing " + controller.name() + ", " + controller.directObject()
+                            description = "Since you're not facing " + controller.getName() + ", " + controller.directObject()
                                             + " hypnotic eyes cannot affect you.";
                             break;
                         }
@@ -280,12 +280,12 @@ public class MindControl extends Addiction {
                     case flying:
                         succeeded = true;
                         if (pos.dom(controller)) {
-                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.getName() + "'s"
                                             + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
                                             + " not having it, though. " + controller.pronoun() + " twists your head back"
                                             + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                         } else {
-                            description = "At the moment of your orgasm, " + controller.name() + " pulls herself up by"
+                            description = "At the moment of your orgasm, " + controller.getName() + " pulls herself up by"
                                             + " your neck and touches " + controller.directObject() + " nose to yours."
                                             + " So close to cumming, you can't bring yourself to look away. ";
                         }
@@ -293,13 +293,13 @@ public class MindControl extends Addiction {
                     case pin:
                         if (pos.dom(controller)) {
                             succeeded = true;
-                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.name() + "'s"
+                            description = "You turn your head away as you feel your orgasm coming on, wary of " + controller.getName() + "'s"
                                             + " hypnotic eyes. " + Global.capitalizeFirstLetter(controller.pronoun()) + "'s"
                                             + " not having it, though. " + controller.pronoun() + " grabs your head"
                                             + " and forces your eyelids open with " + controller.directObject() + " thumbs. ";
                         } else {
                             succeeded = false;
-                            description = "With " + controller.name() + " pinned beneath you as " + controller.pronoun()
+                            description = "With " + controller.getName() + " pinned beneath you as " + controller.pronoun()
                                             + " is, it's not hard for you to keep your eyes from meeting hers as you "
                                             + "launch into your orgasm.";
                         }
@@ -307,14 +307,14 @@ public class MindControl extends Addiction {
                     case oralpin:
                         if (pos.dom(controller)) {
                             succeeded = true;
-                            description = controller.name() + " grabs a fistful of your hair and pulls your head downwards. There is"
+                            description = controller.getName() + " grabs a fistful of your hair and pulls your head downwards. There is"
                                             + " nothing you can do to evade " + controller.directObject() + " hypnotic"
                                             + " gaze as you erupt into " + controller.directObject() + " sucking mouth. ";
                         } else {
                             // probably extremely rare
                             succeeded = false;
                             description = "You close your eyes to make certain you're not going to be affected by "
-                                            + controller.name() + "'s eyes as you cum.";
+                                            + controller.getName() + "'s eyes as you cum.";
                         }
                         break;
                     case neutral:
@@ -323,22 +323,22 @@ public class MindControl extends Addiction {
                                   .canAct()) {
                             succeeded = false;
                             description = "With the freedom of movement you have at the moment, turning your gaze away"
-                                            + " from " + controller.name() + "'s hypnotic eyes is quite easy even with "
+                                            + " from " + controller.getName() + "'s hypnotic eyes is quite easy even with "
                                             + "your impending orgasm.";
                         } else {
                             succeeded = true;
-                            description = "Immobilized as you are, you can't keep " + controller.name() + " from gazing "
+                            description = "Immobilized as you are, you can't keep " + controller.getName() + " from gazing "
                                             + "deeply into your eyes as your orgasm begins to wash over you.";
                         }
                         break;
                     default:
                         if (pos.facing(Global.getPlayer(), controller)) {
                             succeeded = true;
-                            description = controller.name() + " gazes into your eyes as " + controller.pronoun() 
+                            description = controller.getName() + " gazes into your eyes as " + controller.pronoun() 
                                             + " pushes you over the edge. ";
                         } else {
                             succeeded = false;
-                            description = "Since you're not facing " + controller.name() + ", "
+                            description = "Since you're not facing " + controller.getName() + ", "
                                             + controller.directObject() + " hypnotic eyes cannot affect you.";
                         }
                 }

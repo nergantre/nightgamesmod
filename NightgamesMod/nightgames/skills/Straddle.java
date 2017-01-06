@@ -50,7 +50,7 @@ public class Straddle extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You straddle " + target.name() + " using your body weight to hold her down.";
+        return "You straddle " + target.getName() + " using your body weight to hold her down.";
     }
 
     @Override

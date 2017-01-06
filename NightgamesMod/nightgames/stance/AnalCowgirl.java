@@ -92,16 +92,16 @@ public class AnalCowgirl extends AnalSexStance {
                 c.write("With " + inserter.possessiveAdjective()
                                 + " pole gone, you groan in frustration and cease your merciless movements.");
             } else {
-                c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
+                c.write(inserted.getName() + " groans with frustration with the sudden disappearance of your pole.");
             }
             c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
-                c.write("With your asshole suddenly disappearing, you can't continue riding " + inserter.name()
+                c.write("With your asshole suddenly disappearing, you can't continue riding " + inserter.getName()
                                 + " anymore.");
             } else {
-                c.write(inserted.name() + " groans with frustration with the sudden disappearance of her asshole.");
+                c.write(inserted.getName() + " groans with frustration with the sudden disappearance of her asshole.");
             }
             c.setStance(insertRandom(c));
         }

@@ -125,9 +125,9 @@ public class TemptressStripTease extends StripTease {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (isDance(c)) {
-            return "You slowly dance for " + target.name() + ", showing off" + " your naked body.";
+            return "You slowly dance for " + target.getName() + ", showing off" + " your naked body.";
         } else {
-            return "You seductively perform a short dance, shedding clothes as you do so. " + target.name()
+            return "You seductively perform a short dance, shedding clothes as you do so. " + target.getName()
                             + " seems quite taken with it, as " + target.pronoun()
                             + " is practically drooling onto the ground.";
         }

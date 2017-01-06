@@ -90,16 +90,16 @@ public class Flick extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You flick your finger between " + target.name() + "'s legs, but don't hit anything sensitive.";
+            return "You flick your finger between " + target.getName() + "'s legs, but don't hit anything sensitive.";
         } else if (modifier == Result.weak) {
-            return "You flick " + target.name() + "'s balls, but " + target.pronoun() + " seems utterly unfazed.";
+            return "You flick " + target.getName() + "'s balls, but " + target.pronoun() + " seems utterly unfazed.";
         } else {
             if (target.hasBalls()) {
-                return "You use two fingers to simultaneously flick both of " + target.name()
+                return "You use two fingers to simultaneously flick both of " + target.getName()
                                 + " dangling balls. She tries to stifle a yelp and jerks her hips away reflexively. "
                                 + "You feel a twinge of empathy, but she's done far worse.";
             } else {
-                return "You flick your finger sharply across " + target.name()
+                return "You flick your finger sharply across " + target.getName()
                                 + "'s sensitive clit, causing her to yelp in surprise and pain. She quickly covers her girl parts "
                                 + "and glares at you in indignation.";
             }

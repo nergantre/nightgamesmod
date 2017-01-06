@@ -165,7 +165,7 @@ public class AssFuck extends Fuck {
                             target.nameOrPossessivePronoun(), getSelfOrgan().describe(getSelf()),
                             target.possessiveAdjective(), getTargetOrgan(target).describe(target));
         } else {
-            return target.name() + "'s ass is oiled up and ready to go, but you're still too soft to penetrate "+target.directObject()+".";
+            return target.getName() + "'s ass is oiled up and ready to go, but you're still too soft to penetrate "+target.directObject()+".";
         }
     }
 
@@ -190,12 +190,12 @@ public class AssFuck extends Fuck {
                                     target.directObject());
                 } else {
                     return String.format("%s lubes up %s strap-on, positions %s behind %s, and shoves it into %s ass.", 
-                                    getSelf().name(), getSelf().possessiveAdjective(), getSelf().reflectivePronoun(), 
+                                    getSelf().getName(), getSelf().possessiveAdjective(), getSelf().reflectivePronoun(), 
                                     target.nameDirectObject(), target.possessiveAdjective());
                 }
             } else {
                 return String.format("%s rubs %s cock up and down %s ass before thrusting %s hips to penetrate %s.",
-                                getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                                getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                                 getSelf().possessiveAdjective(), target.directObject());
             }
         } else if (modifier == Result.special) {
@@ -210,10 +210,10 @@ public class AssFuck extends Fuck {
                                             + " take it.\"</i> Keeping your legs up with one arm, she uses the other to line up her %s with your hole. Then,"
                                             + " she brutually slams it all the way in in one go. Your screams and Eve's laughter fill the air as she starts"
                                             + " fucking you at a furious pace.",
-                            target.name(), getSelf().body.getRandomCock().describe(getSelf()));
+                            target.getName(), getSelf().body.getRandomCock().describe(getSelf()));
         } else {
             return String.format("%s rubs %s dick against %s ass, but it's still flaccid and can't actually penetrate %s.",
-                            getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(), target.directObject());
+                            getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(), target.directObject());
         }
     }
 

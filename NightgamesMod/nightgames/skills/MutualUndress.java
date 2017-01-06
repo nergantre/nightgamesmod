@@ -64,7 +64,7 @@ public class MutualUndress extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "During a brief respite in the fight as " + target.name()
+        return "During a brief respite in the fight as " + target.getName()
                         + " is catching her breath, you ask if we can finish the fight naked. "
                         + "Without waiting for an answer, you slowly strip off all your clothing."
                         + "By the time you finish, you find that she has also stripped naked while panting with arousal.";

@@ -125,7 +125,6 @@ public class PartiallyCorrupted extends DurationStatus {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("counter", counter);
-        obj.addProperty("cause", cause.getName());
         return obj;
     }
 

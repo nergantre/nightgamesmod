@@ -127,7 +127,7 @@ public class TailSuck extends Skill {
             return String.format(
                             "%s twists and turns %s tail with renewed vigor,"
                                             + " stealing more of %s energy in the process.",
-                            getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun());
+                            getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun());
         } else if (modifier == Result.normal) {
             return String.format(
                             "%s grabs %s tail with both hands and aims it at"
@@ -137,7 +137,7 @@ public class TailSuck extends Skill {
                                             + ", which does indeed <i>feel</i> like a pussy as well, engulfs %s %s"
                                             + " completely. %s as if %s %s slowly getting weaker the more it"
                                             + " sucks on %s. That is not good.",
-                            getSelf().name(), getSelf().possessiveAdjective(),
+                            getSelf().getName(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(), target.directObject(),target.directObject(),
                             target.possessiveAdjective(), target.body.getRandomCock().describe(target),
                             Global.capitalizeFirstLetter(target.subjectAction("feel")),
@@ -167,15 +167,15 @@ public class TailSuck extends Skill {
                                             + " misses %s %s but finds %s balls instead. %s does not seem"
                                             + " too interested in them, though, and leaves them alone after"
                                             + " massaging them a bit.",
-                            getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                            getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             target.subjectAction("twist"), target.possessiveAdjective(), target.possessiveAdjective(),
-                            target.body.getRandomCock().describe(target), target.possessiveAdjective(), getSelf().name());
+                            target.body.getRandomCock().describe(target), target.possessiveAdjective(), getSelf().getName());
         } else {
             return String.format("%s grabs %s tail with both hands and aims it at"
                             + " %s groin. The tip opens up like a flower, revealing a hollow"
                             + " inside shaped suspiciously like a pussy. That cannot be good, so"
                             + " %s %s hips just in time to evade the tail as it suddenly"
-                            + " launches forward..", getSelf().name(), getSelf().possessiveAdjective(), 
+                            + " launches forward..", getSelf().getName(), getSelf().possessiveAdjective(), 
                             target.nameOrPossessivePronoun(),
                             target.subjectAction("twist"), target.possessiveAdjective());
         }

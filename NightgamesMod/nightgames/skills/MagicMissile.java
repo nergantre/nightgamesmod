@@ -81,18 +81,18 @@ public class MagicMissile extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You fire a bolt of magical energy, but " + target.name() + " narrowly dodges out of the way.";
+            return "You fire a bolt of magical energy, but " + target.getName() + " narrowly dodges out of the way.";
         } else if (modifier == Result.critical) {
             if (target.hasBalls()) {
-                return "You cast and fire a magic missile at " + target.name()
+                return "You cast and fire a magic missile at " + target.getName()
                                 + ". Just by luck, it hits her directly in the jewels. She cringes in pain, cradling her bruised parts.";
             } else {
-                return "You cast and fire a magic missile at " + target.name()
+                return "You cast and fire a magic missile at " + target.getName()
                                 + ". By chance, it flies under her guard and hits her solidly in the pussy. She doubles over "
                                 + "with a whimper, holding her bruised parts.";
             }
         } else {
-            return "You hurl a magic missile at " + target.name() + ", hitting and staggering her a step.";
+            return "You hurl a magic missile at " + target.getName() + ", hitting and staggering her a step.";
         }
     }
 

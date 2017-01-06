@@ -354,11 +354,11 @@ public class Informant extends Activity {
             Global.everyone().stream()
                   .filter(c -> !c.human())
                   .filter(c -> !Global.checkCharacterDisabledFlag(c))
-                  .forEach(character -> Global.gui().choose(this, String.format(REMOVE_PREFIX + "%s", character.getName())));
+                  .forEach(character -> Global.gui().choose(this, String.format(REMOVE_PREFIX + "%s", character.getTrueName())));
             Global.everyone().stream()
                   .filter(c -> !c.human())
                   .filter(c -> Global.checkCharacterDisabledFlag(c) && !c.getType().equals("Yui"))
-                  .forEach(character -> Global.gui().choose(this, String.format(RETURN_PREFIX + "%s", character.getName())));
+                  .forEach(character -> Global.gui().choose(this, String.format(RETURN_PREFIX + "%s", character.getTrueName())));
             Global.gui().choose(this, "Back");
             return;
         }
@@ -366,7 +366,7 @@ public class Informant extends Activity {
             String name = choice.substring(REMOVE_PREFIX.length());
             Global.gui()
                   .message("Got it, I'll see about sending " + name+ " to another session.");
-            Global.setCharacterDisabledFlag(Global.getCharacterByName(name));
+            Global.setCharacterDisabledFlag(Global.getParticipantsByName(name));
             Global.gui()
                   .choose(this, "Select Competitors");
             return;
@@ -375,7 +375,7 @@ public class Informant extends Activity {
             String name = choice.substring(RETURN_PREFIX.length());
             Global.gui()
                   .message("Missing " + name+ " already? I'll see what I can do.");
-            Global.unsetCharacterDisabledFlag(Global.getCharacterByName(name));
+            Global.unsetCharacterDisabledFlag(Global.getParticipantsByName(name));
             Global.gui()
                   .choose(this, "Select Competitors");
             return;

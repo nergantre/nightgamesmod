@@ -56,7 +56,7 @@ public class StripBottom extends Skill {
                 if (target.body.getRandomCock().isReady(target)) {
                     c.write(getSelf(), "Your boner springs out, no longer restrained by your pants.");
                 } else {
-                    c.write(getSelf(), getSelf().name() + " giggles as "+target.nameOrPossessivePronoun()
+                    c.write(getSelf(), getSelf().getName() + " giggles as "+target.nameOrPossessivePronoun()
                     +" flaccid dick is exposed.");
                 }
             }
@@ -88,10 +88,10 @@ public class StripBottom extends Skill {
 
     @Override public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grab " + target.name() + "'s " + stripped.getName() + ", but " + target.pronoun()
+            return "You grab " + target.getName() + "'s " + stripped.getName() + ", but " + target.pronoun()
                             + " scrambles away before you can strip " + target.directObject() + ".";
         } else {
-            String msg = "After a brief struggle, you manage to pull off " + target.name() + "'s " + stripped.getName()
+            String msg = "After a brief struggle, you manage to pull off " + target.getName() + "'s " + stripped.getName()
                             + ".";
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Taking advantage of the situation, you also manage to snag %s %s!",
@@ -112,7 +112,7 @@ public class StripBottom extends Skill {
                             stripped.getName());
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Before %s can react, %s also strips off %s %s!", target.subject(),
-                                getSelf().name, target.possessiveAdjective(), extra.getName());
+                                getSelf().subject(), target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }

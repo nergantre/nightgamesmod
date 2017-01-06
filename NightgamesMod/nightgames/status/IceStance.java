@@ -19,7 +19,7 @@ public class IceStance extends DurationStatus {
         if (affected.human()) {
             return "You're as frigid as a glacier";
         } else {
-            return affected.name() + " is cool as ice.";
+            return affected.getName() + " is cool as ice.";
         }
     }
 

@@ -92,16 +92,16 @@ public class TentaclePorn extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You summon a mass of tentacles that try to snare " + target.name()
+            return "You summon a mass of tentacles that try to snare " + target.getName()
                             + ", but she nimbly dodges them.";
         } else if (modifier == Result.weak) {
-            return "You summon a mass of phallic tentacles that wrap around " + target.name()
+            return "You summon a mass of phallic tentacles that wrap around " + target.getName()
                             + "'s arms, holding her in place.";
         } else if (modifier == Result.normal) {
-            return "You summon a mass of phallic tentacles that wrap around " + target.name()
+            return "You summon a mass of phallic tentacles that wrap around " + target.getName()
                             + "'s naked body. They squirm against her and squirt slimy fluids on her body.";
         } else {
-            return "You summon tentacles to toy with " + target.name()
+            return "You summon tentacles to toy with " + target.getName()
                             + "'s helpless form. The tentacles toy with her breasts and penetrate her pussy and ass.";
         }
     }

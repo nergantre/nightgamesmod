@@ -74,7 +74,7 @@ public class LewdSuggestion extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "You take advantage of the erotic fantasies already swirling through %s's head, whispering ideas that fan the flame of %s lust.",
-                            new Object[] {target.name(), target.possessiveAdjective()});
+                            new Object[] {target.getName(), target.possessiveAdjective()});
         }
         if (modifier == Result.miss) {
             return String.format(
@@ -82,7 +82,7 @@ public class LewdSuggestion extends Skill {
                             new Object[] {target.nameOrPossessivePronoun()});
         }
         return String.format("You plant an erotic suggestion in %s's mind, distracting %s with lewd fantasies.",
-                        new Object[] {target.name(), target.directObject()});
+                        new Object[] {target.getName(), target.directObject()});
     }
 
     @Override
@@ -90,18 +90,18 @@ public class LewdSuggestion extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "%s whispers a lewd suggestion to %s, intensifying the fantasies %s %s trying to ignore and enflaming %s arousal.",
-                            getSelf().name(), target.nameDirectObject(), target.pronoun(), target.action("were", "was"),
+                            getSelf().getName(), target.nameDirectObject(), target.pronoun(), target.action("were", "was"),
                             target.possessiveAdjective());
         }
         if (modifier == Result.miss) {
             return String.format(
                             "%s whispers a lewd suggestion to %s, but %s just %s it, and %s to concentrate on the fight.",
-                            getSelf().name(), target.nameDirectObject(), target.pronoun(),
+                            getSelf().getName(), target.nameDirectObject(), target.pronoun(),
                             target.action("ignore"), target.action("try", "tries"));
         }
         return String.format(
                         "%s gives %s a hypnotic suggestion and %s head is immediately filled with erotic possibilities.",
-                        getSelf().name(), target.nameDirectObject(), target.possessiveAdjective());
+                        getSelf().getName(), target.nameDirectObject(), target.possessiveAdjective());
     }
 
 }

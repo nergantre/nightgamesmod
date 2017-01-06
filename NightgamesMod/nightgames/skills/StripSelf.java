@@ -59,7 +59,7 @@ public class StripSelf extends Skill {
                             .filter(article -> article.getName().equals(choice)).findAny();
             if (stripped.isPresent()) {
                 clothing = getSelf().getOutfit().unequip(stripped.get());
-                c.getCombatantData(getSelf()).addToClothesPile(clothing);
+                c.getCombatantData(getSelf()).addToClothesPile(getSelf(), clothing);
             }
         } else if (getSelf() instanceof NPC) {
             NPC self = (NPC) getSelf();

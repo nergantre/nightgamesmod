@@ -33,7 +33,7 @@ public abstract class FemdomSexStance extends Position {
 
         if (!inserter.hasInsertable()) {
             if (inserter.human()) {
-                c.write(inserted.name() + " groans with frustration with the sudden disappearance of your pole.");
+                c.write(inserted.getName() + " groans with frustration with the sudden disappearance of your pole.");
             } else {
                 c.write("With " + inserter.nameOrPossessivePronoun()
                                 + " phallus gone, you groan in frustration and cease your merciless riding.");
@@ -42,10 +42,10 @@ public abstract class FemdomSexStance extends Position {
         }
         if (!inserted.hasPussy()) {
             if (inserted.human()) {
-                c.write("With your pussy suddenly disappearing, you can't continue riding " + inserter.name()
+                c.write("With your pussy suddenly disappearing, you can't continue riding " + inserter.getName()
                                 + " anymore.");
             } else {
-                c.write(inserted.name() + " groans with frustration with the sudden disappearance of her pussy.");
+                c.write(inserted.getName() + " groans with frustration with the sudden disappearance of her pussy.");
             }
             c.setStance(insertRandom(c));
         }

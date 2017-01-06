@@ -618,7 +618,11 @@ public class Body implements Cloneable {
                         && (character.getArousal().percent() >= 50)
                         && (skill == null || !skill.getTags(c).contains(SkillTag.fucking))
                         && !(with.isGenital() && target.isGenital() && c.getStance().havingSex(c))) {
-            pleasure -= 4;
+            if (c != null && c.getOpponent(character).human()) {
+                pleasure -= 4;
+            } else {
+                pleasure -= .8;
+            }
             unsatisfied = true;
         }
 
@@ -1058,6 +1062,7 @@ public class Body implements Cloneable {
                 expired.add(r);
             }
         }
+        Collections.reverse(expired);
         for (PartReplacement r : expired) {
             replacements.remove(r);
             updateCurrentParts();
@@ -1116,12 +1121,7 @@ public class Body implements Cloneable {
                 sb.append(Global.prependPrefix(last.prefix(), last.fullDescribe(character)));
                 sb.append('.');
             }
-            if (c != null) {
-                c.writeSystemMessage(character, sb.toString());
-            } else if (character.human()) {
-                Global.gui()
-                      .message(sb.toString());
-            }
+            Global.writeIfCombat(c, character, sb.toString());
         }
     }
 

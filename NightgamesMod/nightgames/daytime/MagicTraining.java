@@ -29,7 +29,7 @@ public class MagicTraining extends Activity {
                             "Aisha apparently spends most of her time in a mostly abandoned creative writing reference room in the back of the liberal arts building. On paper, she "
                                             + "apparently runs a fantasy writing workshop. You're not sure if she is serious about writing, but it makes a good cover.<br/><br/>When you get to the reference room, she's the "
                                             + "only one there. She's slightly taller than you with large, soft breasts. She has coffee colored skin and dark brown, long, wavy hair. When you introduce yourself she "
-                                            + "gives you a gentle, charming smile. <i>\"Hello " + player.name()
+                                            + "gives you a gentle, charming smile. <i>\"Hello " + player.getTrueName()
                                             + ". I know who you are of course. The videos of your fights have been fascinating.\"</i> That catches you off "
                                             + "guard. It's no real surprise that your matches are being secretly recorded, but the idea that this woman has been watching you sex-fight before you even knew she existed is "
                                             + "somehow unnerving. She continues as if to distract you from your discomfort. <i>\"I'm pleased that you have an interest in learning magic. I haven't had many opportunities "
@@ -293,7 +293,7 @@ public class MagicTraining extends Activity {
                             + "smiles reassuringly. \"<i>These things aren't so bad. Sure they're"
                             + " a little inconvenient to hide, but my cat powers have given me so "
                             + "many wonderful things. I'm so grateful for what you've done for me. If"
-                            + " spirit magic gives " + player.name()
+                            + " spirit magic gives " + player.getTrueName()
                             + " even half as much happiness as it's given me, I'm "
                             + "sure he won't regret it.\"</i><br/><br/>"
                             + "Aisha finally relents and instructs you to get undressed while she leaves "

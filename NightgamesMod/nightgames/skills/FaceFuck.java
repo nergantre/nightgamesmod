@@ -96,7 +96,7 @@ public class FaceFuck extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String m = "";
         if (modifier == Result.strapon || modifier == Result.upgrade) {
-            m = "You grab hold of " + target.name()
+            m = "You grab hold of " + target.getName()
                             + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                             + "and tongue while you thrust your hips.";
             if (modifier == Result.upgrade) {
@@ -104,15 +104,15 @@ public class FaceFuck extends Skill {
             }
         } else {
             if (target.body.getRandom("mouth").isErogenous()) {
-                m = "You grab hold of " + target.name()
+                m = "You grab hold of " + target.getName()
                                 + "'s head and push your cock into her mouth. What you find inside is unexpected, though. "
-                                + target.name()
+                                + target.getName()
                                 + " has transformed her mouth into a second female genitalia; its soft hot walls, its ridges and folds slide across your dick delightfully as you thrust into her.";
                 if (modifier == Result.reverse) {
                     m += "<br/>Her skillful tongue works its magic on your cock while you're fucking her mouth pussy, and you find yourself on the verge of orgasm way quicker than you would like.";
                 }
             } else {
-                m = "You grab hold of " + target.name()
+                m = "You grab hold of " + target.getName()
                                 + "'s head and push your cock into her mouth. She flushes in shame and anger, but still dutifully services you with her lips "
                                 + "and tongue while you thrust your hips.";
                 if (modifier == Result.reverse) {

@@ -90,11 +90,11 @@ public class Nurple extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grope at " + target.name() + "'s breasts, but miss.";
+            return "You grope at " + target.getName() + "'s breasts, but miss.";
         } else if (modifier == Result.special) {
-            return "You grab " + target.name() + "'s boob with your shock-gloved hand, painfully shocking her.";
+            return "You grab " + target.getName() + "'s boob with your shock-gloved hand, painfully shocking her.";
         } else {
-            return "You pinch and twist " + target.name() + "'s nipples, causing her to yelp in surprise.";
+            return "You pinch and twist " + target.getName() + "'s nipples, causing her to yelp in surprise.";
         }
     }
 

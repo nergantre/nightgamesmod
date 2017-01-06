@@ -58,7 +58,7 @@ public class LustAura extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You allow the corruption in your libido to spread out from your body. " + target.name()
+        return "You allow the corruption in your libido to spread out from your body. " + target.getName()
                         + " flushes with arousal and presses her thighs together as the aura taints her.";
     }
 

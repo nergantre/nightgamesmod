@@ -73,11 +73,11 @@ public class DarkTendrils extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You summon dark tentacles to hold " + target.name() + ", but she twists away.";
+            return "You summon dark tentacles to hold " + target.getName() + ", but she twists away.";
         } else if (modifier == Result.weak) {
-            return "You summon dark tentacles that take " + target.name() + " feet out from under her.";
+            return "You summon dark tentacles that take " + target.getName() + " feet out from under her.";
         } else {
-            return "You summon a mass of shadow tendrils that entangle " + target.name()
+            return "You summon a mass of shadow tendrils that entangle " + target.getName()
                             + " and pin her arms in place.";
         }
     }

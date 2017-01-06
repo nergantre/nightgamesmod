@@ -136,41 +136,41 @@ public class Kiss extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You pull " + target.name()
+            return "You pull " + target.getName()
                             + " in for a kiss, but " + target.pronoun() + " pushes your face away. Rude. (Maybe you should try pinning her down?)";
         }
         if (modifier == Result.divine) {
-            return "You pull " + target.name()
+            return "You pull " + target.getName()
                             + " to you and kiss her passionately, sending your divine aura into her body though her mouth. "
                             + "You tangle your tongue around hers and probe the sensitive insides her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
                             + "As you finally break the kiss, she looks energized but desperate for more.";
         }
         if (modifier == Result.special) {
-            return "You pull " + target.name()
+            return "You pull " + target.getName()
                             + " to you and kiss her passionately. You run your tongue over her lips until she opens them and immediately invade her mouth. "
                             + "You tangle your tongue around hers and probe the sensitive insides her mouth. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
         }
         if (modifier == Result.upgrade) {
-            return "You pull " + target.name()
+            return "You pull " + target.getName()
                             + " to you and kiss her passionately. You run your tongue over her lips until her opens them and immediately invade her mouth. "
                             + "You focus on her lifeforce inside her and draw it out through the kiss while overwhelming her defenses with heady pleasure. As you finally break the kiss, she leans against you, looking kiss-drunk and needy.";
         } else if (modifier == Result.weak) {
-            return "You aggressively kiss " + target.name()
+            return "You aggressively kiss " + target.getName()
                             + " on the lips. It catches her off guard for a moment, but she soon responds approvingly.";
         } else {
             switch (Global.random(4)) {
                 case 0:
-                    return "You pull " + target.name()
+                    return "You pull " + target.getName()
                                     + " close and capture her lips. She returns the kiss enthusiastically and lets out a soft noise of approval when you "
                                     + "push your tongue into her mouth.";
                 case 1:
-                    return "You press your lips to " + target.name()
+                    return "You press your lips to " + target.getName()
                                     + "'s in a romantic kiss. You tease out her tongue and meet it with your own.";
                 case 2:
-                    return "You kiss " + target.name()
+                    return "You kiss " + target.getName()
                                     + " deeply, overwhelming her senses and swapping quite a bit of saliva.";
                 default:
-                    return "You steal a quick kiss from " + target.name()
+                    return "You steal a quick kiss from " + target.getName()
                                     + ", pulling back before she can respond. As she hesitates in confusion, you kiss her twice more, "
                                     + "lingering on the last to run your tongue over her lips.";
             }

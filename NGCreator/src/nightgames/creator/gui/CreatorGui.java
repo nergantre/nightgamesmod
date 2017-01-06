@@ -360,7 +360,7 @@ public class CreatorGui extends Application {
 
 	private void setupLoad() {
 		Global.allNPCs().stream().map(c -> {
-			MenuItem item = new MenuItem(c.name);
+			MenuItem item = new MenuItem(c.getTrueName());
 			item.setOnAction(e -> load(c));
 			return item;
 		}).forEach(loadMenu.getItems()::add);
@@ -638,7 +638,7 @@ public class CreatorGui extends Application {
 
 	private void load(Character ch) {
 		store.clear();
-		name.setText(ch.name);
+		name.setText(ch.getTrueName());
 		sex.getSelectionModel().select(ch.initialGender);
 		trophy.getSelectionModel().select(ch.getTrophy());
 		outfit.getItems().clear();

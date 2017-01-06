@@ -236,10 +236,10 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public CombatantData getCombatantData(Character character) {
-        if (!combatantData.containsKey(character.getName())) {
-            combatantData.put(character.getName(), new CombatantData());
+        if (!combatantData.containsKey(character.getTrueName())) {
+            combatantData.put(character.getTrueName(), new CombatantData());
         }
-        return combatantData.get(character.getName());
+        return combatantData.get(character.getTrueName());
     }
 
     private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
@@ -372,12 +372,16 @@ public class Combat extends Observable implements Cloneable {
         if (p1.checkLoss(this)) {
             if (doLosses) {
                 victory(p2);
+            } else {
+                winner = Optional.of(p2);
             }
             return true;
         }
         if (p2.checkLoss(this)) {
             if (doLosses) {
                 victory(p1);
+            } else {
+                winner = Optional.of(p1);
             }
             return true;
         }
@@ -644,11 +648,12 @@ public class Combat extends Observable implements Cloneable {
                     CombatPhase.P1_ACT_SECOND);
 
     private CombatPhase determinePostCombatPhase() {
+        CombatPhase nextPhase = CombatPhase.RESULTS_SCENE;
         if (p1.has(Trait.leveldrainer) ^ p2.has(Trait.leveldrainer) && !p1.has(Trait.strapped) && !p2.has(Trait.strapped)) {
             Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
             Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
-            if (!getCombatantData(drainer).getBooleanFlag("has_drained")) {
-                if (!getStance().havingSex(this)) {
+            if (drainer.equals(winner.orElse(null)) && !getCombatantData(drainer).getBooleanFlag("has_drained")) {
+                if (!getStance().havingSex(this) && !getStance().dom(drainer)) {
                     Position mountStance = new Mount(drainer, drained);
                     if (mountStance.insert(this, drained, drainer) != mountStance) {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
@@ -666,6 +671,7 @@ public class Combat extends Observable implements Cloneable {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
                                         + "on top of {other:direct-object}. However, {self:pronoun} could not figure a "
                                         + "way to drain {other:possessive} levels.", drainer, drained));
+                        checkLosses(true);
                         return CombatPhase.RESULTS_SCENE;
                     }
                 } else if (phase == CombatPhase.LEVEL_DRAIN) {
@@ -679,11 +685,19 @@ public class Combat extends Observable implements Cloneable {
                                         Global.pickRandom(getStance().partsFor(this, drainer)).orElse(drainer.body.getRandomGenital()));
                         getCombatantData(drainer).setBooleanFlag("has_drained", true);
                     }
+                } else {
+                    write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:don't stop|doesn't stop} {self:possessive} greedy hips, "
+                                        + "{self:pronoun-action:are|is} deteremined to extract all the power {self:pronoun} can get!", drainer, drained));
                 }
-                return getCombatantData(drainer).getBooleanFlag("has_drained") ? CombatPhase.RESULTS_SCENE : CombatPhase.LEVEL_DRAIN;
+                if (!getCombatantData(drainer).getBooleanFlag("has_drained")) {
+                    nextPhase = CombatPhase.LEVEL_DRAIN;
+                }
             }
         }
-        return CombatPhase.RESULTS_SCENE;
+        if (nextPhase == CombatPhase.RESULTS_SCENE) {
+            checkLosses(true);
+        }
+        return nextPhase;
     }
 
     public void turn() {
@@ -759,14 +773,12 @@ public class Combat extends Observable implements Cloneable {
                 }
                 break;
             case RESULTS_SCENE:
-                checkLosses(true);
                 // fall through to the finished case.
                 phase = CombatPhase.FINISHED;
             case FINISHED:
             default:
                 next();
                 return;
-
         }
         if (beingObserved) {
             updateAndClearMessage();
@@ -794,7 +806,7 @@ public class Combat extends Observable implements Cloneable {
                             + Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
                             + player.describe(other.get(Attribute.Perception), this) + "<br/><br/>";
         } else {
-            return "<b>You are blinded, and cannot see what " + other.name() + " is doing!</b><br/><br/>"
+            return "<b>You are blinded, and cannot see what " + other.getTrueName() + " is doing!</b><br/><br/>"
                             + Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
                             + player.describe(other.get(Attribute.Perception), this) + "<br/><br/>";
         }
@@ -863,7 +875,7 @@ public class Combat extends Observable implements Cloneable {
 
         action = checkWorship(self, target, action);
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.println(self.name() + " uses " + action.getLabel(this));
+            System.out.println(self.getTrueName() + " uses " + action.getLabel(this));
         }
         /*
          * TODO fix this so it works with the new combat system
@@ -1226,7 +1238,7 @@ public class Combat extends Observable implements Cloneable {
             if (!getStance().prone(p)) {
                 if (getStance().inserted() && getStance().dom(other)) {
                     if (p.human()) {
-                        write(p, "Your legs give out, but " + other.name() + " holds you up.");
+                        write(p, "Your legs give out, but " + other.getName() + " holds you up.");
                     } else {
                         write(p, String.format("%s slumps in %s arms, but %s %s %s to keep %s from collapsing.",
                                         p.subject(), other.nameOrPossessivePronoun(),
@@ -1238,7 +1250,7 @@ public class Combat extends Observable implements Cloneable {
                     if (p.human()) {
                         write(p, "You don't have the strength to stay on your feet. You slump to the floor.");
                     } else {
-                        write(p, p.name() + " drops to the floor, exhausted.");
+                        write(p, p.getName() + " drops to the floor, exhausted.");
                     }
                 }
                 p.loseWillpower(this, Math.min(p.getWillpower()
@@ -1558,7 +1570,7 @@ public class Combat extends Observable implements Cloneable {
         if (self.equals(p2) || self.isPetOf(p2)) {
             return p1;
         }
-        System.err.println("Tried to get an opponent for " + self.getName() + " which does not exist in combat.");
+        System.err.println("Tried to get an opponent for " + self.getTrueName() + " which does not exist in combat.");
         Thread.dumpStack();
         return Global.noneCharacter();
     }

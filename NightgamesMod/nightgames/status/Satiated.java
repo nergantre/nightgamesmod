@@ -25,7 +25,7 @@ public class Satiated extends DurationStatus {
         if (affected.human()) {
             return "You feel immensely powerful after feeding on your opponent's essence\n";
         } else {
-            return affected.name() + " feels immensely satisfied after feeding on "+
+            return affected.getName() + " feels immensely satisfied after feeding on "+
                             c.getOpponent(affected).nameOrPossessivePronoun()+" essence\n";
         }
     }

@@ -64,11 +64,11 @@ public class Suggestion extends Skill {
         if (modifier == Result.miss) {
             return String.format(
                             "You attempt to put %s under hypnotic suggestion, but %s doesn't appear to be affected.",
-                            new Object[] {target.name(), target.pronoun()});
+                            new Object[] {target.getName(), target.pronoun()});
         }
         return String.format(
                         "You speak in a calm, rhythmic tone, lulling %s into a hypnotic trance. Her eyes seem to glaze over slightly, momentarily slipping under your influence.",
-                        new Object[] {target.name()});
+                        new Object[] {target.getName()});
     }
 
     @Override

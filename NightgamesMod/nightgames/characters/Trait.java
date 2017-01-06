@@ -96,7 +96,7 @@ public enum Trait {
         if (c.human()) {
             b.append("You exude");
         } else {
-            b.append(c.name() + " exudes");
+            b.append(c.getName() + " exudes");
         }
         b.append(" an aura of pure eros, making both of you flush with excitement.");
     }), // Eve
@@ -122,7 +122,7 @@ public enum Trait {
         if (c.human()) {
             b.append("your");
         } else {
-            b.append(c.name() + "'s");
+            b.append(c.getName() + "'s");
         }
         b.append(" body.");
     }), // causes horny in opponents if aroused
@@ -269,7 +269,7 @@ public enum Trait {
             if (c.human())
                 b.append("You shy away from your opponent's gaze.");
             else
-                b.append(c.name + " quickly avoids your gaze.");
+                b.append(c.subject() + " quickly avoids your gaze.");
         }
     }), // restricts striptease, flick, facesit, taunt, squeeze
 
@@ -279,7 +279,7 @@ public enum Trait {
     succubus("Succubus", "Embraced the dark powers that feed on mortal lust"),
     demigoddess("Demigoddess", "Blessed by a deity of sexual pleasure, and on the road to ascension herself."),
     fighter("Fighter", "A combination of martial arts and ki"),
-    slime("Slime", "An accident in the biology labs made the body a bit more... malleable."),
+    slime("Slime", "An accident in the biology labs made her body a bit more... malleable."),
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),
@@ -355,7 +355,7 @@ public enum Trait {
             if (c.human()) {
                 b.append("your slobbering pussy.");
             } else {
-                b.append(c.name + "'s slobbering pussy.");
+                b.append(c.nameOrPossessivePronoun() + " slobbering pussy.");
             }
         }
     }),
@@ -442,7 +442,7 @@ public enum Trait {
     grappler("Grappler", "Bonus to hold strength"),
     suave("Suave", "Bonus seduction vs girls."),
     brutesCharisma("Brute's Charisma", "Extra charisma based on Power and Ki when on top."),
-    
+
     // Mara's unique traits
     harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
     yank("Yank", "Can yank opponents to the ground if they have a harpoon toy on them"),
@@ -467,13 +467,13 @@ public enum Trait {
     VampireWings("Vampire Wings", "Contact with wings drains Power"),
     
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
-    
+
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
             b.append("A large black strap-on dildo adorns your waist.");
         } else {
-            b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
+            b.append("A large black strap-on dildo adorns " + c.nameOrPossessivePronoun() + " waists.");
         }
     }), // currently wearing a strapon
 

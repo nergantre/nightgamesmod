@@ -33,7 +33,7 @@ public class StripMine extends Trap {
             }
         } else if (target.location().humanPresent()) {
             Global.gui().message("You're startled by a flash of light not far away. Standing there is a half-naked "
-                            + target.name() + ", looking surprised.");
+                            + target.getName() + ", looking surprised.");
         }
         IntStream.range(0, 2 + Global.random(4)).forEach(i -> target.shredRandom());
         target.location().opportunity(target, this);

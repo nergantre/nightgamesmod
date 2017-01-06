@@ -62,10 +62,10 @@ public class TailJob extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (target.hasDick()) {
             return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
-                            + " to stroke and tease " + target.name() + "'s sensitive girl-cock.";
+                            + " to stroke and tease " + target.getName() + "'s sensitive girl-cock.";
         } else {
             return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
-                            + " to stroke and tease " + target.name() + "'s sensitive girl parts.";
+                            + " to stroke and tease " + target.getName() + "'s sensitive girl parts.";
         }
     }
 

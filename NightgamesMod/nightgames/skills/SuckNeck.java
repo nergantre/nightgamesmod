@@ -82,13 +82,13 @@ public class SuckNeck extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You lean in to kiss " + target.name() + "'s neck, but she slips away.";
+            return "You lean in to kiss " + target.getName() + "'s neck, but she slips away.";
         } else if (modifier == Result.special) {
-            return "You draw close to " + target.name()
+            return "You draw close to " + target.getName()
                             + " as she's momentarily too captivated to resist. You run your tongue along her neck and bite gently. She shivers and you "
                             + "can feel the energy of her pleasure flow into you, giving you strength.";
         } else {
-            return "You lick and suck " + target.name() + "'s neck hard enough to leave a hickey.";
+            return "You lick and suck " + target.getName() + "'s neck hard enough to leave a hickey.";
         }
     }
 

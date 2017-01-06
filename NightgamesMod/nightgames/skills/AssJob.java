@@ -155,13 +155,13 @@ public class AssJob extends Skill {
                     return String.format(
                                     "You lean back and rub your ass against %s, but"
                                                     + " %s %s is still too soft to really get into it.",
-                                    target.name(), target.possessiveAdjective(),
+                                    target.getName(), target.possessiveAdjective(),
                                     target.body.getRandomCock().describe(target));
                 }
             case normal:
                 return String.format("You back up against %s and grab %s by the waist."
                                 + " Before %s has a chance to push you away, you rub your ass against" + " %s crotch.",
-                                target.name(), target.directObject(), target.pronoun(), target.possessiveAdjective());
+                                target.getName(), target.directObject(), target.pronoun(), target.possessiveAdjective());
             case miss:
             default:
                 return String.format("You try to mash your ass against %s crotch, but %s" + " pushes you away.",
@@ -177,7 +177,7 @@ public class AssJob extends Skill {
                                 "%s %s tight, thinking %s intends to break "
                                                 + "free from %s hold, but instead %s pushes %s firm asscheeks"
                                                 + " against %s cock and grinds them against %s. ",
-                                target.subjectAction("hold"), getSelf().name(), getSelf().pronoun(), 
+                                target.subjectAction("hold"), getSelf().getName(), getSelf().pronoun(), 
                                 target.possessiveAdjective(), getSelf().pronoun(),
                                 getSelf().possessiveAdjective(), target.possessiveAdjective(), target.directObject());
                 if (getSelf().crotchAvailable() && target.crotchAvailable()) {
@@ -196,7 +196,7 @@ public class AssJob extends Skill {
                                     "%s sits firmly on %s crotch and starts "
                                                     + "dryhumping %s with an impish grin. As %s grinds against %s "
                                                     + "%s restlessly, %s %s definitely feeling it much more than %s is.",
-                                    getSelf().name(), target.nameOrPossessivePronoun(), target.directObject(), 
+                                    getSelf().getName(), target.nameOrPossessivePronoun(), target.directObject(), 
                                     getSelf().pronoun(), target.possessiveAdjective(),
                                     target.outfit.getTopOfSlot(ClothingSlot.bottom).getName(),
                                     target.pronoun(), target.action("are", "is"), getSelf().pronoun());
@@ -204,7 +204,7 @@ public class AssJob extends Skill {
                     return String.format(
                                     "%s lays back on %s, squeezing %s %s between %s soft asscheeks. %s %s to "
                                                     + "crawl away, but %s grinds %s perky butt against %s, massaging %s hard-on %s.",
-                                    getSelf().name(), target.subject(), target.possessiveAdjective(),
+                                    getSelf().getName(), target.subject(), target.possessiveAdjective(),
                                     target.body.getRandomCock().describe(getSelf()),
                                     getSelf().possessiveAdjective(),
                                     Global.capitalizeFirstLetter(target.pronoun()),
@@ -224,7 +224,7 @@ public class AssJob extends Skill {
                                                     + " against %s groin as %s sits back on %s. <i>\"Like what "
                                                     + "you see?\"</i> - %s taunts %s, shaking %s hips invitingly.",
                                                     target.subjectAction("try", "tries"),
-                                    getSelf().name(), getSelf().pronoun(), 
+                                    getSelf().getName(), getSelf().pronoun(), 
                                     target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()),
                                     getSelf().possessiveAdjective(), target.possessiveAdjective(),
                                     getSelf().pronoun(), target.directObject(),
@@ -236,14 +236,14 @@ public class AssJob extends Skill {
                                                 + "%s groin, taking hold of %s arms before %s can recover %s balance."
                                                 + " %s takes the opportunity to tease %s, rubbing %s bubble butt against "
                                                 + "%s sensitive %s.",
-                                getSelf().name(), getSelf().possessiveAdjective(),
+                                getSelf().getName(), getSelf().possessiveAdjective(),
                                 target.possessiveAdjective(), target.possessiveAdjective(), target.pronoun(), target.possessiveAdjective(),
                                 Global.capitalizeFirstLetter(getSelf().pronoun()), 
                                 target.directObject(), getSelf().possessiveAdjective(),
                                 target.possessiveAdjective(), target.body.getRandomCock().describe(target));
             case miss:
             default:
-                return String.format("%s moves %s ass towards %s crotch, but %s %s her away.", getSelf().name(),
+                return String.format("%s moves %s ass towards %s crotch, but %s %s her away.", getSelf().getName(),
                                 getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(), target.pronoun(),
                                 target.action("push", "pushes"));
         }

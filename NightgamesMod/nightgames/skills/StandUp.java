@@ -53,7 +53,7 @@ public class StandUp extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You relinquish your hold on " + target.name() + " and stand back up.";
+        return "You relinquish your hold on " + target.getName() + " and stand back up.";
     }
 
     @Override

@@ -134,22 +134,22 @@ public class Blowjob extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String m = "";
         if (modifier == Result.miss) {
-            m = "You try to take " + target.name() + "'s penis into your mouth, but she manages to pull away.";
+            m = "You try to take " + target.getName() + "'s penis into your mouth, but she manages to pull away.";
         }
         if (target.getArousal().get() < 15) {
-            m = "You suck on " + target.name()
+            m = "You suck on " + target.getName()
                             + " flaccid little penis until it grows into an intimidating large erection.";
         } else if (target.getArousal().percent() >= 90) {
-            m = target.name()
+            m = target.getName()
                             + "'s girl-cock seems ready to burst, so you suck on it strongly and attack the glans with your tongue fiercely.";
         } else if (modifier == Result.special) {
             m = "You put your skilled tongue to good use tormenting and teasing her unnatural member.";
         } else if (modifier == Result.reverse) {
-            m = "With " + target.name() + " sitting over your face, you have no choice but to try to suck her off.";
+            m = "With " + target.getName() + " sitting over your face, you have no choice but to try to suck her off.";
         } else {
-            m = "You feel a bit odd, faced with " + target.name()
+            m = "You feel a bit odd, faced with " + target.getName()
                             + "'s rigid cock, but as you lick and suck on it, you discover the taste is quite palatable. Besides, "
-                            + "making " + target.name() + " squirm and moan in pleasure is well worth it.";
+                            + "making " + target.getName() + " squirm and moan in pleasure is well worth it.";
         }
         if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
             m += "<br/>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck "
@@ -163,7 +163,7 @@ public class Blowjob extends Skill {
         String m = "";
         if (modifier == Result.miss) {
             m += String.format("%s tries to suck %s cock, but %s %s %s hips back to avoid %s.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun(),
+                            getSelf().getName(), target.nameOrPossessivePronoun(), target.pronoun(),
                             target.action("pull"), target.possessiveAdjective(), getSelf().directObject());
         } else if (modifier == Result.special) {
             m += String.format("%s soft lips and talented tongue work over %s dick, drawing out"

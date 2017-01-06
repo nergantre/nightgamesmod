@@ -14,7 +14,7 @@ public class Missionary extends MaledomSexStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are penetrating " + bottom.name() + " in traditional Missionary position.";
+            return "You are penetrating " + bottom.getName() + " in traditional Missionary position.";
         } else {
             return String.format("%s between %s legs, fucking %s in the traditional Missionary position.",
                             top.subjectAction("are", "is"), bottom.nameOrPossessivePronoun(),

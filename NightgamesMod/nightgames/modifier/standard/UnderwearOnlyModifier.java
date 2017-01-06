@@ -22,7 +22,7 @@ public class UnderwearOnlyModifier extends BaseModifier {
 
     @Override
     public String intro() {
-        return "<i>\"So, " + Global.getPlayer().name()
+        return "<i>\"So, " + Global.getPlayer().getTrueName()
                         + ", what would you say to another match in your underwear? For some reason, that just amuses the hell out of me. "
                         + "The bonus is still $" + bonus() + " per point.\"</i> ";
     }

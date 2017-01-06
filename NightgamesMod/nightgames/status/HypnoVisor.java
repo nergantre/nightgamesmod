@@ -115,15 +115,12 @@ public class HypnoVisor extends Status {
     @Override
     public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
-        obj.addProperty("affected", affected.name());
-        obj.addProperty("cause", cause.name());
         return obj;
     }
 
     @Override
     public Status loadFromJson(JsonObject obj) {
-        return new HypnoVisor(Global.getCharacterByName(obj.get("affected").getAsString()),
-                        Global.getCharacterByName(obj.get("cause").getAsString()));
+        return new HypnoVisor(Global.noneCharacter(), Global.noneCharacter());
     }
 
 }

@@ -33,8 +33,6 @@ public interface Personality extends Serializable {
 
     String intervene3p(Combat c, Character target, Character assist);
 
-    String describe(Combat c, Character self);
-
     String draw(Combat c, Result flag);
 
     boolean fightFlight(Character opponent);
@@ -68,7 +66,7 @@ public interface Personality extends Serializable {
 
     Map<CommentSituation, String> getComments(Combat c);
 
-    default void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+    default void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         // no op
     }

@@ -19,6 +19,7 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
 import nightgames.start.NpcConfiguration;
+import nightgames.status.Flatfooted;
 import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
@@ -90,7 +91,7 @@ public class Airi extends BasePersonality {
                 return "<i>\"I need more... Give me more...\"</i>";
             }
         });
-        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> self.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Feels good? Let me have some more...\"</i>");
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> self.has(Trait.slime) ? "<i>\"...Feels good..? I'll suck more out... I'll drain you dry...\"</i>" : "<i>\"Hyaa! Oh please warn me next time...\"</i>");
         character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> "You walk back to your dorm after the match, and decide to take a shower after all that exertion. Who knew sex fighting a bunch of girls would be so exhausting? You strip off your shirt and boxers and head straight into the bathroom. As you flip on the lights, you notice that the tub seems already filled with water. Just as you wonder if you forgot to drain the tub from last night, the liquid in the tub quivers and… stands up. "
                         + "<br/><br/>It’s Airi. What’s she doing here? You ask her how did get in, since you were sure the door was locked. <i>Followed you… flowed under door… No problem…</i> Well, that explains it. Noticing the time, you let her know that you really need to take your shower now and head to bed or you won’t make it tomorrow for your morning classes. Airi looks at you for a second and nods. <i>Un… will help you clean…</i> Wait what? Oh n-! Airi pulls you into the tub with her gooey appendages and submerges you inside her body. <i>Relax… I’ll clean you up… Inside and out…</i>");
         character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
@@ -111,6 +112,15 @@ public class Airi extends BasePersonality {
             } else {
                 return "\"<i>{other:NAME}... Did you know...? I'm stronger than you now... But you can't stop... I need all that you have...</i>\"";
             }
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return character.has(Trait.slime) ? "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
+            + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
+            + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel."
+            : "Airi looks at you cautiously. The lithe Japanese girl sports a cute face and a tight body with shoulder length black hair "
+                            + "almost covering her bright intelligent black eyes. You're not too sure what she's thinking "
+                            + "so you approach her cautiously.";
         });
     }
 
@@ -224,62 +234,69 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
-        if (times == totalTimes && character.getWillpower().percent() < 60 && !character.has(Trait.slime)) {
-            c.write(character, Global.format("After {self:NAME-POSSESSIVE} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
-                            + "Gone is the slim repressed girl you knew. The new Airi that appears before you is a sexually idealized version of herself, with bigger breasts, a dynamic body line and long legs that end in a ball of blue goo. "
-                            + "You're now fighting {self:name} in slime form!", character, opponent));
-            character.nudify();
-            character.purge(c);
-            character.addTemporaryTrait(Trait.slime, 999);
-            character.removeTemporaryTrait(Trait.repressed, 999);
-            character.removeTemporaryTrait(Trait.softheart, 999);
-            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
-                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+    public void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        if (times == totalTimes && ((self.getWillpower().percent() < 60 && !self.has(Trait.slime)) || self.is(Stsflag.disguised))) {
+            if (self.is(Stsflag.disguised)) {
+                c.write(self, Global.format("<b>As {self:subject} orgasms, {self:possessive} whole body shimmers and seems to melt into a puddle of goo. "
+                                + "A human body rises from the slime and molds itself to a facsimile of an all-too-familiar Asian {self:boy} giving you a self satisfied little smirk. "
+                                + "Shit, {self:pronoun} tricked you, it was Airi all along!</b><br/>", self, opponent));
+                opponent.add(c, new Flatfooted(opponent, 2));
+            } else {
+                c.write(self, Global.format("After {self:name-possessive} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
+                                + "Gone is the slim repressed girl you knew. The new Airi that appears before you is a sexually idealized version of herself, with bigger breasts, a dynamic body line and long legs that end in a ball of blue goo. "
+                                + "You're now fighting {self:name} in slime form!", self, opponent));
             }
-            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
-                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+            self.completelyNudify(c);
+            self.purge(c);
+            self.addTemporaryTrait(Trait.slime, 999);
+            self.removeTemporaryTrait(Trait.repressed, 999);
+            self.removeTemporaryTrait(Trait.softheart, 999);
+            if (self.hasPussy() && !self.body.getRandomPussy().moddedPartCountsAs(self, PussyPart.gooey)) {
+                self.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }
-            BreastsPart part = character.body.getBreastsBelow(BreastsPart.h.size);
+            if (self.hasDick() && !self.body.getRandomCock().moddedPartCountsAs(self, CockMod.slimy)) {
+                self.body.temporaryAddOrReplacePartWithType(self.body.getRandomCock().applyMod(CockMod.slimy), 999);
+            }
+            BreastsPart part = self.body.getBreastsBelow(BreastsPart.h.size);
             if (part != null) {
-                character.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+                self.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
             }
-            character.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
-            if (character.level >= 21) {
-                character.addTemporaryTrait(Trait.Sneaky, 999);
+            self.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+            if (self.level >= 21) {
+                self.addTemporaryTrait(Trait.Sneaky, 999);
             }
-            if (character.level >= 24) {
-                character.addTemporaryTrait(Trait.shameless, 999);
+            if (self.level >= 24) {
+                self.addTemporaryTrait(Trait.shameless, 999);
             }
-            if (character.level >= 27) {
-                character.addTemporaryTrait(Trait.lactating, 999);
+            if (self.level >= 27) {
+                self.addTemporaryTrait(Trait.lactating, 999);
             }
-            if (character.level >= 30) {
-                character.addTemporaryTrait(Trait.addictivefluids, 999);
+            if (self.level >= 30) {
+                self.addTemporaryTrait(Trait.addictivefluids, 999);
             }
-            if (character.level >= 33) {
-                character.addTemporaryTrait(Trait.autonomousPussy, 999);
+            if (self.level >= 33) {
+                self.addTemporaryTrait(Trait.autonomousPussy, 999);
             }
-            if (character.level >= 36) {
-                character.addTemporaryTrait(Trait.enthrallingjuices, 999);
+            if (self.level >= 36) {
+                self.addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
-            if (character.level >= 39) {
-                character.addTemporaryTrait(Trait.energydrain, 999);
+            if (self.level >= 39) {
+                self.addTemporaryTrait(Trait.energydrain, 999);
             }
-            if (character.level >= 42) {
-                character.addTemporaryTrait(Trait.desensitized, 999);
+            if (self.level >= 42) {
+                self.addTemporaryTrait(Trait.desensitized, 999);
             }
-            if (character.level >= 45) {
-                character.addTemporaryTrait(Trait.steady, 999);
+            if (self.level >= 45) {
+                self.addTemporaryTrait(Trait.steady, 999);
             }
-            if (character.level >= 50) {
-                character.addTemporaryTrait(Trait.strongwilled, 999);
+            if (self.level >= 50) {
+                self.addTemporaryTrait(Trait.strongwilled, 999);
             }
-            character.moodSwing(c);
+            self.moodSwing(c);
         }
     }
     
@@ -353,16 +370,6 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return character.has(Trait.slime) ? "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
-                        + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
-                        + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel."
-                        : "Airi looks at you cautiously. Airi sports a cute face and a tight body with shoulder length black hair "
-                                        + "almost covering her bright intelligent black eyes. You're not too sure what she's thinking "
-                                        + "so you approach her cautiously.";
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         return "You make each other cum at the same time. Woohoo!";
 
@@ -384,7 +391,7 @@ public class Airi extends BasePersonality {
             return "Airi crawls over to you at an agonizing pace. Her slime rapidly flows on top of your penis and covers it in a sticky bulb. <i>\"Time… for you to cum…\"</i><br/><br/>"
                             + "Her previously still slime suddenly starts to frantically squeeze and knead your cock, pulsating in waves of sticky goo on top of you. Startled by the sudden stimulation, you cum in seconds, spilling the proof of your defeat inside her tendril.<br/><br/>";
         } else {
-            return "Airi flows over to " + target.name()
+            return "Airi flows over to " + target.getName()
                             + ". Her slime pools into a long and flexible appendage and worms itself inside "
                             + target.possessiveAdjective()
                             + " depths. The appendage starts to twist and squirm inside her poor victim and almost instantly causes her victim to scream out in pleasure.<br/><br/>";

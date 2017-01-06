@@ -77,10 +77,10 @@ public class BreastWorship extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return "You worshipfully circle your tongue around each of " + target.name()
+            return "You worshipfully circle your tongue around each of " + target.getName()
                             + "'s nipples, and start sucking like a newborn while furiously masturbating.";
         } else {
-            return "You worshipfully circle your tongue around each of " + target.name()
+            return "You worshipfully circle your tongue around each of " + target.getName()
                             + "'s nipples, and start sucking like a newborn while furiously masturbating. "
                             + "Her milk slides smoothly down your throat, and you're left with a warm comfortable feeling.";
         }
@@ -89,15 +89,15 @@ public class BreastWorship extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return getSelf().name()
+            return getSelf().getName()
                             + " worshipfully licks and sucks "+target.nameOrPossessivePronoun()+
                             " nipples while uncontrollably playing with "+getSelf().reflectivePronoun()+".";
         } else {
             return String.format("%s worshipfully licks and sucks %s nipples while uncontrollably masturbating, drawing forth "
                             + "a gush of breast milk from %s teats. %s drinks deeply of %s milk, gurgling happily "
                             + "as more of the smooth liquid flows down %s throat.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
-                            getSelf().name(), target.possessiveAdjective(), getSelf().possessiveAdjective());
+                            getSelf().getName(), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            getSelf().getName(), target.possessiveAdjective(), getSelf().possessiveAdjective());
         }
     }
 

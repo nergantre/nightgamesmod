@@ -37,7 +37,7 @@ public class Pray extends Skill {
                                         + " whispering a quick prayer to Angel for guidance. %s looks at you strangely, but "
                                         + " the knowledge that Angel is there for you reinvigorates your spirit"
                                         + " and strengthens your faith.",
-                        target.name()));
+                        target.getName()));
         int amt = Math.round((((Player)getSelf()).getAddiction(AddictionType.ZEAL)
                         .orElseThrow(() -> new SkillUnusableException(this)).getMagnitude() * 5));
         getSelf().restoreWillpower(c, amt);

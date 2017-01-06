@@ -88,7 +88,7 @@ public class SpawnImp extends Skill {
                             + "pot and despite yourself, you're slightly affected by the pheromones she's releasing.";
         } else {
             return "You focus your dark energy and summon a minion to fight for you. A brief burst of flame reveals a naked imp. He looks at "
-                            + target.name() + " with hungry eyes "
+                            + target.getName() + " with hungry eyes "
                             + "and a constant stream of pre-cum leaks from his large, obscene cock.";
         }
     }

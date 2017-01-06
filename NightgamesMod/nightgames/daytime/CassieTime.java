@@ -142,7 +142,7 @@ public class CassieTime extends BaseNPCTime {
                                         + "She starts the ritual by coating the inscribed dildo with all the potions you brought along. After starting a incomprehensible chant, she unbuttons her pants and starts fingering her pussy. "
                                         + "<i>\"I... uhhgh told you... that this would be, aah, embarassing... Nhhh!\"</i> Cassie grunts as she's masturbating. As she's nearing orgasm, she sticks the inscribed dildo inside her and clamps down on it hard."
                                         + "You can see a soft purple glow transfering itself from her body into the plastic rod. After taking a few seconds to calm down, Cassie beckons you over, <i>\"Your turn "
-                                        + player.name() + ", say Ahh.\"</i>"
+                                        + player.getTrueName() + ", say Ahh.\"</i>"
                                         + "<br/>You obediently sit down on the couch, and open your mouth. As expected, Cassie takes the glowing fake phallus, still coated with her juices, and starts putting it in your mouth. "
                                         + "At first, you gag a bit from having a large foreign object stuffed into your throat, but after a few moments, you start feeling your entire oral cavity reforming itself around the false cock. "
                                         + "Your teeth recede a bit back into your gums, and you feel walls of soft muscle line your mouth. Your tongue feels like it's on fire as it rapidly lengthens, filling your maw, and spilling out of your expanded lips. "
@@ -183,7 +183,7 @@ public class CassieTime extends BaseNPCTime {
                             + "The third floor of the library is a part of the archives, where old books go to die if they're not asked for, for over 5 years. "
                             + "You wander around for a bit and find the girls bathroom hidden in a little corner by the classic slavic literature section. No wonder why it's mostly unused. "
                             + "While idly speculating at why Cassie even knows of such a place, you open the door and step inside. The moment you enter, you see Cassie sitting by the sink. She looks up at the noise and smiles as you step inside. "
-                            + "She looks at you knowingly and teases while cupping her generous chest, <i>\""+player.getName()+", what's up? Was there something... you wanted?\"</i>");
+                            + "She looks at you knowingly and teases while cupping her generous chest, <i>\""+player.getTrueName()+", what's up? Was there something... you wanted?\"</i>");
             if (npc.getAttraction(player) < 15) {
                 npc.gainAttraction(player, 2);
                 player.gainAttraction(npc, 2);
@@ -242,7 +242,7 @@ public class CassieTime extends BaseNPCTime {
                                         + " to hold back the thirst. Once inside, Cassie turns to you with a wide grin"
                                         + " and starts to speak. <i>\"So for today, I was thinking... Hey!\" </i>You don't let"
                                         + " her finish, instead you pick her up and deposit her swiftly on the dinner "
-                                        + "table. <i>\""+player.getName()+"! What are you doing?\"</i> No time for words. Time for milk. "
+                                        + "table. <i>\""+player.getTrueName()+"! What are you doing?\"</i> No time for words. Time for milk. "
                                         + "You yank her shirt over her head and pull her bra down to expose her tits. "
                                         + "Then you dive in, drinking greedily. Ah! So alive! The bit she left you was"
                                         + " great, but nothing compares to drinking straight from the source. Cassie, "
@@ -260,7 +260,7 @@ public class CassieTime extends BaseNPCTime {
                                         + " have to see even more of each other, though. I hope that isn't too much "
                                         + "of a problem?\"</i> A problem? You can't think of anything you'd like to do"
                                         + " more! And this time you're sure it's not just the milk, either. You walk"
-                                        + " back up to her and embrace her, telling her this. <i>\"Oh, "+player.getName()
+                                        + " back up to her and embrace her, telling her this. <i>\"Oh, "+player.getTrueName()
                                         +"!\"</i> She grabs "
                                         + "your head and pulls you in for a deep kiss. The kiss grows more and more"
                                         + " passionate, and she starts leaking milk on your chest. Through supreme "

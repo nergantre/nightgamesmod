@@ -79,9 +79,9 @@ public class Handjob extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You reach for " + target.name() + "'s dick but miss. (Maybe you should get closer?)";
+            return "You reach for " + target.getName() + "'s dick but miss. (Maybe you should get closer?)";
         } else {
-            return "You grab " + target.name()
+            return "You grab " + target.getName()
                             + "'s girl-cock and stroke it using the techniques you use when masturbating.";
         }
     }

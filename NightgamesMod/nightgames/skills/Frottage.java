@@ -90,9 +90,9 @@ public class Frottage extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You tease " + target.name() + "'s penis with your own, dueling her like a pair of fencers.";
+            return "You tease " + target.getName() + "'s penis with your own, dueling her like a pair of fencers.";
         } else {
-            return "You press your hips against " + target.name()
+            return "You press your hips against " + target.getName()
                             + "'s legs, rubbing her nether lips and clit with your dick.";
         }
     }

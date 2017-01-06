@@ -53,6 +53,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Bathe;
 import nightgames.actions.BushAmbush;
 import nightgames.actions.Craft;
+import nightgames.actions.Disguise;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
 import nightgames.actions.Locate;
@@ -566,6 +567,7 @@ public class Global {
         actionPool.add(new Locate());
         actionPool.add(new MasturbateAction());
         actionPool.add(new Energize());
+        actionPool.add(new Disguise());
         actionPool.add(new BushAmbush());
         actionPool.add(new PassAmbush());
         actionPool.add(new TreeAmbush());
@@ -653,7 +655,7 @@ public class Global {
 
     public static Character lookup(String name) {
         for (Character player : players) {
-            if (player.name().equalsIgnoreCase(name)) {
+            if (player.getTrueName().equalsIgnoreCase(name)) {
                 return player;
             }
         }
@@ -1383,7 +1385,7 @@ public class Global {
         });
         matchActions.put("name", (self, first, second, third) -> {
             if (self != null) {
-                return self.name();
+                return self.getName();
             }
             return "";
         });
@@ -1501,6 +1503,10 @@ public class Global {
             } else {
                 return "master";
             }
+        });
+
+        matchActions.put("true-name", (self, first, second, third) -> {
+            return self.getTrueName();
         });
 
         matchActions.put("girl", (self, first, second, third) -> {
@@ -1638,7 +1644,7 @@ public class Global {
         }
     }
 
-    public static HashSet<Character> getCharacters() {
+    public static HashSet<Character> getParticipants() {
         return new HashSet<>(players);
     }
 
@@ -1654,21 +1660,21 @@ public class Global {
         return rng.nextLong();
     }
 
-    public static Character getCharacterByName(String name) {
-        return players.stream().filter(c -> c.getName().equals(name)).findAny().get();
+    public static Character getParticipantsByName(String name) {
+        return players.stream().filter(c -> c.getTrueName().equals(name)).findAny().get();
     }
 
     private static String DISABLED_FORMAT = "%sDisabled";
     public static boolean checkCharacterDisabledFlag(Character self) {
-        return checkFlag(String.format(DISABLED_FORMAT, self.getName()));
+        return checkFlag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }
 
     public static void setCharacterDisabledFlag(Character self) {
-        flag(String.format(DISABLED_FORMAT, self.getName()));
+        flag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }    
 
     public static void unsetCharacterDisabledFlag(Character self) {
-        unflag(String.format(DISABLED_FORMAT, self.getName()));
+        unflag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }
 
     public static TraitTree getTraitRequirements() {
@@ -1680,10 +1686,10 @@ public class Global {
     }
 
 	public static void writeIfCombat(Combat c, Character self, String string) {
-		if (c == null) {
+	    if (c != null) {
+	        c.write(self, string);
+	    } else if (self.human()) {
 			gui().message(string);
-		} else {
-			c.write(self, string);
 		}
 	}
 

@@ -35,7 +35,7 @@ public abstract class MaledomSexStance extends Position {
             if (inserter.human()) {
                 c.write("With your phallus gone, you groan in frustration and cease your merciless movements.");
             } else {
-                c.write(inserter.name() + " groans with frustration with the sudden disappearance of "
+                c.write(inserter.getName() + " groans with frustration with the sudden disappearance of "
                                 + inserter.possessiveAdjective() + " pole.");
             }
             c.setStance(insertRandom(c));

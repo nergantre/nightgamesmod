@@ -185,6 +185,12 @@ public class Eve extends BasePersonality {
             }
             return "<i>\"That's it! Now, how about you return the favor?\"</i>";
         });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return "If there's one word to describe Eve's appearance, it would have to be 'wild'. Her face is quite pretty, though her eyes are an unnerving silver color. "
+                            + "She has bright purple hair gathered in a messy ponytail, a variety of tattoos decorating her extremely shapely body, and of couse it's "
+                            + "impossible to miss the larger than average cock and balls hanging between between her legs.";
+        });
     }
 
     @Override
@@ -272,13 +278,6 @@ public class Eve extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return "If there's one word to describe Eve's appearance, it would have to be 'wild'. Her face is quite pretty, though her eyes are an unnerving silver color. "
-                        + "She has bright purple hair gathered in a messy ponytail, a variety of tattoos decorating her extremely shapely body, and of couse it's "
-                        + "impossible to miss the larger than average cock and balls hanging between between her legs.";
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         return "You feel like you've got Eve pretty aroused, but you can't keep up"
                         + " with her amazing handjob. She's just too damn good at handling "
@@ -357,19 +356,19 @@ public class Eve extends BasePersonality {
             assist.defeated(character);
             assist.nudify();
         }
-        return "Eve kneels between " + target.name()
+        return "Eve kneels between " + target.getName()
                         + "'s legs and plays with the helpless girl's slit. <i>\"Nice and wet. Good.\"</i> She flicks a finger across "
-                        + target.name() + "'s "
+                        + target.getName() + "'s "
                         + "clit and you feel her body jerk at the sensation. <i>\"Sensitive too, and all mine? I don't mind if I do.\"</i> She lines up her impressive "
                         + "member with the other girl's dripping entrance and penetrates her with one firm thrust. Both girls moan in pleasure and you feel your boner stand at attention in "
                         + "response to the enticing scene. Eve grins at you confidently. <i>\"Jealous? I'm sure you wish your cock was buried deep in this tight, wet cunt, but I got "
                         + "here first.\"</i> She thrusts her hips several times for emphasis. <i>\"You could always go for the back door.\"</i> "
-                        + target.name() + " frantically shakes her "
+                        + target.getName() + " frantically shakes her "
                         + "head in protest, though she's moaning too much to speak. <i>\"Aww... She doesn't want to be double penetrated. You'll just have to settle for this.\"</i> <br/>"
                         + "Without slowing down her thrusts, she pushes the other girl into your lap. Suddenly "
-                        + target.name() + "'s soft butt is rubbing firmly and pleasurably against your erection. "
+                        + target.getName() + "'s soft butt is rubbing firmly and pleasurably against your erection. "
                         + "Shit. She's going to make you cum too, even when you're helping her. <i>\"Don't let go of her, or you won't get credit for her orgasm.\"</i> Unable to struggle "
-                        + "free, the sensation of " + target.name()
+                        + "free, the sensation of " + target.getName()
                         + "'s ass grinding against your dick makes you cum right after she does.";
 
     }
@@ -377,7 +376,7 @@ public class Eve extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "Your fight with " + assist.name()
+            return "Your fight with " + assist.getName()
                             + " is interrupted when you're suddenly grabbed from behind. The big breasts pressed against your back don't narrow down the "
                             + "suspects too much, but the hard bulge hitting your ass does. The last thing you want to do is expose your ass to Eve, but fortunately she doesn't have a "
                             + "firm grip on you yet. You jerk forward to try to escape her grasp. <i>\"Stop squirming!\"</i> She slams her knee up between your legs, hitting you squarely "
@@ -385,14 +384,14 @@ public class Eve extends BasePersonality {
                             + "You meekly shake your head and let her secure her grip.<br/>";
         }
 
-        return "Your fight with " + target.name()
+        return "Your fight with " + target.getName()
                         + " quickly renders you both naked and aroused. She manages to trip you, dropping you solidly to the floor. She wastes no time "
                         + "and bends down to suck on your defenseless dick. You groan in pleasure as her tongue plays with your glans. Suddenly, she yelps in surprise and loses her balance. "
-                        + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.name()
+                        + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.getName()
                         + " tries to get back to her feet, but Eve easily forces her onto her back. "
                         + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + c.getOpponent(character).boyOrGirl() + ".\"</i> "
                         + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br/>"
-                        + "Apparently you've been forgotten. Oh well. " + target.name()
+                        + "Apparently you've been forgotten. Oh well. " + target.getName()
                         + "'s pussy looks pretty lonely. Looks like this will be your win.<br/>";
 
     }
