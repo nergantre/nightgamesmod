@@ -85,7 +85,7 @@ public class Wait extends Skill {
         } else if (modifier == Result.strong) {
             return "You take a moment to clear your thoughts, focusing your mind and calming your body.";
         } else {
-            return "You bide your time, waiting to see what " + target.name() + " will do.";
+            return "You bide your time, waiting to see what " + target.getName() + " will do.";
         }
     }
 

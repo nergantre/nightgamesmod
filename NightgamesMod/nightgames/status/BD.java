@@ -20,7 +20,7 @@ public class BD extends DurationStatus {
         if (affected.human()) {
             return "Fantasies of being tied up continue to dance through your head.";
         } else {
-            return affected.name() + " is affected by a brief bondage fetish.";
+            return affected.getName() + " is affected by a brief bondage fetish.";
         }
     }
 

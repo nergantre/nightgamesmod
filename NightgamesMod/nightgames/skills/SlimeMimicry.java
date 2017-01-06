@@ -8,6 +8,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Stsflag;
 
 public class SlimeMimicry extends Skill {
     private final static List<Skill> MIMICRY_SKILLS = Arrays.asList(
@@ -29,7 +30,7 @@ public class SlimeMimicry extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond();
+        return getSelf().canRespond() && !getSelf().is(Stsflag.mimicry);
     }
 
     @Override

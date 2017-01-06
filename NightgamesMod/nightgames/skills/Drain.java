@@ -130,7 +130,7 @@ public class Drain extends Skill {
                             ? getSelf().body.getRandom("ass").describe(getSelf())
                             : getSelf().body.getRandomPussy().describe(getSelf());
             String base = "You put your powerful " + muscDesc + " muscles to work whilst" + " transfixing "
-                            + target.name() + "'s gaze with your own, goading " + target.possessiveAdjective()
+                            + target.getName() + "'s gaze with your own, goading " + target.possessiveAdjective()
                             + " energy into " + target.possessiveAdjective() + " cock."
                             + " Soon it erupts from her into your " + partDesc + ", ";
             switch (damage) {
@@ -159,7 +159,7 @@ public class Drain extends Skill {
                     return " but nothing happens, you feel strangely impotent.";
             }
         } else {
-            String base = "With your cock deep inside " + target.name()
+            String base = "With your cock deep inside " + target.getName()
                             + ", you can feel the heat from her core. You draw the energy from her, mining her depths. ";
             switch (damage) {
                 case 4:
@@ -169,13 +169,13 @@ public class Drain extends Skill {
                 case 3:
                     return base + "You draw some of her wit and cunning into yourself.";
                 case 1:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, taking a bit of her energy.";
                 case 2:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, stealing some of her restraint.";
                 case 0:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, but it goes wrong. You feel intense pleasure feeding "
                                     + "back into you and threatening to overwhelm you. You brink the spiritual link as fast as you can, but you're still left on the brink of "
                                     + "climax.";
@@ -242,7 +242,7 @@ public class Drain extends Skill {
                 case 0:
                     return String.format("%s squeezes %s with %s %s and starts to milk %s,"
                                     + " but %s suddenly %s %s shudder and moan loudly."
-                                    + " Looks like %s plan backfired.", getSelf().name(), target.subject(),
+                                    + " Looks like %s plan backfired.", getSelf().getName(), target.subject(),
                                     getSelf().possessiveAdjective(), partDesc, target.directObject(),
                                     target.pronoun(), target.action("feel"), getSelf().directObject(),
                                     target.nameOrPossessivePronoun());

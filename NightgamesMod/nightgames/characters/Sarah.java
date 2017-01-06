@@ -94,11 +94,6 @@ public class Sarah extends BasePersonality {
     public void rest(int time) {}
 
     @Override
-    public String describe(Combat c, Character self) {
-        return "";
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         return "";
     }

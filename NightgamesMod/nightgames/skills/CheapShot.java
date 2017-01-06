@@ -75,20 +75,20 @@ public class CheapShot extends Skill {
                                 "You freeze time briefly, giving you a chance to circle around %s. When time resumes, %s looks around in "
                                                 + "confusion, completely unguarded. You capitalize on your advantage by crouching behind %s and delivering a decisive "
                                                 + "uppercut to %s dangling balls.",
-                                target.name(), target.pronoun(), target.directObject(), target.possessiveAdjective());
+                                target.getName(), target.pronoun(), target.directObject(), target.possessiveAdjective());
             } else {
                 return String.format(
                                 "You freeze time briefly, giving you a chance to circle around %s. When time resumes, %s looks around in "
                                                 + "confusion, completely unguarded. You capitalize on your advantage by crouching behind %s and delivering a swift, but "
                                                 + "painful cunt punt.",
-                                target.name(), target.pronoun(), target.directObject());
+                                target.getName(), target.pronoun(), target.directObject());
             }
         } else {
             return String.format(
                             "You freeze time briefly, giving you a chance to circle around %s. When time resumes, %s looks around in "
                                             + "confusion, completely unguarded. You capitalize on your advantage by crouching behind %s and delivering a decisive "
                                             + "uppercut to the groin.",
-                            target.name(), target.pronoun(), target.directObject());
+                            target.getName(), target.pronoun(), target.directObject());
         }
     }
 
@@ -98,13 +98,13 @@ public class CheapShot extends Skill {
             return String.format(
                             "%s suddenly vanishes right in front of %s eyes. That wasn't just fast, %s completely disappeared! Before "
                                             + "%s can react, %s %s hit from behind with a devastating punch to %s unprotected balls.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
+                            getSelf().getName(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
                             target.subject(), target.pronoun(), target.subjectAction("are", "is"), target.possessiveAdjective());
         } else {
             return String.format(
                             "%s suddenly vanishes right in front of %s eyes. That wasn't just fast, %s completely disappeared! %s something "
                                             + "that sounds like 'Za Warudo' before %s suffer a painful groin hit from behind.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
+                            getSelf().getName(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
                             Global.capitalizeFirstLetter(target.subjectAction("hear")), target.pronoun());
         }
     }

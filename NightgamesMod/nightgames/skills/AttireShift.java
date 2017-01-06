@@ -54,13 +54,13 @@ public class AttireShift extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         return String.format("You trigger a small temporal disturbance, sending %s's clothes a couple seconds back in time. "
-                        + "Due to the speed and rotation of the Earth, they probably ended up somewhere over the Pacific Ocean.", target.name());
+                        + "Due to the speed and rotation of the Earth, they probably ended up somewhere over the Pacific Ocean.", target.getName());
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s triggers a device on her arm and %s clothes suddenly vanish. "
-                        + "What the fuck did %s just do?",getSelf().name(), target.nameOrPossessivePronoun(),
+                        + "What the fuck did %s just do?",getSelf().getName(), target.nameOrPossessivePronoun(),
                         getSelf().pronoun());
     }
 

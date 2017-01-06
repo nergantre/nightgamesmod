@@ -120,13 +120,13 @@ public class Stomp extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
             if (target.hasBalls()) {
-                return "You push " + target.name()
+                return "You push " + target.getName()
                                 + "'s legs apart, exposing her private parts. Her girl-cock is hanging over her testicles, so you prod it with your foot "
                                 + "to push it out of the way. She becomes slightly aroused at your touch and your attention, not realizing you're planning something extremely "
                                 + "painful. You're going to feel a bit bad about this, but probably not nearly as much as she will. You jump up, lifting both legs and coming "
                                 + "down in a double legdrop directly hitting her unprotected jewels.";
             } else {
-                return "You push " + target.name()
+                return "You push " + target.getName()
                                 + "'s legs apart, fully exposing her womanhood. She flushes in shame, apparently misunderstanding you intentions, which "
                                 + "compels you to mutter a quick apology before you jump up and slam your heel into her vulnerable quim.";
             }
@@ -136,23 +136,23 @@ public class Stomp extends Skill {
                                             + "%s does not seem to realize what you are planning before your foot is already plunging down towards them."
                                             + " When it lands, you feel a sympathetic jolt run up your spine as %s gonads are crushed beneath your foot."
                                             + " %s whimpers in pain, but not as much as you'd expect from such a magnificent impact.",
-                            target.name(), target.body.getRandomCock().describe(target), target.possessiveAdjective(),
+                            target.getName(), target.body.getRandomCock().describe(target), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.pronoun()), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.pronoun()));
         } else if (modifier == Result.weak) {
-            return "You step between " + target.name()
+            return "You step between " + target.getName()
                             + "'s legs and stomp down on her groin. Your foot hits something solid and she doesn't seem terribly affected.";
         } else if (modifier == Result.weak2) {
             return String.format(
                             "You step between %s's legs and stomp down on %s groin."
                                             + "%s exhales sharply, but does not seem hurt much at all. Somehow.",
-                            target.name(), target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()));
+                            target.getName(), target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()));
         } else {
             if (target.hasBalls()) {
-                return "You pull " + target.name()
+                return "You pull " + target.getName()
                                 + "'s legs open and stomp on her vulnerable balls. She cries out in pain and curls up in the fetal position.";
             } else {
-                return "You step between " + target.name()
+                return "You step between " + target.getName()
                                 + "'s legs and stomp down on her sensitive pussy. She cries out in pain and rubs her injured girl bits.";
             }
         }
@@ -181,7 +181,7 @@ public class Stomp extends Skill {
                                             + " worse, when %s suddenly lifts the foot up and slams it back down with"
                                             + " great force. %s often feel much pain from %s balls, but the"
                                             + " enormous impact still hurts a lot.",
-                            getSelf().name(), target.nameOrPossessivePronoun(),
+                            getSelf().getName(), target.nameOrPossessivePronoun(),
                             getSelf().possessiveAdjective(), target.possessiveAdjective(),
                             target.body.getRandomCock().describe(target), 
                             Global.capitalizeFirstLetter(target.subjectAction("were", "was")),

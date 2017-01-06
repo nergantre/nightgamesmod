@@ -32,7 +32,7 @@ public class PacifistModifier extends BaseModifier {
     @Override
     public String acceptance() {
         return "Lilly flashes you a broad grin and slaps you on the back uncomfortably hard. <i>\"Just so everyone's aware,\"</i> she calls out to your opponents, <i>\""
-                        + Global.getPlayer().name()
+                        + Global.getPlayer().getTrueName()
                         + " has sworn that he won't hurt any girls tonight. So no matter how much anyone taunts him, whips him, or kicks him in the balls, he can't retaliate in "
                         + "any way.\"</i> As you try to ignore a growing sense of dread, she leans close to your ear and whispers, <i>\"Good luck.\"</i>";
     }

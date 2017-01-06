@@ -56,14 +56,14 @@ public class FaerieSwarm extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.weak) {
             return "You unroll the summoning scroll and unleash a cloud of cute, naked faeries."
-                            + "They immediately swarm around " + target.name() + ", grabbing and pulling at "
+                            + "They immediately swarm around " + target.getName() + ", grabbing and pulling at "
                             + target.possessiveAdjective() + " clothes. By the time they disappear, " + target.pronoun()
                             + "'s left completely naked.";
         }
         return
 
         "You unroll the summoning scroll and unleash a cloud of cute, naked faeries. "
-                        + "They eagerly take advantage of " + target.name()
+                        + "They eagerly take advantage of " + target.getName()
                         + "'s naked body, teasing and tickling every exposed erogenous zone. "
                         + Global.capitalizeFirstLetter(target.pronoun()) + " tries in vain to defend "
                         + target.directObject() + "self, but there are too many of them and they're too quick. "

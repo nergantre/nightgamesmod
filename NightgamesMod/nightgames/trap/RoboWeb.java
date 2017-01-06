@@ -53,7 +53,7 @@ public class RoboWeb extends Trap {
                             + " %s into the air and leaving %s completely immobile. The clothes %s"
                             + " was wearing disappear from beneath the web-like structure, and %s"
                             + " thrashes around wildly, moaning loudly. %s is not getting"
-                            + " out of there anytime soon. Oh, the possibilities...", target.name(), target.directObject(),
+                            + " out of there anytime soon. Oh, the possibilities...", target.getName(), target.directObject(),
                             target.directObject(), target.pronoun(), target.pronoun(),
                             Global.capitalizeFirstLetter(target.pronoun())));
         }

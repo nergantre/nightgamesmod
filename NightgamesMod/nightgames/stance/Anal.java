@@ -98,18 +98,18 @@ public class Anal extends AnalSexStance {
 
         if (!inserter.hasInsertable()) {
             if (inserted.human()) {
-                c.write("With " + inserter.name() + "'s pole gone, your ass gets a respite.");
+                c.write("With " + inserter.getName() + "'s pole gone, your ass gets a respite.");
             } else {
-                c.write(inserted.name() + " sighs with relief with your phallus gone.");
+                c.write(inserted.getName() + " sighs with relief with your phallus gone.");
             }
             c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
-                c.write("With your asshole suddenly disappearing, " + inserter.name()
+                c.write("With your asshole suddenly disappearing, " + inserter.getName()
                                 + "'s dick pops out of what was once your sphincter.");
             } else {
-                c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
+                c.write("Your dick pops out of " + inserted.getName() + " as her asshole shrinks and disappears.");
             }
             c.setStance(insertRandom(c));
         }

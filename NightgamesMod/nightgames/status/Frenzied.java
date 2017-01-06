@@ -90,7 +90,7 @@ public class Frenzied extends DurationStatus {
             msg = "You cannot think about anything other than fucking all that moves.";
         } else {
             msg = String.format("%s has a frenzied look in %s eyes, interested in nothing but raw, hard sex.",
-                            affected.name(), affected.possessiveAdjective());
+                            affected.getName(), affected.possessiveAdjective());
         }
         if (affected.has(Trait.PrimalHeat)) {
             msg += Global.format(" Somehow {self:possessive} crazed animal desperation makes {self:direct-object} seem more attractive than ever.", affected, c.getOpponent(affected));

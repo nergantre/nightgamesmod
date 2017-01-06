@@ -50,7 +50,7 @@ public class Masochism extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         return "You fantasize about the pleasure that exquisite pain can bring. You share this pleasure with "
-                        + target.name() + ".";
+                        + target.getName() + ".";
     }
 
     @Override

@@ -101,16 +101,16 @@ public class TentacleRape extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You use your " + tentacles.describe(getSelf()) + " to snare " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to snare " + target.getName()
                             + ", but she nimbly dodges them.";
         } else if (modifier == Result.weak) {
-            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.getName()
                             + "'s arms, holding her in place.";
         } else if (modifier == Result.normal) {
-            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.getName()
                             + "'s naked body. They squirm against her and squirt slimy fluids on her body.";
         } else {
-            return "You use your " + tentacles.describe(getSelf()) + " to toy with " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to toy with " + target.getName()
                             + "'s helpless form. The tentacles toy with her breasts and penetrate her genitals and ass.";
         }
     }

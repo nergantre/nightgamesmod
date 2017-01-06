@@ -39,7 +39,7 @@ public class Trance extends DurationStatus {
         if (affected.human()) {
             return "You know that you should be fighting back, but it's so much easier to just surrender.";
         } else {
-            return affected.name() + " is flush with desire and doesn't seem interested in fighting back.";
+            return affected.getName() + " is flush with desire and doesn't seem interested in fighting back.";
         }
     }
 

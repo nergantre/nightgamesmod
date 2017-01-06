@@ -189,7 +189,7 @@ public class ThrowSlime extends Skill {
                                 + " Your mood does not improve when you feel it seep into your ears, and"
                                 + " beyond. It doesn't hurt, but the shock and the general weirdness of the"
                                 + " situation get to you. You try to shake the slime off, but it just worms around"
-                                + " inside of you while " + self.name() + " observes, giggling."
+                                + " inside of you while " + self.getName() + " observes, giggling."
                                 + " When it's job - whatever it is - is finished, the slime dislodges from"
                                 + " your head and falls to the ground in a harmless puddle. Not nearly as"
                                 + " harmless, however, is the sensation of some left-over slime still "

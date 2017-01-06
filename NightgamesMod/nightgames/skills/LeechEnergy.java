@@ -155,7 +155,7 @@ public class LeechEnergy extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             BodyPart selfPart = getSelf().body.getRandom("tentacles");
-            return "You try to drain energy with your " + selfPart.describe(getSelf()) + ", but " + target.name()
+            return "You try to drain energy with your " + selfPart.describe(getSelf()) + ", but " + target.getName()
                             + " dodges out of the way.";
         }
         return "";

@@ -90,11 +90,11 @@ public class Fly extends Fuck {
     @Override
     public String deal(Combat c, int amount, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return (amount == 0 ? "You " : "") + "grab " + target.name() + " tightly and try to take off. However "
+            return (amount == 0 ? "You " : "") + "grab " + target.getName() + " tightly and try to take off. However "
                             + target.pronoun()
                             + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
         } else {
-            return (amount == 0 ? "You " : "") + "grab " + target.name() + " tightly and take off, "
+            return (amount == 0 ? "You " : "") + "grab " + target.getName() + " tightly and take off, "
                             + (target.hasDick() && getSelf().hasPussy()
                                             ? "inserting her dick into your hungry "
                                                             + getSelf().body.getRandomPussy().describe(getSelf()) + "."

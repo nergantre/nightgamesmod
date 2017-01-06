@@ -57,7 +57,7 @@ public class Daytime {
             Global.gui()
                   .message("The next day, just after getting out of class you receive call from a restricted number. Normally you'd just ignore it, "
                                   + "but for some reason you feel compelled to answer this one. You're greeted by a man with a clear deep voice. <i>\"Hello "
-                                  + player.name() + ", and "
+                                  + player.getTrueName() + ", and "
                                   + "congratulations. Your performance in your most recent matches has convinced me you're ready for a higher level of play. You're promoted to "
                                   + "ranked status, effective immediately. This new status earns you a major increase in monetary rewards and many new opportunities. I'll leave "
                                   + "the details to others. I just wanted to congratulate you personally.\"</i> Wait, wait. That's not the end of the call. This guy is clearly "
@@ -67,7 +67,7 @@ public class Daytime {
         } else if (player.getLevel() >= 20 && player.getRank() == 1) {
             Global.gui()
                   .message("In the morning, you receive a call from a restricted number. You have a pretty decent guess who it might be. Hopefully it is good news. <i>\"Hello again "
-                                  + player.name()
+                                  + player.getTrueName()
                                   + ".\"</i> You were right, that voice is pretty hard to forget. <i>\"I am impressed. You and your opponents are "
                                   + "all quickly adapting to what most people would consider an extraordinary situation. If you are taking advantage of the people and services available "
                                   + "to you, you could probably use more money. Therefore, I am authorizing another pay increase. Congratulations.\"</i> This is the mysterious Benefactor "
@@ -78,7 +78,7 @@ public class Daytime {
         } else if (player.getLevel() >= 30 && player.getRank() == 2) {
             Global.gui()
                   .message("In the morning, you receive a call from a restricted number. You are not at all surprised to hear the voice of your anonymous Benefactor again. It did seem about time for him to call again. <i>\"Hello "
-                                  + player.name() + ". Have you been keeping busy? You've been putting "
+                                  + player.getTrueName() + ". Have you been keeping busy? You've been putting "
                                   + "on a good show in your matches, but when we last spoke, you had many questions. Are you any closer to finding your answers?\"</i><br/><br/>"
                                   + "That's an odd question since it depends on whether or not he has become more willing to talk. Who else is going to fill you in about this "
                                   + "apparently clandestine organization. <i>\"Oh don't become lazy now. I chose you for this Game, in part, for your drive and initiative. Are "

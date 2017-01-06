@@ -102,11 +102,12 @@ public class Maya extends BasePersonality {
     private void constructLines() {
         character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
             return "Maya looks at you sympathetically. <i>\"Was that painful? Don't worry, you aren't seriously injured. Our Benefactor protects us.\"</i>";
-       });
+        });
 
         character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
             if (other.human()) {
-                return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave " + other.boyOrGirl() + ". I'll try not to disappoint you.\"</i>";
+                return "Maya smiles softly as she confidently steps toward you. <i>\"Are you simply unfortunate or were you actually hoping to challenge me? What a brave "
+                                + other.boyOrGirl() + ". I'll try not to disappoint you.\"</i>";
             } else {
                 return "{self:SUBJECT} smiles softly as she confidently steps towards {other:name-do}.";
             }
@@ -114,31 +115,41 @@ public class Maya extends BasePersonality {
 
         character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
             return "Maya smiles, unashamed of her nudity. <i>\"Well done. Not many participants are able to get my clothes off anymore. You'll at least be able to look at a naked woman while you orgasm.\"</i>";
-       });
+        });
 
         character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
             return "You think you see something dangerous flicker in Maya's eyes. <i>\"Well done. I may need to get a little serious.\"</i>";
-       });
+        });
 
         character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
             return "Maya gives you a look of gentle disapproval. <i>\"You aren't putting up much of a fight, are you? Aren't you a little overeager to cum?\"</i>";
-       });
+        });
         character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
             return "";
-       });
+        });
 
         character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
             return "Maya lowers her voice to a smokey tone as she speaks. <i>\"Shall"
                             + " I show you what experience can do for a sexfighter?\"</i>";
-       });
+        });
 
         character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
             return "<i>\"Oh.. SHIT! Did I just actually... Fuck! Come here and let me return the favor, stud!\"</i>";
-       });
+        });
 
         character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
             return "<i>\"Aaaand there we are. Think you can go again?\"</i>";
-       });
+        });
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return "Maya is a beautiful young woman in her early twenties, though she carries"
+                            + " herself with the grace of a more mature lady. She has soft, shapely "
+                            + "breasts, larger than her slim frame would imply. Her waist length, raven "
+                            + "black hair is tied in a single braid down her back. She wears elbow-length"
+                            + " silk gloves, giving the appearance of sensual elegance. Her eyes are a "
+                            + "beautiful dark blue, behind her red-framed glasses, but every so often the "
+                            + "light catches them in a way that makes you think there might "
+                            + "be something dangerous inside.";
+        });
     }
 
     @Override
@@ -205,27 +216,27 @@ public class Maya extends BasePersonality {
             assist.defeated(character);
         }
         return "Maya looks a bit surprised as you restrain her opponent. <i>\"You're going to "
-                        + "side with me? I appreciate the thought.\"</i> She kneels down in front of " + target.name()
+                        + "side with me? I appreciate the thought.\"</i> She kneels down in front of " + target.getName()
                         + " and kisses her softly while staring deeply into her eyes. "
                         + "She turns her attention toward you and leans close to whisper in your"
                         + " ear. <i>\"But I don't need any help\"</i> "
                         + "You don't notice her hand snake between your legs until she suddenly "
                         + "gives your balls a painful flick. The shock and surprise makes you lose " + "your grip on "
-                        + target.name() + ", who twists out of your arms and pins you to the floor. Suddenly you're"
+                        + target.getName() + ", who twists out of your arms and pins you to the floor. Suddenly you're"
                         + " the one being double-teamed. Her eyes have a certain glazed over "
                         + "appearance that tells you " + "she's under Maya's influence.<br/><br/>"
                         + "Maya casually moves between your legs, where she can easily reach your " + "dick and "
-                        + target.name() + "'s slit. You groan despite yourself as she" + " starts to stroke your shaft "
+                        + target.getName() + "'s slit. You groan despite yourself as she" + " starts to stroke your shaft "
                         + "with both hands. Her mouth goes to work on the other girl's pussy. "
                         + "The two of you writhe in pleasure, completely at the mercy of the " + "veteran sexfighter. "
-                        + target.name() + " kisses you passionately as you both cum simultaneously.";
+                        + target.getName() + " kisses you passionately as you both cum simultaneously.";
 
     }
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "In the middle of your fight with " + assist.name()
+            return "In the middle of your fight with " + assist.getName()
                             + ", you feel an overwhelming presence approach from behind. "
                             + "She apparently senses it too, because you both stop and turn "
                             + "to see Maya confidently walking towards you. She smiles and looks "
@@ -241,31 +252,19 @@ public class Maya extends BasePersonality {
                             + "ery often anymore and I wanted to watch a cute " + c.getOpponent(character).boyOrGirl() + " orgasm. You "
                             + "should try to enjoy your defeat, it's just another " + "part of the Game.\"</i><br/>";
         }
-        return "In the middle of your fight with " + target.name()
+        return "In the middle of your fight with " + target.getName()
                         + ", you feel an overwhelming presence approach from behind. She apparently "
                         + "senses it too, because you both stop and turn "
                         + "to see Maya confidently walking towards you. She smiles and looks at"
-                        + " the two of you. <i>\"Eenie... Meenie... Minie....\"</i> She points toward " + target.name()
+                        + " the two of you. <i>\"Eenie... Meenie... Minie....\"</i> She points toward " + target.getName()
                         + ". <i>\"Mo.\"</i><br/>" + "Before the girl can react, Maya is on her and "
-                        + "kisses her passionately. " + target.name()
+                        + "kisses her passionately. " + target.getName()
                         + " struggles for just a moment before going limp. Maya moves to licking and " + "sucking "
                         + "her neck, while she eases the helpless girl to the floor. "
                         + "She glances back at you and you feel a chill run down your spine "
                         + "as her eyes seem to bore into you. <i>\"Are you "
                         + "going to make me do all the work? There's a lovely, naked girl in "
                         + "front of you who needs a good licking. Don't keep her waiting.</i><br/>";
-    }
-
-    @Override
-    public String describe(Combat c, Character self) {
-        return "Maya is a beautiful young woman in her early twenties, though she carries"
-                        + " herself with the grace of a more mature lady. She has soft, shapely "
-                        + "breasts, larger than her slim frame would imply. Her waist length, raven "
-                        + "black hair is tied in a single braid down her back. She wears elbow-length"
-                        + " silk gloves, giving the appearance of sensual elegance. Her eyes are a "
-                        + "beautiful dark blue, behind her red-framed glasses, but every so often the "
-                        + "light catches them in a way that makes you think there might "
-                        + "be something dangerous inside.";
     }
 
     @Override
@@ -362,30 +361,30 @@ public class Maya extends BasePersonality {
     @Override
     public String resist3p(Combat c, Character assist, Character target) {
         if (assist.human()) {
-            return "As you attempt to hold off Maya, you see " + target.name()
+            return "As you attempt to hold off Maya, you see " + target.getName()
                             + " stealthily approaching behind her. Looks like you're about to get "
                             + "some help. Maya suddenly "
                             + "winks at you and her foot darts up almost playfully between your legs."
                             + " She barely seemed to use any force, but the impact is still staggering. "
-                            + "You crumple to the floor, holding your balls in debilitating pain.<br/><br/>" + target.name()
+                            + "You crumple to the floor, holding your balls in debilitating pain.<br/><br/>" + target.getName()
                             + " hesitates, realizing she doesn't have the advantage of superior numbers. Maya is already moving, though, and pounces on the other girl "
                             + "before she can escape. From your position on the floor, you can't see exactly what is happening, but it's clear Maya is overwhelming her. As soon as the "
                             + "pain subsides, you force yourself back to your feet. You'd hoped to team up with "
-                            + target.name() + ", but she is already trembling in orgasm under Maya's "
+                            + target.getName() + ", but she is already trembling in orgasm under Maya's "
                             + "fingers. The older girl returns her attention to you and smiles. <i>\"Sorry about the interruption. Where were we?\"</i>";
         }
-        return assist.name()
+        return assist.getName()
                         + " isn't likely to be able to hold off Maya on her own. Your best bet is to work together to take her down. You creep up behind her, with Maya "
                         + "showing no sign of noticing you. When you've gotten close enough, you lunge toward her, hoping to catch her from behind. To your surprise, she vanishes the "
-                        + "moment you touch her and you stumble forward into " + assist.name()
+                        + "moment you touch her and you stumble forward into " + assist.getName()
                         + ". You turn around and see Maya standing a couple feet away. You've lost the element of "
                         + "surprise (you probably never had it), but it's still 2 on 1.<br/>" + "You suddenly feel "
-                        + assist.name()
+                        + assist.getName()
                         + " grab you from behind. You turn your head and notice her eyes are dull and unfocused. Maya must have hypnotized her to "
                         + "help trap you. Maya speaks up in a melodic voice. <i>\"How rude of you to interrupt a perfectly enjoyable fight. Naughty " + c.getOpponent(character).boyOrGirl() + "s should be punished.\"</i> She strips off your clothes and "
                         + "runs her fingers over your exposed dick. You immediately grow hard under her touch. She's too skilled with her hands for you to hold back and you're completely "
                         + "unable to defend yourself. She makes you cum embarrassingly quickly and both girls discard you unceremoniously to the floor. Maya snaps her fingers in front of "
-                        + assist.name()
+                        + assist.getName()
                         + "'s face to bring her out of the trance and the girl looks down at your defeated form in confusion. <i>\"Thank you for your cooperation. Now we can "
                         + "continue our fight without interruption.\"</i>";
     }

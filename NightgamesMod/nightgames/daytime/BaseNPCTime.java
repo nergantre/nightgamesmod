@@ -26,7 +26,7 @@ public abstract class BaseNPCTime extends Activity {
     Trait advTrait = null;
 
     public BaseNPCTime(Character player, NPC npc) {
-        super(npc.getName(), player);
+        super(npc.getTrueName(), player);
         this.npc = npc;
         buildTransformationPool();
     }

@@ -80,15 +80,15 @@ public class SpiralThrust extends Thrust {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.anal) {
-            return "You unleash your strongest technique into " + target.name()
+            return "You unleash your strongest technique into " + target.getName()
                             + "'s ass, spiraling your hips and stretching her tight sphincter.";
         } else if (modifier == Result.reverse) {
-            return Global.format("As you bounce on " + target.name()
+            return Global.format("As you bounce on " + target.getName()
                             + "'s steaming pole, you feel a power welling up inside you. You put everything you have into moving your hips circularly, "
                             + "rubbing every inch of her cock with your hot slippery "
                             + getSelfOrgan(c, target).fullDescribe(getSelf()) + ".", getSelf(), target);
         } else {
-            return "As you thrust into " + target.name()
+            return "As you thrust into " + target.getName()
                             + "'s hot pussy, you feel a power welling up inside you. You put everything you have into moving your hips circularly "
                             + "while you continue to drill into her.";
         }

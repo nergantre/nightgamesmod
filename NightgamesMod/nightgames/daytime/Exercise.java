@@ -138,7 +138,7 @@ public class Exercise extends Activity {
                         + "her other than hoping to run into her by chance. Does she really not own a cell phone? She didn't seem to be lying. Aesop, being an information broker, could probably find "
                         + "out more about her, but it feels wrong to ask him to investigate someone unrelated to the Games just to satisfy your curiosity. That would be like hiring a private detective "
                         + "to look into a girl you barely know. Oh well, maybe you'll get lucky and run into her again.<br/><br/>"
-                        + "Your luck proves remarkable a few minutes later. You spot Yui sitting alone on a bench. She jumps up with an excited grin when she sees you. <i>\""+player.name()+"! I was "
+                        + "Your luck proves remarkable a few minutes later. You spot Yui sitting alone on a bench. She jumps up with an excited grin when she sees you. <i>\""+player.getTrueName()+"! I was "
                         + "hoping to see you again. This really must be fate!\"</i> She blushes a bit at her own overexcitement and regains her self-control. She seems quite nervous. <i>\"Do you have "
                         + "some time to talk? I have something important I want to tell you... and something to show you.\"</i> She sounds as nervous as she looks. Whatever she wants to talk about, "
                         + "she's obviously worried how you'll react. The rest of your workout can wait.<br/><br/>"

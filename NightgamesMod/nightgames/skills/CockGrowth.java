@@ -90,15 +90,15 @@ public class CockGrowth extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
         if (modifier == Result.miss) {
-            message = "You attempt to channel your arcane energies into " + target.name()
+            message = "You attempt to channel your arcane energies into " + target.getName()
                             + "'s crotch, but she dodges out of the way, causing your spell to fail.";
         } else {
             if (modifier == Result.special) {
-                message = "You channel your arcane energies into " + target.name() + "'s groin. A moment later, "
-                                + target.name() + " yelps as her clitoris rapidly enlarges into a small girl-cock!";
+                message = "You channel your arcane energies into " + target.getName() + "'s groin. A moment later, "
+                                + target.getName() + " yelps as her clitoris rapidly enlarges into a small girl-cock!";
             } else {
-                message = "You channel your arcane energies into " + target.name() + "'s dick. A moment later, "
-                                + target.name() + " yelps as her cock rapidly enlarges!";
+                message = "You channel your arcane energies into " + target.getName() + "'s dick. A moment later, "
+                                + target.getName() + " yelps as her cock rapidly enlarges!";
             }
             if (damage > 0) {
                 message += " You realize the effects are permanent!";

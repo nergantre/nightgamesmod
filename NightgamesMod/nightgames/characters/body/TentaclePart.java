@@ -68,7 +68,7 @@ public class TentaclePart extends GenericBodyPart {
     @Override
     public void describeLong(StringBuilder b, Character c) {
         if (printSynonym)
-            b.append("A " + Global.pickRandom(synonyms) + " of ");
+            b.append("A " + Global.pickRandom(synonyms).get() + " of ");
         else
             b.append("A ");
         b.append(describe(c));

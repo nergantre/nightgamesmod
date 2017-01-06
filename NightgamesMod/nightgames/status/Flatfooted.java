@@ -29,7 +29,7 @@ public class Flatfooted extends DurationStatus {
         if (affected.human()) {
             return "You are caught off-guard.";
         } else {
-            return affected.name() + " is flat-footed and not ready to fight.";
+            return affected.getName() + " is flat-footed and not ready to fight.";
         }
     }
 

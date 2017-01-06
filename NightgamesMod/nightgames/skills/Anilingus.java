@@ -116,9 +116,9 @@ public class Anilingus extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to lick " + target.name() + "'s rosebud, but "+target.pronoun()+" pushes your head away.";
+            return "You try to lick " + target.getName() + "'s rosebud, but "+target.pronoun()+" pushes your head away.";
         } else if (modifier == Result.special) {
-            return "You gently rim " + target.name() + "'s asshole with your tongue, sending shivers through "+target.possessiveAdjective()+" body.";
+            return "You gently rim " + target.getName() + "'s asshole with your tongue, sending shivers through "+target.possessiveAdjective()+" body.";
         } else if (modifier == Result.reverse) {
             return "With " + target.nameOrPossessivePronoun()
                             + " ass pressing into your face, you helplessly give in and take an experimental lick at "+target.possessiveAdjective()+" pucker.";
@@ -130,18 +130,18 @@ public class Anilingus extends Skill {
                             + "You dimly realize that this is probably arousing you as much as " + target.getName()
                             + ", but worshipping "+target.possessiveAdjective()+" sublime derriere seems much higher on your priorities than winning.";
         }
-        return "You thrust your tongue into " + target.name() + "'s ass and lick it, making "+target.directObject()+" yelp in surprise.";
+        return "You thrust your tongue into " + target.getName() + "'s ass and lick it, making "+target.directObject()+" yelp in surprise.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return String.format("%s closes in on %s behind, but %s %s to push %s head away.", getSelf().name(), 
+            return String.format("%s closes in on %s behind, but %s %s to push %s head away.", getSelf().getName(), 
                             target.nameOrPossessivePronoun(), getSelf().pronoun(), 
                             target.action("manage"), target.possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s gently rims %s asshole with %s tongue, sending shivers through %s body.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                            getSelf().getName(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                             target.possessiveAdjective());
         } else if (modifier == Result.reverse) {
             return String.format("With %s ass pressing into %s face, %s helplessly gives in and starts licking %s ass.",
@@ -152,7 +152,7 @@ public class Anilingus extends Skill {
                             getSelf().subject(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(), target.possessiveAdjective(), target.possessiveAdjective());
         }
         return String.format("%s licks %s tight asshole, both surprising and arousing %s.",
-                        getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun());
+                        getSelf().getName(), target.nameOrPossessivePronoun(), target.pronoun());
     }
 
     @Override

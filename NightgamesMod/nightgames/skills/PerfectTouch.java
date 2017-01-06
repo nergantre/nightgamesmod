@@ -71,9 +71,9 @@ public class PerfectTouch extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to steal " + target.name() + "'s clothes off of her, but she catches you.";
+            return "You try to steal " + target.getName() + "'s clothes off of her, but she catches you.";
         } else {
-            return "You feint to the left while your right hand makes quick work of " + target.name()
+            return "You feint to the left while your right hand makes quick work of " + target.getName()
                             + "'s clothes. By the time she realizes what's happening, you've "
                             + "already stripped all her clothes off.";
         }

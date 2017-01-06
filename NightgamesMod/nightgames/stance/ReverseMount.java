@@ -12,7 +12,7 @@ public class ReverseMount extends AbstractBehindStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are straddling " + bottom.name() + ", with your back to her.";
+            return "You are straddling " + bottom.getName() + ", with your back to her.";
         } else {
             return String.format("%s is sitting on %s chest, facing %s groin.",
                             top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());

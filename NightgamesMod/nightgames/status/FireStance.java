@@ -29,7 +29,7 @@ public class FireStance extends DurationStatus {
         if (affected.human()) {
             return "Your spirit burns in you, feeding your power";
         } else {
-            return affected.name() + " is all fired up.";
+            return affected.getName() + " is all fired up.";
         }
     }
 

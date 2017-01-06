@@ -23,7 +23,7 @@ public class RemoteControl extends Trap {
                             + " real discernable features. Suddenly a ring of light appears around"
                             + " the thing, and you freeze in place and hear " + owner.nameOrPossessivePronoun()
                             + " voice in your mind." + " <i>\"Is someone there? Who did I catch? Ah, it's you, "
-                            + target.name + "! Wonderful!\"</i> Without warning, the hand not holding the weird device"
+                            + target.getName() + "! Wonderful!\"</i> Without warning, the hand not holding the weird device"
                             + " flies down towards your crotch and";
             if (!target.outfit.slotOpen(ClothingSlot.bottom)) {
                 msg += ", first removing all the clothing covering your nethers,";
@@ -46,11 +46,11 @@ public class RemoteControl extends Trap {
                                 + ". " + owner.nameOrPossessivePronoun() + " experienced, feather-light"
                                 + " touch soon gets you lubricated enough to allow your fingers passage"
                                 + " deeper into your folds and the hole in their center. You gasp as "
-                                + owner.name + ", by proxy, rubs your clit with 'your'"
+                                + owner.subject() + ", by proxy, rubs your clit with 'your'"
                                 + " thumb while probing your pussy with delicate thrusts of 'your' fingers.";
                 otherHand = "between your thighs, working dilligently on your pussy.";
             } else {
-                msg += " finds nothing there. <i>\"Oh, right. I forgot. You're really missing out," + target.name
+                msg += " finds nothing there. <i>\"Oh, right. I forgot. You're really missing out," + target.getName()
                                 + ", you ought to do something about that. Still, this"
                                 + " doesn't mean there is </i>nothing<i> we can do...\"</i>"
                                 + " Your errant limb bends back up, and you involuntarily wet a finger."

@@ -164,13 +164,6 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return character.name
-                        + " is a cute girl with her short blonde hair in a what's almost a pixie cut. However, her long bangs hangs over her blue eyes, and makes it hard for you to tell what's in her mind."
-                        + "She looks a bit strange dressed in what's obviously traditional eastern clothing while being very clearly white. Looking your way, she gives you a polite bow before taking her stance.";
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
@@ -255,6 +248,12 @@ public class Yui extends BasePersonality {
         character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
             return "{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance";
         });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return character.subject()
+                            + " is a cute girl with her short blonde hair in a what's almost a pixie cut. However, her long bangs hangs over her blue eyes, and makes it hard for you to tell what's in her mind."
+                            + "She looks a bit strange dressed in what's obviously traditional eastern clothing while being very clearly white. Looking your way, she gives you a polite bow before taking her stance.";
+        });
     }
 
     @Override
@@ -280,26 +279,26 @@ public class Yui extends BasePersonality {
             return String.format(
                             "Yui kneels between %s's legs and takes a hold of %s cock. "
                                             + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s blows %s load literally within a second of Yui touching her. Wow.",
-                            target.name(), target.possessiveAdjective(), target.name(), target.pronoun(), target.possessiveAdjective());
+                            target.getName(), target.possessiveAdjective(), target.getName(), target.pronoun(), target.possessiveAdjective());
         }
         return String.format(
                         "Yui kneels between %s's legs and hooks two fingers inside %s pussy. "
                                         + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s back arches and lets out a wail within a second of Yui touching her. Wow.",
-                                        target.name(), target.possessiveAdjective(), target.name(), target.possessiveAdjective());
+                                        target.getName(), target.possessiveAdjective(), target.getName(), target.possessiveAdjective());
 }
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
-        return target.human()?"Your fight with " + assist.name() + " has barely started when you hear a familiar voice call out to you. <i>\"Master! I was hoping you would be here.\"</i> " 
+        return target.human()?"Your fight with " + assist.getName() + " has barely started when you hear a familiar voice call out to you. <i>\"Master! I was hoping you would be here.\"</i> " 
                         + "Before you can react, Yui grabs you and eagerly kisses you on the lips. Your surprise quickly gives way to extreme lightheadedness and drowsiness. " 
                         + "Your legs give out and you collapse into her arms. Did Yui drug you? <i>\"Please forgive this betrayal, Master. You work so hard fighting and training " 
                         + "every night. For the sake of your health, I thought it was neccessary to make you take a break.\"</i> "
                         + "She sounds genuinely apologetic, but also a little excited. <br/><i>\"Don\'t worry. We\'ll take good care of you until you can move again.\"</i> "
-                        + "She carefully lowers your limp upper body onto her lap as " + assist.name() + " fondles your dick to full hardness. "
+                        + "She carefully lowers your limp upper body onto her lap as " + assist.getName() + " fondles your dick to full hardness. "
                         + "<i>\"I\'m sure we can relieve some of your built up stress too.\"</i><br/>"
                         :
                             "This fight could certainly have gone better than this. You\'re completely naked and have your hands bound behind your back. " 
-                        + target.name() + " is just taking " + "her time to finish you off. A familiar voice calls out to her. <i>\"I see you\'ve caught my master. "
+                        + target.getName() + " is just taking " + "her time to finish you off. A familiar voice calls out to her. <i>\"I see you\'ve caught my master. "
                                         + "I\'ve always wanted to get him in this position.\"</i> You " + "both surprised to see Yui standing nearby. "
                                         + "She hadn\'t made a sound when she approached. <i>\"Do you mind if I play with him for a moment? I promise I " 
                                         + "won\'t make him cum.\"</i> ";

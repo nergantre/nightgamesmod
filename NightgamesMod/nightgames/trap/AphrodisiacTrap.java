@@ -40,7 +40,7 @@ public class AphrodisiacTrap extends Trap {
                                                 + "hit with an aphrodisiac.");
             } else if (target.location().humanPresent()) {
                 Global.gui().message(
-                                target.name() + " is caught in your trap and sprayed with aphrodisiac. She flushes bright red and presses a hand against her crotch. It seems like "
+                                target.getName() + " is caught in your trap and sprayed with aphrodisiac. She flushes bright red and presses a hand against her crotch. It seems like "
                                                 + "she'll start masturbating even if you don't do anything.");
             }
             target.addNonCombat(new Horny(target, (30 + getStrength()) / 10, 10, "Aphrodisiac Trap"));

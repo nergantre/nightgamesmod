@@ -101,9 +101,9 @@ public class CommandUse extends PlayerCommand {
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
         switch (modifier) {
             case normal:
-                return target.name() + " coats herself in a shiny lubricant at your 'request'.";
+                return target.getName() + " coats herself in a shiny lubricant at your 'request'.";
             case special:
-                return "Obediently, " + target.name() + " smears a sensitivity potion on herself.";
+                return "Obediently, " + target.getName() + " smears a sensitivity potion on herself.";
             default:
                 return "<<This should not be displayed, please inform The" + " Silver Bard: CommandUse-deal>>";
         }

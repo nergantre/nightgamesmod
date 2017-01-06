@@ -39,7 +39,7 @@ public class CommandInsult extends PlayerCommand {
 
     @Override
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
-        return "Your words nearly drive " + target.name() + " to tears with their ferocity and psychic backup. Luckily,"
+        return "Your words nearly drive " + target.getName() + " to tears with their ferocity and psychic backup. Luckily,"
                         + " she won't remember any of it later.";
     }
 

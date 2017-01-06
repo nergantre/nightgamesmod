@@ -14,6 +14,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
@@ -151,7 +152,7 @@ public abstract class BasePersonality implements Personality {
     }
 
     public String defaultImage(Combat c) {
-        return character.name()
+        return character.getTrueName()
                         .toLowerCase() + "_confident.jpg";
     }
 
@@ -174,7 +175,7 @@ public abstract class BasePersonality implements Personality {
     @Override
     public String describeAll(Combat c, Character self) {
         StringBuilder b = new StringBuilder();
-        b.append(describe(c, self));
+        b.append(self.getRandomLineFor(CharacterLine.DESCRIBE_LINER, c));
         b.append("<br/><br/>");
         self.body.describe(b, c.getOpponent(self), " ");
         b.append("<br/>");

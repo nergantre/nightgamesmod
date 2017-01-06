@@ -74,7 +74,7 @@ public class WindUp extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return String.format("%s fiddles with a small device on %s wrist.", getSelf().name(),
+        return String.format("%s fiddles with a small device on %s wrist.", getSelf().getName(),
                         getSelf().possessiveAdjective());
     }
 

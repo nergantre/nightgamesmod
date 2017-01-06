@@ -124,14 +124,14 @@ public class Slap extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return target.name() + " avoids your slap.";
+            return target.getName() + " avoids your slap.";
         } else if (modifier == Result.special) {
-            return "You channel your bestial power and strike " + target.name() + " with a solid open hand strike.";
+            return "You channel your bestial power and strike " + target.getName() + " with a solid open hand strike.";
         } else if (modifier == Result.critical) {
             return "You let more of your slime flow to your hand, tripling it in size. Then, you lash out and slam "
-                            + target.name() + " in the face.";
+                            + target.getName() + " in the face.";
         } else {
-            return "You slap " + target.name()
+            return "You slap " + target.getName()
                             + "'s cheek; not hard enough to really hurt her, but enough to break her concentration.";
         }
     }

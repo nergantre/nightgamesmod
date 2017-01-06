@@ -1062,6 +1062,7 @@ public class Body implements Cloneable {
                 expired.add(r);
             }
         }
+        Collections.reverse(expired);
         for (PartReplacement r : expired) {
             replacements.remove(r);
             updateCurrentParts();
@@ -1120,12 +1121,7 @@ public class Body implements Cloneable {
                 sb.append(Global.prependPrefix(last.prefix(), last.fullDescribe(character)));
                 sb.append('.');
             }
-            if (c != null) {
-                c.writeSystemMessage(character, sb.toString());
-            } else if (character.human()) {
-                Global.gui()
-                      .message(sb.toString());
-            }
+            Global.writeIfCombat(c, character, sb.toString());
         }
     }
 

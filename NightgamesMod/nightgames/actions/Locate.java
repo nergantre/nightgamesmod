@@ -51,14 +51,14 @@ public class Locate extends Action {
         if (choice.equals("Start")) {
             Global.getMatch().combatants.stream().filter(c -> self.getAffection(c) >= MINIMUM_SCRYING_REQUIREMENT)
                             .forEach((character) -> {
-                                gui.choose(this, character.getName(), self);
+                                gui.choose(this, character.getTrueName(), self);
                             });
             gui.choose(this, "Leave", self);
         } else if (choice.equals("Leave")) {
             gui.clearText();
             gui.clearCommand();
             Global.getMatch().resume();
-        } else if ((target = Global.getCharacterByName(choice)) != null) {
+        } else if ((target = Global.getParticipantsByName(choice)) != null) {
             Area area = target.location();
             gui.clearText();
             if (area != null) {
@@ -66,7 +66,7 @@ public class Locate extends Action {
                                 + target.nameOrPossessivePronoun() + " location. In your mind, an image of the <b><i>"
                                 + area.name
                                 + "</i></b> appears. It falls apart as quickly as it came to be, but you know where "
-                                + target.name()
+                                + target.getTrueName()
                                 + " currently is. Your small talisman is already burning up in those creepy "
                                 + "purple flames, the smoke flowing from your nose straight to your crotch and setting another fire there.");
                 target.addNonCombat(new Detected(target, 10));
@@ -86,7 +86,7 @@ public class Locate extends Action {
             gui.message("If you see this text in game, something went wrong with"
                             + " the locator function. Please take the time to send the information"
                             + " below to The Silver Bard at his wordpress blog or Fenoxo's Forum: " + "\n\nSelf: "
-                            + self.name() + "(" + self.human() + ")\n" + "Choice: " + choice + "\nStacktrace:\n"
+                            + self.getTrueName() + "(" + self.human() + ")\n" + "Choice: " + choice + "\nStacktrace:\n"
                             + writer.toString());
             gui.clearCommand();
             gui.choose(this, "Leave", self);

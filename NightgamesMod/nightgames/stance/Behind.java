@@ -12,7 +12,7 @@ public class Behind extends AbstractBehindStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are holding " + bottom.name() + " from behind.";
+            return "You are holding " + bottom.getName() + " from behind.";
         } else {
             return String.format("%s is holding %s from behind.", top.subject(), bottom.nameDirectObject());
         }

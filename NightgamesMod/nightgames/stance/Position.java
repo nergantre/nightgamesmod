@@ -159,9 +159,9 @@ public abstract class Position implements Cloneable {
     }
 
     public Character other(Character character) {
-        if (character.name().equals(top.name())) {
+        if (character.getTrueName().equals(top.getTrueName())) {
             return bottom;
-        } else if (character.name().equals(bottom.name())) {
+        } else if (character.getTrueName().equals(bottom.getTrueName())) {
             return top;
         }
         return null;

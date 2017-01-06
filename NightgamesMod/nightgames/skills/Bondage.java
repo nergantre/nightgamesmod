@@ -50,12 +50,12 @@ public class Bondage extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         return "You imagine the exhilarating feeling of ropes digging into your skin and binding you. You push this feeling into "
-                        + target.name() + "'s libido.";
+                        + target.getName() + "'s libido.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
+        return getSelf().getName()
                         + " flushes and wraps her arms around herself tightly. Suddenly the thought of being tied up and dominated slips into "+target.nameOrPossessivePronoun()+" head.";
     }
 

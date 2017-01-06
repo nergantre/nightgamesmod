@@ -128,7 +128,7 @@ public class Angel extends BasePersonality {
                         + "Patting your own lap, you motion for Angel to sit down. Luckily for you, she doesn't leave you hanging and does just that. "
                         + "<br/><br/>"
                         + "The two of you spend a few moments relaxing before Angel decides to bring up her worries. "
-                        + "<i>\"Say " + player.name() + ", what do you really think of me become a real goddess? "
+                        + "<i>\"Say " + player.getName() + ", what do you really think of me become a real goddess? "
                         + "To be honest, I'm not even sure how it started. One night after the games, I started feeling a heat in my chest. "
                         + "The next night when we started the match, I already had my wings. "
                         + "I didn't think too much of it, with all the other strange things going on, "
@@ -144,7 +144,7 @@ public class Angel extends BasePersonality {
                                             + "Angel scowls a bit at you and questions, <i>\"You mean you're not going to be my follower?\"</i> "
                                             + "You hastily deny that and try to resolve the misunderstanding before you realize Angel's stern "
                                             + "expression melts into a smile and you realize she was just joking. "
-                                            + "<i>\"Thanks "+ other.name() + ", that took a lot off my mind. I'll pay you back, don't worry. "
+                                            + "<i>\"Thanks "+ other.getName() + ", that took a lot off my mind. I'll pay you back, don't worry. "
                                                             + "A Goddess always keeps her promises.\"</i>");
                             useFollowers();
                             return true;
@@ -397,6 +397,19 @@ public class Angel extends BasePersonality {
                                 + "and shows you a satisfied smile as you uncontrollably let out a final splurt of cum.";
             }
         });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.demigoddess)) {
+                return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+                                + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
+                                + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
+                                + "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
+            } else {
+                return "Angel has long, straight blonde hair that almost reaches her waist. "
+                                + "Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to "
+                                + "her, but you don't know it yet.";
+            }
+        });
     }
 
     @Override
@@ -502,20 +515,6 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.demigoddess)) {
-            return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
-                            + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
-                            + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
-                            + "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
-        } else {
-            return "Angel has long, straight blonde hair that almost reaches her waist. "
-                            + "Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to "
-                            + "her, but you don't know it yet.";
-        }
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         if (flag == Result.intercourse) {
             return "Angel pins you on your back, riding you with passion. You're close to the edge, but she's too far gone to take advantage of it. She's fucking you "
@@ -577,19 +576,19 @@ public class Angel extends BasePersonality {
                                             + " energy to control %s who is violently shaking in the throes of orgasm."
                                             + " You ease %s to the floor as %s goes completely limp, while Angel licks"
                                             + " the cum from her fingers.",
-                            target.name(), target.name(), target.name(), target.possessiveAdjective(), target.name(),
-                            target.name(), target.pronoun(), target.name(), target.directObject(), target.pronoun());
+                            target.getName(), target.getName(), target.getName(), target.possessiveAdjective(), target.getName(),
+                            target.getName(), target.pronoun(), target.getName(), target.directObject(), target.pronoun());
         }
-        return "You present " + target.name()
+        return "You present " + target.getName()
                         + "'s naked, helpless form to Angel's tender minstrations. Angel licks her lips and begins licking and stroking "
-                        + target.name() + "'s body. She's " + "hitting all the right spots, because soon "
-                        + target.name()
+                        + target.getName() + "'s body. She's " + "hitting all the right spots, because soon "
+                        + target.getName()
                         + " is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. "
                         + "Angel meets your eyes to focus your attention and slowly moves her fingers down the front of "
-                        + target.name() + "'s body. You can't see her hands from "
-                        + "this position, but you know when she reaches her target, because " + target.name()
+                        + target.getName() + "'s body. You can't see her hands from "
+                        + "this position, but you know when she reaches her target, because " + target.getName()
                         + " immediately jumps as if she's been shocked. Soon it takes all of "
-                        + "your energy to control " + target.name()
+                        + "your energy to control " + target.getName()
                         + " who is violently shaking in the throes of orgasm. You ease her to the floor as she goes completely limp, "
                         + "while Angel licks the juice from her fingers.";
 
@@ -598,20 +597,20 @@ public class Angel extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "You manage to overwhelm " + assist.name()
+            return "You manage to overwhelm " + assist.getName()
                             + " and bring her to the floor. You're able to grab both her arms and pin her helplessly beneath you. "
                             + "Before you can take advantage of your position, pain explodes below your waist. "
-                            + assist.name() + " shouldn't have been able to reach your groin "
+                            + assist.getName() + " shouldn't have been able to reach your groin "
                             + "from her position, but you're in too much pain to think about it. You are still lucid enough to feel large, perky breasts press against your back "
                             + "and a soft whisper in your ear. <i>\"Surprise, lover.\"</i> The voice is unmistakably Angel's. She rolls you onto your back and positions herself over your face,"
                             + " with her legs pinning your arms. Her bare pussy is right in front of you, just out of reach of your tongue. It's weird that she's naked, considering "
                             + "she caught you by surprise, but this is Angel after all.<br/><br/>";
         } else {
-            return "You and " + target.name()
+            return "You and " + target.getName()
                             + " grapple back and forth for several minutes. Soon you're both tired, sweaty, and aroused. You catch her hands for a moment and "
                             + "run your tongue along her neck and collarbone. Recognizing her disadvantage, she jumps out of your grasp and directly into Angel. Neither of you "
-                            + "noticed Angel approach. Before " + target.name()
-                            + " can react, Angel pulls her into a passionate kiss. " + target.name()
+                            + "noticed Angel approach. Before " + target.getName()
+                            + " can react, Angel pulls her into a passionate kiss. " + target.getName()
                             + " forgets to resist and goes limp " + "long enough for Angel to pin her arms.<br/><br/>";
         }
     }

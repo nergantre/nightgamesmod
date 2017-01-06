@@ -123,7 +123,7 @@ public class PullOut extends Skill {
                                         : target.body.getRandomPussy();
                         String partString = part.describe(target);
                         if (getSelf().human()) {
-                            c.write(getSelf(), "You try to pull out of " + target.name() + "'s " + partString
+                            c.write(getSelf(), "You try to pull out of " + target.getName() + "'s " + partString
                                             + ", but her legs immediately tighten against your waist, holding you inside her. "
                                             + "The mere friction from her action sends a shiver down your spine.");
                         } else {
@@ -134,7 +134,7 @@ public class PullOut extends Skill {
                         }
                     } else if (getSelf().hasStatus(Stsflag.armlocked)) {
                         if (getSelf().human()) {
-                            c.write(getSelf(), "You try to pull yourself off of " + target.name()
+                            c.write(getSelf(), "You try to pull yourself off of " + target.getName()
                                             + ", but she merely pulls you back on top of her, surrounding you in her embrace.");
                         } else {
                             c.write(getSelf(), String.format("%s tries to pull %s off of %s, but with "
@@ -148,7 +148,7 @@ public class PullOut extends Skill {
                                         : target.body.getRandomPussy();
                         String partString = part.describe(target);
                         if (getSelf().human()) {
-                            c.write(getSelf(), "You try to pull yourself out of " + target.name() + "'s " + partString
+                            c.write(getSelf(), "You try to pull yourself out of " + target.getName() + "'s " + partString
                                             + ", but she clamps down hard on your cock while smiling at you. You almost cum from the sensation, and quickly abandon ideas about your escape.");
                         } else {
                             c.write(getSelf(), String.format("%s tries to pull %s out of %s %s, but %s down "
@@ -200,12 +200,12 @@ public class PullOut extends Skill {
             return "You rise up and let " + target.nameOrPossessivePronoun() + " girl-cock slip out of your "
                             + (c.getStance().en == Stance.anal ? "ass." : "pussy");
         } else if (modifier == Result.anal) {
-            return "You pull your dick completely out of " + target.name() + "'s ass.";
+            return "You pull your dick completely out of " + target.getName() + "'s ass.";
         } else if (modifier == Result.normal) {
-            return "You pull completely out of " + target.name()
+            return "You pull completely out of " + target.getName()
                             + "'s pussy, causing her to let out a disappointed little whimper.";
         } else {
-            return "You pull yourself off " + target.name()
+            return "You pull yourself off " + target.getName()
                             + "'s face, causing her to gasp lungfuls of the new fresh air offer to her.";
         }
     }

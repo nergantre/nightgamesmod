@@ -31,10 +31,6 @@ public class BlankPersonality extends BasePersonality {
         return null;
     }
 
-    @Override public String describe(Combat c, Character self) {
-        return "test 2 3";
-    }
-
     @Override public String draw(Combat c, Result flag) {
         return null;
     }

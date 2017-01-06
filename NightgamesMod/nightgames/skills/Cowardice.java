@@ -63,7 +63,7 @@ public class Cowardice extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You try to run away, but " + target.name() + " catches you and grabs you from behind.";
+        return "You try to run away, but " + target.getName() + " catches you and grabs you from behind.";
     }
 
     @Override

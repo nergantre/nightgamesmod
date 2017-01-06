@@ -69,10 +69,10 @@ public class Beg extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You throw away your pride and ask " + target.name() + " for mercy. This just seems to encourage "
+            return "You throw away your pride and ask " + target.getName() + " for mercy. This just seems to encourage "
                             + target.possessiveAdjective() + " sadistic side.";
         }
-        return "You put yourself completely at " + target.name() + "'s mercy. "
+        return "You put yourself completely at " + target.getName() + "'s mercy. "
                         + Global.capitalizeFirstLetter(target.pronoun())
                         + " takes pity on you and gives you a moment to recover.";
     }
@@ -81,11 +81,11 @@ public class Beg extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s gives %s a pleading look and asks %s to go light on %s."+
-                            "%s is cute, but %s is not getting away that easily.", getSelf().name(), target.subject(),
+                            "%s is cute, but %s is not getting away that easily.", getSelf().getName(), target.subject(),
                             target.directObject(), getSelf().directObject(), Global.capitalizeFirstLetter(getSelf().pronoun()),
                             getSelf().pronoun());
         }
-        return getSelf().name() + " begs you for mercy, looking ready to cry. Maybe you should give "
+        return getSelf().getName() + " begs you for mercy, looking ready to cry. Maybe you should give "
                         + getSelf().directObject() + " a break.";
 
     }

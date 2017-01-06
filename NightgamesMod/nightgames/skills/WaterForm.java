@@ -47,7 +47,7 @@ public class WaterForm extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You relax your muscles, prepared to flow with and counter " + target.name() + "'s attacks.";
+        return "You relax your muscles, prepared to flow with and counter " + target.getName() + "'s attacks.";
     }
 
     @Override

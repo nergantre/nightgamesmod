@@ -96,7 +96,7 @@ public enum Trait {
         if (c.human()) {
             b.append("You exude");
         } else {
-            b.append(c.name() + " exudes");
+            b.append(c.getName() + " exudes");
         }
         b.append(" an aura of pure eros, making both of you flush with excitement.");
     }), // Eve
@@ -122,7 +122,7 @@ public enum Trait {
         if (c.human()) {
             b.append("your");
         } else {
-            b.append(c.name() + "'s");
+            b.append(c.getName() + "'s");
         }
         b.append(" body.");
     }), // causes horny in opponents if aroused
@@ -269,7 +269,7 @@ public enum Trait {
             if (c.human())
                 b.append("You shy away from your opponent's gaze.");
             else
-                b.append(c.name + " quickly avoids your gaze.");
+                b.append(c.subject() + " quickly avoids your gaze.");
         }
     }), // restricts striptease, flick, facesit, taunt, squeeze
 
@@ -355,7 +355,7 @@ public enum Trait {
             if (c.human()) {
                 b.append("your slobbering pussy.");
             } else {
-                b.append(c.name + "'s slobbering pussy.");
+                b.append(c.nameOrPossessivePronoun() + " slobbering pussy.");
             }
         }
     }),
@@ -466,7 +466,7 @@ public enum Trait {
         if (c.human()) {
             b.append("A large black strap-on dildo adorns your waist.");
         } else {
-            b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
+            b.append("A large black strap-on dildo adorns " + c.nameOrPossessivePronoun() + " waists.");
         }
     }), // currently wearing a strapon
 

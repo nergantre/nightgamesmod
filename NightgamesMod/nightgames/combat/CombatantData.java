@@ -54,8 +54,8 @@ public class CombatantData implements Cloneable {
         return newData;
     }
 
-    public void addToClothesPile(Clothing article) {
-        if (article != null) {
+    public void addToClothesPile(Character self, Clothing article) {
+        if (article != null && self.outfitPlan.contains(article)) {
             clothespile.add(article);
         }
     }
@@ -116,7 +116,7 @@ public class CombatantData implements Cloneable {
         this.strategy = Optional.ofNullable(strategy);
         this.strategyDuration = strategy.initialDuration(c, self);
         if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
-            System.out.printf("%s is now using %s\n", self.getName(), strategy.getClass().getSimpleName());
+            System.out.printf("%s is now using %s\n", self.getTrueName(), strategy.getClass().getSimpleName());
         }
     }
 

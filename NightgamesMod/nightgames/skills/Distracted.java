@@ -44,7 +44,7 @@ public class Distracted extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character attacker) {
-        return attacker.name() + " looks a little unfocused and makes no attempt to defend herself.";
+        return attacker.getName() + " looks a little unfocused and makes no attempt to defend herself.";
     }
 
     @Override

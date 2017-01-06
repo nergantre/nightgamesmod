@@ -83,7 +83,7 @@ public class TailPeg extends Skill {
                     c.write(getSelf(), receive(c, 0, Result.normal, target));
                 }
                 if (shamed) {
-                    c.write(getSelf(), "The shame of having your ass violated by " + getSelf().name()
+                    c.write(getSelf(), "The shame of having your ass violated by " + getSelf().getName()
                                     + " has destroyed your confidence.");
                 }
             } else if (getSelf().human()) {
@@ -152,31 +152,31 @@ public class TailPeg extends Skill {
                                 + "You quickly lube it up with " + target.possessiveAdjective()
                                 + " juices and slide it into her ass and start pumping.";
             case miss:
-                return "You try to peg " + target.name() + " with your tail, but " + target.pronoun()
+                return "You try to peg " + target.getName() + " with your tail, but " + target.pronoun()
                                 + " manages to clench " + target.possessiveAdjective()
                                 + " butt cheeks together in time to keep you out.";
             case normal:
-                return "You move towards " + target.name() + " and hold " + target.possessiveAdjective() + " hands above "
+                return "You move towards " + target.getName() + " and hold " + target.possessiveAdjective() + " hands above "
                                 + target.possessiveAdjective()
                                 + " head. In the same motion, you swiftly plunge your thick tail into "
                                 + target.possessiveAdjective() + " ass, pumping it in and out of "
                                 + target.possessiveAdjective() + " tight hole.";
             case special:
-                return "You smile down at " + target.name() + " and move your flexible tail behind "
+                return "You smile down at " + target.getName() + " and move your flexible tail behind "
                                 + target.directObject() + ". You spread " + target.possessiveAdjective()
                                 + " cheeks with your tail and plunge it into " + target.possessiveAdjective()
-                                + " tight pucker. " + target.name() + " moans loudly at the sudden intrusion.";
+                                + " tight pucker. " + target.getName() + " moans loudly at the sudden intrusion.";
             case intercourse:
-                return "You smile down at " + target.name() + " and move your flexible tail behind "
+                return "You smile down at " + target.getName() + " and move your flexible tail behind "
                                 + target.directObject() + ". You spread " + target.possessiveAdjective()
                                 + " legs with your tail and plunge it into " + target.possessiveAdjective()
-                                + " wet slit. " + target.name() + " moans loudly at the sudden intrusion.";
+                                + " wet slit. " + target.getName() + " moans loudly at the sudden intrusion.";
             case strong:
                 if (target.body.getLargestBreasts().size >= 2) {
-                    return "You hug " + target.name()
+                    return "You hug " + target.getName()
                                     + " from behind and cup her breasts with your hands. Taking advantage of her surprise, you shove your tail into her ass, and tickle her prostate with the tip.";
                 } else {
-                    return "You hug " + target.name() + " from behind and twist " + target.possessiveAdjective()
+                    return "You hug " + target.getName() + " from behind and twist " + target.possessiveAdjective()
                                     + " nipples. Taking advantage of " + target.possessiveAdjective()
                                     + " surprise, you shove your tail into " + target.possessiveAdjective()
                                     + " ass, and tickle " + target.possessiveAdjective() + " prostate with the tip.";

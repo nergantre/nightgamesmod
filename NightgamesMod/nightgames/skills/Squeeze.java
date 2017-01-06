@@ -117,22 +117,22 @@ public class Squeeze extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to grab " + target.name() + "'s balls, but she avoids it.";
+            return "You try to grab " + target.getName() + "'s balls, but she avoids it.";
         } else if (modifier == Result.special) {
-            return "You use your shock glove to deliver a painful jolt directly into " + target.name()
+            return "You use your shock glove to deliver a painful jolt directly into " + target.getName()
                             + "'s testicles.";
         } else if (modifier == Result.weak) {
-            return "You grab the bulge in " + target.name() + "'s "
+            return "You grab the bulge in " + target.getName() + "'s "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and squeeze.";
         } else if (modifier == Result.weak2) {
-            return "You grab " + target.name() + "by the balls and squeeze hard, but" + target.pronoun()
+            return "You grab " + target.getName() + "by the balls and squeeze hard, but" + target.pronoun()
                             + " does not flinch at all.";
         } else if (modifier == Result.item) {
-            return "You grab the bulge in " + target.name() + "'s "
+            return "You grab the bulge in " + target.getName() + "'s "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
                             + ", but find it solidly protected.";
         } else {
-            return "You manage to grab " + target.name()
+            return "You manage to grab " + target.getName()
                             + "'s balls and squeeze them hard. You feel a twinge of empathy when she cries out in pain, but you maintain your grip.";
         }
     }

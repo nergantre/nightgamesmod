@@ -87,14 +87,14 @@ public class Dissolve extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop a Dissolving Solution into your Aerosolizer and spray " + target.name()
+            return "You pop a Dissolving Solution into your Aerosolizer and spray " + target.getName()
                             + " with a cloud of mist. She emerges from the cloud with her clothes rapidly "
                             + "melting off her body.";
         } else if (modifier == Result.miss) {
-            return "You throw a Dissolving Solution at " + target.name()
+            return "You throw a Dissolving Solution at " + target.getName()
                             + ", but she avoids most of it. Only a couple drops burn through her outfit.";
         } else {
-            return "You throw a Dissolving Solution at " + target.name() + ", which eats away her clothes.";
+            return "You throw a Dissolving Solution at " + target.getName() + ", which eats away her clothes.";
         }
     }
 

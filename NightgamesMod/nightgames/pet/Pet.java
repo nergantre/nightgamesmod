@@ -2,6 +2,7 @@ package nightgames.pet;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public abstract class Pet implements Cloneable {
     private String name;
@@ -32,11 +33,7 @@ public abstract class Pet implements Cloneable {
     }
 
     public String own() {
-        if (owner.human()) {
-            return "Your ";
-        } else {
-            return owner.name() + "'s ";
-        }
+        return Global.capitalizeFirstLetter(owner.nameOrPossessivePronoun());
     }
 
     public abstract String describe();

@@ -97,11 +97,6 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return data.getLine("describe", c, character, c.getOpponent(character));
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         return data.getLine("draw", c, character, c.getOpponent(character));
     }

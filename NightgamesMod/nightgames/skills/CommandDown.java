@@ -46,7 +46,7 @@ public class CommandDown extends PlayerCommand {
 
     @Override
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
-        return "Trembling under the weight of your command, " + target.name()
+        return "Trembling under the weight of your command, " + target.getName()
                         + " lies down. You follow her down and mount her, facing her head.";
     }
 
@@ -54,7 +54,7 @@ public class CommandDown extends PlayerCommand {
     public String receive(Combat c, int magnitude, Result modifier, Character target) {
         return String.format("%s tells %s to remain still and"
                                         + " gracefully lies down on %s, %s face right above %ss.",
-                                        getSelf().name(), target.subject(), 
+                                        getSelf().getName(), target.subject(), 
                                         target.directObject(), getSelf().possessiveAdjective(),
                                         target.possessiveAdjective());
     }

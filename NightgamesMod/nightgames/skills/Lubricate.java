@@ -44,7 +44,7 @@ public class Lubricate extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You cover " + target.name() + " with an oily Lubricant.";
+        return "You cover " + target.getName() + " with an oily Lubricant.";
     }
 
     @Override

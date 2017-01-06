@@ -23,7 +23,7 @@ public class Struggle extends Action {
         Bound status = (Bound) user.getStatus(Stsflag.bound);
         int difficulty = 20 - user.getEscape(null, null);
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.println(user.getName() + " struggles with difficulty " + difficulty);
+            System.out.println(user.getTrueName() + " struggles with difficulty " + difficulty);
         }
         if (user.check(Attribute.Power, difficulty)) {
             if (user.human()) {

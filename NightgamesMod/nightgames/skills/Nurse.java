@@ -105,14 +105,14 @@ public class Nurse extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You cradle " + target.name() + "'s head in your lap and press your "
+            return "You cradle " + target.getName() + "'s head in your lap and press your "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " over her face. "
-                            + target.name()
+                            + target.getName()
                             + " vocalizes a confused little yelp, and you take advantage of it to force your nipples between her lips.";
         } else {
             return "You gently stroke " + target.nameOrPossessivePronoun() + " hair as you feed your nipples to "
                             + target.directObject() + ". " + "Even though she is reluctant at first, you soon have "
-                            + target.name() + " sucking your teats like a newborn.";
+                            + target.getName() + " sucking your teats like a newborn.";
         }
     }
 

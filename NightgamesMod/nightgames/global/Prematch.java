@@ -86,7 +86,7 @@ public class Prematch implements Scene {
                 message += "Before you have a chance to ask though, Lilly mentions to you that there is a new competitor. However, when you ask her for details, she only mentions that her "
                                 + "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<br/><br/>"
                                 + "<b>Airi has entered the games.</b><br/><br/>";
-                Global.newChallenger(new Airi());
+                Global.newChallenger(Global.getNPCByType(Airi.class.getSimpleName()).ai);
                 Global.flag(Flag.Airi);
             }
             type = offer(player);

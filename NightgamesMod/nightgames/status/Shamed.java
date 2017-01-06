@@ -25,7 +25,7 @@ public class Shamed extends DurationStatus {
         if (affected.human()) {
             return "You're a little distracted by self-consciousness, and it's throwing you off your game.";
         } else {
-            return affected.name() + " is red faced from embarrassment as much as arousal.";
+            return affected.getName() + " is red faced from embarrassment as much as arousal.";
         }
     }
 

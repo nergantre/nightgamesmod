@@ -24,7 +24,7 @@ public class Lovestruck extends DurationStatus {
         if (affected.human()) {
             return "You feel an irresistable attraction to " + other.nameDirectObject() + ".";
         } else {
-            return affected.name() + " is looking at "+other.nameDirectObject()+" like a lovestruck teenager.";
+            return affected.getName() + " is looking at "+other.nameDirectObject()+" like a lovestruck teenager.";
         }
     }
 

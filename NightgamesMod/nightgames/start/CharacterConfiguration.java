@@ -77,7 +77,7 @@ public abstract class CharacterConfiguration {
     }
 
     protected final void apply(Character base) {
-        name.ifPresent(n -> base.name = n);
+        name.ifPresent(n -> base.setName(n));
         base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
         level.ifPresent(l -> {

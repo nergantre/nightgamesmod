@@ -29,7 +29,7 @@ public class Workshop extends Activity {
                             "You head to Jett's workshop. Apparently he has an implicit claim on this workshop in the same way that Mara does on her computer room. "
                                             + "When you enter the room, he's busy machining an unidentifiable metal component. When he finishes the part, he walks over to greet you, but doesn't "
                                             + "bother removing his safety glasses. He's a bit short and skinny. You can't help thinking of him as a stereotypical science nerd. <i>\"You're "
-                                            + player.name() + "? "
+                                            + player.getTrueName() + "? "
                                             + "You don't need to nod, that was a rhetorical question. I've seen your fights.\"</i> His tone is not quite hostile, but he's clearly not interested in making "
                                             + "friends. <i>\"If you're looking to upgrade your toys, I'm your man. It's not cheap, but my work is well worth the money.\"</i> Aesop made it sound like Jett "
                                             + "could make some more versitile equipment. What all is for sale? Jett gives you a distainful look. <i>\"Nothing. I'm not selling anything potentially dangerous "

@@ -103,11 +103,11 @@ public class Charm extends Skill {
         if (modifier == Result.miss) {
             return "You flash a dazzling smile at " + target.directObject() + ", but it wasn't very effective.";
         } else if (modifier == Result.weak){
-            return "You let out a soft purr and give " + target.name()
+            return "You let out a soft purr and give " + target.getName()
             + " your best puppy dog eyes. She smiles, but then aims a quick punch at your groin, which you barely avoid. "
             + "Maybe you shouldn't have mixed your animal metaphors.";
         } else if (modifier == Result.special) {
-            String message = "You give " + target.name()
+            String message = "You give " + target.getName()
                             + " an affectionate purr and your most disarming smile. Her battle aura melts away and she pats your head, completely taken with your "
                             + "endearing behavior.";
             if (damage > 0) {

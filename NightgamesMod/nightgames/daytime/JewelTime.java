@@ -142,7 +142,7 @@ public class JewelTime extends BaseNPCTime {
         } else if (npc.getAttraction(player) < 15) {
             Global.gui()
                   .message("You wait by the campus gardens, which according to Aesop, is on Jewel's jogging route. Sure enough, she comes running by within ten minutes and "
-                                  + "calls out to you when she notices you. <i>\"Hey " + player.name()
+                                  + "calls out to you when she notices you. <i>\"Hey " + player.getTrueName()
                                   + ". It's good to see you. Are you here to train too?\"</i> She's not breathing particularly heavily and there's only "
                                   + "a subtle touch of sweat on her skin, so presumably you've caught her early in her run. You could pretend to have run into her by coincidence, but "
                                   + "you decide to be honest and tell her you were hoping to train with her. She raises an eyebrow and looks over you appraisingly. <i>\"I wouldn't mind having a running partner, "

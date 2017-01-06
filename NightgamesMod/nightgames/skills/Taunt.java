@@ -83,7 +83,7 @@ public class Taunt extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You tell " + target.name()
+        return "You tell " + target.getName()
                         + " that if she's so eager to be fucked senseless, you're available during off hours.";
     }
 

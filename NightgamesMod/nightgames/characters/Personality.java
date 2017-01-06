@@ -33,8 +33,6 @@ public interface Personality extends Serializable {
 
     String intervene3p(Combat c, Character target, Character assist);
 
-    String describe(Combat c, Character self);
-
     String draw(Combat c, Result flag);
 
     boolean fightFlight(Character opponent);

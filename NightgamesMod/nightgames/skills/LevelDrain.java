@@ -71,9 +71,9 @@ public class LevelDrain extends Drain {
                 if (stolen > 0) {
                     getSelf().add(c, new Satiated(getSelf(), stolen, 0));
                     if (getSelf().human()) {
-                        c.write(getSelf(), "You have absorbed " + stolen + " XP from " + target.name() + "!\n");
+                        c.write(getSelf(), "You have absorbed " + stolen + " XP from " + target.getName() + "!\n");
                     } else {
-                        c.write(getSelf(), getSelf().name() + " has absorbed " + stolen + " XP from you!\n");
+                        c.write(getSelf(), getSelf().getName() + " has absorbed " + stolen + " XP from you!\n");
                     }
                 }
                 break;
@@ -82,10 +82,10 @@ public class LevelDrain extends Drain {
                 getSelf().add(c, new Satiated(target, xpStolen, 0));
                 c.write(getSelf(), target.dong());
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You have stolen a level from " + target.name() + "'s levels and absorbed it as " + xpStolen
+                    c.write(getSelf(), "You have stolen a level from " + target.getName() + "'s levels and absorbed it as " + xpStolen
                                     + " XP!\n");
                 } else {
-                    c.write(getSelf(), getSelf().name() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
+                    c.write(getSelf(), getSelf().getName() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
                                     + " XP!\n");
                 }
                 getSelf().gainXP(xpStolen);
@@ -114,7 +114,7 @@ public class LevelDrain extends Drain {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (getSelf().hasPussy()) {
-            String base = "You put your powerful vaginal muscles to work whilst" + " transfixing " + target.name()
+            String base = "You put your powerful vaginal muscles to work whilst" + " transfixing " + target.getName()
                             + "'s gaze with your own, goading his energy into his cock." + " Soon it erupts from him, ";
             switch (damage) {
                 case 0:
@@ -134,16 +134,16 @@ public class LevelDrain extends Drain {
                     return " but nothing happens, you feel strangely impotent.";
             }
         } else {
-            String base = "With your cock deep inside " + target.name()
+            String base = "With your cock deep inside " + target.getName()
                             + ", you can feel the heat from her core. You draw the energy from her, mining her depths. ";
             switch (damage) {
                 case 0:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, but it goes wrong. You feel intense pleasure feeding "
                                     + "back into you and threatening to overwhelm you. You brink the spiritual link as fast as you can, but you're still left on the brink of "
                                     + "climax.";
                 case 1:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, taking a bit of her experience.";
                 case 2:
                     return base + "You succeed in siphoning off a portion of her soul, stealing a portion of her very being. This energy permanently "

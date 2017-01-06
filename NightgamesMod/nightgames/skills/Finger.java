@@ -83,23 +83,23 @@ public class Finger extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grope at " + target.name() + "'s pussy, but miss. (Maybe you should get closer?)";
+            return "You grope at " + target.getName() + "'s pussy, but miss. (Maybe you should get closer?)";
         }
         if (modifier == Result.weak) {
-            return "You grope between " + target.name()
+            return "You grope between " + target.getName()
                             + "'s legs, not really knowing what you're doing. You don't know where she's the most sensitive, so you rub and "
                             + "stroke every bit of moist flesh under your fingers.";
         } else {
             if (target.getArousal().get() <= 15) {
-                return "You softly rub the petals of " + target.name() + "'s closed flower.";
+                return "You softly rub the petals of " + target.getName() + "'s closed flower.";
             } else if (target.getArousal().percent() < 50) {
-                return target.name()
+                return target.getName()
                                 + "'s sensitive lower lips start to open up under your skilled touch and you can feel her becoming wet.";
             } else if (target.getArousal().percent() < 80) {
-                return "You locate " + target.name()
+                return "You locate " + target.getName()
                                 + "'s clitoris and caress it directly, causing her to tremble from the powerful stimulation.";
             } else {
-                return "You stir " + target.name()
+                return "You stir " + target.getName()
                                 + "'s increasingly soaked pussy with your fingers and rub her clit with your thumb.";
             }
         }

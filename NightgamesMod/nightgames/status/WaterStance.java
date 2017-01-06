@@ -19,7 +19,7 @@ public class WaterStance extends DurationStatus {
         if (affected.human()) {
             return "You're as smooth and responsive as flowing water.";
         } else {
-            return affected.name() + " continues "+affected.possessiveAdjective()+" flowing movements.";
+            return affected.getName() + " continues "+affected.possessiveAdjective()+" flowing movements.";
         }
     }
 

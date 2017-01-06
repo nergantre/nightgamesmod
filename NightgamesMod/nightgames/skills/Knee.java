@@ -92,9 +92,9 @@ public class Knee extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return target.name() + " blocks your knee strike.";
+            return target.getName() + " blocks your knee strike.";
         }
-        return "You deliver a powerful knee strike to " + target.name()
+        return "You deliver a powerful knee strike to " + target.getName()
                         + "'s delicate lady flower. She lets out a pained whimper and nurses her injured parts.";
     }
 

@@ -70,10 +70,10 @@ public class ReverseFly extends Fly {
     @Override
     public String deal(Combat c, int amount, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "you grab " + target.name() + " tightly and try to take off. However " + target.pronoun()
+            return "you grab " + target.getName() + " tightly and try to take off. However " + target.pronoun()
                             + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
         } else {
-            return "you grab " + target.name() + " tightly and take off, " + "inserting his dick into your hungry "
+            return "you grab " + target.getName() + " tightly and take off, " + "inserting his dick into your hungry "
                             + getSelf().body.getRandomPussy().describe(getSelf()) + ".";
         }
     }

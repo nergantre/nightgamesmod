@@ -50,7 +50,7 @@ public class ShortCircuit extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You send a light electrical current through " + target.name()
+        return "You send a light electrical current through " + target.getName()
                         + "'s body, disrupting her nerve endings. She'll temporarily feel pleasure as pain and pain as pleasure.";
     }
 

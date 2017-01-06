@@ -128,7 +128,7 @@ public class BreastGrowth extends Skill {
                             "%s moving and begins chanting. %s %s breasts grow hot, and they start expanding!"
                                             + " %s to hold them back with %s hands, but the growth continues untill they are a full cup size"
                                             + " bigger than begore. The new sensations from %s substantially larger breasts make %s tremble.",
-                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                            getSelf().getName(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
                             target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()),
                             target.action("try", "tries"), target.possessiveAdjective(), target.directObject());
             if (damage > 0) {
@@ -140,7 +140,7 @@ public class BreastGrowth extends Skill {
                             "%s moving and begins chanting. %s %s chest grow hot, and small, perky breasts start to form!"
                                             + " %s to hold them back with %s hands, but the growth continues untill they are a full A-cup."
                                             + " The new sensations from %s new breasts make %s tremble.",
-                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
+                            getSelf().getName(), Global.capitalizeFirstLetter(target.subjectAction("feel")),
                             target.possessiveAdjective(), Global.capitalizeFirstLetter(target.pronoun()),
                             target.action("try", "tries"), target.possessiveAdjective(), target.directObject());
         } else {

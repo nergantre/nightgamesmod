@@ -60,7 +60,7 @@ public class NakedBloom extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You chant a short spell and turn " + target.name()
+        return "You chant a short spell and turn " + target.getName()
                         + "'s clothes into a burst of flowers. The cloud of flower petals flutters to the ground, exposing her nude body.";
     }
 

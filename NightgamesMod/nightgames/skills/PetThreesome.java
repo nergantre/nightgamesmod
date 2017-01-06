@@ -206,7 +206,7 @@ public class PetThreesome extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name + " pins you down while her pet fucks you [PLACEHOLDER]";
+        return getSelf().subject() + " pins you down while her pet fucks you [PLACEHOLDER]";
     }
 
     @Override

@@ -69,9 +69,9 @@ public class ArmBar extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grab at " + target.name() + "'s arm, but "+target.pronoun()+" pulls it free.";
+            return "You grab at " + target.getName() + "'s arm, but "+target.pronoun()+" pulls it free.";
         } else {
-            return "You grab " + target.name()
+            return "You grab " + target.getName()
                             + "'s arm at the wrist and pull it to your chest in the traditional judo submission technique.";
         }
     }

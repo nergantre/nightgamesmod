@@ -72,10 +72,10 @@ public class ImpFem extends Pet {
     @Override
     public void caught(Combat c, Character captor) {
         if (owner().human()) {
-            c.write(captor, captor.name()
+            c.write(captor, captor.getName()
                             + " grabs your imp and forces her to bend over. She thrusts two fingers into the little demon's pussy and pumps until she's overflowing with wetness. She "
                             + "removes her fingers from the imp's lower lips and forces them into the creature's mouth. Your demon, affected by the aphrodisiacs in her own juices, spreads her legs "
-                            + "to " + captor.name() + " and makes a pleading sound. " + captor.name()
+                            + "to " + captor.getName() + " and makes a pleading sound. " + captor.getName()
                             + " rubs and pinches the imp's clit until she spasms and disappears.");
         } else if (captor.human()) {
             c.write(captor, "You manage to catch " + own()

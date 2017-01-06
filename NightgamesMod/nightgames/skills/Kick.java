@@ -112,17 +112,17 @@ public class Kick extends Skill {
             return "Your kick hits nothing but air.";
         }
         if (modifier == Result.special) {
-            return "You focus your ki into a single kick, targeting not " + target.name() + "'s body, but her "
+            return "You focus your ki into a single kick, targeting not " + target.getName() + "'s body, but her "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
                             + ". The garment is completely destroyed, but "
                             + "she is safely left completely unharmed. Wait, you are actually fighting right now, aren't you?";
         }
         if (modifier == Result.strong) {
-            return "Lying on the floor, you feign exhaustion, hoping " + target.name()
+            return "Lying on the floor, you feign exhaustion, hoping " + target.getName()
                             + " will lower her guard. As she approaches unwarily, you suddenly kick up between "
                             + "her legs, delivering a painful hit to her sensitive vulva.";
         } else {
-            return "You deliver a swift kick between " + target.name()
+            return "You deliver a swift kick between " + target.getName()
                             + "'s legs, hitting her squarely on the baby maker.";
         }
     }
@@ -130,7 +130,7 @@ public class Kick extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return getSelf().name() + "'s kick hits nothing but air.";
+            return getSelf().getName() + "'s kick hits nothing but air.";
         }
         if (modifier == Result.special) {
             return Global.format("{self:SUBJECT} launches a powerful kick straight at {other:name-possessive} groin, but pulls it back "

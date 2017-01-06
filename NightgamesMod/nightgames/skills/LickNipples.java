@@ -68,9 +68,9 @@ public class LickNipples extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You go after " + target.name() + "'s nipples, but she pushes you away. (Maybe try getting closer?)";
+            return "You go after " + target.getName() + "'s nipples, but she pushes you away. (Maybe try getting closer?)";
         } else {
-            return "You slowly circle your tongue around each of " + target.name()
+            return "You slowly circle your tongue around each of " + target.getName()
                             + "'s nipples, making her moan and squirm in pleasure.";
         }
     }

@@ -60,13 +60,13 @@ public class Sedate extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop a sedative into your Aerosolizer and spray " + target.name()
+            return "You pop a sedative into your Aerosolizer and spray " + target.getName()
                             + " with a cloud of mist. She stumbles out of the cloud looking drowsy and unfocused.";
         } else if (modifier == Result.miss) {
-            return "You throw a bottle of sedative at " + target.name()
+            return "You throw a bottle of sedative at " + target.getName()
                             + ", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
         } else {
-            return "You through a bottle of sedative at " + target.name()
+            return "You through a bottle of sedative at " + target.getName()
                             + ". She stumbles for a moment, trying to clear the drowsiness from her head.";
         }
     }

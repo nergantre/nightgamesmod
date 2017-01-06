@@ -49,14 +49,14 @@ public class Enthralled extends DurationStatus {
             return "You feel a constant pull on your mind, forcing you to obey " + master.possessiveAdjective()
                             + " every command.";
         } else {
-            return affected.name() + " looks dazed and compliant, ready to follow "
+            return affected.subject() + " looks dazed and compliant, ready to follow "
                                 +c.getOpponent(affected).nameOrPossessivePronoun()+" orders.";
         }
     }
 
     @Override
     public String getVariant() {
-        return "enthralled by " + master.name();
+        return "enthralled by " + master.getTrueName();
     }
 
     @Override

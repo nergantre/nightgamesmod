@@ -72,10 +72,10 @@ public class StunBlast extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You overload the emitter on your arm, but " + target.name()
+            return "You overload the emitter on your arm, but " + target.getName()
                             + " shields her face to avoid the flash.";
         } else {
-            return "You overload the emitter on your arm, duplicating the effect of a flashbang. " + target.name()
+            return "You overload the emitter on your arm, duplicating the effect of a flashbang. " + target.getName()
                             + " staggers as the blast disorients her.";
         }
     }

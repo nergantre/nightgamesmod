@@ -126,7 +126,7 @@ public class SkillsTest {
 				}
 			}
 		} else {
-			System.out.println("STANCE NOT EFFECTIVE: " + pos.getClass().getSimpleName() + " with top: " + pos.top.name() + " and bottom: " + pos.bottom.getName());
+			System.out.println("STANCE NOT EFFECTIVE: " + pos.getClass().getSimpleName() + " with top: " + pos.top.getTrueName() + " and bottom: " + pos.bottom.getTrueName());
 		}
 	}
 
@@ -146,9 +146,9 @@ public class SkillsTest {
 				for (Position pos : stances) {
 					NPC npc1 = npcs1.get(i).getCharacter();
 					NPC npc2 = npcs2.get(j).getCharacter();
-					System.out.println("Testing [" + i + "]: " + npc1.getName() + " with [" + j + "]: " + npc2.getName() + " in Stance " + pos.getClass().getSimpleName());
+					System.out.println("Testing [" + i + "]: " + npc1.getTrueName() + " with [" + j + "]: " + npc2.getTrueName() + " in Stance " + pos.getClass().getSimpleName());
 					testCombo(npc1.clone(), npc2.clone(), pos);
-					System.out.println("Testing [" + j + "]: " + npc2.getName() + " with [" + i + "]: " + npc1.getName() + " in Stance " + pos.getClass().getSimpleName());
+					System.out.println("Testing [" + j + "]: " + npc2.getTrueName() + " with [" + i + "]: " + npc1.getTrueName() + " in Stance " + pos.getClass().getSimpleName());
 					testCombo(npc2.clone(), npc1.clone(), pos);
 				}
 			}

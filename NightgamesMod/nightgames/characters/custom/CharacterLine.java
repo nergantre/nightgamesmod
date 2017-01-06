@@ -13,8 +13,9 @@ public interface CharacterLine {
     public static String TEMPT_LINER = "tempt";
     public static String TAUNT_LINER = "taunt";
     public static String CHALLENGE = "startBattle";
-    public static String ALL_LINES[] = {CHALLENGE, ORGASM_LINER, MAKE_ORGASM_LINER, NIGHT_LINER, BB_LINER, STUNNED_LINER, NAKED_LINER, TEMPT_LINER, TAUNT_LINER};
     public static String LEVEL_DRAIN_LINER = "levelDrain";
+    public static String DESCRIBE_LINER = "describe";
+    public static String ALL_LINES[] = {DESCRIBE_LINER, CHALLENGE, ORGASM_LINER, MAKE_ORGASM_LINER, NIGHT_LINER, BB_LINER, STUNNED_LINER, NAKED_LINER, TEMPT_LINER, TAUNT_LINER, LEVEL_DRAIN_LINER};
 
     String getLine(Combat c, Character self, Character other);
 }

@@ -46,7 +46,7 @@ public class DivineCharge extends Status {
         if (!c.getStance().vaginallyPenetrated(c, affected) && opponent.human() && !(affected.has(Trait.zealinspiring)
                         && !((Player)opponent).getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
-            c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
+            c.write(affected, "The holy energy seeps out of " + affected.nameDirectObject() + ".");
             if (magnitude < .05f)
                 affected.removelist.add(this);
         }

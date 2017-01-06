@@ -41,11 +41,11 @@ public class DissolvingTrap extends Trap {
                 }
             } else if (target.location().humanPresent()) {
                 if (target.reallyNude()) {
-                    Global.gui().message(target.name()
+                    Global.gui().message(target.getName()
                                     + " is caught in your clothes dissolving trap, but she was already naked. Oh well.");
                 } else {
                     Global.gui().message(
-                                    target.name() + " is caught in your trap and is showered in dissolving solution. In seconds, her clothes vanish off her body, leaving her "
+                                    target.getName() + " is caught in your trap and is showered in dissolving solution. In seconds, her clothes vanish off her body, leaving her "
                                                     + "completely nude.");
                 }
             }

@@ -30,12 +30,12 @@ public class Lethargic extends DurationStatus {
             return "Your mojo gain is stopped.";
         } else if (affected.has(Trait.lethargic)) {
             if (affected.getMojo().get() < 40) {
-                return affected.name() + " looks lethargic.";
+                return affected.getName() + " looks lethargic.";
             } else {
-                return affected.name() + " looks energized";
+                return affected.getName() + " looks energized";
             }
         } else {
-            return affected.name() + " looks lethargic.";
+            return affected.getName() + " looks lethargic.";
         }
     }
 

@@ -20,7 +20,7 @@ public class Nimble extends DurationStatus {
         if (affected.human()) {
             return "You're as quick and nimble as a cat.";
         } else {
-            return affected.name() + " darts around gracefully.";
+            return affected.getName() + " darts around gracefully.";
         }
     }
 

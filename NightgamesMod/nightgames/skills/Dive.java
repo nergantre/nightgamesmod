@@ -67,7 +67,7 @@ public class Dive extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " dives dramatically away and lands flat on the floor.";
+        return getSelf().getName() + " dives dramatically away and lands flat on the floor.";
     }
 
 }

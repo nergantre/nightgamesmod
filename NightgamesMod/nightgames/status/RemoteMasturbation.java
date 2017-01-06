@@ -43,7 +43,7 @@ public class RemoteMasturbation extends DurationStatus {
 
     @Override
     public String describe(Combat c) {
-        return controller.name + " is remotely directing " + affected.nameOrPossessivePronoun()
+        return controller.subject() + " is remotely directing " + affected.nameOrPossessivePronoun()
                         + " hands to masturbate fiercely.";
     }
     
@@ -117,19 +117,14 @@ public class RemoteMasturbation extends DurationStatus {
     @Override
     public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
-        obj.addProperty("affected", affected.name);
-        obj.addProperty("controller", controller.name);
         obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override
     public Status loadFromJson(JsonObject obj) {
-        Character affected = Global.getCharacterByName(obj.get("affected").getAsString());
-        Character controller = Global.getCharacterByName(obj.get("controller").getAsString());
         int duration = obj.get("duration").getAsInt();
-        
-        RemoteMasturbation instance = new RemoteMasturbation(affected, controller);
+        RemoteMasturbation instance = new RemoteMasturbation(Global.noneCharacter(), Global.noneCharacter());
         instance.setDuration(duration);
         return instance;
     }

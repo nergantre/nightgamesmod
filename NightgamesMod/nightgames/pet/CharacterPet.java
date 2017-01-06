@@ -8,8 +8,9 @@ import nightgames.global.Global;
 
 public class CharacterPet extends Pet {
     public CharacterPet(Character owner, Character prototype, int power, int ac) {
-        this(prototype.getName(), owner, prototype, power, ac);
+        this(prototype.getTrueName(), owner, prototype, power, ac);
     }
+
     public CharacterPet(String name, Character owner, Character prototype, int power, int ac) {
         super(name, owner, Ptype.human, power, ac);
         buildSelfWithPrototype(prototype);

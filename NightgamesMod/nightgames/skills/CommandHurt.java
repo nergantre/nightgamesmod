@@ -36,7 +36,7 @@ public class CommandHurt extends PlayerCommand {
 
     @Override
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
-        return "Grinning, you point towards the nearest wall. " + target.name()
+        return "Grinning, you point towards the nearest wall. " + target.getName()
                         + " seems confused for a moment, but soon she understands your"
                         + " meaning and runs headfirst into it.";
     }

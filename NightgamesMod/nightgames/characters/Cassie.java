@@ -86,6 +86,19 @@ public class Cassie extends BasePersonality {
                             + "sounds quite nice. <i>\"I love you.\"</i> The whisper was so soft you're not sure you heard it. When you look at Cassie's face, she's fast asleep.";
         });
 
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.witch)) {
+                return "Cassie has changed a lot since you started the Game. Maybe she isn't that different physically. She has the same bright blue eyes and the same sweet smile. "
+                                + "The magic spellbook and cloak are both new. She's been dabbling in the arcane, and it may be your imagination, but you feel like you can perceive the power "
+                                + "radiating from her. Her magic seems to have given her more confidence and she seems even more eager than usual.";
+            } else {
+                return character.subject()
+                                + " is a cute girl with shoulder-length auburn hair, clear blue eyes, and glasses. She doesn't look at all like the typical sex-fighter. "
+                                + "She's short but not chubby: you would describe her body as soft rather than athletic. Her gentle tone and occasional "
+                                + "flickers of shyness give the impression of sexual innocence, but she seems determined to win.";
+            }
+        });
+
         character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
             final String finalLines[] = {
                             "<i>\"Ooo... my body is starting feel numb. But I won't give up!\"</i>",
@@ -397,20 +410,6 @@ public class Cassie extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.witch)) {
-            return "Cassie has changed a lot since you started the Game. Maybe she isn't that different physically. She has the same bright blue eyes and the same sweet smile. "
-                            + "The magic spellbook and cloak are both new. She's been dabbling in the arcane, and it may be your imagination, but you feel like you can perceive the power "
-                            + "radiating from her. Her magic seems to have given her more confidence and she seems even more eager than usual.";
-        } else {
-            return character.name
-                            + " is a cute girl with shoulder-length auburn hair, clear blue eyes, and glasses. She doesn't look at all like the typical sex-fighter. "
-                            + "She's short but not chubby: you would describe her body as soft rather than athletic. Her gentle tone and occasional "
-                            + "flickers of shyness give the impression of sexual innocence, but she seems determined to win.";
-        }
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
@@ -643,14 +642,14 @@ public class Cassie extends BasePersonality {
                                             + "technique has obviously gotten quite good. It only takes a few minutes"
                                             + " for her to milk out a mouthful of semen. You can't help feeling a "
                                             + "bit envious, maybe you should go a round with her before the match ends.",
-                            target.name(), target.possessiveAdjective(), target.name(), target.possessiveAdjective());
+                            target.getName(), target.possessiveAdjective(), target.getName(), target.possessiveAdjective());
         }
-        return "Cassie settles herself in front of " + target.name()
+        return "Cassie settles herself in front of " + target.getName()
                         + " and tenderly kisses her on the lips. <i>\"I don't really swing this way, but setting the mood is "
-                        + "important.\"</i> She leans in to lick and suck " + target.name()
+                        + "important.\"</i> She leans in to lick and suck " + target.getName()
                         + " neck, before moving down to her breasts. She gives each nipple attention until "
-                        + target.name() + " is panting with desire. She continues downward to " + target.name()
-                        + "'s pussy and starts eating her out. " + target.name()
+                        + target.getName() + " is panting with desire. She continues downward to " + target.getName()
+                        + "'s pussy and starts eating her out. " + target.getName()
                         + " moans loudly and arches her back against "
                         + "you. You gently lower her to the floor as she recovers from her climax, while Cassie wipes the juices from her mouth and looks satisfied at her work.";
     }
@@ -658,18 +657,18 @@ public class Cassie extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "You grapple with " + assist.name()
+            return "You grapple with " + assist.getName()
                             + ", but neither of you can find an opening. She loses her balance while trying to grab you and you manage to trip her. "
                             + "Before you can follow up, a warm body presses against your back and "+(target.hasDick() ?"a soft hand gently grasps your erection" :"soft hands have gently grabbed your breasts from behind")+". Cassie whispers playfully in your ear. <i>\"Hello "
-                            + target.name() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
-                            + assist.name() + " is already back on her feet. You struggle valiantly, "
+                            + target.getName() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
+                            + assist.getName() + " is already back on her feet. You struggle valiantly, "
                             + "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br/>";
         } else {
-            return "You wrestle " + target.name()
+            return "You wrestle " + target.getName()
                             + " to the floor, but she slips away and gets to her feet before you. You roll away to a safe distance before you notice that "
                             + "she's not coming after you. She seems more occupied by the hands that have suddenly grabbed her breasts from behind. You cautiously approach and realize "
-                            + "it's Cassie who is holding onto the flailing " + target.name()
-                            + ". Releasing her boobs, Cassie starts tickling " + target.name()
+                            + "it's Cassie who is holding onto the flailing " + target.getName()
+                            + ". Releasing her boobs, Cassie starts tickling " + target.getName()
                             + " into submission and pins her " + "arms while she catches her breath.<br/>";
         }
     }

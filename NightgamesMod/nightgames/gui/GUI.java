@@ -899,7 +899,7 @@ public class GUI extends JFrame implements Observer {
         bio.setLayout(new GridLayout(2, 0, 0, 0));
         bio.setBackground(GUIColors.bgDark);
 
-        JLabel name = new JLabel(player.name());
+        JLabel name = new JLabel(player.getTrueName());
         name.setHorizontalAlignment(SwingConstants.LEFT);
         name.setFont(new Font("Sylfaen", 1, 15));
         name.setForeground(GUIColors.textColorLight);
@@ -1142,7 +1142,7 @@ public class GUI extends JFrame implements Observer {
 
     public void promptAmbush(IEncounter enc, Character target) {
         clearCommand();
-        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.ambush));
+        commandPanel.add(encounterButton("Attack " + target.getName(), enc, target, Encs.ambush));
         commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
         commandPanel.refresh();
@@ -1150,7 +1150,7 @@ public class GUI extends JFrame implements Observer {
 
     public void promptOpportunity(IEncounter enc, Character target, Trap trap) {
         clearCommand();
-        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
+        commandPanel.add(encounterButton("Attack " + target.getName(), enc, target, Encs.capitalize, trap));
         commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
         commandPanel.refresh();

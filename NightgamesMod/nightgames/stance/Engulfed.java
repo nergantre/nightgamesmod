@@ -24,7 +24,7 @@ public class Engulfed extends Position {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You have engulfed " + bottom.name() + " inside your slime body, with only "
+            return "You have engulfed " + bottom.getName() + " inside your slime body, with only "
                             + bottom.possessiveAdjective() + " face outside of you.";
         } else {
             return String.format("%s is holding %s entire body inside "

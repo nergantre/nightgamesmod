@@ -53,7 +53,7 @@ public class Submit extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name() + " with a nervous glance, lies down on the floor.";
+        return getSelf().getName() + " with a nervous glance, lies down on the floor.";
     }
 
     @Override

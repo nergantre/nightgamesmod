@@ -55,7 +55,8 @@ public enum Movement {
     ftcDump(" walk to the dumpsite."),
     ftcTreeAmbush(" climb up a tree."),
     ftcBushAmbush(" dive into some bushes."),
-    ftcPassAmbush(" slip into an alcove.");
+    ftcPassAmbush(" slip into an alcove."),
+    disguise(" shimmer and turn into someone else!");
 
     private String desc;
 

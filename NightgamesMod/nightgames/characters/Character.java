@@ -74,6 +74,7 @@ import nightgames.stance.Stance;
 import nightgames.status.Abuff;
 import nightgames.status.Alluring;
 import nightgames.status.BodyFetish;
+import nightgames.status.Disguised;
 import nightgames.status.DivineCharge;
 import nightgames.status.DivineRecoil;
 import nightgames.status.Enthralled;
@@ -95,7 +96,7 @@ import nightgames.trap.Trap;
 public abstract class Character extends Observable implements Cloneable {
     private static final String APOSTLES_COUNT = "APOSTLES_COUNT";
 
-    public String name;
+    private String name;
     public CharacterSex initialGender;
     public int level;
     public int xp;
@@ -234,7 +235,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    public String name() {
+    public String getTrueName() {
         return name;
     }
 
@@ -249,7 +250,7 @@ public abstract class Character extends Observable implements Cloneable {
                     }
                     return "";
                 });
-            }
+            } 
         }
         return resistances;
     }
@@ -433,7 +434,7 @@ public abstract class Character extends Observable implements Cloneable {
         double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
         double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
         if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
-            System.out.println(baseDamage + " from " + getName() + " has multiplier " + multiplier + " against " + other.getName() + " ["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
+            System.out.println(baseDamage + " from " + getTrueName() + " has multiplier " + multiplier + " against " + other.getTrueName() + " ["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
         }
         double damage = baseDamage * multiplier;
         return Math.min(Math.max(minDamage, damage), maxDamage);
@@ -646,7 +647,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String subject() {
-        return name();
+        return getName();
     }
 
     public int pleasure(int i, Combat c, Character source) {
@@ -976,17 +977,28 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String getName() {
+        Disguised disguised = (Disguised) getStatus(Stsflag.disguised);
+        if (disguised != null) {
+            return disguised.getTarget().getTrueName();
+        }
         return name;
+    }
+
+    public void completelyNudify(Combat c) {
+        List<Clothing> articles = outfit.undress();
+        if (c != null) {
+            articles.forEach(article -> c.getCombatantData(this).addToClothesPile(this, article));
+        }
     }
 
     /* undress without any modifiers */
     public void undress(Combat c) {
         if (!breastsAvailable() || !crotchAvailable()) {
             // first time only strips down to what blocks fucking
-            outfit.strip().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+            outfit.strip().forEach(article -> c.getCombatantData(this).addToClothesPile(this, article));
         } else {
             // second time strips down everything
-            outfit.undress().forEach(article -> c.getCombatantData(this).addToClothesPile(article));
+            outfit.undress().forEach(article -> c.getCombatantData(this).addToClothesPile(this, article));
         }
     }
 
@@ -1007,7 +1019,7 @@ public abstract class Character extends Observable implements Cloneable {
             return null;
         }
         Clothing res = outfit.unequip(article);
-        c.getCombatantData(this).addToClothesPile(res);
+        c.getCombatantData(this).addToClothesPile(this, res);
         return res;
     }
 
@@ -1340,7 +1352,7 @@ public abstract class Character extends Observable implements Cloneable {
         removedStatuses.addAll(removelist);
         removedStatuses.forEach(s -> {
             if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                System.out.println(s.name + " removed from " + name());
+                System.out.println(s.name + " removed from " + getTrueName());
             }
             s.onRemove(c, opponent);
         });
@@ -1857,6 +1869,11 @@ public abstract class Character extends Observable implements Cloneable {
 
     public String getRandomLineFor(String lineType, Combat c, Character other) {
         return "";
+    }
+
+    public String getRandomLineFor(String lineType, Combat c) {
+        Character other = c == null ? null : c.getOpponent(this);
+        return getRandomLineFor(lineType, c, other);
     }
 
     private void resolvePostOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
@@ -2579,7 +2596,7 @@ public abstract class Character extends Observable implements Cloneable {
             return;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("%s gained attraction for %s\n", name(), other.name());
+            System.out.printf("%s gained attraction for %s\n", getTrueName(), other.getTrueName());
         }
         if (attractions.containsKey(other.getType())) {
             attractions.put(other.getType(), attractions.get(other.getType()) + x);
@@ -2618,7 +2635,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
 
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.printf("%s gained %d affection for %s\n", name(), x, other.name());
+            System.out.printf("%s gained %d affection for %s\n", getTrueName(), x, other.getTrueName());
         }
         if (affections.containsKey(other.getType())) {
             affections.put(other.getType(), affections.get(other.getType()) + x);
@@ -2851,7 +2868,7 @@ public abstract class Character extends Observable implements Cloneable {
     public String dumpstats(boolean notableOnly) {
         StringBuilder b = new StringBuilder();
         b.append("<b>");
-        b.append(name() + ": Level " + getLevel() + "; ");
+        b.append(getTrueName() + ": Level " + getLevel() + "; ");
         for (Attribute a : att.keySet()) {
             b.append(a.name() + " " + att.get(a) + ", ");
         }
@@ -3160,7 +3177,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String nameOrPossessivePronoun() {
-        return name + "'s";
+        return getName() + "'s";
     }
 
     public double getExposure(ClothingSlot slot) {
@@ -3233,7 +3250,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String nameDirectObject() {
-        return name();
+        return getName();
     }
 
     public String reflectivePronoun() {
@@ -3504,9 +3521,9 @@ public abstract class Character extends Observable implements Cloneable {
     public void purge(Combat c) {
         temporaryAddedTraits.clear();
         temporaryRemovedTraits.clear();
-        body.purge(c);
         status = new HashSet<>(status.stream().filter(s -> !s.flags().contains(Stsflag.purgable))
                         .collect(Collectors.toSet()));
+        body.purge(c);
     }
 
     /**
@@ -3784,5 +3801,9 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean isHypnotized() {
         return is(Stsflag.drowsy) || is(Stsflag.enthralled) || is(Stsflag.charmed) || is(Stsflag.trance);
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -70,7 +70,7 @@ public class ImpMale extends Pet {
     @Override
     public void caught(Combat c, Character captor) {
         if (owner().human()) {
-            c.write(captor, captor.name()
+            c.write(captor, captor.getName()
                             + " shoves your imp to the floor and pins its cock under her foot. She grinds her foot, lubricated with the pre-cum that's streaming from "
                             + "your minion's erection. The imp jabbers incoherently as it shoots its load and disappears, leaving only a puddle of cum.");
         } else if (captor.human()) {
