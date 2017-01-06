@@ -442,7 +442,7 @@ public enum Trait {
     grappler("Grappler", "Bonus to hold strength"),
     suave("Suave", "Bonus seduction vs girls."),
     brutesCharisma("Brute's Charisma", "Extra charisma based on Power and Ki when on top."),
-    
+
     // Mara's unique traits
     harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
     yank("Yank", "Can yank opponents to the ground if they have a harpoon toy on them"),
@@ -459,9 +459,8 @@ public enum Trait {
     ControlledRelease("Controlled Release", "Can use mind control to tempt opponents"),
     RemoteControl("Remote Control", "Can deploy a fancy hypnosis trap"),
     EyeOpener("Eye Opener", "The harpoon toy enhances mind control"),
-    
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
-    
+
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {

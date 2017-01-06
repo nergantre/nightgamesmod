@@ -699,7 +699,11 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (has(Trait.Unsatisfied) && (getArousal().percent() >= 50 || getWillpower().percent() < 25)) {
             extraMsg += " (Unsatisfied)";
-            baseModifier *= .2;
+            if (c != null && c.getOpponent(this).human()) {
+                baseModifier *= .2;
+            } else {
+                baseModifier *= .66;
+            }
         }
 
         int bonus = 0;
@@ -801,7 +805,12 @@ public abstract class Character extends Observable implements Cloneable {
         String extraMsg = "";
         if (has(Trait.Unsatisfied) && (getArousal().percent() >= 50 || getWillpower().percent() < 25)) {
             extraMsg += " (Unsatisfied)";
-            i = Math.max(1, i / 5);
+            // make it much less effective vs NPCs because they're bad at exploiting the weakness
+            if (c.getOpponent(this).human()) {
+                i = Math.max(1, i / 5);
+            } else {
+                i = Math.max(1, i * 2 / 3);
+            }
         }
         String message = String.format("%s aroused for <font color='rgb(240,100,100)'>%d<font color='white'> %s%s\n",
                         Global.capitalizeFirstLetter(subjectWas()), i, source, extraMsg);

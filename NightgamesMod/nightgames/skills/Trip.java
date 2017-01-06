@@ -2,11 +2,13 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Falling;
+import nightgames.status.Slimed;
 
 public class Trip extends Skill {
     public Trip(Character self) {
@@ -35,6 +37,9 @@ public class Trip extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (isSlime()) {
                 writeOutput(c, Result.special, target);
+                if (getSelf().has(Trait.VolatileSubstrate)) {
+                    target.add(c, new Slimed(target, getSelf(), Global.random(2, 4)));
+                }
             } else {
                 writeOutput(c, Result.normal, target);
             }

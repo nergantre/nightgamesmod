@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -9,6 +10,7 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.status.Slimed;
 
 public class Dissolve extends Skill {
 
@@ -47,6 +49,9 @@ public class Dissolve extends Skill {
                             + " {self:action:caress|caresses} {other:possessive} " + destroyed.getName()
                             + ". Slowly, it dissolves away beneath {self:possessive} touch.";
             c.write(getSelf(), Global.format(msg, getSelf(), target));
+            if (getSelf().has(Trait.VolatileSubstrate)) {
+                target.add(c, new Slimed(target, getSelf(), Global.random(2, 4)));
+            }
         } else {
             getSelf().consume(Item.DisSol, 1);
             if (getSelf().has(Item.Aersolizer)) {

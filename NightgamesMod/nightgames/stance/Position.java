@@ -385,4 +385,7 @@ public abstract class Position implements Cloneable {
         return false;
     }
 
+    public boolean reversable(Combat c) {
+        return reverse(c, false) == this;
+    }
 }

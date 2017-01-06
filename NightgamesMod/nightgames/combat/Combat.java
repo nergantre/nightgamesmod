@@ -372,12 +372,16 @@ public class Combat extends Observable implements Cloneable {
         if (p1.checkLoss(this)) {
             if (doLosses) {
                 victory(p2);
+            } else {
+                winner = Optional.of(p2);
             }
             return true;
         }
         if (p2.checkLoss(this)) {
             if (doLosses) {
                 victory(p1);
+            } else {
+                winner = Optional.of(p1);
             }
             return true;
         }
@@ -647,8 +651,8 @@ public class Combat extends Observable implements Cloneable {
         if (p1.has(Trait.leveldrainer) ^ p2.has(Trait.leveldrainer) && !p1.has(Trait.strapped) && !p2.has(Trait.strapped)) {
             Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
             Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
-            if (!getCombatantData(drainer).getBooleanFlag("has_drained")) {
-                if (!getStance().havingSex(this)) {
+            if (drainer.equals(winner.orElse(null)) && !getCombatantData(drainer).getBooleanFlag("has_drained")) {
+                if (!getStance().havingSex(this) && !getStance().dom(drainer)) {
                     Position mountStance = new Mount(drainer, drained);
                     if (mountStance.insert(this, drained, drainer) != mountStance) {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
@@ -679,6 +683,9 @@ public class Combat extends Observable implements Cloneable {
                                         Global.pickRandom(getStance().partsFor(this, drainer)).orElse(drainer.body.getRandomGenital()));
                         getCombatantData(drainer).setBooleanFlag("has_drained", true);
                     }
+                } else {
+                    write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:don't stop|doesn't stop} {self:possessive} greedy hips, "
+                                        + "{self:pronoun-action:are|is} deteremined to extract all the power {self:pronoun} can get!", drainer, drained));
                 }
                 return getCombatantData(drainer).getBooleanFlag("has_drained") ? CombatPhase.RESULTS_SCENE : CombatPhase.LEVEL_DRAIN;
             }

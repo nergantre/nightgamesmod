@@ -11,7 +11,6 @@ import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
 public class Drain extends Skill {
-
     public Drain(Character self) {
         super("Drain", self, 5);
         addTag(SkillTag.drain);
@@ -25,7 +24,7 @@ public class Drain extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Dark) >= 15 || user.has(Trait.energydrain);
+        return user.get(Attribute.Dark) >= 15 || user.has(Trait.energydrain) || (user.has(Trait.leveldrainer) && user.getLevel() >= 10);
     }
 
     @Override
@@ -35,7 +34,11 @@ public class Drain extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 30;
+        return drainsAttributes(c) ? 30 : 0;
+    }
+
+    private boolean drainsAttributes(Combat c) {
+        return getSelf().getMojo().get() >= 30;
     }
 
     @Override
@@ -64,18 +67,23 @@ public class Drain extends Skill {
 
     public boolean resolve(Combat c, Character target, boolean nocost) {
         int strength = Math.max(10, 1 + getSelf().get(Attribute.Dark) / 4);
+        int staminaStrength = 50;
         int type = Math.max(1, Global.centeredrandom(6, getSelf().get(Attribute.Dark) / 3.0, 3));
+        if (!drainsAttributes(c) && type > 2) {
+            type = 1;
+            staminaStrength /= 2;
+        }
 
         writeOutput(c, type, Result.normal, target);
         switch (type) {
             case 0:
-                getSelf().arouse(getSelf().getArousal().max(), c);
+                getSelf().arouse(getSelf().getArousal().max() / 4, c);
             case 1:
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 break;
             case 2:
-                target.loseMojo(c, 20);
-                getSelf().buildMojo(c, 20);
+                target.loseMojo(c, staminaStrength / 2);
+                getSelf().buildMojo(c, staminaStrength / 2);
                 break;
             case 3:
                 steal(c, target, Attribute.Cunning, strength);
@@ -83,7 +91,7 @@ public class Drain extends Skill {
                 break;
             case 4:
                 steal(c, target, Attribute.Power, strength);
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 break;
             case 5:
                 steal(c, target, Attribute.Seduction, strength);
@@ -94,7 +102,7 @@ public class Drain extends Skill {
                 steal(c, target, Attribute.Seduction, strength);
                 steal(c, target, Attribute.Cunning, strength);
                 target.mod(Attribute.Perception, 1);
-                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 50));
+                target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
                 target.loseMojo(c, 10);
                 target.temptNoSource(c, getSelf(), 10, this);
                 break;

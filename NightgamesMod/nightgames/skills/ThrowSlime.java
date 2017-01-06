@@ -13,6 +13,7 @@ import nightgames.status.Falling;
 import nightgames.status.Flatfooted;
 import nightgames.status.Frenzied;
 import nightgames.status.Parasited;
+import nightgames.status.Slimed;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
@@ -56,14 +57,20 @@ public class ThrowSlime extends Skill {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:throw|throws} a glob of slime at"
                             + " {other:name-do}, but it is simply absorbed into {other:possessive}"
                             + " equally slimy body. That was rather underwhelming.", getSelf(), target));
+            return false;
         } else {
             HitType type = decideEffect(c, target);
             type.message(c, getSelf(), target);
             if (type != HitType.NONE) {
                 target.add(c, type.build(getSelf(), target));
+                if (getSelf().has(Trait.VolatileSubstrate)) {
+                    target.add(c, new Slimed(target, getSelf(), Global.random(1, 11)));
+                }
+                return true;
+            } else {
+                return false;
             }
         }
-        return true;
     }
 
     @Override
@@ -236,8 +243,7 @@ public class ThrowSlime extends Skill {
         int slime = getSelf().get(Attribute.Slime);
         int bonus = Math.min(slime, 40) - 20;
 
-        if (!c.getStance()
-              .mobile(target) || !target.canRespond()) {
+        if (!c.getStance().mobile(target) || !target.canRespond()) {
             bonus *= 2;
         }
 
