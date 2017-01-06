@@ -234,69 +234,69 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
-        if (times == totalTimes && ((character.getWillpower().percent() < 60 && !character.has(Trait.slime)) || character.is(Stsflag.disguised))) {
-            if (character.is(Stsflag.disguised)) {
-                c.write(character, Global.format("<b>As {self:subject} orgasms, {self:possessive} whole body shimmers and seems to melt into a puddle of goo. "
+    public void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        if (times == totalTimes && ((self.getWillpower().percent() < 60 && !self.has(Trait.slime)) || self.is(Stsflag.disguised))) {
+            if (self.is(Stsflag.disguised)) {
+                c.write(self, Global.format("<b>As {self:subject} orgasms, {self:possessive} whole body shimmers and seems to melt into a puddle of goo. "
                                 + "A human body rises from the slime and molds itself to a facsimile of an all-too-familiar Asian {self:boy} giving you a self satisfied little smirk. "
-                                + "Shit, {self:pronoun} tricked you, it was Airi all along!</b><br/>", character, opponent));
+                                + "Shit, {self:pronoun} tricked you, it was Airi all along!</b><br/>", self, opponent));
                 opponent.add(c, new Flatfooted(opponent, 2));
             } else {
-                c.write(character, Global.format("After {self:name-possessive} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
+                c.write(self, Global.format("After {self:name-possessive} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
                                 + "Gone is the slim repressed girl you knew. The new Airi that appears before you is a sexually idealized version of herself, with bigger breasts, a dynamic body line and long legs that end in a ball of blue goo. "
-                                + "You're now fighting {self:name} in slime form!", character, opponent));
+                                + "You're now fighting {self:name} in slime form!", self, opponent));
             }
-            character.nudify();
-            character.purge(c);
-            character.addTemporaryTrait(Trait.slime, 999);
-            character.removeTemporaryTrait(Trait.repressed, 999);
-            character.removeTemporaryTrait(Trait.softheart, 999);
-            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
-                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            self.completelyNudify(c);
+            self.purge(c);
+            self.addTemporaryTrait(Trait.slime, 999);
+            self.removeTemporaryTrait(Trait.repressed, 999);
+            self.removeTemporaryTrait(Trait.softheart, 999);
+            if (self.hasPussy() && !self.body.getRandomPussy().moddedPartCountsAs(self, PussyPart.gooey)) {
+                self.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }
-            if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
-                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+            if (self.hasDick() && !self.body.getRandomCock().moddedPartCountsAs(self, CockMod.slimy)) {
+                self.body.temporaryAddOrReplacePartWithType(self.body.getRandomCock().applyMod(CockMod.slimy), 999);
             }
-            BreastsPart part = character.body.getBreastsBelow(BreastsPart.h.size);
+            BreastsPart part = self.body.getBreastsBelow(BreastsPart.h.size);
             if (part != null) {
-                character.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+                self.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
             }
-            character.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
-            character.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
-            if (character.level >= 21) {
-                character.addTemporaryTrait(Trait.Sneaky, 999);
+            self.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
+            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
+            if (self.level >= 21) {
+                self.addTemporaryTrait(Trait.Sneaky, 999);
             }
-            if (character.level >= 24) {
-                character.addTemporaryTrait(Trait.shameless, 999);
+            if (self.level >= 24) {
+                self.addTemporaryTrait(Trait.shameless, 999);
             }
-            if (character.level >= 27) {
-                character.addTemporaryTrait(Trait.lactating, 999);
+            if (self.level >= 27) {
+                self.addTemporaryTrait(Trait.lactating, 999);
             }
-            if (character.level >= 30) {
-                character.addTemporaryTrait(Trait.addictivefluids, 999);
+            if (self.level >= 30) {
+                self.addTemporaryTrait(Trait.addictivefluids, 999);
             }
-            if (character.level >= 33) {
-                character.addTemporaryTrait(Trait.autonomousPussy, 999);
+            if (self.level >= 33) {
+                self.addTemporaryTrait(Trait.autonomousPussy, 999);
             }
-            if (character.level >= 36) {
-                character.addTemporaryTrait(Trait.enthrallingjuices, 999);
+            if (self.level >= 36) {
+                self.addTemporaryTrait(Trait.enthrallingjuices, 999);
             }
-            if (character.level >= 39) {
-                character.addTemporaryTrait(Trait.energydrain, 999);
+            if (self.level >= 39) {
+                self.addTemporaryTrait(Trait.energydrain, 999);
             }
-            if (character.level >= 42) {
-                character.addTemporaryTrait(Trait.desensitized, 999);
+            if (self.level >= 42) {
+                self.addTemporaryTrait(Trait.desensitized, 999);
             }
-            if (character.level >= 45) {
-                character.addTemporaryTrait(Trait.steady, 999);
+            if (self.level >= 45) {
+                self.addTemporaryTrait(Trait.steady, 999);
             }
-            if (character.level >= 50) {
-                character.addTemporaryTrait(Trait.strongwilled, 999);
+            if (self.level >= 50) {
+                self.addTemporaryTrait(Trait.strongwilled, 999);
             }
-            character.moodSwing(c);
+            self.moodSwing(c);
         }
     }
     

@@ -279,7 +279,7 @@ public enum Trait {
     succubus("Succubus", "Embraced the dark powers that feed on mortal lust"),
     demigoddess("Demigoddess", "Blessed by a deity of sexual pleasure, and on the road to ascension herself."),
     fighter("Fighter", "A combination of martial arts and ki"),
-    slime("Slime", "An accident in the biology labs made the body a bit more... malleable."),
+    slime("Slime", "An accident in the biology labs made her body a bit more... malleable."),
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),

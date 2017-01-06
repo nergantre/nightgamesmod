@@ -66,7 +66,7 @@ public interface Personality extends Serializable {
 
     Map<CommentSituation, String> getComments(Combat c);
 
-    default void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
+    default void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         // no op
     }

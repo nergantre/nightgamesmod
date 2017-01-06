@@ -203,9 +203,9 @@ public class Decider {
         if (tactic.isEmpty()) {
             tactic.addAll(available);
         }
-        // give disguise some priority
-        if (tactic.stream().anyMatch(a -> a.consider() == Movement.disguise) && Global.random(3) == 0) {
-            tactic.stream().filter(a -> a.consider() == Movement.disguise).findFirst().get();
+        // give disguise some priority when just picking something random
+        if (tactic.stream().anyMatch(a -> a.consider() == Movement.disguise) && Global.random(5) == 0) {
+            return tactic.stream().filter(a -> a.consider() == Movement.disguise).findFirst().get();
         }
         Action[] actions = tactic.toArray(new Action[tactic.size()]);
         return actions[Global.random(actions.length)];

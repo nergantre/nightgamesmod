@@ -860,7 +860,7 @@ public class NPC extends Character {
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
-        ai.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        ai.resolveOrgasm(c, this, opponent, selfPart, opponentPart, times, totalTimes);
     }
 
     @Override

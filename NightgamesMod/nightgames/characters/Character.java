@@ -1365,6 +1365,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void removeStatusNoSideEffects() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println("Purging (remove no sideeffects) " + getTrueName());
+        }
         status.removeAll(removelist);
         removelist.clear();
     }
@@ -2466,6 +2469,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void bathe() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println("(Bathing) Purging " + getTrueName());
+        }
         status.clear();
         stamina.fill();
         state = State.ready;
@@ -2752,6 +2758,9 @@ public abstract class Character extends Observable implements Cloneable {
     public abstract void counterattack(Character target, Tactics type, Combat c);
 
     public void clearStatus() {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println("Clearing " + getTrueName());
+        }
         status.clear();
     }
 
@@ -3519,6 +3528,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void purge(Combat c) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.println("Purging " + getTrueName());
+        }
         temporaryAddedTraits.clear();
         temporaryRemovedTraits.clear();
         status = new HashSet<>(status.stream().filter(s -> !s.flags().contains(Stsflag.purgable))
