@@ -21,8 +21,8 @@ public class UpsideDownFemdom extends FemdomSexStance {
                             + " upsidedown by her legs while fucking her cock with your slit.";
         } else {
             return String.format("%s is holding %s upsidedown by %s legs while fucking %s cock with %s slit.",
-                            top.subject(), bottom.nameDirectObject(), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), top.possessivePronoun());
+                            top.subject(), bottom.nameDirectObject(), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), top.possessiveAdjective());
         }
     }
 

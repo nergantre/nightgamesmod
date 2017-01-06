@@ -102,14 +102,14 @@ public class FootWorship extends Skill {
             return String.format("%s throws %s at %s feet. %s worshipfully grasps %s feet "
                             + "and starts licking between %s toes, all while %s face displays a mask of ecstasy.",
                             getSelf().subject(), getSelf().reflectivePronoun(), target.nameOrPossessivePronoun(),
-                            getSelf().subject(), target.possessivePronoun(), target.possessivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().subject(), target.possessiveAdjective(), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective());
         }
         return String.format("%s can't seem to get enough of %s feet as %s continues to "
                         + "lick along the bottom of %s soles, %s face further lost in "
                         + "servitude as %s is careful not to miss a spot.", getSelf().subject(),
                         target.nameOrPossessivePronoun(), getSelf().pronoun(),
-                        target.possessivePronoun(), getSelf().possessivePronoun(),
+                        target.possessiveAdjective(), getSelf().possessiveAdjective(),
                         getSelf().pronoun());
     }
 

@@ -30,7 +30,7 @@ public class FaceSitting extends AbstractBehindStance {
     @Override
     public String describe(Combat c) {
         return Global.capitalizeFirstLetter(top.subjectAction("are", "is")) + " sitting on "
-                        + bottom.nameOrPossessivePronoun() + " face while holding " + bottom.possessivePronoun()
+                        + bottom.nameOrPossessivePronoun() + " face while holding " + bottom.possessiveAdjective()
                         + " arms so " + bottom.subject() + " cannot escape";
     }
 

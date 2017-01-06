@@ -153,7 +153,7 @@ public class Blowjob extends Skill {
         }
         if (modifier != Result.miss && getSelf().body.getRandom("mouth").isErogenous()) {
             m += "<br/>Unfortunately for you, your sensitive modified mouth pussy sends spasms of pleasure into you too as you mouth fuck "
-                            + target.possessivePronoun() + " cock.";
+                            + target.possessiveAdjective() + " cock.";
         }
         return m;
     }
@@ -164,7 +164,7 @@ public class Blowjob extends Skill {
         if (modifier == Result.miss) {
             m += String.format("%s tries to suck %s cock, but %s %s %s hips back to avoid %s.",
                             getSelf().name(), target.nameOrPossessivePronoun(), target.pronoun(),
-                            target.action("pull"), target.possessivePronoun(), getSelf().directObject());
+                            target.action("pull"), target.possessiveAdjective(), getSelf().directObject());
         } else if (modifier == Result.special) {
             m += String.format("%s soft lips and talented tongue work over %s dick, drawing out"
                             + " dangerously irresistible pleasure with each touch.", 
@@ -174,40 +174,40 @@ public class Blowjob extends Skill {
                             + "%s realize she's controlling her vaginal tongue to blow %s with her pussy! "
                             + "Her lower tongue runs up and down %s shaft causing %s to shudder with arousal.",
                             getSelf().nameOrPossessivePronoun(), target.subjectAction("feel"),
-                            target.possessivePronoun(),
+                            target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.pronoun()), target.directObject(),
-                            target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), target.directObject());
         } else if (modifier == Result.reverse) {
             m += String.format("Faced with %s dick sitting squarely in front of %s face, %s"
                             + " obediently tongues %s cock in defeat.", target.nameOrPossessivePronoun(),
-                            getSelf().nameOrPossessivePronoun(), getSelf().pronoun(), target.possessivePronoun());
+                            getSelf().nameOrPossessivePronoun(), getSelf().pronoun(), target.possessiveAdjective());
         } else if (target.getArousal().get() < 15) {
             m += String.format("%s %s soft penis into %s mouth and sucks on it until it hardens.",
                             getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         } else if (target.getArousal().percent() >= 90) {
             m += String.format("%s up the precum leaking from %s cock and %s the entire length into %s mouth, sucking relentlessly.",
                             getSelf().subjectAction("lap"), target.nameOrPossessivePronoun(), getSelf().action("take"),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         } else {
             int r = Global.random(4);
             if (r == 0) {
                 m += String.format("%s %s tongue up the length of %s dick, sending a jolt of pleasure up %s spine. "
                                 + "%s slowly wraps %s lips around %s dick and sucks.",
-                                getSelf().subjectAction("run"), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
-                                target.possessivePronoun(), Global.capitalizeFirstLetter(getSelf().pronoun()),
-                                getSelf().possessivePronoun(), target.nameOrPossessivePronoun());
+                                getSelf().subjectAction("run"), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                                target.possessiveAdjective(), Global.capitalizeFirstLetter(getSelf().pronoun()),
+                                getSelf().possessiveAdjective(), target.nameOrPossessivePronoun());
             } else if (r == 1) {
                 m += String.format("%s on the head of %s cock while %s hand strokes the shaft.",
-                                getSelf().subjectAction("suck"), target.nameOrPossessivePronoun(), getSelf().possessivePronoun());
+                                getSelf().subjectAction("suck"), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective());
             } else if (r == 2) {
                 m += String.format("%s %s way down to the base of %s cock and gently sucks on %s balls.",
-                                getSelf().subjectAction("lick"), getSelf().possessivePronoun(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                                getSelf().subjectAction("lick"), getSelf().possessiveAdjective(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             } else {
                 m += String.format("%s %s tongue around the glans of %s penis and teases %s urethra.",
-                                getSelf().subjectAction("run"), getSelf().possessivePronoun(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                                getSelf().subjectAction("run"), getSelf().possessiveAdjective(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }
         }
 
@@ -215,7 +215,7 @@ public class Blowjob extends Skill {
             m += String.format("<br/>Unfortunately for %s, as %s mouth fucks %s cock %s sensitive"
                             + " modifier mouth pussy sends spasms of pleasure into %s as well.", 
                             getSelf().directObject(), getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), getSelf().reflectivePronoun());
+                            getSelf().possessiveAdjective(), getSelf().reflectivePronoun());
         }
         return m;
     }

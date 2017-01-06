@@ -56,7 +56,7 @@ public class DivineCharge extends Status {
     public String initialMessage(Combat c, boolean replaced) {
         if (!replaced) {
             return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"),
-                            affected.possessivePronoun(), getPart(c));
+                            affected.possessiveAdjective(), getPart(c));
         }
         return "";
     }

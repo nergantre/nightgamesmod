@@ -34,7 +34,7 @@ public class Bound extends Status {
         if (affected.human()) {
             return "Your hands are bound by " + binding + ".";
         } else {
-            return affected.possessivePronoun() + " hands are restrained by " + binding + ".";
+            return affected.possessiveAdjective() + " hands are restrained by " + binding + ".";
         }
     }
 

@@ -149,37 +149,37 @@ public class TailPeg extends Skill {
         switch (modifier) {
             case critical:
                 return "You flex your prehensile tail and spread " + target.nameOrPossessivePronoun() + " legs apart. "
-                                + "You quickly lube it up with " + target.possessivePronoun()
+                                + "You quickly lube it up with " + target.possessiveAdjective()
                                 + " juices and slide it into her ass and start pumping.";
             case miss:
                 return "You try to peg " + target.name() + " with your tail, but " + target.pronoun()
-                                + " manages to clench " + target.possessivePronoun()
+                                + " manages to clench " + target.possessiveAdjective()
                                 + " butt cheeks together in time to keep you out.";
             case normal:
-                return "You move towards " + target.name() + " and hold " + target.possessivePronoun() + " hands above "
-                                + target.possessivePronoun()
+                return "You move towards " + target.name() + " and hold " + target.possessiveAdjective() + " hands above "
+                                + target.possessiveAdjective()
                                 + " head. In the same motion, you swiftly plunge your thick tail into "
-                                + target.possessivePronoun() + " ass, pumping it in and out of "
-                                + target.possessivePronoun() + " tight hole.";
+                                + target.possessiveAdjective() + " ass, pumping it in and out of "
+                                + target.possessiveAdjective() + " tight hole.";
             case special:
                 return "You smile down at " + target.name() + " and move your flexible tail behind "
-                                + target.directObject() + ". You spread " + target.possessivePronoun()
-                                + " cheeks with your tail and plunge it into " + target.possessivePronoun()
+                                + target.directObject() + ". You spread " + target.possessiveAdjective()
+                                + " cheeks with your tail and plunge it into " + target.possessiveAdjective()
                                 + " tight pucker. " + target.name() + " moans loudly at the sudden intrusion.";
             case intercourse:
                 return "You smile down at " + target.name() + " and move your flexible tail behind "
-                                + target.directObject() + ". You spread " + target.possessivePronoun()
-                                + " legs with your tail and plunge it into " + target.possessivePronoun()
+                                + target.directObject() + ". You spread " + target.possessiveAdjective()
+                                + " legs with your tail and plunge it into " + target.possessiveAdjective()
                                 + " wet slit. " + target.name() + " moans loudly at the sudden intrusion.";
             case strong:
                 if (target.body.getLargestBreasts().size >= 2) {
                     return "You hug " + target.name()
                                     + " from behind and cup her breasts with your hands. Taking advantage of her surprise, you shove your tail into her ass, and tickle her prostate with the tip.";
                 } else {
-                    return "You hug " + target.name() + " from behind and twist " + target.possessivePronoun()
-                                    + " nipples. Taking advantage of " + target.possessivePronoun()
-                                    + " surprise, you shove your tail into " + target.possessivePronoun()
-                                    + " ass, and tickle " + target.possessivePronoun() + " prostate with the tip.";
+                    return "You hug " + target.name() + " from behind and twist " + target.possessiveAdjective()
+                                    + " nipples. Taking advantage of " + target.possessiveAdjective()
+                                    + " surprise, you shove your tail into " + target.possessiveAdjective()
+                                    + " ass, and tickle " + target.possessiveAdjective() + " prostate with the tip.";
                 }
             default:
                 return "<<This should not be displayed, please inform The Silver Bard: TailPeg-deal>>";
@@ -194,58 +194,58 @@ public class TailPeg extends Skill {
                                 + " %s how the tail itself is slick and wet as it"
                                 + " slowly pushes through %s anus, spreading %s cheeks apart. %s"
                                 + " pumps it in and out a for a few times before taking it out again.",
-                                target.nameDirectObject(), getSelf().subject(), target.possessivePronoun(),
-                                target.possessivePronoun(), getSelf().possessivePronoun(),
+                                target.nameDirectObject(), getSelf().subject(), target.possessiveAdjective(),
+                                target.possessiveAdjective(), getSelf().possessiveAdjective(),
                                 Global.capitalizeFirstLetter(target.subjectAction("notice")),
-                                target.possessivePronoun(), target.possessivePronoun(),
+                                target.possessiveAdjective(), target.possessiveAdjective(),
                                 getSelf().subject());
             case miss:
                 return String.format("%s tries to peg %s with her tail but %s %s to clench"
                                 + " %s butt cheeks together in time to keep it out.",
                                 getSelf().subject(), target.nameDirectObject(),
                                 target.pronoun(), target.action("manage"),
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             case normal:
                 return String.format("%s suddenly moves very close to %s. %s an attack from the front"
                                 + " and %s to move back, but %s up shoving %s tail right up %s ass.",
                                 getSelf().subject(), target.nameDirectObject(),
                                 Global.capitalizeFirstLetter(target.subjectAction("expect")),
                                 target.action("try", "tries"), target.action("end"),
-                                getSelf().possessivePronoun(), target.possessivePronoun());
+                                getSelf().possessiveAdjective(), target.possessiveAdjective());
             case special:
                 return String.format("%s smirks and wiggles %s tail behind %s back. %s briefly %s "
                                 + "at it and %s the appendage move behind %s. %s to keep it"
                                 + " out by clenching %s butt together, but a squeeze of %s"
                                 + " vagina breaks %s concentration, so the tail slides up %s ass"
                                 + " and %s almost %s it as %s cock and ass are stimulated so thoroughly"
-                                + " at the same time.", getSelf().subject(), getSelf().possessivePronoun(),
+                                + " at the same time.", getSelf().subject(), getSelf().possessiveAdjective(),
                                 target.nameOrPossessivePronoun(),
                                 Global.capitalizeFirstLetter(target.pronoun()), target.action("look"),
                                 target.action("see"), target.directObject(), 
                                 Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
-                                target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
-                                target.possessivePronoun(), target.possessivePronoun(),
-                                target.pronoun(), target.action("lose"), target.possessivePronoun());
+                                target.possessiveAdjective(), getSelf().nameOrPossessivePronoun(),
+                                target.possessiveAdjective(), target.possessiveAdjective(),
+                                target.pronoun(), target.action("lose"), target.possessiveAdjective());
             case intercourse:
                 return String.format("%s smirks and coils %s tail around in front of %s. %s briefly %s "
                                 + "at it and %s the appendage move under %s and %s. %s to keep it"
                                 + " out by clamping %s legs together, but a squeeze of %s"
                                 + " ass breaks %s concentration, so the tail slides smoothly into %s pussy.",
-                                getSelf().subject(), getSelf().possessivePronoun(), 
+                                getSelf().subject(), getSelf().possessiveAdjective(), 
                                 target.nameDirectObject(), Global.capitalizeFirstLetter(target.pronoun()),
                                 target.action("look"), target.action("see"), target.directObject(),
                                 target.action("panic"),
                                 Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
-                                target.possessivePronoun(), getSelf().nameOrPossessivePronoun(),
-                                target.possessivePronoun(), target.possessivePronoun());
+                                target.possessiveAdjective(), getSelf().nameOrPossessivePronoun(),
+                                target.possessiveAdjective(), target.possessiveAdjective());
             case strong:
                 return String.format("%s hugs %s from behind and rubs %s chest against %s back."
                                 + " Distracted by that, %s managed to push %s tail between %s"
                                 + " ass cheeks and started tickling %s %s with the tip.",
                                 getSelf().subject(), target.nameDirectObject(),
-                                getSelf().possessivePronoun(), target.possessivePronoun(),
-                                getSelf().pronoun(), getSelf().possessivePronoun(),
-                                target.possessivePronoun(), target.possessivePronoun(),
+                                getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                                getSelf().pronoun(), getSelf().possessiveAdjective(),
+                                target.possessiveAdjective(), target.possessiveAdjective(),
                                 target.hasBalls() ? "prostate" : "sensitive insides");
             default:
                 return "<<This should not be displayed, please inform The Silver Bard: TailPeg-receive>>";

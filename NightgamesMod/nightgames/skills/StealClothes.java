@@ -72,8 +72,8 @@ public class StealClothes extends Skill {
         }
         c.write(getSelf(), String.format(
                         "%s %s with %s quick movements, and before %s %s what's" + " going on, %s %s graces %s %s.",
-                        getSelf().subjectAction("dazzle"), target.subject(), getSelf().possessivePronoun(),
-                        target.pronoun(), target.action("realize"), target.possessivePronoun(),
+                        getSelf().subjectAction("dazzle"), target.subject(), getSelf().possessiveAdjective(),
+                        target.pronoun(), target.action("realize"), target.possessiveAdjective(),
                         stripped.getName(), getSelf().nameOrPossessivePronoun(), top ? "chest" : "hips"));
         return true;
     }

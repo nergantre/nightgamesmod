@@ -94,7 +94,7 @@ public class UseOnahole extends Skill {
         } else if (modifier == Result.upgrade) {
             return String.format("%s slides %s cocksleeve over %s dick and starts pumping it. "
                             + "The sensation is the same as if %s was riding %s, but %s %s the only "
-                            + "one who's feeling anything.", getSelf().subject(), getSelf().possessivePronoun(),
+                            + "one who's feeling anything.", getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(), getSelf().subject(), target.directObject(),
                             target.pronoun(), target.action("are", "is"));
         } else {

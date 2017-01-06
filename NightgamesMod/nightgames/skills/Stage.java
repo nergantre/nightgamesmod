@@ -66,7 +66,7 @@ public enum Stage {
             }
             if (stage == FINISHER) {
                 return Global.capitalizeFirstLetter(ch.pronoun()) + 
-                                " is completely absorbed in the fight, giving it " + ch.possessivePronoun()
+                                " is completely absorbed in the fight, giving it " + ch.possessiveAdjective()
                                 + " all.<br/>";
             }
             return "";

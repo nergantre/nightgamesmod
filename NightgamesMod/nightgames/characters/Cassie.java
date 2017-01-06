@@ -643,7 +643,7 @@ public class Cassie extends BasePersonality {
                                             + "technique has obviously gotten quite good. It only takes a few minutes"
                                             + " for her to milk out a mouthful of semen. You can't help feeling a "
                                             + "bit envious, maybe you should go a round with her before the match ends.",
-                            target.name(), target.possessivePronoun(), target.name(), target.possessivePronoun());
+                            target.name(), target.possessiveAdjective(), target.name(), target.possessiveAdjective());
         }
         return "Cassie settles herself in front of " + target.name()
                         + " and tenderly kisses her on the lips. <i>\"I don't really swing this way, but setting the mood is "

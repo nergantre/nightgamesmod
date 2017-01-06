@@ -82,9 +82,9 @@ public class Sensitize extends Skill {
                             + "suddenly surrounded by a cloud of minty gas. %s skin becomes"
                             + " hot, but goosebumps appear anyway. "
                             + "Even the air touching %s skin makes %s shiver.", getSelf().subject(),
-                            getSelf().possessivePronoun(), 
+                            getSelf().possessiveAdjective(), 
                             Global.capitalizeFirstLetter(target.subjectAction("are", "is")),
-                            target.possessivePronoun(), target.possessivePronoun(),
+                            target.possessiveAdjective(), target.possessiveAdjective(),
                             target.directObject());
         } else if (modifier == Result.miss) {
             return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",

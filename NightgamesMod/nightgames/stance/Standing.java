@@ -16,8 +16,8 @@ public class Standing extends MaledomSexStance {
             return "You are holding " + bottom.name() + " in the air while buried deep in her pussy.";
         } else {
             return String.format("%s is holding %s in %s arms while pumping into %s girl parts.",
-                            top.subject(), bottom.nameDirectObject(), top.possessivePronoun(),
-                            bottom.possessivePronoun());
+                            top.subject(), bottom.nameDirectObject(), top.possessiveAdjective(),
+                            bottom.possessiveAdjective());
         }
     }
 

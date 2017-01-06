@@ -88,9 +88,9 @@ public class Spank extends Skill {
         }
         if (modifier == Result.special) {
             return "You bend " + target.name()
-                            + " over your knee and spank "+target.directObject()+", alternating between hitting "+target.possessivePronoun()+" soft butt cheek and "+target.possessivePronoun()+" sensitive pussy.";
+                            + " over your knee and spank "+target.directObject()+", alternating between hitting "+target.possessiveAdjective()+" soft butt cheek and "+target.possessiveAdjective()+" sensitive pussy.";
         } else {
-            return "You spank " + target.name() + " on "+target.possessivePronoun()+" naked butt cheek.";
+            return "You spank " + target.name() + " on "+target.possessiveAdjective()+" naked butt cheek.";
         }
 
     }
@@ -108,9 +108,9 @@ public class Spank extends Skill {
             return String.format("%s bends %s over like a misbehaving child and spanks %s"
                             + " ass twice. The third spank aims lower and connects solidly with %s %s, "
                             + "injuring %s %s along with %s pride.", getSelf().subject(),
-                            target.nameDirectObject(), target.possessivePronoun(),
-                            target.possessivePronoun(), victim, target.possessivePronoun(),
-                            hood, target.possessivePronoun());
+                            target.nameDirectObject(), target.possessiveAdjective(),
+                            target.possessiveAdjective(), victim, target.possessiveAdjective(),
+                            hood, target.possessiveAdjective());
         } else {
             return String.format("%s lands a stinging slap on %s bare ass.",
                             getSelf().subject(), target.nameOrPossessivePronoun());

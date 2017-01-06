@@ -131,27 +131,27 @@ public class Footjob extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s swings %s foot at %s groin, but misses.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun());
         } else {
             if (target.hasDick()) {
                 return String.format("%s rubs %s dick with the sole of %s soft foot. From time to time,"
                                 + " %s teases %s by pinching the glans between %s toes and jostling %s balls.",
-                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                                getSelf().subject(), target.directObject(), getSelf().possessivePronoun(),
-                                target.possessivePronoun());
+                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                                getSelf().subject(), target.directObject(), getSelf().possessiveAdjective(),
+                                target.possessiveAdjective());
             }
             if (target.hasPussy()) {
                 return String.format("%s teases the lips of %s slit with %s foot. From time "
                                 + "to time, %s teases %s by slipping %s big toe inside and wiggling it around.",
-                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                                getSelf().subject(), target.directObject(), getSelf().possessivePronoun());
+                                getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                                getSelf().subject(), target.directObject(), getSelf().possessiveAdjective());
             }
             return String.format("%s teases %s asshole with %s foot. From time to time, %s "
                             + "teases %s by pressing %s big toe at %s sphincter and nudging it.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun(),
-                            getSelf().subject(), target.directObject(), getSelf().possessivePronoun(),
-                            target.possessivePronoun());
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
+                            getSelf().subject(), target.directObject(), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective());
         }
     }
 

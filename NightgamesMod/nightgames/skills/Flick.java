@@ -119,9 +119,9 @@ public class Flick extends Skill {
             return String.format("%s gives %s a mischievous grin and flicks each of %s balls with %s finger. "
                             + "It startles %s more than anything, but it does hurt and "
                             + "%s seemingly carefree abuse of %s jewels destroys %s confidence.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
-                            getSelf().possessivePronoun(), target.directObject(), getSelf().nameOrPossessivePronoun(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective(), target.directObject(), getSelf().nameOrPossessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective());
         }
     }
 

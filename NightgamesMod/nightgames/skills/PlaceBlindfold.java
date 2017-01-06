@@ -49,7 +49,7 @@ public class PlaceBlindfold extends Skill {
             c.write(getSelf(),
                             String.format("%s a blindfold around %s head, covering %s eyes.",
                                             getSelf().subjectAction("snap"), target.nameOrPossessivePronoun(),
-                                            target.possessivePronoun()));
+                                            target.possessiveAdjective()));
             getSelf().remove(Item.Blindfold);
             target.add(c, new Blinded(target, "a blindfold", false));
         } else {
@@ -57,7 +57,7 @@ public class PlaceBlindfold extends Skill {
                             String.format("%s out a blindfold and %s to place it around %s "
                                             + "head, but %s it away and throws it clear.",
                                             getSelf().subjectAction("take"), getSelf().action("try", "tries"),
-                                            target.possessivePronoun(),
+                                            target.possessiveAdjective(),
                                             target.subjectAction("rip")));
         }
         return true;

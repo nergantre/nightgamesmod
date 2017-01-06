@@ -230,10 +230,10 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                                         .max()
                         / 5 && Global.random(4) == 0) {
             c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!",
-                            self.possessivePronoun(), describe(self), opponent.directObject()));
+                            self.possessiveAdjective(), describe(self), opponent.directObject()));
         }
         if (countsAs(self, feral)) {
-            c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessivePronoun(),
+            c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessiveAdjective(),
                             describe(self), opponent.directObject()));
             double base = 3;
             if (target.getMod(opponent).countsAs(opponent, CockMod.runic)) {
@@ -278,21 +278,21 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 c.write(self, String.format(
                                 "Putting in great effort, %s %s to draw upon %s power, but the fae enchantments in %s %s keep it locked away.",
                                 self.nameOrPossessivePronoun(), self.human() ? "try" : " tries",
-                                opponent.nameOrPossessivePronoun(), opponent.possessivePronoun(),
+                                opponent.nameOrPossessivePronoun(), opponent.possessiveAdjective(),
                                 target.describe(opponent)));
             } else {
                 c.write(self, String.format(
                                 "%s hot flesh kneads %s %s as %s %s"
                                                 + ", drawing gouts of life energy out of %s %s, which is greedily absorbed by %s %s.",
-                                self.possessivePronoun(), opponent.possessivePronoun(), target.describe(opponent),
+                                self.possessiveAdjective(), opponent.possessiveAdjective(), target.describe(opponent),
                                 self.subjectAction("ride", "rides"), opponent.directObject(),
-                                opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
+                                opponent.possessiveAdjective(), target.describe(opponent), self.possessiveAdjective(),
                                 describe(self)));
                 int strength;
                 if (target.getMod(opponent).countsAs(opponent, CockMod.enlightened)) {
                     c.write(self, String.format(
                                     "Since %s had focused so much of %s in %s %s, there is much more for %s to take.",
-                                    opponent.subject(), opponent.reflectivePronoun(), opponent.possessivePronoun(),
+                                    opponent.subject(), opponent.reflectivePronoun(), opponent.possessiveAdjective(),
                                     target.describe(opponent), self.subject()));
                     strength = 10 + self.get(Attribute.Dark);
                 } else {
@@ -367,8 +367,8 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, String.format(
                             prefix + "%s %s whirls to life and starts attempting to extract all the semen packed inside %s %s. "
                                             + "At the same time, %s feel a thin filament sliding into %s urethra, filling %s with both pleasure and shame.",
-                            self.possessivePronoun(), describe(self), opponent.possessivePronoun(),
-                            target.describe(opponent), opponent.pronoun(), opponent.possessivePronoun(),
+                            self.possessiveAdjective(), describe(self), opponent.possessiveAdjective(),
+                            target.describe(opponent), opponent.pronoun(), opponent.possessiveAdjective(),
                             opponent.directObject()));
             bonus += 15;
             if (target.getMod(opponent).countsAs(opponent, CockMod.incubus) || Global.random(4) == 0) {
@@ -389,7 +389,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 opponent.pain(c, self, Math.max(30, 20 + self.get(Attribute.Ki)));
             } else {
                 c.write(self, String.format("Plugging %s %s into %s %s leaves %s gasping from the heat.",
-                                opponent.possessivePronoun(), target.describe(opponent), self.possessivePronoun(),
+                                opponent.possessiveAdjective(), target.describe(opponent), self.possessiveAdjective(),
                                 describe(self), opponent.directObject()));
                 opponent.pain(c, self, 20 + self.get(Attribute.Ki) / 2);
             }
@@ -403,13 +403,13 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                     "The tattoos around %s %s flare up with a new intensity, responding to the energy flow from %s %s."
                                                     + " The magic within them latches onto it and pulls fiercly, drawing %s strength into %s with great gulps.",
                                     self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
-                                    target.describe(opponent), opponent.possessivePronoun(), self.directObject());
+                                    target.describe(opponent), opponent.possessiveAdjective(), self.directObject());
                     strength = 10 + self.get(Attribute.Arcane) / 4;
                 } else {
-                    message = self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessivePronoun()
+                    message = self.nameOrPossessivePronoun() + " tattoos surrounding " + self.possessiveAdjective()
                                     + " vagina light up with arcane energy as " + opponent.subjectAction("are", "is")
                                     + " inside " + self.directObject() + ", channeling some of "
-                                    + opponent.possessivePronoun() + " energies back to its master.";
+                                    + opponent.possessiveAdjective() + " energies back to its master.";
                     strength = 5 + self.get(Attribute.Arcane) / 6;
                 }
                 opponent.loseMojo(c, strength);
@@ -426,9 +426,9 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 target.describe(opponent));
             }
             if (Global.random(8) == 0 && !opponent.wary() && !target.getMod(opponent).countsAs(opponent, CockMod.bionic)) {
-                message += " The light seems to seep into " + opponent.possessivePronoun() + " "
+                message += " The light seems to seep into " + opponent.possessiveAdjective() + " "
                                 + target.describe(opponent) + ", leaving " + opponent.directObject() + " enthralled to "
-                                + self.possessivePronoun() + " will.";
+                                + self.possessiveAdjective() + " will.";
                 opponent.add(c, new Enthralled(opponent, self, 3));
             }
             c.write(self, message);

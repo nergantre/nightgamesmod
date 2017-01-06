@@ -33,10 +33,10 @@ public enum EarPart implements BodyPart, BodyPartMod {
     public void describeLong(StringBuilder b, Character c) {
         switch (this) {
             case cat:
-                b.append("Cute " + fullDescribe(c) + " tops " + c.possessivePronoun() + " head.");
+                b.append("Cute " + fullDescribe(c) + " tops " + c.possessiveAdjective() + " head.");
                 break;
             default:
-                b.append(Global.capitalizeFirstLetter(fullDescribe(c)) + " frames " + c.possessivePronoun() + " face.");
+                b.append(Global.capitalizeFirstLetter(fullDescribe(c)) + " frames " + c.possessiveAdjective() + " face.");
         }
     }
 

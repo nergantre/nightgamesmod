@@ -77,9 +77,9 @@ public class Sedate extends Skill {
             return String.format("%s inserts a bottle into the attachment on %s arm. "
                             + "%s suddenly surrounded by a cloud of dense fog. The "
                             + "fog seems to fill %s head and %s body feels heavy.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.action("are", "is")),
-                            target.possessivePronoun(), target.possessivePronoun());
+                            target.possessiveAdjective(), target.possessiveAdjective());
         } else if (modifier == Result.miss) {
             return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());
@@ -87,7 +87,7 @@ public class Sedate extends Skill {
             return String.format("%s hits %s with a flask of liquid. Even the fumes make %s feel"
                             + " sluggish and %s limbs become heavy.",
                             getSelf().subject(), target.nameDirectObject(),
-                            target.directObject(), target.possessivePronoun());
+                            target.directObject(), target.possessiveAdjective());
         }
     }
 

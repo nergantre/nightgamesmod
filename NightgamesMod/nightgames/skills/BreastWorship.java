@@ -96,8 +96,8 @@ public class BreastWorship extends Skill {
             return String.format("%s worshipfully licks and sucks %s nipples while uncontrollably masturbating, drawing forth "
                             + "a gush of breast milk from %s teats. %s drinks deeply of %s milk, gurgling happily "
                             + "as more of the smooth liquid flows down %s throat.",
-                            getSelf().name(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            getSelf().name(), target.possessivePronoun(), getSelf().possessivePronoun());
+                            getSelf().name(), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            getSelf().name(), target.possessiveAdjective(), getSelf().possessiveAdjective());
         }
     }
 

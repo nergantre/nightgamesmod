@@ -53,7 +53,7 @@ public class WaterForm extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s takes a deep breath and %s movements become much more fluid.",
-                        getSelf().subject(), getSelf().possessivePronoun());
+                        getSelf().subject(), getSelf().possessiveAdjective());
     }
 
 }

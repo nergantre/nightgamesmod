@@ -52,7 +52,7 @@ public class Lubricate extends Skill {
         return String.format("%s throws an oily liquid at %s. The liquid "
                         + "clings to %s and makes %s whole body slippery.",
                         getSelf().subject(), target.nameDirectObject(),
-                        target.directObject(), target.possessivePronoun());
+                        target.directObject(), target.possessiveAdjective());
     }
 
     @Override

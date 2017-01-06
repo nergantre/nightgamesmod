@@ -70,7 +70,7 @@ public class Beg extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return "You throw away your pride and ask " + target.name() + " for mercy. This just seems to encourage "
-                            + target.possessivePronoun() + " sadistic side.";
+                            + target.possessiveAdjective() + " sadistic side.";
         }
         return "You put yourself completely at " + target.name() + "'s mercy. "
                         + Global.capitalizeFirstLetter(target.pronoun())

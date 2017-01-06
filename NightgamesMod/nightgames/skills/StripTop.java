@@ -94,7 +94,7 @@ public class StripTop extends Skill {
                             + stripped.getName() + ".";
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Taking advantage of the situation, you also"
-                                + " manage to snag %s %s!", target.possessivePronoun(), extra.getName());
+                                + " manage to snag %s %s!", target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }
@@ -113,7 +113,7 @@ public class StripTop extends Skill {
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Before %s can react, %s also strips off %s %s!", 
                                 target.subject(), getSelf().name, 
-                                target.possessivePronoun(), extra.getName());
+                                target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }

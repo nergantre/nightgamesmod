@@ -34,7 +34,7 @@ public class TailFucked extends Status {
         }
         return Global.capitalizeFirstLetter(String.format("%s now fucking %s %s with %s %s\n",
                         other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(), hole.describe(affected),
-                        other.possessivePronoun(), tail.describe(other)));
+                        other.possessiveAdjective(), tail.describe(other)));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TailFucked extends Status {
         }
         return Global.capitalizeFirstLetter(String.format("%s fucking %s %s with %s %s\n",
                             other.subjectAction("are", "is"), affected.nameOrPossessivePronoun(),
-                            hole.describe(affected), other.possessivePronoun(), tail.describe(other)));
+                            hole.describe(affected), other.possessiveAdjective(), tail.describe(other)));
     }
 
     @Override

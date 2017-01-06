@@ -70,7 +70,7 @@ public class ReverseCarry extends Carry {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return (damage > 0 ? "" : "You ") + "leap into " + target.possessivePronoun()
+            return (damage > 0 ? "" : "You ") + "leap into " + target.possessiveAdjective()
                             + " arms, but she deposits you back onto the floor.";
         } else {
             return Global.format(
@@ -92,8 +92,8 @@ public class ReverseCarry extends Carry {
             return String.format("%sleaps into %s arms and impales %s on %s cock. "
                             + "%s wraps %s legs around %s torso and %s quickly %s %s so %s doesn't "
                             + "fall and injure %s or %s.", subject, target.nameOrPossessivePronoun(),
-                            getSelf().reflectivePronoun(), target.possessivePronoun(),
-                            getSelf().subject(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().reflectivePronoun(), target.possessiveAdjective(),
+                            getSelf().subject(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             target.pronoun(), target.action("support"), getSelf().pronoun(),
                             getSelf().pronoun(),
                             getSelf().reflectivePronoun(), target.directObject());

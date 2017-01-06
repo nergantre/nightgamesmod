@@ -82,7 +82,7 @@ public class Diversion extends Skill {
                         attacker.action("see"),
                         getSelf().directObject(), attacker.directObject(),
                         Global.capitalizeFirstLetter(attacker.subject()), attacker.action("spin"),
-                        getSelf().nameDirectObject(), getSelf().possessivePronoun(),
+                        getSelf().nameDirectObject(), getSelf().possessiveAdjective(),
                         article.getName());
     }
 

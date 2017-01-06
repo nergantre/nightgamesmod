@@ -16,7 +16,7 @@ public class Mount extends AbstractFacingStance {
         } else {
             return String.format("%s straddling %s, with %s enticing breasts right in front of %s.",
                             top.subjectAction("are", "is"), bottom.nameDirectObject(),
-                            top.possessivePronoun(), bottom.directObject());
+                            top.possessiveAdjective(), bottom.directObject());
         }
     }
 

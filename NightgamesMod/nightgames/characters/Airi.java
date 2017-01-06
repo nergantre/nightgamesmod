@@ -386,7 +386,7 @@ public class Airi extends BasePersonality {
         } else {
             return "Airi flows over to " + target.name()
                             + ". Her slime pools into a long and flexible appendage and worms itself inside "
-                            + target.possessivePronoun()
+                            + target.possessiveAdjective()
                             + " depths. The appendage starts to twist and squirm inside her poor victim and almost instantly causes her victim to scream out in pleasure.<br/><br/>";
         }
     }

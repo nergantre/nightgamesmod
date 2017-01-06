@@ -95,12 +95,12 @@ public class Trip extends Skill {
             return String.format(
                             "You reshape your hands into a sheet of slime and slide it under %s's feet."
                                             + " When you quickly pull it back, %s falls flat on %s back.",
-                            target.name(), target.pronoun(), target.possessivePronoun());
+                            target.name(), target.pronoun(), target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format(
                             "You reshape your hands into a sheet of slime and slide it towards %s."
                                             + " In the nick of time, %s jumps clear, landing safely back on %s feet.",
-                            target.name(), target.pronoun(), target.possessivePronoun());
+                            target.name(), target.pronoun(), target.possessiveAdjective());
         } else {
             return "You catch " + target.name() + " off balance and trip " + target.directObject() + ".";
         }
@@ -115,14 +115,14 @@ public class Trip extends Skill {
             return String.format(
                             "%s shoves a mass of %s slime under %s feet, destabilizing %s. With a few"
                                             + " pulls, %s throws %s onto %s back.",
-                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             target.directObject(), getSelf().pronoun(), target.directObject(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format(
                             "%s forms some of %s slime into a sheet and slides it towards %s feet."
                                             + " %s %s away from it, and %s harmlessly retracts the slime.",
-                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().name(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             Global.capitalizeFirstLetter(target.pronoun()), target.action("jump"), getSelf().pronoun());
         } else {
             return String.format("%s takes %s feet out from under %s and sends %s sprawling to the floor.",

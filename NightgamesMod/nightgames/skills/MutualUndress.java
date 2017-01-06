@@ -76,8 +76,8 @@ public class MutualUndress extends Skill {
                         + " are no time outs in the rules, %s can't help staring "
                         + "at the seductive display until %s finishes with a cute wiggle of %s naked ass. "
                         + "%s asks %s if %s %s to join %s in feeling good, and before %s it "
-                        + "%s has got %s naked as well.", getSelf().subject(), getSelf().possessivePronoun(),
-                        target.subject(), getSelf().subject(), getSelf().possessivePronoun(),
+                        + "%s has got %s naked as well.", getSelf().subject(), getSelf().possessiveAdjective(),
+                        target.subject(), getSelf().subject(), getSelf().possessiveAdjective(),
                         Global.capitalizeFirstLetter(getSelf().pronoun()), target.directObject(),
                         target.pronoun(), target.action("want"), getSelf().directObject(),
                         target.subjectAction("realize"), getSelf().subject(),

@@ -91,14 +91,14 @@ public class Undress extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s tries to struggle out of %s clothing, but it stubbornly clings onto %s.",
-                            getSelf().subject(), getSelf().possessivePronoun(), getSelf().directObject());
+                            getSelf().subject(), getSelf().possessiveAdjective(), getSelf().directObject());
         } else if (modifier == Result.weak) {
             return String.format("%s manages to struggle out of some of %s clothing.", getSelf().subject(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
         if (c.getStance().en != Stance.neutral) {
             return String.format("%s wiggles out of %s clothes and tosses them aside.", getSelf().subject(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
         return String.format("%s puts some space between %s and strips naked.", getSelf().subject(), c.isBeingObserved()
                         ? getSelf().reflectivePronoun() + " and " + target.nameDirectObject() : "you");

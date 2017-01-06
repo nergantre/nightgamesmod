@@ -87,7 +87,7 @@ public class ShamefulDisplay extends Skill {
             return String.format(
                             "%s fondles %s %s while looking at %s with an almost daring look."
                                             + " %s seems to find the situation arousing, and so %s %s.",
-                            getSelf().name(), getSelf().possessivePronoun(),
+                            getSelf().name(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomCock().describe(getSelf()),
                             target.nameDirectObject(),
                             Global.capitalizeFirstLetter(getSelf().pronoun()),
@@ -96,7 +96,7 @@ public class ShamefulDisplay extends Skill {
             return String.format(
                             "%s lifts %s hips and spreads %s pussy lips open. %s's "
                                             + "bright red with shame, but the sight is lewd enough to drive %s wild.",
-                            getSelf().name(), getSelf().possessivePronoun(), getSelf().possessivePronoun(),
+                            getSelf().name(), getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                             Global.capitalizeFirstLetter(getSelf().pronoun()),
                             target.nameDirectObject());
         }

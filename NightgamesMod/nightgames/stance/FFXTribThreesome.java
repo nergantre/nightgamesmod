@@ -24,9 +24,9 @@ public class FFXTribThreesome extends Position {
     @Override
     public String describe(Combat c) {
         return domSexCharacter.subjectAction("are", "is") + " holding " + bottom.nameOrPossessivePronoun() + " legs across "
-                        + top.possessivePronoun() + " lap while grinding " + domSexCharacter
-                        .possessivePronoun()
-                        + " soaked cunt into " + bottom.possessivePronoun() + " pussy.";
+                        + top.possessiveAdjective() + " lap while grinding " + domSexCharacter
+                        .possessiveAdjective()
+                        + " soaked cunt into " + bottom.possessiveAdjective() + " pussy.";
     }
 
     @Override

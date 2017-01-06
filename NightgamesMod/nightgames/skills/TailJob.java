@@ -75,16 +75,16 @@ public class TailJob extends Skill {
             return String.format("%s teases %s sensitive dick and balls with %s %s. "
                             + "It wraps completely around %s shaft and strokes firmly.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(),
                             getSelf().body.getRandom("tail").describe(getSelf()),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return String.format("%s teases %s sensitive pussy with %s %s. "
                             + "It runs along %s nether lips and leaves %s gasping.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(),
                             getSelf().body.getRandom("tail").describe(getSelf()),
-                            target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), target.directObject());
         }
     }
 

@@ -119,25 +119,25 @@ public class TentacleRape extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s shoots %s %s forward at %s. %s barely able to avoid them.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             tentacles.describe(getSelf()), target.nameDirectObject(), 
                             Global.capitalizeFirstLetter(target.subjectAction("are", "is")));
         } else if (modifier == Result.weak) {
             return String.format("%s shoots %s %s forward at %s, entangling %s arms and legs.",
-                            getSelf().subject(), getSelf().possessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameDirectObject(), target.possessivePronoun());
+                            getSelf().subject(), getSelf().possessiveAdjective(), tentacles.describe(getSelf()),
+                            target.nameDirectObject(), target.possessiveAdjective());
         } else if (modifier == Result.normal) {
             return String.format("%s shoots %s %s forward at %s, "
                             + "entangling %s arms and legs. The slimy appendages "
                             + "wriggle over %s body and coat %s in the slippery liquid.",
-                            getSelf().subject(), getSelf().possessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameDirectObject(), target.possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(), tentacles.describe(getSelf()),
+                            target.nameDirectObject(), target.possessiveAdjective(),
                             target.nameOrPossessivePronoun(), target.directObject());
         } else {
             return String.format("%s %s cover %s helpless body, tease %s genitals, and probe %s ass.",
                             getSelf().nameOrPossessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            target.possessiveAdjective());
         }
     }
 

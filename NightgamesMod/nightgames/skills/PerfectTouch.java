@@ -87,8 +87,8 @@ public class PerfectTouch extends Skill {
                             + " before %s can get ahold of %s clothes.",
                             getSelf().subject(), target.nameDirectObject(),
                             target.pronoun(), target.action("catch"),
-                            target.possessivePronoun(), getSelf().pronoun(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective(), getSelf().pronoun(),
+                            target.possessiveAdjective());
         } else {
             return String.format("%s lunges towards %s, but dodges away without hitting %s. "
                             + "%s tosses aside a handful of clothes, "

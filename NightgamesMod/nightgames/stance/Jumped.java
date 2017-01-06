@@ -20,7 +20,7 @@ public class Jumped extends FemdomSexStance {
             return String.format("%s clinging to %s shoulders and gripping %s waist "
                             + "with %s thighs while %s uses the leverage to ride %s.",
                             top.subjectAction("are", "is"), bottom.nameOrPossessivePronoun(),
-                            bottom.possessivePronoun(), top.possessivePronoun(),
+                            bottom.possessiveAdjective(), top.possessiveAdjective(),
                             top.pronoun(), bottom.directObject());
         }
     }

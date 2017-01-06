@@ -105,8 +105,8 @@ public class Tribadism extends Skill {
         if (modifier == Result.normal) {
             String message = String.format("%s grabs %s leg and slides her crotch against %s."
                             + " She then grinds her %s against %s wet %s.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            selfO.describe(getSelf()), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            selfO.describe(getSelf()), target.possessiveAdjective(),
                             targetO.describe(getSelf()));
             return message;
         }

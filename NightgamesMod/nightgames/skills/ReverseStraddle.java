@@ -55,7 +55,7 @@ public class ReverseStraddle extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s sits on %s chest, facing %s crotch.",
                         getSelf().subject(), target.nameOrPossessivePronoun(),
-                        target.possessivePronoun());
+                        target.possessiveAdjective());
     }
 
     @Override

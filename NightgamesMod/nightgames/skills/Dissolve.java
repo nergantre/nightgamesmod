@@ -106,7 +106,7 @@ public class Dissolve extends Skill {
                             getSelf().subject(), attacker.nameOrPossessivePronoun(), attacker.directObject());
         } else {
             return String.format("%s covers you with a clear liquid. %s clothes dissolve away, but it doesn't do anything to %s skin.",
-                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subject()), attacker.possessivePronoun());
+                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subject()), attacker.possessiveAdjective());
         }
     }
 

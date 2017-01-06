@@ -75,7 +75,7 @@ public class CheapShot extends Skill {
                                 "You freeze time briefly, giving you a chance to circle around %s. When time resumes, %s looks around in "
                                                 + "confusion, completely unguarded. You capitalize on your advantage by crouching behind %s and delivering a decisive "
                                                 + "uppercut to %s dangling balls.",
-                                target.name(), target.pronoun(), target.directObject(), target.possessivePronoun());
+                                target.name(), target.pronoun(), target.directObject(), target.possessiveAdjective());
             } else {
                 return String.format(
                                 "You freeze time briefly, giving you a chance to circle around %s. When time resumes, %s looks around in "
@@ -99,7 +99,7 @@ public class CheapShot extends Skill {
                             "%s suddenly vanishes right in front of %s eyes. That wasn't just fast, %s completely disappeared! Before "
                                             + "%s can react, %s %s hit from behind with a devastating punch to %s unprotected balls.",
                             getSelf().name(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
-                            target.subject(), target.pronoun(), target.subjectAction("are", "is"), target.possessivePronoun());
+                            target.subject(), target.pronoun(), target.subjectAction("are", "is"), target.possessiveAdjective());
         } else {
             return String.format(
                             "%s suddenly vanishes right in front of %s eyes. That wasn't just fast, %s completely disappeared! %s something "

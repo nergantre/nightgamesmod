@@ -23,8 +23,8 @@ public class FlyingCarry extends MaledomSexStance {
                         spectated() ? String.format("%s and %s", top.subject(), bottom.subject()) : "You",
                         spectated() ? "eachother" : "your partner",
                         spectated() ? "their" : "your",
-                        top.subject(), bottom.subject(), top.possessivePronoun(),
-                        top.body.getRandomInsertable().describe(top), bottom.possessivePronoun(),
+                        top.subject(), bottom.subject(), top.possessiveAdjective(),
+                        top.body.getRandomInsertable().describe(top), bottom.possessiveAdjective(),
                         bottom.body.getRandomPussy().describe(bottom));
     }
 

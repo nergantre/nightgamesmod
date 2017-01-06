@@ -134,14 +134,14 @@ public class Charm extends Skill {
                             + "attacks in while %s %s watching %s earnest efforts.",
                             getSelf().subject(), target.nameDirectObject(),
                             getSelf().pronoun(), getSelf().directObject(), target.subject(),
-                            target.pronoun(), target.action("enjoy"), getSelf().possessivePronoun());
+                            target.pronoun(), target.action("enjoy"), getSelf().possessiveAdjective());
             if (damage > 0) {
                 message += String.format("\nYou're not sure if this was intentional, but %s flushed "
                                 + "face and ragged breathing makes the act a lot more erotic than "
                                 + "you would expect. %s to contain %s need to fuck the little kitty in heat.",
                                 getSelf().nameOrPossessivePronoun(), 
                                 Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             }
             return message;
         } else {

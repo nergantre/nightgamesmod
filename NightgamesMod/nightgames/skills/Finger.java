@@ -117,7 +117,7 @@ public class Finger extends Skill {
                             + "strokes every bit of %s moist flesh under %s fingers.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().pronoun(),
                             getSelf().subject(), target.subjectAction("are", "is"), getSelf().pronoun(),
-                            target.possessivePronoun(), getSelf().possessivePronoun());
+                            target.possessiveAdjective(), getSelf().possessiveAdjective());
         } else {
             if (target.getArousal().get() <= 15) {
                 return String.format("%s softly rubs the petals of %s closed flower.",
@@ -135,8 +135,8 @@ public class Finger extends Skill {
                 return String.format("%s stirs %s increasingly soaked pussy with %s fingers and "
                                 + "rubs %s clit directly with %s thumb.",
                                 getSelf().subject(), target.nameOrPossessivePronoun(),
-                                getSelf().possessivePronoun(), target.possessivePronoun(),
-                                getSelf().possessivePronoun());
+                                getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                                getSelf().possessiveAdjective());
             }
         }
     }

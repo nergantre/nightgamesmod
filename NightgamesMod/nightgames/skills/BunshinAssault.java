@@ -121,7 +121,7 @@ public class BunshinAssault extends Skill {
             if(target.hasBalls()){
                 return String.format("One of your clones gets grabs and squeezes %s's balls.",target.name());
             }else{
-                return String.format("One of your clones hits %s on %s sensitive tit.",target.name(),target.possessivePronoun());
+                return String.format("One of your clones hits %s on %s sensitive tit.",target.name(),target.possessiveAdjective());
             }
         }else if(modifier==Result.critical){
             if(target.hasBalls()){
@@ -142,7 +142,7 @@ public class BunshinAssault extends Skill {
         }else if(modifier==Result.weak){
             return String.format("%s sight of one of the clones until %s %s a sharp spank on %s ass cheek.",
                             target.subjectAction("lose"), target.pronoun(), target.action("feel"),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         }else if(modifier==Result.strong){
             if(target.hasBalls()){
                 return String.format("A %s clone gets a hold of %s balls and squeezes them painfully.",getSelf().name(),
@@ -160,7 +160,7 @@ public class BunshinAssault extends Skill {
                                 target.nameOrPossessivePronoun());
             }
         }else{
-            return String.format("One of %s clones delivers a swift punch to %s solar plexus.",getSelf().possessivePronoun(),
+            return String.format("One of %s clones delivers a swift punch to %s solar plexus.",getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun());
         }
     }

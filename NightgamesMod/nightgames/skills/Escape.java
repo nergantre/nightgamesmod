@@ -48,10 +48,10 @@ public class Escape extends Skill {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You try to slip your restraints, but can't get free.");
                 } else if (c.shouldPrintReceive(target, c)) {
-                    c.write(getSelf(), getSelf().name() + " squirms against " + getSelf().possessivePronoun()
+                    c.write(getSelf(), getSelf().name() + " squirms against " + getSelf().possessiveAdjective()
                                     + " restraints fruitlessly.");
                     c.write(getSelf(), String.format("%s squirms against %s restraints fruitlessly.", getSelf().name(),
-                                    getSelf().possessivePronoun()));
+                                    getSelf().possessiveAdjective()));
                 }
                 getSelf().struggle();
                 return false;
@@ -70,7 +70,7 @@ public class Escape extends Skill {
                     c.write(getSelf(),
                                     String.format("%s somehow managed to wiggle out of %s iron grip on %s dick.",
                                                     getSelf().pronoun(), target.nameOrPossessivePronoun(),
-                                                    getSelf().possessivePronoun()));
+                                                    getSelf().possessiveAdjective()));
                     getSelf().removeStatus(Stsflag.cockbound);
                     return true;
                 }
@@ -79,9 +79,9 @@ public class Escape extends Skill {
                                                 + ". As soon as %s %s, %s bolts out of %s weakened hold. "
                                                 + "It was a trick!",
                                 getSelf().name(), target.subjectAction("take"),
-                                target.possessivePronoun(), getSelf().directObject(),
+                                target.possessiveAdjective(), getSelf().directObject(),
                                 target.pronoun(), target.action("move"), getSelf().pronoun(),
-                                target.possessivePronoun()));
+                                target.possessiveAdjective()));
             }
             c.setStance(new Neutral(getSelf(), target), getSelf(), true);
         } else {

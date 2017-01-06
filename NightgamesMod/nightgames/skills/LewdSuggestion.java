@@ -74,7 +74,7 @@ public class LewdSuggestion extends Skill {
         if (modifier == Result.strong) {
             return String.format(
                             "You take advantage of the erotic fantasies already swirling through %s's head, whispering ideas that fan the flame of %s lust.",
-                            new Object[] {target.name(), target.possessivePronoun()});
+                            new Object[] {target.name(), target.possessiveAdjective()});
         }
         if (modifier == Result.miss) {
             return String.format(
@@ -91,7 +91,7 @@ public class LewdSuggestion extends Skill {
             return String.format(
                             "%s whispers a lewd suggestion to %s, intensifying the fantasies %s %s trying to ignore and enflaming %s arousal.",
                             getSelf().name(), target.nameDirectObject(), target.pronoun(), target.action("were", "was"),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         }
         if (modifier == Result.miss) {
             return String.format(
@@ -101,7 +101,7 @@ public class LewdSuggestion extends Skill {
         }
         return String.format(
                         "%s gives %s a hypnotic suggestion and %s head is immediately filled with erotic possibilities.",
-                        getSelf().name(), target.nameDirectObject(), target.possessivePronoun());
+                        getSelf().name(), target.nameDirectObject(), target.possessiveAdjective());
     }
 
 }

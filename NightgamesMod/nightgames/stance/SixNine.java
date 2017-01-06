@@ -28,15 +28,15 @@ public class SixNine extends AbstractBehindStance {
         if (top.human()) {
             return String.format("You are on top of %s in the 69 position. %s %s is right in front of your face "
                             + "and you can feel %s breath on your %s.", bottom.nameDirectObject(),
-                            Global.capitalizeFirstLetter(bottom.possessivePronoun()), bottomParts,
-                            bottom.possessivePronoun(), topParts);
+                            Global.capitalizeFirstLetter(bottom.possessiveAdjective()), bottomParts,
+                            bottom.possessiveAdjective(), topParts);
         } else {
             return String.format("%s and %s are on the floor in 69 position. "
                             + "%s sitting on top of %s with %s %s right in "
                             + "front of %s face and %s %s in %s mouth.", bottom.subject(),
                             top.subject(), top.subjectAction("are", "is"), bottom.nameDirectObject(),
-                            top.possessivePronoun(), topParts, bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), bottomParts, top.possessivePronoun());
+                            top.possessiveAdjective(), topParts, bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), bottomParts, top.possessiveAdjective());
         }
     }
     

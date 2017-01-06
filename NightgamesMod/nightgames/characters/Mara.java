@@ -712,12 +712,12 @@ public class Mara extends BasePersonality {
                                             + " and shudders in your arms. You release %s and %s collapses, completely"
                                             + " exhausted. Mara grins at you mischievously. <i>\"%s obviously enjoyed "
                                             + "that. Do you want to be next?\"</i>",
-                            target.name(), target.name(), target.name(), target.possessivePronoun(),
-                            target.possessivePronoun(), target.possessivePronoun(), target.name(), target.pronoun(),
-                            target.possessivePronoun(), target.possessivePronoun(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()), target.name(),
-                            target.possessivePronoun(), target.directObject(), target.pronoun(),
-                            Global.capitalizeFirstLetter(target.possessivePronoun()));
+                            target.name(), target.name(), target.name(), target.possessiveAdjective(),
+                            target.possessiveAdjective(), target.possessiveAdjective(), target.name(), target.pronoun(),
+                            target.possessiveAdjective(), target.possessiveAdjective(),
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()), target.name(),
+                            target.possessiveAdjective(), target.directObject(), target.pronoun(),
+                            Global.capitalizeFirstLetter(target.possessiveAdjective()));
         }
         return "Mara approaches " + target.name()
                         + " like a panther claiming its prey. She runs her fingers down the length of " + target.name()

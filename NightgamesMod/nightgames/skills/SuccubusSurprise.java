@@ -92,7 +92,7 @@ public class SuccubusSurprise extends Skill {
                                         + " enough. A sultry wave washes over you as the draft takes effect, and you ",
                         target.name(), target.pronoun(), target.pronoun());
         if (isArmLock(c.getStance())) {
-            result += String.format("grab %s hands and pull %s deeper into you. ", target.possessivePronoun(),
+            result += String.format("grab %s hands and pull %s deeper into you. ", target.possessiveAdjective(),
                             target.directObject());
         } else {
             result += String.format("wrap your legs around %s, trapping %s within.", target.directObject(),
@@ -119,20 +119,20 @@ public class SuccubusSurprise extends Skill {
                         + " there, though, and when %s back at %s, %s has already downed"
                         + " a draft of some kind. %s grin widens as black wings and a tail form on %s back."
                         + " %s to pull out, but ", target.nameOrPossessivePronoun(),
-                        getSelf().name(), getSelf().subject(), getSelf().possessivePronoun(),
-                        target.subjectAction("follow"), getSelf().possessivePronoun(), 
-                        target.possessivePronoun(), getSelf().name(), getSelf().directObject(),
-                        getSelf().pronoun(), Global.capitalizeFirstLetter(getSelf().possessivePronoun()),
-                        getSelf().possessivePronoun(), 
+                        getSelf().name(), getSelf().subject(), getSelf().possessiveAdjective(),
+                        target.subjectAction("follow"), getSelf().possessiveAdjective(), 
+                        target.possessiveAdjective(), getSelf().name(), getSelf().directObject(),
+                        getSelf().pronoun(), Global.capitalizeFirstLetter(getSelf().possessiveAdjective()),
+                        getSelf().possessiveAdjective(), 
                         Global.capitalizeFirstLetter(target.subjectAction("try", "tries")));
         if (isArmLock(c.getStance())) {
             result += String.format("%s grabs %s hands tightly to %s body, holding %s in place. ",
-                            getSelf().subject(), target.possessivePronoun(), 
-                            getSelf().possessivePronoun(), target.directObject());
+                            getSelf().subject(), target.possessiveAdjective(), 
+                            getSelf().possessiveAdjective(), target.directObject());
         } else {
             result += String.format("%s wraps %s lithe legs around %s waist, keeping %s inside.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
-                            target.possessivePronoun(), target.directObject());
+                            getSelf().subject(), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective(), target.directObject());
         }
         if (modifier == Result.weak) {
             result += String.format(" Luckily%s, the blessings on %s cock prevent any serious damage.",
@@ -143,7 +143,7 @@ public class SuccubusSurprise extends Skill {
                             + "on %s cock, drawing out %s strength.",
                             Global.capitalizeFirstLetter(target.nameOrPossessivePronoun()),
                             target.pronoun(), target.action("feel"),
-                            target.possessivePronoun(), target.possessivePronoun());
+                            target.possessiveAdjective(), target.possessiveAdjective());
         }
         return result;
     }

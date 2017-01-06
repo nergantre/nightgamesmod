@@ -167,7 +167,7 @@ public class LeechEnergy extends Skill {
 
         if (modifier == Result.miss) {
             return String.format("%s tries to drain energy with %s %s, but %s out of the way.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             selfPart.describe(getSelf()), target.subjectAction("dodge"));
         }
         return "";
