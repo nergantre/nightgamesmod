@@ -11,6 +11,7 @@ import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
+import nightgames.status.Charmed;
 import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
@@ -271,6 +272,12 @@ public enum BreastsPart implements BodyPart {
                                                 self, opponent));
                 opponent.weaken(c, opponent.getStamina().max() / 10);
                 opponent.add(c, new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
+            }
+            if (self.has(Trait.Pacification)) {
+                c.write(opponent,
+                                Global.format("The power seems to leave {other:name-possessive} body as {other:pronoun-action:sip|sips} {self:possessive} cloying cream.",
+                                                self, opponent));
+                opponent.add(c, new Charmed(opponent, 2));
             }
         }
         return 0;

@@ -25,6 +25,11 @@ public class Reversal extends Skill {
     public int getMojoCost(Combat c) {
         return 20;
     }
+    
+    @Override
+    public float priorityMod(Combat c) {
+        return 5.f - (float) getSelf().get(Attribute.Submissive) / 3.f;
+    }
 
     @Override
     public boolean resolve(Combat c, Character target) {

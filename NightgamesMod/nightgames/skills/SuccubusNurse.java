@@ -41,9 +41,10 @@ public class SuccubusNurse extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Let your opponent drink a bit of milk";
+        return getSelf().has(Trait.lactating) ? "Put your opponent's mouth to use"
+                        : "Let your opponent drink a bit of milk";
     }
-
+    
     @Override
     public boolean resolve(Combat c, Character target) {
         c.write(getSelf(), Global.format(

@@ -75,5 +75,6 @@ public enum Stsflag {
     piercingOdor, 
     hypnovisor,
     slimed,
-    disguised
+    disguised,
+    wrapped
 }

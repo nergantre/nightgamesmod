@@ -546,6 +546,7 @@ public class Global {
         getSkillPool().add(new DemandArousal(ch));
         getSkillPool().add(new Embrace(ch));
         getSkillPool().add(new SuccubusNurse(ch));
+        getSkillPool().add(new WingWrap(ch));
         
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
@@ -1352,7 +1353,7 @@ public class Global {
     }
     
     public static <T> Optional<T> pickRandom(List<T> list) {
-        if (list.size() == 0) {
+        if (list == null || list.size() == 0) {
             return Optional.empty();
         } else {
             return Optional.of(list.get(random(list.size())));

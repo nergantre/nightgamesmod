@@ -9,6 +9,7 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.Skill;
 import nightgames.status.Stsflag;
 

@@ -1246,11 +1246,15 @@ public class Combat extends Observable implements Cloneable {
                                         p.directObject()));
                     }
                 } else {
-                    setStance(new StandingOver(other, p), null, false);
-                    if (p.human()) {
-                        write(p, "You don't have the strength to stay on your feet. You slump to the floor.");
+                    if (stance.havingSex(this)) {
+                        setStance(stance.reverse(this, true));
                     } else {
-                        write(p, p.getName() + " drops to the floor, exhausted.");
+                        if (p.human()) {
+                            write(p, "You don't have the strength to stay on your feet. You slump to the floor.");
+                        } else {
+                            write(p, p.getName() + " drops to the floor, exhausted.");
+                        } 
+                        setStance(new StandingOver(other, p), null, false);
                     }
                 }
                 p.loseWillpower(this, Math.min(p.getWillpower()
