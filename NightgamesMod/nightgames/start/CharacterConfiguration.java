@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonElement;
@@ -81,20 +82,20 @@ public abstract class CharacterConfiguration {
     protected final void apply(Character base) {
         name.ifPresent(n -> base.setName(n));
         money.ifPresent(m -> base.money = m);
-        Map<Attribute, Integer> deltaAtts = new HashMap<>();
-        for (Attribute att : attributes.keySet()) {
-            deltaAtts.put(att, attributes.get(att) - base.getPure(att));
-        }
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
+        Map<Attribute, Integer> start = new HashMap<>(base.att);
+        Map<Attribute, Integer> deltaAtts = attributes.keySet()
+                        .stream()
+                        .collect(Collectors.toMap(Function.identity(), key -> attributes.get(key) - start.getOrDefault(key, 0)));
         level.ifPresent(desiredLevel -> {
             while (base.level < desiredLevel) {
                 base.level += 1;
                 modMeters(base, 1); // multiplication to compensate for missed daytime gains
                 deltaAtts.forEach((a, val) -> {
-                    int current = base.level * val / desiredLevel;
+                    int current = start.getOrDefault(a, 0) + base.level * val / desiredLevel;
                     int delta = current - base.getPure(a);
                     if (delta > 0) {
-                        base.mod(a, delta);
+                        base.mod(a, delta, true);
                     }
                 });
                 base.getGrowth().addOrRemoveTraits(base);

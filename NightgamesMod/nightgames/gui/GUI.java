@@ -1292,14 +1292,13 @@ public class GUI extends JFrame implements Observer {
         // We may be in between setting NIGHT and building the Match object
         if (Global.getTime() == Time.NIGHT && Global.getMatch() != null) {
             // yup... silverbard pls :D
-            if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
+            if (Global.getMatch().getHour() >= 12) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
             } else {
                 timeLabel.setText(Global.getMatch().getTime() + " pm");
             }
-
             timeLabel.setForeground(new Color(51, 101, 202));
-        } else if (Global.getTime() == Time.DAY) { // not updating correctly during daytime
+        } else if (Global.getTime() == Time.DAY && Global.getDay() != null) { // not updating correctly during daytime
             timeLabel.setText(Global.getDay().getTime() + " pm");
             timeLabel.setForeground(new Color(253, 184, 19));
         } else {

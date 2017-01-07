@@ -30,5 +30,4 @@ public class PlayerConfiguration extends CharacterConfiguration {
         cfg.attributePoints = JsonUtils.getOptional(obj, "attribute_points").map(JsonElement::getAsInt).orElse(11);
         return cfg;
     }
-
 }

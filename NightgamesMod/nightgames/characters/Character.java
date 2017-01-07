@@ -1143,9 +1143,13 @@ public abstract class Character extends Observable implements Cloneable {
         levelPlan.putIfAbsent(level, new LevelUpData());
         return levelPlan.get(level);
     }
-    
+
     public void modAttributeDontSaveData(Attribute a, int i) {
-        if (human() && i != 0) {
+        modAttributeDontSaveData(a, i, false);
+    }
+
+    public void modAttributeDontSaveData(Attribute a, int i, boolean silent) {
+        if (human() && i != 0 && !silent) {
             Global.gui().message("You have " + (i > 0 ? "gained" : "lost") + " " + i + " " + a.name());
         }
         if (a.equals(Attribute.Willpower)) {
@@ -1156,7 +1160,11 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void mod(Attribute a, int i) {
-        modAttributeDontSaveData(a, i);
+        mod(a, i, false);
+    }
+
+    public void mod(Attribute a, int i, boolean silent) {
+        modAttributeDontSaveData(a, i, silent);
         getLevelUpFor(getLevel()).modAttribute(a, i);
     }
 

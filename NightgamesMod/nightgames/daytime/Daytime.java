@@ -184,7 +184,7 @@ public class Daytime {
     }
 
     public String getTime() {
-        return time + ":00";
+        return (time % 12) + ":00";
     }
 
     public void advance(int t) {
