@@ -653,19 +653,19 @@ public class Combat extends Observable implements Cloneable {
             Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
             Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
             if (drainer.equals(winner.orElse(null)) && !getCombatantData(drainer).getBooleanFlag("has_drained")) {
-                if (!getStance().havingSex(this) && !getStance().dom(drainer)) {
+                if (!getStance().havingSex(this) || !getStance().dom(drainer)) {
                     Position mountStance = new Mount(drainer, drained);
                     if (mountStance.insert(this, drained, drainer) != mountStance) {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
-                                        + "on top of {other:direct-object} and inserts {other:possessive} cock into {self:reflective}.", drainer, drained));
+                                        + "on top of {other:direct-object} and {self:action:insert} {other:possessive} cock into {self:reflective}.", drainer, drained));
                         setStance(mountStance.insert(this, drained, drainer));
                     } else if (mountStance.insert(this, drainer, drainer) != mountStance) {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
-                                        + "on top of {other:direct-object} and inserts {self:reflective} into {other:possessive} soaking vagina.", drainer, drained));
+                                        + "on top of {other:direct-object} and {self:action:insert} {self:reflective} into {other:possessive} soaking vagina.", drainer, drained));
                         setStance(mountStance.insert(this, drainer, drainer));
                     } else if (drainer.hasPussy() && drained.hasPussy()) {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
-                                        + "on top of {other:direct-object} and presses {self:possessive} wet snatch on top of {other:possessive}s.", drainer, drained));
+                                        + "on top of {other:direct-object} and {self:action:press} {self:possessive} wet snatch on top of {poss-pronoun}.", drainer, drained));
                         setStance(new TribadismStance(drainer, drained));
                     } else {
                         write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:climb|climbs} "
@@ -687,7 +687,7 @@ public class Combat extends Observable implements Cloneable {
                     }
                 } else {
                     write(drainer, Global.format("With {other:name-do} defeated, {self:subject-action:don't stop|doesn't stop} {self:possessive} greedy hips, "
-                                        + "{self:pronoun-action:are|is} deteremined to extract all the power {self:pronoun} can get!", drainer, drained));
+                                        + "{self:pronoun-action:are|is} determined to extract all the power {self:pronoun} can get!", drainer, drained));
                 }
                 if (!getCombatantData(drainer).getBooleanFlag("has_drained")) {
                     nextPhase = CombatPhase.LEVEL_DRAIN;
@@ -847,7 +847,7 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private boolean rollWorship(Character self, Character other) {
-        if (other.has(Trait.objectOfWorship) && (other.breastsAvailable() || other.crotchAvailable())) {
+        if ((other.has(Trait.objectOfWorship) || self.is(Stsflag.lovestruck)) && (other.breastsAvailable() || other.crotchAvailable())) {
             double chance = Math.min(20, Math.max(5, other.get(Attribute.Divinity) + 10 - self.getLevel()));
             if (other.has(Trait.revered)) {
                 chance += 10;
@@ -1149,7 +1149,7 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private void resolveContactBonuses(Character contacted, Character contacter) {
-		if (contacted.has(Trait.VolatileSubstrate)) {
+		if (contacted.has(Trait.VolatileSubstrate) && contacted.has(Trait.slime)) {
 			contacter.add(this, new Slimed(contacter, contacted, 1));
 		}
 	}
@@ -1236,7 +1236,7 @@ public class Combat extends Observable implements Cloneable {
                 other = p1;
             }
             if (!getStance().prone(p)) {
-                if (getStance().inserted() && getStance().dom(other)) {
+                if (getStance().havingSex(this) && getStance().dom(other)) {
                     if (p.human()) {
                         write(p, "Your legs give out, but " + other.getName() + " holds you up.");
                     } else {
@@ -1245,6 +1245,9 @@ public class Combat extends Observable implements Cloneable {
                                         other.pronoun(), other.action("support"), p.directObject(),
                                         p.directObject()));
                     }
+                } else if (getStance().havingSex(this) && getStance().dom(p) && getStance().reversable(this)) {
+                    write(getOpponent(p), Global.format("{other:SUBJECT-ACTION:take|takes} the chance to shift into a more dominant position.", p, getOpponent(p)));
+                    setStance(getStance().reverse(this, true));
                 } else {
                     setStance(new StandingOver(other, p), null, false);
                     if (p.human()) {
@@ -1646,6 +1649,11 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void addPet(Character master, PetCharacter self) {
+        if (self == null) {
+            System.err.println("Something fucked up happened");
+            Thread.dumpStack();
+            return;
+        }
         if (master.has(Trait.leadership)) {
             int levelups = Math.max(5, master.getLevel() / 4);
             self.getSelf().setPower(self.getSelf().getPower() + levelups);

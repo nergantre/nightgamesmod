@@ -1,6 +1,8 @@
 package nightgames.start;
 
-import static nightgames.start.ConfigurationUtils.*;
+import static nightgames.start.ConfigurationUtils.mergeCollections;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -78,14 +80,28 @@ public abstract class CharacterConfiguration {
 
     protected final void apply(Character base) {
         name.ifPresent(n -> base.setName(n));
-        base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
-        level.ifPresent(l -> {
-            base.level = l;
-            modMeters(base, l * 2); // multiplication to compensate for missed daytime gains
-        });
-        xp.ifPresent(x -> base.gainXP(x));
+        Map<Attribute, Integer> deltaAtts = new HashMap<>();
+        for (Attribute att : attributes.keySet()) {
+            deltaAtts.put(att, attributes.get(att) - base.getPure(att));
+        }
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
+        level.ifPresent(desiredLevel -> {
+            while (base.level < desiredLevel) {
+                base.level += 1;
+                modMeters(base, 1); // multiplication to compensate for missed daytime gains
+                deltaAtts.forEach((a, val) -> {
+                    int current = base.level * val / desiredLevel;
+                    int delta = current - base.getPure(a);
+                    if (delta > 0) {
+                        base.mod(a, delta);
+                    }
+                });
+                base.getGrowth().addOrRemoveTraits(base);
+            }
+        });
+        base.att.putAll(attributes);
+        xp.ifPresent(x -> base.gainXPPure(x));
         if (clothing.isPresent()) {
             List<Clothing> clothes = clothing.get().stream().map(Clothing::getByID).collect(Collectors.toList());
             base.outfitPlan = new ArrayList<>(clothes);

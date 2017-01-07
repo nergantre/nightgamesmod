@@ -3,12 +3,14 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Bound;
 import nightgames.status.Oiled;
+import nightgames.status.Slimed;
 import nightgames.status.Stsflag;
 
 public class TentacleRape extends Skill {
@@ -84,6 +86,9 @@ public class TentacleRape extends Skill {
         } else {
             writeOutput(c, Result.miss, target);
             return false;
+        }
+        if (getSelf().has(Trait.VolatileSubstrate) && getSelf().has(Trait.slime)) {
+            target.add(c, new Slimed(target, getSelf(), Global.random(2, 5)));
         }
         return true;
     }

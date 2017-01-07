@@ -528,6 +528,7 @@ public class Global {
         getSkillPool().add(new Edge(ch));
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
+        getSkillPool().add(new Divide(ch));
         getSkillPool().add(new PetThreesome(ch));
         getSkillPool().add(new ReversePetThreesome(ch));
         getSkillPool().add(new PetInitiatedThreesome(ch));
@@ -1390,21 +1391,33 @@ public class Global {
         matchActions.put("subject-action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.subjectAction(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.subjectAction(verbs[0], verbs[1]);
+                } else {
+                    return self.subjectAction(verbs[0]);
+                }
             }
             return "";
         });
         matchActions.put("pronoun-action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
+                } else {
+                    return self.pronoun() + " " + self.action(verbs[0]);
+                }
             }
             return "";
         });
         matchActions.put("action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.action(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.action(verbs[0], verbs[1]);
+                } else {
+                    return self.action(verbs[0]);
+                }
             }
             return "";
         });

@@ -117,7 +117,7 @@ public class Simulacrum extends Skill {
                             + "The projection stabilizes into a split image of {other:name-do}!", getSelf(), target);
         } else {
             if (modifier == Result.miss) {
-                Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
+                return Global.format("{self:SUBJECT} closes {self:possessive} eyes momentarily before slowly rising into the air. "
                                 + "{other:SUBJECT-ACTION:are|is} not sure what {self:pronoun} is up to, but it's definitely not good for {other:direct-object}. "
                                 + "Fortunately, {other:subject:were|was} close enough to leap at {self:direct-object} and interrupt whatever {self:pronoun} was trying to do.", 
                                 getSelf(), target);

@@ -195,7 +195,7 @@ public class Decider {
         
         if (character.plan == Plan.hunting && !enemy.isEmpty()) {
             tactic.addAll(enemy);
-        } 
+        }
         if (!character.location().humanPresent()) {
             tactic.addAll(onlyWhenSafe);
         }

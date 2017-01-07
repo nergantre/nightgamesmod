@@ -11,8 +11,8 @@ import java.util.Optional;
 public class BlankPersonality extends BasePersonality {
     private static final long serialVersionUID = 1L;
 
-    public BlankPersonality(String name, int level) {
-        super(name, level, Optional.empty(), Optional.empty(), false);
+    public BlankPersonality(String name) {
+        super(name, Optional.empty(), Optional.empty(), false);
     }
 
     @Override public String victory(Combat c, Result flag) {

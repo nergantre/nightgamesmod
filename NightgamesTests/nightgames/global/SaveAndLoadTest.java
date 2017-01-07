@@ -41,11 +41,11 @@ public class SaveAndLoadTest {
     }
 
     @Test public void testSaveAndLoadAffection() throws Exception {
-        BlankPersonality beforeNPC = new BlankPersonality("Affectionate", 1);
+        BlankPersonality beforeNPC = new BlankPersonality("Affectionate");
         Player human = new Player("testPlayer");
         beforeNPC.character.gainAffection(human, 10);
         JsonObject npcJson = beforeNPC.character.save();
-        BlankPersonality afterNPC = new BlankPersonality("AffectionateLoad", 1);
+        BlankPersonality afterNPC = new BlankPersonality("AffectionateLoad");
         afterNPC.character.load(npcJson);
         assertThat(afterNPC.character.getAffections(), equalTo(beforeNPC.character.getAffections()));
     }

@@ -26,7 +26,7 @@ public class Sarah extends BasePersonality {
     }
 
     public Sarah(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Sarah", 1, charConfig, commonConfig, false);
+        super("Sarah", charConfig, commonConfig, false);
         constructLines();
     }
 

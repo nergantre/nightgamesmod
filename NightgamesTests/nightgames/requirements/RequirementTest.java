@@ -50,8 +50,8 @@ public class RequirementTest {
     }
 
     @Before public void setUp() throws Exception {
-        self = new BlankPersonality("SelfTestNPC", 1).character;
-        other = new BlankPersonality("OtherTestNPC", 1).character;
+        self = new BlankPersonality("SelfTestNPC").character;
+        other = new BlankPersonality("OtherTestNPC").character;
         Area area = new Area("TestArea", "TestArea description", Movement.beer);
         combat = new Combat(self, other, area);
     }

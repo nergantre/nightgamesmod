@@ -185,10 +185,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getVictoryXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getDefeatXP(this));
+        gainXP(getVictoryXP(target));
+        target.gainXP(getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -211,10 +209,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getDefeatXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getVictoryXP(this));
+        gainXP(getDefeatXP(target));
+        target.gainXP(getVictoryXP(this));
         arousal.empty();
         if (!target.human() || !Global.getMatch().condition.name().equals("norecovery")) {
             target.arousal.empty();
@@ -389,10 +385,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getVictoryXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getVictoryXP(this));
+        gainXP(getVictoryXP(target));
+        target.gainXP(getVictoryXP(this));
         arousal.empty();
         target.arousal.empty();
         if (this.has(Trait.insatiable)) {

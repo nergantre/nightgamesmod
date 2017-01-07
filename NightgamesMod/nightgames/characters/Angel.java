@@ -29,7 +29,7 @@ public class Angel extends BasePersonality {
     }
 
     public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig, true);
+        super("Angel", charConfig, commonConfig, true);
         constructLines();
     }
 

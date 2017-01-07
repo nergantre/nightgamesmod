@@ -27,11 +27,14 @@ public class CustomNPC extends BasePersonality {
     }
 
     public CustomNPC(NPCData data, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super(data.getName(), data.getStats().level, data.isStartCharacter());
+        super(data.getName(), data.isStartCharacter());
         this.data = data;
         setupCharacter(charConfig, commonConfig);
         for (String lineType : CharacterLine.ALL_LINES) {
             character.addLine(lineType, (c, self, other) -> data.getLine(lineType, c, self, other));
+        }
+        for (int i = 1; i < data.getStats().level; i++) {
+            character.ding();
         }
     }
 

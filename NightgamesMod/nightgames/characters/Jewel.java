@@ -42,7 +42,7 @@ public class Jewel extends BasePersonality {
     }
 
     public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Jewel", 1, charConfig, commonConfig, true);
+        super("Jewel", charConfig, commonConfig, true);
         constructLines();
     }
 

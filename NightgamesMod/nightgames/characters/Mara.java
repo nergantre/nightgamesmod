@@ -39,13 +39,13 @@ public class Mara extends BasePersonality {
     }
 
     public Mara(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Mara", 1, charConfig, commonConfig, true);
+        super("Mara", charConfig, commonConfig, true);
         constructLines();
     }
     
     private void constructLines () {
         character.addLine(CharacterLine.BB_LINER, (c, self, other) -> { 
-            return "Mara gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
+            return "{self:SUBJECT} gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
                             + "lying just now. I'm not actually that sorry.\"</i>";
         });
         character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
@@ -53,46 +53,46 @@ public class Mara extends BasePersonality {
         });
 
         character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> { 
-            return "Mara gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
+            return "{self:SUBJECT} gives an exaggerated squeal and covers herself. <i>\"You brute! You rapist! What are you trying to do to a helpless, innocent girl?\"</i>";
          });
 
         character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> { 
-            return "Mara lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
+            return "{self:SUBJECT} lets out a slightly pained whimper. <i>\"Go easy on me. I'm not really the masochistic type.\"</i>";
          });
 
         character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> { 
-            return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
+            return "<i>\"If you want me to get you off so badly,\"</i> {self:SUBJECT} teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
          });
 
         character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> { 
-            return "<i>\"If you want me to get you off so badly,\"</i> Mara teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
+            return "<i>\"If you want me to get you off so badly,\"</i> {self:SUBJECT} teases coyly. <i>\"You should have just said so from the start. You don't need to put up this token resistance.\"</i>";
          });
 
         character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> { 
-            return "On your way back to your dorm after the match, you feel a sudden weight on your back that almost knocks you off your feet. It turns out to be Mara, who jumped "
-                            + "on your back in her enthusiasm to spend the night together. You give her a piggyback ride back to the dorm, and per her request, head up to the roof. Unsurprisingly, "
-                            + "there's no one here this late at night and there's a good view of the stars. Mara strips off her clothes and dances naked onto the rooftop. <i>\"There's nothing like "
-                            + "being naked in the moonlight. Come on!\"</i> You undress and put your clothes in a neat pile, taking the time to gather up hers as well. You walk up behind her and hold "
-                            + "her while enjoying the view. The night air is slightly cool, but her nude body is warm in your arms. She turns her head to give you a tender kiss before stepping out of "
-                            + "your embrace. <i>\"Have you ever danced naked under the stars?\"</i> It's a strange question, but she looks too lovely in this light to refuse. The two of you dance without any "
+            return "On your way back to your dorm after the match, you feel a sudden weight on your back that almost knocks you off your feet. It turns out to be {self:name-do}, who jumped "
+                            + "on your back in {self:possessive} enthusiasm to spend the night together. You give {self:possessive} a piggyback ride back to the dorm, and per {self:possessive} request, head up to the roof. Unsurprisingly, "
+                            + "there's no one here this late at night and there's a good view of the stars. {self:SUBJECT} strips off {self:possessive} clothes and dances naked onto the rooftop. <i>\"There's nothing like "
+                            + "being naked in the moonlight. Come on!\"</i> You undress and put your clothes in a neat pile, taking the time to gather up hers as well. You walk up behind {self:possessive} and hold "
+                            + "{self:possessive} while enjoying the view. The night air is slightly cool, but {self:possessive} nude body is warm in your arms. {self:PRONOUN} turns {self:possessive} head to give you a tender kiss before stepping out of "
+                            + "your embrace. <i>\"Have you ever danced naked under the stars?\"</i> It's a strange question, but {self:pronoun} looks too lovely in this light to refuse. The two of you dance without any "
                             + "hint of style or rhythm, not caring how rediculous you'd look to a third party. When you've both tired, you spend some time just looking at the stars together. You "
-                            + "never would have imagined this is how you'd be spending your night, but Mara always finds ways to surprise you. You suddenly realize she's no longer standing next to "
-                            + "you. You spot her back by the door, holding your clothes. She winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch her just "
-                            + "as she reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay her back "
+                            + "never would have imagined this is how you'd be spending your night, but {self:subject} always finds ways to surprise you. You suddenly realize {self:pronoun}'s no longer standing next to "
+                            + "you. You spot {self:possessive} back by the door, holding your clothes. {self:PRONOUN} winks mischeviously and dashes into the building. You give chase, still naked. You manage to catch {self:possessive} just "
+                            + "as {self:pronoun} reaches your room. You consider it a minor miracle no one saw the two of you streaking through the dorm building. You're going to have to find a way to pay {self:possessive} back "
                             + "before morning.";
          });
 
         character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> { 
             final String finalLines[] =
                             {"<i>\"NNnnnn..! Oh man I can't take much more!\"</i>", "<i>\"Ngh! Slow down! please!\"</i>",
-                                            "Mara groans as her climax subsides, <i>\"Again! I deman a rematch!\"</i>",};
+                                            "{self:SUBJECT} groans as {self:possessive} climax subsides, <i>\"Again! I deman a rematch!\"</i>",};
             switch (self.orgasms) {
                 case 0:
                     return "<i>\"Aw man, that one didn't count! Come on, let's go, I'll fuck your brains out!\"</i>";
                 case 1:
                     return "<i>\"No fair! I'll get you next time!\"</i>";
                 case 2:
-                    return "<i>\"AAAHHH!\"</i> Mara tries to catch her breath, \"There's... no way... you can keep this up!\"";
+                    return "<i>\"AAAHHH!\"</i> {self:subject} tries to catch {self:possessive} breath, \"There's... no way... you can keep this up!\"";
                 default:
                     return Global.pickRandom(Arrays.asList(finalLines))
                                  .get();
@@ -102,10 +102,10 @@ public class Mara extends BasePersonality {
         character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> { 
             final String finalLines[] = {"<i>\"Cumming again? You " + other.boyOrGirl() + "s are too easy.\"</i>",
                             "<i>\"You're simply inexhaustible aren't you? Let's test that theory... for science.\"</i>",
-                            "Mara laughs triumphantly, <i>\"Again! Again!\"</i>",};
+                            "{self:SUBJECT} laughs triumphantly, <i>\"Again! Again!\"</i>",};
             switch (other.orgasms) {
                 case 0:
-                    return "Mara lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
+                    return "{self:SUBJECT} lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
                 case 1:
                     return "<i>\"Looks like Mr. Happy over here can't help himself! That's twice now, how long can you go?\"</i>";
                 case 2:
@@ -119,11 +119,11 @@ public class Mara extends BasePersonality {
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
             String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
-                return "\"<i>Annddd... here it comes!</i>\" Mara happily squeals as the now familiar sensation of your strength entering her flows through the petite girl. "
-                                + "You try struggling out, but Mara simply holds you down with a single hand. \"<i>Now now, don't get antsy! "
+                return "\"<i>Annddd... here it comes!</i>\" {self:SUBJECT} happily squeals as the now familiar sensation of your strength entering {self:possessive} flows through the petite girl. "
+                                + "You try struggling out, but {self:subject} simply holds you down with a single hand. \"<i>Now now, don't get antsy! "
                                 + "You know you're already much weaker than me right? So don't struggle and just let me take everything!</i>\"";
             } else if (other.getLevel() >= self.getLevel()) {
-                return "Mara narrows her eyes in pleasure as your strength is absorbed by her " + part + " as you cum. <i>\"Oh {other:boy}, that is some GOOD stuff! Don't be shy, give me some more, yes?\"</i>";
+                return "{self:SUBJECT} narrows {self:possessive} eyes in pleasure as your strength is absorbed by {self:possessive} " + part + " as you cum. <i>\"Oh {other:boy}, that is some GOOD stuff! Don't be shy, give me some more, yes?\"</i>";
             } else {
                 return "\"<i>You know {other:NAME}, I don't know why I bothered working so hard before. "
                                 + "Training, studying, preparing took so much time! It's so much <b>easier</b> to just take it from you! "
@@ -133,12 +133,12 @@ public class Mara extends BasePersonality {
 
         character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
             if (character.has(Trait.madscientist)) {
-                return "Mara has gone high tech. She has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses she's wearing appear to be "
-                                + "computerized rather than prescription. She also has a device of unknown purpose strapped to her arm. Underneath all of that, she has the same cute, mischievous expression she "
+                return "{self:SUBJECT} has gone high tech. {self:PRONOUN} has a rig of equipment on harnesses that seem carefully placed so as not to interfere with clothing removal. The glasses {self:pronoun}'s wearing appear to be "
+                                + "computerized rather than prescription. {self:PRONOUN} also has a device of unknown purpose strapped to {self:possessive} arm. Underneath all of that, {self:pronoun} has the same cute, mischievous expression {self:pronoun} "
                                 + "you're used to.";
             } else {
-                return "Mara is short and slender, with a small heart shaped face. She has dark skin, and short, curly black hair. Her size and cute features make her look a few years "
-                                + "younger than she actually is, and she wears a near constant playful smile. She's far from physically intimidating, but her sharp eyes reveal her exceptional intellect.";
+                return "{self:SUBJECT} is short and slender, with a small heart shaped face. {self:PRONOUN} has dark skin, and short, curly black hair. {self:POSSESSIVE} size and cute features make {self:possessive} look a few years "
+                                + "younger than {self:pronoun} actually is, and {self:pronoun} wears a near constant playful smile. {self:PRONOUN}'s far from physically intimidating, but {self:possessive} sharp eyes reveal {self:possessive} exceptional intellect.";
             }
         });
     }
@@ -201,7 +201,7 @@ public class Mara extends BasePersonality {
                                             "You tell {self:direct-object} there would be no point to slavering"
                                                             + " away on mediocre devices. Instead, {self:pronoun} should devote {self:reflective}"
                                                             + " to one, truly inspired invention to show {self:possessive} true prowess."
-                                                            + " <i>\"Yes... You're right!\"</i> %s You yelp and stumble backward, asking her"
+                                                            + " <i>\"Yes... You're right!\"</i> %s You yelp and stumble backward, asking {self:possessive}"
                                                             + " what she's doing. <i>\"I'm going to create the best sex toy this world will"
                                                             + " ever see, of course! And since you convinced me to do so, it's only fair"
                                                             + " that I get it tailored to suit you </i>just<i> right. Trust me, {other:name},"
@@ -230,7 +230,7 @@ public class Mara extends BasePersonality {
                             c.write(Global.format(
                                             "{self:name} is a genius. Surely, if anyone"
                                                             + " could create a true masterpiece and still have time"
-                                                            + " left for side projects, it would be her. <i>\"Aww, flatterer!"
+                                                            + " left for side projects, it would be {self:possessive}. <i>\"Aww, flatterer!"
                                                             + " If you hadn't already gotten in my pants just now, I'd think"
                                                             + " you were trying really hard to get there. I'll just have "
                                                             + "to work extra hard to live up to your expectations, then. It's"

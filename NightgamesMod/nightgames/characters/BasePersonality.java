@@ -35,18 +35,18 @@ public abstract class BasePersonality implements Personality {
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
 
-    protected BasePersonality(String name, int level, boolean isStartCharacter) {
+    protected BasePersonality(String name, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
-        character = new NPC(name, level, this);
+        character = new NPC(name, 1, this);
         character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
     }
 
-    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+    public BasePersonality(String name, Optional<NpcConfiguration> charConfig,
                     Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
-        this(name, level, isStartCharacter);
+        this(name, isStartCharacter);
         setupCharacter(charConfig, commonConfig);
     }
 
