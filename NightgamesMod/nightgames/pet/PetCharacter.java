@@ -23,6 +23,7 @@ import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
+import nightgames.status.Slimed;
 import nightgames.status.Status;
 import nightgames.trap.Trap;
 
@@ -287,7 +288,12 @@ public class PetCharacter extends Character {
     @Override
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
         super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
-        c.write(this, Global.format("The force of {self:name-possessive} orgasm destroys {self:possessive} anchor to the fight and {self:pronoun} disappears.", this, opponent));
+        if (getSelf().owner().has(Trait.StickyFinale)) {
+            c.write(this, Global.format("The force of {self:name-possessive} orgasm causes {self:direct-object} to shudder and explode in a rain of slime, completely covering {other:name-do} with the sticky substance.", this, opponent));
+            opponent.add(c, new Slimed(opponent, getSelf().owner(), Global.random(5, 11)));
+        } else {
+            c.write(this, Global.format("The force of {self:name-possessive} orgasm destroys {self:possessive} anchor to the fight and {self:pronoun} disappears.", this, opponent));
+        }
         c.removePet(this);
     }
 

@@ -10,7 +10,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Slimed extends DurationStatus {
-    private static final int MAX_STACKS = 50;
+    private static final int MAX_STACKS = 25;
     private Character origin;
     private int stacks;
 

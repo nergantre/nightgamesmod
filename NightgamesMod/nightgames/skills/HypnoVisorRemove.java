@@ -19,6 +19,11 @@ public class HypnoVisorRemove extends Skill {
     }
 
     @Override
+    public int accuracy(Combat c, Character target) {
+        return (int) ((Math.min(0.8, (double) .2 + getSelf().get(Attribute.Cunning) / 100.0)) * 100);
+    }
+
+    @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && getSelf().is(Stsflag.hypnovisor) && c.getStance().mobile(getSelf());
     }
@@ -30,9 +35,7 @@ public class HypnoVisorRemove extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        boolean hit = Global.randomdouble() < Global.randomdouble() * .2
-                        + Math.min(0.8, (double) getSelf().get(Attribute.Power) / 50.0);
-        if (hit) {
+        if (target.roll(getSelf(), c, accuracy(c, target))) {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:find|finds} a small button"
                             + " on the side of the Hypno Visor, and pressing it unlocks whatever"
                             + " mechanisms held it in place. {self:PRONOUN-ACTION:make|makes} sure"

@@ -701,6 +701,9 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void turn() {
+        if (!cloned && isBeingObserved()) {
+            Global.gui().loadPortrait(this, p1, p2);
+        }
         if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses(false)) {
             phase = determinePostCombatPhase();
             next();

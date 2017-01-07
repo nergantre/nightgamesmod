@@ -69,6 +69,7 @@ import nightgames.skills.OrgasmicTighten;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.skills.damage.DamageType;
+import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Abuff;
@@ -1679,8 +1680,30 @@ public abstract class Character extends Observable implements Cloneable {
     private static final OrgasmicTighten TIGHTEN_SKILL = new OrgasmicTighten(null);
     private static final OrgasmicThrust THRUST_SKILL = new OrgasmicThrust(null);
 
-    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
-                    int totalTimes) {
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        if (has(Trait.HiveMind) && !c.getPetsFor(this).isEmpty()) {
+            // don't use opponent, use opponent of the current combat
+            c.write(this, Global.format("Just as {self:subject-action:seem} about to orgasm, {self:possessive} expression shifts. "
+                            + "{self:POSSESSIVE} eyes dulls and {self:possessive} expressions slacken."
+                            + "{other:if-human: Shit you've seen this before, she somehow switched bodies with one of her clones!}"
+                            , this, c.getOpponent(this)));
+            while (!c.getPetsFor(this).isEmpty() && checkOrgasm()) {
+                int amount = Math.min(getArousal().get(), getArousal().max());
+                getArousal().reduce(amount);
+                Character pet = c.getPetsFor(this).iterator().next();
+                pet.arouse(amount, c, Global.format("({self:master}'s orgasm)", this, opponent));
+                pet.doOrgasm(c, pet, null, null);
+            }
+            c.setStance(new Neutral(this, opponent));
+            if (!checkOrgasm()) {
+                return;
+            } else {
+                c.write(this, Global.format("{other:if-human:Luckily }{self:pronoun} didn't seem to be able to shunt all {self:possessive arousal} "
+                                + "into {self:possessive clones, and rapidly reaches the peak anyways."
+                                , this, c.getOpponent(this)));
+            }
+        }
+
         String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
         String opponentOrgasmLiner = (opponent == null || opponent == this || opponent.isPet()) ? "" : 
             "<b>" + opponent.makeOrgasmLiner(c, this) + "</b>";

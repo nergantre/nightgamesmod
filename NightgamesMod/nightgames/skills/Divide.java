@@ -1,5 +1,8 @@
 package nightgames.skills;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import nightgames.characters.Character;
 import nightgames.characters.NPC;
 import nightgames.characters.Player;
@@ -38,18 +41,33 @@ public class Divide extends Skill {
     }
 
     public static Pet makeClone(Combat c, Character self) {
-        int power = Math.max(10, self.getLevel() / 2);
+        int power = Math.max(1, self.getLevel() / 2);
         int ac = 4 + power / 3;
-
-        String cloneName = String.format("%s clone", self.nameOrPossessivePronoun());
+        CharacterPet pet = null;
+        String clonePrefix = String.format("%s clone", self.nameOrPossessivePronoun());
+        Set<String> existingNames = c.getOtherCombatants()
+                                      .stream().map(Character::getTrueName)
+                                      .filter(name -> name.contains(clonePrefix))
+                                      .collect(Collectors.toSet());
+        String cloneName = clonePrefix + " ?";
+        for (char letter : "abcdefghijklmnopqrstuvwxyz".toCharArray()) {
+            String testName = clonePrefix + " " + String.valueOf(letter).toUpperCase();
+            if (!existingNames.contains(testName)) {
+                cloneName = testName;
+                break;
+            }
+        }
         if (self instanceof Player) {
-            return new CharacterPet(cloneName, self, (Player)self, power, ac);
+            pet = new CharacterPet(cloneName, self, (Player)self, power, ac);
         } else if (self instanceof NPC) {
-            return new CharacterPet(cloneName, self, (NPC)self, power, ac);
+            pet = new CharacterPet(cloneName, self, (NPC)self, power, ac);
         } else {
             c.write(self, "Something fucked up happened in Divide.");
-            return null;
+            return pet;
         }
+        pet.getSelf().add(Trait.MindlessClone);
+        return pet;
+
     }
     
     @Override

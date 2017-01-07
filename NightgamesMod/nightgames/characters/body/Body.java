@@ -786,6 +786,10 @@ public class Body implements Cloneable {
             if (character.has(Trait.romantic)) {
                 perceptionBonus += Math.max(0, opponent.getArousal().percent() - 70) / 100.0;
             }
+
+            if (character.has(Trait.MindlessClone)) {
+                perceptionBonus /= 3;
+            }
             return perceptionBonus;
         }
     }

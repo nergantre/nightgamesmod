@@ -262,6 +262,7 @@ public class Command extends Skill {
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "ass", .1));
                 }
+                target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);
                 break;
             case GIVE_BLOWJOB:
@@ -280,6 +281,7 @@ public class Command extends Skill {
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "cock", .1));
                 }
+                target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);
                 break;
             case GIVE_CUNNILINGUS:
@@ -296,6 +298,7 @@ public class Command extends Skill {
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "pussy", .1));
                 }
+                target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);
                 break;
             case MASTER_BEHIND:
@@ -382,6 +385,7 @@ public class Command extends Skill {
                                                 Global.capitalizeFirstLetter(target.pronoun()),
                                                 target.action("comply", "complies"),
                                                 getSelf().nameOrPossessivePronoun()));
+                target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 break;
             case STRIP_SLAVE:
                 removed = getStripTarget(target);
