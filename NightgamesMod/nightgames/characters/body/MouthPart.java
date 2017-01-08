@@ -154,4 +154,9 @@ public class MouthPart extends GenericBodyPart {
     public boolean isVisible(Character c) {
         return true;
     }
+
+    @Override
+    public String adjective() {
+        return "oral";
+    }
 }

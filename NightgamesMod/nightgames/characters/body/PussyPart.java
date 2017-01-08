@@ -167,7 +167,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
+    public double getSensitivity(Character self, BodyPart target) {
         return sensitivity;
     }
 
@@ -226,7 +226,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 self.add(c, new DivineCharge(self, charge.magnitude));
             }
         }
-        if (countsAs(self, plant) && damage > opponent.getArousal()
+        if (countsAs(self, plant) && damage > self.getArousal()
                                                         .max()
                         / 5 && Global.random(4) == 0) {
             c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!",
@@ -662,5 +662,10 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             return new ModdedCockPart(part, equivalent);
         }
         return part;
+    }
+
+    @Override
+    public String adjective() {
+        return "vaginal";
     }
 }

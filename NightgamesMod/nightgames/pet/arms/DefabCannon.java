@@ -10,8 +10,8 @@ import nightgames.pet.arms.skills.DefabRay;
 
 public class DefabCannon extends RoboArm {
 
-    public DefabCannon(RoboArmManager manager, Character owner) {
-        super(manager, owner, ArmType.DEFAB_CANNON);
+    public DefabCannon(ArmManager manager) {
+        super(manager, ArmType.DEFAB_CANNON);
     }
 
     @Override

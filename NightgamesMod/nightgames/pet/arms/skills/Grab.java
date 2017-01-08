@@ -6,7 +6,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.CombatantData;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 import nightgames.status.Bound;
 import nightgames.status.Stsflag;
 
@@ -19,12 +19,12 @@ public class Grab extends ArmSkill {
     }
 
     @Override
-    public boolean usable(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean usable(Combat c, Arm arm, Character owner, Character target) {
         return super.usable(c, arm, owner, target) && !target.is(Stsflag.bound);
     }
     
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
         boolean sub = c.getStance().dom(owner);
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Science);
         CombatantData data = c.getCombatantData(target);

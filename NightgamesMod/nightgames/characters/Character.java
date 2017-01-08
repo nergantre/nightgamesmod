@@ -60,7 +60,7 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.ArmType;
-import nightgames.pet.arms.RoboArmManager;
+import nightgames.pet.arms.ArmManager;
 import nightgames.skills.Command;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Nothing;
@@ -3648,14 +3648,12 @@ public abstract class Character extends Observable implements Cloneable {
             Global.gainSkills(this);
             placeNinjaStash(m);
         }
-        if (has(Trait.octo)) {
-            RoboArmManager manager = RoboArmManager.getManagerFor(this);
-            manager.selectArms();
-            if (manager.getActiveArms().stream().anyMatch(a -> a.getType() == ArmType.STABILIZER)) {
-                add(Trait.stabilized);
-            } else {
-                remove(Trait.stabilized);
-            }
+        ArmManager manager = m.getMatchData().getDataFor(this).getArmManager();
+        manager.selectArms(this);
+        if (manager.getActiveArms().stream().anyMatch(a -> a.getType() == ArmType.STABILIZER)) {
+            add(Trait.stabilized);
+        } else {
+            remove(Trait.stabilized);
         }
         if (has(Trait.RemoteControl)) {
             int currentCount = inventory.getOrDefault(Item.RemoteControl, 0);

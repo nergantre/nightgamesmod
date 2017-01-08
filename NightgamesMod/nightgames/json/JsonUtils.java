@@ -18,6 +18,7 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.mods.HoleMod;
 import nightgames.items.clothing.Clothing;
 
 public class JsonUtils {
@@ -25,8 +26,8 @@ public class JsonUtils {
                     new GsonBuilder().setPrettyPrinting()
                                     .registerTypeAdapter(Clothing.class, new ClothingAdaptor())
                                     .registerTypeAdapter(BodyPart.class, new BodyPartAdapter())
+                                    .registerTypeAdapter(HoleMod.class, new HoleModAdapter())
                                     .create();
-
 
     public static <T> Collection<T> collectionFromJson(JsonArray array, Class<T> clazz) {
         Type type = new ParameterizedCollectionType<>(clazz);

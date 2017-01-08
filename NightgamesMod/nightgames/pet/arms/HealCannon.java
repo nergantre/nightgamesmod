@@ -10,8 +10,8 @@ import nightgames.pet.arms.skills.HealRay;
 
 public class HealCannon extends RoboArm {
 
-    public HealCannon(RoboArmManager manager, Character owner) {
-        super(manager, owner, ArmType.HEAL_CANNON);
+    public HealCannon(ArmManager manager) {
+        super(manager, ArmType.HEAL_CANNON);
     }
 
     @Override

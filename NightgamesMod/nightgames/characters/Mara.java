@@ -42,7 +42,7 @@ public class Mara extends BasePersonality {
         super("Mara", charConfig, commonConfig, true);
         constructLines();
     }
-    
+
     private void constructLines () {
         character.addLine(CharacterLine.BB_LINER, (c, self, other) -> { 
             return "{self:SUBJECT} gives you a look of not quite genuine concern. <i>\"That must have really hurt. Sorry for scrambling your eggs. I feel really bad about that. Also for "
@@ -250,7 +250,7 @@ public class Mara extends BasePersonality {
                         }))));
 
         character.addCombatScene(new CombatScene(
-                        (c, self, other) -> self.getLevel() >= 10 && !Global.checkFlag(MARA_OCTO_FOCUS)
+                        (c, self, other) -> self.getLevel() >= 20 && !Global.checkFlag(MARA_OCTO_FOCUS)
                                         && !Global.checkFlag(MARA_MIND_CONTROL_FOCUS),
                         (c, self, other) -> Global.format(
                                         "You and {self:name} are both getting back up after your match,"

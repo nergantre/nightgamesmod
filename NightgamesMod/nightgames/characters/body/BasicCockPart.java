@@ -110,7 +110,7 @@ public enum BasicCockPart implements CockPart {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
+    public double getSensitivity(Character self, BodyPart target) {
         return Math.log(size / 5 + 1) / Math.log(2);
     }
 

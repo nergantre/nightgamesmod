@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import nightgames.characters.CharacterSex;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.Body;
@@ -27,6 +26,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.json.JsonUtils;
 
 class BodyConfiguration {
@@ -77,7 +77,7 @@ class BodyConfiguration {
                                                                    .toLowerCase()));
         if (obj.has("ass"))
             config.ass = Optional.of(obj.get("ass").getAsString()
-                                           .equals("basic") ? AssPart.generic : new AnalPussyPart());
+                                           .equals("basic") ? AssPart.generateGeneric() : AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
 
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()

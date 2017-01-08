@@ -10,8 +10,8 @@ import nightgames.pet.arms.skills.HeatRay;
 
 public class HeatCannon extends RoboArm {
 
-    public HeatCannon(RoboArmManager manager, Character owner) {
-        super(manager, owner, ArmType.HEAT_RAY);
+    public HeatCannon(ArmManager manager) {
+        super(manager, ArmType.HEAT_RAY);
     }
 
     @Override

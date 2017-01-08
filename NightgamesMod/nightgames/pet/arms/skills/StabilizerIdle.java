@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 import nightgames.stance.Stance;
 
 public class StabilizerIdle extends ArmSkill {
@@ -14,7 +14,7 @@ public class StabilizerIdle extends ArmSkill {
     }
 
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
         if (c.getStance().en == Stance.neutral) {
             c.write(PetCharacter.DUMMY, Global.format("The stabilizer is idling behind {self:subject},"
                             + " low to the ground and ready to break {self:possessive} fall should"

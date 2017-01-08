@@ -12,6 +12,7 @@ import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.pet.arms.ArmManager;
 import nightgames.skills.Skill;
 import nightgames.skills.damage.Staleness;
 import nightgames.skills.strategy.CombatStrategy;
@@ -25,6 +26,7 @@ public class CombatantData implements Cloneable {
     private Optional<CombatStrategy> strategy;
     private int strategyDuration;
     private Map<Skill, Double> moveModifiers;
+    private ArmManager manager;
 
     public CombatantData() {
         clothespile = new ArrayList<>();
@@ -34,6 +36,7 @@ public class CombatantData implements Cloneable {
         strategy = Optional.empty();
         strategyDuration = 0;
         moveModifiers = new HashMap<>();
+        manager = new ArmManager();
     }
 
     @Override
@@ -155,5 +158,13 @@ public class CombatantData implements Cloneable {
 
     public void increaseIntegerFlag(String key, int i) {
         setIntegerFlag(key, getIntegerFlag(key) + i);
+    }
+
+    public ArmManager getManager() {
+        return manager;
+    }
+
+    protected void setManager(ArmManager manager) {
+        this.manager = manager.instance();
     }
 }

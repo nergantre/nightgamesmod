@@ -8,7 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 import nightgames.skills.damage.DamageType;
 
 public class ToyAttack extends ArmSkill {
@@ -18,12 +18,12 @@ public class ToyAttack extends ArmSkill {
     }
 
     @Override
-    public boolean usable(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean usable(Combat c, Arm arm, Character owner, Character target) {
         return super.usable(c, arm, owner, target) && target.outfit.slotOpen(ClothingSlot.bottom);
     }
 
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
 
         int m = 5 + Global.random(15);
         m = (int) owner.modifyDamage(DamageType.gadgets, target, m);

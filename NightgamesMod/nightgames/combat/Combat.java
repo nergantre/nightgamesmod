@@ -34,7 +34,6 @@ import nightgames.items.clothing.ClothingTrait;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.Pet;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Anilingus;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
@@ -129,6 +128,8 @@ public class Combat extends Observable implements Cloneable {
         this.p2 = p2;
         p1.startBattle(this);
         p2.startBattle(this);
+        getCombatantData(p1).setManager(Global.getMatch().getMatchData().getDataFor(p1).getArmManager());
+        getCombatantData(p2).setManager(Global.getMatch().getMatchData().getDataFor(p2).getArmManager());
         location = loc;
         stance = new Neutral(p1, p2);
         message = "";
@@ -612,9 +613,9 @@ public class Combat extends Observable implements Cloneable {
                 getCombatantData(self).setIntegerFlag("enchantingvoice-count", voiceCount + 1);
             }
         }
-        if (self.has(Trait.octo)) {
-            RoboArmManager.getManagerFor(self).act(this, other);
-        }
+
+        getCombatantData(self).getManager().act(this, self, other);
+
         if (self.has(Trait.mindcontroller) && other.human()) {
             Collection<Clothing> infra = self.outfit.getArticlesWithTrait(ClothingTrait.infrasound);
             float magnitude = infra.size() * (Addiction.LOW_INCREASE / 6);
@@ -1239,7 +1240,7 @@ public class Combat extends Observable implements Cloneable {
                 other = p1;
             }
             if (!getStance().prone(p)) {
-                if (getStance().havingSex(this) && getStance().dom(other)) {
+                if (!getStance().mobile(p) && getStance().dom(other)) {
                     if (p.human()) {
                         write(p, "Your legs give out, but " + other.getName() + " holds you up.");
                     } else {
@@ -1361,6 +1362,8 @@ public class Combat extends Observable implements Cloneable {
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
+        Global.getMatch().getMatchData().getDataFor(p1).setArmManager(getCombatantData(p1).getManager());
+        Global.getMatch().getMatchData().getDataFor(p2).setArmManager(getCombatantData(p2).getManager());
         if (!ding && !shouldAutoresolve()) {
             Global.gui().endCombat();
         }

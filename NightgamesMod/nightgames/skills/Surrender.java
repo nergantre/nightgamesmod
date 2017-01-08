@@ -42,7 +42,7 @@ public class Surrender extends Skill {
 
     @Override
     public int speed() {
-        return 6;
+        return 20;
     }
 
     @Override

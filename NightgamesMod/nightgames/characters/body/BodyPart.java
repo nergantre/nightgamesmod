@@ -24,11 +24,13 @@ public interface BodyPart {
 
     public String describe(Character c);
 
+    public String adjective();
+
     public double getHotness(Character self, Character opponent);
 
     public double getPleasure(Character self, BodyPart target);
 
-    public double getSensitivity(BodyPart target);
+    public double getSensitivity(Character self, BodyPart target);
 
     @Override
     public String toString();
@@ -59,10 +61,10 @@ public interface BodyPart {
     public boolean isNotable();
 
     public BodyPart upgrade();
+    public BodyPart downgrade();
 
     public int compare(BodyPart other);
 
-    public BodyPart downgrade();
 
     double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c);
 
