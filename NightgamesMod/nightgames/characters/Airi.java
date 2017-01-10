@@ -18,6 +18,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.Skill;
+import nightgames.stance.Engulfed;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Flatfooted;
 import nightgames.status.SlimeMimicry;
@@ -38,7 +39,7 @@ public class Airi extends BasePersonality {
     }
 
     public Airi(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Airi", 10, charConfig, commonConfig, false);
+        super("Airi", charConfig, commonConfig, false);
         constructLines();
     }
 
@@ -80,6 +81,8 @@ public class Airi extends BasePersonality {
         character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> self.has(Trait.slime) ? "Airi glares at you from the puddle she formed on the floor. <i>\"Unforgivable...\"</i>" : "<i>\"Unforgivable...\"</i>");
         character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> self.has(Trait.slime) ? "Airi coos at you <i>\"About to cum..? ...even trying..?\"</i>" : "<i><b>Airi giggles, </b> \"Try a bit harder okay?\"</i>");
         character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> self.has(Trait.slime) ? "<i>\"Fill me with yourself... forget everything...\"</i>" : "<i>\"Uhm, it's okay, you can come inside...\"</i>");
+        character.addLine(CharacterLine.ENGULF_LINER, (c, self, other) -> "\n<i>\"It's done... over... stop struggling... cum.\"</i>");
+
         character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
             if (self.has(Trait.slime)) {
                 return "<i>\"Ahhnn... forgot how good... feels... Will return favor...\"</i>.";
@@ -236,11 +239,13 @@ public class Airi extends BasePersonality {
     @Override
     public void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
         if (times == totalTimes && ((self.getWillpower().percent() < 60 && !self.has(Trait.slime)) || self.is(Stsflag.disguised))) {
+            boolean unmasked = false;
             if (self.is(Stsflag.disguised)) {
                 c.write(self, Global.format("<b>As {self:subject} orgasms, {self:possessive} whole body shimmers and seems to melt into a puddle of goo. "
                                 + "A human body rises from the slime and molds itself to a facsimile of an all-too-familiar Asian {self:boy} giving you a self satisfied little smirk. "
                                 + "Shit, {self:pronoun} tricked you, it was Airi all along!</b><br/>", self, opponent));
                 opponent.add(c, new Flatfooted(opponent, 2));
+                unmasked = true;
             } else {
                 c.write(self, Global.format("After {self:name-possessive} orgasm, her whole body shimmers and melts into a puddle of goo. A human body rises from the slime and molds itself to a facsimile of {self:reflective}. "
                                 + "Gone is the slim repressed girl you knew. The new Airi that appears before you is a sexually idealized version of herself, with bigger breasts, a dynamic body line and long legs that end in a ball of blue goo. "
@@ -263,9 +268,6 @@ public class Airi extends BasePersonality {
             }
             self.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
             self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
-            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
-            self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
             if (self.level >= 21) {
                 self.addTemporaryTrait(Trait.Sneaky, 999);
             }
@@ -295,6 +297,10 @@ public class Airi extends BasePersonality {
             }
             if (self.level >= 50) {
                 self.addTemporaryTrait(Trait.strongwilled, 999);
+            }
+            if (unmasked && self.has(Trait.ThePrestige) && c.getStance().distance() < 2) {
+                c.write(self, Global.format("<b>Taking advantage of {other:name-possessive} bewilderment, {self:subject-action:swoop} {self:possessive} slime onto {other:possessive} hapless form, swiftly engulfing it in {self:possessive} amorphous body.</b><br/>", self, opponent));
+                c.setStance(new Engulfed(self, opponent));
             }
             self.moodSwing(c);
         }

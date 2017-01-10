@@ -2,7 +2,7 @@ package nightgames.pet.arms.skills;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 
 public abstract class ArmSkill {
     
@@ -14,7 +14,7 @@ public abstract class ArmSkill {
         this.level = level;
     }
     
-    public boolean usable(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean usable(Combat c, Arm arm, Character owner, Character target) {
         return owner.getLevel() >= level;
     }
     
@@ -22,5 +22,5 @@ public abstract class ArmSkill {
         return name;
     }
     
-    public abstract boolean resolve(Combat c, RoboArm arm, Character owner, Character target);
+    public abstract boolean resolve(Combat c, Arm arm, Character owner, Character target);
 }

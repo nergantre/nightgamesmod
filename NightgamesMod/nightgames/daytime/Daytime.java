@@ -184,7 +184,11 @@ public class Daytime {
     }
 
     public String getTime() {
-        return time + ":00";
+        if (time > 12) {
+            return (time % 12) + ":00 pm";            
+        } else {
+            return time + ":00 am";
+        }
     }
 
     public void advance(int t) {

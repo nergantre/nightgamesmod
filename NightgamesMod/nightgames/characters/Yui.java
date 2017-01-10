@@ -29,7 +29,7 @@ public class Yui extends BasePersonality {
     public Yui(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         // Yui is a start character so that you can gain affection with her straight off the bat.
         // She is disabled when the game starts
-        super("Yui", 1, charConfig, commonConfig, true);
+        super("Yui", charConfig, commonConfig, true);
         constructLines();
     }
 

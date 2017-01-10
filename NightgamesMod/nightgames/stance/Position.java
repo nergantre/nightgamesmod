@@ -275,12 +275,12 @@ public abstract class Position implements Cloneable {
 
     public boolean havingSexOtherNoStrapped(Combat c, Character self) {
         Character other = getPartner(c, self);
-        return penetratedBy(c, other, self) || penetratedBy(c, self, other) && !other.has(Trait.strapped);
+        return (penetratedBy(c, other, self) || penetratedBy(c, self, other)) && !other.has(Trait.strapped);
     }
 
     public boolean havingSexNoStrapped(Combat c) {
-        return penetratedBy(c, top, bottom) && !bottom.has(Trait.strapped)
-                        || penetratedBy(c, bottom, top) && !top.has(Trait.strapped);
+        return (penetratedBy(c, top, bottom) && !bottom.has(Trait.strapped)
+                        || penetratedBy(c, bottom, top)) && !top.has(Trait.strapped);
     }
 
     public boolean havingSex(Combat c) {

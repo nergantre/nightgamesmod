@@ -46,8 +46,8 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
-        return mod.getSensitivity(target, getBase());
+    public double getSensitivity(Character self, BodyPart target) {
+        return mod.getSensitivity(self, target, getBase());
     }
 
     @Override

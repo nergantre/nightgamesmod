@@ -60,7 +60,7 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.ArmType;
-import nightgames.pet.arms.RoboArmManager;
+import nightgames.pet.arms.ArmManager;
 import nightgames.skills.Command;
 import nightgames.skills.AssFuck;
 import nightgames.skills.Nothing;
@@ -69,6 +69,7 @@ import nightgames.skills.OrgasmicTighten;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 import nightgames.skills.damage.DamageType;
+import nightgames.stance.Neutral;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Abuff;
@@ -91,6 +92,7 @@ import nightgames.status.addiction.AddictionType;
 import nightgames.status.addiction.Dominance;
 import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
+import nightgames.utilities.ProseUtils;
 
 @SuppressWarnings("unused")
 public abstract class Character extends Observable implements Cloneable {
@@ -382,6 +384,11 @@ public abstract class Character extends Observable implements Cloneable {
         return level;
     }
 
+    public void gainXPPure(int i) {
+        xp += i;
+        update();
+    }
+
     public void gainXP(int i) {
         assert i >= 0;
         double rate = 1.0;
@@ -389,8 +396,11 @@ public abstract class Character extends Observable implements Cloneable {
             rate += .2;
         }
         rate *= Global.xpRate;
-        xp += Math.round(i * rate);
-        update();
+        i = (int) Math.round(i * rate);
+
+        if (!has(Trait.leveldrainer)) {
+            gainXPPure(i);
+        }
     }
 
     public void setXP(int i) {
@@ -824,9 +834,9 @@ public abstract class Character extends Observable implements Cloneable {
     public String subjectAction(String verb, String pluralverb) {
         return subject() + " " + pluralverb;
     }
-    
+
     public String subjectAction(String verb) {
-        return subjectAction(verb, verb + "s");
+        return subjectAction(verb, ProseUtils.getThirdPersonFromFirstPerson(verb));
     }
 
     public String subjectWas() {
@@ -1133,9 +1143,13 @@ public abstract class Character extends Observable implements Cloneable {
         levelPlan.putIfAbsent(level, new LevelUpData());
         return levelPlan.get(level);
     }
-    
+
     public void modAttributeDontSaveData(Attribute a, int i) {
-        if (human() && i != 0) {
+        modAttributeDontSaveData(a, i, false);
+    }
+
+    public void modAttributeDontSaveData(Attribute a, int i, boolean silent) {
+        if (human() && i != 0 && !silent) {
             Global.gui().message("You have " + (i > 0 ? "gained" : "lost") + " " + i + " " + a.name());
         }
         if (a.equals(Attribute.Willpower)) {
@@ -1146,7 +1160,11 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void mod(Attribute a, int i) {
-        modAttributeDontSaveData(a, i);
+        mod(a, i, false);
+    }
+
+    public void mod(Attribute a, int i, boolean silent) {
+        modAttributeDontSaveData(a, i, silent);
         getLevelUpFor(getLevel()).modAttribute(a, i);
     }
 
@@ -1670,8 +1688,30 @@ public abstract class Character extends Observable implements Cloneable {
     private static final OrgasmicTighten TIGHTEN_SKILL = new OrgasmicTighten(null);
     private static final OrgasmicThrust THRUST_SKILL = new OrgasmicThrust(null);
 
-    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
-                    int totalTimes) {
+    protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
+        if (has(Trait.HiveMind) && !c.getPetsFor(this).isEmpty()) {
+            // don't use opponent, use opponent of the current combat
+            c.write(this, Global.format("Just as {self:subject-action:seem} about to orgasm, {self:possessive} expression shifts. "
+                            + "{self:POSSESSIVE} eyes dulls and {self:possessive} expressions slacken."
+                            + "{other:if-human: Shit you've seen this before, she somehow switched bodies with one of her clones!}"
+                            , this, c.getOpponent(this)));
+            while (!c.getPetsFor(this).isEmpty() && checkOrgasm()) {
+                int amount = Math.min(getArousal().get(), getArousal().max());
+                getArousal().reduce(amount);
+                Character pet = c.getPetsFor(this).iterator().next();
+                pet.arouse(amount, c, Global.format("({self:master}'s orgasm)", this, opponent));
+                pet.doOrgasm(c, pet, null, null);
+            }
+            c.setStance(new Neutral(this, opponent));
+            if (!checkOrgasm()) {
+                return;
+            } else {
+                c.write(this, Global.format("{other:if-human:Luckily }{self:pronoun} didn't seem to be able to shunt all {self:possessive arousal} "
+                                + "into {self:possessive clones, and rapidly reaches the peak anyways."
+                                , this, c.getOpponent(this)));
+            }
+        }
+
         String orgasmLiner = "<b>" + orgasmLiner(c) + "</b>";
         String opponentOrgasmLiner = (opponent == null || opponent == this || opponent.isPet()) ? "" : 
             "<b>" + opponent.makeOrgasmLiner(c, this) + "</b>";
@@ -1915,18 +1955,15 @@ public abstract class Character extends Observable implements Cloneable {
                             || Global.checkFlag(Flag.hardmode))) {
                 c.getCombatantData(opponent).toggleFlagOn("has_drained", true);
                 if (c.getStance().penetratedBy(c, opponent, this)) {
-                    c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s contracts around %s %s, reinforcing"
-                            + " %s orgasm and drawing upon %s very strength and experience. Once it's over, %s"
-                                                    + " left considerably more powerful, at %s expense.</b>",
-                                    opponent.nameOrPossessivePronoun(),
-                                    c.getStance().insertablePartFor(c, opponent).describe(opponent),
-                                    nameOrPossessivePronoun(),
-                            c.getStance().insertedPartFor(c, this).describe(this), possessiveAdjective(), possessiveAdjective(),
-                            opponent.pronoun() + opponent.action("are", "is"), nameOrPossessivePronoun())));
+                    c.write(opponent, Global.format("<b>{other:NAME-POSSESSIVE} %s contracts around {self:name-possessive} %s, reinforcing"
+                            + " {self:possessive} orgasm and drawing upon {self:possessive} very strength and experience. Once it's over, {other:pronoun-action:are}"
+                                                    + " left considerably more powerful at {self:possessive} expense.</b>",
+                                    this, opponent, c.getStance().insertablePartFor(c, opponent).describe(opponent),
+                                    c.getStance().insertedPartFor(c, this).describe(this)));
                 } else if (c.getStance().penetratedBy(c, this, opponent)) {
                     c.write(opponent, Global.format("{other:NAME-POSSESSIVE} cock pistons rapidly into {self:name-do} as {self:subject-action:cum|cums}, "
                                     + "drawing out {self:possessive} very strength and experience on every return stroke. "
-                                    + "Once it's over, {other:pronoun-action:are|is} left considerably more powerful at {self:possessive} expense.",
+                                    + "Once it's over, {other:pronoun-action:are} left considerably more powerful at {self:possessive} expense.",
                                     this, opponent));
                 } else {
                     c.write(opponent, Global.format("{other:NAME-POSSESSIVE} greedy {other:body-part:pussy} sucks itself tightly to {self:name-possessive} {self:body-part:pussy}, "
@@ -1948,12 +1985,12 @@ public abstract class Character extends Observable implements Cloneable {
                 } else {
                     gained = Math.max(opponent.getXPReqToNextLevel(), xpStolen);
                 }
-                opponent.gainXP(gained);
+                opponent.gainXPPure(gained);
             } else {
-                c.write(opponent, Global.capitalizeFirstLetter(String.format("<b>%s %s pulses, but fails to"
-                                                + " draw in %s experience.</b>", opponent.nameOrPossessivePronoun(),
+                c.write(opponent, String.format("<b>%s %s pulses, but fails to"
+                                                + " draw in %s experience.</b>", Global.capitalizeFirstLetter(opponent.nameOrPossessivePronoun()),
                                 opponent.body.getRandomPussy().describe(opponent),
-                                nameOrPossessivePronoun())));
+                                nameOrPossessivePronoun()));
             }
         }
     }
@@ -3317,9 +3354,9 @@ public abstract class Character extends Observable implements Cloneable {
     public String action(String firstPerson, String thirdPerson) {
         return thirdPerson;
     }
-    
+
     public String action(String verb) {
-        return action(verb, verb + "s");
+        return action(verb, ProseUtils.getThirdPersonFromFirstPerson(verb));
     }
 
     public void addCooldown(Skill skill) {
@@ -3611,14 +3648,12 @@ public abstract class Character extends Observable implements Cloneable {
             Global.gainSkills(this);
             placeNinjaStash(m);
         }
-        if (has(Trait.octo)) {
-            RoboArmManager manager = RoboArmManager.getManagerFor(this);
-            manager.selectArms();
-            if (manager.getActiveArms().stream().anyMatch(a -> a.getType() == ArmType.STABILIZER)) {
-                add(Trait.stabilized);
-            } else {
-                remove(Trait.stabilized);
-            }
+        ArmManager manager = m.getMatchData().getDataFor(this).getArmManager();
+        manager.selectArms(this);
+        if (manager.getActiveArms().stream().anyMatch(a -> a.getType() == ArmType.STABILIZER)) {
+            add(Trait.stabilized);
+        } else {
+            remove(Trait.stabilized);
         }
         if (has(Trait.RemoteControl)) {
             int currentCount = inventory.getOrDefault(Item.RemoteControl, 0);

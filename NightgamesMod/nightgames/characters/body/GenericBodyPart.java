@@ -89,9 +89,9 @@ public class GenericBodyPart implements BodyPart {
     @Override
     public String fullDescribe(Character c) {
         if (notable) {
-            return desc;
+            return describe(c);
         } else {
-            return "normal " + desc;
+            return "normal " + describe(c);
         }
     }
 
@@ -121,7 +121,7 @@ public class GenericBodyPart implements BodyPart {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
+    public double getSensitivity(Character self, BodyPart target) {
         return sensitivity;
     }
 
@@ -137,12 +137,12 @@ public class GenericBodyPart implements BodyPart {
             return false;
         if (!(other instanceof GenericBodyPart))
             return false;
-        return toString().equals(other.toString());
+        return canonicalDescription().equals(((GenericBodyPart)other).canonicalDescription());
     }
 
     @Override
     public int hashCode() {
-        return (type + ":" + toString()).hashCode();
+        return (type + ":" + canonicalDescription()).hashCode();
     }
 
     public JsonObject toJson() {
@@ -258,5 +258,11 @@ public class GenericBodyPart implements BodyPart {
     @Override
     public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
+    }
+
+    @Override
+    public String adjective() {
+        // implement when needed
+        return type;
     }
 }

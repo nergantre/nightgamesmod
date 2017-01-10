@@ -396,25 +396,28 @@ public enum Trait {
     // Airi Unique Traits
     // Slime debuff - builds up slime on to an opponent when coming into contact. This slows them down and eventually petrifies them.
     VolatileSubstrate("Volatile Substrate", "Slimes those who get come into contact"),
-    EnduringAdhesive("Enduring Adhesive", "Slime buildup lasts longer"),
     ParasiticBond("Parasitic Bond", "Slime buildup drains stamina"),
     PetrifyingPolymers("Petrifying Polymers", "Slime buildup eventually petrifies the target"),
+    EnduringAdhesive("Enduring Adhesive", "Slime buildup lasts longer"),
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),
     UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
-    CeilingStalker("Ceiling Stalker", "Can ambush from the ceilings"),
+    ThePrestige("The Prestige", "Will engulf upon unveiling the disguise"),
     Masquerade("Masquerade", "Improves quality of mimicry"),
 
     // Queen Slime - Clones build
     SlimeRoyalty("Slime Royalty", "Can now divide the body"),
     RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
-    // + parasite 
-    MimicClothing("Mimic: Clothing", "Clones can transform themselves into clothing for the opponent."),
+    // + slime
+    StickyFinale("Sticky Finale", "Clones explode when defeated"),
     // + transformation
     MimicBodyPart("Mimic: BodyPart", "Clones can transform themselves into extra body parts for the opponent."),
-    StickyFinale("Sticky Finale", "Clones explode when defeated"),
+    HiveMind("Hive Mind", "Pets cum instead of the owner"),
     NoblesseOblige("Noblesse Oblige", "Clones are stronger"),
+
+    // debuff trait for clones so they aren't too overwhelming
+    MindlessClone("Mindless Clone", "Half sentience makes them less tempting"),
 
     // Slime Carrier - Immortal pet build
     SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),

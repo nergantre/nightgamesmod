@@ -5,7 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 
 public class HeatRay extends ArmSkill {
 
@@ -14,7 +14,7 @@ public class HeatRay extends ArmSkill {
     }
 
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
         boolean sub = c.getStance().dom(owner);
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Science);
         

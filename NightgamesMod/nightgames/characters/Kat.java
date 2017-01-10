@@ -34,7 +34,7 @@ public class Kat extends BasePersonality {
     }
 
     public Kat(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Kat", 10, charConfig, commonConfig, false);
+        super("Kat", charConfig, commonConfig, false);
         constructLines();
     }
 

@@ -10,7 +10,7 @@ import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 
 public class Strip extends ArmSkill {
 
@@ -19,12 +19,12 @@ public class Strip extends ArmSkill {
     }
 
     @Override
-    public boolean usable(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean usable(Combat c, Arm arm, Character owner, Character target) {
         return super.usable(c, arm, owner, target) && !target.outfit.isNude();
     }
     
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
         boolean sub = c.getStance().dom(owner);
         double accuracy = 10 + owner.get(Attribute.Science);
         boolean hasTop = !target.outfit.slotEmpty(ClothingSlot.top);

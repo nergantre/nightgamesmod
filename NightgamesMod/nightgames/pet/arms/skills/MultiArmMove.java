@@ -6,7 +6,7 @@ import java.util.Optional;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 
 public abstract class MultiArmMove {
     @SuppressWarnings("unused")
@@ -16,10 +16,10 @@ public abstract class MultiArmMove {
         this.name = name;
     }
 
-    public abstract Optional<List<RoboArm>> getInvolvedArms(Combat c, Character owner, Character target,
-                    List<RoboArm> available);
+    public abstract Optional<List<Arm>> getInvolvedArms(Combat c, Character owner, Character target,
+                    List<Arm> available);
     
-    public abstract void execute(Combat c, Character owner, Character target, List<RoboArm> arms);
+    public abstract void execute(Combat c, Character owner, Character target, List<Arm> arms);
     
     public boolean shouldExecute() {
         return Global.random(100) < 20;

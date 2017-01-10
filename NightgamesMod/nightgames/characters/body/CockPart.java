@@ -25,4 +25,8 @@ public interface CockPart extends BodyPart {
         }
         return PussyPart.normal;
     }
+
+    default String adjective() {
+        return "phallic";
+    }
 }

@@ -73,7 +73,7 @@ public class TestAngel extends BasePersonality {
     }
 
     public TestAngel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("TestAngel", 1, charConfig, commonConfig, true);
+        super("TestAngel", charConfig, commonConfig, true);
     }
 
     public void applyBasicStats(Character self) {

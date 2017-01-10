@@ -68,4 +68,9 @@ public class FacePart extends GenericBodyPart {
         }
         return desc + "face";
     }
+
+    @Override
+    public String adjective() {
+        return "facial";
+    }
 }

@@ -34,7 +34,7 @@ public class Match {
         for (Character c : combatants) {
             this.combatants.add(c);
         }
-        matchData = new MatchData(combatants);
+        matchData = new MatchData();
         score = new HashMap<Character, Integer>();
         this.condition = condition;
         map = Global.buildMap();

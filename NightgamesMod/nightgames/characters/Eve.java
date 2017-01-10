@@ -26,7 +26,7 @@ public class Eve extends BasePersonality {
     }
 
     public Eve(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Eve", 10, charConfig, commonConfig, false);
+        super("Eve", charConfig, commonConfig, false);
         constructLines();
     }
 

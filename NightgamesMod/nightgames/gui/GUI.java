@@ -1290,17 +1290,22 @@ public class GUI extends JFrame implements Observer {
             map.repaint();
         }
         // We may be in between setting NIGHT and building the Match object
-        if (Global.getTime() == Time.NIGHT && Global.getMatch() != null) {
-            // yup... silverbard pls :D
-            if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
+        if (Global.getTime() == Time.NIGHT) {
+                // yup... silverbard pls :D
+            if (Global.getMatch() == null) {
+                timeLabel.setText("9:50 pm");
+            } else if (Global.getMatch().getHour() >= 12) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
             } else {
                 timeLabel.setText(Global.getMatch().getTime() + " pm");
             }
-
             timeLabel.setForeground(new Color(51, 101, 202));
         } else if (Global.getTime() == Time.DAY) { // not updating correctly during daytime
-            timeLabel.setText(Global.getDay().getTime() + " pm");
+            if (Global.getDay() != null) {
+                timeLabel.setText(Global.getDay().getTime() + " pm");
+            } else {
+                timeLabel.setText("10:00 am");
+            }
             timeLabel.setForeground(new Color(253, 184, 19));
         } else {
             System.err.println("Unknown time of day: " + Global.getTime());

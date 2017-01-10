@@ -43,7 +43,7 @@ public class EngulfedFuck extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Pairing pair = Pairing.findPairing(getSelf(), target);
-        double base = 20.0 + Global.random(getSelf().get(Attribute.Slime) + getSelf().get(Attribute.Seduction) / 2);
+        double base = 10.0 + Math.min(20, Global.random(getSelf().get(Attribute.Slime) / 3 + getSelf().get(Attribute.Seduction) / 5));
         int selfDmg = (int) ((base * pair.modPleasure(true)) / (getSelf().has(Trait.experienced) ? 2.0 : 3.0));
         int targetDmg = (int) (base * pair.modPleasure(false));
         switch (pair) {
@@ -106,7 +106,7 @@ public class EngulfedFuck extends Skill {
             case HERM_HERM:
                 c.write(getSelf(),
                                 Global.format("It takes some clever maneuvering, but {self:SUBJECT-ACTION:manage|manages}"
-                                                + " to line {other:name-do} and {self:direct-object} up perfectly. When"
+                                                + " to line {other:name-do} and {self:reflective} up perfectly. When"
                                                 + " {self:pronoun} {self:action:strike|strikes}, {other:possessive} {other:body-part:cock} ends up"
                                                 + " in {self:possessive} {self:body-part:pussy}, and {self:body-part:cock} in {other:possessive}"
                                                 + " {other:body-part:pussy}. With every twitch, both of you are filled with unimaginable pleasure,"

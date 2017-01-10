@@ -53,8 +53,8 @@ public enum CockMod implements BodyPartMod {
         return (pleasureMod + base.getPleasure(self, target)) * pleasure;
     }
 
-    public double getSensitivity(BodyPart target, BasicCockPart base) {
-        return base.getSensitivity(target) * sensitivity;
+    public double getSensitivity(Character character, BodyPart target, BasicCockPart base) {
+        return base.getSensitivity(character, target) * sensitivity;
     }
 
     public boolean isReady(Character self, BasicCockPart base) {

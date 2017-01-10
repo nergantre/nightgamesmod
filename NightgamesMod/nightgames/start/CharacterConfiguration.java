@@ -1,6 +1,8 @@
 package nightgames.start;
 
-import static nightgames.start.ConfigurationUtils.*;
+import static nightgames.start.ConfigurationUtils.mergeCollections;
+import static nightgames.start.ConfigurationUtils.mergeOptionals;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonElement;
@@ -78,14 +81,28 @@ public abstract class CharacterConfiguration {
 
     protected final void apply(Character base) {
         name.ifPresent(n -> base.setName(n));
-        base.att.putAll(attributes);
         money.ifPresent(m -> base.money = m);
-        level.ifPresent(l -> {
-            base.level = l;
-            modMeters(base, l * 2); // multiplication to compensate for missed daytime gains
-        });
-        xp.ifPresent(x -> base.gainXP(x));
         traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
+        Map<Attribute, Integer> start = new HashMap<>(base.att);
+        Map<Attribute, Integer> deltaAtts = attributes.keySet()
+                        .stream()
+                        .collect(Collectors.toMap(Function.identity(), key -> attributes.get(key) - start.getOrDefault(key, 0)));
+        level.ifPresent(desiredLevel -> {
+            while (base.level < desiredLevel) {
+                base.level += 1;
+                modMeters(base, 1); // multiplication to compensate for missed daytime gains
+                deltaAtts.forEach((a, val) -> {
+                    int current = start.getOrDefault(a, 0) + base.level * val / desiredLevel;
+                    int delta = current - base.getPure(a);
+                    if (delta > 0) {
+                        base.mod(a, delta, true);
+                    }
+                });
+                base.getGrowth().addOrRemoveTraits(base);
+            }
+        });
+        base.att.putAll(attributes);
+        xp.ifPresent(x -> base.gainXPPure(x));
         if (clothing.isPresent()) {
             List<Clothing> clothes = clothing.get().stream().map(Clothing::getByID).collect(Collectors.toList());
             base.outfitPlan = new ArrayList<>(clothes);

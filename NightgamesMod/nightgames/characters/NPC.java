@@ -35,7 +35,6 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.pet.arms.RoboArmManager;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
 import nightgames.skills.Stage;
@@ -100,10 +99,7 @@ public class NPC extends Character {
         description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
-        if (has(Trait.octo)) {
-            description += "<p>You can see " + RoboArmManager.getManagerFor(this).describeArms() + " strapped behind "
-                                + possessiveAdjective() + " back.<br/>";
-        }
+        description = description + c.getCombatantData(this).getManager().describe(this);
         return description;
     }
 
@@ -185,10 +181,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getVictoryXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getDefeatXP(this));
+        gainXP(getVictoryXP(target));
+        target.gainXP(getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -211,10 +205,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getDefeatXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getVictoryXP(this));
+        gainXP(getDefeatXP(target));
+        target.gainXP(getVictoryXP(this));
         arousal.empty();
         if (!target.human() || !Global.getMatch().condition.name().equals("norecovery")) {
             target.arousal.empty();
@@ -389,10 +381,8 @@ public class NPC extends Character {
         } else {
             target = c.p1;
         }
-        if (!has(Trait.leveldrainer))
-            gainXP(getVictoryXP(target));
-        if (!target.has(Trait.leveldrainer))
-            target.gainXP(getVictoryXP(this));
+        gainXP(getVictoryXP(target));
+        target.gainXP(getVictoryXP(this));
         arousal.empty();
         target.arousal.empty();
         if (this.has(Trait.insatiable)) {

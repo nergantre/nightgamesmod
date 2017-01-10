@@ -4,7 +4,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
-import nightgames.pet.arms.RoboArm;
+import nightgames.pet.arms.Arm;
 
 public class HealRay extends ArmSkill {
 
@@ -13,7 +13,7 @@ public class HealRay extends ArmSkill {
     }
 
     @Override
-    public boolean resolve(Combat c, RoboArm arm, Character owner, Character target) {
+    public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
         boolean stamina = Global.random(2) == 0;
         boolean mojo = Global.random(2) == 0;
 
