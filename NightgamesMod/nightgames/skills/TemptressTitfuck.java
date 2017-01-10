@@ -115,7 +115,7 @@ public class TemptressTitfuck extends Paizuri {
                 return String.format(
                                 "%s %s up %s flaccid %s between %s %s, doing everything %s"
                                                 + " can to get it hard, but %s %s back before %s can manage it.",
-                                getSelf().name(),  getSelf().subjectAction("wrap"), target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target), 
+                                getSelf().getName(),  getSelf().subjectAction("wrap"), target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target), 
                                 getSelf().pronoun(), getSelf().body.getLargestBreasts().describe(getSelf()),  
                                 getSelf().pronoun(), target.pronoun(), target.action("pull"), getSelf().pronoun());
             case special:
@@ -131,7 +131,7 @@ public class TemptressTitfuck extends Paizuri {
                         return String.format(
                                         "%s strokes %s %s with her %s in slow circular motions while"
                                                         + " lightly licking the tip, causing %s to groan in pleasure.",
-                                        getSelf().name, target.nameOrPossessivePronoun(),
+                                        getSelf().getName(), target.nameOrPossessivePronoun(),
                                         target.body.getRandomCock().describe(target), getSelf().body.getLargestBreasts().fullDescribe(getSelf()), target.directObject());
                     case 1:
                         return String.format("%s tongue loops around the head of %s hard %s "
@@ -144,7 +144,7 @@ public class TemptressTitfuck extends Paizuri {
                                         + "All while %s %s the head sending bolts of electric pleasure back down %s shaft. "
                                         + "Overwhelmed from the pleasure, you grit %s teeth through a pleasure filled smile trying not to cum.",
                                         getSelf().nameOrPossessivePronoun(), getSelf().body.getLargestBreasts().describe(getSelf()),
-                                        target.possessivePronoun(), target.body.getRandomCock().describe(target), getSelf().name(),
+                                        target.possessivePronoun(), target.body.getRandomCock().describe(target), getSelf().getName(),
                                         getSelf().action("suck"), target.possessivePronoun(), target.possessivePronoun());
                 }
         }
