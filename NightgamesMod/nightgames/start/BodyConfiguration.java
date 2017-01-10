@@ -77,7 +77,7 @@ class BodyConfiguration {
                                                                    .toLowerCase()));
         if (obj.has("ass"))
             config.ass = Optional.of(obj.get("ass").getAsString()
-                                           .equals("basic") ? AssPart.generateGeneric() : AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
+                                           .equals("basic") ? AssPart.generateGeneric() : (AssPart)AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
 
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()

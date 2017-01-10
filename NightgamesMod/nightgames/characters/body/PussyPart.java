@@ -1,6 +1,8 @@
 package nightgames.characters.body;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 import com.google.gson.JsonObject;
 
@@ -70,7 +72,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
     @Override
     public void describeLong(StringBuilder b, Character c) {
-        if (countsAs(c, plant)) {
+        if (moddedPartCountsAs(c, plant)) {
             b.append("A larger fleshy red flower is situated between ");
             b.append(c.nameOrPossessivePronoun());
             b.append(" legs, spreading a intoxicatingly sweet scent in the vicinity.");
@@ -189,7 +191,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
     @Override
     public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
-        if (countsAs(self, divine) && target.isErogenous()) {
+        if (moddedPartCountsAs(self, divine) && target.isErogenous()) {
             if (!self.human()) {
                 c.write(self, Global.format(
                                 "As soon as you penetrate {self:name-do}, you realize it was a bad idea. While it looks innocuous enough, {self:possessive} {self:body-part:pussy} "
@@ -198,7 +200,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                                 + "relax around your dick, bringing you waves of pleasure.",
                                 self, opponent));
             }
-        } else if (countsAs(self, gooey) && target.isErogenous()) {
+        } else if (moddedPartCountsAs(self, gooey) && target.isErogenous()) {
             c.write(self, Global.format("{self:NAME-POSSESSIVE} {self:body-part:pussy} envelops"
                             + " {other:possessive} {other:body-part:cock} in a sticky grip, making extraction more"
                             + " difficult.", self, opponent));
@@ -209,7 +211,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = 0;
-        if (countsAs(self, divine) && c.getStance()
+        if (moddedPartCountsAs(self, divine) && c.getStance()
                                .vaginallyPenetrated(c, self)) {
             DivineCharge charge = (DivineCharge) self.getStatus(Stsflag.divinecharge);
             if (charge == null) {
@@ -226,22 +228,22 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 self.add(c, new DivineCharge(self, charge.magnitude));
             }
         }
-        if (countsAs(self, plant) && damage > self.getArousal()
+        if (moddedPartCountsAs(self, plant) && damage > self.getArousal()
                                                         .max()
                         / 5 && Global.random(4) == 0) {
             c.write(self, String.format("An intoxicating scent emanating from %s %s leaves %s in a trance!",
                             self.possessiveAdjective(), describe(self), opponent.directObject()));
         }
-        if (countsAs(self, feral)) {
+        if (moddedPartCountsAs(self, feral)) {
             c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessiveAdjective(),
                             describe(self), opponent.directObject()));
             double base = 3;
-            if (target.getMod(opponent).countsAs(opponent, CockMod.runic)) {
+            if (target.moddedPartCountsAs(opponent, CockMod.runic)) {
                 c.write(self, String.format(
                                 "The wild scent overwhelms %s carefully layered enchantments, instantly sweeping %s away.",
                                 opponent.nameOrPossessivePronoun(), opponent.directObject()));
                 base *= 2.5;
-            } else if (target.getMod(opponent).countsAs(opponent, CockMod.incubus)) {
+            } else if (target.moddedPartCountsAs(opponent, CockMod.incubus)) {
                 c.write(self, String.format("Whilst certainly invigorating, the scent leaves %s largely unaffected.",
                                 opponent.subject()));
                 base /= 2;
@@ -265,7 +267,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = 0;
-        if (countsAs(self, divine) && target.isType("cock")) {
+        if (moddedPartCountsAs(self, divine) && target.isType("cock")) {
             if (self.getStatus(Stsflag.divinecharge) != null) {
                 c.write(self, Global.format(
                                 "{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} pussy seeps into {other:name-possessive} cock, sending unimaginable pleasure directly into {other:possessive} soul.",
@@ -273,8 +275,8 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             }
             // no need for any effects, the bonus is in the pleasure mod
         }
-        if (countsAs(self, succubus) && target.isType("cock")) {
-            if (target.getMod(opponent).countsAs(opponent, CockMod.runic)) {
+        if (moddedPartCountsAs(self, succubus) && target.isType("cock")) {
+            if (target.moddedPartCountsAs(opponent, CockMod.runic)) {
                 c.write(self, String.format(
                                 "Putting in great effort, %s %s to draw upon %s power, but the fae enchantments in %s %s keep it locked away.",
                                 self.nameOrPossessivePronoun(), self.human() ? "try" : " tries",
@@ -289,7 +291,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 opponent.possessiveAdjective(), target.describe(opponent), self.possessiveAdjective(),
                                 describe(self)));
                 int strength;
-                if (target.getMod(opponent).countsAs(opponent, CockMod.enlightened)) {
+                if (target.moddedPartCountsAs(opponent, CockMod.enlightened)) {
                     c.write(self, String.format(
                                     "Since %s had focused so much of %s in %s %s, there is much more for %s to take.",
                                     opponent.subject(), opponent.reflectivePronoun(), opponent.possessiveAdjective(),
@@ -322,7 +324,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 }
             }
         }
-        if (countsAs(self, tentacled) && target.isType("cock")) {
+        if (moddedPartCountsAs(self, tentacled) && target.isType("cock")) {
             if (!opponent.is(Stsflag.cockbound)) {
                 if (!self.human()) {
                     c.write(self, Global.format(
@@ -353,16 +355,16 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 bonus += 5 + Global.random(4);
             }
         }
-        if (countsAs(self, cybernetic) && target.getMod(opponent).countsAs(opponent, CockMod.enlightened)) {
+        if (moddedPartCountsAs(self, cybernetic) && target.moddedPartCountsAs(opponent, CockMod.enlightened)) {
             c.write(self, String.format(
                             "Despite %s %s's best efforts, %s focus does not waver, and %s barely %s a thing.",
                             self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
                             opponent.pronoun(), opponent.human() ? "feel" : "feels"));
             bonus -= 5;
         }
-        if (countsAs(self, cybernetic) && target.isType("cock") && !target.getMod(opponent).countsAs(opponent, CockMod.enlightened)
-                        && (Global.random(3) == 0 || target.getMod(opponent).countsAs(opponent, CockMod.incubus))) {
-            String prefix = target.getMod(opponent).countsAs(opponent, CockMod.incubus) ? "Eager to gain a sample of "
+        if (moddedPartCountsAs(self, cybernetic) && target.isType("cock") && !target.moddedPartCountsAs(opponent, CockMod.enlightened)
+                        && (Global.random(3) == 0 || target.moddedPartCountsAs(opponent, CockMod.incubus))) {
+            String prefix = target.moddedPartCountsAs(opponent, CockMod.incubus) ? "Eager to gain a sample of "
                             + opponent.nameOrPossessivePronoun() + " exotic, demonic sperm, " : "";
             c.write(self, String.format(
                             prefix + "%s %s whirls to life and starts attempting to extract all the semen packed inside %s %s. "
@@ -371,17 +373,17 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                             target.describe(opponent), opponent.pronoun(), opponent.possessiveAdjective(),
                             opponent.directObject()));
             bonus += 15;
-            if (target.getMod(opponent).countsAs(opponent, CockMod.incubus) || Global.random(4) == 0) {
+            if (target.moddedPartCountsAs(opponent, CockMod.incubus) || Global.random(4) == 0) {
                 opponent.add(c, new Shamed(opponent));
             }
         }
-        if (countsAs(self, fiery) && target.isType("cock")) {
-            if (target.getMod(opponent).countsAs(opponent, CockMod.primal)) {
+        if (moddedPartCountsAs(self, fiery) && target.isType("cock")) {
+            if (target.moddedPartCountsAs(opponent, CockMod.primal)) {
                 c.write(self, String.format(
                                 "The intense heat emanating from %s %s only serves to enflame %s primal passion.",
                                 self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun()));
                 opponent.buildMojo(c, 7);
-            } else if (target.getMod(opponent).countsAs(opponent, CockMod.bionic)) {
+            } else if (target.moddedPartCountsAs(opponent, CockMod.bionic)) {
                 c.write(self, String.format(
                                 "The heat emanating from %s %s is extremely hazardous for %s %s, nearly burning through its circuitry and definitely causing intense pain.",
                                 self.nameOrPossessivePronoun(), describe(self), opponent.nameOrPossessivePronoun(),
@@ -394,11 +396,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                 opponent.pain(c, self, 20 + self.get(Attribute.Ki) / 2);
             }
         }
-        if (countsAs(self, arcane)) {
+        if (moddedPartCountsAs(self, arcane)) {
             String message;
             int strength;
-            if (!target.getMod(opponent).countsAs(opponent, CockMod.bionic)) {
-                if (target.getMod(opponent).countsAs(opponent, CockMod.primal)) {
+            if (!target.moddedPartCountsAs(opponent, CockMod.bionic)) {
+                if (target.moddedPartCountsAs(opponent, CockMod.primal)) {
                     message = String.format(
                                     "The tattoos around %s %s flare up with a new intensity, responding to the energy flow from %s %s."
                                                     + " The magic within them latches onto it and pulls fiercly, drawing %s strength into %s with great gulps.",
@@ -425,7 +427,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                 self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
                                 target.describe(opponent));
             }
-            if (Global.random(8) == 0 && !opponent.wary() && !target.getMod(opponent).countsAs(opponent, CockMod.bionic)) {
+            if (Global.random(8) == 0 && !opponent.wary() && !target.moddedPartCountsAs(opponent, CockMod.bionic)) {
                 message += " The light seems to seep into " + opponent.possessiveAdjective() + " "
                                 + target.describe(opponent) + ", leaving " + opponent.directObject() + " enthralled to "
                                 + self.possessiveAdjective() + " will.";
@@ -434,7 +436,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             c.write(self, message);
         }
 
-        if (countsAs(self, feral)) {
+        if (moddedPartCountsAs(self, feral)) {
             int chance = Math.max(3, 10 - self.getArousal()
                                               .getReal()
                             / 50);
@@ -540,7 +542,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                             self, opponent));
             opponent.body.pleasure(self, this, otherOrgan, 10, c);
         }
-        if (countsAs(self, plant)) {
+        if (moddedPartCountsAs(self, plant)) {
             c.write(self, Global.format(
                             "The small rough fibery filaments inside {self:name-possessive} flower pussy wrap around {other:name-possessive} cock. "
                                             + "A profound exhaustion settles on {other:direct-object}, as {other:subject-action:feel|feels} {self:name-possessive} insidious flower leeching {other:possessive} strength.",
@@ -548,7 +550,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             opponent.drainStaminaAsMojo(c, self, 20, 1.25f);
             opponent.loseWillpower(c, 5);
         }
-        if (countsAs(self, gooey)) {
+        if (moddedPartCountsAs(self, gooey)) {
             c.write(self, Global.format(
                             "The slimy filaments inside {self:possessive} {self:body-part:pussy} constantly massage"
                                             + " {other:possessive} {other:body-part:cock}, filling every inch of it with pleasure.",
@@ -559,7 +561,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
     @Override
     public int counterValue(BodyPart otherPart, Character self, Character other) {
-        if (countsAs(self, normal) && otherPart.getType()
+        if (moddedPartCountsAs(self, normal) && otherPart.getType()
                                    .equals("cock")
                         && !((CockPart) otherPart).isGeneric(other)) {
             // If opponent has a modded cock, that's dangerous
@@ -573,21 +575,20 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             return 1;
         }
         if (otherPart instanceof ModdedCockPart) {
-            BodyPartMod mod = otherPart.getMod(self);
-            if (countsAs(self, fiery)) {
-                return mod.countsAs(other, CockMod.bionic) ? 1 : mod.countsAs(other, CockMod.primal) ? -1 : 0;
+            if (moddedPartCountsAs(self, fiery)) {
+                return moddedPartCountsAs(other, CockMod.bionic) ? 1 : moddedPartCountsAs(other, CockMod.primal) ? -1 : 0;
             }
-            if (countsAs(self, arcane)) {
-                return mod.countsAs(other, CockMod.primal) ? 1 : mod.countsAs(other, CockMod.bionic) ? -1 : 0;
+            if (moddedPartCountsAs(self, arcane)) {
+                return moddedPartCountsAs(other, CockMod.primal) ? 1 : moddedPartCountsAs(other, CockMod.bionic) ? -1 : 0;
             }
-            if (countsAs(self, succubus)) {
-                return mod.countsAs(other, CockMod.runic) ? -1 : 0;
+            if (moddedPartCountsAs(self, succubus)) {
+                return moddedPartCountsAs(other, CockMod.runic) ? -1 : 0;
             }
-            if (countsAs(self, feral)) {
-                return mod.countsAs(other, CockMod.runic) ? 1 : mod.countsAs(other, CockMod.incubus) ? -1 : 0;
+            if (moddedPartCountsAs(self, feral)) {
+                return moddedPartCountsAs(other, CockMod.runic) ? 1 : moddedPartCountsAs(other, CockMod.incubus) ? -1 : 0;
             }
-            if (countsAs(self, cybernetic)) {
-                return mod.countsAs(other, CockMod.incubus) ? 1 : 0;
+            if (moddedPartCountsAs(self, cybernetic)) {
+                return moddedPartCountsAs(other, CockMod.incubus) ? 1 : 0;
             }
         }
 
@@ -595,11 +596,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public BodyPartMod getMod(Character self) {
-        if (countsAs(self, normal)) {
-            return BodyPartMod.noMod;
+    public Collection<? extends BodyPartMod> getMods(Character self) {
+        if (this == normal) {
+            return Collections.emptySet();
         }
-        return this;
+        return Collections.singleton(this);
     }
 
     @Override
@@ -609,7 +610,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
 
     @Override
     public void onOrgasm(Combat c, Character self, Character opponent) {
-        if (countsAs(self, feral)) {
+        if (moddedPartCountsAs(self, feral)) {
             c.write(self, Global.format(
                             "As {self:SUBJECT-ACTION:cum|cums} hard, a literal explosion of pheromones hits {other:name-do}. {other:POSSESSIVE} entire body flushes in arousal; {other:subject} better finish this fast!",
                             self, opponent));
@@ -620,7 +621,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
     @Override
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart target, boolean selfCame) {
          if (target.isType("cock") && !selfCame) {
-            if (countsAs(self, gooey)) {
+            if (moddedPartCountsAs(self, gooey)) {
                 c.write(self, Global.format(
                                 "{self:NAME-POSSESSIVE} {self:body-part:pussy} clenches down hard"
                                                 + " on {other:name-possessive} {other:body-part:cock}. The suction is so strong that the cum"
@@ -628,7 +629,7 @@ public enum PussyPart implements BodyPart,BodyPartMod {
                                                 + " over, {other:subject-action:are|is} much more drained of cum than usual.",
                                 self, opponent));
                 opponent.loseWillpower(c, 10 + Global.random(Math.min(20, self.get(Attribute.Bio))));
-            } else if (countsAs(self, divine) && self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player
+            } else if (moddedPartCountsAs(self, divine) && self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player
                             && Global.random(4) > 0) {
                 c.write(self, Global.format(
                                 "As {other:possessive} cum floods {self:name-possessive} "

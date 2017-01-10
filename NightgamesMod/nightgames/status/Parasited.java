@@ -84,8 +84,8 @@ public class Parasited extends Status {
                     Global.gui().message(c, affected,
                                     Global.format("With absolutely no warning, {self:subject-action:feel|feels} an incredible orgasm rip through {self:possessive} body.",
                                     affected, other));
-                    BodyPart part = Global.pickRandom(c.getStance().partsFor(c, affected)).orElse(affected.body.getRandomGenital());
-                    BodyPart otherPart = Global.pickRandom(c.getStance().partsFor(c, other)).orElse(other.body.getRandom("skin"));
+                    BodyPart part = Global.pickRandom(c.getStance().getPartsFor(c, affected, other)).orElse(affected.body.getRandomGenital());
+                    BodyPart otherPart = Global.pickRandom(c.getStance().getPartsFor(c, other, other)).orElse(other.body.getRandom("skin"));
                     affected.doOrgasm(c, other, part, otherPart);
                     break;
                 case 1:

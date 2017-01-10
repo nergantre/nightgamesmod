@@ -11,14 +11,14 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import nightgames.characters.body.mods.ErrorHoleMod;
-import nightgames.characters.body.mods.HoleMod;
+import nightgames.characters.body.mods.PartMod;
 
-public class HoleModAdapter implements JsonSerializer<HoleMod>, JsonDeserializer<HoleMod> {
-    @Override public HoleMod deserialize(JsonElement jsonElement, Type type,
+public class HoleModAdapter implements JsonSerializer<PartMod>, JsonDeserializer<PartMod> {
+    @Override public PartMod deserialize(JsonElement jsonElement, Type type,
                     JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         try {
             @SuppressWarnings("unchecked")
-            Class<HoleMod> modClass = (Class<HoleMod>) Class.forName(jsonElement.getAsString());
+            Class<PartMod> modClass = (Class<PartMod>) Class.forName(jsonElement.getAsString());
             return modClass.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
@@ -29,7 +29,7 @@ public class HoleModAdapter implements JsonSerializer<HoleMod>, JsonDeserializer
     }
 
     @Override
-    public JsonElement serialize(HoleMod mod, Type type, JsonSerializationContext jsonSerializationContext) {
+    public JsonElement serialize(PartMod mod, Type type, JsonSerializationContext jsonSerializationContext) {
         return new JsonPrimitive(mod.getClass().getCanonicalName());
     }
 }

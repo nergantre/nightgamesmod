@@ -10,9 +10,10 @@ import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.ModdedCockPart;
-import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -121,7 +122,7 @@ public class CassieTime extends BaseNPCTime {
             return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric(self));
         });
         mouthPussy.requirements.add((c, self, other) -> {
-            return other.body.get("mouth").stream().anyMatch(mouth -> mouth instanceof MouthPussyPart);
+            return other.body.get("mouth").stream().anyMatch(mouth -> mouth.moddedPartCountsAs(other, new SecondPussyHoleMod()));
         });
         mouthPussy.additionalRequirements = "A normal mouth";
         mouthPussy.option = "Mouth Pussy";
@@ -151,7 +152,7 @@ public class CassieTime extends BaseNPCTime {
                                         + "You blank out with the strange sensations that your organ transmits back to you, and Cassie takes the opportunity to mouth-fuck you to an almost-instantaneous climax."
                                         + "<br/>Cassie walks by you and gives you a quick kiss which almost makes you cum yet again, <i>\"I'm so looking forward to seeing what you do with that tonight!\"</i>";
         mouthPussy.effect = (c, self, other) -> {
-            self.body.addReplace(new MouthPussyPart(), 1);
+            self.body.addReplace(((GenericBodyPart)self.body.getRandom("mouth")).applyMod(new SecondPussyHoleMod()), 1);
             return true;
         };
         options.add(mouthPussy);

@@ -29,7 +29,7 @@ public class Blowjob extends Skill {
                         || getSelf().canAct();
         return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
                         && c.getStance().front(getSelf()) && canUse && !c.getStance().inserted(target)
-                        || getSelf().canRespond() && isVaginal(c);
+                        || getSelf().canRespond() && isVaginal(c, target);
     }
 
     @Override
@@ -47,8 +47,8 @@ public class Blowjob extends Skill {
         return priority;
     }
 
-    public boolean isVaginal(Combat c) {
-        return c.getStance().vaginallyPenetratedBy(c, getSelf(), c.getOpponent(getSelf()))
+    public boolean isVaginal(Combat c, Character target) {
+        return c.getStance().isPartFuckingPartInserted(c, target, target.body.getRandomCock(), getSelf(), getSelf().body.getRandomPussy())
                         && !c.getOpponent(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
     }
 
@@ -58,7 +58,7 @@ public class Blowjob extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        if (isVaginal(c)) {
+        if (isVaginal(c, c.getOpponent(getSelf()))) {
             return 10;
         } else if (c.getStance().isBeingFaceSatBy(c, getSelf(), c.getOpponent(getSelf()))) {
             return 0;
@@ -74,7 +74,7 @@ public class Blowjob extends Skill {
         if (getSelf().has(Trait.silvertongue)) {
             m += 4;
         }
-        if (isVaginal(c)) {
+        if (isVaginal(c, target)) {
             m += 4;
             writeOutput(c, m, Result.intercourse, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("pussy"), target.body.getRandom("cock"), m, c, this);
@@ -108,7 +108,7 @@ public class Blowjob extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return isVaginal(c) || isFacesitting(c, target) || !c.getStance().mobile(target) ? 200 : 75;
+        return isVaginal(c, target) || isFacesitting(c, target) || !c.getStance().mobile(target) ? 200 : 75;
     }
 
     @Override

@@ -11,7 +11,6 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class TentaclePart extends GenericBodyPart {
-    private static final BodyPartMod TentacleMod = () -> "TentacleMod";
     public static final GenericBodyPart DUMMY_PART = new GenericBodyPart("tentacles", 1.0, 1.0, 0.0, "tentacles", "");
     public static final Character DUMMY_CHARACTER = new DummyCharacter("summoned tentacles", "tentaclesdummy", 1, DUMMY_PART);
     public String attachpoint;
@@ -109,10 +108,5 @@ public class TentaclePart extends GenericBodyPart {
     @Override
     public String getFluids(Character c) {
         return fluids;
-    }
-
-    @Override
-    public BodyPartMod getMod(Character self) {
-        return TentacleMod;
     }
 }

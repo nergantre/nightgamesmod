@@ -38,6 +38,13 @@ public class ReverseXHFDaisyChainThreesome extends FemdomSexStance {
         return domSexCharacter(c) == self || top == self || self.has(Trait.powerfulhips);
     }
 
+    public List<Character> getAllPartners(Combat c, Character self) {
+        if (self == bottom) {
+            return Arrays.asList(top, domSexCharacter);
+        }
+        return Collections.singletonList(getPartner(c, self));
+    }
+
     @Override
     public void checkOngoing(Combat c) {
         if (!c.getOtherCombatants().contains(domSexCharacter)) {
@@ -60,14 +67,23 @@ public class ReverseXHFDaisyChainThreesome extends FemdomSexStance {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character c) {
-        if (c == domSexCharacter(combat)) {
-            return topParts(combat);
-        } else if (c == top) {
-            return Arrays.asList(top.body.getRandomCock()).stream().filter(part -> part != null && part.present())
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
+            return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
                             .collect(Collectors.toList());
+        } else if (self == top && other == bottom) {
+            return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                            .collect(Collectors.toList());
+        } else if (self == bottom) {
+            if (other == top) {
+                return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            } else if (other == domSexCharacter) {
+                return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            }
         }
-        return c.equals(bottom) ? bottomParts() : Collections.emptyList();
+        return Collections.emptyList();
     }
 
     @Override

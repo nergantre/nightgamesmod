@@ -17,7 +17,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.Skill;
 import nightgames.stance.Engulfed;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Flatfooted;
@@ -107,7 +106,7 @@ public class Airi extends BasePersonality {
             }
         });
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
                 return "{self:SUBJECT} tousles {other:possessive} hair fondly as {other:subject} cum, \"<i>How does it feel... reduced to mere prey...? You're just food... for me now...</i>\"";
             } else if (other.getLevel() >= self.getLevel()) {
@@ -218,7 +217,7 @@ public class Airi extends BasePersonality {
     }
 
     @Override
-    public void eot(Combat c, Character opponent, Skill last) {
+    public void eot(Combat c, Character opponent) {
         // always replace with gooey/slime versions of genitals.
         if (character.has(Trait.slime)) {
             if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {

@@ -403,7 +403,7 @@ public class Jewel extends BasePersonality {
         });
 
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.getType()).orElse("pussy");
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.getType()).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
                 return "Jewel smirks at you with a sadistic grin on her face as her " + self.body.getRandom(part).describe(self) 
                                 + " plunders your strength once again. <i>\"Poor {other:guy}, being dominated by someone who used to be so much weaker than you.\"</i> "
@@ -434,7 +434,7 @@ public class Jewel extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character other = c.getOpponent(character);
-        Collection<BodyPart> otherOrgans = c.getStance().partsFor(c, other);
+        Collection<BodyPart> otherOrgans = c.getStance().getPartsFor(c, other, other);
         if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(c, other)) {
             BodyPart insertable = character.body.getRandomInsertable();
             String selfODesc = insertable == null ? "[none]" : insertable.describe(character);

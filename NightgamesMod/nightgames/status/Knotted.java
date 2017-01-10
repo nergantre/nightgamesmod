@@ -30,7 +30,7 @@ public class Knotted extends Status {
         return String.format("The base of %s %s swells up, forming a tight seal within %s %s and keeping it inside.",
                         opponent.nameOrPossessivePronoun(), c.getStance().insertedPartFor(c, opponent).describe(opponent),
                         affected.nameOrPossessivePronoun(),
-                        c.getStance().insertablePartFor(c, affected).describe(affected));
+                        c.getStance().insertablePartFor(c, affected, opponent).describe(affected));
     }
 
     @Override

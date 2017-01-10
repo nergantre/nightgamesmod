@@ -246,7 +246,7 @@ public class Combat extends Observable implements Cloneable {
     private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
         return victor.has(Item.EmptyBottle, 1) && loser.body.get("pussy")
                                                             .stream()
-                                                            .anyMatch(part -> part.getMod(loser) == mod);
+                                                            .anyMatch(part -> part.moddedPartCountsAs(loser, mod));
     }
 
     public void doVictory(Character victor, Character loser) {
@@ -435,10 +435,13 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private void doEndOfTurnUpkeep() {
-        p1.eot(this, p2, p2act);
-        p2.eot(this, p1, p1act);
+        p1.eot(this, p2);
+        p2.eot(this, p1);
+        otherCombatants.forEach(other -> other.eot(this, getOpponent(other)));
         checkStamina(p1);
         checkStamina(p2);
+        otherCombatants.forEach(this::checkStamina);
+
         doStanceTick(p1);
         doStanceTick(p2);
 
@@ -594,6 +597,20 @@ public class Combat extends Observable implements Cloneable {
             other.temptNoSkillNoSource(this, self, self.get(Attribute.Seduction) / 2);
         }
 
+        if (getStance().facing(self, other) && other.breastsAvailable() && !self.has(Trait.temptingtits) && other.has(Trait.temptingtits)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
+                                            self, other));
+            self.temptNoSkill(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
+        } else if (getOpponent(self).has(Trait.temptingtits) && getStance().behind(other)) {
+            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
+                            self, other));
+            double selfTopExposure = self.outfit.getExposure(ClothingSlot.top);
+            double otherTopExposure = other.outfit.getExposure(ClothingSlot.top);
+            double temptDamage = 20 + Math.max(0, other.get(Attribute.Seduction) / 2 - 12);
+            temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
+            self.temptNoSkill(this, other, other.body.getRandomBreasts(), (int) temptDamage);
+        }
+
         if (self.has(Trait.enchantingVoice)) {
             int voiceCount = getCombatantData(self).getIntegerFlag("enchantingvoice-count");
             if (voiceCount >= 1) {
@@ -682,8 +699,8 @@ public class Combat extends Observable implements Cloneable {
                         getCombatantData(drainer).increaseIntegerFlag("level_drain_thrusts", 1);
                     } else {
                         drained.doOrgasm(this, drainer,
-                                        Global.pickRandom(getStance().partsFor(this, drained)).orElse(drained.body.getRandomGenital()),
-                                        Global.pickRandom(getStance().partsFor(this, drainer)).orElse(drainer.body.getRandomGenital()));
+                                        Global.pickRandom(getStance().getPartsFor(this, drained, drainer)).orElse(drained.body.getRandomGenital()),
+                                        Global.pickRandom(getStance().getPartsFor(this, drainer, drained)).orElse(drainer.body.getRandomGenital()));
                         getCombatantData(drainer).setBooleanFlag("has_drained", true);
                     }
                 } else {
@@ -1023,7 +1040,7 @@ public class Combat extends Observable implements Cloneable {
             Position nw = stance.reverse(this, false);
             if (!stance.equals(nw)) {
                 stance = nw;
-                write(Global.format("Appearantly punishing {self:name-do} for being dominant, the collar"
+                write(Global.format("Apparantly punishing {self:name-do} for being dominant, the collar"
                                 + " around {self:possessive} neck gives {self:direct-object} a painful"
                                 + " shock. At the same time, {other:subject-action:grab|grabs}"
                                 + " hold of {self:possessive} body and gets {other:reflective}"
@@ -1035,20 +1052,6 @@ public class Combat extends Observable implements Cloneable {
                                 + " {other:subject-action:put|puts} {self:direct-object}"
                                 + " in a pin.", self, other));
             }
-        }
-        
-        if (getStance().facing(self, other) && other.breastsAvailable() && !self.has(Trait.temptingtits) && other.has(Trait.temptingtits)) {
-            write(self, Global.format("{self:SUBJECT-ACTION:can't avert|can't avert} {self:possessive} eyes from {other:NAME-POSSESSIVE} perfectly shaped tits sitting in front of {self:possessive} eyes.",
-                                            self, other));
-            self.temptNoSkill(this, other, other.body.getRandomBreasts(), 10 + Math.max(0, other.get(Attribute.Seduction) / 3 - 7));
-        } else if (getOpponent(self).has(Trait.temptingtits) && getStance().behind(other)) {
-            write(self, Global.format("{self:SUBJECT-ACTION:feel|feels} a heat in {self:possessive} groin as {other:name-possessive} enticing tits pressing against {self:possessive} back.",
-                            self, other));
-            double selfTopExposure = self.outfit.getExposure(ClothingSlot.top);
-            double otherTopExposure = other.outfit.getExposure(ClothingSlot.top);
-            double temptDamage = 20 + Math.max(0, other.get(Attribute.Seduction) / 2 - 12);
-            temptDamage = temptDamage * Math.min(1, selfTopExposure + .5) * Math.min(1, otherTopExposure + .5);
-            self.temptNoSkill(this, other, other.body.getRandomBreasts(), (int) temptDamage);
         }
     }
 
@@ -1233,6 +1236,10 @@ public class Combat extends Observable implements Cloneable {
         if (p.getStamina()
              .isEmpty() && !p.is(Stsflag.stunned)) {
             p.add(this, new Winded(p, 3));
+            if (p.isPet()){
+                // pets don't get stance changes
+                return;
+            }
             Character other;
             if (p == p1) {
                 other = p2;
@@ -1479,6 +1486,20 @@ public class Combat extends Observable implements Cloneable {
         setStance(newStance, null, true);
     }
 
+    private void doEndPenetration(Character self, Character partner) {
+        List<BodyPart> parts1 = stance.getPartsFor(this, self, partner);
+        List<BodyPart> parts2 = stance.getPartsFor(this, partner, self);
+        parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, self, partner, other)));
+        parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, partner, self, other)));
+    }
+
+    private void doStartPenetration(Character self, Character partner) {
+        List<BodyPart> parts1 = stance.getPartsFor(this, self, partner);
+        List<BodyPart> parts2 = stance.getPartsFor(this, partner, self);
+        parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, self, partner, other)));
+        parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, partner, self, other)));
+    }
+
     public void setStance(Position newStance, Character initiator, boolean voluntary) {
         if ((newStance.top != getStance().bottom && newStance.top != getStance().top) || (newStance.bottom != getStance().bottom && newStance.bottom != getStance().top)) {
             if (initiator != null && initiator.isPet() && newStance.top == initiator) {
@@ -1518,13 +1539,22 @@ public class Combat extends Observable implements Cloneable {
         checkStanceStatus(p2, stance, newStance);
 
         if (stance.inserted() && !newStance.inserted()) {
-            List<BodyPart> parts1 = stance.partsFor(this, p1);
-            List<BodyPart> parts2 = stance.partsFor(this, p2);
-            parts1.forEach(part -> parts2.forEach(other -> part.onEndPenetration(this, p1, p2, other)));
-            parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, p2, p1, other)));
+            doEndPenetration(p1, p2);
+            Character threePCharacter = stance.domSexCharacter(this);
+            if (threePCharacter != p1 && threePCharacter != p2) {
+                doEndPenetration(p1, threePCharacter);
+                doEndPenetration(p2, threePCharacter);
+                getCombatantData(threePCharacter).setIntegerFlag("ChoseToFuck", 0);
+            }
             getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
             getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
-        } else if (!stance.inserted() && newStance.inserted() && (p1.human() || p2.human())) {
+        } else if (!stance.inserted() && newStance.inserted()) {
+            doStartPenetration(p1, p2);
+            Character threePCharacter = stance.domSexCharacter(this);
+            if (threePCharacter != p1 && threePCharacter != p2) {
+                doStartPenetration(p1, threePCharacter);
+                doStartPenetration(p2, threePCharacter);
+            }
             Player player = null;
             if (p1.human() && p1 instanceof Player) {
                 player = (Player) p1;
@@ -1533,10 +1563,6 @@ public class Combat extends Observable implements Cloneable {
             }
             if (player != null) {
                 Character opp = getOpponent(player);
-                List<BodyPart> parts1 = newStance.partsFor(this, p1);
-                List<BodyPart> parts2 = newStance.partsFor(this, p2);
-                parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, p1, p2, other)));
-                parts2.forEach(part -> parts1.forEach(other -> part.onStartPenetration(this, p2, p1, other)));
                 if (voluntary) {
                     if (initiator != null) {
                         getCombatantData(initiator).setIntegerFlag("ChoseToFuck", 1);

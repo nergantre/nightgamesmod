@@ -34,7 +34,7 @@ public class MouthPart extends GenericBodyPart {
 
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
-        double bonus = 0;
+        double bonus = super.applyBonuses(self, opponent, target, damage, c);
         if (target.isErogenous() && opponent.has(Trait.lickable)) {
             c.write(opponent, Global.capitalizeFirstLetter(opponent.subjectAction("shudder", "shudders"))
                             + " when licked by " + self.directObject() + ".");
@@ -133,7 +133,7 @@ public class MouthPart extends GenericBodyPart {
 
     @Override
     public double getPleasure(Character self, BodyPart target) {
-        double pleasureMod = pleasure;
+        double pleasureMod = super.getPleasure(self, target);
         pleasureMod += self.has(Trait.tongueTraining1) ? .5 : 0;
         pleasureMod += self.has(Trait.tongueTraining2) ? .7 : 0;
         pleasureMod += self.has(Trait.tongueTraining3) ? .9 : 0;
@@ -142,12 +142,11 @@ public class MouthPart extends GenericBodyPart {
 
     @Override
     public String getFluids(Character c) {
-        return "saliva";
-    }
-
-    @Override
-    public boolean isErogenous() {
-        return false;
+        if (super.getFluids(c).isEmpty()) {
+            return "saliva";
+        } else {
+            return super.getFluids(c);
+        }
     }
 
     @Override

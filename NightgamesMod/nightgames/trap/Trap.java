@@ -54,16 +54,20 @@ public abstract class Trap implements Deployable {
 
     @Override
     public final String toString() {
-        return name;
+        return getName();
     }
 
     @Override
     public final boolean equals(Object obj) {
-        return obj != null && name.equals(obj.toString());
+        return obj != null && getName().equals(obj.toString());
     }
     
     public void capitalize(Character attacker, Character victim, IEncounter enc) {
         // NOP
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

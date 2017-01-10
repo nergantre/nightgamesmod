@@ -5,13 +5,11 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.trap.RoboWeb;
+import nightgames.trap.Trap;
 
 public class RoboWebbed extends Bound {
-    private final RoboWeb trap;
-    public RoboWebbed(Character affected, float dc, RoboWeb roboWeb) {
-        super("RoboWebbed", affected, dc, "robo-web");
-        trap = roboWeb;
+    public RoboWebbed(Character affected, float dc, Trap roboWeb) {
+        super("RoboWebbed", affected, dc, "robo-web", roboWeb);
     }
 
     @Override
@@ -28,15 +26,16 @@ public class RoboWebbed extends Bound {
 
     @Override
     public void tick(Combat c) {
-        super.tick(c);
         int dmg = (int) (affected.getArousal().max() * .25);
         // Message handled in describe
-        if (c == null) {
-            Global.gui().message(Global.format("{self:SUBJECT-ACTION:are|is} hopelessly tangled up in"
-                            + " synthetic webbing, which is sending pleasurable sensations"
-                            + " through {self:possessive} entire body.", affected, Global.noneCharacter()));
+        if (c == null && trap.isPresent()) {
+            if (affected.human()) {
+                Global.gui().message(Global.format("{self:SUBJECT-ACTION:are|is} hopelessly tangled up in"
+                                + " synthetic webbing, which is sending pleasurable sensations"
+                                + " through {self:possessive} entire body.", affected, Global.noneCharacter()));
+            }
             affected.tempt(dmg);
-            affected.location().opportunity(affected, trap);
+            affected.location().opportunity(affected, trap.get());
         } else {
             affected.temptNoSkillNoTempter(c, dmg);
         }
@@ -44,7 +43,7 @@ public class RoboWebbed extends Bound {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new RoboWebbed(newAffected, toughness, trap);
+        return new RoboWebbed(newAffected, toughness, trap.orElse(null));
     }
 
     @Override

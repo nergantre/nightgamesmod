@@ -13,7 +13,7 @@ public abstract class ArmSkill {
         this.name = name;
         this.level = level;
     }
-    
+
     public boolean usable(Combat c, Arm arm, Character owner, Character target) {
         return owner.getLevel() >= level;
     }

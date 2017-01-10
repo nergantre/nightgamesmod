@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -7,19 +9,26 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.trap.Trap;
 
 public class Bound extends Status {
     protected float toughness;
-    private String binding;
+    protected String binding;
+    protected Optional<Trap> trap;
 
     public Bound(Character affected, float dc, String binding) {
-        this("Bound", affected, dc, binding);
+        this(affected, dc, binding, null);
+    }
+    public Bound(Character affected, float dc, String binding, Trap trap) {
+        this("Bound", affected, dc, binding, trap);
     }
 
-    public Bound(String type, Character affected, float dc, String binding) {
+    public Bound(String type, Character affected, float dc, String binding, Trap trap) {
         super(type, affected);
         toughness = dc;
         this.binding = binding;
+        this.trap = Optional.ofNullable(trap);
         flag(Stsflag.bound);
         flag(Stsflag.debuff);
     }
@@ -126,9 +135,18 @@ public class Bound extends Status {
         return 0;
     }
 
+    public void tick(Combat c) {
+        if (c == null && trap.isPresent()) {
+            if (affected.human()) {
+                Global.gui().message(Global.format("{self:SUBJECT-ACTION:are|is} still trapped by the %s.", affected, Global.noneCharacter(), trap.get().getName().toLowerCase()));
+            }
+            affected.location().opportunity(affected, trap.get());
+        }
+    }
+
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Bound(newAffected, toughness, binding);
+        return new Bound(newAffected, toughness, binding, trap.orElse(null));
     }
 
     @Override  public JsonObject saveToJson() {

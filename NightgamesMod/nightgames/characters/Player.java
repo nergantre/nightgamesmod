@@ -33,7 +33,6 @@ import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 import nightgames.skills.damage.DamageType;
@@ -703,8 +702,8 @@ public class Player extends Character {
     }
 
     @Override
-    public void eot(Combat c, Character opponent, Skill last) {
-        super.eot(c, opponent, last);
+    public void eot(Combat c, Character opponent) {
+        super.eot(c, opponent);
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {

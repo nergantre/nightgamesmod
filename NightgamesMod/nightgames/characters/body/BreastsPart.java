@@ -1,5 +1,8 @@
 package nightgames.characters.body;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -323,8 +326,8 @@ public enum BreastsPart implements BodyPart {
     }
 
     @Override
-    public BodyPartMod getMod(Character self) {
-        return BodyPartMod.noMod;
+    public Collection<? extends BodyPartMod> getMods(Character self) {
+        return Collections.emptySet();
     }
 
     @Override

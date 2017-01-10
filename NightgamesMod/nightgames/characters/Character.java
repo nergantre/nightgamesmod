@@ -82,6 +82,7 @@ import nightgames.status.Enthralled;
 import nightgames.status.Falling;
 import nightgames.status.Feral;
 import nightgames.status.Frenzied;
+import nightgames.status.InsertedStatus;
 import nightgames.status.Masochistic;
 import nightgames.status.Resistance;
 import nightgames.status.Status;
@@ -1958,7 +1959,7 @@ public abstract class Character extends Observable implements Cloneable {
                     c.write(opponent, Global.format("<b>{other:NAME-POSSESSIVE} %s contracts around {self:name-possessive} %s, reinforcing"
                             + " {self:possessive} orgasm and drawing upon {self:possessive} very strength and experience. Once it's over, {other:pronoun-action:are}"
                                                     + " left considerably more powerful at {self:possessive} expense.</b>",
-                                    this, opponent, c.getStance().insertablePartFor(c, opponent).describe(opponent),
+                                    this, opponent, c.getStance().insertablePartFor(c, opponent, this).describe(opponent),
                                     c.getStance().insertedPartFor(c, this).describe(this)));
                 } else if (c.getStance().penetratedBy(c, this, opponent)) {
                     c.write(opponent, Global.format("{other:NAME-POSSESSIVE} cock pistons rapidly into {self:name-do} as {self:subject-action:cum|cums}, "
@@ -2048,8 +2049,8 @@ public abstract class Character extends Observable implements Cloneable {
                     + "{self:SUBJECT} reaches into the light and holds the figure's hands. "
                     + "<i>\"See {other:name}, I'm not a greedy {self:girl}. I can share with my friends.\"</i>"
                     );
-    
-    public void eot(Combat c, Character opponent, Skill last) {
+
+    public void eot(Combat c, Character opponent) {
         dropStatus(c, opponent);
         tick(c);
         List<String> removed = new ArrayList<>();
@@ -2066,21 +2067,8 @@ public abstract class Character extends Observable implements Cloneable {
         if (c.getStance().inserted()) {
             BodyPart selfOrgan;
             BodyPart otherOrgan;
-            if (c.getStance().inserted(this)) {
-                selfOrgan = body.getRandomCock();
-                if (c.getStance().en == Stance.anal) {
-                    otherOrgan = opponent.body.getRandom("ass");
-                } else {
-                    otherOrgan = opponent.body.getRandomPussy();
-                }
-            } else {
-                otherOrgan = opponent.body.getRandomCock();
-                if (c.getStance().en == Stance.anal) {
-                    selfOrgan = body.getRandom("ass");
-                } else {
-                    selfOrgan = body.getRandomPussy();
-                }
-            }
+            selfOrgan = c.getStance().getPartsFor(c, this, opponent).iterator().next();
+            otherOrgan = c.getStance().getPartsFor(c, opponent, this).iterator().next();
             if (has(Trait.energydrain) && selfOrgan != null && otherOrgan != null) {
                 c.write(this, Global.format(
                                 "{self:NAME-POSSESSIVE} body glows purple as {other:subject-action:feel|feels} {other:possessive} very spirit drained into {self:possessive} "
@@ -2089,7 +2077,6 @@ public abstract class Character extends Observable implements Cloneable {
                 int m = Global.random(5) + 5;
                 opponent.drain(c, this, (int) this.modifyDamage(DamageType.drain, opponent, m));
             }
-            // TODO this works weirdly when both have both organs.
             body.tickHolding(c, opponent, selfOrgan, otherOrgan);
         }
         if (outfit.has(ClothingTrait.tentacleSuit)) {
@@ -2808,6 +2795,13 @@ public abstract class Character extends Observable implements Cloneable {
             }
         }
         return null;
+    }
+
+    public List<InsertedStatus> getInsertedStatus() {
+        return status.stream()
+                        .filter(status -> status instanceof InsertedStatus)
+                        .map(status -> (InsertedStatus)status)
+                        .collect(Collectors.toList());
     }
 
     public Integer prize() {

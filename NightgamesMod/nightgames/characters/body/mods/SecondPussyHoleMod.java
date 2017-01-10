@@ -6,7 +6,7 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.global.Global;
 
-public class SecondPussyHoleMod extends HoleMod {
+public class SecondPussyHoleMod extends PartMod {
     public SecondPussyHoleMod() {
         super("secondpussy", .2, .2, .3, 999);
     }
@@ -26,5 +26,9 @@ public class SecondPussyHoleMod extends HoleMod {
 
     public Optional<String> getDescriptionOverride(Character self, BodyPart part) {
         return Optional.of("pussy");
+    }
+
+    public Optional<Boolean> getErogenousOverride() {
+        return Optional.of(true);
     }
 }

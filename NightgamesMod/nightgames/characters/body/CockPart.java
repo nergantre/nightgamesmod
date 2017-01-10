@@ -19,14 +19,14 @@ public interface CockPart extends BodyPart {
     default PussyPart getEquivalentPussy() {
         for (PussyPart pussy : PussyPart.values()) {
             CockMod equivalentMod = pussy.getEquivalentCockMod();
-            if (equivalentMod != CockMod.error && equivalentMod.equals(getMod(Global.noneCharacter()))) {
+            if (equivalentMod != CockMod.error && moddedPartCountsAs(Global.noneCharacter(), equivalentMod)) {
                 return pussy;
             }
         }
         return PussyPart.normal;
     }
 
-    default String adjective() {
+    default String adjective(Character c) {
         return "phallic";
     }
 }

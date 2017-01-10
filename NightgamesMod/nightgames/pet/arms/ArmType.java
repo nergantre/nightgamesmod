@@ -7,6 +7,12 @@ public enum ArmType {
     HEAT_RAY("Heat Ray Cannon", "a red, slitted opening"),
     DEFAB_CANNON("Defrabrication Cannon", "a spherical, metallic tip"),
     HEAL_CANNON("Heal Cannon", "a blocky tip"),
+    TENTACLE_INJECTOR("Injector", "a needle tip leaking fluid"),
+    TENTACLE_CLINGER("Clinger", "suction cups lining the body"),
+    TENTACLE_IMPALER("Impaler", "a tapered phallic tip"),
+    TENTACLE_SUCKER("Sucker", "a lewd fleshy opening"),
+    TENTACLE_SQUIRTER("Squirter", "a nozzle-like opening"),
+    TENTACLE_BIRTHER("Birther", "numerous bulbous pods"),
     ;
     
     private final String name, desc;

@@ -56,11 +56,11 @@ public class FFXTribThreesome extends Position {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character c) {
-        if (c == domSexCharacter(combat)) {
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
             return topParts(combat);
         }
-        return c.equals(bottom) ? bottomParts() : Collections.emptyList();
+        return self.equals(bottom) ? bottomParts() : Collections.emptyList();
     }
 
     public Character getPartner(Combat c, Character self) {

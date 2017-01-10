@@ -9,7 +9,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
-import nightgames.status.Stsflag;
 import nightgames.status.TailSucked;
 
 public class TailSuck extends Skill {
@@ -38,12 +37,12 @@ public class TailSuck extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return target.is(Stsflag.tailsucked) ? 200 : 90;
+        return c.getStance().isPartFuckingPartInserted(c, target, target.body.getRandomCock(), getSelf(), getSelf().body.getRandom("tail")) ? 200 : 90;
     }
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (target.is(Stsflag.tailsucked)) {
+        if (c.getStance().isPartFuckingPartInserted(c, target, target.body.getRandomCock(), getSelf(), getSelf().body.getRandom("tail"))) {
             writeOutput(c, Result.special, target);
             target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandomCock(),
                             Global.random(10) + 10, c, this);

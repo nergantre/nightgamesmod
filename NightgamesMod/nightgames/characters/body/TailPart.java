@@ -1,5 +1,8 @@
 package nightgames.characters.body;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -167,8 +170,8 @@ public enum TailPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public BodyPartMod getMod(Character self) {
-        return this;
+    public Collection<? extends BodyPartMod> getMods(Character self) {
+        return Collections.singleton(this);
     }
 
     @Override

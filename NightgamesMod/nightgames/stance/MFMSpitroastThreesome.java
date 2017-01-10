@@ -53,18 +53,23 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character c) {
-        if (c == domSexCharacter(combat)) {
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
             return topParts(combat);
         }
-
-        if (c == top) {
+        if (self == top) {
                 return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                                 .collect(Collectors.toList());
+        } else if (self == bottom) {
+            if (other == top) {
+                return Arrays.asList(top.body.getRandom("mouth")).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            } else if (other == domSexCharacter) {
+                return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            }
         }
-
-        return c.equals(bottom) ? Arrays.asList(bottom.body.getRandomPussy(), bottom.body.getRandomAss()).stream().filter(part -> part != null && part.present())
-                        .collect(Collectors.toList()) : Collections.emptyList();
+        return Collections.emptyList();
     }
 
     public Character getPartner(Combat c, Character self) {
@@ -83,9 +88,16 @@ public class MFMSpitroastThreesome extends MaledomSexStance {
         if (top.human()) {
             return "";
         } else {
-            return String.format("%s is fucking %s ass while %s pounding away at %s pussy.",
-                            top.subject(), bottom.nameOrPossessivePronoun(), domSexCharacter(c).subjectAction("are", "is"), bottom.possessiveAdjective());
+            return String.format("%s is fucking %s face while %s taking %s from behind.",
+                            top.subject(), bottom.nameOrPossessivePronoun(), domSexCharacter(c).subjectAction("are", "is"), bottom.directObject());
         }
+    }
+
+    public List<Character> getAllPartners(Combat c, Character self) {
+        if (self == bottom) {
+            return Arrays.asList(top, domSexCharacter);
+        }
+        return Collections.singletonList(getPartner(c, self));
     }
 
     @Override

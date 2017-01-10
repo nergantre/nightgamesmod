@@ -44,8 +44,6 @@ public enum Stsflag {
     frenzied,
     lethargic,
     divinecharge,
-    fucked,
-    pegged,
     firedup,
     aphrodisiac,
     sensitized,
@@ -53,8 +51,6 @@ public enum Stsflag {
     seeded,
     tied,
     drowsy,
-    inserted,
-    tailsucked,
     aggressive,
     divinerecoil,
     detected,
@@ -75,5 +71,6 @@ public enum Stsflag {
     piercingOdor, 
     hypnovisor,
     slimed,
-    disguised
+    disguised,
+    tentacleBound,
 }

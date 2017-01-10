@@ -2,9 +2,7 @@ package nightgames.characters.body.mods;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BodyPartMod;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.ModdedCockPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Frenzied;
@@ -12,12 +10,12 @@ import nightgames.status.IgnoreOrgasm;
 import nightgames.status.Pheromones;
 import nightgames.status.Stsflag;
 
-public class FeralHoleMod extends HoleMod {
+public class FeralHoleMod extends PartMod {
     public FeralHoleMod() {
         super("feral", .2, .3, .2, -8);
     }
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
-        if (target.isType("cock")) {
+        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part)) {
             int chance = Math.max(5, 10 - self.getArousal()
                             .getReal() / 50);
             if (!self.is(Stsflag.frenzied) && !self.is(Stsflag.cynical) && target.isType("cock")
@@ -38,12 +36,12 @@ public class FeralHoleMod extends HoleMod {
             c.write(self, String.format("Musk emanating from %s %s leaves %s reeling.", self.possessiveAdjective(),
                             part.describe(self), opponent.directObject()));
             double base = 3;
-            if (target.getMod(opponent).countsAs(opponent, CockMod.runic)) {
+            if (target.moddedPartCountsAs(opponent, CockMod.runic)) {
                 c.write(self, String.format(
                                 "The wild scent overwhelms %s carefully layered enchantments, instantly sweeping %s away.",
                                 opponent.nameOrPossessivePronoun(), opponent.directObject()));
                 base *= 2.5;
-            } else if (target.getMod(opponent).countsAs(opponent, CockMod.incubus)) {
+            } else if (target.moddedPartCountsAs(opponent, CockMod.incubus)) {
                 c.write(self, String.format("Whilst certainly invigorating, the scent leaves %s largely unaffected.",
                                 opponent.subject()));
                 base /= 2;
@@ -63,10 +61,6 @@ public class FeralHoleMod extends HoleMod {
     }
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 
-        if (otherPart instanceof ModdedCockPart) {
-            BodyPartMod mod = otherPart.getMod(self);
-            return mod.countsAs(other, CockMod.runic) ? 1 : mod.countsAs(other, CockMod.incubus) ? -1 : 0;
-        }
-        return 0;
+        return otherPart.moddedPartCountsAs(other, CockMod.runic) ? 1 : otherPart.moddedPartCountsAs(other, CockMod.incubus) ? -1 : 0;
     }
 }

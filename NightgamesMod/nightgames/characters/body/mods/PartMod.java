@@ -8,14 +8,14 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BodyPartMod;
 import nightgames.combat.Combat;
 
-public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
+public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
     private final String modType;
     private final double hotness;
     private final double pleasure;
     private final double sensitivity;
     private int sortOrder;
 
-    public HoleMod(String modType, double hotness, double pleasure, double sensitivity, int sortOrder) {
+    public PartMod(String modType, double hotness, double pleasure, double sensitivity, int sortOrder) {
         this.modType = modType;
         this.hotness = hotness;
         this.pleasure = pleasure;
@@ -25,6 +25,10 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
 
     @Override
     public String getModType() {
+        return modType;
+    }
+
+    public String adjective() {
         return modType;
     }
 
@@ -62,6 +66,10 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
         return Optional.empty();
     }
 
+    public Optional<Boolean> getErogenousOverride() {
+        return Optional.empty();
+    }
+
     public Optional<String> getLongDescriptionOverride(Character self, BodyPart part) {
         return Optional.empty();
     }
@@ -71,7 +79,7 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
     }
 
     @Override
-    public int compareTo(HoleMod other) {
+    public int compareTo(PartMod other) {
         return Integer.compare(sortOrder, other.sortOrder);
     }
 }

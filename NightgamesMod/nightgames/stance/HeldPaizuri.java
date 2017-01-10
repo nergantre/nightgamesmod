@@ -1,6 +1,10 @@
 package nightgames.stance;
 
+import java.util.Collections;
+import java.util.List;
+
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
@@ -14,6 +18,11 @@ public class HeldPaizuri extends AbstractFacingStance {
         return Global.format(
                         "{self:SUBJECT-ACTION:are|is} holding {other:name-do} down with {self:possessive} breasts nested around {other:possessive} cock.",
                         top, bottom);
+    }
+
+    @Override
+    public boolean inserted(Character c) {
+        return c == bottom;
     }
 
     @Override
@@ -61,6 +70,14 @@ public class HeldPaizuri extends AbstractFacingStance {
         return c == bottom;
     }
 
+    public List<BodyPart> topParts(Combat c) {
+        return Collections.singletonList(top.body.getRandom("breasts"));
+    }
+
+    public List<BodyPart> bottomParts() {
+        return Collections.singletonList(top.body.getRandom("cock"));
+    }
+
     @Override
     public boolean feet(Character c, Character target) {
         return false;
@@ -73,11 +90,6 @@ public class HeldPaizuri extends AbstractFacingStance {
 
     @Override
     public boolean behind(Character c) {
-        return false;
-    }
-
-    @Override
-    public boolean inserted(Character c) {
         return false;
     }
 

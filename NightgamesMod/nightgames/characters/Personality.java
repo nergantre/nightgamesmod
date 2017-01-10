@@ -71,7 +71,7 @@ public interface Personality extends Serializable {
         // no op
     }
 
-    default void eot(Combat c, Character opponent, Skill last) {
+    default void eot(Combat c, Character opponent) {
         // noop
     }
 

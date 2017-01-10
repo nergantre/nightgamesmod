@@ -784,9 +784,9 @@ public class NPC extends Character {
     }
 
     @Override
-    public void eot(Combat c, Character opponent, Skill last) {
-        super.eot(c, opponent, last);
-        ai.eot(c, opponent, last);
+    public void eot(Combat c, Character opponent) {
+        super.eot(c, opponent);
+        ai.eot(c, opponent);
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
             c.write(opponent, "<br/>You see " + getName()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");

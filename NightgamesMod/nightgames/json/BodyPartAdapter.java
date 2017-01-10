@@ -23,7 +23,6 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.MouthPart;
-import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.body.TailPart;
@@ -48,7 +47,6 @@ public class BodyPartAdapter implements JsonSerializer<BodyPart>, JsonDeserializ
         prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
         prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
         prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
-        prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
         prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
         prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));
     }

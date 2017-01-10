@@ -1,5 +1,8 @@
 package nightgames.characters.body;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -16,8 +19,8 @@ public class ModdedCockPart implements CockPart {
     }
 
     @Override
-    public BodyPartMod getMod(Character self) {
-        return mod;
+    public Collection<? extends BodyPartMod> getMods(Character self) {
+        return Collections.singleton(mod);
     }
 
     @Override
@@ -231,5 +234,10 @@ public class ModdedCockPart implements CockPart {
     @Override
     public BodyPart applyMod(CockMod mod) {
         return base.applyMod(mod);
+    }
+
+    @Override
+    public String adjective() {
+        return "phallic";
     }
 }

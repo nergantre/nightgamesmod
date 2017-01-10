@@ -56,8 +56,7 @@ public class Corruption extends Addiction {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and your pussy turns into that of a succubus!</b>");
                 affected.body.temporaryAddOrReplacePartWithType(PussyPart.succubus, 20);
-            } else if (affected.hasDick() && affected.body.getRandomCock()
-                                                          .getMod(affected) != CockMod.incubus) {
+            } else if (affected.hasDick() && !affected.body.getRandomCock().moddedPartCountsAs(affected, CockMod.incubus)) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and your cock turns into that of an incubus!</b>");
                 CockPart cock = affected.body.getRandomCock();

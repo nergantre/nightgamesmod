@@ -117,7 +117,7 @@ public class Mara extends BasePersonality {
          });
 
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
                 return "\"<i>Annddd... here it comes!</i>\" {self:SUBJECT} happily squeals as the now familiar sensation of your strength entering {self:possessive} flows through the petite girl. "
                                 + "You try struggling out, but {self:subject} simply holds you down with a single hand. \"<i>Now now, don't get antsy! "

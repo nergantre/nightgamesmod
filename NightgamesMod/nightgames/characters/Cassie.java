@@ -9,7 +9,6 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
@@ -136,7 +135,7 @@ public class Cassie extends BasePersonality {
         });
 
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.getType()).orElse("pussy");
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.getType()).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
                 return "{self:SUBJECT} grins at you as your strength is once again sucked into {self:possessive} devilish " + part 
                                 + ", <i>\"{other:NAME}, I truly love you, you know that? But this... this is no longer a competition. "
@@ -201,7 +200,7 @@ public class Cassie extends BasePersonality {
         character.getGrowth().addTrait(11, Trait.experttongue);
         character.getGrowth().addTrait(25, Trait.tongueTraining2);
         character.getGrowth().addTrait(38, Trait.tongueTraining3);
-        character.getGrowth().addBodyPart(57, new MouthPussyPart());
+        character.getGrowth().addTrait(57, Trait.addictivefluids);
     }
     private void useEnchantressBonus() {
         Global.flag(CASSIE_ENCHANTRESS_FOCUS);

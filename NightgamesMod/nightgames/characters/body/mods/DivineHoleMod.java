@@ -11,20 +11,18 @@ import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-public class DivineHoleMod extends HoleMod {
+public class DivineHoleMod extends PartMod {
     public DivineHoleMod() {
         super("divine", 0, 1.0, 0.0, -10);
     }
 
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
-        if (target.isType("cock")) {
-            if (self.getStatus(Stsflag.divinecharge) != null) {
-                c.write(self, Global.format(
-                                "{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} pussy seeps into {other:name-possessive} cock, sending unimaginable pleasure directly into {other:possessive} soul.",
-                                self, opponent));
-            }
-            // no need for any effects, the bonus is in the pleasure mod
+        if (self.getStatus(Stsflag.divinecharge) != null) {
+            c.write(self, Global.format(
+                            "{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} %s seeps into {other:name-possessive} %s, sending unimaginable pleasure directly into {other:possessive} soul.",
+                            self, opponent, part.getType(), target.getType()));
         }
+        // no need for any effects, the bonus is in the pleasure mod
         return 0;
     }
 
