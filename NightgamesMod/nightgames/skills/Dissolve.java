@@ -2,6 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -9,6 +10,7 @@ import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.status.Slimed;
 
 public class Dissolve extends Skill {
 
@@ -47,6 +49,9 @@ public class Dissolve extends Skill {
                             + " {self:action:caress|caresses} {other:possessive} " + destroyed.getName()
                             + ". Slowly, it dissolves away beneath {self:possessive} touch.";
             c.write(getSelf(), Global.format(msg, getSelf(), target));
+            if (getSelf().has(Trait.VolatileSubstrate)) {
+                target.add(c, new Slimed(target, getSelf(), Global.random(2, 4)));
+            }
         } else {
             getSelf().consume(Item.DisSol, 1);
             if (getSelf().has(Item.Aersolizer)) {
@@ -82,14 +87,14 @@ public class Dissolve extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop a Dissolving Solution into your Aerosolizer and spray " + target.name()
+            return "You pop a Dissolving Solution into your Aerosolizer and spray " + target.getName()
                             + " with a cloud of mist. She emerges from the cloud with her clothes rapidly "
                             + "melting off her body.";
         } else if (modifier == Result.miss) {
-            return "You throw a Dissolving Solution at " + target.name()
+            return "You throw a Dissolving Solution at " + target.getName()
                             + ", but she avoids most of it. Only a couple drops burn through her outfit.";
         } else {
-            return "You throw a Dissolving Solution at " + target.name() + ", which eats away her clothes.";
+            return "You throw a Dissolving Solution at " + target.getName() + ", which eats away her clothes.";
         }
     }
 
@@ -106,7 +111,7 @@ public class Dissolve extends Skill {
                             getSelf().subject(), attacker.nameOrPossessivePronoun(), attacker.directObject());
         } else {
             return String.format("%s covers you with a clear liquid. %s clothes dissolve away, but it doesn't do anything to %s skin.",
-                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subject()), attacker.possessivePronoun());
+                            getSelf().subject(), Global.capitalizeFirstLetter(attacker.subject()), attacker.possessiveAdjective());
         }
     }
 

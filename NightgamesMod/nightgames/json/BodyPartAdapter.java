@@ -12,7 +12,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
@@ -49,7 +48,6 @@ public class BodyPartAdapter implements JsonSerializer<BodyPart>, JsonDeserializ
         prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
         prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
         prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
-        prototypes.put(AnalPussyPart.class.getCanonicalName(), new AnalPussyPart());
         prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
         prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
         prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));

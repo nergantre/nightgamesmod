@@ -20,7 +20,7 @@ public class MimicWitch extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Slime) >= 10;
+        return user.human() && user.get(Attribute.Slime) >= 10;
     }
 
     @Override
@@ -47,6 +47,8 @@ public class MimicWitch extends Skill {
         getSelf().addTemporaryTrait(Trait.enchantingVoice, 10);
         getSelf().addTemporaryTrait(Trait.magicEyeEnthrall, 10);
         getSelf().addTemporaryTrait(Trait.lactating, 10);
+        getSelf().addTemporaryTrait(Trait.beguilingbreasts, 10);
+        getSelf().addTemporaryTrait(Trait.sedativecream, 10);
         BreastsPart part = getSelf().body.getBreastsBelow(BreastsPart.h.size);
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);

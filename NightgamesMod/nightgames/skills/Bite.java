@@ -64,7 +64,7 @@ public class Bite extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.pleasure;
+        return Tactics.fucking;
     }
 
     @Override

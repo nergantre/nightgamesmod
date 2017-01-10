@@ -105,10 +105,10 @@ public class ShrinkRay extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
         if (modifier == Result.special) {
-            message = "You aim your shrink ray at " + target.name()
+            message = "You aim your shrink ray at " + target.getName()
                             + "'s cock, shrinking her male anatomy. She turns red and glares at you in humiliation.";
         } else {
-            message = "You point your shrink ray to turn " + target.name()
+            message = "You point your shrink ray to turn " + target.getName()
                             + "'s breasts. She whimpers and covers her chest in shame.";
         }
         if (damage > 0) {
@@ -123,13 +123,13 @@ public class ShrinkRay extends Skill {
         if (modifier == Result.special) {
             message = String.format("%s points a device at %s groin and giggles as %s genitals "
                             + "shrink. %s in shame and %s %s.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("flush", "flushes")),
                             target.action("cover"), target.reflectivePronoun());
         } else {
             message = String.format("%s points a device at %s chest and giggles as %s %s"
                             + " shrink. %s in shame and %s %s.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             getSelf().body.getRandomBreasts().describe(getSelf()),
                             Global.capitalizeFirstLetter(target.subjectAction("flush", "flushes")),
                             target.action("cover"), target.reflectivePronoun());

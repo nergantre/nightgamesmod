@@ -18,7 +18,7 @@ public class Cynical extends DurationStatus {
         if (affected.human()) {
             return "You're feeling more cynical than usual and won't fall for any mind games.";
         } else {
-            return affected.name() + " has a cynical edge in "+affected.possessivePronoun()+" eyes.";
+            return affected.getName() + " has a cynical edge in "+affected.possessiveAdjective()+" eyes.";
         }
     }
 

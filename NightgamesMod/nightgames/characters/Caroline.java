@@ -10,6 +10,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -25,7 +26,8 @@ public class Caroline extends BasePersonality {
     }
 
     public Caroline(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Caroline", 1, charConfig, commonConfig, false);
+        super("Caroline", charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -95,11 +97,6 @@ public class Caroline extends BasePersonality {
     public void rest(int time) {}
 
     @Override
-    public String describe(Combat c, Character self) {
-        return "";
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         return "";
     }
@@ -114,29 +111,47 @@ public class Caroline extends BasePersonality {
         return "";
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return Global.format("Caroline seems all business even after brutalizing {other:name-possessive} genitals <i>\"Don't worry, I don't think the damage is permanent... I hope.\"</i>", character, other);
-    }
-
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Caroline doesn't even flinch after being stripped. <i>\"You know, you get used to these things after being friends with Angel this long.\"</i>";
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Caroline staggers as she falls <i>\"You don't go easy do you...\"</i>";
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "<i>\"Come on, put in some more effort. You'll just be another knotch on our bedpost at this rate.\"</i>";
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Caroline turns around and spreads her lower lips with her fingers, <i>\"Mmm, I may not be as good as Angel, but I'm confident you wont last 10 seconds in me. Want to give it a go?\"</i>";
+    private static String FOUGHT_CAROLINE_PET = "FOUGHT_CAROLINE_PET";
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> "Caroline seems all business even after brutalizing {other:name-possessive} genitals <i>\"Don't worry, I don't think the damage is permanent... I hope.\"</i>");
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> "Caroline doesn't even flinch after being stripped. <i>\"You know, you get used to these things after being friends with Angel this long.\"</i>");
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> "Caroline staggers as she falls <i>\"You don't go easy do you...\"</i>");
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> "<i>\"Come on, put in some more effort. You'll just be another notch on our bedpost at this rate.\"</i>");
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> "Caroline turns around and spreads her lower lips with her fingers, <i>\"Mmm, I may not be as good as Angel, but I'm confident you wont last 10 seconds in me. Want to give it a go?\"</i>");
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> "Caroline groans as she love juices drips endlessly between her legs <i>\"You're pretty good...\"</i>");
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> "<i>\"Come on, come on! Let's go for another round!\"</i>");
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            int carolineFought = other.getFlag(FOUGHT_CAROLINE_PET);
+            if (other.human()) {
+                if (carolineFought == 0)  {
+                    other.setFlag(FOUGHT_CAROLINE_PET, 1);
+                    return "You see runic circles twist and rotate in front of Angel, summoning a humanoid figure into the fight. "
+                                    + "With a loud bang, you are thrown on your ass as the circles collapse inwards, wrapping themselves around the newly formed body. "
+                                    + "Cautiously you pick yourself off the ground and check out the intruder. Oh shit. "
+                                    + "You'd recognize that bob cut and competitive look anywhere. "
+                                    + "It's Angel's friend Caroline!"
+                                    + "<br/><br/>"
+                                    + "Caroline looks around and spots you and Angel. <i>\"Hmmm I'm not entirely sure what's going on here, "
+                                    + "but looks like some kind of sex fight? Sounds fun, I'm in!\"</i> You groan. Well she sure is adaptable...";
+                } else if (self.has(Trait.kabbalah) && carolineFought == 1) {
+                    other.setFlag(FOUGHT_CAROLINE_PET, 2);
+                    return "Caroline emerges again from the runic circles you're used to seeing by now. However, she looks a bit different. "
+                                    + "Angel must have shared some more of her divine power with her in thet summoning since Caroline now sports translucent "
+                                    + "ethereal-looking wings between her shoulder blades and runic tattoos all over her body. "
+                                    + "Moreover, she is holding a heavy tome in her hands that you've never seen before. "
+                                    + "<br/><br/>"
+                                    + "Caroline seems a bit surprised too. She inspects herself for a moment and tries tracing something in front of herself. "
+                                    + "From her fingertips a glowing pattern emerges from thin air. Caroline smiles and says <i>\"This is way cool. "
+                                    + "I wonder what else I can do?\"</i>";
+                } else if (self.has(Trait.kabbalah)) {
+                    return "{self:SUBJECT} emerges from the runic portal and unfurls her ethereal wings. "
+                                    + "<i>\"Hmmm I can't seem to remember any of this during the day time, but I'm having so much fun I can't really complain. Ready {other:name}?\"</i>";
+                } else {
+                    return "{self:SUBJECT} opens her eyes and takes in the situation. Oooh a rematch? I'm game!</i>";
+                }
+            }
+            return Global.format("{self:SUBJECT} quickly scans the situation and with an approving look from Angel, she gets ready to attack!</i>", self, other);
+        });
     }
 
     @Override
@@ -163,49 +178,9 @@ public class Caroline extends BasePersonality {
         return "";
     }
 
-    private static String FOUGHT_CAROLINE_PET = "FOUGHT_CAROLINE_PET";
-    @Override
-    public String startBattle(Character self, Character other) {
-        int carolineFought = other.getFlag(FOUGHT_CAROLINE_PET);
-        if (other.human()) {
-            if (carolineFought == 0)  {
-                other.setFlag(FOUGHT_CAROLINE_PET, 1);
-                return Global.format("You see runic circles twist and rotate in front of Angel, summoning a humanoid figure into the fight. "
-                                + "With a loud bang, you are thrown on your ass as the circles collapse inwards, wrapping themselves around the newly formed body. "
-                                + "Cautiously you pick yourself off the ground and check out the intruder. Oh shit. "
-                                + "You'd recognize that bob cut and competitive look anywhere. "
-                                + "It's Angel's friend Caroline!"
-                                + "<br/><br/>"
-                                + "Caroline looks around and spots you and Angel. <i>\"Hmmm I'm not entirely sure what's going on here, "
-                                + "but looks like some kind of sex fight? Sounds fun, I'm in!\"</i> You groan. Well she sure is adaptable...", self, other);
-            } else if (self.has(Trait.kabbalah) && carolineFought == 1) {
-                other.setFlag(FOUGHT_CAROLINE_PET, 2);
-                return Global.format("Caroline emerges again from the runic circles you're used to seeing by now. However, she looks a bit different. "
-                                + "Angel must have shared some more of her divine power with her in thet summoning since Caroline now sports translucent "
-                                + "ethereal-looking wings between her shoulder blades and runic tattoos all over her body. "
-                                + "Moreover, she is holding a heavy tome in her hands that you've never seen before. "
-                                + "<br/><br/>"
-                                + "Caroline seems a bit surprised too. She inspects herself for a moment and tries tracing something in front of herself. "
-                                + "From her fingertips a glowing pattern emerges from thin air. Caroline smiles and says <i>\"This is way cool. "
-                                + "I wonder what else I can do?\"</i>", self, other);
-            } else if (self.has(Trait.kabbalah)) {
-                return Global.format("{self:SUBJECT} emerges from the runic portal and unfurls her ethereal wings. "
-                                + "<i>\"Hmmm I can't seem to remember any of this during the day time, but I'm having so much fun I can't really complain. Ready {other:name}?\"</i>", self, other);
-            } else {
-                return Global.format("{self:SUBJECT} opens her eyes and takes in the situation. Oooh a rematch? I'm game!</i>", self, other);
-            }
-        }
-        return Global.format("{self:SUBJECT} quickly scans the situation and with an approving look from Angel, she gets ready to attack!</i>", self, other);
-    }
-
     @Override
     public boolean fit() {
         return true;
-    }
-
-    @Override
-    public String night() {
-        return "";
     }
 
     @Override
@@ -214,15 +189,5 @@ public class Caroline extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "Caroline groans as she love juices drips endlessly between her legs <i>\"You're pretty good...\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "<i>\"Come on, come on! Let's go for another round!\"</i>";
     }
 }

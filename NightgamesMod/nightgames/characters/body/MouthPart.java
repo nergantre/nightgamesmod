@@ -91,7 +91,7 @@ public class MouthPart extends GenericBodyPart {
                 if (!self.human()) {
                     c.write(opponent, "<br/>Your mind falls into a pink colored fog from the tongue lashing.");
                 } else {
-                    c.write(opponent, "<br/>" + opponent.name()
+                    c.write(opponent, "<br/>" + opponent.getName()
                                     + "'s mind falls into a pink colored fog from the tongue lashing.");
                 }
                 opponent.add(c, new Trance(opponent));
@@ -153,5 +153,10 @@ public class MouthPart extends GenericBodyPart {
     @Override
     public boolean isVisible(Character c) {
         return true;
+    }
+
+    @Override
+    public String adjective() {
+        return "oral";
     }
 }

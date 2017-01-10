@@ -63,14 +63,14 @@ public class Sensitize extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop a sensitivity potion into your Aerosolizer and spray " + target.name()
+            return "You pop a sensitivity potion into your Aerosolizer and spray " + target.getName()
                             + " with a cloud of mist. She shivers as it takes hold and heightens her "
                             + "sense of touch.";
         } else if (modifier == Result.miss) {
-            return "You throw a bottle of sensitivity elixir at " + target.name()
+            return "You throw a bottle of sensitivity elixir at " + target.getName()
                             + ", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
         } else {
-            return "You throw a sensitivity potion at " + target.name()
+            return "You throw a sensitivity potion at " + target.getName()
                             + ". You see her skin flush as it takes effect.";
         }
     }
@@ -82,9 +82,9 @@ public class Sensitize extends Skill {
                             + "suddenly surrounded by a cloud of minty gas. %s skin becomes"
                             + " hot, but goosebumps appear anyway. "
                             + "Even the air touching %s skin makes %s shiver.", getSelf().subject(),
-                            getSelf().possessivePronoun(), 
+                            getSelf().possessiveAdjective(), 
                             Global.capitalizeFirstLetter(target.subjectAction("are", "is")),
-                            target.possessivePronoun(), target.possessivePronoun(),
+                            target.possessiveAdjective(), target.possessiveAdjective(),
                             target.directObject());
         } else if (modifier == Result.miss) {
             return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",

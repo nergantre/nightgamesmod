@@ -13,7 +13,7 @@ public class Neutral extends Position {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You and " + bottom.name() + " circle each other cautiously";
+            return "You and " + bottom.getName() + " circle each other cautiously";
         } else {
             return String.format("%s and %s circle each other cautiously",
                             top.subject(), bottom.subject());

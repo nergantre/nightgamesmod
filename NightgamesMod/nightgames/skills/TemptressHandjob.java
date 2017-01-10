@@ -69,18 +69,18 @@ public class TemptressHandjob extends Handjob {
             case miss:
                 return String.format("%s down to %s groin, but %s pulls %s hips back.",
                                 getSelf().subjectAction("reach", "reaches"), target.nameOrPossessivePronoun(),
-                                target.pronoun(), target.possessivePronoun());
+                                target.pronoun(), target.possessiveAdjective());
             case weak:
                 return String.format("%s %s limp %s and %s it expertly, but it remains flaccid despite %s best efforts.",
                                 getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().action("fondle"),
-                                getSelf().possessivePronoun());
+                                getSelf().possessiveAdjective());
             case special:
                 return String.format(
                                 "%s %s limp %s and %s it expertly, and it grows fully hard under %s skilled touch.",
                                 getSelf().subjectAction("grab"), target.nameOrPossessivePronoun(),
                                 target.body.getRandomCock().describe(target), getSelf().action("massage"),
-                                getSelf().possessivePronoun());
+                                getSelf().possessiveAdjective());
             default: // should be Result.normal
                 // already hard
                 switch (damage) {
@@ -89,7 +89,7 @@ public class TemptressHandjob extends Handjob {
                                         "%s hold of %s %s and %s %s fingers over it briskly, hitting all the right spots.",
                                         getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
                                         target.body.getRandomCock().describe(target), getSelf().action("run"),
-                                        getSelf().possessivePronoun());
+                                        getSelf().possessiveAdjective());
                     case 1:
                         return String.format(
                                         "%s hold on %s %s tightens, and where once there were gentle touches there are now firm jerks.",

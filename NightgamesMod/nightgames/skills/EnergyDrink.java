@@ -64,7 +64,7 @@ public class EnergyDrink extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return target.name() + " opens up an energy drink and downs the whole can.";
+        return target.getName() + " opens up an energy drink and downs the whole can.";
     }
 
 }

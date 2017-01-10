@@ -47,13 +47,13 @@ public class WaterForm extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You relax your muscles, prepared to flow with and counter " + target.name() + "'s attacks.";
+        return "You relax your muscles, prepared to flow with and counter " + target.getName() + "'s attacks.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s takes a deep breath and %s movements become much more fluid.",
-                        getSelf().subject(), getSelf().possessivePronoun());
+                        getSelf().subject(), getSelf().possessiveAdjective());
     }
 
 }

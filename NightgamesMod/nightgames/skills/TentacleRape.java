@@ -3,12 +3,14 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Bound;
 import nightgames.status.Oiled;
+import nightgames.status.Slimed;
 import nightgames.status.Stsflag;
 
 public class TentacleRape extends Skill {
@@ -85,6 +87,9 @@ public class TentacleRape extends Skill {
             writeOutput(c, Result.miss, target);
             return false;
         }
+        if (getSelf().has(Trait.VolatileSubstrate) && getSelf().has(Trait.slime)) {
+            target.add(c, new Slimed(target, getSelf(), Global.random(2, 5)));
+        }
         return true;
     }
 
@@ -101,16 +106,16 @@ public class TentacleRape extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You use your " + tentacles.describe(getSelf()) + " to snare " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to snare " + target.getName()
                             + ", but she nimbly dodges them.";
         } else if (modifier == Result.weak) {
-            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.getName()
                             + "'s arms, holding her in place.";
         } else if (modifier == Result.normal) {
-            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to wrap around " + target.getName()
                             + "'s naked body. They squirm against her and squirt slimy fluids on her body.";
         } else {
-            return "You use your " + tentacles.describe(getSelf()) + " to toy with " + target.name()
+            return "You use your " + tentacles.describe(getSelf()) + " to toy with " + target.getName()
                             + "'s helpless form. The tentacles toy with her breasts and penetrate her genitals and ass.";
         }
     }
@@ -119,25 +124,25 @@ public class TentacleRape extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
             return String.format("%s shoots %s %s forward at %s. %s barely able to avoid them.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             tentacles.describe(getSelf()), target.nameDirectObject(), 
                             Global.capitalizeFirstLetter(target.subjectAction("are", "is")));
         } else if (modifier == Result.weak) {
             return String.format("%s shoots %s %s forward at %s, entangling %s arms and legs.",
-                            getSelf().subject(), getSelf().possessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameDirectObject(), target.possessivePronoun());
+                            getSelf().subject(), getSelf().possessiveAdjective(), tentacles.describe(getSelf()),
+                            target.nameDirectObject(), target.possessiveAdjective());
         } else if (modifier == Result.normal) {
             return String.format("%s shoots %s %s forward at %s, "
                             + "entangling %s arms and legs. The slimy appendages "
                             + "wriggle over %s body and coat %s in the slippery liquid.",
-                            getSelf().subject(), getSelf().possessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameDirectObject(), target.possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(), tentacles.describe(getSelf()),
+                            target.nameDirectObject(), target.possessiveAdjective(),
                             target.nameOrPossessivePronoun(), target.directObject());
         } else {
             return String.format("%s %s cover %s helpless body, tease %s genitals, and probe %s ass.",
                             getSelf().nameOrPossessivePronoun(), tentacles.describe(getSelf()),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            target.possessiveAdjective());
         }
     }
 

@@ -15,6 +15,7 @@ import nightgames.characters.Character;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.modifier.Modifier;
+import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 
 public class Match {
@@ -33,7 +34,7 @@ public class Match {
         for (Character c : combatants) {
             this.combatants.add(c);
         }
-        matchData = new MatchData(combatants);
+        matchData = new MatchData();
         score = new HashMap<Character, Integer>();
         this.condition = condition;
         map = Global.buildMap();
@@ -99,12 +100,13 @@ public class Match {
             while (index < combatants.size()) {
                 Global.gui().refresh();
                 if (combatants.get(index).state != State.quit) {
-                    combatants.get(index).upkeep();
-                    manageConditions(combatants.get(index));
-                    combatants.get(index).move();
+                    Character self = combatants.get(index);
+                    self.upkeep();
+                    manageConditions(self);
+                    self.move();
                     if (Global.isDebugOn(DebugFlags.DEBUG_SCENE) && index < combatants.size()) {
-                        System.out.println(combatants.get(index).name() + " is in "
-                                        + combatants.get(index).location().name);
+                        System.out.println(self.getTrueName() + (self.is(Stsflag.disguised) ? "(Disguised)" : "") + " is in "
+                                        + self.location().name);
                     }
                 }
                 index++;
@@ -136,7 +138,7 @@ public class Match {
         Character player = null;
         Character winner = null;
         for (Character combatant : score.keySet()) {
-            Global.gui().message(combatant.name() + " scored " + score.get(combatant) + " victories.");
+            Global.gui().message(combatant.getTrueName() + " scored " + score.get(combatant) + " victories.");
             combatant.modMoney(score.get(combatant) * combatant.prize());
             if (winner == null || score.get(combatant) >= score.get(winner)) {
                 winner = combatant;

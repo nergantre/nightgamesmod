@@ -99,7 +99,7 @@ public class AiriTime extends BaseNPCTime {
             Global.gui()
                   .message("You have some free time, so you decide to text Airi to see if she wants to meet up. You receive an answer in a few minutes with instructions to her flat off campus. "
                                   + "There's no time like the present, so you pack up and head towards her place. You arrive at a high-rise close to the north gate; following her instructions you press the dialer and button in her number. "
-                                  + "A few cracks of static later, you hear her soft voice <i>\"Hey " + player.getName() + ", please come on in.\"</i> The sliding doors open for you and you head to her floor."
+                                  + "A few cracks of static later, you hear her soft voice <i>\"Hey " + player.getTrueName() + ", please come on in.\"</i> The sliding doors open for you and you head to her floor."
                                   + "<br/><br/>"
                                   + "You're a bit nervous, but you quickly find yourself standing outside a posh entrance ringing the bell. The sound of foot steps ring out from behind the door and you a flushed Airi welcoming you inside. "
                                   + "She's in human form again, wearing an elegant but sexy blouse and skirt set instead of her usual down to earth lab gear. You smile wryly at her as you realize that she's been getting ready for you.");

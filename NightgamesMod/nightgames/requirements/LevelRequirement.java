@@ -32,4 +32,8 @@ public class LevelRequirement extends BaseRequirement {
     @Override public int hashCode() {
         return super.hashCode() * 31 + level;
     }
+    
+    public int getLevel() {
+        return level;
+    }
 }

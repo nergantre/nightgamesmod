@@ -60,13 +60,13 @@ public class Sedate extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You pop a sedative into your Aerosolizer and spray " + target.name()
+            return "You pop a sedative into your Aerosolizer and spray " + target.getName()
                             + " with a cloud of mist. She stumbles out of the cloud looking drowsy and unfocused.";
         } else if (modifier == Result.miss) {
-            return "You throw a bottle of sedative at " + target.name()
+            return "You throw a bottle of sedative at " + target.getName()
                             + ", but she ducks out of the way and it splashes harmlessly on the ground. What a waste.";
         } else {
-            return "You through a bottle of sedative at " + target.name()
+            return "You through a bottle of sedative at " + target.getName()
                             + ". She stumbles for a moment, trying to clear the drowsiness from her head.";
         }
     }
@@ -77,9 +77,9 @@ public class Sedate extends Skill {
             return String.format("%s inserts a bottle into the attachment on %s arm. "
                             + "%s suddenly surrounded by a cloud of dense fog. The "
                             + "fog seems to fill %s head and %s body feels heavy.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.action("are", "is")),
-                            target.possessivePronoun(), target.possessivePronoun());
+                            target.possessiveAdjective(), target.possessiveAdjective());
         } else if (modifier == Result.miss) {
             return String.format("%s splashes a bottle of liquid in %s direction, but none of it hits %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());
@@ -87,7 +87,7 @@ public class Sedate extends Skill {
             return String.format("%s hits %s with a flask of liquid. Even the fumes make %s feel"
                             + " sluggish and %s limbs become heavy.",
                             getSelf().subject(), target.nameDirectObject(),
-                            target.directObject(), target.possessivePronoun());
+                            target.directObject(), target.possessiveAdjective());
         }
     }
 

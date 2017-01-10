@@ -86,15 +86,15 @@ public class StripTop extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You attempt to strip off " + target.name() + "'s "
+            return "You attempt to strip off " + target.getName() + "'s "
                             + stripped.getName()
                             + ", but she shoves you away.";
         } else {
-            String msg = "After a brief struggle, you manage to pull off " + target.name() + "'s "
+            String msg = "After a brief struggle, you manage to pull off " + target.getName() + "'s "
                             + stripped.getName() + ".";
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Taking advantage of the situation, you also"
-                                + " manage to snag %s %s!", target.possessivePronoun(), extra.getName());
+                                + " manage to snag %s %s!", target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }
@@ -112,8 +112,8 @@ public class StripTop extends Skill {
                             target.pronoun(), getSelf().directObject());
             if (modifier == Result.critical && extra != null) {
                 msg += String.format(" Before %s can react, %s also strips off %s %s!", 
-                                target.subject(), getSelf().name, 
-                                target.possessivePronoun(), extra.getName());
+                                target.subject(), getSelf().subject(), 
+                                target.possessiveAdjective(), extra.getName());
             }
             return msg;
         }

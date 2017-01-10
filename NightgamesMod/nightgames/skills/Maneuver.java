@@ -85,12 +85,12 @@ public class Maneuver extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You channel your ki into your feet and dash behind " + target.name()
+            return "You channel your ki into your feet and dash behind " + target.getName()
             + " faster than her eyes can follow.";
         } else if (modifier == Result.miss) {
-            return "You try to get behind " + target.name() + " but are unable to.";
+            return "You try to get behind " + target.getName() + " but are unable to.";
         } else {
-            return "You dodge past " + target.name() + "'s guard and grab her from behind.";
+            return "You dodge past " + target.getName() + "'s guard and grab her from behind.";
         }
     }
 

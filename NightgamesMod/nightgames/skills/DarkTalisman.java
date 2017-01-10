@@ -68,7 +68,7 @@ public class DarkTalisman extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
             return "You brandish the dark talisman, which seems to glow with power. The trinket crumbles to dust, but you see the image remain in the reflection of "
-                            + target.name() + "'s eyes.";
+                            + target.getName() + "'s eyes.";
         } else if (modifier == Result.special) {
             return "You hold the talisman in front of " + target.nameOrPossessivePronoun() + " head, but as "
                             + target.pronoun() + " is currently unable to see, it crumbles uselessly in your hands.";
@@ -82,14 +82,14 @@ public class DarkTalisman extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
             return String.format("%s holds up a strange talisman. %s compelled to look at the thing, captivated by its unholy nature.",
-                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")));
+                            getSelf().getName(), Global.capitalizeFirstLetter(target.subjectAction("feel")));
         } else if (modifier == Result.special) {
             return String.format("%s something which sounds like sand spilling onto the floor and a cry of annoyed "
                             + "frustration from %s. What could it have been?", getSelf().subjectAction("hear"),
                             target.nameDirectObject());
         } else {
             return String.format("%s holds up a strange talisman. %s a tiny tug on %s consciousness, but it doesn't really affect %s much.",
-                            getSelf().name(), Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessivePronoun(),
+                            getSelf().getName(), Global.capitalizeFirstLetter(target.subjectAction("feel")), target.possessiveAdjective(),
                             target.directObject());
         }
     }

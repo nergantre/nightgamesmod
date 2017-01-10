@@ -70,10 +70,10 @@ public class ReverseFly extends Fly {
     @Override
     public String deal(Combat c, int amount, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "you grab " + target.name() + " tightly and try to take off. However " + target.pronoun()
+            return "you grab " + target.getName() + " tightly and try to take off. However " + target.pronoun()
                             + " has other ideas. She knees your crotch as you approach and sends you sprawling to the ground.";
         } else {
-            return "you grab " + target.name() + " tightly and take off, " + "inserting his dick into your hungry "
+            return "you grab " + target.getName() + " tightly and take off, " + "inserting his dick into your hungry "
                             + getSelf().body.getRandomPussy().describe(getSelf()) + ".";
         }
     }
@@ -83,7 +83,7 @@ public class ReverseFly extends Fly {
         if (modifier == Result.miss) {
             return String.format("%s lunges for %s with a hungry look in %s eyes. However, %s other ideas."
                             + " %s %s %s as %s approaches and send %s sprawling to the floor.",
-                            getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
                             target.subjectAction("have", "has"), Global.capitalizeFirstLetter(target.pronoun()),
                             target.action("trip"), getSelf().directObject(), getSelf().pronoun(),
                             getSelf().directObject());
@@ -95,10 +95,10 @@ public class ReverseFly extends Fly {
                             + " the rhythmic movements of %s flying arouse %s to no end.",
                             getSelf().subject(), target.nameDirectObject(), target.directObject(),
                             Global.capitalizeFirstLetter(getSelf().pronoun()),
-                            getSelf().possessivePronoun(), getSelf().body.getRandomWings().describe(getSelf()),
+                            getSelf().possessiveAdjective(), getSelf().body.getRandomWings().describe(getSelf()),
                             target.pronoun(), target.action("know"), target.subjectAction("are", "is"),
-                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
-                            getSelf().nameDirectObject(), getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                            getSelf().nameDirectObject(), getSelf().possessiveAdjective(),
                             target.directObject());
         }
     }

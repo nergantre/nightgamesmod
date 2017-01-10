@@ -15,17 +15,17 @@ public class AnalProne extends AnalSexStance {
     public String describe(Combat c) {
         if (top.human()) {
             return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
-                            bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
+                            bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());
         } else if (top.has(Trait.strapped)) {
             return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s strapon dildo.",
-                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), bottom.possessivePronoun(),
-                            top.subject(), top.possessivePronoun());
+                            bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), bottom.possessiveAdjective(),
+                            top.subject(), top.possessiveAdjective());
         } else {
             return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s %s.",
-                            bottom.subjectAction("are", "is"), bottom.possessivePronoun(),
-                            bottom.possessivePronoun(), bottom.possessivePronoun(),
-                            top.subject(), top.possessivePronoun(), top.body.getRandomInsertable().describe(top));
+                            bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
+                            bottom.possessiveAdjective(), bottom.possessiveAdjective(),
+                            top.subject(), top.possessiveAdjective(), top.body.getRandomInsertable().describe(top));
         }
     }
 
@@ -96,18 +96,18 @@ public class AnalProne extends AnalSexStance {
 
         if (!inserter.hasInsertable()) {
             if (inserted.human()) {
-                c.write("With " + inserter.name() + "'s pole gone, your ass gets a respite.");
+                c.write("With " + inserter.getName() + "'s pole gone, your ass gets a respite.");
             } else {
-                c.write(inserted.name() + " sighs with relief with your dick gone.");
+                c.write(inserted.getName() + " sighs with relief with your dick gone.");
             }
             c.setStance(insertRandom(c));
         }
         if (inserted.body.getRandom("ass") == null) {
             if (inserted.human()) {
-                c.write("With your asshole suddenly disappearing, " + inserter.name()
+                c.write("With your asshole suddenly disappearing, " + inserter.getName()
                                 + "'s dick pops out of what was once your sphincter.");
             } else {
-                c.write("Your dick pops out of " + inserted.name() + " as her asshole shrinks and disappears.");
+                c.write("Your dick pops out of " + inserted.getName() + " as her asshole shrinks and disappears.");
             }
             c.setStance(insertRandom(c));
         }

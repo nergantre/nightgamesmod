@@ -79,11 +79,11 @@ public class SweetScent extends Skill {
                             + "%s quickly %s to the coying scent as %s whole"
                             + " body flushes with arousal.", getSelf().subject(),
                             Global.capitalizeFirstLetter(target.subject()),
-                            target.action("succumb"), target.possessivePronoun());
+                            target.action("succumb"), target.possessiveAdjective());
         } else {
             return String.format("%s breathes out a dizzying pink gas, but %s to cover"
                             + " %s face and dodge out of the cloud.", getSelf().subject(),
-                            target.subjectAction("manage"), target.possessivePronoun());
+                            target.subjectAction("manage"), target.possessiveAdjective());
         }
     }
 

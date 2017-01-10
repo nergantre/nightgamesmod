@@ -74,13 +74,13 @@ public class UseOnahole extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to stick your onahole onto " + target.name() + "'s dick, but she manages to avoid it.";
+            return "You try to stick your onahole onto " + target.getName() + "'s dick, but she manages to avoid it.";
         } else if (modifier == Result.upgrade) {
-            return "You slide your onahole over " + target.name()
+            return "You slide your onahole over " + target.getName()
                             + "'s dick. The well-lubricated toy covers her member with minimal resistance. As you pump it, she moans in "
                             + "pleasure and her hips buck involuntarily.";
         } else {
-            return "You stick your cocksleeve onto " + target.name()
+            return "You stick your cocksleeve onto " + target.getName()
                             + "'s erection and rapidly pump it. She squirms a bit at the sensation and can't quite stifle a moan.";
         }
     }
@@ -94,7 +94,7 @@ public class UseOnahole extends Skill {
         } else if (modifier == Result.upgrade) {
             return String.format("%s slides %s cocksleeve over %s dick and starts pumping it. "
                             + "The sensation is the same as if %s was riding %s, but %s %s the only "
-                            + "one who's feeling anything.", getSelf().subject(), getSelf().possessivePronoun(),
+                            + "one who's feeling anything.", getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(), getSelf().subject(), target.directObject(),
                             target.pronoun(), target.action("are", "is"));
         } else {

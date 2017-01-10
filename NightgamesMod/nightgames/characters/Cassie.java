@@ -11,6 +11,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -41,7 +42,117 @@ public class Cassie extends BasePersonality {
     }
 
     public Cassie(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Cassie", 1, charConfig, commonConfig, true);
+        super("Cassie", charConfig, commonConfig, true);
+        constructLines();
+    }
+
+    private void constructLines() {
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "{self:SUBJECT} looks hesitant for just a moment, but can't contain a curious little smile as {self:pronoun} prepares to face {other:name-do}.";
+        });
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "{self:SUBJECT} winces apologetically. <i>\"That looks really painful. Sorry, but I can't afford to go easy on you.\"</i>";
+        });
+
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "{self:SUBJECT} blushes noticeably and covers {self:reflective}. <i>\"No matter how much time I spend naked, it doesn't get any less embarrassing.\"</i>";
+        });
+
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "{self:SUBJECT} groans softly as {self:pronoun} tends {self:possessive} bruises, <i>\"Come on, you don't have to be so rough.\"</i> {self:pronoun} complains.";
+        });
+
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            if (other.hasDick()) {
+                return "{self:SUBJECT} giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> {self:pronoun} jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
+            } else {
+                return "{self:SUBJECT} giggles and draws a little circle around your nipple with {self:possessive} finger. <i>\"Your body is so eager and cooperative,\"</i> {self:pronoun} jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
+            }
+        });
+
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "{self:SUBJECT} catches you glancing at {self:possessive} body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
+        });
+
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "After the match, you stick around for a few minutes chatting with your fellow competitors. You haven't seen Cassie yet, but you at least want to say goodnight to her. "
+                            + "You feel a warm hand grasp yours and find Cassie standing next to you, smiling shyly. She doesn't say anything, but that smile communicates her intentions quite well. "
+                            + "You bid the other girls goodnight and lead Cassie back to your room. The two of you quickly undress each other while sharing brief kisses. You lay down on the bed and "
+                            + "she straddles you, guiding your dick into her pussy. She lets out a soft, contented noise as you fill her. Without moving her hips, she lays against you chest and kisses "
+                            + "you romantically. You embrace her and start thrusting your hips against her. She matches her movements to your slow, but pleasurable strokes. You both take your time, "
+                            + "more interested in feeling each other's closeness than in reaching orgasm, but gradually you both feel your pleasure building. Cassie buries her face in your chest, letting "
+                            + "out hot, breathy moans. You run you hands through her hair and softly stroke her back and the nape of her neck. It's hard to tell whether her orgasm set off your ejaculation "
+                            + "or the other way around, but you release your load into her shuddering pussy. Neither of you make any movement to separate from each other. Remaining inside her until morning "
+                            + "sounds quite nice. <i>\"I love you.\"</i> The whisper was so soft you're not sure you heard it. When you look at Cassie's face, she's fast asleep.";
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.witch)) {
+                return " {self:SUBJECT} has changed a lot since you started the Game. Maybe {self:pronoun} isn't that different physically. {self:PRONOUN} has the same bright blue eyes and the same sweet smile. "
+                                + "The magic spellbook and cloak are both new. {self:PRONOUN}'s been dabbling in the arcane, and it may be your imagination, but you feel like you can perceive the power "
+                                + "radiating from {self:direct-object}. {self:POSSESSIVE} magic seems to have given {self:direct-object} more confidence and {self:pronoun} seems even more eager than usual.";
+            } else {
+                return character.subject()
+                                + " is a cute {self:guy} with shoulder-length auburn hair, clear blue eyes, and glasses. {self:PRONOUN} doesn't look at all like the typical sex-fighter. "
+                                + "{self:PRONOUN}'s short but not chubby: you would describe {self:possessive} body as soft rather than athletic. {self:POSSESSIVE} gentle tone and occasional "
+                                + "flickers of shyness give the impression of sexual innocence, but {self:pronoun} seems determined to win.";
+            }
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "<i>\"Ooo... my body is starting feel numb. But I won't give up!\"</i>",
+                            "<i>\"My head feels fuzzy... More... I want more!\"</i>",
+                            "<i>\"Mmmm, I love the way you make me feel... but I can't give up!\"</i>",
+                            };
+            switch (self.orgasms) {
+                case 0:
+                    return "<i>\"Aaah please let me rest a bit... That was far too intense!\"</i>";
+                case 1:
+                    return "<i>\"Mmmm you're really good at this... But I wont make this easy for you!\"</i>";
+                case 2:
+                    return "<i>\"Oh god oh god, I don't think I can take much more!\"<i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "<i>\"You know, making a " + other.boyOrGirl() + " cum isn't so hard. It's so simple!\"</i>",
+                            "<i>\"Oh wow that one was impressive. I hope it felt as awesome as it looked!\"</i>",
+                            "{self:SUBJECT} giggles, <i>\"Oooh look at all this cum! Is that for me? Did you fall for me a bit? Don't worry, I like you too.\"</i>",
+                            };
+            switch (other.orgasms) {
+                case 0:
+                    return "{self:SUBJECT} grins at you <i>\"Did you feel good? Come on, no time for rest now, I bet I can make you feel even better!\"</i>";
+                case 1:
+                    return "<i>\"Ahh, did it feel good the second time?\"</i> {self:SUBJECT} happily exclaims, <i>\"I know it felt good! We can do more though, let's keep it up!\"</i>";
+                case 2:
+                    return "<i>\"Wow I didn't know " + other.guyOrGirl()+ "s could cum that much! That just proves that you're having a good time right?\"</i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }
+        });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.getType()).orElse("pussy");
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "{self:SUBJECT} grins at you as your strength is once again sucked into {self:possessive} devilish " + part 
+                                + ", <i>\"{other:NAME}, I truly love you, you know that? But this... this is no longer a competition. "
+                                + "Thanks to your previous efforts, I'm now stronger, smarter, and more seductive than you'll ever be. "
+                                + "I think that's okay though... I can take care of you for the rest of your life. "
+                                + "Don't worry, I wont be giving you a choice on this matter...\"</i>";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "{self:SUBJECT} gasps as a new-found strength enters {self:possessive} body through {self:possessive} " + part + ". {self:PRONOUN} turns to you shyly and asks, "
+                                + "<i>\"{other:NAME}, that felt REALLY good... can I have some more? Pretty please?\"</i>";
+            } else {
+                return "{self:SUBJECT} clings to your convulsing body as {self:PRONOUN} once again steals your experiences and training from your body as you helplessly cum. "
+                                + "<i>\"{other:NAME}, {other:name}, you've made me feel so good, you know that? "
+                                + "And you've been generously donating so much of yourself to me. "
+                                + "Don't worry, I'll be sure to pay you back now that I've become stronger than you. I'll make you feel <b>incredible</b>!\"</i>";
+            }
+        });
     }
 
     @Override
@@ -96,6 +207,7 @@ public class Cassie extends BasePersonality {
         Global.flag(CASSIE_ENCHANTRESS_FOCUS);
         character.getGrowth().addTrait(21, Trait.magicEyeArousal);
         character.getGrowth().addTrait(28, Trait.magicEyeFrenzy);
+        character.getGrowth().addTrait(30, Trait.hypnoticsemen);
         character.getGrowth().addTrait(32, Trait.magicEyeTrance);
         character.getGrowth().addTrait(43, Trait.magicEyeEnthrall);
         if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
@@ -299,20 +411,6 @@ public class Cassie extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.witch)) {
-            return "Cassie has changed a lot since you started the Game. Maybe she isn't that different physically. She has the same bright blue eyes and the same sweet smile. "
-                            + "The magic spellbook and cloak are both new. She's been dabbling in the arcane, and it may be your imagination, but you feel like you can perceive the power "
-                            + "radiating from her. Her magic seems to have given her more confidence and she seems even more eager than usual.";
-        } else {
-            return character.name
-                            + " is a cute girl with shoulder-length auburn hair, clear blue eyes, and glasses. She doesn't look at all like the typical sex-fighter. "
-                            + "She's short but not chubby: you would describe her body as soft rather than athletic. Her gentle tone and occasional "
-                            + "flickers of shyness give the impression of sexual innocence, but she seems determined to win.";
-        }
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
@@ -512,35 +610,6 @@ public class Cassie extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Cassie winces apologetically. <i>\"That looks really painful. Sorry, but I can't afford to go easy on you.\"</i>";
-    }
-
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Cassie blushes noticeably and covers herself. <i>\"No matter how much time I spend naked, it doesn't get any less embarrassing.\"</i>";
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Cassie groans softly as she tends her bruises, <i>\"Come on, you don't have to be so rough.\"</i> she complains.";
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        if (opponent.hasDick()) {
-            return "Cassie giggles and taps the head of your dick. <i>\"Your penis is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
-        } else {
-            return "Cassie giggles and draws a little circle around your nipple with her finger. <i>\"Your body is so eager and cooperative,\"</i> she jokes. <i>\"Are you sure you're not just letting me win?\"</i>";
-        }
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Cassie catches you glancing at her body, and blows you a kiss. <i>\"Why don't you just stop resisting and let me make you cum?\"</i>";
-    }
-
-    @Override
     public boolean fightFlight(Character opponent) {
         return !character.mostlyNude();
     }
@@ -574,14 +643,14 @@ public class Cassie extends BasePersonality {
                                             + "technique has obviously gotten quite good. It only takes a few minutes"
                                             + " for her to milk out a mouthful of semen. You can't help feeling a "
                                             + "bit envious, maybe you should go a round with her before the match ends.",
-                            target.name(), target.possessivePronoun(), target.name(), target.possessivePronoun());
+                            target.getName(), target.possessiveAdjective(), target.getName(), target.possessiveAdjective());
         }
-        return "Cassie settles herself in front of " + target.name()
+        return "Cassie settles herself in front of " + target.getName()
                         + " and tenderly kisses her on the lips. <i>\"I don't really swing this way, but setting the mood is "
-                        + "important.\"</i> She leans in to lick and suck " + target.name()
+                        + "important.\"</i> She leans in to lick and suck " + target.getName()
                         + " neck, before moving down to her breasts. She gives each nipple attention until "
-                        + target.name() + " is panting with desire. She continues downward to " + target.name()
-                        + "'s pussy and starts eating her out. " + target.name()
+                        + target.getName() + " is panting with desire. She continues downward to " + target.getName()
+                        + "'s pussy and starts eating her out. " + target.getName()
                         + " moans loudly and arches her back against "
                         + "you. You gently lower her to the floor as she recovers from her climax, while Cassie wipes the juices from her mouth and looks satisfied at her work.";
     }
@@ -589,44 +658,26 @@ public class Cassie extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "You grapple with " + assist.name()
+            return "You grapple with " + assist.getName()
                             + ", but neither of you can find an opening. She loses her balance while trying to grab you and you manage to trip her. "
                             + "Before you can follow up, a warm body presses against your back and "+(target.hasDick() ?"a soft hand gently grasps your erection" :"soft hands have gently grabbed your breasts from behind")+". Cassie whispers playfully in your ear. <i>\"Hello "
-                            + target.name() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
-                            + assist.name() + " is already back on her feet. You struggle valiantly, "
+                            + target.getName() + ". How about a threesome?\"</i> You start to break away from Cassie, but "
+                            + assist.getName() + " is already back on her feet. You struggle valiantly, "
                             + "but you're quickly overwhelmed by the two groping and grappling girls. Cassie manages to force both your arms under her, leaving you helpless.<br/>";
         } else {
-            return "You wrestle " + target.name()
+            return "You wrestle " + target.getName()
                             + " to the floor, but she slips away and gets to her feet before you. You roll away to a safe distance before you notice that "
                             + "she's not coming after you. She seems more occupied by the hands that have suddenly grabbed her breasts from behind. You cautiously approach and realize "
-                            + "it's Cassie who is holding onto the flailing " + target.name()
-                            + ". Releasing her boobs, Cassie starts tickling " + target.name()
+                            + "it's Cassie who is holding onto the flailing " + target.getName()
+                            + ". Releasing her boobs, Cassie starts tickling " + target.getName()
                             + " into submission and pins her " + "arms while she catches her breath.<br/>";
         }
-    }
-
-    @Override
-    public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} looks hesitant for just a moment, but can't contain a curious little smile as {self:pronoun} prepares to face {other:name-do}.", character, other);
     }
 
     @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50
                         && character.getArousal().percent() <= 50;
-    }
-
-    @Override
-    public String night() {
-        return "After the match, you stick around for a few minutes chatting with your fellow competitors. You haven't seen Cassie yet, but you at least want to say goodnight to her. "
-                        + "You feel a warm hand grasp yours and find Cassie standing next to you, smiling shyly. She doesn't say anything, but that smile communicates her intentions quite well. "
-                        + "You bid the other girls goodnight and lead Cassie back to your room. The two of you quickly undress each other while sharing brief kisses. You lay down on the bed and "
-                        + "she straddles you, guiding your dick into her pussy. She lets out a soft, contented noise as you fill her. Without moving her hips, she lays against you chest and kisses "
-                        + "you romantically. You embrace her and start thrusting your hips against her. She matches her movements to your slow, but pleasurable strokes. You both take your time, "
-                        + "more interested in feeling each other's closeness than in reaching orgasm, but gradually you both feel your pleasure building. Cassie buries her face in your chest, letting "
-                        + "out hot, breathy moans. You run you hands through her hair and softly stroke her back and the nape of her neck. It's hard to tell whether her orgasm set off your ejaculation "
-                        + "or the other way around, but you release your load into her shuddering pussy. Neither of you make any movement to separate from each other. Remaining inside her until morning "
-                        + "sounds quite nice. <i>\"I love you.\"</i> The whisper was so soft you're not sure you heard it. When you look at Cassie's face, she's fast asleep.";
     }
 
     public void advance() {
@@ -656,44 +707,6 @@ public class Cassie extends BasePersonality {
                 return value >= 150;
             default:
                 return value >= 100;
-        }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        final String finalLines[] = {
-                        "<i>\"Ooo... my body is starting feel numb. But I won't give up!\"</i>",
-                        "<i>\"My head feels fuzzy... More... I want more!\"</i>",
-                        "<i>\"Mmmm, I love the way you make me feel... but I can't give up!\"</i>",
-                        };
-        switch (character.orgasms) {
-            case 0:
-                return "<i>\"Aaah please let me rest a bit... That was far too intense!\"</i>";
-            case 1:
-                return "<i>\"Mmmm you're really good at this... But I wont make this easy for you!\"</i>";
-            case 2:
-                return "<i>\"Oh god oh god, I don't think I can take much more!\"<i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
-        }
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        final String finalLines[] = {
-                        "<i>\"You know, making a " + target.boyOrGirl() + " cum isn't so hard. It's so simple!\"</i>",
-                        "<i>\"Oh wow that one was impressive. I hope it felt as awesome as it looked!\"</i>",
-                        "Cassie giggles, <i>\"Oooh look at all this cum! Is that for me? Did you fall for me a bit? Don't worry, I like you too.\"</i>",
-                        };
-        switch (target.orgasms) {
-            case 0:
-                return "Cassie grins at you <i>\"Did you feel good? Come on, no time for rest now, I bet I can make you feel even better!\"</i>";
-            case 1:
-                return "<i>\"Ahh, did it feel good the second time?\"</i> Cassie happily exclaims, <i>\"I know it felt good! We can do more though, let's keep it up!\"</i>";
-            case 2:
-                return "<i>\"Wow I didn't know " + target.guyOrGirl()+ "s could cum that much! That just proves that you're having a good time right?\"</i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
         }
     }
 }

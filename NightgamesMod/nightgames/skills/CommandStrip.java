@@ -45,7 +45,7 @@ public class CommandStrip extends PlayerCommand {
 
     @Override
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
-        return "You look " + target.name() + " in the eye, sending a psychic command for"
+        return "You look " + target.getName() + " in the eye, sending a psychic command for"
                         + " her to strip. She complies without question, standing before you nude only"
                         + " seconds later.";
     }

@@ -43,4 +43,8 @@ public class RandomRequirement extends BaseRequirement {
         result = 31 * result + Long.valueOf(Math.round(threshold * 1e6)).intValue();
         return result;
     }
+    
+    public float getThreshold() {
+        return threshold;
+    }
 }

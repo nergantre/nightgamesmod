@@ -34,7 +34,7 @@ public class Snare extends Trap {
                 Global.gui().message(
                                 "You hear a sudden snap and you're suddenly overwhelmed by a blur of ropes. The tangle of ropes trip you up and firmly bind your arms.");
             } else if (target.location().humanPresent()) {
-                Global.gui().message(target.name()
+                Global.gui().message(target.getName()
                                 + " enters the room, sets off your snare, and ends up thoroughly tangled in rope.");
             }
             target.location().opportunity(target, this);

@@ -22,4 +22,8 @@ public class MoodRequirement extends BaseRequirement {
     public boolean meets(Combat c, Character self, Character other) {
         return self.getMood() == mood;
     }
+    
+    public Emotion getMood() {
+        return mood;
+    }
 }

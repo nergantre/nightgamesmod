@@ -30,7 +30,7 @@ public class IllusionTrap extends Trap {
                                             + "she immediately presses her warm, soft body against you and kisses you passionately. She slips down a hand to grope your crotch, and suddenly vanishes after a few strokes. "
                                             + "She was just an illusion, but your arousal is very real.");
         } else if (target.location().humanPresent()) {
-            Global.gui().message("There's a flash of pink light and " + target.name() + " flushes with arousal.");
+            Global.gui().message("There's a flash of pink light and " + target.getName() + " flushes with arousal.");
         }
         if (target.has(Trait.imagination)) {
             target.tempt(25 + getStrength());

@@ -58,13 +58,13 @@ public class Binding extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You cast a binding spell on " + target.name() + ", holding her in place.";
+        return "You cast a binding spell on " + target.getName() + ", holding her in place.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name()
-                        + " gestures at "+target.nameDirectObject()+" and casts a spell. A ribbon of light wraps around "+target.possessivePronoun()+" wrists and holds them in place.";
+        return getSelf().getName()
+                        + " gestures at "+target.nameDirectObject()+" and casts a spell. A ribbon of light wraps around "+target.possessiveAdjective()+" wrists and holds them in place.";
     }
 
 }

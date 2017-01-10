@@ -90,15 +90,15 @@ public class CockGrowth extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
         if (modifier == Result.miss) {
-            message = "You attempt to channel your arcane energies into " + target.name()
+            message = "You attempt to channel your arcane energies into " + target.getName()
                             + "'s crotch, but she dodges out of the way, causing your spell to fail.";
         } else {
             if (modifier == Result.special) {
-                message = "You channel your arcane energies into " + target.name() + "'s groin. A moment later, "
-                                + target.name() + " yelps as her clitoris rapidly enlarges into a small girl-cock!";
+                message = "You channel your arcane energies into " + target.getName() + "'s groin. A moment later, "
+                                + target.getName() + " yelps as her clitoris rapidly enlarges into a small girl-cock!";
             } else {
-                message = "You channel your arcane energies into " + target.name() + "'s dick. A moment later, "
-                                + target.name() + " yelps as her cock rapidly enlarges!";
+                message = "You channel your arcane energies into " + target.getName() + "'s dick. A moment later, "
+                                + target.getName() + " yelps as her cock rapidly enlarges!";
             }
             if (damage > 0) {
                 message += " You realize the effects are permanent!";
@@ -114,25 +114,25 @@ public class CockGrowth extends Skill {
             message = String.format("%s moving and begins chanting. %s feeling some "
                             + "tingling in %s groin, but it quickly subsides as %s %s out of the way.", 
                             getSelf().subjectAction("stop"), Global.capitalizeFirstLetter(target.subjectAction("start")),
-                            target.possessivePronoun(), target.pronoun(), target.action("dodge"));
+                            target.possessiveAdjective(), target.pronoun(), target.action("dodge"));
         } else {
             if (modifier == Result.special) {
                 message = String.format("%s moving and begins chanting. %s to feel %s clit grow hot, and start expanding! "
                                 + "%s try to hold it back with your hands, but the growth continues until %s %s the proud owner of a new %s. "
                                 + "The sensations from %s new maleness make %s tremble.",
                                 getSelf().subjectAction("stop"), Global.capitalizeFirstLetter(target.subjectAction("start")),
-                                target.possessivePronoun(),
+                                target.possessiveAdjective(),
                                 Global.capitalizeFirstLetter(target.pronoun()), target.pronoun(), target.action("are", "is"), 
                                 target.body.getRandomCock().describe(target),
-                                target.possessivePronoun(), target.directObject());
+                                target.possessiveAdjective(), target.directObject());
             } else {
                 message = String.format("%s moving and begins chanting. %s feel %s cock grow hot, and start expanding! "
                                 + "%s try to hold it back with your hands, but the growth continues until it's much larger than before. "
                                 + "The new sensations from %s new larger cock make %s tremble.",
                                 getSelf().subjectAction("stop"), Global.capitalizeFirstLetter(target.subjectAction("start")),
-                                target.possessivePronoun(),
+                                target.possessiveAdjective(),
                                 Global.capitalizeFirstLetter(target.pronoun()),
-                                target.possessivePronoun(), target.directObject());
+                                target.possessiveAdjective(), target.directObject());
             }
             if (damage > 0) {
                 message += " You realize the effects are permanent!";

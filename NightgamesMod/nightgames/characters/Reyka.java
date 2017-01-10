@@ -9,6 +9,7 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -28,7 +29,8 @@ public class Reyka extends BasePersonality {
     }
 
     public Reyka(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Reyka", 1, charConfig, commonConfig, false);
+        super("Reyka", charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -146,34 +148,82 @@ public class Reyka extends BasePersonality {
         character.gain(Item.semen, Global.random(3) + 1);
         buyUpTo(Item.semen, 5);
     }
+    
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
+                            + " the source of my meal might not have been the best idea...\"</i>";
+        });
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Reyka looks at you with a pang of regret: <i>\"In hindsight, damaging"
-                        + " the source of my meal might not have been the best idea...\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
+                            + " noticing the radiant ruby ardorning her bellybutton, you feel"
+                            + " sorely tempted to just give in to your desires. The hungry look"
+                            + " on her face as she licks her lips, though, quickly dissuades you" + " from doing so";
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "<i>\"You could have just asked, you know.\"</i> As you gaze upon her naked form,"
-                        + " noticing the radiant ruby ardorning her bellybutton, you feel"
-                        + " sorely tempted to just give in to your desires. The hungry look"
-                        + " on her face as she licks her lips, though, quickly dissuades you" + " from doing so";
-    }
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "Reyka is laying on the floor, her wings spread out behind her, panting for breath";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Reyka is laying on the floor, her wings spread out behind her," + " panting for breath";
-    }
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            return "\"You look like you will taste nice. Maybe if you let me have a taste, I will be nice to you too.\"";
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "\"You look like you will taste nice. Maybe if you let me have " + "a taste, I will be nice to you too.\"";
-    }
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "\"Why keep fighting? Wouldn't it just feel SO much better just to let me do what I do best?\"";
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
+                            + "what " + other.guyOrGirl()
+                            + " would when having this much sex with several different girls? Still, a weekend would "
+                            + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
+                            + "<i>\"Listen, " + other.getName()
+                            + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
+                            + "of " + other.guyOrGirl()
+                            + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
+                            + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
+                            + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
+                            + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "
+                            + "her like this is like nothing you had ever expected from her. For a moment, you think this is all some "
+                            + "elaborate trick of some sort, but that thought vanishes the instant you see tears welling in her eyes. "
+                            + "<i>\"I just... We demons aren't supposed to feel like this, you know? We don't form relationships. It's all "
+                            + "just a constant power struggle, constant scheming and looking over your shoulder and sleeping with a "
+                            + "knife under your pillow. It has never bothered me before; it's simply what I am. That's what I used to "
+                            + "think, anyway. Now, I'm not so sure... about anything...\"</i> She quitely sobs while saying this, and you "
+                            + "embrace her. You hold her there for some time, before inviting her to spend the night at your place. "
+                            + "You don't even have sex when you get there, you just both lay down in your single bed, close to "
+                            + "each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
+        });
+
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><br/><br/>"
+                            + "Reyka strikes a seductive pose and the devilish smile"
+                            + " on her face reveals just what, or more specifically,"
+                            + " who she intends that morsel to be.";
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return "Reyka the succubus stands before you, six feet tall with"
+                            + " the most stunningly beautiful body you have ever seen."
+                            + " Her long black hair enshrines her perfect face like a priceless"
+                            + " painting. Her arms are slim and end in long-fingered,"
+                            + " soft hands, nails polished shining red. Underneath, her long and"
+                            + " perfectly formed legs and delicate feet stand in an imposing posture."
+                            + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br/>"
+                            + " Her gaze speaks of indescribable pleasure, but your mind reminds you"
+                            + " of the cost of indulging in a succubus' body: Give her half a chance"
+                            + " and she will suck out your very soul.";
+        });
     }
 
     @Override
@@ -277,7 +327,7 @@ public class Reyka extends BasePersonality {
     public String victory3p(Combat c, Character target, Character assist) {
         if (target.human()) {
             return "<i>\"How kind of you to hold him for me, dear.\"</i> Reyka bows her head ever so slightly towards "
-                            + assist.name() + " and then turns her gaze upon you prone form. "
+                            + assist.getName() + " and then turns her gaze upon you prone form. "
                             + "She pulls a blindfold out of a small pocket in her miniskirt and secures it tightly over your eyes. <i>\"Wouldn't want to spoil the surprise, would we?\"</i> For "
                             + "just a moment, you feel a slight pull on your mind, but the sensation passes quickly, replaced by that of one of her slender fingers invading your mouth. "
                             + "It is covered with a fragrant liquid and given what you already know about her, there is little doubt in your mind of its origins. Your suspicions "
@@ -290,25 +340,25 @@ public class Reyka extends BasePersonality {
                             + "holding a bottle. That bottle is firmly planted against the head of your still twitching dick and filled with your cum. <i>\"You looked scrumptuous, "
                             + "sitting there all helpless, but I was really in need of some supplies. Still, I didn't want to deny you the pleasure, so I crafted a teeny tiny "
                             + "illusion just for you.\"</i> As she says this, she pours a small drop of your semen onto her finger and licks it up. <i>\"Yum, I might just have to find "
-                            + "you again later.\"</i> Both she and " + assist.name()
+                            + "you again later.\"</i> Both she and " + assist.getName()
                             + " walk off, in opposite directions, the former holding your clothes and the latter quietly giggling at "
                             + "your embarrassment. Ah, well.";
         }
         return "<i>\"My my, what a cute little offering you have caught for me tonight\"</i>, Reyka says, looking you at you with a satisfied grin on her face. <i>\"Not very nutricious, "
                         + "but certainly a good deal of fun.\"</i> With that, she starts gently undressing "
-                        + target.name() + ". When she is finished she squats down in front of her, bringing "
+                        + target.getName() + ". When she is finished she squats down in front of her, bringing "
                         + "her tail up between them. <i>\"Where would you prefer it dear?\"</i>, she asks "
-                        + target.name() + ", whose eyes grow wide in shock. She manages to stammer out a "
+                        + target.getName() + ", whose eyes grow wide in shock. She manages to stammer out a "
                         + "few syllables, but nothing quite coherent. <i>\"No preference? Then I guess I will simply choose for you.\"</i> She brings her spade-tipped tail between "
-                        + target.name() + "s "
+                        + target.getName() + "s "
                         + "legs and starts running the very tip rapidly across her labia. When it is sufficiently wet, she moves it slightly upwards and moves it briskly back and forth over "
-                        + target.name() + "'s clit.<br/><br/>" + target.name()
+                        + target.getName() + "'s clit.<br/><br/>" + target.getName()
                         + ", at first scared, now has her eyes closed and begins moaning feverishly. Just when she has almost reached her climax, "
-                        + "Reyka digs her tail deep into " + target.name() + "'s drooling pussy. This sends "
-                        + target.name() + " loudly over the edge. Her screams of pleasure are almost deafening, "
+                        + "Reyka digs her tail deep into " + target.getName() + "'s drooling pussy. This sends "
+                        + target.getName() + " loudly over the edge. Her screams of pleasure are almost deafening, "
                         + "and you have to work really hard to restrain her convlusing body. After a minute or so, the orgasm subsides and "
-                        + target.name() + " falls asleep and you gently lay her " + "down. When you turn to look at "
-                        + character.name()
+                        + target.getName() + " falls asleep and you gently lay her " + "down. When you turn to look at "
+                        + character.getName()
                         + ", you are startled by the predatory look in her eyes. <i>\"I'm afraid all the excitement has left me a tad peckish. Be a "
                         + "dear and help me out with that, will you?\"</i> You ponder whether or not you made a mistake in helping her.";
     }
@@ -316,41 +366,27 @@ public class Reyka extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "Your fight with " + assist.name() + " starts out poorly; she already"
+            return "Your fight with " + assist.getName() + " starts out poorly; she already"
                             + " has you naked and aroused, wheras she seems as cool and calm as when"
                             + " you started. You haven't lost yet though, you just need to find an opening "
                             + "and turn things around. A noise behind you causes you to turn and your vision is "
                             + "filled with two piercing red eyes. <i>\"Kneel.\"</i> You drop to your knees involuntarily. "
                             + "The rational part of your brain is telling you that Reyka is trying to dominate your "
                             + "mind and you should resist, but what's the point? Reyka's tail binds your wrists and "
-                            + "she forces you to turn back to a bewildered " + assist.name()
+                            + "she forces you to turn back to a bewildered " + assist.getName()
                             + ". <i>\"I'm not poaching "
                             + "your prey,\"</i> you hear her say. <i>\"He's all yours.\"</i>";
         }
 
-        return "Your fight with " + target.name + " starts out poorly; she already"
+        return "Your fight with " + target.nameDirectObject() + " starts out poorly; she already"
                         + " has you naked and aroused, wheras she seems as cool and calm as when"
                         + " you started. Fortune, though, seems to have a strange sense of humor as"
-                        + " your salvation comes in the form of a winged demon swooping down on " + target.name
+                        + " your salvation comes in the form of a winged demon swooping down on " + target.nameDirectObject()
                         + ". The two are briefly entangled in a ball of limbs and wings,"
-                        + " but soon Reyka comes out on top. She is pinning " + target.name
+                        + " but soon Reyka comes out on top. She is pinning " + target.nameDirectObject()
                         + " helplessly to the ground, holding her arms behind her back and"
-                        + " locking her shoulders in place with her wings. The struggle has " + "left " + target.name
+                        + " locking her shoulders in place with her wings. The struggle has " + "left " + target.nameDirectObject()
                         + " completely naked and ready for you to" + " take advantage of.";
-    }
-
-    @Override
-    public String describe(Combat c, Character self) {
-        return "Reyka the succubus stands before you, six feet tall with"
-                        + " the most stunningly beautiful body you have ever seen."
-                        + " Her long black hair enshrines her perfect face like a priceless"
-                        + " painting. Her arms are slim and end in long-fingered,"
-                        + " soft hands, nails polished shining red. Underneath, her long and"
-                        + " perfectly formed legs and delicate feet stand in an imposing posture."
-                        + " Behind her, you see a pair of relatively small but powerful-looking bat wings.<br/>"
-                        + " Her gaze speaks of indescribable pleasure, but your mind reminds you"
-                        + " of the cost of indulging in a succubus' body: Give her half a chance"
-                        + " and she will suck out your very soul.";
     }
 
     @Override
@@ -387,39 +423,9 @@ public class Reyka extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return "<i>\"Yum, I was just looking for a tasty little morsel.\"</i><br/><br/>"
-                        + "Reyka strikes a seductive pose and the devilish smile"
-                        + " on her face reveals just what, or more specifically,"
-                        + " who she intends that morsel to be.";
-    }
-
-    @Override
     public boolean fit() {
         return (!character.mostlyNude() || Global.random(3) == 1) && character.getStamina().percent() >= 50
                         && character.getArousal().percent() <= 50;
-    }
-
-    @Override
-    public String night() {
-        return "You feel exhausted after yet another night of sexfighting. You're not complaining, of course; "
-                        + "what " + Global.getPlayer().guyOrGirl() + " would when having this much sex with several different girls? Still, a weekend would "
-                        + "be nice sometime... About half way to your room, Reyka steps in front of you. Where did she come from? "
-                        + "<i>\"Listen, " + Global.getPlayer().name()
-                        + ", I've been doing some thinking lately. You know very well I've had sex with a lot "
-                        + "of " + Global.getPlayer().guyOrGirl() + "s and a fair amount of girls, too, right?\"</i> You just nod, wondering where this is going. <i>\"Well, "
-                        + "in all that time no one has ever made me feel the way you can. I don't know why, really, but I can't help "
-                        + "feeling there's something special about you.\"</i> You stand there, paralyzed, with a look of amazement "
-                        + "on your face. Reyka intimidates you. Hell, she is downright terrifying at times. To see and hear "
-                        + "her like this is like nothing you had ever expected from her. For a moment, you think this is all some "
-                        + "elaborate trick of some sort, but that thought vanishes the instant you see tears welling in her eyes. "
-                        + "<i>\"I just... We demons aren't supposed to feel like this, you know? We don't form relationships. It's all "
-                        + "just a constant power struggle, constant scheming and looking over your shoulder and sleeping with a "
-                        + "knife under your pillow. It has never bothered me before; it's simply what I am. That's what I used to "
-                        + "think, anyway. Now, I'm not so sure... about anything...\"</i> She quitely sobs while saying this, and you "
-                        + "embrace her. You hold her there for some time, before inviting her to spend the night at your place. "
-                        + "You don't even have sex when you get there, you just both lay down in your single bed, close to "
-                        + "each other, and enjoy a peaceful sleep together with your arms around her and her head on your shoulder.";
     }
 
     @Override
@@ -432,15 +438,5 @@ public class Reyka extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "Reyka shudders, <i>\"Mmm it's been a while since I've felt that. Here, I'll return the favor\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "With a devilish smile, Reyka brings her face close to yours <i>\"Mmmmm that smells great! Too bad I'm still pretty hungry.\"</i>";
     }
 }

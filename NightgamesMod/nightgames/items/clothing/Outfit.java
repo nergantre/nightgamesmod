@@ -44,6 +44,10 @@ public class Outfit {
     }
 
     /* public information api */
+    public Collection<Clothing> getAll() {
+        return outfit.values().stream().flatMap(List::stream).filter(c -> c != null).collect(Collectors.toSet());
+    }
+    
     public boolean slotOpen(ClothingSlot slot) {
         return outfit.get(slot).isEmpty() || !outfit.get(slot).stream()
                         .anyMatch(article -> article != null && !article.is(ClothingTrait.open));
@@ -130,6 +134,10 @@ public class Outfit {
         }
         Collections.shuffle(slotsAvailable);
         return slotsAvailable.get(0);
+    }
+    
+    public Collection<Clothing> getArticlesWithTrait(ClothingTrait attribute) {
+        return equipped.stream().filter(article -> article.is(attribute)).collect(Collectors.toSet());
     }
 
     public boolean has(Trait t) {

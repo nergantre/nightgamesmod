@@ -39,7 +39,7 @@ public enum Attribute {
     }
 
     public static boolean isBasic(Character self, Attribute a) {
-        return a == Power || a == Seduction || a == Perception || (self.has(Trait.nymphomania) && a == Attribute.Nymphomania);
+        return a == Power || a == Seduction || a == Perception || (self != null && self.has(Trait.nymphomania) && a == Attribute.Nymphomania);
     }
 
     public static boolean isTrainable(Character self, Attribute a) {

@@ -79,7 +79,7 @@ public enum ToysPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
+    public double getSensitivity(Character self, BodyPart target) {
         return sensitivity;
     }
 
@@ -177,5 +177,10 @@ public enum ToysPart implements BodyPart,BodyPartMod {
     @Override
     public String getModType() {
         return name();
+    }
+
+    @Override
+    public String adjective() {
+        return "fake";
     }
 }

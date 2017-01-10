@@ -80,7 +80,7 @@ public class BodyFetish extends DurationStatus {
                                 + " run through your mind (" + magString + ").");
             }
         } else {
-            return affected.name() + " is affected by " + desc + part + " fetish (" + magString + ").";
+            return affected.getName() + " is affected by " + desc + part + " fetish (" + magString + ").";
         }
     }
 

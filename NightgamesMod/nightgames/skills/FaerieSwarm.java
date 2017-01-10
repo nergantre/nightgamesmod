@@ -56,14 +56,14 @@ public class FaerieSwarm extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.weak) {
             return "You unroll the summoning scroll and unleash a cloud of cute, naked faeries."
-                            + "They immediately swarm around " + target.name() + ", grabbing and pulling at "
-                            + target.possessivePronoun() + " clothes. By the time they disappear, " + target.pronoun()
+                            + "They immediately swarm around " + target.getName() + ", grabbing and pulling at "
+                            + target.possessiveAdjective() + " clothes. By the time they disappear, " + target.pronoun()
                             + "'s left completely naked.";
         }
         return
 
         "You unroll the summoning scroll and unleash a cloud of cute, naked faeries. "
-                        + "They eagerly take advantage of " + target.name()
+                        + "They eagerly take advantage of " + target.getName()
                         + "'s naked body, teasing and tickling every exposed erogenous zone. "
                         + Global.capitalizeFirstLetter(target.pronoun()) + " tries in vain to defend "
                         + target.directObject() + "self, but there are too many of them and they're too quick. "
@@ -78,7 +78,7 @@ public class FaerieSwarm extends Skill {
             return String.format("%s pulls out a scroll and a swarm of butterfly-winged faeries burst "
                             + "forth to attack %s. They mischeviously grab at %s clothes, using magical assistance "
                             + "to efficiently strip %s naked.", getSelf().subject(), target.nameDirectObject(),
-                            target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), target.directObject());
         }
         String parts = target.hasDick() ? "dick and balls" : target.hasPussy() ? "pussy and clit" : "ass and chest";
         return String.format("%s pulls out a scroll and a swarm of butterfly-winged faeries burst forth to attack %s."
@@ -87,9 +87,9 @@ public class FaerieSwarm extends Skill {
                         + "dozens of tiny hands playfully immobilizing %s with ticklish pleasure. The spell "
                         + "doesn't actaully last very long, but from %s perspective, it feels"
                         + " like minutes of delightful torture.", getSelf().subject(),
-                        target.nameDirectObject(), target.possessivePronoun(),
-                        target.directObject(), target.possessivePronoun(),
-                        target.possessivePronoun(),
+                        target.nameDirectObject(), target.possessiveAdjective(),
+                        target.directObject(), target.possessiveAdjective(),
+                        target.possessiveAdjective(),
                         parts, target.directObject(), target.nameOrPossessivePronoun());
     }
 

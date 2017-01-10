@@ -9,6 +9,7 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -33,7 +34,8 @@ public class Kat extends BasePersonality {
     }
 
     public Kat(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Kat", 10, charConfig, commonConfig, false);
+        super("Kat", charConfig, commonConfig, false);
+        constructLines();
     }
 
     @Override
@@ -141,7 +143,7 @@ public class Kat extends BasePersonality {
                             c.write("Kat grins and jumps to her feet, <i>\"Nya! Am I? I am right? I can go even faster you know? Meowrr!\"</i> "
                                             + "Indeed, she seems even faster than before, dancing around the room with a feline grace. "
                                             + "You can hardly even track her with your eyes! Suddenly you feel two small mounds press "
-                                            + "against your back and a voice in your ear, <i>\"Thanks " + other.name() + ", nya! "
+                                            + "against your back and a voice in your ear, <i>\"Thanks " + other.getName() + ", nya! "
                                             + "Next time we fight, you will nyat catch me!\"</i>."
                                             + "<br/><br/>"
                                             + "Looks like you've got your work cut out for you.");
@@ -227,7 +229,7 @@ public class Kat extends BasePersonality {
                                             + "reason returns to her eyes. Realizing what she did, Kat stammers, <i>\"I-it's nyat like that! S-sorry... I d-didn't m-mean to... "
                                             + "S-sometimes the animal spirit gets restless and I go into h-h-heat. I can't really control myself, meowrr\"</i> You calm the little kittycat down "
                                             + "and reassure her that you're not angry. In fact, you found her frantic self adorable - not to mention hot as hell. It took a bit of time and she is "
-                                            + "still red as a tomato when she whispers, <i>\"T-thanks " + other.name() + ", that myeans a lot to m-meowrr. If you l-liked it, I'll see if I can control it nya-ext time!\"</i> "
+                                            + "still red as a tomato when she whispers, <i>\"T-thanks " + other.getName() + ", that myeans a lot to m-meowrr. If you l-liked it, I'll see if I can control it nya-ext time!\"</i> "
                                             + "You smile wryly as Kat leaves. You feel that she'll be a force to be reckoned with the next time you see her.",
                                             self, other));
                             useFrenzy();
@@ -311,33 +313,61 @@ public class Kat extends BasePersonality {
         }
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Kat gives you a look of concern and sympathy. <i>\"Nya... Are you ok? I didn't mean to hit you that hard.\"</i>";
-    }
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Kat gives you a look of concern and sympathy. <i>\"Nya... Are you ok? I didn't mean to hit you that hard.\"</i>";
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        if (character.getArousal().percent() >= 50) {
-            return "Kat makes no effort to hide the moisture streaming down her thighs. <i>\"You want my pussy? I'm nyot going to myake it easy for you.\"</i>";
-        } else {
-            return "Kat blushes deep red and bashfully tries to cover her girl parts with her tail. <i>\"Don't stare too much, ok?\"</i>";
-        }
-    }
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "Kat looks a bit nervous, but her tail wags slowly in anticipation. <i>\"Let's have some funNya.\"</i>";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Kat mews pitifully on the floor. <i>\"Don't be so meaNya.\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            if (self.getArousal()
+                    .percent() >= 50) {
+                return "Kat makes no effort to hide the moisture streaming down her thighs. <i>\"You want my pussy? I'm nyot going to myake it easy for you.\"</i>";
+            } else {
+                return "Kat blushes deep red and bashfully tries to cover her girl parts with her tail. <i>\"Don't stare too much, ok?\"</i>";
+            }
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return "Kat smiles excitedly and bats at your cock. <i>\"Are you already close to cumming? Nya! I want to play with you more!\"</i>";
-    }
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "Kat mews pitifully on the floor. <i>\"Don't be so meaNya.\"</i>";
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            return "Kat smiles excitedly and bats at your cock. <i>\"Are you already close to cumming? Nya! I want to play with you more!\"</i>";
+        });
+
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "Kat winks at you and looks at your crotch, <i>\"MmM! That looks tasty nya!\"</i>";
+        });
+
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "You walk back to your dorm after the match, but something is bothering you the whole way. You feel like you're being watched, but there's no menace to the sensation. "
+                            + "You hear a rustling behind you and look back just in time to see someone duck behind a bush. 'Someone'.... The cat ears on that hat make your stalker's identity "
+                            + "pretty obvious. You pretend you didn't see anything and continue toward your dorm. So, a stray Kat is following you home tonight. It would make more sense for her "
+                            + "to just come out so you can walk together, but you know how shy she can be about things like this. On the other hand, she is following you back to your room at night "
+                            + "with obvious implications, so... does that count as being forward? <br/><br/>You reach the door to your dorm building and look back to see Kat clumsily attempting to hide behind a "
+                            + "tree. Oh good grief. How long is she planning to stay hidden? The door to the building locks automatically, so if you go inside she'll be stuck out here. Besides, the closer "
+                            + "you get to your room, the harder it's going to be for her to work up to courage to approach you. You walk over to where she's hiding and she freezes in panic. Before she "
+                            + "can run off, you catch her and gently pat her on the head. It's starting to get chilly out here. She should just come inside with you. Kat blushes furiously, but looks "
+                            + "delighted as you lead her to your room.";
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            return "<i>\"NYAAAH! uuu...\"</i> Kat glares at you reproachfully as she comes down from her high.";
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            return "<i>\"Nyahaha! I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return "It's easy to forget that Kat's older than you when she looks like she's about to start high school. She's a very short and slim, though you know she's "
+                            + "stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She "
+                            + "looks a bit timid, but there's a gleam of desire in her eyes.";
+        });
     }
 
     @Override
@@ -442,13 +472,6 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return "It's easy to forget that Kat's older than you when she looks like she's about to start high school. She's a very short and slim, though you know she's "
-                        + "stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She "
-                        + "looks a bit timid, but there's a gleam of desire in her eyes.";
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         Character opponent = c.getOpponent(character);
         if (flag == Result.intercourse) {
@@ -504,19 +527,19 @@ public class Kat extends BasePersonality {
                             + "mouth and hands, it's not long before your hips start bucking in anticipation of release. She jerks you off with both hands and sucks firmly on your glans. "
                             + "You groan as you ejaculate into her mouth and she eagerly swallows every drop.";
         } else {
-            return "Kat stalks over to " + target.name()
+            return "Kat stalks over to " + target.getName()
                             + " like a cat. Very much like a cat. She leans toward the other girl's breasts and starts to softly lick her nipples. "
-                            + target.name()
+                            + target.getName()
                             + " stifles a moan of pleasure as Kat gradually covers her breasts in saliva, not missing an inch. Kat gradually works her way down, giving "
-                            + "equal attention to " + target.name()
+                            + "equal attention to " + target.getName()
                             + "'s bellybutton. By the helpless girl's shudders and stifled giggles, it clearly tickles, but also seems to heighten "
                             + "her arousal. You feel her body tense up in anticipation when Kat licks her way down towards her waiting pussy. Instead Kat veers off and starts kissing "
-                            + "and licking her inner thighs. " + target.name()
+                            + "and licking her inner thighs. " + target.getName()
                             + " trembles in frustration and she must realize she has no chance to win, because she yells out: <i>\"Please! "
                             + "Stop teasing me and let me cum!\"</i> Kat blinks for a moment and looks surprised, like she had forgotten her original purpose, but she soon smiles and dives "
-                            + "enthusiastically between " + target.name()
+                            + "enthusiastically between " + target.getName()
                             + "'s legs. It doesn't take long before you feel her shudder in orgasm from Kat's intense licking, but even then, "
-                            + "Kat shows no sign of stopping. " + target.name()
+                            + "Kat shows no sign of stopping. " + target.getName()
                             + " stammers out a protest and you sympathetically release her hands, but she's too overwhelmed by pleasure "
                             + "to defend herself as Kat licks her to a second orgasm.";
         }
@@ -525,17 +548,17 @@ public class Kat extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "Your fight with " + assist.name()
+            return "Your fight with " + assist.getName()
                             + " goes back and forth for several minutes, leaving you both naked and aroused, but without a clear winner. You back off "
                             + "a couple steps to catch your breath, when suddenly you're blindsided and knocked to the floor. You look up to see Kat straddling your chest in full cat-mode. "
                             + "She's clearly happy to see you, kissing and nuzzling your neck while mewing happily. She's very cute, but unfortunately you're unable to dislodge her from "
                             + "her perch on your upper body. More unfortunately, your completely defenseless lower body is exposed to "
-                            + assist.name() + ", who doesn't let the opportunity go " + "to waste.";
+                            + assist.getName() + ", who doesn't let the opportunity go " + "to waste.";
         } else {
-            return "Your fight with " + target.name()
+            return "Your fight with " + target.getName()
                             + " goes back and forth for several minutes, leaving you both naked and aroused, but without a clear winner. You back off "
                             + "a couple steps to catch your breath, when you notice a blur of motion out of the corner of your eye. Distracted as you are, you aren't paying attention to "
-                            + "your footing and stumble backwards. " + target.name()
+                            + "your footing and stumble backwards. " + target.getName()
                             + " advances to take advantage of your mistake, but she soon realizes you aren't looking at her, but "
                             + "behind her. She turns around just in time to get pounced on by an exuberant catgirl. Kat starts to playfully tickle her prey, incapacitating the poor, "
                             + "naked girl with uncontrollable fits of laughter. You stand up, brush off your butt, and leisurely walk towards your helpless opponent to finish her off.";
@@ -543,27 +566,9 @@ public class Kat extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return "Kat looks a bit nervous, but her tail wags slowly in anticipation. <i>\"Let's have some funNya.\"</i>";
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50
                         || character.getArousal().percent() > 50;
-    }
-
-    @Override
-    public String night() {
-        return "You walk back to your dorm after the match, but something is bothering you the whole way. You feel like you're being watched, but there's no menace to the sensation. "
-                        + "You hear a rustling behind you and look back just in time to see someone duck behind a bush. 'Someone'.... The cat ears on that hat make your stalker's identity "
-                        + "pretty obvious. You pretend you didn't see anything and continue toward your dorm. So, a stray Kat is following you home tonight. It would make more sense for her "
-                        + "to just come out so you can walk together, but you know how shy she can be about things like this. On the other hand, she is following you back to your room at night "
-                        + "with obvious implications, so... does that count as being forward? <br/><br/>You reach the door to your dorm building and look back to see Kat clumsily attempting to hide behind a "
-                        + "tree. Oh good grief. How long is she planning to stay hidden? The door to the building locks automatically, so if you go inside she'll be stuck out here. Besides, the closer "
-                        + "you get to your room, the harder it's going to be for her to work up to courage to approach you. You walk over to where she's hiding and she freezes in panic. Before she "
-                        + "can run off, you catch her and gently pat her on the head. It's starting to get chilly out here. She should just come inside with you. Kat blushes furiously, but looks "
-                        + "delighted as you lead her to your room.";
     }
 
     @Override
@@ -600,15 +605,5 @@ public class Kat extends BasePersonality {
                     return value >= 100;
             }
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "<i>\"NYAAAH! uuu...\"</i> Kat glares at you reproachfully as she comes down from her high.";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "<i>\"Nya! I gotcha! Hey hey, do you think you can cum again-nyaa? Let's try it out!\"</i>";
     }
 }

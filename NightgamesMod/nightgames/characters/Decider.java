@@ -132,7 +132,7 @@ public class Decider {
 
     public static Action parseMoves(Collection<Action> available, Collection<Movement> radar, NPC character) {
         HashSet<Action> enemy = new HashSet<Action>();
-        HashSet<Action> safe = new HashSet<Action>();
+        HashSet<Action> onlyWhenSafe = new HashSet<Action>();
         HashSet<Action> utility = new HashSet<Action>();
         HashSet<Action> tactic = new HashSet<Action>();
         if (character.mostlyNude()) {
@@ -185,24 +185,27 @@ public class Decider {
             } else if (act.consider() == Movement.bathe || act.consider() == Movement.craft
                             || act.consider() == Movement.scavenge || act.consider() == Movement.hide
                             || act.consider() == Movement.trap || act.consider() == Movement.wait
-                            || act.consider() == Movement.engineering || act.consider() == Movement.dining) {
-                utility.add(act);
+                            || act.consider() == Movement.engineering || act.consider() == Movement.dining
+                            || act.consider() == Movement.disguise) {
+                onlyWhenSafe.add(act);
             } else {
-                safe.add(act);
+                utility.add(act);
             }
         }
-        if (!character.location().humanPresent()) {
-            tactic.addAll(utility);
-        }
+        
         if (character.plan == Plan.hunting && !enemy.isEmpty()) {
             tactic.addAll(enemy);
         }
-
-        else {
-            tactic.addAll(safe);
+        if (!character.location().humanPresent()) {
+            tactic.addAll(onlyWhenSafe);
         }
+        tactic.addAll(utility);
         if (tactic.isEmpty()) {
             tactic.addAll(available);
+        }
+        // give disguise some priority when just picking something random
+        if (tactic.stream().anyMatch(a -> a.consider() == Movement.disguise) && Global.random(5) == 0) {
+            return tactic.stream().filter(a -> a.consider() == Movement.disguise).findFirst().get();
         }
         Action[] actions = tactic.toArray(new Action[tactic.size()]);
         return actions[Global.random(actions.length)];

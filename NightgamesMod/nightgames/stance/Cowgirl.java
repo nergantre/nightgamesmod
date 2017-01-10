@@ -14,12 +14,12 @@ public class Cowgirl extends FemdomSexStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You're on top of " + bottom.name() + ".";
+            return "You're on top of " + bottom.getName() + ".";
         } else {
             return String.format("%s is riding %s in Cowgirl position. %s breasts bounce in front of %s"
                             + " face each time %s moves %s hips.", top.subject(), bottom.nameDirectObject(),
-                            Global.capitalizeFirstLetter(top.possessivePronoun()), bottom.possessivePronoun(),
-                            top.pronoun(), top.possessivePronoun());
+                            Global.capitalizeFirstLetter(top.possessiveAdjective()), bottom.possessiveAdjective(),
+                            top.pronoun(), top.possessiveAdjective());
         }
     }
 

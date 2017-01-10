@@ -89,22 +89,22 @@ public class UseCrop extends Skill {
             if (!target.has(Item.Crop)) {
                 return "You lash out with your riding crop, but it fails to connect.";
             } else {
-                return "You try to hit " + target.name() + " with your riding crop, but she deflects it with her own.";
+                return "You try to hit " + target.getName() + " with your riding crop, but she deflects it with her own.";
             }
         } else if (modifier == Result.critical) {
             if (target.hasBalls()) {
-                return "You strike " + target.name()
+                return "You strike " + target.getName()
                                 + "'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, hitting one of her hanging testicles "
                                 + "squarely. She lets out a shriek and clutches her sore nut";
             } else {
-                return "You strike " + target.name()
+                return "You strike " + target.getName()
                                 + "'s bare ass with your crop and the 'Treasure Hunter' attachment slips between her legs, impacting on her sensitive pearl. She "
                                 + "lets out a high pitched yelp and clutches her injured anatomy.";
             }
         } else if (modifier == Result.weak) {
-            return "You hit " + target.name() + " with your riding crop.";
+            return "You hit " + target.getName() + " with your riding crop.";
         } else {
-            return "You strike " + target.name()
+            return "You strike " + target.getName()
                             + "'s soft, bare skin with your riding crop, leaving a visible red mark.";
         }
     }
@@ -115,11 +115,11 @@ public class UseCrop extends Skill {
             if (!target.has(Item.Crop)) {
                 return String.format("%s out of the way, as %s swings %s riding crop at %s.",
                                 target.subjectAction("duck"), getSelf().subject(),
-                                getSelf().possessivePronoun(), target.directObject());
+                                getSelf().possessiveAdjective(), target.directObject());
             } else {
                 return String.format("%s swings %s riding crop, but %s %s own crop and %s it.",
-                                getSelf().subject(), getSelf().possessivePronoun(),
-                                target.subjectAction("draw"), target.possessivePronoun(),
+                                getSelf().subject(), getSelf().possessiveAdjective(),
+                                target.subjectAction("draw"), target.possessiveAdjective(),
                                 target.action("parry", "parries"));
             }
         } else if (modifier == Result.critical) {
@@ -127,8 +127,8 @@ public class UseCrop extends Skill {
                             + "The attachment on the end delivers a painful sting to "
                             + "%s jewels. %s in pain and %s the urge to "
                             + "curl up in the fetal position.", getSelf().subject(),
-                            target.nameDirectObject(), getSelf().possessivePronoun(),
-                            target.possessivePronoun(), target.subjectAction("groan"),
+                            target.nameDirectObject(), getSelf().possessiveAdjective(),
+                            target.possessiveAdjective(), target.subjectAction("groan"),
                             target.action("fight"));
         } else if (modifier == Result.weak) {
             return String.format("%s strikes %s with a riding crop.",

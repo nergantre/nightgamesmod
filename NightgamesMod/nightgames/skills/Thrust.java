@@ -160,14 +160,14 @@ public class Thrust extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.anal) {
-            return "You thrust steadily into " + target.name() + "'s ass, eliciting soft groans of pleasure.";
+            return "You thrust steadily into " + target.getName() + "'s ass, eliciting soft groans of pleasure.";
         } else if (modifier == Result.reverse) {
             return Global.format(
-                            "You rock your hips against {other:direct-object}, riding her smoothly. "
+                            "You rock your hips against {other:direct-object}, riding {other:direct-object} smoothly. "
                                             + "Despite the slow pace, {other:subject} soon starts gasping and mewing with pleasure.",
                             getSelf(), target);
         } else {
-            return "You thrust into " + target.name()
+            return "You thrust into " + target.getName()
                             + " in a slow, steady rhythm. She lets out soft breathy moans in time with your lovemaking. You can't deny you're feeling "
                             + "it too, but by controlling the pace, you can hopefully last longer than she can.";
         }
@@ -180,7 +180,7 @@ public class Thrust extends Skill {
             if (getSelf().has(Trait.strapped)) {
                 res = String.format("%s thrusts her hips, pumping her artificial cock in and out"
                                 + " of %s ass and pushing on %s %s.", getSelf().subject(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                                 target.hasBalls() ? "prostate" : "innermost parts");
                 
             } else {
@@ -191,7 +191,7 @@ public class Thrust extends Skill {
                 res += String.format(" %s penchant for fucking people in the ass makes "
                                 + "%s thrusting that much more powerful, and that much more "
                                 + "intense for the both of %s.", getSelf().nameOrPossessivePronoun(),
-                                getSelf().possessivePronoun(),
+                                getSelf().possessiveAdjective(),
                                 c.bothDirectObject(target));
             }
             return res;
@@ -199,11 +199,11 @@ public class Thrust extends Skill {
             return String.format("%s rocks %s hips against %s, riding %s smoothly and deliberately. "
                             + "Despite the slow pace, the sensation of %s hot %s surrounding "
                             + "%s dick is gradually driving %s to %s limit.", getSelf().subject(),
-                            getSelf().possessivePronoun(), target.nameDirectObject(),
+                            getSelf().possessiveAdjective(), target.nameDirectObject(),
                             target.directObject(), getSelf().nameOrPossessivePronoun(),
                             getSelfOrgan(c, target).describe(getSelf()),
                             target.nameOrPossessivePronoun(), target.directObject(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return Global.format(
                             "{self:subject} thrusts into {other:name-possessive} {other:body-part:pussy} in a slow steady rhythm, leaving {other:direct-object} gasping.",

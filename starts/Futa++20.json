@@ -392,5 +392,5 @@
 		}
 	],
 	"all_npcs":{},
-	"flags":["hardmode"]
+	"flags":["hardmode", "FutaTime"]
 }

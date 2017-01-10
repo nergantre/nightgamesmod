@@ -2,15 +2,12 @@ package nightgames.status;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -48,7 +45,7 @@ public class Parasited extends Status {
     @Override
     public String describe(Combat c) {
         return String.format("%s a part of %s inside of %s head.", affected.subjectAction("have", "has"),
-                        other.nameOrPossessivePronoun(), affected.possessivePronoun());
+                        other.nameOrPossessivePronoun(), affected.possessiveAdjective());
     }
 
     @Override
@@ -66,7 +63,7 @@ public class Parasited extends Status {
         if (c == null) {
             return;
         }
-        if (time >= 3 && other.has(Trait.NeuralLink)) {
+        if (time >= 3) {
             if (stage < 3) {
                 stage = 3;
                 Global.gui().message(c, other,
@@ -166,24 +163,6 @@ public class Parasited extends Status {
         }
 
         time += .2;
-        if (other.has(Trait.Voracity)) {
-            c.write(Global.format("The parasite seems to be sapping your strength to sustain itself", affected, other));
-            affected.weaken(c, 5 * (1 + stage));
-            time += .05;
-        }
-        if (other.has(Trait.BefuddlingFragrance)) {
-            List<Attribute> debuffable = DEBUFFABLE_ATTS.stream()
-                              .filter(att -> affected.get(att) > 10)
-                              .collect(Collectors.toList());
-            Optional<Attribute> att = Global.pickRandom(debuffable);
-            String message = Global.format("Somehow {self:pronoun-action:feel|seems} %s than before, maybe the parasite is doing something to {self:direct-object}?", affected, other, att.get().getLowerPhrase());
-            if (c != null && att.isPresent()) {
-                c.write(affected, message);
-            } else {
-                Global.gui().message(message);                
-            }
-            affected.add(c, new Abuff(affected, att.get(), -1, 10));
-        }
     }
 
     @Override

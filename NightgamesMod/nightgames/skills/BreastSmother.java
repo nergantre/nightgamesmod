@@ -113,11 +113,12 @@ public class BreastSmother extends Skill {
         StringBuilder b = new StringBuilder();
         
         if (modifier == Result.special) {
+
             b.append( "You quickly wrap up " + target.name() + "'s head in your arms and press your "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " into " + target.nameOrPossessivePronoun() + " face. ");
         }
         else {
-            b.append( "You rock " + target.name() + "'s head between your "
+            b.append( "You rock " + target.getName() + "'s head between your "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " trying to force them to gasp.");                           
         }
         
@@ -130,7 +131,7 @@ public class BreastSmother extends Skill {
             b.append(".");
             
         } else{
-            b.append(" " + target.name() + " muffles something in confusion into your breasts before they begin to panic as they realize they cannot breathe!");            
+            b.append(" " + target.getName() + " muffles something in confusion into your breasts before they begin to panic as they realize they cannot breathe!");            
         }   
         return b.toString();
 }
@@ -148,7 +149,7 @@ public class BreastSmother extends Skill {
         
         if (getSelf().has(Trait.temptingtits)) {
             b.append("You can't help but groan in pleasure from having your face stuck between ");
-            b.append(getSelf().possessivePronoun());
+            b.append(getSelf().possessiveAdjective());
             b.append(" perfect tits as they take your breath away");           
                           
             if (getSelf().has(Trait.beguilingbreasts)) {

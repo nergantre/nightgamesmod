@@ -20,7 +20,7 @@ public class InducedEuphoria extends DurationStatus {
         if (affected.human()) {
             return "Your entire body is flushed with chemically induced pleasure. Every sensation turns you on.";
         } else {
-            return affected.possessivePronoun()
+            return affected.possessiveAdjective()
                             + " body is alight with chemically induced euphoria. Every sensation causes "
                             + affected.pronoun() + " to moan softly.";
         }

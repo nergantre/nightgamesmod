@@ -24,13 +24,13 @@ public class Engulfed extends Position {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You have engulfed " + bottom.name() + " inside your slime body, with only "
-                            + bottom.possessivePronoun() + " face outside of you.";
+            return "You have engulfed " + bottom.getName() + " inside your slime body, with only "
+                            + bottom.possessiveAdjective() + " face outside of you.";
         } else {
             return String.format("%s is holding %s entire body inside "
                             + "%s slime body, with only %s face outside.",
                             top.nameOrPossessivePronoun(), bottom.nameOrPossessivePronoun(),
-                            top.possessivePronoun(), bottom.possessivePronoun());
+                            top.possessiveAdjective(), bottom.possessiveAdjective());
         }
     }
 
@@ -120,8 +120,8 @@ public class Engulfed extends Position {
             if (writeMessage) {
                 c.write(bottom, String.format("%s %s slimy body a"
                                 + "round %s, reversing %s hold.",
-                                bottom.subjectAction("swirls", "swirl"), bottom.possessivePronoun(),
-                                top.nameOrPossessivePronoun(), top.possessivePronoun()));
+                                bottom.subjectAction("swirls", "swirl"), bottom.possessiveAdjective(),
+                                top.nameOrPossessivePronoun(), top.possessiveAdjective()));
             }
             return super.reverse(c, writeMessage);
         }

@@ -86,7 +86,7 @@ public class Prematch implements Scene {
                 message += "Before you have a chance to ask though, Lilly mentions to you that there is a new competitor. However, when you ask her for details, she only mentions that her "
                                 + "name is Airi, and that she's a Biology student, while holding a visible smirk. Your instincts tells you something is wrong, but you decide to ignore it for now.<br/><br/>"
                                 + "<b>Airi has entered the games.</b><br/><br/>";
-                Global.newChallenger(new Airi());
+                Global.newChallenger(Global.getNPCByType(Airi.class.getSimpleName()).ai);
                 Global.flag(Flag.Airi);
             }
             type = offer(player);
@@ -109,7 +109,7 @@ public class Prematch implements Scene {
         }
         Set<Modifier> modifiers = new HashSet<>(Global.getModifierPool());
         modifiers.removeIf(mod -> !mod.isApplicable() || mod.name().equals("normal"));
-        return Global.pickRandom(modifiers.toArray(new Modifier[] {}));
+        return Global.pickRandom(modifiers.toArray(new Modifier[] {})).get();
     }
 
     @Override

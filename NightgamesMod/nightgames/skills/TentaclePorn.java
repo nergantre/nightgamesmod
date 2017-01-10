@@ -92,16 +92,16 @@ public class TentaclePorn extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You summon a mass of tentacles that try to snare " + target.name()
+            return "You summon a mass of tentacles that try to snare " + target.getName()
                             + ", but she nimbly dodges them.";
         } else if (modifier == Result.weak) {
-            return "You summon a mass of phallic tentacles that wrap around " + target.name()
+            return "You summon a mass of phallic tentacles that wrap around " + target.getName()
                             + "'s arms, holding her in place.";
         } else if (modifier == Result.normal) {
-            return "You summon a mass of phallic tentacles that wrap around " + target.name()
+            return "You summon a mass of phallic tentacles that wrap around " + target.getName()
                             + "'s naked body. They squirm against her and squirt slimy fluids on her body.";
         } else {
-            return "You summon tentacles to toy with " + target.name()
+            return "You summon tentacles to toy with " + target.getName()
                             + "'s helpless form. The tentacles toy with her breasts and penetrate her pussy and ass.";
         }
     }
@@ -115,26 +115,26 @@ public class TentaclePorn extends Skill {
         } else if (modifier == Result.weak) {
             return String.format("%s stomps on the ground and a bundle of tentacles erupt from the "
                             + "ground around %s, entangling %s arms and legs.", getSelf().subject(),
-                            target.nameDirectObject(), target.possessivePronoun());
+                            target.nameDirectObject(), target.possessiveAdjective());
         } else if (modifier == Result.normal) {
             return String.format("%s stomps on the ground and a bundle of tentacles erupt from the "
                             + "ground around %s, entangling %s arms and legs. The slimy appendages "
                             + "wriggle over %s body and coat %s in the slippery liquid.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
-                            target.possessivePronoun(), target.directObject());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective(),
+                            target.possessiveAdjective(), target.directObject());
         } else {
             String actions = "";
             if (target.hasDick())
-                actions += String.format("tease %s %s", target.possessivePronoun(), 
+                actions += String.format("tease %s %s", target.possessiveAdjective(), 
                                 target.body.getRandomCock().describe(target));
             
             if (target.hasPussy())
                 actions += String.format("%scaress %s clit", actions.length() > 0 ? ", " : "", 
-                                target.possessivePronoun());
+                                target.possessiveAdjective());
             
             if (target.body.getRandomBreasts() != BreastsPart.flat)
                 actions += String.format("%sknead %s %s" ,actions.length() > 0 ? ", " : "", 
-                                target.possessivePronoun(),
+                                target.possessiveAdjective(),
                                 target.body.getRandomBreasts().describe(target));
             
             if (actions.length() > 0)
@@ -142,7 +142,7 @@ public class TentaclePorn extends Skill {
             return String.format("%s summons slimy tentacles that cover %s helpless body,"
                             + " %s probe %s ass.", getSelf().subject(),
                             target.nameOrPossessivePronoun(), actions,
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         }
     }
 }

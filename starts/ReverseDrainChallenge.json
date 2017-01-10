@@ -1,0 +1,41 @@
+{
+	"name":"Reverse Drain Challenge",
+	"summary":"You are a fairly powerful, experienced player of the Night Games. Normally, it would be no problem to beat the rookies who are joining tonight; your skills eclipse theirs in pretty much every way. However, these particular rookies have a distinct advantage: Whenever you cum inside any of them, they will drain a level from you. They are also almost impossible to finish off without sex. And you're naked. Can you maintain your lead, or will you get drained into submission?",
+	"enabled":true,
+	"player": {
+		"attributes": {
+			"Power":10,
+			"Seduction":10,
+			"Cunning":10,
+			"Perception":5,
+			"Speed":5
+		},
+		"clothing": [],
+		"level": 7,
+		"attribute_points": 6,
+		"traits": ["limbTraining1", "tongueTraining1", "sexTraining1"],
+		"trait_choice": true
+	},
+	"npcs": [
+		{
+			"type":"Cassie",
+			"traits":["softheart", "imagination", "romantic"]
+		},
+		{
+			"type":"Jewel",
+			"traits":["wrassler", "direct", "insatiable"]
+		},
+		{
+			"type":"Angel",
+			"traits":["undisciplined", "lickable"]
+		},
+		{
+			"type":"Mara",
+			"traits":["petite", "dexterous", "ticklish"]
+		}
+	],
+	"all_npcs" : {
+		"traits": ["leveldrainer", "stronghold", "tight", "holecontrol", "Unsatisfied"]
+	},
+	"flags": []
+}

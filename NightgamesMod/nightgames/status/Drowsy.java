@@ -39,7 +39,7 @@ public class Drowsy extends DurationStatus {
             return "You feel lethargic and sluggish. You're struggling to remain standing";
         }
 
-        return affected.name() + " looks extremely sleepy.";
+        return affected.subject() + " looks extremely sleepy.";
     }
 
     @Override

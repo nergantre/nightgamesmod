@@ -90,11 +90,11 @@ public class Nurple extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grope at " + target.name() + "'s breasts, but miss.";
+            return "You grope at " + target.getName() + "'s breasts, but miss.";
         } else if (modifier == Result.special) {
-            return "You grab " + target.name() + "'s boob with your shock-gloved hand, painfully shocking her.";
+            return "You grab " + target.getName() + "'s boob with your shock-gloved hand, painfully shocking her.";
         } else {
-            return "You pinch and twist " + target.name() + "'s nipples, causing her to yelp in surprise.";
+            return "You pinch and twist " + target.getName() + "'s nipples, causing her to yelp in surprise.";
         }
     }
 
@@ -106,7 +106,7 @@ public class Nurple extends Skill {
         } else if (modifier == Result.special) {
             return String.format("%s touches %s nipple with %s glove and a jolt of electricity hits %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), target.directObject());
+                            getSelf().possessiveAdjective(), target.directObject());
         } else {
             return String.format("%s twists %s sensitive nipples, giving %s a jolt of pain.",
                             getSelf().subject(), target.nameOrPossessivePronoun(), target.directObject());

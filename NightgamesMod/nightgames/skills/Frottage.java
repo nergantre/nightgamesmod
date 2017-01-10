@@ -90,9 +90,9 @@ public class Frottage extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You tease " + target.name() + "'s penis with your own, dueling her like a pair of fencers.";
+            return "You tease " + target.getName() + "'s penis with your own, dueling her like a pair of fencers.";
         } else {
-            return "You press your hips against " + target.name()
+            return "You press your hips against " + target.getName()
                             + "'s legs, rubbing her nether lips and clit with your dick.";
         }
     }
@@ -103,20 +103,20 @@ public class Frottage extends Skill {
             return String.format("%s thrusts %s hips to prod %s delicate jewels with %s strapon dildo. "
                             + "As %s and %s %s hips back, %s presses the toy against %s cock, "
                             + "teasing %s sensitive parts.",
-                            getSelf().subject(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(),
-                            target.subjectAction("flinch", "flinches"), target.action("pull"), target.possessivePronoun(),
-                            getSelf().subject(), target.possessivePronoun(), target.possessivePronoun());
+                            getSelf().subject(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                            getSelf().possessiveAdjective(),
+                            target.subjectAction("flinch", "flinches"), target.action("pull"), target.possessiveAdjective(),
+                            getSelf().subject(), target.possessiveAdjective(), target.possessiveAdjective());
         } else if (getSelf().hasDick()) {
             return String.format("%s pushes %s %s against the sensitive head of %s member, "
-                            + "dominating %s manhood.", getSelf().subject(), getSelf().possessivePronoun(),
+                            + "dominating %s manhood.", getSelf().subject(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomCock().describe(getSelf()), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return String.format("%s pushes %s cock against her soft thighs, rubbing %s shaft up"
                             + " against %s nether lips.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            getSelf().possessivePronoun());
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective());
         }
     }
 

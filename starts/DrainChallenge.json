@@ -26,7 +26,8 @@
 			"name":"Casey",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":"flat",
+				"faceFemininity": -1.5
 			},
 			"clothing": [
 				"Tshirt",
@@ -76,7 +77,8 @@
 			"name":"Mark",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":"flat",
+				"faceFemininity": -.7
 			},
 			"clothing": [
 				"Tshirt",

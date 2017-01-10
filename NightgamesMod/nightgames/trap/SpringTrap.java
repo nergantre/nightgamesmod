@@ -31,7 +31,7 @@ public class SpringTrap extends Trap {
                                 "As you're walking, your foot hits something and there's a sudden debilitating pain in your groin. Someone has set up a spring-loaded rope designed "
                                                 + "to shoot up into your nuts, which is what just happened. You collapse into the fetal position and pray that there's no one nearby.");
             } else if (target.location().humanPresent()) {
-                Global.gui().message("You hear a sudden yelp as your trap catches " + target.name()
+                Global.gui().message("You hear a sudden yelp as your trap catches " + target.getName()
                                 + " right in the cooch. She eventually manages to extract the rope from between her legs "
                                 + "and collapses to the floor in pain.");
             }

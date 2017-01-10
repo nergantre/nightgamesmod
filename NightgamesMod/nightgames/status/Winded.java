@@ -26,7 +26,7 @@ public class Winded extends DurationStatus {
         if (affected.human()) {
             return "You need a moment to catch your breath";
         } else {
-            return affected.name() + " is panting and trying to recover";
+            return affected.getName() + " is panting and trying to recover";
         }
     }
 

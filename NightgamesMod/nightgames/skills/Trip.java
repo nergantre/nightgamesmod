@@ -2,11 +2,13 @@ package nightgames.skills;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Falling;
+import nightgames.status.Slimed;
 
 public class Trip extends Skill {
     public Trip(Character self) {
@@ -35,6 +37,9 @@ public class Trip extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (isSlime()) {
                 writeOutput(c, Result.special, target);
+                if (getSelf().has(Trait.VolatileSubstrate)) {
+                    target.add(c, new Slimed(target, getSelf(), Global.random(2, 4)));
+                }
             } else {
                 writeOutput(c, Result.normal, target);
             }
@@ -90,19 +95,19 @@ public class Trip extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to trip " + target.name() + ", but she keeps her balance.";
+            return "You try to trip " + target.getName() + ", but she keeps her balance.";
         } else if (modifier == Result.special) {
             return String.format(
                             "You reshape your hands into a sheet of slime and slide it under %s's feet."
                                             + " When you quickly pull it back, %s falls flat on %s back.",
-                            target.name(), target.pronoun(), target.possessivePronoun());
+                            target.getName(), target.pronoun(), target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format(
                             "You reshape your hands into a sheet of slime and slide it towards %s."
                                             + " In the nick of time, %s jumps clear, landing safely back on %s feet.",
-                            target.name(), target.pronoun(), target.possessivePronoun());
+                            target.getName(), target.pronoun(), target.possessiveAdjective());
         } else {
-            return "You catch " + target.name() + " off balance and trip " + target.directObject() + ".";
+            return "You catch " + target.getName() + " off balance and trip " + target.directObject() + ".";
         }
     }
 
@@ -115,14 +120,14 @@ public class Trip extends Skill {
             return String.format(
                             "%s shoves a mass of %s slime under %s feet, destabilizing %s. With a few"
                                             + " pulls, %s throws %s onto %s back.",
-                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             target.directObject(), getSelf().pronoun(), target.directObject(),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format(
                             "%s forms some of %s slime into a sheet and slides it towards %s feet."
                                             + " %s %s away from it, and %s harmlessly retracts the slime.",
-                            getSelf().name(), getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
+                            getSelf().getName(), getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
                             Global.capitalizeFirstLetter(target.pronoun()), target.action("jump"), getSelf().pronoun());
         } else {
             return String.format("%s takes %s feet out from under %s and sends %s sprawling to the floor.",

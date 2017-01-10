@@ -69,9 +69,9 @@ public class Restrain extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to catch " + target.name() + "'s hands, but she squirms too much to keep your grip on her.";
+            return "You try to catch " + target.getName() + "'s hands, but she squirms too much to keep your grip on her.";
         } else {
-            return "You manage to restrain " + target.name() + ", leaving her helpless and vulnerable beneath you.";
+            return "You manage to restrain " + target.getName() + ", leaving her helpless and vulnerable beneath you.";
         }
     }
 
@@ -80,10 +80,10 @@ public class Restrain extends Skill {
         if (modifier == Result.miss) {
             return String.format("%s tries to pin %s down, but %s %s %s arms free.",
                             getSelf().subject(), target.nameDirectObject(),
-                            target.pronoun(), target.action("keep"), target.possessivePronoun());
+                            target.pronoun(), target.action("keep"), target.possessiveAdjective());
         } else {
             return String.format("%s pounces on %s and pins %s arms in place, leaving %s at %s mercy.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective(),
                             target.directObject(), getSelf().directObject());
         }
     }

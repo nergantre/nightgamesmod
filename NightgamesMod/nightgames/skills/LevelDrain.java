@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -10,7 +11,6 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.status.Satiated;
 
 public class LevelDrain extends Drain {
-
     public LevelDrain(Character self) {
         super("Level Drain", self);
 
@@ -49,7 +49,7 @@ public class LevelDrain extends Drain {
             return 0;
         }
         target.loseXP(xpStolen);
-        getSelf().gainXP(xpStolen);
+        getSelf().gainXPPure(xpStolen);
         return xpStolen;
     }
 
@@ -60,7 +60,6 @@ public class LevelDrain extends Drain {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-
         int type = Global.centeredrandom(2, getSelf().get(Attribute.Dark) / 20.0f, 2);
         writeOutput(c, type, Result.normal, target);
         switch (type) {
@@ -72,9 +71,9 @@ public class LevelDrain extends Drain {
                 if (stolen > 0) {
                     getSelf().add(c, new Satiated(getSelf(), stolen, 0));
                     if (getSelf().human()) {
-                        c.write(getSelf(), "You have absorbed " + stolen + " XP from " + target.name() + "!\n");
+                        c.write(getSelf(), "You have absorbed " + stolen + " XP from " + target.getName() + "!\n");
                     } else {
-                        c.write(getSelf(), getSelf().name() + " has absorbed " + stolen + " XP from you!\n");
+                        c.write(getSelf(), getSelf().getName() + " has absorbed " + stolen + " XP from you!\n");
                     }
                 }
                 break;
@@ -83,14 +82,18 @@ public class LevelDrain extends Drain {
                 getSelf().add(c, new Satiated(target, xpStolen, 0));
                 c.write(getSelf(), target.dong());
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You have stolen a level from " + target.name() + "'s levels and absorbed it as " + xpStolen
+                    c.write(getSelf(), "You have stolen a level from " + target.getName() + "'s levels and absorbed it as " + xpStolen
                                     + " XP!\n");
                 } else {
-                    c.write(getSelf(), getSelf().name() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
+                    c.write(getSelf(), getSelf().getName() + " has stolen a level from "+target.subject()+" and absorbed it as " + xpStolen
                                     + " XP!\n");
                 }
-                getSelf().gainXP(xpStolen);
+                getSelf().gainXPPure(xpStolen);
                 target.temptNoSource(c, getSelf(), target.getArousal().max(), this);
+                String levelDrainLine = getSelf().getRandomLineFor(CharacterLine.LEVEL_DRAIN_LINER, c, target);
+                if (!levelDrainLine.isEmpty()) {
+                    c.write(getSelf(), levelDrainLine);
+                }
                 break;
             default:
                 break;
@@ -111,7 +114,7 @@ public class LevelDrain extends Drain {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (getSelf().hasPussy()) {
-            String base = "You put your powerful vaginal muscles to work whilst" + " transfixing " + target.name()
+            String base = "You put your powerful vaginal muscles to work whilst" + " transfixing " + target.getName()
                             + "'s gaze with your own, goading his energy into his cock." + " Soon it erupts from him, ";
             switch (damage) {
                 case 0:
@@ -131,16 +134,16 @@ public class LevelDrain extends Drain {
                     return " but nothing happens, you feel strangely impotent.";
             }
         } else {
-            String base = "With your cock deep inside " + target.name()
+            String base = "With your cock deep inside " + target.getName()
                             + ", you can feel the heat from her core. You draw the energy from her, mining her depths. ";
             switch (damage) {
                 case 0:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, but it goes wrong. You feel intense pleasure feeding "
                                     + "back into you and threatening to overwhelm you. You brink the spiritual link as fast as you can, but you're still left on the brink of "
                                     + "climax.";
                 case 1:
-                    return "You attempt to drain " + target.name()
+                    return "You attempt to drain " + target.getName()
                                     + "'s energy through your intimate connection, taking a bit of her experience.";
                 case 2:
                     return base + "You succeed in siphoning off a portion of her soul, stealing a portion of her very being. This energy permanently "
@@ -162,7 +165,7 @@ public class LevelDrain extends Drain {
                         + " something far more precious than semen into %s; as more of the ethereal"
                         + " fluid leaves %s, %s ",
                         target.subjectAction("feel"), demon, target.directObject(),
-                        getSelf().subject(), target.possessivePronoun(), target.directObject(),
+                        getSelf().subject(), target.possessiveAdjective(), target.directObject(),
                         target.subject(), target.action("feel"), target.reflectivePronoun(),
                         getSelf().directObject(), target.pronoun(), target.action("realize"),
                         target.pronoun(), target.action("are", "is"), getSelf().nameDirectObject(),
@@ -172,12 +175,12 @@ public class LevelDrain extends Drain {
                 return String.format("%s squeezes %s with %s pussy and starts to milk %s, "
                                 + "but %s suddenly %s %s shudder and moan loudly. "
                                 + "Looks like %s plan backfired.", getSelf().subject(),
-                                target.nameDirectObject(), getSelf().possessivePronoun(),
+                                target.nameDirectObject(), getSelf().possessiveAdjective(),
                                 target.directObject(), target.pronoun(), target.action("feel"),
-                                getSelf().directObject(), getSelf().possessivePronoun());
+                                getSelf().directObject(), getSelf().possessiveAdjective());
             case 1:
                 return base + String.format("%s experiences and memories escape %s mind and flowing into %s.",
-                                target.possessivePronoun(), target.possessivePronoun(), getSelf().directObject());
+                                target.possessiveAdjective(), target.possessiveAdjective(), getSelf().directObject());
             case 2:
                 return base + String.format("%s very being snap loose inside of %s and it seems to flow right "
                                 + "through %s dick and into %s. When it is over %s... empty "
@@ -186,10 +189,10 @@ public class LevelDrain extends Drain {
                                 + " %s has kept on thrusting and %s right on the edge of climax."
                                 + " %s defeat appears imminent, but %s %s already lost something"
                                 + " far more valuable than a simple sex fight...",
-                                target.possessivePronoun(), target.directObject(), target.possessivePronoun(),
+                                target.possessiveAdjective(), target.directObject(), target.possessiveAdjective(),
                                 getSelf().subject(), target.subjectAction("feel"), getSelf().subject(),
                                 getSelf().pronoun(), target.subjectAction("are", "is"), 
-                                Global.capitalizeFirstLetter(target.possessivePronoun()),
+                                Global.capitalizeFirstLetter(target.possessiveAdjective()),
                                 target.pronoun(), target.action("have", "has"));
             default:
                 // Should never happen

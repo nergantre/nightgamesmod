@@ -69,10 +69,10 @@ public class BreastRay extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         String message;
-        message = "You point your growth ray at " + target.name()
+        message = "You point your growth ray at " + target.getName()
                         + "'s breasts and fire. Her breasts balloon up and the new sensitivity causes her to moan.";
         if (damage > 0) {
-            message += " The change in " + target.name() + " looks permanent!";
+            message += " The change in " + target.getName() + " looks permanent!";
         }
         return message;
     }
@@ -84,7 +84,7 @@ public class BreastRay extends Skill {
         message = String.format("%s a device at %s chest and giggles as %s %s"
                         + " %s ballooning up. %s %s and %s to cover %s, but the increased sensitivity "
                         + "distracts %s in a delicious way.",
-                        getSelf().subjectAction("point"), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                        getSelf().subjectAction("point"), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                         target.body.getRandomBreasts().describe(target), plural ? "start" : "starts",
                                         Global.capitalizeFirstLetter(target.pronoun()), 
                                         target.action("flush", "flushes"),

@@ -19,12 +19,12 @@ public class CoiledSex extends FemdomSexStance {
     public String describe(Combat c) {
         if (top.human()) {
             return "Your limbs are coiled around " + bottom.nameOrPossessivePronoun() + " body and "
-                            + bottom.possessivePronoun() + " cock is inside you.";
+                            + bottom.possessiveAdjective() + " cock is inside you.";
         } else {
             return String.format("%s on top of %s with %s cock trapped in %s pussy and %s face smothered in %s cleavage.",
                             bottom.subjectAction("are", "is"), top.nameDirectObject(),
-                            bottom.possessivePronoun(), top.possessivePronoun(),
-                            bottom.possessivePronoun(), top.possessivePronoun());
+                            bottom.possessiveAdjective(), top.possessiveAdjective(),
+                            bottom.possessiveAdjective(), top.possessiveAdjective());
         }
     }
 

@@ -14,6 +14,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.custom.AiModifiers;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
@@ -34,18 +35,18 @@ public abstract class BasePersonality implements Personality {
     protected CockMod preferredCockMod;
     protected AiModifiers mods;
 
-    protected BasePersonality(String name, int level, boolean isStartCharacter) {
+    protected BasePersonality(String name, boolean isStartCharacter) {
         // Make the built-in character
         type = getClass().getSimpleName();
-        character = new NPC(name, level, this);
+        character = new NPC(name, 1, this);
         character.isStartCharacter = isStartCharacter;
         preferredCockMod = CockMod.error;
         preferredAttributes = new ArrayList<PreferredAttribute>();
     }
 
-    public BasePersonality(String name, int level, Optional<NpcConfiguration> charConfig,
+    public BasePersonality(String name, Optional<NpcConfiguration> charConfig,
                     Optional<NpcConfiguration> commonConfig, boolean isStartCharacter) {
-        this(name, level, isStartCharacter);
+        this(name, isStartCharacter);
         setupCharacter(charConfig, commonConfig);
     }
 
@@ -58,6 +59,9 @@ public abstract class BasePersonality implements Personality {
         Optional<NpcConfiguration> mergedConfig = NpcConfiguration.mergeOptionalNpcConfigs(charConfig, commonConfig);
         mergedConfig.ifPresent(cfg -> cfg.apply(character));
 
+        if (Global.checkFlag("FutaTime") && character.initialGender == CharacterSex.female) {
+            character.initialGender = CharacterSex.herm;
+        }
         character.body.makeGenitalOrgans(character.initialGender);
         character.body.finishBody(character.initialGender);
         for (int i = 1; i < character.getLevel(); i++) {
@@ -148,7 +152,7 @@ public abstract class BasePersonality implements Personality {
     }
 
     public String defaultImage(Combat c) {
-        return character.name()
+        return character.getTrueName()
                         .toLowerCase() + "_confident.jpg";
     }
 
@@ -171,7 +175,7 @@ public abstract class BasePersonality implements Personality {
     @Override
     public String describeAll(Combat c, Character self) {
         StringBuilder b = new StringBuilder();
-        b.append(describe(c, self));
+        b.append(self.getRandomLineFor(CharacterLine.DESCRIBE_LINER, c));
         b.append("<br/><br/>");
         self.body.describe(b, c.getOpponent(self), " ");
         b.append("<br/>");

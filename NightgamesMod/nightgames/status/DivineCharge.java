@@ -43,10 +43,10 @@ public class DivineCharge extends Status {
     @Override
     public void tick(Combat c) {
         Character opponent = c.getOpponent(affected);
-        if (!c.getStance().vaginallyPenetrated(c, affected) && opponent.human() && !(affected.has(Trait.zealinspiring)
+        if (!c.getStance().havingSex(c, affected) && opponent.human() && !(affected.has(Trait.zealinspiring)
                         && !((Player)opponent).getAddiction(AddictionType.ZEAL).map(Addiction::isInWithdrawal).orElse(false))) {
             magnitude = magnitude / 2;
-            c.write(affected, "The holy energy seeps out of " + affected.getName() + ".");
+            c.write(affected, "The holy energy seeps out of " + affected.nameDirectObject() + ".");
             if (magnitude < .05f)
                 affected.removelist.add(this);
         }
@@ -56,7 +56,7 @@ public class DivineCharge extends Status {
     public String initialMessage(Combat c, boolean replaced) {
         if (!replaced) {
             return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"),
-                            affected.possessivePronoun(), getPart(c));
+                            affected.possessiveAdjective(), getPart(c));
         }
         return "";
     }

@@ -43,7 +43,7 @@ class CombatLog {
             File dir = new File("combatlogs");
             if (!dir.isDirectory())
                 dir.mkdir();
-            File file = new File(String.format("combatlogs/%s VS %s - %d.log", p1.getName(), p2.getName(),
+            File file = new File(String.format("combatlogs/%s VS %s - %d.log", p1.getTrueName(), p2.getTrueName(),
                             System.currentTimeMillis()));
             file.createNewFile();
             writer = Files.newBufferedWriter(file.toPath());
@@ -54,9 +54,9 @@ class CombatLog {
 
     void logHeader(String linebreak) {
         StringBuilder sb = new StringBuilder("Combat Log - ");
-        sb.append(p1.getName())
+        sb.append(p1.getTrueName())
           .append(" versus ")
-          .append(p2.getName())
+          .append(p2.getTrueName())
           .append(linebreak);
         describeForHeader(p1, p2, sb, linebreak);
         describeForHeader(p2, p1, sb, linebreak);
@@ -78,14 +78,14 @@ class CombatLog {
 
     String logTurnToString(Skill p1act, Skill p2act, String linebreak) {
         StringBuilder sb = new StringBuilder(String.format("Turn %d:%s", cbt.timer, linebreak));
-        sb.append(String.format("%s: %s%s%s: %s%s", p1.getName(), p1act.getName(),
-                        linebreak, p2.getName(), p2act.getName(), linebreak));
+        sb.append(String.format("%s: %s%s%s: %s%s", p1.getTrueName(), p1act.getName(),
+                        linebreak, p2.getTrueName(), p2act.getName(), linebreak));
         useSkills(p1act, p2act, sb, linebreak);
-        sb.append(p1.getName())
+        sb.append(p1.getTrueName())
           .append(": ");
         describeChanges(p1, last1, sb);
         sb.append(linebreak)
-          .append(p2.getName())
+          .append(p2.getTrueName())
           .append(": ");
         describeChanges(p2, last2, sb);
         describePositionChange(cbt.getStance(), lastP, sb, linebreak);
@@ -107,7 +107,7 @@ class CombatLog {
         StringBuilder sb = new StringBuilder("\nMATCH OVER: ");
         if (winner.isPresent()) {
             sb.append(winner.get()
-                            .getName())
+                            .getTrueName())
               .append(" WINS");
         } else {
             sb.append("DRAW");
@@ -140,8 +140,8 @@ class CombatLog {
             cbt.write("<br/>");
             second = cbt.resolveSkill(secondSkill, firstCharacter);
         }
-        sb.append(String.format("%s went first: %s%s", firstCharacter.getName(), first ? "orgasm" : "normal", linebreak));
-        sb.append(String.format("%s went second: %s%s", secondCharacter.getName(),
+        sb.append(String.format("%s went first: %s%s", firstCharacter.getTrueName(), first ? "orgasm" : "normal", linebreak));
+        sb.append(String.format("%s went second: %s%s", secondCharacter.getTrueName(),
                         cbt.lastFailed || first ? "failed" : second ? "orgasm" : "normal", linebreak))
           .append(linebreak);
     }
@@ -153,10 +153,10 @@ class CombatLog {
                             current.getClass()
                                    .getSimpleName()));
             if (current.dom(p1)) {
-                sb.append(p1.getName())
+                sb.append(p1.getTrueName())
                   .append(" dominant");
             } else if (current.dom(p2)) {
-                sb.append(p2.getName())
+                sb.append(p2.getTrueName())
                   .append(" dominant");
             }
             sb.append(linebreak);
@@ -164,7 +164,7 @@ class CombatLog {
     }
 
     private static void describeForHeader(Character c, Character other, StringBuilder sb, String linebreak) {
-        sb.append(c.getName())
+        sb.append(c.getTrueName())
           .append(" at start:").append(linebreak);
         sb.append(c.att.toString());
         sb.append(c.traits.toString());

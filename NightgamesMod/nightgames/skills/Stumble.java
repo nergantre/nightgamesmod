@@ -65,7 +65,7 @@ public class Stumble extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You slip and fall to the ground, pulling " + target.name() + " awkwardly on top of you.";
+        return "You slip and fall to the ground, pulling " + target.getName() + " awkwardly on top of you.";
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Stumble extends Skill {
         return String.format(
                         "%s stumbles and falls, grabbing %s to catch %s. Unfortunately, "
                                         + "%s can't keep %s balance and %s %s on top of %s. Maybe that's not so unfortunate.",
-                        getSelf().name(), target.nameDirectObject(), getSelf().reflectivePronoun(), 
-                        target.subject(), target.possessivePronoun(), target.pronoun(),
+                        getSelf().getName(), target.nameDirectObject(), getSelf().reflectivePronoun(), 
+                        target.subject(), target.possessiveAdjective(), target.pronoun(),
                         target.action("fall"), getSelf().directObject());
     }
 

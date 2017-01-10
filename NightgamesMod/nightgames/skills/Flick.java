@@ -90,16 +90,16 @@ public class Flick extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You flick your finger between " + target.name() + "'s legs, but don't hit anything sensitive.";
+            return "You flick your finger between " + target.getName() + "'s legs, but don't hit anything sensitive.";
         } else if (modifier == Result.weak) {
-            return "You flick " + target.name() + "'s balls, but " + target.pronoun() + " seems utterly unfazed.";
+            return "You flick " + target.getName() + "'s balls, but " + target.pronoun() + " seems utterly unfazed.";
         } else {
             if (target.hasBalls()) {
-                return "You use two fingers to simultaneously flick both of " + target.name()
+                return "You use two fingers to simultaneously flick both of " + target.getName()
                                 + " dangling balls. She tries to stifle a yelp and jerks her hips away reflexively. "
                                 + "You feel a twinge of empathy, but she's done far worse.";
             } else {
-                return "You flick your finger sharply across " + target.name()
+                return "You flick your finger sharply across " + target.getName()
                                 + "'s sensitive clit, causing her to yelp in surprise and pain. She quickly covers her girl parts "
                                 + "and glares at you in indignation.";
             }
@@ -119,9 +119,9 @@ public class Flick extends Skill {
             return String.format("%s gives %s a mischievous grin and flicks each of %s balls with %s finger. "
                             + "It startles %s more than anything, but it does hurt and "
                             + "%s seemingly carefree abuse of %s jewels destroys %s confidence.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun(),
-                            getSelf().possessivePronoun(), target.directObject(), getSelf().nameOrPossessivePronoun(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective(), target.directObject(), getSelf().nameOrPossessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective());
         }
     }
 

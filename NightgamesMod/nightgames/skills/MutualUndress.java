@@ -64,7 +64,7 @@ public class MutualUndress extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "During a brief respite in the fight as " + target.name()
+        return "During a brief respite in the fight as " + target.getName()
                         + " is catching her breath, you ask if we can finish the fight naked. "
                         + "Without waiting for an answer, you slowly strip off all your clothing."
                         + "By the time you finish, you find that she has also stripped naked while panting with arousal.";
@@ -76,8 +76,8 @@ public class MutualUndress extends Skill {
                         + " are no time outs in the rules, %s can't help staring "
                         + "at the seductive display until %s finishes with a cute wiggle of %s naked ass. "
                         + "%s asks %s if %s %s to join %s in feeling good, and before %s it "
-                        + "%s has got %s naked as well.", getSelf().subject(), getSelf().possessivePronoun(),
-                        target.subject(), getSelf().subject(), getSelf().possessivePronoun(),
+                        + "%s has got %s naked as well.", getSelf().subject(), getSelf().possessiveAdjective(),
+                        target.subject(), getSelf().subject(), getSelf().possessiveAdjective(),
                         Global.capitalizeFirstLetter(getSelf().pronoun()), target.directObject(),
                         target.pronoun(), target.action("want"), getSelf().directObject(),
                         target.subjectAction("realize"), getSelf().subject(),

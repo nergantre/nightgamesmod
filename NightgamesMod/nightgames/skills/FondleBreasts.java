@@ -77,15 +77,15 @@ public class FondleBreasts extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grope at " + target.name() + "'s breasts, but miss. (Maybe you should get closer?)";
+            return "You grope at " + target.getName() + "'s breasts, but miss. (Maybe you should get closer?)";
         } else if (modifier == Result.strong) {
-            return "You massage " + target.name()
+            return "You massage " + target.getName()
             + "'s soft breasts and pinch her nipples, causing her to moan with desire.";
         } else if (modifier == Result.special) {
-            return "You slip your hands into " + target.nameOrPossessivePronoun() + " " + target.outfit.getTopOfSlot(ClothingSlot.top).getName() + ", massaging " + target.name()
+            return "You slip your hands into " + target.nameOrPossessivePronoun() + " " + target.outfit.getTopOfSlot(ClothingSlot.top).getName() + ", massaging " + target.getName()
             + "'s soft breasts and pinching her nipples.";
         } else {
-            return "You massage " + target.name() + "'s breasts over her "
+            return "You massage " + target.getName() + "'s breasts over her "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
         }
     }
@@ -100,14 +100,14 @@ public class FondleBreasts extends Skill {
             return String.format("%s massages %s %s, and pinches %s nipples, causing %s to moan with desire.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
                             target.body.getRandomBreasts().describe(target),
-                            target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), target.directObject());
         } else if (modifier == Result.special) {
             return Global.format("{self:SUBJECT-ACTION:slip|slips} {self:possessive} agile fingers into {other:name-possessive} bra, massaging and pinching at {other:possessive} nipples.",
                             getSelf(), target);
         } else {
             return String.format("%s massages %s %s over %s %s.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.body.getRandomBreasts().describe(target), target.possessivePronoun(),
+                            target.body.getRandomBreasts().describe(target), target.possessiveAdjective(),
                             target.getOutfit().getTopOfSlot(ClothingSlot.top).getName());
         }
     }

@@ -58,4 +58,6 @@ public interface NPCData {
     Map<CommentSituation, String> getComments();
 
     boolean isStartCharacter();
+    
+    Map<String, List<CustomStringEntry>> getCharacterLines();
 }

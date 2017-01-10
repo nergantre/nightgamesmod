@@ -52,14 +52,14 @@ public class Turnover extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You turn " + target.name() + " onto her hands and knees. You move behind her while she slowly gets up.";
+        return "You turn " + target.getName() + " onto her hands and knees. You move behind her while she slowly gets up.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s rolls %s onto %s stomach. %s %s back "
                         + "up, but %s takes the opportunity to get behind %s.", getSelf().subject(),
-                        target.nameDirectObject(), target.possessivePronoun(),
+                        target.nameDirectObject(), target.possessiveAdjective(),
                         Global.capitalizeFirstLetter(target.subjectAction("push", "pushes")),
                         target.reflectivePronoun(), getSelf().subject(), target.directObject());
     }

@@ -32,7 +32,7 @@ public class Stunned extends DurationStatus {
         if (affected.human()) {
             return "You were knocked off your feet!";
         } else {
-            return affected.name() + " was knocked off " + affected.possessivePronoun() + " feet!";
+            return affected.getName() + " was knocked off " + affected.possessiveAdjective() + " feet!";
         }
     }
 

@@ -20,7 +20,7 @@ public class Rewired extends DurationStatus {
         if (affected.human()) {
             return "Your senses feel... wrong. It's like your sense of pleasure and pain are jumbled.";
         } else {
-            return affected.name() + " fidgets uncertainly at the alien sensation of "+affected.possessivePronoun()
+            return affected.getName() + " fidgets uncertainly at the alien sensation of "+affected.possessiveAdjective()
             +" rewired nerves.";
         }
     }

@@ -23,7 +23,7 @@ public class Spank extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().prone(target) && c.getStance().reachBottom(getSelf()) && getSelf().canAct();
+        return !c.getStance().prone(target) && c.getStance().distance() <= 1 && !c.getStance().sub(getSelf()) && c.getStance().reachBottom(getSelf()) && getSelf().canAct();
     }
 
     @Override
@@ -84,13 +84,13 @@ public class Spank extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to spank " + target.name() + ", but "+target.pronoun()+" dodges away.";
+            return "You try to spank " + target.getName() + ", but "+target.pronoun()+" dodges away.";
         }
         if (modifier == Result.special) {
-            return "You bend " + target.name()
-                            + " over your knee and spank "+target.directObject()+", alternating between hitting "+target.possessivePronoun()+" soft butt cheek and "+target.possessivePronoun()+" sensitive pussy.";
+            return "You bend " + target.getName()
+                            + " over your knee and spank "+target.directObject()+", alternating between hitting "+target.possessiveAdjective()+" soft butt cheek and "+target.possessiveAdjective()+" sensitive pussy.";
         } else {
-            return "You spank " + target.name() + " on "+target.possessivePronoun()+" naked butt cheek.";
+            return "You spank " + target.getName() + " on "+target.possessiveAdjective()+" naked butt cheek.";
         }
 
     }
@@ -108,9 +108,9 @@ public class Spank extends Skill {
             return String.format("%s bends %s over like a misbehaving child and spanks %s"
                             + " ass twice. The third spank aims lower and connects solidly with %s %s, "
                             + "injuring %s %s along with %s pride.", getSelf().subject(),
-                            target.nameDirectObject(), target.possessivePronoun(),
-                            target.possessivePronoun(), victim, target.possessivePronoun(),
-                            hood, target.possessivePronoun());
+                            target.nameDirectObject(), target.possessiveAdjective(),
+                            target.possessiveAdjective(), victim, target.possessiveAdjective(),
+                            hood, target.possessiveAdjective());
         } else {
             return String.format("%s lands a stinging slap on %s bare ass.",
                             getSelf().subject(), target.nameOrPossessivePronoun());

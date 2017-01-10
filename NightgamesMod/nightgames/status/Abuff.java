@@ -52,7 +52,7 @@ public class Abuff extends DurationStatus {
         if (affected.human()) {
             person = "You feel your";
         } else {
-            person = affected.name() + "'s";
+            person = affected.getName() + "'s";
         }
         if (Math.abs(value) > 5) {
             adjective = "greatly";

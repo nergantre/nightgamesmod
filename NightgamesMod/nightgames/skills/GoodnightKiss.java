@@ -41,9 +41,9 @@ public class GoodnightKiss extends Skill {
                                         + "%s %s in and kiss %s softly. Only a small amount of the drug is actually "
                                         + "transfered by the kiss, but it's enough. %s immediately staggers "
                                         + "as the strength leaves %s body.",
-                        getSelf().subject(), getSelf().action("coat"), getSelf().possessivePronoun(),
+                        getSelf().subject(), getSelf().action("coat"), getSelf().possessiveAdjective(),
                         getSelf().pronoun(), getSelf().action("see"), getSelf().pronoun(),
-                        getSelf().action("dart"), target.subject(), target.name, target.possessivePronoun()));
+                        getSelf().action("dart"), target.subject(), target.subject(), target.possessiveAdjective()));
         target.tempt(Global.random(4));
         target.getStamina()
               .empty();

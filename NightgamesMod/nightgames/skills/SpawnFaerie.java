@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.pet.Fairy;
 import nightgames.pet.FairyFem;
 import nightgames.pet.FairyMale;
 import nightgames.pet.Ptype;
@@ -44,10 +45,15 @@ public class SpawnFaerie extends Skill {
         int ac = 4 + getSelf().get(Attribute.Arcane) / 10;
         if (getSelf().human()) {
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-            if (gender == Ptype.fairyfem) {
-                c.addPet(getSelf(), new FairyFem(getSelf(), power, ac).getSelf());
-            } else {
-                c.addPet(getSelf(), new FairyMale(getSelf(), power, ac).getSelf());
+            switch (gender) {
+                case fairyfem:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyfem, power, ac).getSelf());
+                case fairymale:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairymale, power, ac).getSelf());
+                case fairyherm:
+                default:
+                    c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyherm, power, ac).getSelf());
+
             }
         } else {
             if (target.human()) {
@@ -97,13 +103,13 @@ public class SpawnFaerie extends Skill {
     	if (gender == Ptype.fairyfem) {
 	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
 	                        + " a small, naked girl with butterfly wings appears in %s palm.",
-	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
-	                        getSelf().possessivePronoun());
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessiveAdjective(),
+	                        getSelf().possessiveAdjective());
     	} else {
 	        return String.format("%s casts a spell as %s extends %s hand. In a flash of magic,"
 	                        + " a small, naked boy with butterfly wings appears in %s palm.",
-	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessivePronoun(),
-	                        getSelf().possessivePronoun());
+	                        getSelf().subject(), getSelf().pronoun(), getSelf().possessiveAdjective(),
+	                        getSelf().possessiveAdjective());
     	}
     }
 

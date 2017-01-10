@@ -126,7 +126,7 @@ public enum BreastsPart implements BodyPart {
     }
 
     @Override
-    public double getSensitivity(BodyPart target) {
+    public double getSensitivity(Character self, BodyPart target) {
         return .75 + size * .2;
     }
 
@@ -325,5 +325,10 @@ public enum BreastsPart implements BodyPart {
     @Override
     public BodyPartMod getMod(Character self) {
         return BodyPartMod.noMod;
+    }
+
+    @Override
+    public String adjective() {
+        return "mammary";
     }
 }

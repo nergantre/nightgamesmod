@@ -30,7 +30,7 @@ public class TentacleTrap extends Trap {
                                                 + "are gone, dumping you unceremoniously to the floor. You're left coated in a slimy liquid that, based on your rock-hard erection, seems to be a powerful aphrodisiac. Holy "
                                                 + "fucking hell....");
             } else if (target.location().humanPresent()) {
-                Global.gui().message(target.name()
+                Global.gui().message(target.getName()
                                 + " gets caught in the tentacle trap and is immediately surrounded by penis-shaped tentacles. Before she can escape, they bind her "
                                 + "limbs and start probing and caressing her naked body. The tentacles start to ooze out lubricant and two tentacles penetrate her vaginally and anally. A third "
                                 + "tentacle slips into her mouth, while the rest frot against her body. They gang-bang her briefly, but thoroughly, before squirting liquid over her and disappearing "
@@ -50,7 +50,7 @@ public class TentacleTrap extends Trap {
                                                 + "\n...Is that it? You're safe... you guess?");
             } else if (target.location().humanPresent()) {
                 Global.gui().message(
-                                target.name() + " stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and "
+                                target.getName() + " stumbles into range of the fetish totem. A cage of phallic tentacles appear around her. They apparently aren't interested in her and "
                                                 + "they disappear, leaving her slightly bewildered.");
             }
         }

@@ -31,7 +31,7 @@ public class DataBackedNPCData implements NPCData {
     Growth growth;
     Item trophy;
     String name;
-    String sex;
+    CharacterSex sex;
     String defaultPortraitName;
     Plan plan;
     String type;
@@ -55,7 +55,7 @@ public class DataBackedNPCData implements NPCData {
         growth = new Growth();
         trophy = Item.MiscTrophy;
         name = "Anonymous";
-        sex = "female";
+        sex = CharacterSex.female;
         defaultPortraitName = "";
         recruitment = new RecruitmentData();
         aiModifiers = new AiModifiers();
@@ -137,11 +137,7 @@ public class DataBackedNPCData implements NPCData {
 
     @Override
     public CharacterSex getSex() {
-        try {
-            return CharacterSex.valueOf(sex);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            return CharacterSex.asexual;
-        }
+        return sex;
     }
 
     @Override
@@ -185,6 +181,114 @@ public class DataBackedNPCData implements NPCData {
     }
 
     public boolean isStartCharacter() {
+        return isStartCharacter;
+    }
+
+    public List<CustomStringEntry> getPortraits() {
+        return portraits;
+    }
+
+    public void setPortraits(List<CustomStringEntry> portraits) {
+        this.portraits = portraits;
+    }
+
+    public Map<Emotion, Integer> getMoodThresholds() {
+        return moodThresholds;
+    }
+
+    public void setMoodThresholds(Map<Emotion, Integer> moodThresholds) {
+        this.moodThresholds = moodThresholds;
+    }
+
+    public Map<String, List<CustomStringEntry>> getCharacterLines() {
+        return characterLines;
+    }
+
+    public void setCharacterLines(Map<String, List<CustomStringEntry>> characterLines) {
+        this.characterLines = characterLines;
+    }
+
+    public Stack<Clothing> getTop() {
+        return top;
+    }
+
+    public void setTop(Stack<Clothing> top) {
+        this.top = top;
+    }
+
+    public Stack<Clothing> getBottom() {
+        return bottom;
+    }
+
+    public void setBottom(Stack<Clothing> bottom) {
+        this.bottom = bottom;
+    }
+
+    public void setPreferredAttributes(List<PreferredAttribute> preferredAttributes) {
+        this.preferredAttributes = preferredAttributes;
+    }
+
+    public void setPurchasedItems(List<ItemAmount> purchasedItems) {
+        this.purchasedItems = purchasedItems;
+    }
+
+    public void setStartingItems(List<ItemAmount> startingItems) {
+        this.startingItems = startingItems;
+    }
+
+    public void setStats(Stats stats) {
+        this.stats = stats;
+    }
+
+    public void setGrowth(Growth growth) {
+        this.growth = growth;
+    }
+
+    public void setTrophy(Item trophy) {
+        this.trophy = trophy;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSex(CharacterSex sex) {
+        this.sex = sex;
+    }
+
+    public void setDefaultPortraitName(String defaultPortraitName) {
+        this.defaultPortraitName = defaultPortraitName;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setRecruitment(RecruitmentData recruitment) {
+        this.recruitment = recruitment;
+    }
+
+    public void setBody(Body body) {
+        this.body = body;
+    }
+
+    public void setAiModifiers(AiModifiers aiModifiers) {
+        this.aiModifiers = aiModifiers;
+    }
+
+    public void setComments(Map<CommentSituation, String> comments) {
+        this.comments = comments;
+    }
+
+    public void setIsStartCharacter(boolean isStartCharacter) {
+        this.isStartCharacter = isStartCharacter;
+    }
+    
+    public boolean getIsStartCharacter() {
         return isStartCharacter;
     }
 }

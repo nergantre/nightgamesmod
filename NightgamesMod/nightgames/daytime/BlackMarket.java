@@ -54,7 +54,7 @@ public class BlackMarket extends Store {
                                     "You knock on the door to the black market. When Ridley answers, you tell him that you're here to see his premium goods on behalf of "
                                                     + "Callisto. Ridley glances back into the room for a moment and then walks past you without saying anything. You stand there confused, until you see the "
                                                     + "girl on the couch stand up and approach you with a smile. <i>\"Hello "
-                                                    + player.name()
+                                                    + player.getTrueName()
                                                     + ",\"</i> she says while extending her hand. <i>\"I'm Rin Callisto. You shouldn't "
                                                     + "be surprised I know who you are, you've been putting on a good show lately.\"</i> You've seen her here before, but you've never taken a good look at her. She "
                                                     + "has elegant features, shoulder length black hair, and looks a couple years older than you. She's very pretty, but you overlooked her because you assumed she "

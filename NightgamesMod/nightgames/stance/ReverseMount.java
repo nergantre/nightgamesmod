@@ -12,10 +12,10 @@ public class ReverseMount extends AbstractBehindStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You are straddling " + bottom.name() + ", with your back to her.";
+            return "You are straddling " + bottom.getName() + ", with your back to her.";
         } else {
             return String.format("%s is sitting on %s chest, facing %s groin.",
-                            top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessivePronoun());
+                            top.subject(), bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());
         }
     }
 
@@ -26,9 +26,9 @@ public class ReverseMount extends AbstractBehindStance {
 
     @Override
     public String image() {
-        if (bottom.hasDick() && !top.hasDick()) {
+        if (!bottom.useFemalePronouns() && top.useFemalePronouns()) {
             return "rmount_f.jpg";
-        } else if (!bottom.hasDick() && !top.hasDick()) {
+        } else if (bottom.useFemalePronouns() && top.useFemalePronouns()) {
             return "rmount_ff.jpg";
         } else {
             return "rmount_m.jpg";

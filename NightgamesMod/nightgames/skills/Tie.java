@@ -69,11 +69,11 @@ public class Tie extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to catch " + target.name() + "'s hands, but she squirms too much to keep your grip on her.";
+            return "You try to catch " + target.getName() + "'s hands, but she squirms too much to keep your grip on her.";
         } else if (modifier == Result.special) {
-            return "You catch " + target.name() + "'s wrists and slap a pair of cuffs on her.";
+            return "You catch " + target.getName() + "'s wrists and slap a pair of cuffs on her.";
         } else {
-            return "You catch both of " + target.name() + " hands and wrap a ziptie around her wrists.";
+            return "You catch both of " + target.getName() + " hands and wrap a ziptie around her wrists.";
         }
     }
 
@@ -82,7 +82,7 @@ public class Tie extends Skill {
         if (modifier == Result.miss) {
             return String.format("%s tries to tie %s down, but %s %s %s arms free.",
                             getSelf().subject(), target.nameDirectObject(),
-                            target.pronoun(), target.action("keep"), target.possessivePronoun());
+                            target.pronoun(), target.action("keep"), target.possessiveAdjective());
         } else if (modifier == Result.special) {
             return String.format("%s restrains %s with a pair of handcuffs.",
                             getSelf().subject(), target.nameDirectObject());

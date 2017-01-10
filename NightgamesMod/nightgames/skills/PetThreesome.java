@@ -8,6 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.FFMCowgirlThreesome;
 import nightgames.stance.FFMFacesittingThreesome;
 import nightgames.stance.FFXTribThreesome;
@@ -20,6 +21,8 @@ import nightgames.stance.ReverseXHFDaisyChainThreesome;
 public class PetThreesome extends Skill {
     public PetThreesome(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.fucking);
     }
 
     @Override
@@ -28,7 +31,7 @@ public class PetThreesome extends Skill {
     }
 
     public PetThreesome(Character self) {
-        super("Threesome", self);
+        this("Threesome", self, 0);
     }
 
     public BodyPart getSelfOrgan(Character fucker, Combat c) {
@@ -117,7 +120,7 @@ public class PetThreesome extends Skill {
                     c.write(getSelf(), Global.format("While %s holding {other:name-do} down with %s ass, "
                                     + "{self:subject} mounts {other:direct-object} and pierces "
                                     + "{self:reflective} with {other:possessive} cock.", fucker, 
-                                    target, master.subjectAction("are", "is"), master.possessivePronoun()));
+                                    target, master.subjectAction("are", "is"), master.possessiveAdjective()));
                     c.setStance(new FFMFacesittingThreesome(fucker, master, target), getSelf(), true);
                 } else {
                     c.write(getSelf(), Global.format("While %s holding {other:name-do} down, "
@@ -160,7 +163,7 @@ public class PetThreesome extends Skill {
                                     + "{other:direct-object} with {self:possessive} cock. "
                                     + "It does not end there however, as %s {other:direct-object} %s cock, "
                                     + "leaving the poor {other:girl} spit-roasted.", fucker, 
-                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action(" feed", " feeds"), master.possessivePronoun()));
+                                    target, master.subjectAction("are", "is"), master.pronoun() + master.action(" feed", " feeds"), master.possessiveAdjective()));
                     c.setStance(new MFMSpitroastThreesome(fucker, master, target), getSelf(), true);
                 }
             }
@@ -203,7 +206,7 @@ public class PetThreesome extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return getSelf().name + " pins you down while her pet fucks you [PLACEHOLDER]";
+        return getSelf().subject() + " pins you down while her pet fucks you [PLACEHOLDER]";
     }
 
     @Override

@@ -61,7 +61,7 @@ public class LivingClothingOther extends Skill {
         message = "You power up your fabricator and dial the knob to the emergency reclothing setting. "
                         + "You hit the button and dark tentacles squirm out of the device. " + "You hold "
                         + target.subject() + " down and point the tentacles at her body. "
-                        + "The undulating tentacles coils around " + target.possessivePronoun()
+                        + "The undulating tentacles coils around " + target.possessiveAdjective()
                         + " body and wraps itself into a living suit.";
         return message;
     }
@@ -73,7 +73,7 @@ public class LivingClothingOther extends Skill {
                         + " to the emergency reclothing setting. %s hits the button and dark tentacles squirm"
                         + " out of the device. The created tentacles coils around %s body and"
                         + " wrap themselves into a living suit.", target.nameDirectObject(),
-                        getSelf().subject(), getSelf().possessivePronoun(),
+                        getSelf().subject(), getSelf().possessiveAdjective(),
                         Global.capitalizeFirstLetter(getSelf().pronoun()),
                         target.nameOrPossessivePronoun());
         return message;

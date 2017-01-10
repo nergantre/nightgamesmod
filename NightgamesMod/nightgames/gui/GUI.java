@@ -58,6 +58,7 @@ import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -164,7 +165,7 @@ public class GUI extends JFrame implements Observer {
 
         // frame title
         setTitle("NightGames Mod");
-
+        setBackground(GUIColors.bgDark);
         // closing operation
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,8 +197,8 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmNewgame = new JMenuItem("New Game");
 
-        mntmNewgame.setForeground(Color.WHITE);
-        mntmNewgame.setBackground(GUIColors.bgGrey);
+        //mntmNewgame.setForeground(Color.WHITE);
+        //mntmNewgame.setBackground(GUIColors.bgGrey);
         mntmNewgame.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmNewgame.addActionListener(arg0 -> {
@@ -218,8 +219,8 @@ public class GUI extends JFrame implements Observer {
 
         JMenuItem mntmLoad = new JMenuItem("Load"); // Initializer
 
-        mntmLoad.setForeground(Color.WHITE); // Formatting
-        mntmLoad.setBackground(GUIColors.bgGrey);
+        //mntmLoad.setForeground(Color.WHITE); // Formatting
+        //mntmLoad.setBackground(GUIColors.bgGrey);
         mntmLoad.setHorizontalAlignment(SwingConstants.CENTER);
 
         mntmLoad.addActionListener(arg0 -> Global.loadWithDialog());
@@ -229,8 +230,8 @@ public class GUI extends JFrame implements Observer {
         // menu bar - options
 
         JMenuItem mntmOptions = new JMenuItem("Options");
-        mntmOptions.setForeground(Color.WHITE);
-        mntmOptions.setBackground(GUIColors.bgGrey);
+        //mntmOptions.setForeground(Color.WHITE);
+        //mntmOptions.setBackground(GUIColors.bgGrey);
 
         menuBar.add(mntmOptions);
 
@@ -462,16 +463,16 @@ public class GUI extends JFrame implements Observer {
         // menu bar - credits
 
         JMenuItem mntmCredits = new JMenuItem("Credits");
-        mntmCredits.setForeground(Color.WHITE);
-        mntmCredits.setBackground(GUIColors.bgGrey);
+        //mntmCredits.setForeground(Color.WHITE);
+        //mntmCredits.setBackground(GUIColors.bgGrey);
         menuBar.add(mntmCredits);
 
         // menu bar - quit match
 
         mntmQuitMatch = new JMenuItem("Quit Match");
         mntmQuitMatch.setEnabled(false);
-        mntmQuitMatch.setForeground(Color.WHITE);
-        mntmQuitMatch.setBackground(GUIColors.bgGrey);
+        //mntmQuitMatch.setForeground(Color.WHITE);
+        //mntmQuitMatch.setBackground(GUIColors.bgGrey);
         mntmQuitMatch.addActionListener(arg0 -> {
             int result = JOptionPane.showConfirmDialog(GUI.this,
                             "Do you want to quit for the night? Your opponents will continue to fight and gain exp.",
@@ -664,6 +665,9 @@ public class GUI extends JFrame implements Observer {
     // image loader
 
     public void displayImage(String path, String artist) {
+        if (Global.checkFlag(Flag.noimage)){ 
+            return;
+        }
         if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
             System.out.println("Display image: " + path);
         }
@@ -846,7 +850,13 @@ public class GUI extends JFrame implements Observer {
         willpower.setForeground(new Color(68, 170, 85));
         willpower.setToolTipText("Willpower is a representation of your will to fight. When this reaches 0, you lose.");
         meter.add(willpower);
-
+        try {
+            // on macs, the aqua look and feel does not have colored progress bars.
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                        | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         staminaBar = new JProgressBar();
         staminaBar.setBorder(new SoftBevelBorder(1, null, null, null, null));
         staminaBar.setForeground(new Color(164, 8, 2));
@@ -878,13 +888,18 @@ public class GUI extends JFrame implements Observer {
         meter.add(willpowerBar);
         willpowerBar.setMaximum(player.getWillpower().max());
         willpowerBar.setValue(player.getWillpower().get());
-
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                        | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
         JPanel bio = new JPanel();
         topPanel.add(bio);
         bio.setLayout(new GridLayout(2, 0, 0, 0));
         bio.setBackground(GUIColors.bgDark);
 
-        JLabel name = new JLabel(player.name());
+        JLabel name = new JLabel(player.getTrueName());
         name.setHorizontalAlignment(SwingConstants.LEFT);
         name.setFont(new Font("Sylfaen", 1, 15));
         name.setForeground(GUIColors.textColorLight);
@@ -927,8 +942,8 @@ public class GUI extends JFrame implements Observer {
         loclbl.setFont(new Font("Sylfaen", 1, 16));
         loclbl.setForeground(GUIColors.textColorLight);
 
-        stsbtn.setBackground(new Color(85, 98, 112));
-        stsbtn.setForeground(GUIColors.textColorLight);
+        //stsbtn.setBackground(new Color(85, 98, 112));
+        //stsbtn.setForeground(GUIColors.textColorLight);
         bio.add(loclbl);
 
         timeLabel = new JLabel();
@@ -1127,7 +1142,7 @@ public class GUI extends JFrame implements Observer {
 
     public void promptAmbush(IEncounter enc, Character target) {
         clearCommand();
-        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.ambush));
+        commandPanel.add(encounterButton("Attack " + target.getName(), enc, target, Encs.ambush));
         commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
         commandPanel.refresh();
@@ -1135,7 +1150,7 @@ public class GUI extends JFrame implements Observer {
 
     public void promptOpportunity(IEncounter enc, Character target, Trap trap) {
         clearCommand();
-        commandPanel.add(encounterButton("Attack " + target.name(), enc, target, Encs.capitalize, trap));
+        commandPanel.add(encounterButton("Attack " + target.getName(), enc, target, Encs.capitalize, trap));
         commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
         Global.getMatch().pause();
         commandPanel.refresh();
@@ -1275,17 +1290,22 @@ public class GUI extends JFrame implements Observer {
             map.repaint();
         }
         // We may be in between setting NIGHT and building the Match object
-        if (Global.getTime() == Time.NIGHT && Global.getMatch() != null) {
-            // yup... silverbard pls :D
-            if (Global.getMatch().getHour() == 12 || Global.getMatch().getHour() < 10) {
+        if (Global.getTime() == Time.NIGHT) {
+                // yup... silverbard pls :D
+            if (Global.getMatch() == null) {
+                timeLabel.setText("9:50 pm");
+            } else if (Global.getMatch().getHour() >= 12) {
                 timeLabel.setText(Global.getMatch().getTime() + " am");
             } else {
                 timeLabel.setText(Global.getMatch().getTime() + " pm");
             }
-
             timeLabel.setForeground(new Color(51, 101, 202));
         } else if (Global.getTime() == Time.DAY) { // not updating correctly during daytime
-            timeLabel.setText(Global.getDay().getTime() + " pm");
+            if (Global.getDay() != null) {
+                timeLabel.setText(Global.getDay().getTime() + " pm");
+            } else {
+                timeLabel.setText("10:00 am");
+            }
             timeLabel.setForeground(new Color(253, 184, 19));
         } else {
             System.err.println("Unknown time of day: " + Global.getTime());
@@ -1328,8 +1348,10 @@ public class GUI extends JFrame implements Observer {
     public void displayStatus() {
         statusPanel.removeAll();
         statusPanel.repaint();
-        statusPanel.setPreferredSize(new Dimension(400, mainPanel.getHeight()));
+        //statusPanel.setPreferredSize(new Dimension(400, mainPanel.getHeight()));
+        statusPanel.setPreferredSize(new Dimension(width/4, mainPanel.getHeight()));
 
+        
         if (width < 720) {
             statusPanel.setMaximumSize(new Dimension(height, width / 6));
             System.out.println("STATUS PANEL");
@@ -1339,7 +1361,9 @@ public class GUI extends JFrame implements Observer {
         Player player = Global.human;
 
         statusPanel.add(statsPanel);
-        statsPanel.setPreferredSize(new Dimension(400, 200));
+        //statsPanel.setPreferredSize(new Dimension(400, 200));
+        statsPanel.setPreferredSize(new Dimension(width/4, 200));
+
         JSeparator sep = new JSeparator();
         sep.setMaximumSize(new Dimension(statusPanel.getWidth(), 2));
         statusPanel.add(sep);
@@ -1384,9 +1408,13 @@ public class GUI extends JFrame implements Observer {
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         JPanel currentStatusPanel = new JPanel(new GridLayout());
-        statusPanel.setPreferredSize(new Dimension(400, height));
-        currentStatusPanel.setMaximumSize(new Dimension(400, 2000));
-        currentStatusPanel.setPreferredSize(new Dimension(400, 2000));
+//        statusPanel.setPreferredSize(new Dimension(400, height));
+//        currentStatusPanel.setMaximumSize(new Dimension(400, 2000));
+//        currentStatusPanel.setPreferredSize(new Dimension(400, 2000));
+        statusPanel.setPreferredSize(new Dimension(width/4, height));
+        currentStatusPanel.setMaximumSize(new Dimension(width/4, 2000));
+        currentStatusPanel.setPreferredSize(new Dimension(width/4, 2000));
+        
         currentStatusPanel.setBackground(GUIColors.bgLight);
         statusPanel.add(currentStatusPanel);
         currentStatusPanel.add(scrollPane);

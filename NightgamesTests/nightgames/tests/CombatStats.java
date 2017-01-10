@@ -30,7 +30,7 @@ public class CombatStats {
         this.setup = setup;
         records = new HashMap<>();
         combatants = setup.execute();
-        combatants.forEach(c -> records.put(c.name(), new Record(c)));
+        combatants.forEach(c -> records.put(c.getTrueName(), new Record(c)));
         //Global.save(true);
         Global.debug = new boolean[DebugFlags.values().length];
     }
@@ -63,7 +63,7 @@ public class CombatStats {
 
     private void fightMany(Character c1, Character c2, int count) {
         // ExecutorService threadPool = Executors.newFixedThreadPool(50);
-        System.out.println(String.format("%s vs. %s (%dX)", c1.name(), c2.name(), count));
+        System.out.println(String.format("%s vs. %s (%dX)", c1.getTrueName(), c2.getTrueName(), count));
         for (int i = 0; i < count; i++) {
             try {
                 Character clone1 = c1.clone();
@@ -103,7 +103,7 @@ public class CombatStats {
     }
 
     private Record recordOf(Character c) {
-        return records.get(c.name());
+        return records.get(c.getTrueName());
     }
 
     public static void main(String[] args) {
@@ -129,28 +129,28 @@ public class CombatStats {
             losses = new HashMap<>();
             draws = new HashMap<>();
             combatants.stream().filter(c -> !c.equals(subject)).forEach(c -> {
-                wins.put(c.name(), 0);
-                losses.put(c.name(), 0);
-                draws.put(c.name(), 0);
+                wins.put(c.getTrueName(), 0);
+                losses.put(c.getTrueName(), 0);
+                draws.put(c.getTrueName(), 0);
             });
         }
 
         synchronized void win(Character opp) {
             totalPlayed++;
             totalWins++;
-            wins.put(opp.name(), wins.get(opp.name()) + 1);
+            wins.put(opp.getTrueName(), wins.get(opp.getTrueName()) + 1);
         }
 
         synchronized void lose(Character opp) {
             totalPlayed++;
             totalLosses++;
-            losses.put(opp.name(), losses.get(opp.name()) + 1);
+            losses.put(opp.getTrueName(), losses.get(opp.getTrueName()) + 1);
         }
 
         synchronized void draw(Character opp) {
             totalPlayed++;
             totalDraws++;
-            draws.put(opp.name(), draws.get(opp.name()) + 1);
+            draws.put(opp.getTrueName(), draws.get(opp.getTrueName()) + 1);
         }
 
         @Override
@@ -179,16 +179,16 @@ public class CombatStats {
 
         public List<Character> execute() {
             extraChars.forEach(Global::newChallenger);
-            List<Character> combatants = new ArrayList<>(Global.getCharacters());
+            List<Character> combatants = new ArrayList<>(Global.getParticipants());
             combatants.removeIf(Character::human);
             combatants.forEach(c -> {
                 while (c.getLevel() < level) {
                     c.ding();
                     Character partner;
                     do {
-                        partner = (Character) Global.pickRandom(combatants.toArray());
+                        partner = (Character) Global.pickRandom(combatants.toArray()).get();
                     } while (c == partner);
-                    Daytime.train(partner, c, (Attribute) Global.pickRandom(c.att.keySet().toArray()));
+                    Daytime.train(partner, c, (Attribute) Global.pickRandom(c.att.keySet().toArray()).get());
                 }
                 c.modMoney(level * 500);
                 Global.day = new Daytime(new Player("<player>"));

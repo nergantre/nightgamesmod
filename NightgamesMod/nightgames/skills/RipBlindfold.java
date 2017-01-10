@@ -22,8 +22,7 @@ public class RipBlindfold extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance()
                                       .reachTop(getSelf())
-                        && target.is(Stsflag.blinded) && ((Blinded) target.getStatus(Stsflag.blinded)).getCause()
-                                                                                                      .equals("a blindfold");
+                        && target.is(Stsflag.blinded) && target.getStatus(Stsflag.blinded) instanceof Blinded;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class RipBlindfold extends Skill {
         } else {
             c.write(getSelf(), String.format("%s at %s blindfold, but %s %s away from %s fingers.",
                             getSelf().subjectAction("grasp"), target.nameOrPossessivePronoun(),
-                            target.pronoun(), target.action("twist"), getSelf().possessivePronoun()));
+                            target.pronoun(), target.action("twist"), getSelf().possessiveAdjective()));
         }
 
         return hit;

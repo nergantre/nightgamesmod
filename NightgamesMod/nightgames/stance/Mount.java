@@ -12,11 +12,11 @@ public class Mount extends AbstractFacingStance {
     @Override
     public String describe(Combat c) {
         if (top.human()) {
-            return "You're on top of " + bottom.name() + ".";
+            return "You're on top of " + bottom.getName() + ".";
         } else {
             return String.format("%s straddling %s, with %s enticing breasts right in front of %s.",
                             top.subjectAction("are", "is"), bottom.nameDirectObject(),
-                            top.possessivePronoun(), bottom.directObject());
+                            top.possessiveAdjective(), bottom.directObject());
         }
     }
 

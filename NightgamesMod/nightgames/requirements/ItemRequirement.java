@@ -41,4 +41,8 @@ public class ItemRequirement extends BaseRequirement {
         result = 31 * result + item.hashCode();
         return result;
     }
+    
+    public ItemAmount getItemAmount() {
+        return item;
+    }
 }

@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import nightgames.characters.CharacterSex;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.Body;
@@ -21,11 +20,13 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
+import nightgames.characters.body.FacePart;
 import nightgames.characters.body.ModdedCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.json.JsonUtils;
 
 class BodyConfiguration {
@@ -39,11 +40,13 @@ class BodyConfiguration {
     protected Optional<WingsPart> wings;
     protected Optional<List<TentaclePart>> tentacles;
     protected Optional<Double> hotness;
+    protected Optional<Double> faceFemininity;
 
     BodyConfiguration() {
         type = Optional.empty();
         genitals = Optional.empty();
         breasts = Optional.empty();
+        faceFemininity = Optional.empty();
         ass = Optional.empty();
         ears = Optional.empty();
         tail = Optional.empty();
@@ -57,6 +60,7 @@ class BodyConfiguration {
         genitals = mergeOptionals(primaryConfig.genitals, secondaryConfig.genitals);
         breasts = mergeOptionals(primaryConfig.breasts, secondaryConfig.breasts);
         ass = mergeOptionals(primaryConfig.ass, secondaryConfig.ass);
+        faceFemininity = mergeOptionals(primaryConfig.faceFemininity, secondaryConfig.faceFemininity);
         ears = mergeOptionals(primaryConfig.ears, secondaryConfig.ears);
         tail = mergeOptionals(primaryConfig.tail, secondaryConfig.tail);
         wings = mergeOptionals(primaryConfig.wings, secondaryConfig.wings);
@@ -73,7 +77,7 @@ class BodyConfiguration {
                                                                    .toLowerCase()));
         if (obj.has("ass"))
             config.ass = Optional.of(obj.get("ass").getAsString()
-                                           .equals("basic") ? AssPart.generic : new AnalPussyPart());
+                                           .equals("basic") ? AssPart.generateGeneric() : AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
 
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()
@@ -101,6 +105,9 @@ class BodyConfiguration {
             config.hotness = Optional.of((double) obj.get("hotness").getAsFloat());
         }
 
+        if (obj.has("faceFemininity")) {
+            config.faceFemininity = Optional.of((double) obj.get("faceFemininity").getAsFloat());
+        }
         return config;
     }
 
@@ -116,12 +123,13 @@ class BodyConfiguration {
 
     void apply(Body body) {
         type.ifPresent(t -> t.apply(body));
-/**/    genitals.ifPresent(gc -> gc.apply(body));
+        genitals.ifPresent(gc -> gc.apply(body));
         replaceIfPresent(body, breasts);
         replaceIfPresent(body, ass);
         replaceIfPresent(body, ears);
         replaceIfPresent(body, tail);
         replaceIfPresent(body, wings);
+        replaceIfPresent(body, faceFemininity.map(fem -> new FacePart(Optional.ofNullable(body.getFace()).map(face -> face.hotness).orElse(0.0), fem)));
         applyTentacles(body);
         hotness.ifPresent(h -> body.hotness = h);
     }

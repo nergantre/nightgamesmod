@@ -20,6 +20,7 @@ import nightgames.actions.Resupply;
 import nightgames.actions.Shortcut;
 import nightgames.areas.Area;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
@@ -44,6 +45,7 @@ import nightgames.skills.strategy.DefaultStrategy;
 import nightgames.stance.Behind;
 import nightgames.stance.Neutral;
 import nightgames.stance.Position;
+import nightgames.status.Disguised;
 import nightgames.status.Enthralled;
 import nightgames.status.Pheromones;
 import nightgames.status.Status;
@@ -59,10 +61,12 @@ public class NPC extends Character {
     public boolean isStartCharacter = false;
     private List<CombatStrategy> personalStrategies;
     private List<CombatScene> postCombatScenes;
+    private Map<String, List<CharacterLine>> lines;
 
     public NPC(String name, int level, Personality ai) {
         super(name, level);
         this.ai = ai;
+        this.lines = new HashMap<>();
         fakeHuman = false;
         emotes = new HashMap<>();
         for (Emotion e : Emotion.values()) {
@@ -95,6 +99,7 @@ public class NPC extends Character {
         description = description + "<br/><br/>";
         description = description + outfit.describe(this);
         description = description + observe(per);
+        description = description + c.getCombatantData(this).getManager().describe(this);
         return description;
     }
 
@@ -161,7 +166,7 @@ public class NPC extends Character {
         
         if (per >= 6 && status.size() > 0) {
             visible += "List of statuses:<br/><i>";
-            visible += status.stream().map(Status::toString).collect(Collectors.joining(", "));
+            visible += status.stream().filter(s -> !s.flags().contains(Stsflag.disguised) || per >= 9).map(Status::toString).collect(Collectors.joining(", "));
             visible += "</i><br/>";
         }
         
@@ -271,7 +276,7 @@ public class NPC extends Character {
             Collection<Skill> possibleSkills = c.getCombatantData(this).getStrategy().get().nextSkills(c, this);
             if (possibleSkills.isEmpty()) {
                 if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
-                    System.out.printf("%s has no moves available for strategy %s, picking a new one\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                    System.out.printf("%s has no moves available for strategy %s, picking a new one\n", this.getTrueName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
                 }
                 c.getCombatantData(this).setStrategy(c, this, pickStrategy(c));
                 possibleSkills = c.getCombatantData(this).getStrategy().get().nextSkills(c, this);
@@ -282,12 +287,12 @@ public class NPC extends Character {
             // if there are still no moves, just use all available skills for this turn and try again next turn.
             if (possibleSkills.isEmpty()) {
                 if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
-                    System.out.printf("%s has no moves available for strategy %s\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                    System.out.printf("%s has no moves available for strategy %s\n", this.getTrueName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
                 }
                 possibleSkills = getSkills();
             } else {
                 if (Global.isDebugOn(DebugFlags.DEBUG_STRATEGIES)) {
-                    System.out.printf("%s is using strategy %s\n", this.getName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
+                    System.out.printf("%s is using strategy %s\n", this.getTrueName(), c.getCombatantData(this).getStrategy().get().getClass().getSimpleName());
                 }
             }
             HashSet<Skill> available = new HashSet<>();
@@ -401,39 +406,53 @@ public class NPC extends Character {
         }
     }
 
+    public String getRandomLineFor(String lineType, Combat c, Character other) {
+        Map<String, List<CharacterLine>> lines = this.lines;
+        Disguised disguised = (Disguised) getStatus(Stsflag.disguised);
+        if (disguised != null) {
+            lines = disguised.getTarget().getLines();
+        }
+        return Global.format(Global.pickRandom(lines.get(lineType)).orElse((cb, sf, ot) -> "").getLine(c, this, other), this, other);
+    }
+
+    @Override
+    public String challenge(Character other) {
+        return getRandomLineFor(CharacterLine.CHALLENGE, null, other);
+    }
+
     @Override
     public String orgasmLiner(Combat c) {
-        return ai.orgasmLiner(c);
+        return getRandomLineFor(CharacterLine.ORGASM_LINER, c);
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return ai.makeOrgasmLiner(c, target);
+        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c);
     }
 
     @Override
     public String bbLiner(Combat c, Character target) {
-        return ai.bbLiner(c, target);
+        return getRandomLineFor(CharacterLine.BB_LINER, c);
     }
 
     @Override
     public String nakedLiner(Combat c, Character target) {
-        return ai.nakedLiner(c, target);
+        return getRandomLineFor(CharacterLine.NAKED_LINER, c);
     }
 
     @Override
     public String stunLiner(Combat c, Character target) {
-        return ai.stunLiner(c, target);
+        return getRandomLineFor(CharacterLine.STUNNED_LINER, c);
     }
 
     @Override
     public String taunt(Combat c, Character target) {
-        return ai.taunt(c, target);
+        return getRandomLineFor(CharacterLine.TAUNT_LINER, c);
     }
 
     @Override
     public String temptLiner(Combat c, Character target) {
-        return ai.temptLiner(c, target);
+        return getRandomLineFor(CharacterLine.TEMPT_LINER, c);
     }
 
     @Override
@@ -443,17 +462,17 @@ public class NPC extends Character {
     @Override
     public void move() {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.println(getName() + " is moving with state " + state);
+            System.out.println(getTrueName() + " is moving with state " + state);
         }
         if (state == State.combat) {
             if (location != null && location.fight != null) {
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(getName() + " is battling in the " + location.name);
+                    System.out.println(getTrueName() + " is battling in the " + location.name);
                 }
                 location.fight.battle();
             } else {
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.println(getName() + " is done battling in the " + location.name);
+                    System.out.println(getTrueName() + " is done battling in the " + location.name);
                 }
             }
         } else if (busy > 0) {
@@ -489,14 +508,14 @@ public class NPC extends Character {
                     if (match.isPrey(this) && match.getFlagHolder() == null) {
                         moves.add(findPath(match.gps("Central Camp")));
                         if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-                            System.out.println(name() + " moving to get flag (prey)");
+                            System.out.println(getTrueName() + " moving to get flag (prey)");
                     } else if (!match.isPrey(this) && has(Item.Flag) && !match.isBase(this, location)) {
                         moves.add(findPath(match.getBase(this)));
                         if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-                            System.out.println(name() + " moving to deliver flag (hunter)");
+                            System.out.println(getTrueName() + " moving to deliver flag (hunter)");
                     } else if (!match.isPrey(this) && has(Item.Flag) && match.isBase(this, location)) {
                         if (Global.isDebugOn(DebugFlags.DEBUG_FTC))
-                            System.out.println(name() + " delivering flag (hunter)");
+                            System.out.println(getTrueName() + " delivering flag (hunter)");
                         new Resupply().execute(this);
                         return;
                     }
@@ -532,7 +551,7 @@ public class NPC extends Character {
         }
         available.removeIf(a -> a == null || !a.usable(this));
         if (location.humanPresent()) {
-            Global.gui().message("You notice " + name() + ai.move(available, radar).execute(this).describe());
+            Global.gui().message("You notice " + getName() + ai.move(available, radar).execute(this).describe());
         } else {
             ai.move(available, radar).execute(this);
         }
@@ -599,11 +618,6 @@ public class NPC extends Character {
     }
 
     @Override
-    public String challenge(Character other) {
-        return ai.startBattle(this, other);
-    }
-
-    @Override
     public void promptTrap(IEncounter enc, Character target, Trap trap) {
         if (ai.attack(target) && (!target.human() || !Global.isDebugOn(DebugFlags.DEBUG_SPECTATE))) {
             enc.trap(this, target, trap);
@@ -612,9 +626,14 @@ public class NPC extends Character {
         }
     }
 
+    public void addLine(String lineType, CharacterLine line) {
+        lines.computeIfAbsent(lineType, type -> new ArrayList<>());
+        lines.get(lineType).add(line);
+    }
+
     @Override
     public void afterParty() {
-        Global.gui().message(ai.night());
+        Global.gui().message(getRandomLineFor(CharacterLine.NIGHT_LINER, null, Global.getPlayer()));
     }
 
     public void daytime(int time) {
@@ -630,23 +649,23 @@ public class NPC extends Character {
     public void counterattack(Character target, Tactics type, Combat c) {
         switch (type) {
             case damage:
-                c.write(this, name() + " avoids your clumsy attack and swings her fist into your nuts.");
+                c.write(this, getName() + " avoids your clumsy attack and swings her fist into your nuts.");
                 target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 break;
             case pleasure:
                 if (target.hasDick()) {
                     if (target.crotchAvailable()) {
-                        c.write(this, name() + " catches you by the penis and rubs your sensitive glans.");
+                        c.write(this, getName() + " catches you by the penis and rubs your sensitive glans.");
                         target.body.pleasure(this, body.getRandom("hands"), target.body.getRandom("cock"),
                                         4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     } else {
-                        c.write(this, name() + " catches you as you approach and grinds her knee into the tent in your "
+                        c.write(this, getName() + " catches you as you approach and grinds her knee into the tent in your "
                                         + target.getOutfit().getTopOfSlot(ClothingSlot.bottom) +".");
                         target.body.pleasure(this, body.getRandom("legs"), target.body.getRandom("cock"),
                                         4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
                     }
                 } else {
-                    c.write(this, name()
+                    c.write(this, getName()
                                     + " pulls you off balance and licks your sensitive ear. You tremble as she nibbles on your earlobe.");
                     target.body.pleasure(this, body.getRandom("tongue"), target.body.getRandom("ears"),
                                     4 + Math.min(Global.random(get(Attribute.Seduction)), 20), c);
@@ -676,26 +695,26 @@ public class NPC extends Character {
             case stripping:
                 Clothing clothes = target.stripRandom(c);
                 if (clothes != null) {
-                    c.write(this, name()
+                    c.write(this, getName()
                                     + " manages to catch you groping her clothing, and in a swift motion strips off your "
                                     + clothes.getName() + ".");
                 } else {
-                    c.write(this, name()
+                    c.write(this, getName()
                                     + " manages to dodge your groping hands and gives a retaliating slap in return.");
                     target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
                 }
                 break;
             case positioning:
                 if (c.getStance().dom(this)) {
-                    c.write(this, name() + " outmanuevers you and you're exhausted from the struggle.");
+                    c.write(this, getName() + " outmanuevers you and you're exhausted from the struggle.");
                     target.weaken(c, (int) this.modifyDamage(DamageType.stance, target, 15));
                 } else {
-                    c.write(this, name() + " outmanuevers you and catches you from behind when you stumble.");
+                    c.write(this, getName() + " outmanuevers you and catches you from behind when you stumble.");
                     c.setStance(new Behind(this, target));
                 }
                 break;
             default:
-                c.write(this, name() + " manages to dodge your attack and gives a retaliating slap in return.");
+                c.write(this, getName() + " manages to dodge your attack and gives a retaliating slap in return.");
                 target.pain(c, target, 4 + Math.min(Global.random(get(Attribute.Power)), 20));
         }
     }
@@ -732,7 +751,7 @@ public class NPC extends Character {
     @Override
     public void emote(Emotion emo, int amt) {
         if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
-            System.out.printf("%s: %+d %s", getName(), amt, emo.name());
+            System.out.printf("%s: %+d %s", getTrueName(), amt, emo.name());
         }
         if (emo == mood) {
             // if already this mood, cut gain by half
@@ -753,7 +772,7 @@ public class NPC extends Character {
                 }
                 mood = e;
                 if (Global.isDebugOn(DebugFlags.DEBUG_MOOD)) {
-                    System.out.printf("Moodswing: %s is now %s\n", name, mood.name());
+                    System.out.printf("Moodswing: %s is now %s\n", getTrueName(), mood.name());
                 }
                 if (c.p1.human() || c.p2.human()) {
                     Global.gui().loadPortrait(c, c.p1, c.p2);
@@ -769,7 +788,7 @@ public class NPC extends Character {
         super.eot(c, opponent, last);
         ai.eot(c, opponent, last);
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br/>You see " + name()
+            c.write(opponent, "<br/>You see " + getName()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
             add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
@@ -831,10 +850,15 @@ public class NPC extends Character {
     protected void resolveOrgasm(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times,
                     int totalTimes) {
         super.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
-        ai.resolveOrgasm(c, opponent, selfPart, opponentPart, times, totalTimes);
+        ai.resolveOrgasm(c, this, opponent, selfPart, opponentPart, times, totalTimes);
     }
+
     @Override
     public String getPortrait(Combat c) {
+        Disguised disguised = (Disguised) getStatus(Stsflag.disguised);
+        if (disguised != null) {
+            return disguised.getTarget().ai.image(c);
+        }
         return ai.image(c);
     }
 
@@ -860,7 +884,7 @@ public class NPC extends Character {
         forbidden.forEach(comments::remove);
         if (comments.isEmpty() || comments.size() == 1 && comments.containsKey(CommentSituation.NO_COMMENT))
             return Optional.empty();
-        return Optional.of((String) Global.pickRandom(comments.values().toArray()));
+        return Global.pickRandom(new ArrayList<>(comments.values()));
     }
     
     public Emotion moodSwing() {
@@ -900,6 +924,10 @@ public class NPC extends Character {
         decayMood();
         update();
         notifyObservers();
+    }
+
+    public Map<String, List<CharacterLine>> getLines() {
+        return lines;
     }
 
 }

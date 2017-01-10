@@ -22,7 +22,7 @@ public class NudistModifier extends BaseModifier {
 
     @Override
     public String intro() {
-        return "<i>\"Funny thing " + Global.getPlayer().name()
+        return "<i>\"Funny thing " + Global.getPlayer().getTrueName()
                         + ", me and the other girls were just talking about you.\"</i> There's no way that's good. <i>\"I asked them all what their least "
                         + "favorite thing about you is.\"</i> Nope. Definitely not good. <i>\"After some discussion they all agreed that your worst quality is your insistence on "
                         + "so frequently wearing clothing. So, I think you should spend the match naked and see how well you do. I'm willing to offer a $"

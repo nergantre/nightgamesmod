@@ -117,22 +117,22 @@ public class Squeeze extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You try to grab " + target.name() + "'s balls, but she avoids it.";
+            return "You try to grab " + target.getName() + "'s balls, but she avoids it.";
         } else if (modifier == Result.special) {
-            return "You use your shock glove to deliver a painful jolt directly into " + target.name()
+            return "You use your shock glove to deliver a painful jolt directly into " + target.getName()
                             + "'s testicles.";
         } else if (modifier == Result.weak) {
-            return "You grab the bulge in " + target.name() + "'s "
+            return "You grab the bulge in " + target.getName() + "'s "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName() + " and squeeze.";
         } else if (modifier == Result.weak2) {
-            return "You grab " + target.name() + "by the balls and squeeze hard, but" + target.pronoun()
+            return "You grab " + target.getName() + "by the balls and squeeze hard, but" + target.pronoun()
                             + " does not flinch at all.";
         } else if (modifier == Result.item) {
-            return "You grab the bulge in " + target.name() + "'s "
+            return "You grab the bulge in " + target.getName() + "'s "
                             + target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName()
                             + ", but find it solidly protected.";
         } else {
-            return "You manage to grab " + target.name()
+            return "You manage to grab " + target.getName()
                             + "'s balls and squeeze them hard. You feel a twinge of empathy when she cries out in pain, but you maintain your grip.";
         }
     }
@@ -146,12 +146,12 @@ public class Squeeze extends Skill {
             return String.format("%s grabs %s naked balls roughly in %s gloved hand. A painful jolt "
                             + "of electricity shoots through %s groin, sapping %s will to fight.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(), target.possessivePronoun(),
-                            target.possessivePronoun());
+                            getSelf().possessiveAdjective(), target.possessiveAdjective(),
+                            target.possessiveAdjective());
         } else if (modifier == Result.weak) {
             return String.format("%s grabs %s balls through %s %s and squeezes hard.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun(), 
+                            target.possessiveAdjective(), 
                             target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName());
         } else if (modifier == Result.weak2) {
             return String.format("%s grins menacingly and firmly grabs %s nuts. %s squeezes as hard as "
@@ -161,13 +161,13 @@ public class Squeeze extends Skill {
                             getSelf().pronoun(), target.pronoun(), target.action("feel"));
         } else if (modifier == Result.item) {
             return String.format("%s grabs %s crotch through %s %s, but %s can barely feel it.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            getSelf().subject(), target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             target.getOutfit().getTopOfSlot(ClothingSlot.bottom).getName(),
                             target.pronoun());
         } else {
             return String.format("%s reaches between %s legs and grabs %s exposed balls. %s "
                             + "in pain as %s pulls and squeezes them.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("writhe")),
                             getSelf().subject());
         }

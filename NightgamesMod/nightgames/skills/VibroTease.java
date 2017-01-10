@@ -74,8 +74,8 @@ public class VibroTease extends Skill {
         return String.format("%s cranks up the vibration to maximum level which stirs up %s insides. "
                         + "%s teasingly pokes the tip against %s %s which causes %s limbs to get shaky from the pleasure.",
                         getSelf().subject(), target.nameOrPossessivePronoun(),
-                        Global.capitalizeFirstLetter(getSelf().pronoun()), target.possessivePronoun(),
-                        target.hasBalls() ? "prostate" : "sensitive insides", target.possessivePronoun());
+                        Global.capitalizeFirstLetter(getSelf().pronoun()), target.possessiveAdjective(),
+                        target.hasBalls() ? "prostate" : "sensitive insides", target.possessiveAdjective());
     }
 
     @Override

@@ -8,6 +8,7 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -28,7 +29,8 @@ public class Yui extends BasePersonality {
     public Yui(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
         // Yui is a start character so that you can gain affection with her straight off the bat.
         // She is disabled when the game starts
-        super("Yui", 1, charConfig, commonConfig, true);
+        super("Yui", charConfig, commonConfig, true);
+        constructLines();
     }
 
     @Override
@@ -162,13 +164,6 @@ public class Yui extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        return character.name
-                        + " is a cute girl with her short blonde hair in a what's almost a pixie cut. However, her long bangs hangs over her blue eyes, and makes it hard for you to tell what's in her mind."
-                        + "She looks a bit strange dressed in what's obviously traditional eastern clothing while being very clearly white. Looking your way, she gives you a polite bow before taking her stance.";
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         if (c.getStance().anallyPenetrated(c, c.getOpponent(character))) {
             character.arousal.empty();
@@ -209,41 +204,56 @@ public class Yui extends BasePersonality {
         return "";
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        if (other.human()) {
-            return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
-        } else {
-            return "Yui seems apologetic. <i>\"I'm sorry, but it's master's orders.\"</i>";
-        }
-    }
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            if (other.human()) {
+                return "Yui seems apologetic. <i>\"I'm sorry Master, but you did order a fair fight.\"</i>";
+            } else {
+                return "Yui seems apologetic. <i>\"I'm sorry, but it's master's orders.\"</i>";
+            }
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Yui doesn't seem too fazed. <i>\"If Master wanted to see my body, you need just to ask.\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "Yui doesn't seem too fazed. <i>\"If Master wanted to see my body, you need just to ask.\"</i>";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Yui groans as she falls, <i>\"Master, you are pretty good at this!\"</i>.";
-    }
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> {
+            return "Yui groans as she falls, <i>\"Master, you are pretty good at this!\"</i>.";
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        if (opponent.human()) {
-            return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
-        } else {
-            return "Yui taunts " + opponent + ", <i>\"Soon I'll have you on your knees serving master!\"</i>";
-        }
-    }
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            if (other.human()) {
+                return "Yui blows you a kiss. <i>\"Master, your servant will comfort you soon!\"</i>";
+            } else {
+                return "Yui taunts " + other + ", <i>\"Soon I'll have you on your knees serving master!\"</i>";
+            }
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        if (opponent.human()) {
-            return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
-        } else {
-            return "Yui cups her breasts and looks at " + opponent.nameDirectObject() + " slyly, <i>\"Mmm don't look away.\"</i>";
-        }
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            if (other.human()) {
+                return "Yui cups her breasts and looks at you slyly, <i>\"Master, keep your eyes on me.\"</i>";
+            } else {
+                return "Yui cups her breasts and looks at " + other.nameDirectObject() + " slyly, <i>\"Mmm don't look away.\"</i>";
+            }
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            return "<i>\"Aaahhhh! Masteeerrr!\"</i>";
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            return "Yui smiles, <i>\"Don't worry Master, you just need to everything to your humble servant.\"</i>";
+        });
+
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance";
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            return character.subject()
+                            + " is a cute girl with her short blonde hair in a what's almost a pixie cut. However, her long bangs hangs over her blue eyes, and makes it hard for you to tell what's in her mind."
+                            + "She looks a bit strange dressed in what's obviously traditional eastern clothing while being very clearly white. Looking your way, she gives you a polite bow before taking her stance.";
+        });
     }
 
     @Override
@@ -269,45 +279,35 @@ public class Yui extends BasePersonality {
             return String.format(
                             "Yui kneels between %s's legs and takes a hold of %s cock. "
                                             + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s blows %s load literally within a second of Yui touching her. Wow.",
-                            target.name(), target.possessivePronoun(), target.name(), target.pronoun(), target.possessivePronoun());
+                            target.getName(), target.possessiveAdjective(), target.getName(), target.pronoun(), target.possessiveAdjective());
         }
         return String.format(
                         "Yui kneels between %s's legs and hooks two fingers inside %s pussy. "
                                         + "<i>Master, thank you for assisting your servant. Don't worry, this will just take a second...</i> And indeed, %s back arches and lets out a wail within a second of Yui touching her. Wow.",
-                                        target.name(), target.possessivePronoun(), target.name(), target.possessivePronoun());
+                                        target.getName(), target.possessiveAdjective(), target.getName(), target.possessiveAdjective());
 }
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
-        return target.human()?"Your fight with " + assist.name() + " has barely started when you hear a familiar voice call out to you. <i>\"Master! I was hoping you would be here.\"</i> " 
+        return target.human()?"Your fight with " + assist.getName() + " has barely started when you hear a familiar voice call out to you. <i>\"Master! I was hoping you would be here.\"</i> " 
                         + "Before you can react, Yui grabs you and eagerly kisses you on the lips. Your surprise quickly gives way to extreme lightheadedness and drowsiness. " 
                         + "Your legs give out and you collapse into her arms. Did Yui drug you? <i>\"Please forgive this betrayal, Master. You work so hard fighting and training " 
                         + "every night. For the sake of your health, I thought it was neccessary to make you take a break.\"</i> "
                         + "She sounds genuinely apologetic, but also a little excited. <br/><i>\"Don\'t worry. We\'ll take good care of you until you can move again.\"</i> "
-                        + "She carefully lowers your limp upper body onto her lap as " + assist.name() + " fondles your dick to full hardness. "
+                        + "She carefully lowers your limp upper body onto her lap as " + assist.getName() + " fondles your dick to full hardness. "
                         + "<i>\"I\'m sure we can relieve some of your built up stress too.\"</i><br/>"
                         :
                             "This fight could certainly have gone better than this. You\'re completely naked and have your hands bound behind your back. " 
-                        + target.name() + " is just taking " + "her time to finish you off. A familiar voice calls out to her. <i>\"I see you\'ve caught my master. "
+                        + target.getName() + " is just taking " + "her time to finish you off. A familiar voice calls out to her. <i>\"I see you\'ve caught my master. "
                                         + "I\'ve always wanted to get him in this position.\"</i> You " + "both surprised to see Yui standing nearby. "
                                         + "She hadn\'t made a sound when she approached. <i>\"Do you mind if I play with him for a moment? I promise I " 
                                         + "won\'t make him cum.\"</i> ";
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} bows respectifully towards {other:name-do} before sliding into an easy stance", character, other);
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50
                         && character.getArousal().percent() <= 50;
-    }
-
-    @Override
-    public String night() {
-        return "";
     }
 
     @Override
@@ -320,15 +320,5 @@ public class Yui extends BasePersonality {
             default:
                 return value >= 100;
         }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return "<i>\"Aaahhhh! Masteeerrr!\"</i>";
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return "Yui smiles, <i>\"Don't worry Master, you just need to everything to your humble servant.\"</i>";
     }
 }

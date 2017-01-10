@@ -144,7 +144,7 @@ public class Paizuri extends Skill {
             b.append(" cock, ");
             b.append(target.name());
             b.append(" shudders with lust");
-           
+       
             if (getSelf().has(Trait.beguilingbreasts)) {
                 b.append(" and due to your beguiling nature, they can't help but drool at the show.");
             }
@@ -158,7 +158,7 @@ public class Paizuri extends Skill {
 
     public String receive(int damage, Result modifier, Character target, BreastsPart breasts) {
         StringBuilder b = new StringBuilder();
-        b.append(getSelf().name() + " squeezes your dick between her ");
+        b.append(getSelf().getName() + " squeezes your dick between her ");
         b.append(breasts.describe(getSelf()));
         if( getSelf().has(Trait.lactating))
         {
@@ -178,7 +178,7 @@ public class Paizuri extends Skill {
             
             if (getSelf().has(Trait.beguilingbreasts)) {
                 b.append(" and due to ");
-                b.append(getSelf().name()) ;
+                b.append(getSelf().getName()) ;
                 b.append("'s breasts beguiling nature, you can't help but enjoy the show.");
             }
             else  {

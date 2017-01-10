@@ -92,7 +92,7 @@ public class TemptressBlowjob extends Blowjob {
                                 "%s %s %s into %s mouth and %s on it powerfully. It hardens"
                                                 + " swiftly, as if %s pulled the blood right into it.",
                                 getSelf().subjectAction("take"), target.nameOrPossessivePronoun(),
-                                target.body.getRandomCock().describe(target), getSelf().possessivePronoun(),
+                                target.body.getRandomCock().describe(target), getSelf().possessiveAdjective(),
                                 getSelf().action("suck"), getSelf().pronoun());
             default: // should be Result.normal
                 switch (damage) {
@@ -108,10 +108,10 @@ public class TemptressBlowjob extends Blowjob {
                                         + "and %s on it forcefully while swirling %s tongue rapidly"
                                         + " around. At the same time, %s hands are massaging and"
                                         + " caressing every bit of sensitive flesh not covered by" + " %s mouth.",
-                                        getSelf().subjectAction("lock"), getSelf().possessivePronoun(),
+                                        getSelf().subjectAction("lock"), getSelf().possessiveAdjective(),
                                         target.nameOrPossessivePronoun(), target.body.getRandomCock().describe(target),
-                                        getSelf().action("suck"), getSelf().possessivePronoun(),
-                                        getSelf().possessivePronoun(), getSelf().possessivePronoun());
+                                        getSelf().action("suck"), getSelf().possessiveAdjective(),
+                                        getSelf().possessiveAdjective(), getSelf().possessiveAdjective());
                     default:
                         return String.format("%s bobbing up and down now, hands still working"
                                         + " on any exposed skin while %s %s, %s and even %s all over %s"
@@ -119,10 +119,10 @@ public class TemptressBlowjob extends Blowjob {
                                         + " enjoyment, and %s %s loudly every time %s teeth graze" + " %s shaft.",
                                         getSelf().subjectAction("are", "is"), getSelf().pronoun(),
                                         getSelf().action("lick"), getSelf().action("suck"),
-                                        getSelf().action("nibble"), target.possessivePronoun(),
+                                        getSelf().action("nibble"), target.possessiveAdjective(),
                                         target.nameDirectObject(), target.action("are", "is"),
-                                        target.possessivePronoun(), target.pronoun(), target.action("grunt"),
-                                        getSelf().possessivePronoun(), target.possessivePronoun());
+                                        target.possessiveAdjective(), target.pronoun(), target.action("grunt"),
+                                        getSelf().possessiveAdjective(), target.possessiveAdjective());
                 }
         }
     }

@@ -8,6 +8,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -28,7 +29,8 @@ public class Angel extends BasePersonality {
     }
 
     public Angel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Angel", 1, charConfig, commonConfig, true);
+        super("Angel", charConfig, commonConfig, true);
+        constructLines();
     }
 
     public void applyBasicStats(Character self ) {
@@ -126,7 +128,7 @@ public class Angel extends BasePersonality {
                         + "Patting your own lap, you motion for Angel to sit down. Luckily for you, she doesn't leave you hanging and does just that. "
                         + "<br/><br/>"
                         + "The two of you spend a few moments relaxing before Angel decides to bring up her worries. "
-                        + "<i>\"Say " + player.name() + ", what do you really think of me become a real goddess? "
+                        + "<i>\"Say " + player.getName() + ", what do you really think of me become a real goddess? "
                         + "To be honest, I'm not even sure how it started. One night after the games, I started feeling a heat in my chest. "
                         + "The next night when we started the match, I already had my wings. "
                         + "I didn't think too much of it, with all the other strange things going on, "
@@ -142,7 +144,7 @@ public class Angel extends BasePersonality {
                                             + "Angel scowls a bit at you and questions, <i>\"You mean you're not going to be my follower?\"</i> "
                                             + "You hastily deny that and try to resolve the misunderstanding before you realize Angel's stern "
                                             + "expression melts into a smile and you realize she was just joking. "
-                                            + "<i>\"Thanks "+ other.name() + ", that took a lot off my mind. I'll pay you back, don't worry. "
+                                            + "<i>\"Thanks "+ other.getName() + ", that took a lot off my mind. I'll pay you back, don't worry. "
                                                             + "A Goddess always keeps her promises.\"</i>");
                             useFollowers();
                             return true;
@@ -328,34 +330,86 @@ public class Angel extends BasePersonality {
             }
         }
     }
+    
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>");
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>");
+        character.addLine(CharacterLine.STUNNED_LINER, (c, self, other) -> "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>");
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            if (other.hasDick()) {
+                return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
+            } else {
+                return "Angel spreads your cleft with her fingers, <i>\"So wet. Does my little slut want to come? Can't help yourself?\"</i>";
+            }
+        });
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> "{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.");
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>");
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "<i>\"Fill me! Fill me with everything you have!\"</i>",
+                            "Angel pants with a flushed face and lidded eyes, <i>\"I'll pay you back... I wont let you escape!\"</i>",
+                            "<i>\"Fuck me! fuck me! fuck me! fuck!\"</i>",
+                            };
+            switch (self.orgasms) {
+                case 0:
+                    return "<i>\"Mmm, maybe you do have promise. Care to try that again?\"</i>";
+                case 1:
+                    return "<i>\"Oh fuck, I didn't think you had it in you. More. Now.\"</i>";
+                case 2:
+                    return "Angel massages her own cunt as she cums, <i>\"Not enough... Not nearly enough!\"<i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }
+        });
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "<i>\"You're making this too easy. Put your back into it!\"</i>",
+                            "<i>\"I'm not satisfied. No, not at all. So keep going.\"</i>",
+                            "<i>\"No resting. I won't allow it.\"</i>",
+                            };
+            switch (other.orgasms) {
+                case 0:
+                    return "Angel stares you in the eye as your consciousness returns from the precipice <i>\"Once isn't enough. I need more. You can do that for me, right?\"</i>";
+                case 1:
+                    return "<i>\"Surely you won't let it end with just two times right?\"</i>";
+                case 2:
+                    return "<i>\"Enough? This is no where near enough. Stop panting and keep going.\"</i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }});
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> "As you start to head back after the match, Angel grabs your hand and drags you in the other direction. <i>\"You're officially kidnapped, because I haven't had "
+                        + "enough sex yet tonight.\"</i> That makes sense... kinda? You did just finish three hours of intense sex-fighting. If she wants too much more than that, you're "
+                        + "both going to end up pretty sleep deprived. Angel looks like she's struggling to put her thoughts into words. <i>\"I had enough sex in general, but I want some "
+                        + "more time having you all to myself.\"</i> That's quite flattering coming from her, but why you specifically? Angel is openly bisexual, she could just as easily "
+                        + "take one of the other girls back with her. She looks back at you and blushes noticeably. <i>\"It's better with you, and not just because you have a cock. It is "
+                        + "a pretty good fit though. I don't know. It doesn't matter. I'm kidnapping you, so we're going to go back to my room, have sex, and you're going to stay the night "
+                        + "in case I want more sex in the morning.\"</i> You follow without protest. <br/>You lose a lot of sleep, but you don't regret it.");
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Angel seems to enjoy your anguish in a way that makes you more than a little nervous. <i>\"That's a great look for you, I'd like to see it more often.\"</i>";
-    }
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "{self:SUBJECT} gives you an intense kiss as the familiar feeling of your strength flowing into her rips through your body, "
+                                + "\"<i>Mmmm... Honestly I don't need any more of your power. I'm already quite a bit stronger than you now, you know? "
+                                + "But that look on your face as you realize your hard work and training amounts to nothing... I can't get enough of that.</i>\"";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "{self:SUBJECT} leans over your shoulder and purrs into your ear as your strength leaves your body, \"<i>Thank you for the donation. But you wont stop now will you?</i>\"";
+            } else {
+                return "Angel finally seems to have caught up to you in strength. That's... not good. The divine seductress rocks her hips once more experimentally, "
+                                + "and shows you a satisfied smile as you uncontrollably let out a final splurt of cum.";
+            }
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Angel gives you a haughty look, practically showing off her body. <i>\"I can't blame you for wanting to see me naked, everyone does.\"</i>";
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Angel groans on the floor. <i>\"You really are a beast. It takes a gentle touch to please a lady.\"</i>";
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        if (opponent.hasDick()) {
-            return "Angel pushes the head of your dick with her finger and watches it spring back into place. <i>\"You obviously can't help yourself. If only you were a little bigger, we could have a lot of fun.\"</i>";
-        } else {
-            return "Angel spreads your cleft with her fingers, <i>\"So wet. Does my little slut want to come? Can't help yourself?\"</i>";
-        }
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Angel looks at you with a grin, <i>\"You're almost drooling. Is staring at my body that much fun? If you want me that much, why don't you just sit there and let me make you feel good.\"</i>";
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.demigoddess)) {
+                return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
+                                + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
+                                + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
+                                + "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
+            } else {
+                return "Angel has long, straight blonde hair that almost reaches her waist. "
+                                + "Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to "
+                                + "her, but you don't know it yet.";
+            }
+        });
     }
 
     @Override
@@ -461,20 +515,6 @@ public class Angel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.demigoddess)) {
-            return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
-                            + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
-                            + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
-                            + "Angel's entire being seems to radiate sex and you struggle to ignore an overwhelming urge to prostrate yourself and beg to worship her body.";
-        } else {
-            return "Angel has long, straight blonde hair that almost reaches her waist. "
-                            + "Beautiful, refined features complete the set, making her utterly irresistable. Her personality is prideful and overbearing, as though you belong to "
-                            + "her, but you don't know it yet.";
-        }
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         if (flag == Result.intercourse) {
             return "Angel pins you on your back, riding you with passion. You're close to the edge, but she's too far gone to take advantage of it. She's fucking you "
@@ -536,19 +576,19 @@ public class Angel extends BasePersonality {
                                             + " energy to control %s who is violently shaking in the throes of orgasm."
                                             + " You ease %s to the floor as %s goes completely limp, while Angel licks"
                                             + " the cum from her fingers.",
-                            target.name(), target.name(), target.name(), target.possessivePronoun(), target.name(),
-                            target.name(), target.pronoun(), target.name(), target.directObject(), target.pronoun());
+                            target.getName(), target.getName(), target.getName(), target.possessiveAdjective(), target.getName(),
+                            target.getName(), target.pronoun(), target.getName(), target.directObject(), target.pronoun());
         }
-        return "You present " + target.name()
+        return "You present " + target.getName()
                         + "'s naked, helpless form to Angel's tender minstrations. Angel licks her lips and begins licking and stroking "
-                        + target.name() + "'s body. She's " + "hitting all the right spots, because soon "
-                        + target.name()
+                        + target.getName() + "'s body. She's " + "hitting all the right spots, because soon "
+                        + target.getName()
                         + " is squirming and moaning in pleasure, and Angel hasn't even touched her pussy yet. "
                         + "Angel meets your eyes to focus your attention and slowly moves her fingers down the front of "
-                        + target.name() + "'s body. You can't see her hands from "
-                        + "this position, but you know when she reaches her target, because " + target.name()
+                        + target.getName() + "'s body. You can't see her hands from "
+                        + "this position, but you know when she reaches her target, because " + target.getName()
                         + " immediately jumps as if she's been shocked. Soon it takes all of "
-                        + "your energy to control " + target.name()
+                        + "your energy to control " + target.getName()
                         + " who is violently shaking in the throes of orgasm. You ease her to the floor as she goes completely limp, "
                         + "while Angel licks the juice from her fingers.";
 
@@ -557,43 +597,27 @@ public class Angel extends BasePersonality {
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
         if (target.human()) {
-            return "You manage to overwhelm " + assist.name()
+            return "You manage to overwhelm " + assist.getName()
                             + " and bring her to the floor. You're able to grab both her arms and pin her helplessly beneath you. "
                             + "Before you can take advantage of your position, pain explodes below your waist. "
-                            + assist.name() + " shouldn't have been able to reach your groin "
+                            + assist.getName() + " shouldn't have been able to reach your groin "
                             + "from her position, but you're in too much pain to think about it. You are still lucid enough to feel large, perky breasts press against your back "
                             + "and a soft whisper in your ear. <i>\"Surprise, lover.\"</i> The voice is unmistakably Angel's. She rolls you onto your back and positions herself over your face,"
                             + " with her legs pinning your arms. Her bare pussy is right in front of you, just out of reach of your tongue. It's weird that she's naked, considering "
                             + "she caught you by surprise, but this is Angel after all.<br/><br/>";
         } else {
-            return "You and " + target.name()
+            return "You and " + target.getName()
                             + " grapple back and forth for several minutes. Soon you're both tired, sweaty, and aroused. You catch her hands for a moment and "
                             + "run your tongue along her neck and collarbone. Recognizing her disadvantage, she jumps out of your grasp and directly into Angel. Neither of you "
-                            + "noticed Angel approach. Before " + target.name()
-                            + " can react, Angel pulls her into a passionate kiss. " + target.name()
+                            + "noticed Angel approach. Before " + target.getName()
+                            + " can react, Angel pulls her into a passionate kiss. " + target.getName()
                             + " forgets to resist and goes limp " + "long enough for Angel to pin her arms.<br/><br/>";
         }
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return Global.format("{self:SUBJECT} licks {self:possessive} lips and stalks {other:name-do} like a predator.", character, other);
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50;
-    }
-
-    @Override
-    public String night() {
-        return "As you start to head back after the match, Angel grabs your hand and drags you in the other direction. <i>\"You're officially kidnapped, because I haven't had "
-                        + "enough sex yet tonight.\"</i> That makes sense... kinda? You did just finish three hours of intense sex-fighting. If she wants too much more than that, you're "
-                        + "both going to end up pretty sleep deprived. Angel looks like she's struggling to put her thoughts into words. <i>\"I had enough sex in general, but I want some "
-                        + "more time having you all to myself.\"</i> That's quite flattering coming from her, but why you specifically? Angel is openly bisexual, she could just as easily "
-                        + "take one of the other girls back with her. She looks back at you and blushes noticeably. <i>\"It's better with you, and not just because you have a cock. It is "
-                        + "a pretty good fit though. I don't know. It doesn't matter. I'm kidnapping you, so we're going to go back to my room, have sex, and you're going to stay the night "
-                        + "in case I want more sex in the morning.\"</i> You follow without protest. <br/>You lose a lot of sleep, but you don't regret it.";
     }
 
     public void advance() {
@@ -623,44 +647,6 @@ public class Angel extends BasePersonality {
                 return value >= 150;
             default:
                 return value >= 100;
-        }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        final String finalLines[] = {
-                        "<i>\"Fill me! Fill me with everything you have!\"</i>",
-                        "Angel pants with a flushed face and lidded eyes, <i>\"I'll pay you back... I wont let you escape!\"</i>",
-                        "<i>\"Fuck me! fuck me! fuck me! fuck!\"</i>",
-                        };
-        switch (character.orgasms) {
-            case 0:
-                return "<i>\"Mmm, maybe you do have promise. Care to try that again?\"</i>";
-            case 1:
-                return "<i>\"Oh fuck, I didn't think you had it in you. More. Now.\"</i>";
-            case 2:
-                return "Angel massages her own cunt as she cums, <i>\"Not enough... Not nearly enough!\"<i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
-        }
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        final String finalLines[] = {
-                        "<i>\"You're making this too easy. Put your back into it!\"</i>",
-                        "<i>\"I'm not satisfied. No, not at all. So keep going.\"</i>",
-                        "<i>\"No resting. I won't allow it.\"</i>",
-                        };
-        switch (target.orgasms) {
-            case 0:
-                return "Angel stares you in the eye as your consciousness returns from the precipice <i>\"Once isn't enough. I need more. You can do that for me, right?\"</i>";
-            case 1:
-                return "<i>\"Surely you won't let it end with just two times right?\"</i>";
-            case 2:
-                return "<i>\"Enough? This is no where near enough. Stop panting and keep going.\"</i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
         }
     }
 }

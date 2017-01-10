@@ -37,7 +37,7 @@ public class Enthralled extends DurationStatus {
     public String initialMessage(Combat c, boolean replaced) {
         if (replaced) {
             return String.format("%s %s control of %s.\n", master.subjectAction("reinforce", "reinforces"),
-                            master.possessivePronoun(), affected.nameDirectObject());
+                            master.possessiveAdjective(), affected.nameDirectObject());
         } else {
             return String.format("%s now enthralled by %s.\n", affected.subjectAction("are", "is"), master.subject());
         }
@@ -46,17 +46,17 @@ public class Enthralled extends DurationStatus {
     @Override
     public String describe(Combat c) {
         if (affected.human()) {
-            return "You feel a constant pull on your mind, forcing you to obey " + master.possessivePronoun()
+            return "You feel a constant pull on your mind, forcing you to obey " + master.possessiveAdjective()
                             + " every command.";
         } else {
-            return affected.name() + " looks dazed and compliant, ready to follow "
+            return affected.subject() + " looks dazed and compliant, ready to follow "
                                 +c.getOpponent(affected).nameOrPossessivePronoun()+" orders.";
         }
     }
 
     @Override
     public String getVariant() {
-        return "enthralled by " + master.name();
+        return "enthralled by " + master.getTrueName();
     }
 
     @Override

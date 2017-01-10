@@ -72,14 +72,14 @@ public class Tear extends Skill {
                                             + getSelf().get(Attribute.Animism) * getSelf().getArousal().percent() / 100)
                             || !target.canAct())) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You channel your animal spirit and shred " + target.name() + "'s "
+                    c.write(getSelf(), "You channel your animal spirit and shred " + target.getName() + "'s "
                                     + article.getName() + " with claws you don't actually have.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s lunges towards %s and rakes %s nails across %s %s, "
                                     + "shredding the garment. That shouldn't be possible. %s "
                                     + "nails are not that sharp, and if they were, %s surely wouldn't have gotten away unscathed.",
-                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
-                                    target.possessivePronoun(), article.getName(),
+                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
+                                    target.possessiveAdjective(), article.getName(),
                                     Global.capitalizeFirstLetter(getSelf().pronoun()),
                                     target.nameDirectObject()));
                 }
@@ -92,7 +92,7 @@ public class Tear extends Skill {
                                             + (target.getStamina().percent() - target.getArousal().percent()) / 4)
                             || !target.canAct()) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), target.name() + " yelps in surprise as you rip her " + article.getName()
+                    c.write(getSelf(), target.getName() + " yelps in surprise as you rip her " + article.getName()
                                     + " apart.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s violently rips %s %s off.",
@@ -104,7 +104,7 @@ public class Tear extends Skill {
                 }
             } else if (isMedical) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to cut apart " + target.name() + "'s " + article.getName()
+                    c.write(getSelf(), "You try to cut apart " + target.getName() + "'s " + article.getName()
                                     + ", but the material is more durable than you expected.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s tries to cut %s %s, but fails to remove them.",
@@ -114,7 +114,7 @@ public class Tear extends Skill {
                 return false;
             } else {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to tear apart " + target.name() + "'s " + article.getName()
+                    c.write(getSelf(), "You try to tear apart " + target.getName() + "'s " + article.getName()
                                     + ", but the material is more durable than you expected.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s yanks on %s %s, but fails to remove it.",
@@ -147,14 +147,14 @@ public class Tear extends Skill {
                                             + getSelf().get(Attribute.Animism) * getSelf().getArousal().percent() / 100)
                             || !target.canAct())) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You channel your animal spirit and shred " + target.name() + "'s "
+                    c.write(getSelf(), "You channel your animal spirit and shred " + target.getName() + "'s "
                                     + article.getName() + " with claws you don't actually have.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s lunges towards %s and rakes %s nails across %s %s, "
                                     + "shredding the garment. That shouldn't be possible. %s "
                                     + "nails are not that sharp, and if they were, %s surely wouldn't have gotten away unscathed.",
-                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessivePronoun(),
-                                    target.possessivePronoun(), article.getName(),
+                                    getSelf().subject(), target.nameDirectObject(), getSelf().possessiveAdjective(),
+                                    target.possessiveAdjective(), article.getName(),
                                     Global.capitalizeFirstLetter(getSelf().pronoun()),
                                     target.nameDirectObject()));
                 }
@@ -165,7 +165,7 @@ public class Tear extends Skill {
                 if (target.human() && target.crotchAvailable() && target.hasDick()) {
                     if (target.getArousal().get() >= 15) {
                         c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
-                                        target.nameOrPossessivePronoun(), target.possessivePronoun()));
+                                        target.nameOrPossessivePronoun(), target.possessiveAdjective()));
                     } else {
                         c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));
@@ -177,7 +177,7 @@ public class Tear extends Skill {
                                             + (target.getStamina().percent() - target.getArousal().percent()) / 4)
                             || !target.canAct()) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), target.name() + " yelps in surprise as you rip her " + article.getName()
+                    c.write(getSelf(), target.getName() + " yelps in surprise as you rip her " + article.getName()
                                     + " apart.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s violently rips %s %s off.",
@@ -190,7 +190,7 @@ public class Tear extends Skill {
                 if (target.human() && target.crotchAvailable()) {
                     if (target.getArousal().get() >= 15) {
                         c.write(getSelf(), String.format("%s boner springs out, no longer restrained by %s pants.",
-                                        target.nameOrPossessivePronoun(), target.possessivePronoun()));
+                                        target.nameOrPossessivePronoun(), target.possessiveAdjective()));
                     } else {
                         c.write(getSelf(), String.format("%s giggles as %s flaccid dick is exposed.",
                                         getSelf().subject(), target.nameOrPossessivePronoun()));
@@ -199,7 +199,7 @@ public class Tear extends Skill {
                 target.emote(Emotion.nervous, 10);
             } else if (isMedical) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to cut apart " + target.name() + "'s " + article.getName()
+                    c.write(getSelf(), "You try to cut apart " + target.getName() + "'s " + article.getName()
                                     + ", but the material is more durable than you expected.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s tries to cut %s %s, but fails to remove them.",
@@ -209,7 +209,7 @@ public class Tear extends Skill {
                 return false;
             } else {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You try to tear apart " + target.name() + "'s " + article.getName()
+                    c.write(getSelf(), "You try to tear apart " + target.getName() + "'s " + article.getName()
                                     + ", but the material is more durable than you expected.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s yanks on %s %s, but fails to remove it.",

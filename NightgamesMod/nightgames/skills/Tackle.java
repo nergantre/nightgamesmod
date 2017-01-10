@@ -114,12 +114,12 @@ public class Tackle extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.special) {
-            return "You let your instincts take over and you pounce on " + target.name()
+            return "You let your instincts take over and you pounce on " + target.getName()
                             + " like a predator catching your prey.";
         } else if (modifier == Result.normal) {
-            return "You tackle " + target.name() + " to the ground and straddle her.";
+            return "You tackle " + target.getName() + " to the ground and straddle her.";
         } else {
-            return "You lunge at " + target.name() + ", but she dodges out of the way.";
+            return "You lunge at " + target.getName() + ", but she dodges out of the way.";
         }
     }
 
@@ -135,7 +135,7 @@ public class Tackle extends Skill {
                             target.pronoun(), target.action("sidestep"));
         } else {
             return String.format("%s bowls %s over and sits triumphantly on %s chest.",
-                            getSelf().subject(), target.nameDirectObject(), target.possessivePronoun());
+                            getSelf().subject(), target.nameDirectObject(), target.possessiveAdjective());
         }
     }
 

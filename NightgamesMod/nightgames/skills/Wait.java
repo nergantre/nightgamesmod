@@ -85,7 +85,7 @@ public class Wait extends Skill {
         } else if (modifier == Result.strong) {
             return "You take a moment to clear your thoughts, focusing your mind and calming your body.";
         } else {
-            return "You bide your time, waiting to see what " + target.name() + " will do.";
+            return "You bide your time, waiting to see what " + target.getName() + " will do.";
         }
     }
 
@@ -98,8 +98,8 @@ public class Wait extends Skill {
                             getSelf(), target);
         } else if (modifier == Result.strong) {
             return String.format("%s closes %s eyes and takes a deep breath. When %s opens %s eyes, "
-                            + "%s seems more composed.", getSelf().subject(), getSelf().possessivePronoun(),
-                            getSelf().pronoun(), getSelf().possessivePronoun(), getSelf().pronoun());
+                            + "%s seems more composed.", getSelf().subject(), getSelf().possessiveAdjective(),
+                            getSelf().pronoun(), getSelf().possessiveAdjective(), getSelf().pronoun());
         } else {
             return String.format("%s hesitates, watching %s closely.",
                             getSelf().subject(), target.nameDirectObject());

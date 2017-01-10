@@ -62,10 +62,10 @@ public class TailJob extends Skill {
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (target.hasDick()) {
             return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
-                            + " to stroke and tease " + target.name() + "'s sensitive girl-cock.";
+                            + " to stroke and tease " + target.getName() + "'s sensitive girl-cock.";
         } else {
             return "You skillfully use your flexible " + getSelf().body.getRandom("tail").describe(getSelf())
-                            + " to stroke and tease " + target.name() + "'s sensitive girl parts.";
+                            + " to stroke and tease " + target.getName() + "'s sensitive girl parts.";
         }
     }
 
@@ -75,16 +75,16 @@ public class TailJob extends Skill {
             return String.format("%s teases %s sensitive dick and balls with %s %s. "
                             + "It wraps completely around %s shaft and strokes firmly.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(),
                             getSelf().body.getRandom("tail").describe(getSelf()),
-                            target.possessivePronoun());
+                            target.possessiveAdjective());
         } else {
             return String.format("%s teases %s sensitive pussy with %s %s. "
                             + "It runs along %s nether lips and leaves %s gasping.",
                             getSelf().subject(), target.nameOrPossessivePronoun(),
-                            getSelf().possessivePronoun(),
+                            getSelf().possessiveAdjective(),
                             getSelf().body.getRandom("tail").describe(getSelf()),
-                            target.possessivePronoun(), target.directObject());
+                            target.possessiveAdjective(), target.directObject());
         }
     }
 

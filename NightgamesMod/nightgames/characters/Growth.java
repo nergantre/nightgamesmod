@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import nightgames.characters.body.BodyPart;
 import nightgames.global.Flag;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
 
 public class Growth implements Cloneable {
     public float arousal;
@@ -24,6 +24,7 @@ public class Growth implements Cloneable {
     private Map<Integer, List<Trait>> traits;
     private Map<Integer, Integer> traitPoints;
     public Map<Integer, List<BodyPart>> bodyParts;
+    private Map<Integer, Clothing> clothing;
 
     public Growth() {
         stamina = 2;
@@ -40,6 +41,7 @@ public class Growth implements Cloneable {
         traits = new HashMap<>();
         bodyParts = new HashMap<>();
         traitPoints = new HashMap<>();
+        clothing = new HashMap<>();
     }
 
     public void addTrait(int level, Trait trait) {
@@ -49,6 +51,10 @@ public class Growth implements Cloneable {
         traits.get(level).add(trait);
     }
 
+    public Map<Integer, List<Trait>> getTraits() {
+        return new HashMap<>(traits);
+    }
+    
     public void addTraitPoints(int[] levels, Character charfor) {
         if (!(charfor instanceof Player)) return;
         for (int level : levels) {
@@ -65,6 +71,10 @@ public class Growth implements Cloneable {
         bodyParts.get(level).add(part);
     }
 
+    public void addClothing(int level, Clothing c) {
+        clothing.putIfAbsent(level, c);
+    }
+    
     public void addOrRemoveTraits(Character character) {
         traits.keySet().stream().filter(i -> i > character.level).forEach(i -> {
             traits.get(i).forEach(character::remove);
@@ -84,6 +94,13 @@ public class Growth implements Cloneable {
                     }
                 }
             });
+        });
+        clothing.forEach((level, c) -> {
+           if (character.getLevel() >= level) {
+               character.outfitPlan.add(c);
+           } else {
+               character.outfitPlan.remove(c);
+           }
         });
     }
 
@@ -125,6 +142,7 @@ public class Growth implements Cloneable {
         Growth clone = (Growth) super.clone();
         clone.traits = Collections.unmodifiableMap(clone.traits);
         clone.bodyParts = Collections.unmodifiableMap(clone.bodyParts);
+        clone.clothing = Collections.unmodifiableMap(clone.clothing);
         return clone;
     }
 }

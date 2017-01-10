@@ -65,10 +65,10 @@ public class HipThrow extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.normal) {
-            return target.name()
+            return target.getName()
                             + " rushes toward you, but you step in close and pull her towards you, using her momentum to throw her across your hip and onto the floor.";
         } else {
-            return "As " + target.name()
+            return "As " + target.getName()
                             + " advances, you pull her towards you and attempt to throw her over your hip, but she steps away from the throw and manages to keep her footing.";
         }
     }
@@ -89,10 +89,10 @@ public class HipThrow extends Skill {
                             + " stable stance than %s and %s has "
                             + "to break away to stay on %s feet.", getSelf().subject(),
                             target.nameOrPossessivePronoun(), target.directObject(),
-                            target.pronoun(), target.action("manage"), target.possessivePronoun(),
-                            getSelf().possessivePronoun(), target.nameDirectObject(),
+                            target.pronoun(), target.action("manage"), target.possessiveAdjective(),
+                            getSelf().possessiveAdjective(), target.nameDirectObject(),
                             getSelf().nameDirectObject(), getSelf().pronoun(),
-                            getSelf().possessivePronoun());
+                            getSelf().possessiveAdjective());
         }
     }
 

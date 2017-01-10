@@ -92,9 +92,9 @@ public class Knee extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return target.name() + " blocks your knee strike.";
+            return target.getName() + " blocks your knee strike.";
         }
-        return "You deliver a powerful knee strike to " + target.name()
+        return "You deliver a powerful knee strike to " + target.getName()
                         + "'s delicate lady flower. She lets out a pained whimper and nurses her injured parts.";
     }
 
@@ -112,18 +112,18 @@ public class Knee extends Skill {
                             + "down like a hammer onto %s %s. %s"
                             + " out in pain and instinctively try "
                             + "to close %s legs, but %s holds them open.",
-                            getSelf().subject(), getSelf().possessivePronoun(),
+                            getSelf().subject(), getSelf().possessiveAdjective(),
                             target.nameOrPossessivePronoun(), victim,
                             Global.capitalizeFirstLetter(target.subjectAction("cry", "cries")),
-                            target.possessivePronoun(), getSelf().subject());
+                            target.possessiveAdjective(), getSelf().subject());
         } else {
             return String.format("%s steps in close and brings %s knee up between %s legs, "
                             + "crushing %s fragile balls. %s and nearly %s from the "
                             + "intense pain in %s abdomen.", getSelf().subject(),
-                            getSelf().possessivePronoun(), target.nameOrPossessivePronoun(),
-                            target.possessivePronoun(),
+                            getSelf().possessiveAdjective(), target.nameOrPossessivePronoun(),
+                            target.possessiveAdjective(),
                             Global.capitalizeFirstLetter(target.subjectAction("groan")),
-                            target.action("collapse"), target.possessivePronoun());
+                            target.action("collapse"), target.possessiveAdjective());
         }
     }
 

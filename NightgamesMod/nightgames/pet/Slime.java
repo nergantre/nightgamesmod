@@ -72,10 +72,10 @@ public class Slime extends Pet {
     @Override
     public void caught(Combat c, Character captor) {
         if (owner().human()) {
-            c.write(captor, captor.name()
+            c.write(captor, captor.getName()
                             + " seizes your slime and holds it near her groin. The ooze reacts to the closeness of her vagina and immediately forms a phallic appendage. She grabs the slimy "
                             + "cock before it can penetrate her and strokes it quickly. With each stroke, the shape becomes more defined, until the slime has a perfectly human penis and a set of testicles. "
-                            + captor.name()
+                            + captor.getName()
                             + " speeds up her stokes and grabs the artifical balls with her free hand. The slime ejaculates its own fluid and melts into a puddle.");
         } else if (captor.human()) {
             c.write(captor, "You manage to catch " + own()

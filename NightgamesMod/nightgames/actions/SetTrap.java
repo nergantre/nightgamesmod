@@ -19,7 +19,7 @@ public class SetTrap extends Action {
     @Override
     public boolean usable(Character user) {
         return trap.recipe(user) && !user.location().open() && trap.requirements(user)
-                        && user.location().env.size() < 5 && !user.bound();
+                        && user.location().env.size() < 5 && !user.bound() && !user.location().isTrapped();
     }
 
     @Override

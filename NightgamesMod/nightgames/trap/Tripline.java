@@ -34,7 +34,7 @@ public class Tripline extends Trap {
         } else {
             if (!target.check(Attribute.Perception, 20 + target.baseDisarm())) {
                 if (target.location().humanPresent()) {
-                    Global.gui().message(target.name()
+                    Global.gui().message(target.getName()
                                     + " carelessly stumbles over the tripwire and lands with an audible thud.");
                 }
                 target.pain(null, null, m);

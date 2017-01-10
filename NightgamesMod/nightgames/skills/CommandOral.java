@@ -61,14 +61,14 @@ public class CommandOral extends PlayerCommand {
     public String deal(Combat c, int magnitude, Result modifier, Character target) {
         switch (modifier) {
             case normal:
-                return target.name() + " is ecstatic at being given the privilege of"
+                return target.getName() + " is ecstatic at being given the privilege of"
                                 + " pleasuring you and does a fairly good job at it, too. She"
                                 + " sucks your hard dick powerfully while massaging your balls.";
             case strong:
-                return target.name() + " seems delighted to 'help' you, and makes short work"
+                return target.getName() + " seems delighted to 'help' you, and makes short work"
                                 + " of taking your flaccid length into her mouth and getting it " + "nice and hard.";
             case weak:
-                return target.name() + " tries her very best to get you ready by running"
+                return target.getName() + " tries her very best to get you ready by running"
                                 + " her tongue all over your groin, but even"
                                 + " her psychically induced enthusiasm can't get you hard.";
             default:

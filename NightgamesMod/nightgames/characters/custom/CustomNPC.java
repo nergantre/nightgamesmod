@@ -27,9 +27,15 @@ public class CustomNPC extends BasePersonality {
     }
 
     public CustomNPC(NPCData data, Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super(data.getName(), data.getStats().level, data.isStartCharacter());
+        super(data.getName(), data.isStartCharacter());
         this.data = data;
         setupCharacter(charConfig, commonConfig);
+        for (String lineType : CharacterLine.ALL_LINES) {
+            character.addLine(lineType, (c, self, other) -> data.getLine(lineType, c, self, other));
+        }
+        for (int i = 1; i < data.getStats().level; i++) {
+            character.ding();
+        }
     }
 
     @Override
@@ -83,31 +89,6 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String bbLiner(Combat c, Character other) {
-        return data.getLine("hurt", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return data.getLine("naked", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return data.getLine("stunned", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        return data.getLine("taunt", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return data.getLine("tempt", c, character, c.getOpponent(character));
-    }
-
-    @Override
     public String victory(Combat c, Result flag) {
         character.getArousal().empty();
         return data.getLine("victory", c, character, c.getOpponent(character));
@@ -116,11 +97,6 @@ public class CustomNPC extends BasePersonality {
     @Override
     public String defeat(Combat c, Result flag) {
         return data.getLine("defeat", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String describe(Combat c, Character self) {
-        return data.getLine("describe", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -157,33 +133,13 @@ public class CustomNPC extends BasePersonality {
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return data.getLine("startBattle", null, character, other);
-    }
-
-    @Override
     public boolean fit() {
         return !character.mostlyNude() && character.getStamina().percent() >= 50;
     }
 
     @Override
-    public String night() {
-        return data.getLine("startBattle", null, character, Global.getPlayer());
-    }
-
-    @Override
     public boolean checkMood(Combat c, Emotion mood, int value) {
         return data.checkMood(character, mood, value);
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        return data.getLine("orgasm", c, character, c.getOpponent(character));
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        return data.getLine("makeOrgasm", c, character, c.getOpponent(character));
     }
 
     @Override
@@ -218,5 +174,9 @@ public class CustomNPC extends BasePersonality {
         all.entrySet().stream().filter(e -> e.getKey().isApplicable(c, character, c.getOpponent(character)))
                         .forEach(e -> applicable.put(e.getKey(), e.getValue()));
         return applicable;
+    }
+    
+    public NPCData getData() {
+        return data;
     }
 }

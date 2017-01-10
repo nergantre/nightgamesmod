@@ -52,14 +52,14 @@ public class ToggleKnot extends Skill {
                 String part = Global.pickRandom(c.getStance().partsFor(c, target)).orElse(Body.nonePart).describe(target);
                 c.write(getSelf(), String.format("%s the intense pressure in %s %s "
                                 + "recede as %s allows %s knot to deflate.", target.subjectAction("feel"),
-                                target.possessivePronoun(), part, getSelf().subject(),
-                                getSelf().possessivePronoun()));
+                                target.possessiveAdjective(), part, getSelf().subject(),
+                                getSelf().possessiveAdjective()));
             }
             target.removeStatus(Stsflag.knotted);
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(),
-                                "You'd like to stay inside " + target.name() + " for a bit, so you "
+                                "You'd like to stay inside " + target.getName() + " for a bit, so you "
                                                 + (c.getStance().canthrust(c, getSelf()) ? "thrust" : "buck up")
                                                 + " as deep inside of her as you can and send a mental command to the base of your cock, where your"
                                                 + " knot soon swells up, locking you inside,");
@@ -70,12 +70,12 @@ public class ToggleKnot extends Skill {
                                     getSelf().subject(), target.nameDirectObject(),
                                     c.isBeingObserved() ? " to " + target.directObject() : "");
                 } else {
-                    firstPart = String.format("%s pulls %s all the way onto %s cock."
+                    firstPart = String.format("%s pulls %s all the way onto %s cock. "
                                     + "As soon as %s pelvis touches %s, something starts happening.",
                                     getSelf().subject(), target.nameDirectObject(),
-                                    getSelf().possessivePronoun(), getSelf().possessivePronoun(),
+                                    getSelf().possessiveAdjective(), getSelf().possessiveAdjective(),
                                     (target.human() || target.useFemalePronouns()) 
-                                    ? target.possessivePronoun() + "s" : "s");
+                                    ? target.possessiveAdjective() + "s" : "s");
                 }
                 c.write(getSelf() ,String.format("%s A ball swells up at the base of %s dick,"
                                 + " growing to the size of a small apple. %s not"

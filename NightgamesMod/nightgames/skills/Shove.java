@@ -51,7 +51,7 @@ public class Shove extends Skill {
         } else if (c.getStance().getClass() == Mount.class || c.getStance().getClass() == ReverseMount.class) {
             if (getSelf().check(Attribute.Power, target.knockdownDC() + 5)) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You shove " + target.name()
+                    c.write(getSelf(), "You shove " + target.getName()
                                     + " off of you and get to your feet before she can retaliate.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s shoves %s hard enough to free %s and jump up.",
@@ -60,7 +60,7 @@ public class Shove extends Skill {
                 c.setStance(new Neutral(getSelf(), target), getSelf(), true);
             } else {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You push " + target.name() + ", but you're unable to dislodge her.");
+                    c.write(getSelf(), "You push " + target.getName() + ", but you're unable to dislodge her.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s shoves %s weakly.", getSelf().subject(), 
                                     target.nameDirectObject()));
@@ -71,7 +71,7 @@ public class Shove extends Skill {
         } else {
             if (getSelf().check(Attribute.Power, target.knockdownDC())) {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You shove " + target.name() + " hard enough to knock her flat on her back.");
+                    c.write(getSelf(), "You shove " + target.getName() + " hard enough to knock her flat on her back.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s knocks %s off balance and %s %s at her feet.",
                                     getSelf().subject(), target.nameDirectObject(),
@@ -80,11 +80,11 @@ public class Shove extends Skill {
                 target.add(c, new Falling(target));
             } else {
                 if (getSelf().human()) {
-                    c.write(getSelf(), "You shove " + target.name() + " back a step, but she keeps her footing.");
+                    c.write(getSelf(), "You shove " + target.getName() + " back a step, but she keeps her footing.");
                 } else if (c.shouldPrintReceive(target, c)) {
                     c.write(getSelf(), String.format("%s pushes %s back, but %s %s able to maintain %s balance.",
                                     getSelf().subject(), target.nameDirectObject(), target.pronoun(),
-                                    target.action("are", "is"), target.possessivePronoun()));
+                                    target.action("are", "is"), target.possessiveAdjective()));
                 }
                 success = false;
             }
@@ -124,7 +124,7 @@ public class Shove extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You channel your ki into your hands and strike " + target.name() + " in the chest, destroying her "
+        return "You channel your ki into your hands and strike " + target.getName() + " in the chest, destroying her "
                         + target.getOutfit().getTopOfSlot(ClothingSlot.top).getName() + ".";
     }
 
@@ -132,8 +132,8 @@ public class Shove extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s strikes %s in the chest with %s palm, staggering %s footing. Suddenly %s "
                         + "%s tears and falls off %s in tatters.", getSelf().subject(),
-                        target.nameDirectObject(), getSelf().possessivePronoun(),
-                        target.possessivePronoun(), target.nameOrPossessivePronoun(),
+                        target.nameDirectObject(), getSelf().possessiveAdjective(),
+                        target.possessiveAdjective(), target.nameOrPossessivePronoun(),
                         target.getOutfit().getTopOfSlot(ClothingSlot.top).getName(),
                         target.directObject());
     }

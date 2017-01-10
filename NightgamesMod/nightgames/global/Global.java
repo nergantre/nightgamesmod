@@ -53,6 +53,7 @@ import nightgames.actions.Action;
 import nightgames.actions.Bathe;
 import nightgames.actions.BushAmbush;
 import nightgames.actions.Craft;
+import nightgames.actions.Disguise;
 import nightgames.actions.Energize;
 import nightgames.actions.Hide;
 import nightgames.actions.Locate;
@@ -165,7 +166,6 @@ public class Global {
     public static final Path COMBAT_LOG_DIR = new File("combatlogs").toPath();
 
     public Global(boolean headless) {
-        //debug[DebugFlags.DEBUG_SKILL_CHOICES.ordinal()] = true;
         rng = new Random();
         flags = new HashSet<>();
         players = new HashSet<>();
@@ -501,6 +501,7 @@ public class Global {
         getSkillPool().add(new Pray(ch));
         getSkillPool().add(new Prostrate(ch));
         getSkillPool().add(new DarkKiss(ch));
+        getSkillPool().add(new SlimeMimicry(ch));
         getSkillPool().add(new MimicAngel(ch));
         getSkillPool().add(new MimicCat(ch));
         getSkillPool().add(new MimicDryad(ch));
@@ -528,6 +529,7 @@ public class Global {
         getSkillPool().add(new Edge(ch));
         getSkillPool().add(new SummonYui(ch));
         getSkillPool().add(new Simulacrum(ch));
+        getSkillPool().add(new Divide(ch));
         getSkillPool().add(new PetThreesome(ch));
         getSkillPool().add(new ReversePetThreesome(ch));
         getSkillPool().add(new PetInitiatedThreesome(ch));
@@ -540,7 +542,11 @@ public class Global {
         getSkillPool().add(new RemoveBomb(ch));
         getSkillPool().add(new MagLock(ch));
         getSkillPool().add(new Collar(ch));
-
+        getSkillPool().add(new HypnoVisorPlace(ch));
+        getSkillPool().add(new HypnoVisorRemove(ch));
+        getSkillPool().add(new StripMinor(ch));
+        getSkillPool().add(new DemandArousal(ch));
+        
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
         }
@@ -561,6 +567,7 @@ public class Global {
         actionPool.add(new Locate());
         actionPool.add(new MasturbateAction());
         actionPool.add(new Energize());
+        actionPool.add(new Disguise());
         actionPool.add(new BushAmbush());
         actionPool.add(new PassAmbush());
         actionPool.add(new TreeAmbush());
@@ -648,7 +655,7 @@ public class Global {
 
     public static Character lookup(String name) {
         for (Character player : players) {
-            if (player.name().equalsIgnoreCase(name)) {
+            if (player.getTrueName().equalsIgnoreCase(name)) {
                 return player;
             }
         }
@@ -1338,9 +1345,10 @@ public class Global {
         }
     }
 
-    public static <T> T pickRandom(T[] arr) {
-        if (arr.length == 0) return null;
-        return arr[Global.random(arr.length)];
+    @SafeVarargs
+    public static <T> Optional<T> pickRandom(T ... arr) {
+        if (arr.length == 0) return Optional.empty();
+        return Optional.of(arr[Global.random(arr.length)]);
     }
     
     public static <T> Optional<T> pickRandom(List<T> list) {
@@ -1365,7 +1373,7 @@ public class Global {
         matchActions = new HashMap<>();
         matchActions.put("possessive", (self, first, second, third) -> {
             if (self != null) {
-                return self.possessivePronoun();
+                return self.possessiveAdjective();
             }
             return "";
         });
@@ -1377,28 +1385,40 @@ public class Global {
         });
         matchActions.put("name", (self, first, second, third) -> {
             if (self != null) {
-                return self.name();
+                return self.getName();
             }
             return "";
         });
         matchActions.put("subject-action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.subjectAction(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.subjectAction(verbs[0], verbs[1]);
+                } else {
+                    return self.subjectAction(verbs[0]);
+                }
             }
             return "";
         });
         matchActions.put("pronoun-action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.pronoun() + " " + self.action(verbs[0], verbs[1]);
+                } else {
+                    return self.pronoun() + " " + self.action(verbs[0]);
+                }
             }
             return "";
         });
         matchActions.put("action", (self, first, second, third) -> {
             if (self != null && third != null) {
                 String verbs[] = third.split("\\|");
-                return self.action(verbs[0], verbs[1]);
+                if (verbs.length > 1) {
+                    return self.action(verbs[0], verbs[1]);
+                } else {
+                    return self.action(verbs[0]);
+                }
             }
             return "";
         });
@@ -1497,6 +1517,10 @@ public class Global {
             }
         });
 
+        matchActions.put("true-name", (self, first, second, third) -> {
+            return self.getTrueName();
+        });
+
         matchActions.put("girl", (self, first, second, third) -> {
                 return self.guyOrGirl();
         });
@@ -1505,6 +1529,12 @@ public class Global {
         });
         matchActions.put("boy", (self, first, second, third) -> {
             return self.boyOrGirl();
+        });
+        matchActions.put("poss-pronoun", (self, first, second, third) -> {
+            if (self != null) {
+                return self.possessivePronoun();
+            }
+            return "";
         });
     }
 
@@ -1603,6 +1633,9 @@ public class Global {
         /*
          * TODO Lots of FTC bugs right now, will disable it for the time being.
          * Enable again once some of the bugs are sorted out.
+        
+        if (checkFlag(Flag.NoFTC)) return MatchType.NORMAL;
+        
         if (human.getLevel() < 15)
             return MatchType.NORMAL;
         if (!checkFlag(Flag.didFTC))
@@ -1623,7 +1656,7 @@ public class Global {
         }
     }
 
-    public static HashSet<Character> getCharacters() {
+    public static HashSet<Character> getParticipants() {
         return new HashSet<>(players);
     }
 
@@ -1639,21 +1672,21 @@ public class Global {
         return rng.nextLong();
     }
 
-    public static Character getCharacterByName(String name) {
-        return players.stream().filter(c -> c.getName().equals(name)).findAny().get();
+    public static Character getParticipantsByName(String name) {
+        return players.stream().filter(c -> c.getTrueName().equals(name)).findAny().get();
     }
 
     private static String DISABLED_FORMAT = "%sDisabled";
     public static boolean checkCharacterDisabledFlag(Character self) {
-        return checkFlag(String.format(DISABLED_FORMAT, self.getName()));
+        return checkFlag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }
 
     public static void setCharacterDisabledFlag(Character self) {
-        flag(String.format(DISABLED_FORMAT, self.getName()));
+        flag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }    
 
     public static void unsetCharacterDisabledFlag(Character self) {
-        unflag(String.format(DISABLED_FORMAT, self.getName()));
+        unflag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }
 
     public static TraitTree getTraitRequirements() {
@@ -1665,10 +1698,18 @@ public class Global {
     }
 
 	public static void writeIfCombat(Combat c, Character self, String string) {
-		if (c == null) {
+	    if (c != null) {
+	        c.write(self, string);
+	    } else if (self.human()) {
 			gui().message(string);
-		} else {
-			c.write(self, string);
 		}
-	}    
+	}
+
+	public static void writeFormattedIfCombat(Combat c, String string, Character self, Character other, Object ...args) {
+		if (c == null) {
+			gui().message(format(string, self, other, args));
+		} else {
+			c.write(self, format(string, self, other, args));
+		}
+	}
 }

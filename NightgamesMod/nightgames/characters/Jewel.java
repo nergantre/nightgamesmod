@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
-import nightgames.characters.body.AnalPussyPart;
+import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.TrainedHoleMod;
+import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
@@ -41,7 +43,8 @@ public class Jewel extends BasePersonality {
     }
 
     public Jewel(Optional<NpcConfiguration> charConfig, Optional<NpcConfiguration> commonConfig) {
-        super("Jewel", 1, charConfig, commonConfig, true);
+        super("Jewel", charConfig, commonConfig, true);
+        constructLines();
     }
 
     @Override
@@ -135,8 +138,8 @@ public class Jewel extends BasePersonality {
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_ANAL_FOCUS) 
                             && !Global.checkFlag(JEWEL_MARTIAL_FOCUS);
-        }, (c, self, player) -> character.name + " leans back a bit as she watches you recover from your fight."
-                        + " <i>\"Hey, " + player.name + ". Pop quiz. If I were to knock you on your ass and then"
+        }, (c, self, player) -> character.subject() + " leans back a bit as she watches you recover from your fight."
+                        + " <i>\"Hey, " + player.getName() + ". Pop quiz. If I were to knock you on your ass and then"
                         + " ride your cock with </i>my<i> ass, which part would you enjoy more?\"</i>", Arrays.asList(
                         new CombatSceneChoice("The takedown", (c, self, other) -> {
                             c.write("Jewel raises a single shapely eyebrow, <i>\"Oh really? Well, at least you're being honest. "
@@ -161,7 +164,7 @@ public class Jewel extends BasePersonality {
                                             + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
                                             + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
                             useAnal();
-                            usePhysical();
+                            useMartial();
                             growth.extraAttributes += 1;
                             // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
                             Global.getPlayer().getGrowth().addTraitPoints(new int[]{25,47},Global.getPlayer());
@@ -172,7 +175,7 @@ public class Jewel extends BasePersonality {
         character.addCombatScene(new CombatScene((c, self, other) -> {
             return character.getLevel() >= 20 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
                             && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
-        }, (c, self, player) -> "Jewel stands over you after the fight while looking at you rather coldly, <i>\"So, " + player.name + ". You're going to be doing what I tell"
+        }, (c, self, player) -> "Jewel stands over you after the fight while looking at you rather coldly, <i>\"So, " + player.getName() + ". You're going to be doing what I tell"
                         + " you. No, don't interrupt. You are. My question is, are you just going"
                         + " to listen to me, or am I going to have to physically force you?\"</i>", Arrays.asList(
                         new CombatSceneChoice("No, No! I'll listen!", (c, self, other) -> {
@@ -229,7 +232,6 @@ public class Jewel extends BasePersonality {
         // 37 - Choice 1, trait 3
         character.getStamina().setMax(100);
         character.getArousal().setMax(70);
-        growth.addBodyPart(40, new AnalPussyPart());
         // 39 - Choice 2, trait 2
 
         growth.addTrait(43, Trait.analTraining3);
@@ -247,6 +249,13 @@ public class Jewel extends BasePersonality {
             if (!character.has(Trait.fighter) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS))) {
                 advance();
             }
+        }
+        if (character.getLevel() >= 40 && Global.checkFlag(JEWEL_ANAL_FOCUS)) {
+            if (!character.body.getRandomAss().getMods(character).stream().anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
+                character.body.addReplace(character.body.getRandomAss().applyMod(new TrainedHoleMod()), 1);
+            }
+        } else if (character.body.getRandomAss().getMods(character).stream().anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
+            character.body.addReplace(AssPart.generateGeneric(), 1);
         }
         super.rest(time);
         if (!(character.has(Item.Crop) || character.has(Item.Crop2)) && character.money >= 200) {
@@ -302,47 +311,124 @@ public class Jewel extends BasePersonality {
         Decider.visit(character);
     }
 
-    @Override
-    public String bbLiner(Combat c, Character other) {
-        return "Jewel gently pats your injured testicles. <br/><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
-                        + "I could never concentrate on fighting.\"</i>";
-    }
+    private void constructLines() {
+        character.addLine(CharacterLine.BB_LINER, (c, self, other) -> {
+            return "Jewel gently pats your injured testicles. <br/><i>\"These things are the reason I'm glad I was born a girl. If I had a pair of big dangling targets between my legs, "
+                            + "I could never concentrate on fighting.\"</i>";
+        });
 
-    @Override
-    public String nakedLiner(Combat c, Character opponent) {
-        return "Jewel smiles and makes no effort to hide her nakedness. <i>\"Feel free to enjoy the view. I love fighting naked, it gives me so much freedom of movement.\"</i>";
-    }
+        character.addLine(CharacterLine.CHALLENGE, (c, self, other) -> {
+            return "Jewel approaches, looking confident and ready to fight.";
+        });
 
-    @Override
-    public String stunLiner(Combat c, Character opponent) {
-        return "Jewel takes several heaving breaths, looking beaten and exhausted. She suddenly grins ear to ear. <i>\"OK, I'm impressed.\"</i>";
-    }
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "Jewel smiles and makes no effort to hide her nakedness. <i>\"Feel free to enjoy the view. I love fighting naked, it gives me so much freedom of movement.\"</i>";
+        });
 
-    @Override
-    public String taunt(Combat c, Character opponent) {
-        if (character.has(Trait.bitingwords) && c.getStance().dom(character)) {
-            ArrayList<String> possible = new ArrayList<>(); 
-            Character other = c.getOpponent(character);
-            possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there "
-                            + c.getOpponent(character)
-                               .getName()
-                            + ".\"</i>");
-            possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quite comfortable there. Maybe you're a natural bottom?\"</i>");
-            if (other.hasBalls()) {
-                possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless " + c.getOpponent(character).boyOrGirl() + "s like you should just give up. Why even try when you end up as my seat every time?\"</i>");
+        character.addLine(CharacterLine.NAKED_LINER, (c, self, other) -> {
+            return "Jewel takes several heaving breaths, looking beaten and exhausted. She suddenly grins ear to ear. <i>\"OK, I'm impressed.\"</i>";
+        });
+
+        character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
+            if (self.has(Trait.bitingwords) && c.getStance().dom(self)) {
+                ArrayList<String> possible = new ArrayList<>(); 
+                possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there "
+                                + c.getOpponent(self).getName()
+                                + ".\"</i>");
+                possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quite comfortable there. Maybe you're a natural bottom?\"</i>");
+                if (other.hasBalls()) {
+                    possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless " + c.getOpponent(character).boyOrGirl() + "s like you should just give up. Why even try when you end up as my seat every time?\"</i>");
+                }
+                return possible.get(Global.random(possible.size()));
             }
-            return possible.get(Global.random(possible.size()));
-        }
-        if (opponent.hasDick()) {
-            return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
-        } else {
-            return "Jewel glares at you and pinches your erect nipples. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
-        }
-    }
+            if (other.hasDick()) {
+                return "Jewel glares at you and squeezes your dick tightly. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
+            } else {
+                return "Jewel glares at you and pinches your erect nipples. <i>\"No matter how horny you are, you better give me your best fight. I don't like fucking weaklings.\"</i>";
+            }
+        });
 
-    @Override
-    public String temptLiner(Combat c, Character opponent) {
-        return "Jewel licks her lips, <i>\"Soon, I'll have you wailing like a whore.\"</i>";
+        character.addLine(CharacterLine.TEMPT_LINER, (c, self, other) -> {
+            return "Jewel licks her lips, <i>\"Soon, I'll have you wailing like a whore.\"</i>";
+        });
+
+        character.addLine(CharacterLine.NIGHT_LINER, (c, self, other) -> {
+            return "You head back to your dorm after saying a quick goodnight to each of your opponents. The only expection is Jewel, who unfortunately appears to have left before "
+                            + "you. When you get near the dorm, you discover why she left in such a hurry. You spot Jewel waiting in front of your dorm before she sees you. She's fidgetting "
+                            + "and looking around constantly, showing none of the confidence and composure you've always seen from her. When you greet her, she keeps her eyes averted and "
+                            + "hesitates before speaking. <i>\"You had a good match tonight, and I wanted to.... I thought maybe we could spend some more time together... just the two of us...\"</i> "
+                            + "She trails off a couple time before something occurs to her. <i>\"Oh, sex! I thought we could have some more sex in your room and maybe... stay the night and... maybe "
+                            + "cuddle?... just a bit?\"</i> You can't quite supress a laugh, which you feel guilty about when she blushes and lowers her eyes. Jewel is a unique kind of girl who won't "
+                            + "hesitate to throw you down for wild sex, but turns into a nervous wreck at the thought of cuddling. <i>\"I'm still a girl, even if I don't always act like it! Is it so "
+                            + "weird for me to want a cuddle sometimes?!\"</i> You kiss her gently and you can feel her calm down a bit. <i>\"I've never really stuck around after sex, but I'm starting to "
+                            + "wake up in the morning wishing I had someone to hold me. Can I wake up in your arms tomorrow?\"</i> You kiss her again and lead her to your room.";
+        });
+
+        character.addLine(CharacterLine.ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "Jewels lets out an uncharacterically cute groan when she cums and glares fiercely at you when you chuckle, <i>\"I didn't cum! You didn't hear anything!\"</i>",
+                            "<i>\"Ahhn feels sho good... No I wont lose!\"</i>",
+                            "Jewel's body flushs bright red, <i>\"My body feels like it's on fire!\"</i>",
+                            };
+            switch (self.orgasms) {
+                case 0:
+                    return "Jewel glares at you after calming down, <i>\"That one doesn't count... Come on, let's have a rematch!\"</i>";
+                case 1:
+                    return "<i>\"Don't give me that smug look, I can go for at least five... no ten more times!\"<i>";
+                case 2:
+                    return "<i>\"Shit shit, I won't let you win!\"</i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }
+        });
+
+        character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
+            final String finalLines[] = {
+                            "<i>\"Wow, still going! You're the best you know? You can't expect everyone to last this long\"</i>",
+                            "<i>\"Keep it coming partner! I'll take all that you've got.\"</i>",
+                            "<i>\"I hope you're not dry yet, let's continue!\"</i>",
+                            "<i>\"Not dry yet? Great, let's continue!\"</i>",
+                            };
+            switch (other.orgasms) {
+                case 0:
+                    return "<i>\"Heh, no matter what, you're just a horny little " + c.getOpponent(character).boyOrGirl()
+                                + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
+                case 1:
+                    return "<i>\"Oooh that's two now. Hope you can keep going!\"</i>";
+                case 2:
+                    return "<i>\"Mmmm not done yet are we? Let's try for a fourth!\"</i>";
+                default:
+                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+            }
+        });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.getType()).orElse("pussy");
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "Jewel smirks at you with a sadistic grin on her face as her " + self.body.getRandom(part).describe(self) 
+                                + " plunders your strength once again. <i>\"Poor {other:guy}, being dominated by someone who used to be so much weaker than you.\"</i> "
+                                + "The red-head leans close to your ear, <i>\"Don't worry... I wont be making the same mistake. You'll always be my bottom-bitch from now on.\"</i>";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "Jewel clings on to your struggling body as your strength flows out of you and into the lovely red-head. As the flow subsides, she smirks "
+                                + "<i>\"Finders keepers...\"</i>";
+            } else {
+                return "Jewel rocks her powerful hips on top of you as you cum your soul out into her " + part + ". "
+                                + "When you finally collapse exhausted, the toned girl declares <i>\"And now we're even. Or maybe I'm a bit stronger? Who knows. "
+                                + "Even though I'm no longer the underdog, I still wont be showing you any mercy.\"</i>";
+            }
+        });
+
+        character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
+            if (character.has(Trait.fighter)) {
+                return "Something has changed about Jewel's demeanor, though it's hard to put your finger on it. Her body has always been toned, but now she seems like a weapon "
+                                + "in human shape. She carries a calm composure subtly different from her normal arrogance. Her movements are deliberate and fluid, like you imagine a "
+                                + "martial arts master would look.";
+            } else {
+                return "Jewel has one of the most appropriate names you've ever. Her eyes are as bright green as emeralds and her long ponytailed hair is ruby red. The combination "
+                                + "makes her strikingly beautiful despite not bothering with any make-up. Her body is fit and toned, with almost no fat. "
+                                + "She practically radiates confidence. By her expression alone, it's like her victory is already assured.";
+            }
+        });
     }
 
     @Override
@@ -560,19 +646,6 @@ public class Jewel extends BasePersonality {
     }
 
     @Override
-    public String describe(Combat c, Character self) {
-        if (character.has(Trait.fighter)) {
-            return "Something has changed about Jewel's demeanor, though it's hard to put your finger on it. Her body has always been toned, but now she seems like a weapon "
-                            + "in human shape. She carries a calm composure subtly different from her normal arrogance. Her movements are deliberate and fluid, like you imagine a "
-                            + "martial arts master would look.";
-        } else {
-            return "Jewel has one of the most appropriate names you've ever. Her eyes are as bright green as emeralds and her long ponytailed hair is ruby red. The combination "
-                            + "makes her strikingly beautiful despite not bothering with any make-up. Her body is fit and toned, with almost no fat. "
-                            + "She practically radiates confidence. By her expression alone, it's like her victory is already assured.";
-        }
-    }
-
-    @Override
     public String draw(Combat c, Result flag) {
         if (flag == Result.intercourse) {
             return "You and Jewel grind against each other, both on the verge of climax, both desperate to push the other over first. At the same instant you feel your ejaculation "
@@ -632,17 +705,17 @@ public class Jewel extends BasePersonality {
                                             + "</i> You feel a chill run down your back, watching Jewel's display of"
                                             + " dominance, but you're also rock hard. %s lets out a loud moan and "
                                             + "covers Jewel's foot with cum.",
-                            target.name(), target.directObject(), target.possessivePronoun(), target.name(),
-                            target.name());
+                            target.getName(), target.directObject(), target.possessiveAdjective(), target.getName(),
+                            target.getName());
         }
-        return "Jewel looks over " + target.name()
+        return "Jewel looks over " + target.getName()
                         + ", trying to decide what to do with her. She leans in and kisses the helpless girl firmly on the lips. Breaking the kiss, "
-                        + "she starts to probe and inspect " + target.name()
-                        + "'s other lips, making her twitch and whimper with each touch. " + target.name()
+                        + "she starts to probe and inspect " + target.getName()
+                        + "'s other lips, making her twitch and whimper with each touch. " + target.getName()
                         + " apparently passes the inspection, "
-                        + "because Jewel slides her hips forward and presses her own wet pussy against " + target.name()
+                        + "because Jewel slides her hips forward and presses her own wet pussy against " + target.getName()
                         + "'s. Both girls moan softly as Jewel begins moving her hips, grinding their lips and clits together. For a moment, "
-                        + "you think Jewel's plan may backfire and she may cum first, but " + target.name()
+                        + "you think Jewel's plan may backfire and she may cum first, but " + target.getName()
                         + " soon shudders to climax in your arms. Jewel doesn't stop until she reaches "
                         + "her own orgasm too.";
     }
@@ -654,45 +727,27 @@ public class Jewel extends BasePersonality {
                         : other.hasPussy() ? "pussy. You fall to the floor"
                                         : other.hasBreasts() ? "breasts. You cringe" : "face. You cower";
         if (target.human()) {
-            return "You skillfully force " + assist.name()
+            return "You skillfully force " + assist.getName()
                             + " to the floor and begin pleasuring her into submission. You rub and finger her pussy until she's shivering and "
                             + "juices flow down her thighs. Before you finish her off, you hear a whistle behind you. You turn and see Jewel standing behind you. Before you can do "
                             + "anything, she sweeps you legs out from under you and deposits you on the floor next to "
-                            + assist.name() + ". She traps your arms in her thighs, leaving "
-                            + "you defenseless. By this time, " + assist.name()
+                            + assist.getName() + ". She traps your arms in her thighs, leaving "
+                            + "you defenseless. By this time, " + assist.getName()
                             + " has recovered and looks ready to take revenge.<br/>";
         } else {
-            return "You wrestle with " + target.name()
+            return "You wrestle with " + target.getName()
                             + " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
-                            + "your legs and slap your " + vulnerability + " in pain, but " + target.name()
+                            + "your legs and slap your " + vulnerability + " in pain, but " + target.getName()
                             + " doesn't have a chance to follow up. Jewel has arrived, seemingly out "
-                            + "of nowhere, and before " + target.name()
+                            + "of nowhere, and before " + target.getName()
                             + " can react, Jewel slaps her on the pussy. She crumples in pain, almost mirroring you, and can't put up any defense "
                             + "when Jewel restrains her arms. You pull yourself back up so you can take advantage of your helpless opponent.<br/>";
         }
     }
 
     @Override
-    public String startBattle(Character self, Character other) {
-        return "Jewel approaches, looking confident and ready to fight.";
-    }
-
-    @Override
     public boolean fit() {
         return true;
-    }
-
-    @Override
-    public String night() {
-        return "You head back to your dorm after saying a quick goodnight to each of your opponents. The only expection is Jewel, who unfortunately appears to have left before "
-                        + "you. When you get near the dorm, you discover why she left in such a hurry. You spot Jewel waiting in front of your dorm before she sees you. She's fidgetting "
-                        + "and looking around constantly, showing none of the confidence and composure you've always seen from her. When you greet her, she keeps her eyes averted and "
-                        + "hesitates before speaking. <i>\"You had a good match tonight, and I wanted to.... I thought maybe we could spend some more time together... just the two of us...\"</i> "
-                        + "She trails off a couple time before something occurs to her. <i>\"Oh, sex! I thought we could have some more sex in your room and maybe... stay the night and... maybe "
-                        + "cuddle?... just a bit?\"</i> You can't quite supress a laugh, which you feel guilty about when she blushes and lowers her eyes. Jewel is a unique kind of girl who won't "
-                        + "hesitate to throw you down for wild sex, but turns into a nervous wreck at the thought of cuddling. <i>\"I'm still a girl, even if I don't always act like it! Is it so "
-                        + "weird for me to want a cuddle sometimes?!\"</i> You kiss her gently and you can feel her calm down a bit. <i>\"I've never really stuck around after sex, but I'm starting to "
-                        + "wake up in the morning wishing I had someone to hold me. Can I wake up in your arms tomorrow?\"</i> You kiss her again and lead her to your room.";
     }
 
     public void advance() {
@@ -718,46 +773,6 @@ public class Jewel extends BasePersonality {
             case nervous:
             default:
                 return value >= 100;
-        }
-    }
-
-    @Override
-    public String orgasmLiner(Combat c) {
-        final String finalLines[] = {
-                        "Jewels lets out an uncharacterically cute groan when she cums and glares fiercely at you when you chuckle, <i>\"I didn't cum! You didn't hear anything!\"</i>",
-                        "<i>\"Ahhn feels sho good... No I wont lose!\"</i>",
-                        "Jewel's body flushs bright red, <i>\"My body feels like it's on fire!\"</i>",
-                        };
-        switch (character.orgasms) {
-            case 0:
-                return "Jewel glares at you after calming down, <i>\"That one doesn't count... Come on, let's have a rematch!\"</i>";
-            case 1:
-                return "<i>\"Don't give me that smug look, I can go for at least five... no ten more times!\"<i>";
-            case 2:
-                return "<i>\"Shit shit, I won't let you win!\"</i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
-        }
-    }
-
-    @Override
-    public String makeOrgasmLiner(Combat c, Character target) {
-        final String finalLines[] = {
-                        "<i>\"Wow, still going! You're the best you know? You can't expect everyone to last this long\"</i>",
-                        "<i>\"Keep it coming partner! I'll take all that you've got.\"</i>",
-                        "<i>\"I hope you're not dry yet, let's continue!\"</i>",
-                        "<i>\"Not dry yet? Great, let's continue!\"</i>",
-                        };
-        switch (target.orgasms) {
-            case 0:
-                return "<i>\"Heh, no matter what, you're just a horny little " + c.getOpponent(character).boyOrGirl()
-                            + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
-            case 1:
-                return "<i>\"Oooh that's two now. Hope you can keep going!\"</i>";
-            case 2:
-                return "<i>\"Mmmm not done yet are we? Let's try for a fourth!\"</i>";
-            default:
-                return Global.pickRandom(Arrays.asList(finalLines)).get();
         }
     }
 }

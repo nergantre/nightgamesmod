@@ -46,7 +46,7 @@ public class EnthrallingTrap extends Trap {
             if (target.location().humanPresent()) {
                 Global.gui().message("You catch a bout of purple fire in your peripheral vision,"
                                 + "but once you have turned to look the flames are gone. All that is left"
-                                + " to see is " + target.name() + ", standing still and staring blankly ahead."
+                                + " to see is " + target.getName() + ", standing still and staring blankly ahead."
                                 + " It would seem to be very easy to have your way with her now, but"
                                 + " who or whatever left that thing there will probably be thinking" + " the same.");
             }

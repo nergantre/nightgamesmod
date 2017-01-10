@@ -73,10 +73,10 @@ public class FGoblin extends Pet {
         if(owner().human()){
             c.write(captor,String.format("%s gets a short running start and delivers a powerful punt to your fetish goblin's dangling balls. The impact lifts the short "
                     + "hermaphrodite completely off the floor as you cringe in sympathetic pain. Apparently it's too much even for the masochistic creature, because she "
-                    + "collapses and disappears.",captor.name()));
+                    + "collapses and disappears.", captor.getName()));
         }
         else{
-            c.write(captor, String.format("You manage to catch %s's ",owner().name()));
+            c.write(captor, String.format("You manage to catch %s's ", owner().getName()));
             c.write(captor, Global.format("{other:SUBJECT} manage to catch {self:name-do} fetish goblin by her bondage gear, keeping her from escaping. It's not immediately clear how {other:pronoun} can "
                     + "finish off the overstimulated goblin. There's not much {other:subject} can do to the goblin's genitals beyond what she's already doing with her 'accessories.' "
                     + "{other:SUBJECT-ACTION:need|needs} a strong enough stimulus to push her over the theshold. {other:PRONOUN} grab the end of the anal beads sticking out of the fetish goblin's ass and "

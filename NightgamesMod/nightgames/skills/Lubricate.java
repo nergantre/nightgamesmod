@@ -44,7 +44,7 @@ public class Lubricate extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You cover " + target.name() + " with an oily Lubricant.";
+        return "You cover " + target.getName() + " with an oily Lubricant.";
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Lubricate extends Skill {
         return String.format("%s throws an oily liquid at %s. The liquid "
                         + "clings to %s and makes %s whole body slippery.",
                         getSelf().subject(), target.nameDirectObject(),
-                        target.directObject(), target.possessivePronoun());
+                        target.directObject(), target.possessiveAdjective());
     }
 
     @Override

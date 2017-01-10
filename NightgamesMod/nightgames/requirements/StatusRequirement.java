@@ -35,4 +35,8 @@ public class StatusRequirement extends BaseRequirement {
     @Override public int hashCode() {
         return flag.hashCode();
     }
+    
+    public Stsflag getFlag() {
+        return flag;
+    }
 }

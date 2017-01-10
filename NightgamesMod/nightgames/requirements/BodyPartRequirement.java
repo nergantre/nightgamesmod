@@ -32,4 +32,8 @@ public class BodyPartRequirement extends BaseRequirement {
     @Override public int hashCode() {
         return super.hashCode() * 31 + type.hashCode();
     }
+    
+    public String getType() {
+        return type;
+    }
 }

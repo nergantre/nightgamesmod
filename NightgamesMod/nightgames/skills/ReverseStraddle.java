@@ -48,14 +48,14 @@ public class ReverseStraddle extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You straddle " + target.name() + ", facing her feet.";
+        return "You straddle " + target.getName() + ", facing her feet.";
     }
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return String.format("%s sits on %s chest, facing %s crotch.",
                         getSelf().subject(), target.nameOrPossessivePronoun(),
-                        target.possessivePronoun());
+                        target.possessiveAdjective());
     }
 
     @Override

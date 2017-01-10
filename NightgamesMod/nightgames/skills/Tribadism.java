@@ -5,6 +5,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.stance.TribadismStance;
 
@@ -12,10 +13,13 @@ public class Tribadism extends Skill {
 
     public Tribadism(String name, Character self, int cooldown) {
         super(name, self, cooldown);
+        addTag(SkillTag.pleasure);
+        addTag(SkillTag.fucking);
+        addTag(SkillTag.petDisallowed);
     }
 
     public Tribadism(Character self) {
-        super("Tribadism", self);
+        this("Tribadism", self, 0);
     }
 
     public BodyPart getSelfOrgan() {
@@ -101,8 +105,8 @@ public class Tribadism extends Skill {
         if (modifier == Result.normal) {
             String message = String.format("%s grabs %s leg and slides her crotch against %s."
                             + " She then grinds her %s against %s wet %s.", getSelf().subject(),
-                            target.nameOrPossessivePronoun(), target.possessivePronoun(),
-                            selfO.describe(getSelf()), target.possessivePronoun(),
+                            target.nameOrPossessivePronoun(), target.possessiveAdjective(),
+                            selfO.describe(getSelf()), target.possessiveAdjective(),
                             targetO.describe(getSelf()));
             return message;
         }

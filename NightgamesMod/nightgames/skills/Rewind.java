@@ -70,7 +70,7 @@ public class Rewind extends Skill {
         return String.format(
                         "%s hits a button on %s wristband and suddenly seems to completely recover. It's like nothing "
                                         + "%s done even happened.",
-                        getSelf().name(), getSelf().possessivePronoun(),
+                        getSelf().getName(), getSelf().possessiveAdjective(),
                         target.subjectAction("have", "has"));
     }
 

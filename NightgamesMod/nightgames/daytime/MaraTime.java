@@ -163,7 +163,7 @@ public class MaraTime extends BaseNPCTime {
                                   + "lab as having rows of fully functional computers and enough clear floorspace to walk through. Most of the computers here are only half assembled and "
                                   + "every surface is covered with assorted electronics. Mara is the only one in the small room, unless someone is buried in the PLCs and cords. She's focused "
                                   + "intensely on her work and doesn't even notice you until you call out to her.<br/><br/><i>\"Oh, hi "
-                                  + player.name() + ".\"</i> She glances up at you, but continues typing "
+                                  + player.getTrueName() + ".\"</i> She glances up at you, but continues typing "
                                   + "on one of the keyboards in front of her. <i>\"How are you doing?\"</i> You ask her if she'd like to take a break and hang out for a while.<br/><i>\"Sounds fun, but I really "
                                   + "need to finish this tonight and it's not being cooperative.\"</i> She lets out a long yawn and picks up a nearby energy drink, but tosses it away when she realizes it's "
                                   + "empty. <i>\"I'm probably going to be stuck here right up to the start of tonight's match. If you could do me a favor and get me something with some caffeine, "
@@ -175,7 +175,7 @@ public class MaraTime extends BaseNPCTime {
         } else {
             Global.gui()
                   .message("You head to the computer lab to see Mara. She jumps in surprise when the door opens, but relaxes when she sees who you are. <i>\"Hi "
-                                  + player.name() + ". "
+                                  + player.getTrueName() + ". "
                                   + "I'm in the middle of something I can't really put down, but if you won't be bored, I'd enjoy some company.\"</i> Mara clears the junk off a chair behind her. You make "
                                   + "your way through the tangle of cords and sit down behind her. The two of you engage in some chat about nothing in particular, and you're impressed by her "
                                   + "ability to hold a conversation while writing code at an astonishing speed.<br/><br/>Eventually curiosity gets the better of you and you have to ask why she was so jumpy "
@@ -263,7 +263,7 @@ public class MaraTime extends BaseNPCTime {
                                       + " felt better. When you are finally done, Mara releases you from all commands. <i>\"I guess you hate me now, huh? I"
                                       + " know it was wrong, but I just had to try, to do something, I...\"</i> You cut her off by kissing her. Yeah, her"
                                       + " methods were pretty brutal, but that was the most intense thing you ever felt. If she can make you feel like that,"
-                                      + " who cares about some hypnosis thing? <i>\"Oh, " + player.name()
+                                      + " who cares about some hypnosis thing? <i>\"Oh, " + player.getTrueName()
                                       + "! You're not mad? Oh!\"</i> She wraps her arms "
                                       + "around you, and you continue hugging and making out for a while before you finally leave. Your "
                                       + "muscles feel a little sluggish, and it's only going to get worse with time and distance, but maybe"
@@ -387,7 +387,7 @@ public class MaraTime extends BaseNPCTime {
                                       + "ahead. She doesn't even pretend to be trying very hard. While you're planning out your next move, she tends to get bored and cuddle with you on the couch. This has a pretty profound impact on "
                                       + "your ability to concentrate. Even simple calculations become a challenge when she's stroking your thigh or breathing on your neck. On your turn you place down two stones in formation to "
                                       + "use them next turn, but she immediately summons a Sylvan Princess and steals one of them. <i>\"That was a bit too obvious for me to let happen. Is your head completely in "
-                                      + "this game " + player.name()
+                                      + "this game " + player.getTrueName()
                                       + "?\"</i> She's doing it on purpose, you're certain. She's building up fearsome formations of units, but every time you try to work out a counter, your "
                                       + "attention is seized by the feeling of her small, but soft breasts against your arm; or the sweet scent of her shampoo; or the sensation of her fingers creeping toward the "
                                       + "zipper of your jeans... hey wait! <br/><br/><i>\"What?\"</i> she asks innocently, while unzipping your pants. <i>\"Your erection looked very uncomfortable in those restricting pants, so I "

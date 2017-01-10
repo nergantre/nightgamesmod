@@ -96,7 +96,7 @@ public enum Trait {
         if (c.human()) {
             b.append("You exude");
         } else {
-            b.append(c.name() + " exudes");
+            b.append(c.getName() + " exudes");
         }
         b.append(" an aura of pure eros, making both of you flush with excitement.");
     }), // Eve
@@ -122,7 +122,7 @@ public enum Trait {
         if (c.human()) {
             b.append("your");
         } else {
-            b.append(c.name() + "'s");
+            b.append(c.getName() + "'s");
         }
         b.append(" body.");
     }), // causes horny in opponents if aroused
@@ -269,7 +269,7 @@ public enum Trait {
             if (c.human())
                 b.append("You shy away from your opponent's gaze.");
             else
-                b.append(c.name + " quickly avoids your gaze.");
+                b.append(c.subject() + " quickly avoids your gaze.");
         }
     }), // restricts striptease, flick, facesit, taunt, squeeze
 
@@ -279,7 +279,7 @@ public enum Trait {
     succubus("Succubus", "Embraced the dark powers that feed on mortal lust"),
     demigoddess("Demigoddess", "Blessed by a deity of sexual pleasure, and on the road to ascension herself."),
     fighter("Fighter", "A combination of martial arts and ki"),
-    slime("Slime", "An accident in the biology labs made the body a bit more... malleable."),
+    slime("Slime", "An accident in the biology labs made her body a bit more... malleable."),
     dryad("Dryad", "Part girl, part tree."),
     temptress("Temptress", "Well versed in the carnal arts."),
     ninja("Ninja", "A shadowy servant."),
@@ -355,7 +355,7 @@ public enum Trait {
             if (c.human()) {
                 b.append("your slobbering pussy.");
             } else {
-                b.append(c.name + "'s slobbering pussy.");
+                b.append(c.nameOrPossessivePronoun() + " slobbering pussy.");
             }
         }
     }),
@@ -394,27 +394,30 @@ public enum Trait {
     Unsatisfied("Unsatisfied", "Hard to finish off without fucking"),
 
     // Airi Unique Traits
-    // Parasitism - debuffs and control
-    Parasite("Parasite", "Implants a parasite with a kiss"),
-    Voracity("Voracity", "Drains stamina to speed up parasite growth rate"),
-    NeuralLink("Neural Link", "Parasites can mind control after being established"),
-    InebriatatingToxins("Inebriating Toxins", "Parasite's toxin buildups weaken basic attributes"),
+    // Slime debuff - builds up slime on to an opponent when coming into contact. This slows them down and eventually petrifies them.
+    VolatileSubstrate("Volatile Substrate", "Slimes those who get come into contact"),
+    ParasiticBond("Parasitic Bond", "Slime buildup drains stamina"),
+    PetrifyingPolymers("Petrifying Polymers", "Slime buildup eventually petrifies the target"),
+    EnduringAdhesive("Enduring Adhesive", "Slime buildup lasts longer"),
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),
     UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
-    CeilingStalker("Ceiling Stalker", "Can ambush from the ceilings"),
+    ThePrestige("The Prestige", "Will engulf upon unveiling the disguise"),
     Masquerade("Masquerade", "Improves quality of mimicry"),
 
     // Queen Slime - Clones build
     SlimeRoyalty("Slime Royalty", "Can now divide the body"),
     RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
-    // + parasite 
-    MimicClothing("Mimic: Clothing", "Clones can transform themselves into clothing for the opponent."),
+    // + slime
+    StickyFinale("Sticky Finale", "Clones explode when defeated"),
     // + transformation
     MimicBodyPart("Mimic: BodyPart", "Clones can transform themselves into extra body parts for the opponent."),
-    StickyFinale("Sticky Finale", "Clones explode when defeated"),
+    HiveMind("Hive Mind", "Pets cum instead of the owner"),
     NoblesseOblige("Noblesse Oblige", "Clones are stronger"),
+
+    // debuff trait for clones so they aren't too overwhelming
+    MindlessClone("Mindless Clone", "Half sentience makes them less tempting"),
 
     // Slime Carrier - Immortal pet build
     SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),
@@ -428,7 +431,7 @@ public enum Trait {
 
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),
-    temptingass("Tempting Ass", "Opponent's can't help butt fuck it"), // ... sorry
+    temptingass("Tempting Ass", "Opponents can't help butt fuck it"), // ... sorry
     disablingblows("Disabling Blows", "Painful attacks may reduce Power"),
     takedown("Takedown", "Expert at tackling weary opponents"),
     indomitable("Indomitable", "Plainly refuses to be dominated"),
@@ -442,7 +445,7 @@ public enum Trait {
     grappler("Grappler", "Bonus to hold strength"),
     suave("Suave", "Bonus seduction vs girls."),
     brutesCharisma("Brute's Charisma", "Extra charisma based on Power and Ki when on top."),
-    
+
     // Mara's unique traits
     harpoon("Harpoon Toy", "Can launch a harpoon-like sex toy from their arm device"),
     yank("Yank", "Can yank opponents to the ground if they have a harpoon toy on them"),
@@ -452,12 +455,21 @@ public enum Trait {
     maglocks("MagLocks", "Has MagLocks, which are very good at binding opponents' limbs together"),
     trainingcollar("Training Collar", "Has a Training Collar, which can be used to 'encourage' opponents to be good"),
     roboweb("RoboWeb", "Improved Spiderweb trap"),
+    octo("Octo", "Has robotic arms mounted onto their back"),
+    stabilized("Stabilized", "Supported by RoboArms"),
+    infrasound("Infrasound", "Gets a mind-controlling necklace"),
+    hypnovisor("Hypno Visor", "Has a fancy Hypno Visor to further her mind control"),
+    ControlledRelease("Controlled Release", "Can use mind control to tempt opponents"),
+    RemoteControl("Remote Control", "Can deploy a fancy hypnosis trap"),
+    EyeOpener("Eye Opener", "The harpoon toy enhances mind control"),
+    stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
+
     // Item
     strapped("Strapped", "Penis envy", (b, c, t) -> {
         if (c.human()) {
             b.append("A large black strap-on dildo adorns your waist.");
         } else {
-            b.append("A large black strap-on dildo adorns " + c.name() + "'s waists.");
+            b.append("A large black strap-on dildo adorns " + c.nameOrPossessivePronoun() + " waists.");
         }
     }), // currently wearing a strapon
 
@@ -542,7 +554,7 @@ public enum Trait {
                 if (s.flags().contains(Stsflag.piercingOdor) && s instanceof Pheromones) {
                     Pheromones pheromones = ((Pheromones)s);
                     pheromones.setMagnitude(pheromones.getMagnitude() / 2);
-                    combat.write(c, "The piercing scent of the pheromones overpowers " + c.possessivePronoun() + " cool-headedness. While it doesn't affect " + c.directObject()+ " as much as it should, it's still impossible to just shrug off.");
+                    combat.write(c, "The piercing scent of the pheromones overpowers " + c.possessiveAdjective() + " cool-headedness. While it doesn't affect " + c.directObject()+ " as much as it should, it's still impossible to just shrug off.");
                     return "";
                 }
                 return "Calm";

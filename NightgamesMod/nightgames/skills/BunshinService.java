@@ -60,7 +60,7 @@ public class BunshinService extends Skill {
             c.write(getSelf(), String.format("You form %d shadow clones and rush forward.",clones));
         }
         else if(c.shouldPrintReceive(target, c)){
-            c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().name(),
+            c.write(getSelf(), String.format("%s moves in a blur and suddenly %s %d of %s approaching %s.",getSelf().getName(),
                             target.subjectAction("see"),clones,getSelf().pronoun(),target.reflectivePronoun()));
         }
         for (int i = 0; i < clones; i++) {
@@ -123,23 +123,23 @@ public class BunshinService extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if(modifier==Result.miss){
-            return String.format("%s dodges your clone's groping hands.",target.name());
+            return String.format("%s dodges your clone's groping hands.",target.getName());
         }else if(modifier==Result.weak){
-            return String.format("Your clone darts close to %s and kisses %s on the lips.",target.name(),target.directObject());
+            return String.format("Your clone darts close to %s and kisses %s on the lips.",target.getName(),target.directObject());
         }else if(modifier==Result.strong){
             if(target.hasDick()){
-                return String.format("Your shadow clone grabs %s's dick and strokes it.",target.name());
+                return String.format("Your shadow clone grabs %s's dick and strokes it.",target.getName());
             }else{
-                return String.format("Your shadow clone fingers and caresses %s's pussy lips.",target.name());
+                return String.format("Your shadow clone fingers and caresses %s's pussy lips.",target.getName());
             }
         }else if(modifier==Result.critical){
             if(target.hasDick()){
-                return String.format("Your clone attacks %s's sensitive penis, rubbing and stroking %s glans.",target.name(),target.possessivePronoun());
+                return String.format("Your clone attacks %s's sensitive penis, rubbing and stroking %s glans.",target.getName(),target.possessiveAdjective());
             }else{
-                return String.format("Your clone slips between %s's legs to lick and suck %s swollen clit.",target.name(),target.possessivePronoun());
+                return String.format("Your clone slips between %s's legs to lick and suck %s swollen clit.",target.getName(),target.possessiveAdjective());
             }
         }else{
-            return String.format("A clone pinches and teases %s's nipples",target.name());
+            return String.format("A clone pinches and teases %s's nipples",target.getName());
         }
     }
 
@@ -149,7 +149,7 @@ public class BunshinService extends Skill {
             return String.format("%s to avoid one of the shadow clones.",
                             target.subjectAction("manage"));
         }else if(modifier==Result.weak){
-            return String.format("One of the %ss grabs %s and kisses %s enthusiastically.",getSelf().name(),
+            return String.format("One of the %ss grabs %s and kisses %s enthusiastically.",getSelf().getName(),
                             target.subject(), target.directObject());
         }else if(modifier==Result.strong){
             if(target.hasBalls()){
@@ -161,19 +161,19 @@ public class BunshinService extends Skill {
             }
         }else if(modifier==Result.critical){
             if(target.hasDick()){
-                return String.format("One of the %s clones kneels between %s legs to lick and suck %s cock.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                return String.format("One of the %s clones kneels between %s legs to lick and suck %s cock.",getSelf().getName(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }else{
-                return String.format("One of the %s clones kneels between %s legs to lick %s nether lips.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                return String.format("One of the %s clones kneels between %s legs to lick %s nether lips.",getSelf().getName(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }
         }else{
             if(getSelf().hasBreasts()){
-                return String.format("A %s clone presses her boobs against %s and teases %s nipples.",getSelf().name(),
-                                target.subject(), target.possessivePronoun());
+                return String.format("A %s clone presses her boobs against %s and teases %s nipples.",getSelf().getName(),
+                                target.subject(), target.possessiveAdjective());
             }else{
-                return String.format("A %s clone caresses %s chest and teases %s nipples.",getSelf().name(),
-                                target.nameOrPossessivePronoun(), target.possessivePronoun());
+                return String.format("A %s clone caresses %s chest and teases %s nipples.",getSelf().getName(),
+                                target.nameOrPossessivePronoun(), target.possessiveAdjective());
             }
             
         }

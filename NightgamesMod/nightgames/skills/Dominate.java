@@ -63,7 +63,7 @@ public class Dominate extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         return "You take a deep breathe, gathering dark energy into your lungs. You expend the power to command "
-                        + target.name() + " to submit. The demonic command renders her "
+                        + target.getName() + " to submit. The demonic command renders her "
                         + "unable to resist and she drops to floor, spreading her legs open to you. As you approach, she comes to her senses and quickly closes her legs. Looks like her "
                         + "will is still intact.";
     }
@@ -75,11 +75,11 @@ public class Dominate extends Skill {
                         + "pushes %s onto %s back. By the time %s free of %s suggestion, %s %s"
                         + " flat on the floor with %s foot planted on %s chest.", getSelf().subject(),
                         target.subject(), Global.capitalizeFirstLetter(target.pronoun()),
-                        target.possessivePronoun(), target.pronoun(), target.action("drop"),
-                        target.possessivePronoun(), getSelf().directObject(),
-                        getSelf().name(), target.nameDirectObject(), target.possessivePronoun(),
-                        target.subjectAction("break"), getSelf().possessivePronoun(), target.pronoun(),
-                        target.action("are", "is"), getSelf().nameOrPossessivePronoun(), target.possessivePronoun());
+                        target.possessiveAdjective(), target.pronoun(), target.action("drop"),
+                        target.possessiveAdjective(), getSelf().directObject(),
+                        getSelf().getName(), target.nameDirectObject(), target.possessiveAdjective(),
+                        target.subjectAction("break"), getSelf().possessiveAdjective(), target.pronoun(),
+                        target.action("are", "is"), getSelf().nameOrPossessivePronoun(), target.possessiveAdjective());
     }
 
 }

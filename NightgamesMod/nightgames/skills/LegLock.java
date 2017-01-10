@@ -62,9 +62,9 @@ public class LegLock extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "You grab " + target.name() + "'s leg, but she kicks free.";
+            return "You grab " + target.getName() + "'s leg, but she kicks free.";
         } else {
-            return "You take hold of " + target.name() + "'s ankle and force her leg to extend painfully.";
+            return "You take hold of " + target.getName() + "'s ankle and force her leg to extend painfully.";
         }
     }
 
@@ -76,7 +76,7 @@ public class LegLock extends Skill {
                             target.pronoun(), target.action("slip"));
         } else {
             return String.format("%s pulls %s leg across %s body in a painful submission hold.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessivePronoun());
+                            getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective());
         }
     }
 

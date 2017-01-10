@@ -37,8 +37,8 @@ public class Aggressive extends DurationStatus {
         if (affected.human()) {
             return "Affected by " + cause + ", you are incapable of anything but an all-out assault.";
         }
-        return String.format("%s has an aggressive look on %s face: eyes wide open, teeth bared.", affected.name(),
-                        affected.possessivePronoun());
+        return String.format("%s has an aggressive look on %s face: eyes wide open, teeth bared.", affected.getName(),
+                        affected.possessiveAdjective());
     }
 
     @Override

@@ -33,7 +33,7 @@ public class AngelTime extends BaseNPCTime {
                         "[Placeholder]<br/>Angel says she may be able to try a few things with her new divine powers.";
         loveIntro = "You meet Angel at her room, but for once, she doesn't seem eager to get to sex. You can tell she has something on her mind, so you let her lean "
                         + "against you on the futon while she thinks. It's quiet. You aren't used to your time with Angel being quiet, mostly because you so rarely meet her alone. You "
-                        + "lose track of time sitting there before she breaks the silence. <i>\"" + player.name()
+                        + "lose track of time sitting there before she breaks the silence. <i>\"" + player.getTrueName()
                         + ", what do you think about my friends?\"</i> That's not the question you expected. "
                         + "You've gotten along with her friends quite well so far. Angel shifts her position so you can't see her face. <i>\"I've had several lovers who couldn't get along with "
                         + "my friends. Some of them pretended they did for awhile, some of them wanted me to spend less time with them.\"</i> Her friends are very socially and sexually aggressive. "
@@ -410,7 +410,7 @@ public class AngelTime extends BaseNPCTime {
                                       + "her. As you somewhat hesitantly sit down, she begins to slowly stroke and play with your erection. She leans in close to whisper in your ear. <i>\"Everyone wants to see you cum, so I can tease "
                                       + "them by teasing you.\"</i> You groan quietly. You can't deny the pleasure she's giving you, but she's clearly not going to let you finish anytime soon. Caroline watches the two of you with a flushed "
                                       + "smile. Mei and Sarah are both watching rapt, each with one hand under the table. <i>\""
-                                      + player.name()
+                                      + player.getTrueName()
                                       + " isn't the only loser in the room,\"</i> Caroline says while glancing at the naked girls. <i>\"How about "
                                       + "the two of you give him some eye candy by showing him what you're doing under there.\"</i> Sarah lets out a surprised whimper at the command, but she and Mei both obey Caroline as she has them sit "
                                       + "facing you while they masturbate openly. Sarah looks so embarrassed she may cry, but you can tell she's getting off on this more than anyone else. Mei looks more composed, but from time to time you see her "
@@ -440,7 +440,7 @@ public class AngelTime extends BaseNPCTime {
                                       + "topless and you're in your boxers. <i>\"Right hand boob\"</i> You palm her breast without even thinking, and she lets out a soft noise. You apologize, but she just smiles back at you. "
                                       + "<i>\"Don't worry about it. You can probably repay me if you hold that position for a little while longer.\"</i> <i>\"Right hand male!\"</i> Wait... what? Caroline grins victoriously and her hand darts "
                                       + "into your boxers to grab your dick. Sarah cheers excitedly and leans in for a closer look. <i>\"Caroline got the penis! That means everyone else loses an article of clothing and that "
-                                      + "means Angel and " + player.name()
+                                      + "means Angel and " + player.getTrueName()
                                       + " are out. Caroline wins!\"</i> <br/><br/>There was definitely no mention of a bonus for grabbing your cock during the rules explanation. Caroline's response to "
                                       + "your protests is to rub the sensitive head of your dick with her thumb, making you squirm a bit despite your indignation. Angel speaks up from behind you while removing her panties. <i>\"If we warned you, you would have tried to protect your man "
                                       + "parts. That would have been no fun.\"</i> Caroline smiles while still holding your shaft. <i>\"I think of this as a team victory. If you want, I don't mind rewarding you for your cooperation.\"</i> "

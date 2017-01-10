@@ -25,8 +25,8 @@ public class FlowerSex extends FemdomSexStance {
                             + "and %s face smothered in %s cleavage.", bottom.subjectAction("are", "is"),
                             bottom.human() ? "you" : bottom.reflectivePronoun(), top.subject(),
                             bottom.subjectAction("are", "is"), top.nameDirectObject(),
-                            bottom.possessivePronoun(), top.possessivePronoun(),
-                            bottom.possessivePronoun(), top.possessivePronoun());
+                            bottom.possessiveAdjective(), top.possessiveAdjective(),
+                            bottom.possessiveAdjective(), top.possessiveAdjective());
         }
     }
 

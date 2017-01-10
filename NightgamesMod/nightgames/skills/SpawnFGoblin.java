@@ -67,7 +67,7 @@ public class SpawnFGoblin extends Skill {
                         "%s shivers and moans as %s sinks into %s darkest fantasies. Something dangerous is coming. Sure enough a short feminine figure in bondage gear appears "
                                         + "before %s. Her face is completely obscured by a latex mask, but her big tits and her crotch are completely exposed. She has a large cock, "
                                         + "which looks ready to burst if it wasn't tightly bound at the base. Past her heavy sack, %s can see sex toys sticking out of both her pussy and ass.",
-                        getSelf().name(), getSelf().pronoun(), getSelf().possessivePronoun(),
+                        getSelf().getName(), getSelf().pronoun(), getSelf().possessiveAdjective(),
                         target.nameDirectObject(), target.subject());
     }
 

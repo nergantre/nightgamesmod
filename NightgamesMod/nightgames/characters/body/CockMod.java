@@ -53,8 +53,8 @@ public enum CockMod implements BodyPartMod {
         return (pleasureMod + base.getPleasure(self, target)) * pleasure;
     }
 
-    public double getSensitivity(BodyPart target, BasicCockPart base) {
-        return base.getSensitivity(target) * sensitivity;
+    public double getSensitivity(Character character, BodyPart target, BasicCockPart base) {
+        return base.getSensitivity(character, target) * sensitivity;
     }
 
     public boolean isReady(Character self, BasicCockPart base) {
@@ -84,7 +84,7 @@ public enum CockMod implements BodyPartMod {
                 message += String.format(
                                 "The fae energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
                                 self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
-                                opponent.possessivePronoun(), target.describe(opponent));
+                                opponent.possessiveAdjective(), target.describe(opponent));
                 bonus += damage * 0.5; // +50% damage
             }
             if (Global.random(8) == 0 && !opponent.wary()) {
@@ -97,7 +97,7 @@ public enum CockMod implements BodyPartMod {
                 String binding = ((CockBound) self.getStatus(Stsflag.cockbound)).binding;
                 message += String.format(
                                 "With the merest of thoughts, %s %s out a pulse of energy from %s %s, freeing it from %s %s. ",
-                                self.subject(), self.human() ? "send" : "sends", self.possessivePronoun(),
+                                self.subject(), self.human() ? "send" : "sends", self.possessiveAdjective(),
                                 part.describe(self), opponent.nameOrPossessivePronoun(), binding);
                 self.removeStatus(Stsflag.cockbound);
             }
@@ -109,14 +109,14 @@ public enum CockMod implements BodyPartMod {
             int amtDrained;
             if (target.moddedPartCountsAs(opponent, PussyPart.feral)) {
                 message += String.format(" %s %s gladly gives it up, eager for more pleasure.",
-                                opponent.possessivePronoun(), target.describe(opponent));
+                                opponent.possessiveAdjective(), target.describe(opponent));
                 amtDrained = 5;
                 bonus += 2;
             } else if (target.moddedPartCountsAs(opponent, PussyPart.cybernetic)) {
                 message += String.format(
                                 " %s %s does not oblige, instead sending a pulse of electricity through %s %s and up %s spine",
                                 opponent.nameOrPossessivePronoun(), target.describe(opponent),
-                                self.nameOrPossessivePronoun(), part.describe(self), self.possessivePronoun());
+                                self.nameOrPossessivePronoun(), part.describe(self), self.possessiveAdjective());
                 self.pain(c, opponent, Global.random(9) + 4);
                 amtDrained = 0;
             } else {
@@ -143,8 +143,8 @@ public enum CockMod implements BodyPartMod {
                                                 + "Then, a thin tube extends from %s uthera and into %s womb, pumping in a powerful aphrodisiac that soon has %s sensitive and"
                                                 + " gasping for more.",
                                 self.subject(), self.human() ? "bottom" : "bottoms", opponent.nameOrPossessivePronoun(),
-                                target.describe(opponent), self.possessivePronoun(), part.describe(self),
-                                opponent.possessivePronoun(), self.possessivePronoun(), opponent.possessivePronoun(),
+                                target.describe(opponent), self.possessiveAdjective(), part.describe(self),
+                                opponent.possessiveAdjective(), self.possessiveAdjective(), opponent.possessiveAdjective(),
                                 opponent.directObject());
                 opponent.add(c, new Hypersensitive(opponent));
                 // Instantly addict
@@ -172,16 +172,16 @@ public enum CockMod implements BodyPartMod {
                 message = String.format(
                                 "Almost instinctively, %s %s entire being into %s %s. While this would normally be a good thing,"
                                                 + " whilst fucking a succubus it is very, very bad indeed.",
-                                self.subjectAction("focus", "focuses"), self.possessivePronoun(),
-                                self.possessivePronoun(), part.describe(self));
+                                self.subjectAction("focus", "focuses"), self.possessiveAdjective(),
+                                self.possessiveAdjective(), part.describe(self));
                 c.write(self, message);
                 // Actual bad effects are dealt with in PussyPart
             } else {
                 message = String.format(
                                 "Drawing upon %s extensive training, %s %s will into %s %s, enhancing %s own abilities",
-                                self.possessivePronoun(), self.subjectAction("concentrate", "concentrates"),
-                                self.possessivePronoun(), self.possessivePronoun(), part.describe(self),
-                                self.possessivePronoun());
+                                self.possessiveAdjective(), self.subjectAction("concentrate", "concentrates"),
+                                self.possessiveAdjective(), self.possessiveAdjective(), part.describe(self),
+                                self.possessiveAdjective());
                 c.write(self, message);
                 for (int i = 0; i < Math.max(2, (self.get(Attribute.Ki) + 5) / 10); i++) { // +5
                                                                                            // for
@@ -246,7 +246,7 @@ public enum CockMod implements BodyPartMod {
         } else {
             description = name() + (c.hasPussy() ? " girl-" : " ");
         }
-        String syn = Global.pickRandom(BasicCockPart.synonyms);
+        String syn = Global.pickRandom(BasicCockPart.synonyms).get();
         return base.desc + " " + description + syn;
     }
 
@@ -259,7 +259,7 @@ public enum CockMod implements BodyPartMod {
         } else {
             description = name() + (c.hasPussy() ? " girl-" : " ");
         }
-        String syn = Global.pickRandom(BasicCockPart.synonyms);
+        String syn = Global.pickRandom(BasicCockPart.synonyms).get();
         return Global.maybeString(base.desc) + " " + description + syn;
     }
 
@@ -275,12 +275,12 @@ public enum CockMod implements BodyPartMod {
                     c.write(self, String.format(
                                     "%s demonic seed splashes pointlessly against the walls of %s %s, failing even in %s moment of defeat.",
                                     self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
-                                    target.describe(opponent), self.possessivePronoun()));
+                                    target.describe(opponent), self.possessiveAdjective()));
                 } else {
                     int duration = Global.random(3) + 2;
                     String message = String.format(
                                     "The moment %s erupts inside %s, %s mind goes completely blank, leaving %s pliant and ready.",
-                                    self.subject(), opponent.subject(), opponent.possessivePronoun(),
+                                    self.subject(), opponent.subject(), opponent.possessiveAdjective(),
                                     opponent.directObject());
                     if (target.moddedPartCountsAs(opponent, PussyPart.feral)) {
                         message += String.format(" %s no resistance to the subversive seed.",
@@ -314,7 +314,7 @@ public enum CockMod implements BodyPartMod {
         if (this.countsAs(self, primal)) {
             c.write(self, String.format("Raw sexual energy flows from %s %s into %s %s, enflaming %s lust",
                             self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
-                            otherOrgan.describe(opponent), opponent.possessivePronoun()));
+                            otherOrgan.describe(opponent), opponent.possessiveAdjective()));
             opponent.add(c, Pheromones.getWith(self, opponent, Global.random(3) + 1, 3, " primal passion"));
 
         }

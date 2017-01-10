@@ -23,8 +23,8 @@ public class FlyingCowgirl extends FemdomSexStance {
                                         spectated() ? String.format("%s and %s", top.subject(), bottom.subject()) : "You",
                                                         spectated() ? "eachother" : "your partner",
                                                         spectated() ? "their" : "your",
-                        top.subjectAction("are", "is"), bottom.subject(), top.possessivePronoun(),
-                        top.body.getRandomPussy().describe(top), bottom.possessivePronoun(),
+                        top.subjectAction("are", "is"), bottom.subject(), top.possessiveAdjective(),
+                        top.body.getRandomPussy().describe(top), bottom.possessiveAdjective(),
                         bottom.body.getRandomInsertable().describe(bottom));
     }
     
@@ -91,10 +91,10 @@ public class FlyingCowgirl extends FemdomSexStance {
     public void checkOngoing(Combat c) {
         if (top.getStamina().get() < 5) {
             if (top.human()) {
-                c.write("You're too tired to stay in the air. You plummet to the ground and " + bottom.name()
+                c.write("You're too tired to stay in the air. You plummet to the ground and " + bottom.getName()
                                 + " drops on you heavily, knocking the wind out of you.");
             } else {
-                c.write(top.name()
+                c.write(top.getName()
                                 + " falls to the ground and so do you. Fortunately, her body cushions your fall, but you're not sure she appreciates that as much as you do.");
             }
             top.pain(c, bottom, (int) bottom.modifyDamage(DamageType.physical, top, Global.random(50, 75)));

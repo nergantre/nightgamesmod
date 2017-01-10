@@ -41,14 +41,14 @@ public class Substitute extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
             c.write(getSelf(), String.format("By the time %s realizes %s's pinning a dummy, you're already behind %s.",
-                            target.name(), target.pronoun(), target.directObject()));
+                            target.getName(), target.pronoun(), target.directObject()));
         } else {
             c.write(getSelf(),
                             String.format("%s a good hold of %s body, and %s is surprisingly pliable..."
                                             + " %s wrestling a blow-up doll! The real %s is standing behind %s! How- How"
                                             + " did %s make the switch?!", target.subjectAction("take"),
                                             getSelf().nameOrPossessivePronoun(), getSelf().pronoun(),
-                                            target.subjectAction("are", "is"), getSelf().name, target.directObject(),
+                                            target.subjectAction("are", "is"), getSelf().nameDirectObject(), target.directObject(),
                                             getSelf().pronoun()));
         }
         getSelf().emote(Emotion.dominant, 10);

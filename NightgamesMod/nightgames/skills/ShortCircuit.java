@@ -50,7 +50,7 @@ public class ShortCircuit extends Skill {
 
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
-        return "You send a light electrical current through " + target.name()
+        return "You send a light electrical current through " + target.getName()
                         + "'s body, disrupting her nerve endings. She'll temporarily feel pleasure as pain and pain as pleasure.";
     }
 
@@ -60,9 +60,9 @@ public class ShortCircuit extends Skill {
                         + "across %s skin. %s indescribably weird. %s has "
                         + "done something to %s sense of touch.", getSelf().subject(),
                         target.nameDirectObject(), target.pronoun(), target.action("feel"),
-                        target.possessivePronoun(),
+                        target.possessiveAdjective(),
                         Global.capitalizeFirstLetter(target.subjectAction("feel")),
-                        getSelf().subject(), target.possessivePronoun());
+                        getSelf().subject(), target.possessiveAdjective());
     }
 
 }

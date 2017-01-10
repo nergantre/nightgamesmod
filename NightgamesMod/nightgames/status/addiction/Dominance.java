@@ -74,11 +74,11 @@ public class Dominance extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return "Held down by " + cause.name() + ", you feel completely powerless to resist.";
+                return "Held down by " + cause.getName() + ", you feel completely powerless to resist.";
             case LOW:
-                return "You feel strangely weak in " + cause.name() + "'s powerful hold.";
+                return "You feel strangely weak in " + cause.getName() + "'s powerful hold.";
             case MED:
-                return "Something about the way " + cause.name() + " is holding on to you is causing your strength to seep away.";
+                return "Something about the way " + cause.getName() + " is holding on to you is causing your strength to seep away.";
             case NONE:
             default:
                 return "";
@@ -89,12 +89,12 @@ public class Dominance extends Addiction {
     protected String describeDecrease() {
         switch (getSeverity()) {
             case LOW:
-                return "More and more of your strength is returning since escaping from " + cause.name() + ". ";
+                return "More and more of your strength is returning since escaping from " + cause.getName() + ". ";
             case MED:
-                return "You find some of the strange weakness caused by " + cause.name() + "'s powerful hold"
+                return "You find some of the strange weakness caused by " + cause.getName() + "'s powerful hold"
                                 + " fleeing your bones. ";
             case NONE:
-                return "You have completely recovered from " + cause.name() + "'s hold. ";
+                return "You have completely recovered from " + cause.getName() + "'s hold. ";
             case HIGH:
             default:
                 return "";
@@ -103,7 +103,7 @@ public class Dominance extends Addiction {
 
     @Override
     protected String describeWithdrawal() {
-        return "Your body longs for the exquisite pain and submission " + cause.name() + " can bring you,"
+        return "Your body longs for the exquisite pain and submission " + cause.getName() + " can bring you,"
                         + " reducing your stamina and causing masochisitc tendencies.";
     }
 
@@ -143,11 +143,11 @@ public class Dominance extends Addiction {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (inWithdrawal) {
-            return cause.name() + " is looking meaner than ever after you neglected to visit today. Equal"
+            return cause.getName() + " is looking meaner than ever after you neglected to visit today. Equal"
                             + " parts of fear and desire well up inside of you at the thought of what "
                             + cause.pronoun() + " might do to you.";
         }
-        return "You are conflicted at the sight of " + cause.name() + ". One part of you still remembers"
+        return "You are conflicted at the sight of " + cause.getName() + ". One part of you still remembers"
                         + " the pain and humiliation " + cause.pronoun() + " can cause and"
                         + " is terrified because of it, the other part is getting excited"
                         + " for the very same reason.";

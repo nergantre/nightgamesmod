@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.AnalPussyPart;
 import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
@@ -15,6 +14,7 @@ import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -460,7 +460,7 @@ public class BodyShop extends Activity {
                                         "{self:name-possessive} legs are wrapped in a shiny black material that look fused on.",
                                         .3, 1.5, .7, true, "feet", ""),
                         new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
-        addBodyPartMod("Anal Pussy", AnalPussyPart.generic, AssPart.generic, 2000, 2000);
+        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()), AssPart.generic, 2000, 2000);
         addBodyPartMod("Fused Gloves",
                         new GenericBodyPart("Fused Gloves",
                                         "{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",
@@ -549,7 +549,7 @@ public class BodyShop extends Activity {
             budget -= choice.price;
             choice.buy(npc);
             if (Global.isDebugOn(DebugFlags.DEBUG_PLANNING) && !choice.choice.contains("none")) {
-                System.out.println(npc.name() + " purchased " + choice.choice);
+                System.out.println(npc.getTrueName() + " purchased " + choice.choice);
             }
         }
     }

@@ -1,8 +1,8 @@
 {
 		"skipFF": false,
-		"skipMM": true,
+		"skipMM": false,
 		"hermHasBalls": false,
 		"shemaleNoBalls": false,
-		"femaleTGIntoHerm" : true,
+		"femaleTGIntoHerm" : false,
 		"FemalePronounsOnly" : false
 }

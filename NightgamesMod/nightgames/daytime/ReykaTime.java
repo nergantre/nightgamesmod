@@ -217,7 +217,7 @@ public class ReykaTime extends BaseNPCTime {
                                   + "the creepy decor greeting you. You look around for a moment, but decide not to pry, "
                                   + "there are probably a few dozen things in here that could kill you. If not, Reyka probably "
                                   + "will. As you turn to go back up, Reyka appears in the doorway. <i>\"Oh hello "
-                                  + player.name()
+                                  + player.getTrueName()
                                   + ", how nice of you to come visit me! I was just out getting some... supplies.\"</i> She "
                                   + "gives the room a once-over and looks at you darkly, seeming to bore straight into your "
                                   + "soul with her menacing eyes: <i>\"You didn't touch anything, did you?\"</i> "
@@ -288,7 +288,7 @@ public class ReykaTime extends BaseNPCTime {
                                   + "Usually, I'd go and have a little fun with some random coeds, nothing serious of course. "
                                   + "I just go around discreetly getting people all hot and bothered in a variety of ways and "
                                   + "observe the results. It breaks a few relationships here and there and even creates a few "
-                                  + "new ones, I'm a regular Cupid. Then I thought, 'well, " + player.name()
+                                  + "new ones, I'm a regular Cupid. Then I thought, 'well, " + player.getTrueName()
                                   + " is pretty nice, perhaps "
                                   + "I could have some fun with him.', so here I am. Are you interested?\"<br/><br/>"
                                   + "You are frozen for a moment, staring into those deep eyes of hers. 'Pretty nice'? "

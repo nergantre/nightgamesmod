@@ -31,6 +31,9 @@ public class ToggleBlindfold extends Skill {
     }
 
     private boolean canRemove() {
+        if (!(getSelf().getStatus(Stsflag.blinded) instanceof Blinded)) {
+            return false;
+        }
         Blinded status = (Blinded) getSelf().getStatus(Stsflag.blinded);
         assert status != null;
         return status.getCause()
@@ -54,24 +57,24 @@ public class ToggleBlindfold extends Skill {
                   .sub(getSelf()) || target.roll(getSelf(), c, 80)) {
                 getSelf().add(c, new Blinded(getSelf(), "a blindfold", true));
                 c.write(getSelf(), String.format("%s a blindfold around %s eyes.",
-                                getSelf().subjectAction("tie"), getSelf().possessivePronoun()));
+                                getSelf().subjectAction("tie"), getSelf().possessiveAdjective()));
             } else {
                 c.write(getSelf(), String.format("%s out a blindfold, but %s it from %s hands and %s it away.",
                                 getSelf().subjectAction("take"), target.subjectAction("snatch", "snatches"),
-                                getSelf().possessivePronoun(), getSelf().action("throw")));
+                                getSelf().possessiveAdjective(), getSelf().action("throw")));
             }
         } else if (c.getStance()
                     .sub(getSelf()) && target.canAct() && Global.random(2) == 0) {
             c.write(getSelf(),
                             String.format("%s to take off %s blindfold, but %s %s hands away.",
-                                            getSelf().subjectAction("try", "tries"), getSelf().possessivePronoun(),
-                                            target.subjectAction("keep"), getSelf().possessivePronoun()));
+                                            getSelf().subjectAction("try", "tries"), getSelf().possessiveAdjective(),
+                                            target.subjectAction("keep"), getSelf().possessiveAdjective()));
         } else {
             getSelf().gain(Item.Blindfold);
             c.write(getSelf(),
                             String.format("%s off %s blindfold and %s a few times to clear %s eyes.",
-                                            getSelf().subjectAction("take"), getSelf().possessivePronoun(),
-                                            getSelf().action("blink"), getSelf().possessivePronoun()));
+                                            getSelf().subjectAction("take"), getSelf().possessiveAdjective(),
+                                            getSelf().action("blink"), getSelf().possessiveAdjective()));
             getSelf().removeStatus(Stsflag.blinded);
         }
         return true;

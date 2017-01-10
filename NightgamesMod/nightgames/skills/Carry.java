@@ -90,9 +90,9 @@ public class Carry extends Fuck {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return "you pick up " + target.name() + ", but she flips out of your arms and manages to trip you.";
+            return "you pick up " + target.getName() + ", but she flips out of your arms and manages to trip you.";
         } else {
-            return "you scoop up " + target.name()
+            return "you scoop up " + target.getName()
                             + ", lifting her into the air and simultaneously thrusting your dick into her hot depths. She lets out a noise that's "
                             + "equal parts surprise and delight as you bounce her on your pole.";
         }

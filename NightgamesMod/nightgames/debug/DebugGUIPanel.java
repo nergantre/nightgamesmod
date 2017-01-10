@@ -36,6 +36,11 @@ public class DebugGUIPanel extends JPanel {
     private static List<DebugCommand> consoleCommands = new ArrayList<>();
 
     {
+        consoleCommands.add(new DebugCommand("all\\.(.*)", (output, list) -> {
+            Global.getParticipants().stream().forEach(participant -> {
+                consoleCommands.stream().filter(cc -> cc.checkAndExecute(output, participant.getType() + "." + list.get(1))).findFirst();
+            });
+        }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.setXP (\\d+)", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
