@@ -14,6 +14,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.skills.strategy.BreastStrategy;
 import nightgames.skills.strategy.FacesitStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.KnockdownStrategy;
@@ -36,6 +37,7 @@ public class Reyka extends BasePersonality {
         self.mood = Emotion.confident;
 
         self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new BreastStrategy());
         self.addPersonalStrategy(new FacesitStrategy());
         self.addPersonalStrategy(new KnockdownStrategy());
     }

@@ -33,7 +33,7 @@ public class BreastSmother extends Skill {
         return 6;
     }
 
-    static int MIN_REQUIRED_BREAST_SIZE = 5;
+    static int MIN_REQUIRED_BREAST_SIZE = 4;
     
     @Override
     public boolean usable(Combat c, Character target) {
@@ -114,7 +114,7 @@ public class BreastSmother extends Skill {
         
         if (modifier == Result.special) {
             b.append( "You quickly wrap up " + target.name() + "'s head in your arms and press your "
-                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " into their face. ");
+                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " into " + target.nameOrPossessivePronoun() + " face. ");
         }
         else {
             b.append( "You rock " + target.name() + "'s head between your "
