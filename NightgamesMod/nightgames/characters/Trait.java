@@ -469,6 +469,12 @@ public enum Trait {
     DemonsEmbrace("Demon's Embrace", "Can wrap up opponent in wings"),
     VampireWings("Vampire Wings", "Contact with wings drains Power"),
     
+    // Reyka Seduction Focus
+    MelodiousInflection("Melodious Inflection", "Speaks in a 'Charming' manner"),
+    ComeHither("Come Hither", "Can draw Charmed opponents to herself"),
+    TenderKisses("Tender Kisses", "Kisses may extend existing Charmed status"),
+    PinkHaze("Pink Haze", "Charmed opponents think she is even more beautiful"),
+    
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
 
     // Item

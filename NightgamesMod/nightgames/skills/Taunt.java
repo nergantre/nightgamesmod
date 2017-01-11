@@ -7,8 +7,10 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Charmed;
 import nightgames.status.Enthralled;
 import nightgames.status.Shamed;
+import nightgames.status.Stsflag;
 
 public class Taunt extends Skill {
 
@@ -53,6 +55,12 @@ public class Taunt extends Skill {
                             + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
                             , getSelf(), target));
             target.add(c, new Enthralled(target, getSelf(), 1, false));
+        } else if (getSelf().has(Trait.MelodiousInflection) && !target.is(Stsflag.charmed) && Global.random(3) == 0) {
+            c.write(getSelf(), Global.format("Something about {self:name-possessive} words, the"
+                            + " way {self:possessive} voice rises and falls, {self:possessive}"
+                            + " pauses and pitch... {other:SUBJECT} soon {other:action:find|finds}"
+                            + " {other:reflective} utterly hooked.", getSelf(), target));
+            target.add(c, new Charmed(target, 2));
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

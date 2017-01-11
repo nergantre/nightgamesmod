@@ -11,7 +11,10 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.skills.damage.Staleness;
 import nightgames.stance.Stance;
+import nightgames.status.Charmed;
+import nightgames.status.DurationStatus;
 import nightgames.status.Lovestruck;
+import nightgames.status.Stsflag;
 
 public class Kiss extends Skill {
     private static final String divineString = "Kiss of Baptism";
@@ -102,6 +105,12 @@ public class Kiss extends Skill {
             target.loseWillpower(c, Global.random(3) + 2, false);
             target.add(c, new Lovestruck(target, getSelf(), 2));
             getSelf().usedAttribute(Attribute.Divinity, c, .5);
+        }
+        if (getSelf().has(Trait.TenderKisses) && target.is(Stsflag.charmed) && Global.random(3) == 0) {
+            DurationStatus charmed = (DurationStatus) target.getStatus(Stsflag.charmed);
+            charmed.setDuration(charmed.getDuration() + Global.random(1, 2));
+            c.write(getSelf(), Global.format("<b>The exquisite tenderness of {self:name-possessive} kisses"
+                            + " reinforce the haze clouding {other:name-possessive} mind.</b>", getSelf(), target));
         }
         BodyPart selfMouth = getSelf().body.getRandom("mouth");
         target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c, this);

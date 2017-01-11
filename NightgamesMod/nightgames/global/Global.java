@@ -548,6 +548,7 @@ public class Global {
         getSkillPool().add(new Embrace(ch));
         getSkillPool().add(new SuccubusNurse(ch));
         getSkillPool().add(new WingWrap(ch));
+        getSkillPool().add(new ComeHither(ch));
         
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));

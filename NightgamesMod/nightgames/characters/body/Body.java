@@ -443,6 +443,9 @@ public class Body implements Cloneable {
         if (character.has(Trait.unpleasant)) {
             totalHotness *= .75;
         }
+        if (character.has(Trait.PinkHaze) && opponent.is(Stsflag.charmed)) {
+            totalHotness = Math.max(totalHotness * 1.5, totalHotness + 3.0);
+        }
         return totalHotness;
     }
 
