@@ -36,7 +36,7 @@ import nightgames.pet.Pet;
 import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.ArmManager;
 import nightgames.skills.Anilingus;
-import nightgames.skills.ArmBar;
+import nightgames.skills.AssFuck;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
 import nightgames.skills.Command;
@@ -887,9 +887,48 @@ public class Combat extends Observable implements Cloneable {
         return false;
     }
 
+    private boolean rollAssWorship(Character self, Character opponent) {
+        int chance = 0;
+        if (opponent.has(Trait.temptingass)) {
+            chance += Math.max(0, Math.min(15, opponent.get(Attribute.Seduction) - self.get(Attribute.Seduction)));
+            if (self.is(Stsflag.feral))
+                chance += 10;
+            if (self.is(Stsflag.charmed) || opponent.is(Stsflag.alluring))
+                chance += 5;
+            if (self.has(Trait.assmaster) || self.has(Trait.analFanatic))
+                chance += 5;
+            Optional<BodyFetish> fetish = self.body.getFetish("ass");
+            if (fetish.isPresent() && opponent.has(Trait.bewitchingbottom)) {
+                chance += 20 * fetish.get().magnitude;
+            }
+        }
+        return Global.random(100) < chance;
+    }
+
     private Skill checkWorship(Character self, Character other, Skill def) {
         if (rollWorship(self, other)) {
             return getRandomWorshipSkill(self, other).orElse(def);
+        }
+        if (rollAssWorship(self, other)) {
+            AssFuck fuck = new AssFuck(self);
+            if (fuck.requirements(this, other) && fuck.usable(this, other) && !self.is(Stsflag.frenzied)) {
+                write(other, Global.format("<b>The look of {other:name-possessive} ass,"
+                                        + " so easily within {self:possessive} reach, causes"
+                                        + " {self:subject} to involuntarily switch to autopilot."
+                                        + " {self:SUBJECT} simply {self:action:NEED|NEEDS} that ass.</b>",
+                                self, other));
+                self.add(this, new Frenzied(self, 1));
+                return fuck;
+            }
+            Anilingus anilingus = new Anilingus(self);
+            if (anilingus.requirements(this, other) && anilingus.usable(this, other)) {
+                write(other, Global.format("<b>The look of {other:name-possessive} ass,"
+                                        + " so easily within {self:possessive} reach, causes"
+                                        + " {self:subject} to involuntarily switch to autopilot."
+                                        + " {self:SUBJECT} simply {self:action:NEED|NEEDS} that ass.</b>",
+                                self, other));
+                return anilingus;
+            }
         }
         return def;
     }

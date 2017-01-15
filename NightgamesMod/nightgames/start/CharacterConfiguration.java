@@ -82,7 +82,10 @@ public abstract class CharacterConfiguration {
     protected final void apply(Character base) {
         name.ifPresent(n -> base.setName(n));
         money.ifPresent(m -> base.money = m);
-        traits.ifPresent(t -> base.traits = new CopyOnWriteArrayList<>(t));
+        traits.ifPresent(t -> { 
+            base.traits = new CopyOnWriteArrayList<>(t);
+            t.forEach(trait -> base.getGrowth().addTrait(0, trait));
+        });
         Map<Attribute, Integer> start = new HashMap<>(base.att);
         Map<Attribute, Integer> deltaAtts = attributes.keySet()
                         .stream()

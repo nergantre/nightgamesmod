@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
@@ -18,6 +19,7 @@ import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Wait;
 import nightgames.skills.damage.DamageType;
+import nightgames.status.Abuff;
 
 public class FaceSitting extends AbstractBehindStance {
     FaceSitting(Character top, Character bottom, Stance en) {
@@ -150,6 +152,20 @@ public class FaceSitting extends AbstractBehindStance {
                             top, bottom));
             int m = Global.random(5) + 5;
             bottom.drain(c, top, (int) top.modifyDamage(DamageType.drain, bottom, m));
+        }
+        if (top.has(Trait.drainingass)) {
+            if (Global.random(3) == 0) {
+                c.write(top, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
+                                + " great gouts of {other:name-possessive} strength from {other:possessive}"
+                                + " body.", top, bottom));
+                bottom.drain(c, top, top.getLevel());
+                bottom.add(c, new Abuff(bottom, Attribute.Power, -3, 10));
+                top.add(c, new Abuff(top, Attribute.Power, 3, 10));
+            } else {
+                c.write(top, Global.format("{other:SUBJECT-ACTION:feel} both {other:possessive} breath and energy being stolen by {self:NAME-POSSESSIVE} ass overlapping {other:POSSESSIVE} face."
+                                + " .", top, bottom));
+                bottom.drain(c, top, top.getLevel()/2);
+            }
         }
     }
 

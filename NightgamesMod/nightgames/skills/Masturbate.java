@@ -68,7 +68,7 @@ public class Masturbate extends Skill {
 
     @Override
     public int getMojoBuilt(Combat c) {
-        return 25;
+        return getSelf().canMakeOwnDecision() && getSelf().canAct() ? 25 : 0;
     }
 
     @Override

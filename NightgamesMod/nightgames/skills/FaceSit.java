@@ -88,7 +88,11 @@ public class FaceSit extends Skill {
         if (!c.getStance().isFaceSitting(getSelf())) {
             c.setStance(new FaceSitting(getSelf(), target), getSelf(), true);
         }
-        if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+        int fetishChance = 5 + 2 * getSelf().get(Attribute.Fetish);
+        if (getSelf().has(Trait.bewitchingbottom)) {
+            fetishChance *= 2;
+        }
+        if (Global.random(100) < fetishChance) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }
       

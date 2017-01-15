@@ -292,8 +292,16 @@ public class Struggle extends Skill {
     }
 
     private boolean struggleRegular(Combat c, Character target) {
-        if ((getSelf().check(Attribute.Power, target.getStamina().get() / 2 - getSelf().getStamina().get() / 2
-                        + target.get(Attribute.Power) - getSelf().get(Attribute.Power) - getSelf().escape(c, target)))
+        int difficulty = target.getStamina().get() / 2 - getSelf().getStamina().get() / 2 
+                        + target.get(Attribute.Power) - getSelf().get(Attribute.Power)
+                        - getSelf().escape(c, target);
+        if (target.has(Trait.powerfulcheeks)) {
+            difficulty += 5;
+        }
+        if (target.has(Trait.bewitchingbottom)) {
+            difficulty += 5;
+        }
+        if (getSelf().check(Attribute.Power, difficulty)
                         && (!target.has(Trait.grappler) || Global.random(10) >= 2)) {
             if (getSelf().human()) {
                 c.write(getSelf(), "You manage to scrabble out of " + target.getName() + "'s grip.");
@@ -314,7 +322,7 @@ public class Struggle extends Skill {
                                     target.possessiveAdjective(), getSelf().possessiveAdjective(),
                                     getSelf().directObject(), target.directObject()));
                 }
-                if (target.hasPussy()) {
+                if (target.hasPussy() && !target.has(Trait.temptingass)) {
                     new Cunnilingus(getSelf()).resolve(c, target);
                 } else {
                     new Anilingus(getSelf()).resolve(c, target);

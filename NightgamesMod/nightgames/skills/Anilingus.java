@@ -90,6 +90,10 @@ public class Anilingus extends Skill {
         if (selfm > 0) {
             getSelf().temptWithSkill(c, target, target.body.getRandom("ass"), selfm, this);
         }
+        if (target.has(Trait.temptingass) && !getSelf().bound()) {
+            c.write(target, Global.format("Servicing {other:possessive} perfect behind makes {self:direct-object} almost unconsciously touch {self:reflective}.", getSelf(), target));
+            (new Masturbate(getSelf())).resolve(c, target);
+        }
         return result != Result.miss;
     }
 
