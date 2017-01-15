@@ -2,10 +2,9 @@ package nightgames.pet;
 
 import nightgames.characters.Character;
 import nightgames.characters.Growth;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
@@ -94,7 +93,7 @@ public class Slime extends Pet {
         self.body.setHeight(80);
         self.body.add(new GenericBodyPart("skin", 0, 1, 1, "skin", ""));
         self.body.add(new GenericBodyPart("hands", 0, 1, 1, "hands", ""));
-        self.body.add(new ModdedCockPart(BasicCockPart.average, CockMod.slimy));
+        self.body.add(new GenericCockPart().applyMod(CockMod.slimy));
         self.body.add(PussyPart.gooey);
         self.body.add(new TentaclePart("tentacles", "body", "slime", 0, 1, 1));
         // don't finish the body as a slime, it wont have normal body parts.

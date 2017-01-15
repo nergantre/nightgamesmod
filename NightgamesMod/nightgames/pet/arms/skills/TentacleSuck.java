@@ -7,17 +7,17 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
 import nightgames.pet.arms.Arm;
-import nightgames.pet.arms.TentacleArm;
-import nightgames.status.PartFucked;
+import nightgames.pet.arms.TentacleSucker;
+import nightgames.status.PartSucked;
 
-public class TentacleFuck extends ArmSkill {    
-    public TentacleFuck() {
-        super("Tentacle Fuck", 20);
+public class TentacleSuck extends ArmSkill {    
+    public TentacleSuck() {
+        super("Tentacle Suck", 20);
     }
 
     @Override
     public boolean usable(Combat c, Arm arm, Character owner, Character target) {
-        return super.usable(c, arm, owner, target) && target.hasPussy() && c.getStance().distance() < 2 && !c.getStance().vaginallyPenetrated(c, target);
+        return super.usable(c, arm, owner, target) && target.hasDick() && c.getStance().distance() < 2 && !c.getStance().penisInserted(target);
     }
 
     @Override
@@ -25,21 +25,14 @@ public class TentacleFuck extends ArmSkill {
         boolean sub = target.bound() || !c.getStance().mobile(target);
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Slime);
         double strength = Global.random(10, 21);
-        
-        BodyPart tentaclePart;
-        if (arm instanceof TentacleArm) {
-            tentaclePart = ((TentacleArm)arm).getPart();
-        } else {
-            tentaclePart = TentacleArm.PART;
-        }
+        BodyPart tentaclePart = TentacleSucker.PART;
 
         if (success) {
             c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} %s shoots forward, snaking through {other:possessive} guard "
-                            + "and impaling itself inside {self:possessive} defenseless pussy. "
-                            + "{self:SUBJECT:try} pulling it out with {self:possessive} hands but the slippery appendage easily eludes {other:possessive} grip. "
-                            + "The entire business just ends ups arousing {other:direct-object} to no end.", owner, target, arm.getName()));
+                            + "and attaching itself to {self:possessive} defenseless cock. "
+                            + "{self:SUBJECT:try} pulling it out with {self:possessive} hands but the vacuum-tight suction make it feel like {self:pronoun-action:are} giving {other:reflective} a tug-job.", owner, target, arm.getName()));
             target.body.pleasure(owner, tentaclePart, target.body.getRandomPussy(), strength, c);
-            target.add(c, new PartFucked(target, owner, tentaclePart, "pussy"));
+            target.add(c, new PartSucked(target, owner, tentaclePart, "cock"));
             return true;
         } else {
             c.write(PetCharacter.DUMMY, Global.format("A %s flies towards {other:name-possessive} crotch, "
@@ -47,5 +40,4 @@ public class TentacleFuck extends ArmSkill {
         }
         return false;
     }
-
 }

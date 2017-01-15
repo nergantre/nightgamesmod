@@ -9,12 +9,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
@@ -56,7 +55,7 @@ public class ReykaTime extends BaseNPCTime {
             growCock.scene = "[Placeholder]<br/>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.incubus));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.incubus));
                 return true;
             };
             options.add(growCock);
@@ -123,9 +122,9 @@ public class ReykaTime extends BaseNPCTime {
                                                   .stream()
                                                   .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                   .findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
+            CockPart target = (CockPart) optPart.get();
             self.body.remove(target);
-            self.body.add(new ModdedCockPart(target, CockMod.incubus));
+            self.body.add(target.applyMod(CockMod.incubus));
             return true;
         };
         options.add(incubusCock);

@@ -9,12 +9,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.global.Flag;
@@ -86,7 +85,7 @@ public class KatTime extends BaseNPCTime {
                            + "Fortunately for you, the poor kitty seems exhausted by her new transformation and falls into a soft slumber after the exertion. "
                            + "You pick her up, depositing her onto her bed and covering her with a blanket before turning to leave. Hopefully the next time you meet in the games, she'll be a bit gentler than that.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.primal));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.primal));
                 return true;
             };
             options.add(growCock);
@@ -119,9 +118,9 @@ public class KatTime extends BaseNPCTime {
         primalCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
                             self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
+            CockPart target = (CockPart) optPart.get();
             self.body.remove(target);
-            self.body.add(new ModdedCockPart(target, CockMod.primal));
+            self.body.add(target.applyMod(CockMod.primal));
             return true;
         };
 

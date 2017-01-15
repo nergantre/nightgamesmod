@@ -6,11 +6,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.global.Global;
@@ -59,7 +59,7 @@ public class AngelTime extends BaseNPCTime {
             growCock.option = "Angel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.blessed));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.blessed));
                 return true;
             };
             options.add(growCock);
@@ -98,9 +98,9 @@ public class AngelTime extends BaseNPCTime {
                                                       .stream()
                                                       .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                       .findAny();
-                BasicCockPart target = (BasicCockPart) optPart.get();
+                GenericBodyPart target = (GenericBodyPart) optPart.get();
                 self.body.remove(target);
-                self.body.add(new ModdedCockPart(target, CockMod.blessed));
+                self.body.add(target.applyMod(CockMod.blessed));
                 return true;
             };
             options.add(blessedCock);

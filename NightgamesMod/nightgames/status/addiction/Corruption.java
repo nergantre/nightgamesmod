@@ -10,11 +10,9 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
@@ -59,14 +57,7 @@ public class Corruption extends Addiction {
             } else if (affected.hasDick() && !affected.body.getRandomCock().moddedPartCountsAs(affected, CockMod.incubus)) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and your cock turns into that of an incubus!</b>");
-                CockPart cock = affected.body.getRandomCock();
-                BasicCockPart base;
-                if (cock instanceof BasicCockPart) {
-                    base = (BasicCockPart) cock;
-                } else {
-                    base = ((ModdedCockPart) cock).getBase();
-                }
-                affected.body.temporaryAddOrReplacePartWithType(new ModdedCockPart(base, CockMod.incubus), 20);
+                affected.body.temporaryAddOrReplacePartWithType(affected.body.getRandomCock().applyMod(CockMod.incubus), 20);
             } else if (!affected.hasPussy() && cause.hasDick()) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and a succubus's pussy forms between your legs!</b>");
@@ -74,8 +65,7 @@ public class Corruption extends Addiction {
             } else if (!affected.hasDick()) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and an incubus's cock forms between your legs!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(new ModdedCockPart(BasicCockPart.huge, CockMod.incubus),
-                                20);
+                affected.body.temporaryAddOrReplacePartWithType(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.incubus), 20);
             } else {
                 c.write(affected,
                                 "The corruption is churning within you, but it seems that it's done all it can for now.");

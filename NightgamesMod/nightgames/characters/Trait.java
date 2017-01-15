@@ -419,15 +419,8 @@ public enum Trait {
     // debuff trait for clones so they aren't too overwhelming
     MindlessClone("Mindless Clone", "Half sentience makes them less tempting"),
 
-    // Slime Carrier - Immortal pet build
-    SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),
-    Symbiosis("Symbiosis", "Slime carrier can heal and build mojo for the host"),
-    // + parasite
-    RoperAspect("Roper Aspect", "Slime Carrier has additional capabilities"),
-    // + transformation
-    SuccubusAspect("Succubus Aspect", "Main body has additional capabilities"),
-    // autonomous pussy
-    SplitSentience("Split Sentience", "Slime carrier powers up when main body is disabled."),
+    // Tentacle builds
+    Pseudopod("Pseudopod", "Comes with extra tentacles"),
 
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),

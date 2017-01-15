@@ -6,12 +6,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.global.Flag;
@@ -58,7 +57,7 @@ public class CassieTime extends BaseNPCTime {
             growCock.option = "Cassie: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.runic));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.runic));
                 return true;
             };
             options.add(growCock);
@@ -90,7 +89,7 @@ public class CassieTime extends BaseNPCTime {
         runicCock.effect = (c, self, other) -> {
             Optional<BodyPart> optPart =
                             self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
+            CockPart target = (CockPart) optPart.get();
             self.body.remove(target);
             self.body.add(target.applyMod(CockMod.runic));
             return true;

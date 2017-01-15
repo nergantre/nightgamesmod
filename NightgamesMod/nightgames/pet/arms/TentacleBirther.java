@@ -18,5 +18,4 @@ public class TentacleBirther extends TentacleArm {
     List<ArmSkill> getSkills(Combat c, Character owner, Character target) {
         return Collections.singletonList(new DefabRay());
     }
-
 }

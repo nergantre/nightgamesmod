@@ -6,11 +6,10 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -56,7 +55,7 @@ public class MaraTime extends BaseNPCTime {
             growCock.option = "Mara: Install a cock";
             growCock.scene = "[Placeholder]<br/>Mara makes some modifications to the dildo and manages to attach it to her own body through methods unknown to you.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.bionic));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.bionic));
                 return true;
             };
             options.add(growCock);
@@ -94,9 +93,9 @@ public class MaraTime extends BaseNPCTime {
                                                   .stream()
                                                   .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                   .findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
+            CockPart target = (CockPart) optPart.get();
             self.body.remove(target);
-            self.body.add(new ModdedCockPart(target, CockMod.bionic));
+            self.body.add(target.applyMod(CockMod.bionic));
             return true;
         };
         options.add(bionicCock);

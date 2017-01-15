@@ -26,7 +26,7 @@ public class JsonUtils {
                     new GsonBuilder().setPrettyPrinting()
                                     .registerTypeAdapter(Clothing.class, new ClothingAdaptor())
                                     .registerTypeAdapter(BodyPart.class, new BodyPartAdapter())
-                                    .registerTypeAdapter(PartMod.class, new HoleModAdapter())
+                                    .registerTypeAdapter(PartMod.class, new PartModAdapter())
                                     .create();
 
     public static <T> Collection<T> collectionFromJson(JsonArray array, Class<T> clazz) {

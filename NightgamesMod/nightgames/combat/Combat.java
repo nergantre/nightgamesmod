@@ -34,7 +34,9 @@ import nightgames.items.clothing.ClothingTrait;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.Pet;
 import nightgames.pet.PetCharacter;
+import nightgames.pet.arms.ArmManager;
 import nightgames.skills.Anilingus;
+import nightgames.skills.ArmBar;
 import nightgames.skills.BreastWorship;
 import nightgames.skills.CockWorship;
 import nightgames.skills.Command;
@@ -201,10 +203,13 @@ public class Combat extends Observable implements Cloneable {
         if(self.has(Trait.pussywhipped ) && other.hasPussy()) {
             applyFetish(self, other, "pussy");
         }
-        if(self.has(Trait.cockcraver)&& other.hasDick()) {
+        if (self.has(Trait.cockcraver)&& other.hasDick()) {
             applyFetish(self, other, "cock");
         }
-        
+        if (self.has(Trait.Pseudopod) && self.has(Trait.slime)) {
+            ArmManager manager = new ArmManager();
+            manager.selectArms(self);
+        }
     }
     
     

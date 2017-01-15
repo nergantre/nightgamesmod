@@ -94,6 +94,15 @@ public class GenericBodyPart implements BodyPart {
     protected String modlessDescription(Character c) {
         return desc;
     }
+    
+    public String getModDescriptorString(Character c) {
+        return mods.stream().sorted()
+        .filter(mod -> !mod.getDescriptionOverride(c, this).isPresent())
+        .map(PartMod::adjective)
+        .filter(s -> !s.isEmpty())
+        .map(string -> string + " ")
+        .collect(Collectors.joining());
+    }
 
     @Override
     public String describe(Character c) {
@@ -103,13 +112,7 @@ public class GenericBodyPart implements BodyPart {
             normalDescription = adjective() + " " +  override.get();
         }
 
-        return mods.stream().sorted()
-                        .filter(mod -> !mod.getDescriptionOverride(c, this).isPresent())
-                        .map(PartMod::adjective)
-                        .filter(s -> !s.isEmpty())
-                        .map(string -> string + " ")
-                        .collect(Collectors.joining())
-                        + normalDescription;
+        return getModDescriptorString(c) + normalDescription;
     }
 
     @Override
@@ -377,6 +380,12 @@ public class GenericBodyPart implements BodyPart {
         GenericBodyPart newPart = (GenericBodyPart) instance();
         newPart.mods.add(mod);
         return newPart;
+    }
+
+    public BodyPart removeAllMods() {
+        GenericBodyPart part = (GenericBodyPart) instance();
+        part.mods.clear();
+        return part;
     }
 
     public List<? extends BodyPartMod> getMods(Character npc) {

@@ -94,9 +94,13 @@ public class Jewel extends BasePersonality {
         Growth growth = character.getGrowth();
         Global.flag(JEWEL_ANAL_FOCUS);
         growth.addTrait(11, Trait.holecontrol);
+        growth.addTrait(11, Trait.polecontrol);
         growth.addTrait(25, Trait.tight);
+        growth.addTrait(25, Trait.assmaster);
         growth.addTrait(37, Trait.powerfulcheeks);
+        growth.addTrait(37, Trait.analFanatic);
         growth.addTrait(47, Trait.temptingass);
+        growth.addTrait(47, Trait.hypnoticsemen);
     }
     private void usePhysical() {
         Growth growth = character.getGrowth();
@@ -409,7 +413,7 @@ public class Jewel extends BasePersonality {
                                 + " plunders your strength once again. <i>\"Poor {other:guy}, being dominated by someone who used to be so much weaker than you.\"</i> "
                                 + "The red-head leans close to your ear, <i>\"Don't worry... I wont be making the same mistake. You'll always be my bottom-bitch from now on.\"</i>";
             } else if (other.getLevel() >= self.getLevel()) {
-                return "Jewel clings on to your struggling body as your strength flows out of you and into the lovely red-head. As the flow subsides, she smirks "
+                return "Jewel clings on to your struggling body as your strength streams out of you and into the lovely red-head. As the flow subsides, she smirks "
                                 + "<i>\"Finders keepers...\"</i>";
             } else {
                 return "Jewel rocks her powerful hips on top of you as you cum your soul out into her " + part + ". "

@@ -2,10 +2,10 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
@@ -53,7 +53,7 @@ public class Eve extends BasePersonality {
         Global.gainSkills(self);
         self.setTrophy(Item.EveTrophy);
         self.body.add(BreastsPart.d);
-        self.body.add(BasicCockPart.big);
+        self.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG));
         self.body.add(PussyPart.normal);
         self.getMojo().setMax(120);
 

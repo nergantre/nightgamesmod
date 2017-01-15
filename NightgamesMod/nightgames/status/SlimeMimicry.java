@@ -9,6 +9,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.json.JsonUtils;
 
 public class SlimeMimicry extends DurationStatus {
     private final String mimickedName;
@@ -107,7 +108,7 @@ public class SlimeMimicry extends DurationStatus {
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("mimickedName", getMimickedName());
         obj.addProperty("pussyMimicked", pussyMimicked.name());
-        obj.addProperty("cockMimicked", cockMimicked.name());
+        obj.add("cockMimicked", JsonUtils.gson.toJsonTree(cockMimicked));
         obj.addProperty("duration", getDuration());
         return obj;
     }
@@ -115,7 +116,9 @@ public class SlimeMimicry extends DurationStatus {
     @Override public Status loadFromJson(JsonObject obj) {
         return new SlimeMimicry(obj.get("mimickedName").getAsString(),
                         PussyPart.valueOf(obj.get("pussyMimicked").getAsString()),
-                        CockMod.valueOf(obj.get("cockMimicked").getAsString()), null, obj.get("duration").getAsInt());
+                        JsonUtils.gson.fromJson(obj.get("cockMimicked"), CockMod.class),
+                        null,
+                        obj.get("duration").getAsInt());
     }
 
     public String getMimickedName() {

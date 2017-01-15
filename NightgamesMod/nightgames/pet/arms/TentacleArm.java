@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.TentaclePart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
@@ -22,5 +23,11 @@ public abstract class TentacleArm extends Arm {
     @Override
     int attackOdds(Combat c, Character owner, Character target) {
         return (int) Math.min(40, owner.get(Attribute.Slime) * .67);
+    }
+    
+    public static TentaclePart PART = new TentaclePart("tentacle", "back", "slime", 0.0, 1.0, 0.0);
+
+    public TentaclePart getPart() {
+        return PART;
     }
 }

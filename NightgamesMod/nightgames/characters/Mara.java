@@ -209,7 +209,7 @@ public class Mara extends BasePersonality {
                                             self, other,
                                             other.hasDick() ? "{self:PRONOUN} whips out a tape measure from... somewhere..."
                                                             + " and starts measuring up your {other:body-part:cock}."
-                                                            : "{self:PROUNOUN} reaches down and sticks a finger into"
+                                                            : "{self:PRONOUN} reaches down and sticks a finger into"
                                                                             + " your still-bare, still-wet {other:body-part:pussy},"
                                                                             + " wriggling it around a bit inside."));
                             useHarpoon();

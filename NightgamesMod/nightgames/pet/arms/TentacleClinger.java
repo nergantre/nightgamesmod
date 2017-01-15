@@ -6,8 +6,8 @@ import java.util.List;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.pet.arms.skills.ArmSkill;
-import nightgames.pet.arms.skills.Cling;
-import nightgames.pet.arms.skills.Reel;
+import nightgames.pet.arms.skills.TentacleCling;
+import nightgames.pet.arms.skills.TentacleReel;
 
 public class TentacleClinger extends TentacleArm {
 
@@ -17,7 +17,6 @@ public class TentacleClinger extends TentacleArm {
 
     @Override
     List<ArmSkill> getSkills(Combat c, Character owner, Character target) {
-        return Arrays.asList(new Cling(), new Reel());
+        return Arrays.asList(new TentacleCling(), new TentacleReel());
     }
-
 }

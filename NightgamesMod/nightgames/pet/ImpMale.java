@@ -3,9 +3,8 @@ package nightgames.pet;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.combat.Combat;
 import nightgames.skills.Grind;
 import nightgames.skills.Piston;
@@ -85,9 +84,9 @@ public class ImpMale extends Pet {
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(115);
         if (getPower() > 30) {
-            self.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.incubus));
+            self.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.incubus));
         } else {
-            self.body.add(BasicCockPart.big);
+            self.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG));
         }
         self.body.finishBody(CharacterSex.male);
         self.learn(new ImpAssault(self));

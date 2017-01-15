@@ -21,7 +21,7 @@ public class TentaclePart extends GenericBodyPart {
     public static void pleasureWithTentacles(Combat c, Character target, int strength, BodyPart targetPart) {
         target.body.pleasure(c.getOpponent(target), DUMMY_PART, targetPart, strength, c);
     }
-    
+
     public static TentaclePart randomTentacle(String desc, Body body, String fluids, double hotness, double pleasure,
                     double sensitivity) {
         Set<String> avail = new HashSet<String>(Arrays.asList(allowedAttachTypes));

@@ -9,8 +9,8 @@ import nightgames.stance.Engulfed;
 import nightgames.status.Stsflag;
 import nightgames.status.TentacleBound;
 
-public class Reel extends ArmSkill {
-    public Reel() {
+public class TentacleReel extends ArmSkill {
+    public TentacleReel() {
         super("Reel", 30);
     }
 

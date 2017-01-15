@@ -1,15 +1,13 @@
 package nightgames.characters.body;
 
 import nightgames.characters.Character;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.global.Global;
 
 public interface CockPart extends BodyPart {
     double getSize();
 
-    BodyPart applyMod(CockMod mod);
-
-    // Returns the result of Enum.name().
-    String getName();
+    BodyPart applyMod(PartMod mod);
 
     @Override
     public default double getFemininity(Character self) {
@@ -29,4 +27,6 @@ public interface CockPart extends BodyPart {
     default String adjective(Character c) {
         return "phallic";
     }
+
+    BodyPart removeAllMods();
 }

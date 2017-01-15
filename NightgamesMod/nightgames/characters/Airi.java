@@ -28,10 +28,10 @@ public class Airi extends BasePersonality {
      *
      */
     private static final long serialVersionUID = -8169646189131720872L;
-    private static final String AIRI_PARASITISM_FOCUS = "AiriParasitismFocus";
-    private static final String AIRI_TRANSFORMATION_FOCUS = "AiriTransformationFocus";
-    private static final String AIRI_QUEEN_SLIME_FOCUS = "AiriQueenSlimeFocus";
-    private static final String AIRI_SLIME_CARRIER_FOCUS = "AiriSlimeCarrierFocus";
+    private static final String AIRI_SLIME_FOCUS = "AiriParasitismFocus";
+    private static final String AIRI_MIMICRY_FOCUS = "AiriTransformationFocus";
+    private static final String AIRI_REPLICATION_FOCUS = "AiriQueenSlimeFocus";
+    private static final String AIRI_TENTACLES_FOCUS = "AiriSlimeCarrierFocus";
 
     public Airi() {
         this(Optional.empty(), Optional.empty());
@@ -117,7 +117,7 @@ public class Airi extends BasePersonality {
         });
 
         character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
-            return character.has(Trait.slime) ? "A crystal blue figure stands in front of you. Well, \"stands\" might be an exaggeration. "
+            return character.has(Trait.slime) ? "A crystal blue figure stands before you. Well, \"stands\" might be slightly incorrect. "
             + "Airi sports a cute face and a tight body, but her thighs end in a giant ball of slime. "
             + "Indeed, while her body might look human at a distance, she seems to be composed of a soft, translucent gel."
             : "Airi looks at you cautiously. The lithe Japanese girl sports a cute face and a tight body with shoulder length black hair "
@@ -134,24 +134,23 @@ public class Airi extends BasePersonality {
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 1;
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return self.getLevel() >= 10 && !Global.checkFlag(AIRI_PARASITISM_FOCUS) && !Global.checkFlag(AIRI_TRANSFORMATION_FOCUS);
-        }, (c, self, player) -> Global.format("[Placeholder ]Airi pick parasite or transformation"
-                        + "", self, player),
+            return self.getLevel() >= 10 && !Global.checkFlag(AIRI_SLIME_FOCUS) && !Global.checkFlag(AIRI_MIMICRY_FOCUS);
+        }, (c, self, player) -> Global.format("[Placeholder ]Airi pick slime or mimicry.", self, player),
                 Arrays.asList(
-                        new CombatSceneChoice("[Placeholder] Parasite.", (c, self, other) -> {
-                            c.write("");
-                            useParasitism();
+                        new CombatSceneChoice("[Placeholder] Slime.", (c, self, other) -> {
+                            c.write("[Placeholder] Picked slime");
+                            useSlime();
                             return true;
                         }),
-                        new CombatSceneChoice("Tell her you love her sex drive", (c, self, other) -> {
-                            c.write("");
-                            useTransformation();
+                        new CombatSceneChoice("[Placeholder] Mimicry", (c, self, other) -> {
+                            c.write("[Placeholder] picked mimicry");
+                            useMimicry();
                             return true;
                         }),
                         new CombatSceneChoice("[Placeholder] Both? [Hard Mode]", (c, self, other) -> {
-                            c.write("");
-                            useParasitism();
-                            useTransformation();
+                            c.write("[Placeholder] Picked both");
+                            useSlime();
+                            useMimicry();
                             character.getGrowth().extraAttributes += 1;
                             // some compensation for the added difficulty. She gets 6 traits and 2 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
                             Global.getPlayer().getGrowth().addTraitPoints(new int[]{12,39},Global.getPlayer());
@@ -160,18 +159,18 @@ public class Airi extends BasePersonality {
                     )
                 ));
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return self.getLevel() >= 20 && !Global.checkFlag(AIRI_QUEEN_SLIME_FOCUS) && !Global.checkFlag(AIRI_SLIME_CARRIER_FOCUS)
-                            && (Global.checkFlag(AIRI_PARASITISM_FOCUS) || Global.checkFlag(AIRI_TRANSFORMATION_FOCUS));
+            return self.getLevel() >= 20 && !Global.checkFlag(AIRI_REPLICATION_FOCUS) && !Global.checkFlag(AIRI_TENTACLES_FOCUS)
+                            && (Global.checkFlag(AIRI_SLIME_FOCUS) || Global.checkFlag(AIRI_MIMICRY_FOCUS));
         }, (c, self, player) -> "",
                 Arrays.asList(
                         new CombatSceneChoice("Queen Slime", (c, self, other) -> {
                             c.write("");
-                            useSlimeQueen();
+                            useReplication();
                             return true;
                         }),
                         new CombatSceneChoice("Slime Carrier", (c, self, other) -> {
                             c.write(Global.format("", self, other));
-                            useSlimeCarrier();
+                            useTentacles();
                             return true;
                         })
                     )
@@ -193,27 +192,42 @@ public class Airi extends BasePersonality {
         character.getGrowth().addTrait(58, Trait.tongueTraining2);
 
         preferredAttributes.add(c -> Optional.of(Attribute.Slime));
-        preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
     }
     
-    private void useTransformation() {
-        Global.setFlag(AIRI_TRANSFORMATION_FOCUS, true);
-        
+    private void useMimicry() {
+        Global.setFlag(AIRI_MIMICRY_FOCUS, true);
+
+        character.getGrowth().addTrait(13, Trait.Imposter);
+        character.getGrowth().addTrait(19, Trait.UnstableGenome);
+        character.getGrowth().addTrait(34, Trait.ThePrestige);
+        character.getGrowth().addTrait(54, Trait.Masquerade);
     }
 
-    private void useParasitism() {
-        Global.setFlag(AIRI_PARASITISM_FOCUS, true);
-        
+    private void useSlime() {
+        Global.setFlag(AIRI_SLIME_FOCUS, true);
+        character.getGrowth().addTrait(13, Trait.VolatileSubstrate);
+        character.getGrowth().addTrait(19, Trait.ParasiticBond);
+        character.getGrowth().addTrait(34, Trait.PetrifyingPolymers);
+        character.getGrowth().addTrait(54, Trait.EnduringAdhesive);
     }
 
-    private void useSlimeQueen() {
-        Global.setFlag(AIRI_QUEEN_SLIME_FOCUS, true);
-        
+    private void useReplication() {
+        Global.setFlag(AIRI_REPLICATION_FOCUS, true);
+        character.getGrowth().addTrait(22, Trait.SlimeRoyalty);
+        character.getGrowth().addTrait(28, Trait.RapidMeiosis);
+        if (Global.checkFlag(AIRI_MIMICRY_FOCUS)) {
+            character.getGrowth().addTrait(43, Trait.StickyFinale);
+        }
+        if (Global.checkFlag(AIRI_SLIME_FOCUS)) {
+            character.getGrowth().addTrait(43, Trait.MimicBodyPart);
+        }
+        character.getGrowth().addTrait(49, Trait.HiveMind);
+        character.getGrowth().addTrait(58, Trait.NoblesseOblige);
     }
 
-    private void useSlimeCarrier() {
-        Global.setFlag(AIRI_SLIME_CARRIER_FOCUS, true);
-        
+    private void useTentacles() {
+        Global.setFlag(AIRI_TENTACLES_FOCUS, true);
+        character.getGrowth().addTrait(22, Trait.Pseudopod);
     }
 
     @Override

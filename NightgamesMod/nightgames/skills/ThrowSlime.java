@@ -60,6 +60,8 @@ public class ThrowSlime extends Skill {
             return false;
         } else {
             HitType type = decideEffect(c, target);
+            c.write(Global.format("With a large movement of {self:possessive} arms, {self:subject-action:throw|throws}"
+                            + " a big glob of viscous slime at {other:name-do}. ", getSelf(), target));
             type.message(c, getSelf(), target);
             if (type != HitType.NONE) {
                 target.add(c, type.build(getSelf(), target));
@@ -106,7 +108,7 @@ public class ThrowSlime extends Skill {
      * Accuracy increases with attribute level
      */
 
-    private enum HitType {
+    public enum HitType {
         FLAT_1,
         BOUND_W,
         FALL,
@@ -117,7 +119,7 @@ public class ThrowSlime extends Skill {
         PARASITED,
         NONE;
 
-        Status build(Character user, Character target) {
+        public Status build(Character user, Character target) {
             switch (this) {
                 case BOUND_S:
                     return new Bound(target, 70, "slime");
@@ -144,9 +146,8 @@ public class ThrowSlime extends Skill {
             }
         }
 
-        void message(Combat c, Character self, Character target) {
-            String msg = Global.format("With a large movement of {self:possessive} arms, {self:subject-action:throw|throws}"
-                            + " a big glob of viscous slime at {other:name-do}. ", self, target);
+        public void message(Combat c, Character self, Character target) {
+            String msg = "";
             switch (this) {
                 case BOUND_S:
                     msg += Global.format("While in the air, the mass of slime splits in two, and the remaining projectiles"
@@ -239,7 +240,7 @@ public class ThrowSlime extends Skill {
         return r;
     }
 
-    private HitType decideEffect(Combat c, Character target) {
+    public HitType decideEffect(Combat c, Character target) {
         int slime = getSelf().get(Attribute.Slime);
         int bonus = Math.min(slime, 40) - 20;
 

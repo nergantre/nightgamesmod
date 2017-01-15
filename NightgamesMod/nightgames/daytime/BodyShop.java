@@ -7,12 +7,12 @@ import java.util.Optional;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AssPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.mods.SecondPussyHoleMod;
 import nightgames.global.DebugFlags;
@@ -195,7 +195,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Grow Cock", 2500) {
             @Override
             void buy(Character buyer) {
-                buyer.body.addReplace(BasicCockPart.tiny, 1);
+                buyer.body.addReplace(new GenericCockPart(GenericCockPart.SIZE_TINY), 1);
             }
 
             @Override
@@ -349,7 +349,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Cock Expansion", 1500) {
             @Override
             void buy(Character buyer) {
-                CockPart target = buyer.body.getCockBelow(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockBelow(GenericCockPart.SIZE_MASSIVE);
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.upgrade(), 1);
@@ -357,7 +357,7 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                CockPart target = buyer.body.getCockBelow(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockBelow(GenericCockPart.SIZE_MASSIVE);
                 return target != null;
             }
 
@@ -365,7 +365,7 @@ public class BodyShop extends Activity {
             double priority(Character buyer) {
                 CockPart part = buyer.body.getRandomCock();
                 if (part != null) {
-                    return BasicCockPart.big.size > part.getSize() ? 10 : 3;
+                    return GenericCockPart.SIZE_BIG > part.getSize() ? 10 : 3;
                 }
                 return 0;
             }
@@ -374,7 +374,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Cock Reduction", 1500) {
             @Override
             void buy(Character buyer) {
-                CockPart target = buyer.body.getCockAbove(BasicCockPart.tiny.size);
+                CockPart target = buyer.body.getCockAbove(GenericCockPart.SIZE_TINY);
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.downgrade(), 1);
@@ -382,7 +382,7 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                CockPart target = buyer.body.getCockAbove(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockAbove(GenericCockPart.SIZE_TINY);
                 return target != null;
             }
 
@@ -390,7 +390,7 @@ public class BodyShop extends Activity {
             double priority(Character buyer) {
                 CockPart part = buyer.body.getRandomCock();
                 if (part != null) {
-                    return BasicCockPart.small.size < part.getSize() ? 3 : 0;
+                    return GenericCockPart.SIZE_SMALL < part.getSize() ? 3 : 0;
                 }
                 return 0;
             }
@@ -402,14 +402,7 @@ public class BodyShop extends Activity {
                 CockPart target = buyer.body.getRandomCock();
                 assert target != null;
                 buyer.body.remove(target);
-                BasicCockPart best = BasicCockPart.massive;
-                for (BasicCockPart part : BasicCockPart.values()) {
-                    double delta = Math.abs(target.getSize() - part.getSize());
-                    if (delta < Math.abs(target.getSize() - best.getSize())) {
-                        best = part;
-                    }
-                }
-                buyer.body.addReplace(best, 1);
+                buyer.body.addReplace(target.removeAllMods(), 1);
             }
 
             @Override

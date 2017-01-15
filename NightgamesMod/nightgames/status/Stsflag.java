@@ -73,4 +73,5 @@ public enum Stsflag {
     slimed,
     disguised,
     tentacleBound,
+    atrophy,
 }

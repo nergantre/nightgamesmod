@@ -6,7 +6,7 @@ import java.util.List;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.pet.arms.skills.ArmSkill;
-import nightgames.pet.arms.skills.DefabRay;
+import nightgames.pet.arms.skills.TentacleSquirt;
 
 public class TentacleSquirter extends TentacleArm {
     public TentacleSquirter(ArmManager manager) {
@@ -15,6 +15,6 @@ public class TentacleSquirter extends TentacleArm {
 
     @Override
     List<ArmSkill> getSkills(Combat c, Character owner, Character target) {
-        return Collections.singletonList(new DefabRay());
+        return Collections.singletonList(new TentacleSquirt());
     }
 }

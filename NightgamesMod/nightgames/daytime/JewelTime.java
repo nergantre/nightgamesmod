@@ -6,11 +6,10 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -58,7 +57,7 @@ public class JewelTime extends BaseNPCTime {
             growCock.option = "Jewel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.enlightened));
+                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.enlightened));
                 return true;
             };
             options.add(growCock);
@@ -94,9 +93,9 @@ public class JewelTime extends BaseNPCTime {
                                                   .stream()
                                                   .filter(cock -> ((CockPart) cock).isGeneric(self))
                                                   .findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
+            CockPart target = (CockPart) optPart.get();
             self.body.remove(target);
-            self.body.add(new ModdedCockPart(target, CockMod.enlightened));
+            self.body.add(target.applyMod(CockMod.enlightened));
             return true;
         };
         options.add(enlightenedCock);

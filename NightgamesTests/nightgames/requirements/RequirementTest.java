@@ -3,7 +3,7 @@ package nightgames.requirements;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.*;
-import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -121,7 +121,7 @@ public class RequirementTest {
     }
 
     @Test public void insertedTest() throws Exception {
-        self.body.addReplace(BasicCockPart.huge, 1);
+        self.body.addReplace(new GenericCockPart(GenericCockPart.SIZE_HUGE), 1);
         combat.setStance(new FlyingCarry(self, other));
         assertThat(inserted().meets(combat, self, other), is(true));
         assertThat(inserted().meets(combat, other, self), is(false));
@@ -207,7 +207,7 @@ public class RequirementTest {
     }
 
     @Test public void positionTest() throws Exception {
-        self.body.addReplace(BasicCockPart.huge, 1);
+        self.body.addReplace(new GenericCockPart(), 1);
         PositionRequirement flyfuck = position("FlyingCarry");
         combat.setStance(new FlyingCarry(self, other));
         assertThat(flyfuck.meets(combat, self, other), is(true));

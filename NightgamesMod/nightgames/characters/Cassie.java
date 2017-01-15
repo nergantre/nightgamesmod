@@ -146,7 +146,7 @@ public class Cassie extends BasePersonality {
                 return "{self:SUBJECT} gasps as a new-found strength enters {self:possessive} body through {self:possessive} " + part + ". {self:PRONOUN} turns to you shyly and asks, "
                                 + "<i>\"{other:NAME}, that felt REALLY good... can I have some more? Pretty please?\"</i>";
             } else {
-                return "{self:SUBJECT} clings to your convulsing body as {self:PRONOUN} once again steals your experiences and training from your body as you helplessly cum. "
+                return "{self:SUBJECT} clings to your convulsing body as {self:pronoun} once again steals your experiences and training from your body as you helplessly cum. "
                                 + "<i>\"{other:NAME}, {other:name}, you've made me feel so good, you know that? "
                                 + "And you've been generously donating so much of yourself to me. "
                                 + "Don't worry, I'll be sure to pay you back now that I've become stronger than you. I'll make you feel <b>incredible</b>!\"</i>";

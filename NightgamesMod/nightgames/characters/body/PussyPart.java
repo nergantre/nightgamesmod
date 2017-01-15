@@ -574,22 +574,20 @@ public enum PussyPart implements BodyPart,BodyPartMod {
             // for us
             return 1;
         }
-        if (otherPart instanceof ModdedCockPart) {
-            if (moddedPartCountsAs(self, fiery)) {
-                return moddedPartCountsAs(other, CockMod.bionic) ? 1 : moddedPartCountsAs(other, CockMod.primal) ? -1 : 0;
-            }
-            if (moddedPartCountsAs(self, arcane)) {
-                return moddedPartCountsAs(other, CockMod.primal) ? 1 : moddedPartCountsAs(other, CockMod.bionic) ? -1 : 0;
-            }
-            if (moddedPartCountsAs(self, succubus)) {
-                return moddedPartCountsAs(other, CockMod.runic) ? -1 : 0;
-            }
-            if (moddedPartCountsAs(self, feral)) {
-                return moddedPartCountsAs(other, CockMod.runic) ? 1 : moddedPartCountsAs(other, CockMod.incubus) ? -1 : 0;
-            }
-            if (moddedPartCountsAs(self, cybernetic)) {
-                return moddedPartCountsAs(other, CockMod.incubus) ? 1 : 0;
-            }
+        if (moddedPartCountsAs(self, fiery)) {
+            return moddedPartCountsAs(other, CockMod.bionic) ? 1 : moddedPartCountsAs(other, CockMod.primal) ? -1 : 0;
+        }
+        if (moddedPartCountsAs(self, arcane)) {
+            return moddedPartCountsAs(other, CockMod.primal) ? 1 : moddedPartCountsAs(other, CockMod.bionic) ? -1 : 0;
+        }
+        if (moddedPartCountsAs(self, succubus)) {
+            return moddedPartCountsAs(other, CockMod.runic) ? -1 : 0;
+        }
+        if (moddedPartCountsAs(self, feral)) {
+            return moddedPartCountsAs(other, CockMod.runic) ? 1 : moddedPartCountsAs(other, CockMod.incubus) ? -1 : 0;
+        }
+        if (moddedPartCountsAs(self, cybernetic)) {
+            return moddedPartCountsAs(other, CockMod.incubus) ? 1 : 0;
         }
 
         return 0;
@@ -658,11 +656,11 @@ public enum PussyPart implements BodyPart,BodyPartMod {
         return equivalent;
     }
 
-    public CockPart getEquivalentCock(BasicCockPart part) {
+    public CockPart getEquivalentCock(int size) {
         if (equivalent != CockMod.error) {
-            return new ModdedCockPart(part, equivalent);
+            return (CockPart) new GenericCockPart().applyMod(equivalent);
         }
-        return part;
+        return new GenericCockPart();
     }
 
     @Override

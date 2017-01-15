@@ -43,15 +43,15 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {}
     
     public double modPleasure(Character self) {
-        return pleasure;
+        return getBasePleasure();
     }
 
     public double modHotness(Character self) {
-        return hotness;
+        return getBaseHotness();
     }
 
     public double modSensitivity(Character self) {
-        return sensitivity;
+        return getBaseSensitivity();
     }
 
     protected String lowerOrRear(BodyPart part) {
@@ -81,5 +81,17 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
     @Override
     public int compareTo(PartMod other) {
         return Integer.compare(sortOrder, other.sortOrder);
+    }
+
+    public double getBaseHotness() {
+        return hotness;
+    }
+
+    public double getBasePleasure() {
+        return pleasure;
+    }
+
+    public double getBaseSensitivity() {
+        return sensitivity;
     }
 }

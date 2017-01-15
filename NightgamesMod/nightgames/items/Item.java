@@ -9,9 +9,9 @@ import java.util.List;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.EarPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
@@ -183,11 +183,11 @@ public enum Item implements Loot {
     Totem("Fetish Totem", 150, "A small penis shaped totem that can summon tentacles", "a "),
     Capacitor("Capacitor", 30, "", "a "),
     TinyDraft("Tiny Draft", 100, "Temporarily shrink a penis", "a ",
-                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", BasicCockPart.average,
+                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
                                     BodyModEffect.Effect.downgrade)),
                     15),
     PriapusDraft("Priapus Draft", 150, "Temporarily grow a penis", "a ",
-                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", BasicCockPart.average,
+                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
                                     BodyModEffect.Effect.growplus)),
                     15),
     BustDraft("Bust Draft", 80, "Temporarily grow breasts", "a ", Collections.singleton(
