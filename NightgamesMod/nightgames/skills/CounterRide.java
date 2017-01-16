@@ -52,7 +52,7 @@ public class CounterRide extends CounterBase {
     public boolean usable(Combat c, Character target) {
         return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct()
                         && getSelf().crotchAvailable() && target.crotchAvailable()
-                        && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick());
+                        && (getSelf().hasDick() && target.hasPussy() || getSelf().hasPussy() && target.hasDick()) && target.canAct();
     }
 
     @Override

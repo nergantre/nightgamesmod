@@ -13,7 +13,7 @@ import nightgames.skills.damage.DamageType;
 
 public class ToyAttack extends ArmSkill {
 
-    public ToyAttack(String name, int level) {
+    public ToyAttack() {
         super("Toy Attack", 20);
     }
 
@@ -25,8 +25,8 @@ public class ToyAttack extends ArmSkill {
     @Override
     public boolean resolve(Combat c, Arm arm, Character owner, Character target) {
 
-        int m = 5 + Global.random(15);
-        m = (int) owner.modifyDamage(DamageType.gadgets, target, m);
+        int m = 5 + Global.random(10);
+        m += (int) owner.modifyDamage(DamageType.gadgets, target, 2);
         if (c.getStance()
              .penetrated(c, target) && target.hasDick()) {
             c.write(PetCharacter.DUMMY,

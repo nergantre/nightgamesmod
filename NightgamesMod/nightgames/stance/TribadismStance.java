@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class TribadismStance extends Position {
     public TribadismStance(Character top, Character bottom) {
@@ -95,6 +96,17 @@ public class TribadismStance extends Position {
     public List<BodyPart> topParts(Combat c) {
         return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
+    }
+
+    @Override
+    public Position reverse(Combat c, boolean writeMessage) {
+        if (writeMessage) {
+            c.write(bottom, Global.format(
+                            "In a desperate gamble for dominance, {self:subject} shakes {self:possessive} hips wildly, making {other:direct-object} yelp and breaking {other:possessive} concentration. "
+                            + "Taking that chance, {self:pronoun-action:swing} {self:possessive} legs on top of {other:direct-object} and take control for {self:reflective}.",
+                            bottom, top));
+        }
+        return new TribadismStance(bottom, top);
     }
 
     @Override

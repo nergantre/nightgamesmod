@@ -7,6 +7,7 @@ public enum ArmType {
     HEAT_RAY("Heat Ray Cannon", "a red, slitted opening"),
     DEFAB_CANNON("Defrabrication Cannon", "a spherical, metallic tip"),
     HEAL_CANNON("Heal Cannon", "a blocky tip"),
+    TOY_ARM("Silicone Arm", "a malleable silicone ball"),
     TENTACLE_INJECTOR("Injector", "a needle tip leaking fluid"),
     TENTACLE_CLINGER("Clinger", "suction cups lining the body"),
     TENTACLE_IMPALER("Impaler", "a tapered phallic tip"),

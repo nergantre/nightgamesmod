@@ -1550,6 +1550,7 @@ public class Combat extends Observable implements Cloneable {
                 PetInitiatedThreesome threesomeSkill = new PetInitiatedThreesome(initiator);
                 if (newStance.havingSex(this)) {
                     threesomeSkill.resolve(this, newStance.bottom);
+                    return;
                 } else if (!getStance().sub(newStance.bottom)) {
                     write(initiator, Global.format("{self:SUBJECT-ACTION:take|takes} the chance to send {other:name-do} sprawling to the ground", initiator, newStance.bottom));
                     newStance.bottom.add(this, new Falling(newStance.bottom));
@@ -1557,7 +1558,7 @@ public class Combat extends Observable implements Cloneable {
                 }
             } else {
                 if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-                    System.out.printf("Tried to chance stance without both players, stopping: %s -> %s\n",
+                    System.out.printf("Tried to change stance without both players, stopping: %s -> %s\n",
                                     stance.getClass().getName(),
                                     newStance.getClass().getName());
                     Thread.dumpStack();

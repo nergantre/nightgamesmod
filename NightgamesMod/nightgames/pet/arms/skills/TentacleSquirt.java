@@ -10,7 +10,7 @@ import nightgames.skills.ThrowSlime;
 import nightgames.skills.ThrowSlime.HitType;
 import nightgames.status.Slimed;
 
-public class TentacleSquirt extends ArmSkill {    
+public class TentacleSquirt extends TentacleArmSkill {    
     public TentacleSquirt() {
         super("Tentacle Squirt", 10);
     }

@@ -9,7 +9,7 @@ import nightgames.pet.arms.Arm;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 
-public class TentacleInjectSensitivity extends ArmSkill {
+public class TentacleInjectSensitivity extends TentacleArmSkill {
     public TentacleInjectSensitivity() {
         super("Tentacle Injection: Sensitizer", 20);
     }

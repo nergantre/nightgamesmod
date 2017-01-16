@@ -9,7 +9,7 @@ import nightgames.pet.arms.Arm;
 import nightgames.status.Abuff;
 import nightgames.status.Atrophy;
 
-public class TentacleInjectVenom extends ArmSkill {
+public class TentacleInjectVenom extends TentacleArmSkill {
     public TentacleInjectVenom() {
         super("Tentacle Injection: Venom", 20);
     }

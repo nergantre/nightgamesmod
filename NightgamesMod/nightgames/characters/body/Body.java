@@ -592,7 +592,7 @@ public class Body implements Cloneable {
             }
         }
 
-        if (character.has(Trait.Rut) && character.is(Stsflag.frenzied)) {
+        if (character.has(Trait.NaturalHeat) && character.is(Stsflag.frenzied)) {
             baseBonusDamage -= (baseBonusDamage + magnitude) / 2;
         }
 

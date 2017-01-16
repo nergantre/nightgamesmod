@@ -111,6 +111,7 @@ public class Kat extends BasePersonality {
     private void useFrenzy() {
         Global.flag(KAT_FRENZY_FOCUS);
         character.getGrowth().addTrait(22, Trait.Rut);
+        character.getGrowth().addTrait(22, Trait.NaturalHeat);
         character.getGrowth().addTrait(28, Trait.PrimalHeat);
         if (Global.checkFlag(KAT_SPEED_FOCUS)) {
             character.getGrowth().addTrait(43, Trait.Jackhammer);

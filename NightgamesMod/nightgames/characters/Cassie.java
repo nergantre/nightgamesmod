@@ -204,6 +204,7 @@ public class Cassie extends BasePersonality {
     }
     private void useEnchantressBonus() {
         Global.flag(CASSIE_ENCHANTRESS_FOCUS);
+        character.getGrowth().addTrait(21, Trait.Illusionist);
         character.getGrowth().addTrait(21, Trait.magicEyeArousal);
         character.getGrowth().addTrait(28, Trait.magicEyeFrenzy);
         character.getGrowth().addTrait(30, Trait.hypnoticsemen);
@@ -222,7 +223,7 @@ public class Cassie extends BasePersonality {
         Global.flag(CASSIE_SUBMISSIVE_FOCUS);
         character.getGrowth().addTrait(21, Trait.submissive);
         if (Global.checkFlag(CASSIE_BREAST_FOCUS)) {
-            character.getGrowth().addTrait(28, Trait.augmentedPheromones);
+            character.getGrowth().addTrait(28, Trait.PheromonedMilk);
         }
         if (Global.checkFlag(CASSIE_MOUTH_FOCUS)) {
             character.getGrowth().addTrait(28, Trait.sweetlips);

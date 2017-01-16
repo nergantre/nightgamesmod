@@ -275,6 +275,11 @@ public enum BreastsPart implements BodyPart {
                 opponent.weaken(c, opponent.getStamina().max() / 10);
                 opponent.add(c, new Abuff(opponent, Attribute.Power, -Global.random(1, 3), 20));
             }
+            if (self.has(Trait.PheromonedMilk) && !opponent.has(Trait.Rut)) {
+                c.write(opponent, Global.format("<b>Drinking {self:possessive} breast milk sends {other:direct-object} into a chemically induced rut!</b>",
+                                                self, opponent));
+                opponent.addTemporaryTrait(Trait.Rut, 10);
+            }
         }
         return 0;
     }

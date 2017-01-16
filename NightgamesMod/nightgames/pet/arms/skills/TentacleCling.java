@@ -9,7 +9,7 @@ import nightgames.pet.arms.Arm;
 import nightgames.status.Stsflag;
 import nightgames.status.TentacleBound;
 
-public class TentacleCling extends ArmSkill {
+public class TentacleCling extends TentacleArmSkill {
     public TentacleCling() {
         super("Cling", 20);
     }

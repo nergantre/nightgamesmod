@@ -198,6 +198,6 @@ public class Engulfed extends Position {
     
     @Override
     public int distance() {
-        return 1;
+        return 0;
     }
 }

@@ -78,7 +78,7 @@ public class PartFucked extends Status implements InsertedStatus {
     }
 
     public void onRemove(Combat c, Character other) {
-        c.write(other, Global.format("{other:NAME-POSSESSIVE} slick %s slips out of {self:direct-object} with an audible pop.", affected, other));
+        c.write(other, Global.format("{other:NAME-POSSESSIVE} slick %s slips out of {self:direct-object} with an audible pop.", affected, other, penetrator.describe(other)));
     }
 
     @Override

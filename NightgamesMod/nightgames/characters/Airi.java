@@ -28,10 +28,10 @@ public class Airi extends BasePersonality {
      *
      */
     private static final long serialVersionUID = -8169646189131720872L;
-    private static final String AIRI_SLIME_FOCUS = "AiriParasitismFocus";
-    private static final String AIRI_MIMICRY_FOCUS = "AiriTransformationFocus";
-    private static final String AIRI_REPLICATION_FOCUS = "AiriQueenSlimeFocus";
-    private static final String AIRI_TENTACLES_FOCUS = "AiriSlimeCarrierFocus";
+    private static final String AIRI_SLIME_FOCUS = "AiriSlimeFocus";
+    private static final String AIRI_MIMICRY_FOCUS = "AiriMimicryFocus";
+    private static final String AIRI_REPLICATION_FOCUS = "AiriReplicationFocus";
+    private static final String AIRI_TENTACLES_FOCUS = "AiriTentaclesFocus";
 
     public Airi() {
         this(Optional.empty(), Optional.empty());

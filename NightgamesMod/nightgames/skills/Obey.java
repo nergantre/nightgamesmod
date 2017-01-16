@@ -23,7 +23,7 @@ public class Obey extends Skill {
 
     @Override
     public String describe(Combat c) {
-        return "Obey the succubus' every command";
+        return "Obey your master's every command";
     }
 
     @Override
@@ -33,6 +33,11 @@ public class Obey extends Skill {
             c.write(getSelf(), "You patiently await your "+controller+" command.");
         } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), getSelf().getName() + " stares ahead blankly, waiting for "+getSelf().possessiveAdjective()+" orders.");
+        }
+        if (getSelf().human()) {
+            (new Command(target)).resolve(c, getSelf());
+        } else {
+            (new Masturbate(getSelf())).resolve(c, target);
         }
         return true;
     }

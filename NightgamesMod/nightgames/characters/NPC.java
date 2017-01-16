@@ -877,6 +877,10 @@ public class NPC extends Character {
     }
 
     public Optional<String> getComment(Combat c) {
+        // can't really talk when they're disabled
+        if (!canRespond()) {
+            return Optional.empty();
+        }
         Set<CommentSituation> applicable = CommentSituation.getApplicableComments(c, this, c.getOpponent(this));
         Set<CommentSituation> forbidden = EnumSet.allOf(CommentSituation.class);
         forbidden.removeAll(applicable);

@@ -75,7 +75,7 @@ public class HeldPaizuri extends AbstractFacingStance {
     }
 
     public List<BodyPart> bottomParts() {
-        return Collections.singletonList(top.body.getRandom("cock"));
+        return Collections.singletonList(bottom.body.getRandom("cock"));
     }
 
     @Override

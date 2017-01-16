@@ -66,7 +66,7 @@ public class Frenzied extends DurationStatus {
     public Frenzied(Character affected, int duration, boolean selfInflicted) {
         super("Frenzied", affected, duration);
         flag(Stsflag.frenzied);
-        if (!selfInflicted && !affected.has(Trait.Rut)) {
+        if (!selfInflicted && !affected.has(Trait.NaturalHeat)) {
             flag(Stsflag.debuff);
         }
         flag(Stsflag.purgable);
@@ -75,8 +75,8 @@ public class Frenzied extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, boolean replaced) {
-        if (affected.has(Trait.Rut)) {
-            return Global.format("There's a frenzied look in {self:name-possessive} eyes as {self:pronoun-action:eye|eyes} zeroes in on {other:name-possessive} crotch. "
+        if (affected.has(Trait.Rut) && !affected.human()) {
+            return Global.format("There's a frenzied look in {self:name-possessive} eyes as they zero in on {other:name-possessive} crotch. "
                             + "This could be bad.", affected, c.getOpponent(affected));
         }
         return String.format("%s mind blanks, leaving only the bestial need to breed.",

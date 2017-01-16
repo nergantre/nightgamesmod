@@ -10,7 +10,7 @@ import nightgames.pet.arms.Arm;
 import nightgames.pet.arms.TentacleArm;
 import nightgames.status.PartFucked;
 
-public class TentacleFuck extends ArmSkill {    
+public class TentacleFuck extends TentacleArmSkill {    
     public TentacleFuck() {
         super("Tentacle Fuck", 20);
     }

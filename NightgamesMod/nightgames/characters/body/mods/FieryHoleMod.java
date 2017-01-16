@@ -1,5 +1,7 @@
 package nightgames.characters.body.mods;
 
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
@@ -37,6 +39,29 @@ public class FieryHoleMod extends PartMod {
             return 20;
         }
         return 0;
+    }
+
+    public void tickHolding(Combat c, Character self, Character opponent, BodyPart part, BodyPart otherOrgan) {
+        Optional<BodyPart> targetPart = c.getStance().getPartsFor(c, opponent, self).stream().findAny();
+        if (targetPart.isPresent()) {
+            BodyPart target = targetPart.get();
+            if (target.moddedPartCountsAs(opponent, CockMod.primal)) {
+                c.write(self, String.format(
+                                "The intense heat emanating from %s %s only serves to enflame %s primal passion.",
+                                self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun()));
+                opponent.buildMojo(c, 7);
+            } else if (target.moddedPartCountsAs(opponent, CockMod.bionic)) {
+                c.write(self, String.format(
+                                "The heat emanating from %s %s is extremely hazardous for %s %s, nearly burning through its circuitry and definitely causing intense pain.",
+                                self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
+                                target.describe(opponent)));
+                opponent.pain(c, self, Math.max(30, 20 + self.get(Attribute.Ki)));
+            } else {
+                c.write(self, String.format("The heat from %s %s leaves %s gasping.",
+                                self.possessiveAdjective(), part.describe(self), opponent.directObject()));
+                opponent.pain(c, self, 20 + self.get(Attribute.Ki) / 2);
+            }
+        }
     }
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 

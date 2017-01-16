@@ -326,6 +326,11 @@ public abstract class Character extends Observable implements Cloneable {
                     total += 2;
                 }
                 break;
+            case Hypnosis:
+                if (has(Trait.Illusionist)) {
+                    total += getPure(Attribute.Arcane) / 2;
+                }
+                break;
             case Speed:
                 if (has(ClothingTrait.bulky)) {
                     total -= 1;
@@ -1773,7 +1778,9 @@ public abstract class Character extends Observable implements Cloneable {
         }
 
         if (times == totalTimes) {
-            List<Status> purgedStatuses = getStatuses().stream().filter(status -> status.mindgames() && status.flags().contains(Stsflag.purgable)).collect(Collectors.toList());
+            List<Status> purgedStatuses = getStatuses().stream()
+                            .filter(status -> (status.mindgames() && status.flags().contains(Stsflag.purgable)) || status.flags().contains(Stsflag.orgasmPurged))
+                            .collect(Collectors.toList());
             if (!purgedStatuses.isEmpty()){
                 if (human()) {
                     c.write(this, "Your mind clears up after your release.");
@@ -2232,7 +2239,7 @@ public abstract class Character extends Observable implements Cloneable {
             c.getCombatantData(this).setIntegerFlag(APOSTLES_COUNT, c.getCombatantData(this).getIntegerFlag(APOSTLES_COUNT) + 1);
         }
 
-        if (has(Trait.Rut) && Global.random(100) < (getArousal().percent() - 50)) {
+        if (has(Trait.Rut) && Global.random(100) < (getArousal().percent() - 50) && !is(Stsflag.frenzied)) {
             c.write(this, Global.format("<b>{self:NAME-POSSESSIVE} eyes dilate and {self:possessive} body flushes as {self:pronoun-action:descend|descends} into a mating frenzy!</b>", this, opponent));
             add(c, new Frenzied(this, 3, true));
         }
@@ -2777,7 +2784,7 @@ public abstract class Character extends Observable implements Cloneable {
             dc += getStatus(Stsflag.braced).value();
         }
         if (has(Trait.stabilized)) {
-            dc += 10;
+            dc += 10 + 2 * Math.sqrt(get(Attribute.Science));
         }
         if (has(ClothingTrait.heels) && !has(Trait.proheels)) {
             dc -= 7;
@@ -3853,7 +3860,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean isHypnotized() {
-        return is(Stsflag.drowsy) || is(Stsflag.enthralled) || is(Stsflag.charmed) || is(Stsflag.trance);
+        return is(Stsflag.drowsy) || is(Stsflag.enthralled) || is(Stsflag.charmed) || is(Stsflag.trance) || is(Stsflag.lovestruck);
     }
 
     public void setName(String name) {

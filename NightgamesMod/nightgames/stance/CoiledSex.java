@@ -40,7 +40,7 @@ public class CoiledSex extends FemdomSexStance {
 
     @Override
     public boolean kiss(Character c, Character target) {
-        return true;
+        return false;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class CoiledSex extends FemdomSexStance {
     public Position reverse(Combat c, boolean writeMessage) {
         if (writeMessage) {
             c.write(bottom, Global.format(
-                            "In a desperate gamble for dominance, {self:subject} piston wildly into {other:name-do}, making {other:direct-object} yelp and breaking {other:possessive} concentration. Shaking off {other:possessive} limbs coiled around {self:subject}, {self:subject} grab ahold of {other:possessive} legs and swing into a missionary position.",
+                            "In a desperate gamble for dominance, {self:subject} piston wildly into {other:name-do}, making {other:direct-object} yelp and breaking {other:possessive} concentration. Shaking off {other:possessive} limbs coiled around {self:direct-object}, {self:subject} grab ahold of {other:possessive} legs and swing into a missionary position.",
                             bottom, top));
         }
         return new Missionary(bottom, top);

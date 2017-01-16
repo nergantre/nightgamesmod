@@ -21,6 +21,7 @@ import nightgames.items.clothing.ClothingSlot;
 import nightgames.skills.damage.DamageType;
 import nightgames.stance.Behind;
 import nightgames.stance.FaceSitting;
+import nightgames.stance.Kneeling;
 import nightgames.stance.Mount;
 import nightgames.stance.ReverseMount;
 import nightgames.stance.Stance;
@@ -262,6 +263,9 @@ public class Command extends Skill {
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "ass", .1));
                 }
+                if (c.getStance().dom(target)) {
+                    c.setStance(new Kneeling(getSelf(), target));
+                }
                 target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);
                 break;
@@ -281,6 +285,10 @@ public class Command extends Skill {
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "cock", .1));
                 }
+
+                if (c.getStance().dom(target)) {
+                    c.setStance(new Kneeling(getSelf(), target));
+                }
                 target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);
                 break;
@@ -297,6 +305,10 @@ public class Command extends Skill {
                                 7 + Global.random(m), c, this);
                 if (Global.random(50) < getSelf().get(Attribute.Fetish) + 10) {
                     target.add(c, new BodyFetish(target, getSelf(), "pussy", .1));
+                }
+
+                if (c.getStance().dom(target)) {
+                    c.setStance(new Kneeling(getSelf(), target));
                 }
                 target.temptNoSkillNoSource(c, getSelf(), 7 + Global.random(20));
                 getSelf().buildMojo(c, 15);

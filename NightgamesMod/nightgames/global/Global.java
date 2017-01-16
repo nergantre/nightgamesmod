@@ -545,7 +545,10 @@ public class Global {
         getSkillPool().add(new HypnoVisorRemove(ch));
         getSkillPool().add(new StripMinor(ch));
         getSkillPool().add(new DemandArousal(ch));
-        
+        getSkillPool().add(new KiShout(ch));
+        getSkillPool().add(new PressurePoint(ch));
+        getSkillPool().add(new Deepen(ch));
+
         if (Global.isDebugOn(DebugFlags.DEBUG_SKILLS)) {
             getSkillPool().add(new SelfStun(ch));
         }

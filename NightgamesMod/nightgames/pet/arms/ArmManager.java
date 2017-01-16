@@ -51,9 +51,11 @@ public class ArmManager {
                 if (Global.randomdouble() < .5) {
                     arms.add(new Grabber(this));
                     arms.add(new Grabber(this));
+                    arms.add(new ToyArm(this));
                 } else {
                     arms.add(new Stripper(this));
                     arms.add(new Stripper(this));
+                    arms.add(new ToyArm(this));
                 }
             } else {
                 double r = Global.randomdouble();
@@ -62,21 +64,25 @@ public class ArmManager {
                     arms.add(new Grabber(this));
                     arms.add(new HeatCannon(this));
                     arms.add(new Stripper(this));
+                    arms.add(new ToyArm(this));
                 } else if (r > .5) {
                     arms.add(new Grabber(this));
                     arms.add(new Grabber(this));
                     arms.add(new Stabilizer(this));
                     arms.add(new Stabilizer(this));
+                    arms.add(new ToyArm(this));
                 } else if (r > .25) {
                     arms.add(new HealCannon(this));
                     arms.add(new Stripper(this));
                     arms.add(new DefabCannon(this));
                     arms.add(new HeatCannon(this));
+                    arms.add(new ToyArm(this));
                 } else {
                     arms.add(new Stabilizer(this));
                     arms.add(new Stabilizer(this));
                     arms.add(new HeatCannon(this));
                     arms.add(new DefabCannon(this));
+                    arms.add(new ToyArm(this));
                 }
             }
         }
@@ -166,14 +172,14 @@ public class ArmManager {
 
     private void doArmAction(Arm arm, Combat c, Character owner, Character target) {
         if (arm.attackOdds(c, owner, target) > Global.random(100)) {
-            ArmSkill skill = Global.pickRandom(arm.getSkills(c, owner, target)
+            Optional<ArmSkill> skill = Global.pickRandom(arm.getSkills(c, owner, target)
                                                   .stream()
                                                   .filter(s -> s.usable(c, arm, owner, target))
-                                                  .toArray(ArmSkill[]::new)).get();
-            if (skill != null) {
+                                                  .toArray(ArmSkill[]::new));
+            if (skill.isPresent()) {
                 c.write(PetCharacter.DUMMY, String.format("<b>%s %s uses %s</b>", owner.nameOrPossessivePronoun(),
-                                arm.getName(), skill.getName()));
-                skill.resolve(c, arm, owner, target);
+                                arm.getName(), skill.get().getName()));
+                skill.get().resolve(c, arm, owner, target);
                 return;
             }
         }
@@ -182,7 +188,6 @@ public class ArmManager {
 
     public void act(Combat c, Character owner, Character target) {
         if (arms.isEmpty()) {
-            // fast return if no arms
             return;
         }
         List<Arm> available = handleMultiArmMoves(c, owner, target);

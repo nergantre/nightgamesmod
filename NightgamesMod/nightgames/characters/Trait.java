@@ -155,6 +155,8 @@ public enum Trait {
         }
     }),
     sedativecream("Sedative Cream", "Lactate that weakens the drinker"), // the first time in a fight that you see bare breasts you are entranced
+    PheromonedMilk("Pheromoned Milk", "Milk can cause drinker to go into heat"),
+    Illusionist("Illusionist", "Arcane doubles as Hypnotism"),
 
     defthands("Deft hands", "They know where to go"), // hands damage upgrade
     nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
@@ -386,7 +388,8 @@ public enum Trait {
         b.append(Global.format("A complex aroma lingers in the air.", c, c))),
 
     // Frenzy Focus
-    Rut("Rut", "Half arousal damage during frenzy, chance to go into a frenzy when over half arousal."),
+    Rut("Rut", "Chance to go into a frenzy when over half arousal."),
+    NaturalHeat("Natural Heat", "Half arousal damage during frenzy."),
     PrimalHeat("Primal Heat", "Bonus to seduction while frenzied based on Animism"),
     Jackhammer("Jackhammer", "Chance to thrust/ride twice"),
     Piledriver("Piledriver", "Chance to stun when fucking"),

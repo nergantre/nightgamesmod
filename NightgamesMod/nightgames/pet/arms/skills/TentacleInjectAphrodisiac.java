@@ -9,7 +9,7 @@ import nightgames.pet.arms.Arm;
 import nightgames.stance.Kneeling;
 import nightgames.status.Horny;
 
-public class TentacleInjectAphrodisiac extends ArmSkill {
+public class TentacleInjectAphrodisiac extends TentacleArmSkill {
     public TentacleInjectAphrodisiac() {
         super("Tentacle Injection: Aphrodisiac", 20);
     }
