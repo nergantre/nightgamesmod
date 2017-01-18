@@ -574,7 +574,6 @@ public class NPC extends Character {
     @Override
     public void spy(Character opponent, IEncounter enc) {
         if (ai.attack(opponent)) {
-            // enc.ambush(this, opponent);
             enc.parse(Encs.ambush, this, opponent);
         } else {
             location.endEncounter();
@@ -584,10 +583,14 @@ public class NPC extends Character {
     @Override
     public void ding() {
         level++;
-        ai.ding();
+        ai.ding(this);
         String message = Global.gainSkills(this);
         if (human()) {
             Global.gui().message(message);
+        }
+        Combat currentCombat = Global.gui().combat;
+        if (currentCombat != null && currentCombat.isBeingObserved() && (currentCombat.p1 == this || currentCombat.p2 == this)) {
+            currentCombat.write(this, Global.format("{self:subject-action:have} leveled up!", this, this));
         }
     }
 

@@ -22,7 +22,7 @@ public class Engulf extends CounterBase {
         if (self.human()) {
             return "You have spread yourself out, ready to engulf your opponent.";
         } else {
-            return String.format("%s spread %s thin, arms open invitingly.", self.getName(), self.reflectivePronoun());
+            return String.format("%s spread %s thin, arms opened invitingly.", self.getName(), self.reflectivePronoun());
         }
     }
 

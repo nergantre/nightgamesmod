@@ -23,7 +23,14 @@ import nightgames.characters.State;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.PlantMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -97,8 +104,10 @@ public class Combat extends Observable implements Cloneable {
         P2_ACT_SECOND,
         UPKEEP,
         LEVEL_DRAIN,
+        RESULTS_SCENE_ACTION_COMPLETED,
         RESULTS_SCENE,
-        FINISHED,
+        FINISHED_SCENE,
+        ENDED,
     }
     public Character p1;
     public Character p2;
@@ -209,19 +218,17 @@ public class Combat extends Observable implements Cloneable {
         if (self.has(Trait.Pseudopod) && self.has(Trait.slime)) {
             ArmManager manager = new ArmManager();
             manager.selectArms(self);
+            getCombatantData(self).setManager(manager);
         }
     }
-    
-    
+
     public void applyFetish(Character self, Character other, String FetishType) {
-        
         if ( !other.body.get(FetishType).isEmpty() && !self.body.getFetish(FetishType).isPresent()) {
             if (self.human()) {
-                write(self, "As your first battle of the night begins, you can't help but think about " + FetishType + ".");
+                write(self, "As your first battle of the night begins, you can't help but think about " + other.nameOrPossessivePronoun() + " " + FetishType + " and how it would feel on your skin.");
             } 
             self.add(this, new BodyFetish(self, null, FetishType, .25));
         }
-    
     }
 
     public void go() {
@@ -248,7 +255,7 @@ public class Combat extends Observable implements Cloneable {
         return combatantData.get(character.getTrueName());
     }
 
-    private boolean checkBottleCollection(Character victor, Character loser, PussyPart mod) {
+    private boolean checkBottleCollection(Character victor, Character loser, PartMod mod) {
         return victor.has(Item.EmptyBottle, 1) && loser.body.get("pussy")
                                                             .stream()
                                                             .anyMatch(part -> part.moddedPartCountsAs(loser, mod));
@@ -277,49 +284,49 @@ public class Combat extends Observable implements Cloneable {
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.semen, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.divine)) {
+        if (checkBottleCollection(victor, loser, DivineMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} divine pussy juices in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.HolyWater, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.succubus)) {
+        if (checkBottleCollection(victor, loser, DemonicMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:name-possessive} demonic pussy juices in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.ExtremeAphrodisiac, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.plant)) {
+        if (checkBottleCollection(victor, loser, PlantMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} nectar in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.nectar, 3);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.cybernetic)) {
+        if (checkBottleCollection(victor, loser, CyberneticMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} artificial lubricant in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.LubricatingOils, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.arcane)) {
+        if (checkBottleCollection(victor, loser, ArcaneMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of the floating mana wisps ejected from {other:possessive} orgasm in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.RawAether, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.feral)) {
+        if (checkBottleCollection(victor, loser, FeralMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} musky juices in an empty bottle</b>",
                             victor, loser));
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.FeralMusk, 1);
         }
-        if (checkBottleCollection(victor, loser, PussyPart.gooey)) {
+        if (checkBottleCollection(victor, loser, GooeyMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} goo in an empty bottle</b>",
                             victor, loser));
@@ -676,6 +683,7 @@ public class Combat extends Observable implements Cloneable {
             Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
             Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
             if (drainer.equals(winner.orElse(null)) && !getCombatantData(drainer).getBooleanFlag("has_drained")) {
+                nextPhase = CombatPhase.RESULTS_SCENE_ACTION_COMPLETED;
                 if (!getStance().havingSex(this) || !getStance().dom(drainer)) {
                     Position mountStance = new Mount(drainer, drained);
                     if (mountStance.insert(this, drained, drainer) != mountStance) {
@@ -695,12 +703,13 @@ public class Combat extends Observable implements Cloneable {
                                         + "on top of {other:direct-object}. However, {self:pronoun} could not figure a "
                                         + "way to drain {other:possessive} levels.", drainer, drained));
                         checkLosses(true);
-                        return CombatPhase.RESULTS_SCENE;
+                        return CombatPhase.RESULTS_SCENE_ACTION_COMPLETED;
                     }
                 } else if (phase == CombatPhase.LEVEL_DRAIN) {
                     if (getCombatantData(drainer).getIntegerFlag("level_drain_thrusts") < 10) {
                         Skill thrustSkill = getStance().en == Stance.trib ? new PussyGrind(drainer) : Global.pickRandom(new Thrust(drainer), new Grind(drainer), new Piston(drainer)).get();
                         thrustSkill.resolve(this, drained);
+                        write("<br/>");
                         getCombatantData(drainer).increaseIntegerFlag("level_drain_thrusts", 1);
                     } else {
                         drained.doOrgasm(this, drainer,
@@ -717,9 +726,6 @@ public class Combat extends Observable implements Cloneable {
                 }
             }
         }
-        if (nextPhase == CombatPhase.RESULTS_SCENE) {
-            checkLosses(true);
-        }
         return nextPhase;
     }
 
@@ -727,15 +733,19 @@ public class Combat extends Observable implements Cloneable {
         if (!cloned && isBeingObserved()) {
             Global.gui().loadPortrait(this, p1, p2);
         }
-        if (phase != CombatPhase.FINISHED && phase != CombatPhase.RESULTS_SCENE && checkLosses(false)) {
+        if (phase != CombatPhase.FINISHED_SCENE && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED && checkLosses(false)) {
             phase = determinePostCombatPhase();
-            next();
+            if (phase != CombatPhase.RESULTS_SCENE) {
+                next();
+            } else {
+                turn();
+            }
             if (beingObserved) {
                 updateAndClearMessage();
             }
             return;
         }
-        if ((p1.orgasmed || p2.orgasmed) && phase != CombatPhase.RESULTS_SCENE && SKIPPABLE_PHASES.contains(phase)) {
+        if ((p1.orgasmed || p2.orgasmed) && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED && SKIPPABLE_PHASES.contains(phase)) {
             phase = CombatPhase.UPKEEP;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
@@ -799,9 +809,13 @@ public class Combat extends Observable implements Cloneable {
                 }
                 break;
             case RESULTS_SCENE:
-                // fall through to the finished case.
-                phase = CombatPhase.FINISHED;
-            case FINISHED:
+            case RESULTS_SCENE_ACTION_COMPLETED:
+                checkLosses(true);
+                phase = CombatPhase.FINISHED_SCENE;
+                next();
+                break;
+            case FINISHED_SCENE:
+                phase = CombatPhase.ENDED;
             default:
                 next();
                 return;
@@ -1332,8 +1346,12 @@ public class Combat extends Observable implements Cloneable {
     }
 
     private void next() {
-        if (phase != CombatPhase.FINISHED) {
-            if (!beingObserved || shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) && phase != CombatPhase.SKILL_SELECTION && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.PRETURN)) {
+        if (phase != CombatPhase.ENDED) {
+            if (!beingObserved || shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) 
+                            && phase != CombatPhase.SKILL_SELECTION 
+                            && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED
+                            && phase != CombatPhase.RESULTS_SCENE 
+                            && phase != CombatPhase.PRETURN)) {
                 turn();
             } else {
                 Global.gui().next(this);
@@ -1413,8 +1431,12 @@ public class Combat extends Observable implements Cloneable {
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
-        Global.getMatch().getMatchData().getDataFor(p1).setArmManager(getCombatantData(p1).getManager());
-        Global.getMatch().getMatchData().getDataFor(p2).setArmManager(getCombatantData(p2).getManager());
+        if (!p1.has(Trait.Pseudopod)) {
+            Global.getMatch().getMatchData().getDataFor(p1).setArmManager(getCombatantData(p1).getManager());
+        }
+        if (!p2.has(Trait.Pseudopod)) {
+            Global.getMatch().getMatchData().getDataFor(p2).setArmManager(getCombatantData(p2).getManager());
+        }
         if (!ding && !shouldAutoresolve()) {
             Global.gui().endCombat();
         }
@@ -1756,6 +1778,6 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public boolean isEnded() {
-        return phase == CombatPhase.FINISHED;
+        return phase == CombatPhase.FINISHED_SCENE;
     }
 }

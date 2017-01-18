@@ -72,13 +72,11 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public void describeLong(StringBuilder b, Character c) {
-        Optional<String> override = mods.stream().map(mod -> mod.getDescriptionOverride(c, this)).filter(Optional::isPresent).findFirst().flatMap(Function.identity());
-        if (override.isPresent()) {
-            b.append(override);
-        } else {
-            String parsedDesc = Global.format(descLong, c, c);
-            b.append(parsedDesc);
+        String parsedDesc = Global.format(descLong, c, c);
+        for (PartMod mod : mods) {
+            parsedDesc = mod.getLongDescriptionOverride(c, this, parsedDesc);
         }
+        b.append(parsedDesc);
     }
 
     @Override
@@ -98,7 +96,7 @@ public class GenericBodyPart implements BodyPart {
     public String getModDescriptorString(Character c) {
         return mods.stream().sorted()
         .filter(mod -> !mod.getDescriptionOverride(c, this).isPresent())
-        .map(PartMod::adjective)
+        .map(mod -> mod.adjective(this))
         .filter(s -> !s.isEmpty())
         .map(string -> string + " ")
         .collect(Collectors.joining());
@@ -378,7 +376,9 @@ public class GenericBodyPart implements BodyPart {
 
     public BodyPart applyMod(PartMod mod) {
         GenericBodyPart newPart = (GenericBodyPart) instance();
-        newPart.mods.add(mod);
+        if (!newPart.mods.contains(mod)) {
+            newPart.mods.add(mod);
+        }
         return newPart;
     }
 
@@ -389,6 +389,10 @@ public class GenericBodyPart implements BodyPart {
     }
 
     public List<? extends BodyPartMod> getMods(Character npc) {
+        return mods;
+    }
+
+    protected List<PartMod> getPartMods() {
         return mods;
     }
 }

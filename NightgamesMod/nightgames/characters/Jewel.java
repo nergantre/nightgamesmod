@@ -10,8 +10,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.mods.TrainedHoleMod;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.TrainedMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -133,7 +133,7 @@ public class Jewel extends BasePersonality {
     public void setGrowth() {
         Growth growth = character.getGrowth();
         growth.stamina = 3;
-        growth.arousal = 3;
+        growth.arousal = 6;
         growth.bonusStamina = 3;
         growth.bonusArousal = 1;
         growth.willpower = 1.7f;
@@ -262,15 +262,15 @@ public class Jewel extends BasePersonality {
             if (!character.body.getRandomAss()
                                .getMods(character)
                                .stream()
-                               .anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
+                               .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
                 character.body.addReplace(character.body.getRandomAss()
-                                                        .applyMod(new TrainedHoleMod()),
+                                                        .applyMod(new TrainedMod()),
                                 1);
             }
         } else if (character.body.getRandomAss()
                                  .getMods(character)
                                  .stream()
-                                 .anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
+                                 .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
             character.body.addReplace(AssPart.generateGeneric(), 1);
         }
         super.rest(time);
@@ -786,7 +786,7 @@ public class Jewel extends BasePersonality {
     public void advance() {
         character.getGrowth()
                  .addTrait(10, Trait.fighter);
-        character.body.addReplace(PussyPart.fiery, 100);
+        character.body.addReplace(character.body.getRandomPussy().applyMod(FieryMod.INSTANCE), 1);
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock()
                                                     .applyMod(CockMod.enlightened),

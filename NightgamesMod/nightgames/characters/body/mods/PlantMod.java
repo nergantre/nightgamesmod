@@ -6,8 +6,10 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Trance;
 
-public class PlantHoleMod extends PartMod {
-    public PlantHoleMod() {
+public class PlantMod extends PartMod {
+    public static final PlantMod INSTANCE = new PlantMod();
+
+    public PlantMod() {
         super("plant", .3, 1, .2, 10);
     }
 
@@ -34,4 +36,8 @@ public class PlantHoleMod extends PartMod {
         }
     }
 
+    @Override
+    public String describeAdjective(String partType) {
+        return "floral appearance";
+    }
 }

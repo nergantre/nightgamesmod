@@ -14,9 +14,9 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -190,16 +190,13 @@ public class ReykaTime extends BaseNPCTime {
         succubusPussy.ingredients.put(Item.semen, 5);
         succubusPussy.requirements.add(new BodyPartRequirement("pussy"));
         succubusPussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy")
-                            .stream()
-                            .anyMatch(pussy -> pussy == PussyPart.normal);
+            return self.hasPussy();
         });
-        succubusPussy.additionalRequirements = "A normal pussy";
         succubusPussy.option = "Succubus Pussy";
         succubusPussy.scene =
-                        "[Placeholder]<br/>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a pulsating cock-hungry succubus pussy.";
+                        "[Placeholder]<br/>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human slit into a cock-hungry succubus pussy.";
         succubusPussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.succubus, 1);
+            self.body.addReplace(self.body.getRandomPussy().applyMod(DemonicMod.INSTANCE), 1);
             return true;
         };
         options.add(succubusPussy);

@@ -39,7 +39,7 @@ public interface Personality extends Serializable {
 
     boolean attack(Character opponent);
 
-    void ding();
+    void ding(Character self);
 
     boolean fit();
 

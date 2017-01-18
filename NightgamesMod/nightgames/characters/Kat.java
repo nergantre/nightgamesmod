@@ -9,6 +9,7 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
+import nightgames.characters.body.mods.FeralMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -65,7 +66,7 @@ public class Kat extends BasePersonality {
         self.getMojo().setMax(80);
 
         self.body.add(BreastsPart.a);
-        self.body.add(PussyPart.feral);
+        self.body.add(PussyPart.generic.applyMod(FeralMod.INSTANCE));
         self.body.add(TailPart.cat);
         self.body.add(EarPart.cat);
         // mostly feminine face
@@ -126,7 +127,7 @@ public class Kat extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 2;
         character.addCombatScene(new CombatScene((c, self, other) -> {

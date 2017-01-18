@@ -15,13 +15,6 @@ import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public enum Trait {
-    // Physical
-    vaginaltongue("Vaginal Tongue", "Have a second tongue", (b, c, t) -> {
-        if (c.crotchAvailable()) {
-            b.append("Occasionally, a pink tongue slides out of her pussy and licks her lower lips.");
-        }
-    }),
-
     sadist("Sadist", "Skilled at providing pleasure alongside pain",
                     (b, c, t) -> b.append(Global.capitalizeFirstLetter(
                                     String.format("%s sneers in an unsettling way.", c.subject())))),
@@ -300,6 +293,7 @@ public enum Trait {
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
     leveldrainer("Level Drainer", "Natrually adept at draining levels."),
+    ExpertLevelDrainer("Expert Level Drainer", "Can drain more than one level at a time."),
 
     // Strength
     dexterous("Dexterous", "Dexterous limbs and fingers. Underwear is not an obstacle."),
@@ -405,12 +399,12 @@ public enum Trait {
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),
-    UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
+    ImitatedStrength("Imitated Strength", "Gains traits when mimicking targets."),
     ThePrestige("The Prestige", "Will engulf upon unveiling the disguise"),
     Masquerade("Masquerade", "Improves quality of mimicry"),
 
-    // Queen Slime - Clones build
-    SlimeRoyalty("Slime Royalty", "Can now divide the body"),
+    // Replication - Clones build
+    BinaryFission("Binary Fission", "Can now divide the body"),
     RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
     // + slime
     StickyFinale("Sticky Finale", "Clones explode when defeated"),

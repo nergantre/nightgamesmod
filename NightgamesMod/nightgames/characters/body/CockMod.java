@@ -6,7 +6,11 @@ import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.FieryMod;
 import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
@@ -31,7 +35,7 @@ public class CockMod extends PartMod {
     public static final CockMod primal = new CockMod("primal", 1.0, 1.4, 1.2);
     public static final CockMod bionic = new CockMod("bionic", .8, 1.3, .5);
     public static final CockMod enlightened = new CockMod("enlightened", 1.0, 1.2, .8);
-    public static final List<CockMod> ALL_MODS = Arrays.asList(error, slimy, runic, blessed, incubus, primal, bionic, enlightened);
+    public static final List<CockMod> ALL_MODS = Arrays.asList(slimy, runic, blessed, incubus, primal, bionic, enlightened);
 
     CockMod(String name, double hotness, double pleasure, double sensitivity) {
         super(name, hotness, pleasure, sensitivity, 0);
@@ -50,7 +54,7 @@ public class CockMod extends PartMod {
         }
         if (this.equals(runic)) {
             String message = "";
-            if (target.moddedPartCountsAs(opponent, PussyPart.succubus)) {
+            if (target.moddedPartCountsAs(opponent, DemonicMod.INSTANCE)) {
                 message += String.format(
                                 "The fae energies inside %s %s radiate outward and into %s, causing %s %s to grow much more sensitve.",
                                 self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
@@ -77,12 +81,12 @@ public class CockMod extends PartMod {
                             self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
                             self.reflectivePronoun());
             int amtDrained;
-            if (target.moddedPartCountsAs(opponent, PussyPart.feral)) {
+            if (target.moddedPartCountsAs(opponent, FeralMod.INSTANCE)) {
                 message += String.format(" %s %s gladly gives it up, eager for more pleasure.",
                                 opponent.possessiveAdjective(), target.describe(opponent));
                 amtDrained = 5;
                 bonus += 2;
-            } else if (target.moddedPartCountsAs(opponent, PussyPart.cybernetic)) {
+            } else if (target.moddedPartCountsAs(opponent, CyberneticMod.INSTANCE)) {
                 message += String.format(
                                 " %s %s does not oblige, instead sending a pulse of electricity through %s %s and up %s spine",
                                 opponent.nameOrPossessivePronoun(), target.describe(opponent),
@@ -122,7 +126,7 @@ public class CockMod extends PartMod {
                 opponent.add(c, new FluidAddiction(opponent, self, 1, 2));
                 opponent.add(c, new FluidAddiction(opponent, self, 1, 2));
                 bonus -= 3; // Didn't actually move around too much
-            } else if (target != PussyPart.fiery) {
+            } else if (target.moddedPartCountsAs(opponent, FieryMod.INSTANCE)) {
                 message += String.format(
                                 "Sensing the flesh around it, %s %s starts spinning rapidly, vastly increasing the friction against the walls of %s %s.",
                                 self.nameOrPossessivePronoun(), part.describe(self), opponent.nameOrPossessivePronoun(),
@@ -138,7 +142,7 @@ public class CockMod extends PartMod {
             c.write(self, message);
         } else if (this.equals(enlightened)) {
             String message = "";
-            if (target.moddedPartCountsAs(opponent, PussyPart.succubus)) {
+            if (target.moddedPartCountsAs(opponent, DemonicMod.INSTANCE)) {
                 message = String.format(
                                 "Almost instinctively, %s %s entire being into %s %s. While this would normally be a good thing,"
                                                 + " whilst fucking a succubus it is very, very bad indeed.",
@@ -201,7 +205,7 @@ public class CockMod extends PartMod {
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
         if (this.equals(incubus) && c.getStance().inserted(self)) {
             if (selfCame) {
-                if (target.moddedPartCountsAs(opponent, PussyPart.cybernetic)) {
+                if (target.moddedPartCountsAs(opponent, CyberneticMod.INSTANCE)) {
                     c.write(self, String.format(
                                     "%s demonic seed splashes pointlessly against the walls of %s %s, failing even in %s moment of defeat.",
                                     self.nameOrPossessivePronoun(), opponent.nameOrPossessivePronoun(),
@@ -212,7 +216,7 @@ public class CockMod extends PartMod {
                                     "The moment %s erupts inside %s, %s mind goes completely blank, leaving %s pliant and ready.",
                                     self.subject(), opponent.subject(), opponent.possessiveAdjective(),
                                     opponent.directObject());
-                    if (target.moddedPartCountsAs(opponent, PussyPart.feral)) {
+                    if (target.moddedPartCountsAs(opponent, FeralMod.INSTANCE)) {
                         message += String.format(" %s no resistance to the subversive seed.",
                                         Global.capitalizeFirstLetter(opponent.subjectAction("offer", "offers")));
                         duration += 2;
@@ -221,13 +225,13 @@ public class CockMod extends PartMod {
                     c.write(self, message);
                 }
             } else {
-                if (target != PussyPart.cybernetic) {
+                if (target.moddedPartCountsAs(opponent, CyberneticMod.INSTANCE)) {
                     c.write(self, String.format(
                                     "Sensing %s moment of passion, %s %s greedily draws upon the rampant flows of orgasmic energy within %s, transferring the power back into %s.",
                                     opponent.nameOrPossessivePronoun(), self.nameOrPossessivePronoun(),
                                     part.describe(self), opponent.directObject(), self.directObject()));
-                    int attDamage = target.moddedPartCountsAs(opponent, PussyPart.feral) ? 10 : 5;
-                    int willDamage = target.moddedPartCountsAs(opponent, PussyPart.feral) ? 10 : 5;
+                    int attDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
+                    int willDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
                     opponent.add(c, new Abuff(opponent, Attribute.Power, -attDamage, 20));
                     opponent.add(c, new Abuff(opponent, Attribute.Cunning, -attDamage, 20));
                     opponent.add(c, new Abuff(opponent, Attribute.Seduction, -attDamage, 20));
@@ -275,5 +279,25 @@ public class CockMod extends PartMod {
 
     public static Optional<CockMod> getFromType(String type) {
         return ALL_MODS.stream().filter(mod -> mod.getModType().equals(type)).findAny();
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        if (this.equals(bionic)) {
+            return "bionic implants";
+        } else if (this.equals(blessed)) {
+            return "holy aura";
+        } else if (this.equals(enlightened)) {
+            return "imposing presence";
+        } else if (this.equals(slimy)) {
+            return "slimy transparency";
+        } else if (this.equals(runic)) {
+            return "runic symbols";
+        } else if (this.equals(primal)) {
+            return "primal musk";
+        } else if (this.equals(incubus)) {
+            return "corruption";
+        }
+        return "weirdness (ERROR)";
     }
 }

@@ -125,7 +125,7 @@
 			"body": {
 				"archetype":"DEMON",
 				"genitals": {
-					"pussy":"fiery"
+					"pussy":"nightgames.characters.body.mods.FieryMod"
 				}
 			},
 			"traits": [

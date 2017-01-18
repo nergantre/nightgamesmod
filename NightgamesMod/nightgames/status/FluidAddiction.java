@@ -120,7 +120,7 @@ public class FluidAddiction extends DurationStatus {
     @Override
     public String initialMessage(Combat c, boolean replaced) {
         if (replaced) {
-            return String.format("%s is still %s to %s fluids.\n", affected.subjectAction("are", "is"),
+            return String.format("%s still %s to %s fluids.\n", affected.subjectAction("are", "is"),
                             toString().toLowerCase(), target.nameOrPossessivePronoun());
         }
         return String.format("%s now %s to %s fluids.\n", affected.subjectAction("are", "is"), toString().toLowerCase(),

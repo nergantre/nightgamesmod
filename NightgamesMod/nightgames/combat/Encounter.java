@@ -551,6 +551,9 @@ public class Encounter implements Serializable, IEncounter {
             case flee:
                 fightOrFlight(self, false, Optional.empty());
                 break;
+            case fleehidden:
+                fightOrFlight(self, false, Optional.of(fleeHiddenMessage(self, target)));
+                break;
             case smoke:
                 fightOrFlight(self, false, Optional.of(smokeMessage(self)));
                 self.consume(Item.SmokeBomb, 1);
@@ -564,6 +567,10 @@ public class Encounter implements Serializable, IEncounter {
         return String.format("%s a smoke bomb and %s.", 
                         Global.capitalizeFirstLetter(c.subjectAction("drop", "drops"))
                         , c.action("disappear", "disappears"));
+    }
+
+    private String fleeHiddenMessage(Character c, Character other) {
+        return Global.format("{self:SUBJECT-ACTION:flee} before {other:subject-action:can} notice {self:direct-object}.", c, other);
     }
 
     @Override

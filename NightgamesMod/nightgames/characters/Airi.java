@@ -7,16 +7,18 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.mods.GooeyMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
 import nightgames.combat.CombatSceneChoice;
+import nightgames.combat.CombatantData;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
+import nightgames.pet.arms.ArmManager;
 import nightgames.stance.Engulfed;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Flatfooted;
@@ -24,9 +26,6 @@ import nightgames.status.SlimeMimicry;
 import nightgames.status.Stsflag;
 
 public class Airi extends BasePersonality {
-    /**
-     *
-     */
     private static final long serialVersionUID = -8169646189131720872L;
     private static final String AIRI_SLIME_FOCUS = "AiriSlimeFocus";
     private static final String AIRI_MIMICRY_FOCUS = "AiriMimicryFocus";
@@ -129,12 +128,12 @@ public class Airi extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 1;
-        character.getGrowth().arousal = 1;
+        character.getGrowth().arousal = 5;
         character.getGrowth().willpower = 2.5f;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 1;
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return self.getLevel() >= 10 && !Global.checkFlag(AIRI_SLIME_FOCUS) && !Global.checkFlag(AIRI_MIMICRY_FOCUS);
+            return self.getLevel() >= 13 && !Global.checkFlag(AIRI_SLIME_FOCUS) && !Global.checkFlag(AIRI_MIMICRY_FOCUS);
         }, (c, self, player) -> Global.format("[Placeholder ]Airi pick slime or mimicry.", self, player),
                 Arrays.asList(
                         new CombatSceneChoice("[Placeholder] Slime.", (c, self, other) -> {
@@ -159,18 +158,27 @@ public class Airi extends BasePersonality {
                     )
                 ));
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return self.getLevel() >= 20 && !Global.checkFlag(AIRI_REPLICATION_FOCUS) && !Global.checkFlag(AIRI_TENTACLES_FOCUS)
+            return self.getLevel() >= 22 && !Global.checkFlag(AIRI_REPLICATION_FOCUS) && !Global.checkFlag(AIRI_TENTACLES_FOCUS)
                             && (Global.checkFlag(AIRI_SLIME_FOCUS) || Global.checkFlag(AIRI_MIMICRY_FOCUS));
         }, (c, self, player) -> "",
                 Arrays.asList(
-                        new CombatSceneChoice("Queen Slime", (c, self, other) -> {
-                            c.write("");
+                        new CombatSceneChoice("Replication", (c, self, other) -> {
+                            c.write("[Placeholder] Picked Replication");
                             useReplication();
                             return true;
                         }),
-                        new CombatSceneChoice("Slime Carrier", (c, self, other) -> {
-                            c.write(Global.format("", self, other));
+                        new CombatSceneChoice("Tentacles", (c, self, other) -> {
+                            c.write(Global.format("[Placeholder] Picked Tentacles", self, other));
                             useTentacles();
+                            return true;
+                        }),
+                        new CombatSceneChoice("[Placeholder] Both? [Hard Mode]", (c, self, other) -> {
+                            c.write("[Placeholder] Picked both");
+                            useReplication();
+                            useTentacles();
+                            character.getGrowth().extraAttributes += 1;
+                            // some compensation for the added difficulty. She gets 5 traits and 1 attribute point/level, and you only get 2 traits, but you are fighting more people than just her.
+                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{21,48},Global.getPlayer());
                             return true;
                         })
                     )
@@ -180,27 +188,24 @@ public class Airi extends BasePersonality {
         character.getGrowth().addTrait(0, Trait.imagination);
         character.getGrowth().addTrait(0, Trait.softheart);
         character.getGrowth().addTrait(0, Trait.repressed);
-        character.getGrowth().addTrait(9, Trait.limbTraining1);
-        character.getGrowth().addTrait(12, Trait.lacedjuices);
-        character.getGrowth().addTrait(15, Trait.QuickRecovery);
-        character.getGrowth().addTrait(18, Trait.BoundlessEnergy);
-        character.getGrowth().addTrait(23, Trait.sexTraining1);
-        character.getGrowth().addTrait(31, Trait.limbTraining2);
-        character.getGrowth().addTrait(37, Trait.tongueTraining1);
-        character.getGrowth().addTrait(44, Trait.limbTraining3);
-        character.getGrowth().addTrait(51, Trait.sexTraining2);
-        character.getGrowth().addTrait(58, Trait.tongueTraining2);
+        character.getGrowth().addTrait(3, Trait.Sneaky);
+        character.getGrowth().addTrait(6, Trait.limbTraining1);
+        character.getGrowth().addTrait(10, Trait.tight);
+        character.getGrowth().addTrait(16, Trait.calm);
+        character.getGrowth().addTrait(31, Trait.attractive);
+        character.getGrowth().addTrait(37, Trait.sexTraining1);
+        character.getGrowth().addTrait(46, Trait.responsive);
+        character.getGrowth().addTrait(61, Trait.desensitized);
 
-        preferredAttributes.add(c -> Optional.of(Attribute.Slime));
+        preferredAttributes.add(c -> c.getPure(Attribute.Slime) < c.getLevel() * 1.5 ? Optional.of(Attribute.Slime) : Optional.empty());
     }
-    
+
     private void useMimicry() {
         Global.setFlag(AIRI_MIMICRY_FOCUS, true);
-
         character.getGrowth().addTrait(13, Trait.Imposter);
-        character.getGrowth().addTrait(19, Trait.UnstableGenome);
+        character.getGrowth().addTrait(19, Trait.ImitatedStrength);
         character.getGrowth().addTrait(34, Trait.ThePrestige);
-        character.getGrowth().addTrait(54, Trait.Masquerade);
+        character.getGrowth().addTrait(55, Trait.Masquerade);
     }
 
     private void useSlime() {
@@ -208,12 +213,12 @@ public class Airi extends BasePersonality {
         character.getGrowth().addTrait(13, Trait.VolatileSubstrate);
         character.getGrowth().addTrait(19, Trait.ParasiticBond);
         character.getGrowth().addTrait(34, Trait.PetrifyingPolymers);
-        character.getGrowth().addTrait(54, Trait.EnduringAdhesive);
+        character.getGrowth().addTrait(55, Trait.EnduringAdhesive);
     }
 
     private void useReplication() {
         Global.setFlag(AIRI_REPLICATION_FOCUS, true);
-        character.getGrowth().addTrait(22, Trait.SlimeRoyalty);
+        character.getGrowth().addTrait(22, Trait.BinaryFission);
         character.getGrowth().addTrait(28, Trait.RapidMeiosis);
         if (Global.checkFlag(AIRI_MIMICRY_FOCUS)) {
             character.getGrowth().addTrait(43, Trait.StickyFinale);
@@ -232,18 +237,17 @@ public class Airi extends BasePersonality {
 
     @Override
     public void eot(Combat c, Character opponent) {
-        // always replace with gooey/slime versions of genitals.
         if (character.has(Trait.slime)) {
-            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, PussyPart.gooey)) {
-                character.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            if (character.hasPussy() && !character.body.getRandomPussy().moddedPartCountsAs(character, GooeyMod.INSTANCE)) {
+                character.body.temporaryAddPartMod("pussy", GooeyMod.INSTANCE, 999);
                 c.write(character, 
-                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
+                                Global.format("{self:NAME-POSSESSIVE} %s re-slime-ified.",
                                                 character, opponent, character.body.getRandomPussy()));
             }
             if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
-                character.body.temporaryAddOrReplacePartWithType(character.body.getRandomCock().applyMod(CockMod.slimy), 999);
+                character.body.temporaryAddPartMod("cock", CockMod.slimy, 999);
                 c.write(character, 
-                                Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey cock.",
+                                Global.format("{self:NAME-POSSESSIVE} %s re-slime-ified.",
                                                 character, opponent, character.body.getRandomCock()));
             }
         }
@@ -251,9 +255,11 @@ public class Airi extends BasePersonality {
 
     @Override
     public void resolveOrgasm(Combat c, NPC self, Character opponent, BodyPart selfPart, BodyPart opponentPart, int times, int totalTimes) {
-        if (times == totalTimes && ((self.getWillpower().percent() < 60 && !self.has(Trait.slime)) || self.is(Stsflag.disguised))) {
+        int orgasmsToUnmask = self.has(Trait.Masquerade) ? 2 : 1;
+        boolean unmaskable = self.is(Stsflag.disguised) && self.orgasms >= orgasmsToUnmask;
+        if (times == totalTimes && ((self.getWillpower().percent() < 60 && !self.has(Trait.slime)) || unmaskable)) {
             boolean unmasked = false;
-            if (self.is(Stsflag.disguised)) {
+            if (unmaskable) {
                 c.write(self, Global.format("<b>As {self:subject} orgasms, {self:possessive} whole body shimmers and seems to melt into a puddle of goo. "
                                 + "A human body rises from the slime and molds itself to a facsimile of an all-too-familiar Asian {self:boy} giving you a self satisfied little smirk. "
                                 + "Shit, {self:pronoun} tricked you, it was Airi all along!</b><br/>", self, opponent));
@@ -269,8 +275,8 @@ public class Airi extends BasePersonality {
             self.addTemporaryTrait(Trait.slime, 999);
             self.removeTemporaryTrait(Trait.repressed, 999);
             self.removeTemporaryTrait(Trait.softheart, 999);
-            if (self.hasPussy() && !self.body.getRandomPussy().moddedPartCountsAs(self, PussyPart.gooey)) {
-                self.body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            if (self.hasPussy() && !self.body.getRandomPussy().moddedPartCountsAs(self, GooeyMod.INSTANCE)) {
+                self.body.temporaryAddOrReplacePartWithType(self.body.getRandomPussy().applyMod(new GooeyMod()), 999);
             }
             if (self.hasDick() && !self.body.getRandomCock().moddedPartCountsAs(self, CockMod.slimy)) {
                 self.body.temporaryAddOrReplacePartWithType(self.body.getRandomCock().applyMod(CockMod.slimy), 999);
@@ -281,35 +287,21 @@ public class Airi extends BasePersonality {
             }
             self.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
             self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            if (self.level >= 21) {
-                self.addTemporaryTrait(Trait.Sneaky, 999);
-            }
-            if (self.level >= 24) {
+            if (self.level >= 25) {
                 self.addTemporaryTrait(Trait.shameless, 999);
             }
-            if (self.level >= 27) {
-                self.addTemporaryTrait(Trait.lactating, 999);
-            }
-            if (self.level >= 30) {
-                self.addTemporaryTrait(Trait.addictivefluids, 999);
-            }
-            if (self.level >= 33) {
-                self.addTemporaryTrait(Trait.autonomousPussy, 999);
-            }
-            if (self.level >= 36) {
-                self.addTemporaryTrait(Trait.enthrallingjuices, 999);
-            }
-            if (self.level >= 39) {
+            if (self.level >= 40) {
                 self.addTemporaryTrait(Trait.energydrain, 999);
             }
-            if (self.level >= 42) {
-                self.addTemporaryTrait(Trait.desensitized, 999);
-            }
-            if (self.level >= 45) {
-                self.addTemporaryTrait(Trait.steady, 999);
-            }
-            if (self.level >= 50) {
+            if (self.level >= 52) {
                 self.addTemporaryTrait(Trait.strongwilled, 999);
+            }
+            CombatantData data = c.getCombatantData(self);
+            if (self.has(Trait.Pseudopod) && data.getManager().getActiveArms().isEmpty()) {
+                ArmManager manager = new ArmManager();
+                manager.selectArms(self);
+                c.write(self, manager.getActiveArms().size() + " tentacle arms erupt out of " + self.possessiveAdjective() + " back!</b>");
+                data.setManager(manager);
             }
             if (unmasked && self.has(Trait.ThePrestige) && c.getStance().distance() < 2) {
                 c.write(self, Global.format("<b>Taking advantage of {other:name-possessive} bewilderment, {self:subject-action:swoop} {self:possessive} slime onto {other:possessive} hapless form, swiftly engulfing it in {self:possessive} amorphous body.</b><br/>", self, opponent));

@@ -25,7 +25,14 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
-import nightgames.characters.body.mods.SecondPussyHoleMod;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.SecondPussyMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.json.JsonUtils;
 
 class BodyConfiguration {
@@ -76,7 +83,7 @@ class BodyConfiguration {
                                                                    .toLowerCase()));
         if (obj.has("ass"))
             config.ass = Optional.of(obj.get("ass").getAsString()
-                                           .equals("basic") ? AssPart.generateGeneric() : (AssPart)AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
+                                           .equals("basic") ? AssPart.generateGeneric() : (AssPart)AssPart.generateGeneric().applyMod(new SecondPussyMod()));
 
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()
@@ -241,7 +248,14 @@ class BodyConfiguration {
                 config.cock = Optional.of(cock);
             }
 
-            config.pussy = JsonUtils.getOptional(object, "pussy").map(JsonElement::getAsString).map(PussyPart::valueOf);
+            JsonUtils.getOptional(object, "pussy").ifPresent(modClass -> {
+                if (modClass.getAsString().equals("normal")) {
+                    config.pussy = Optional.of(PussyPart.generic);
+                } else {
+                    PartMod pussyMod = JsonUtils.gson.fromJson(modClass, PartMod.class);
+                    config.pussy = Optional.of((PussyPart)PussyPart.generic.applyMod(pussyMod));
+                }
+            });
             return config;
         }
 
@@ -272,19 +286,18 @@ class BodyConfiguration {
         }
     }
 
-
     enum Archetype {
-        REGULAR(null, PussyPart.normal),
-        DEMON(CockMod.incubus, PussyPart.succubus),
-        CAT(CockMod.primal, PussyPart.feral),
-        CYBORG(CockMod.bionic, PussyPart.cybernetic),
-        ANGEL(CockMod.blessed, PussyPart.divine),
-        WITCH(CockMod.runic, PussyPart.arcane),
-        SLIME(CockMod.slimy, PussyPart.gooey);
+        REGULAR(null, PussyPart.generic),
+        DEMON(CockMod.incubus, PussyPart.generic.applyMod(DemonicMod.INSTANCE)),
+        CAT(CockMod.primal, PussyPart.generic.applyMod(FeralMod.INSTANCE)),
+        CYBORG(CockMod.bionic, PussyPart.generic.applyMod(CyberneticMod.INSTANCE)),
+        ANGEL(CockMod.blessed, PussyPart.generic.applyMod(DivineMod.INSTANCE)),
+        WITCH(CockMod.runic, PussyPart.generic.applyMod(ArcaneMod.INSTANCE)),
+        SLIME(CockMod.slimy, PussyPart.generic.applyMod(GooeyMod.INSTANCE));
         private final CockMod cockMod;
-        private final PussyPart pussy;
+        private final BodyPart pussy;
 
-        Archetype(CockMod cockMod, PussyPart pussy) {
+        Archetype(CockMod cockMod, BodyPart pussy) {
             this.cockMod = cockMod;
             this.pussy = pussy;
         }
@@ -312,19 +325,5 @@ class BodyConfiguration {
                     break;
             }
         }
-    }
-
-
-
-    public static void main(String[] args) {
-        String test = "{\"archetype\":\"regular\",\"genitals\":{\"cock\":{\"type\":\"bionic\",\"length\":6.0}},"
-                        + "\"breasts\":\"c\",\"ass\":\"AnalPussy\",\"ears\":\"pointed\",\"tail\":\"cat\",\"wings"
-                        + "\":\"demonic\",\"tentacles\":[],\"hotness\":1.0}";
-        BodyConfiguration config = parse(new JsonParser().parse(test).getAsJsonObject());
-        Body body = new Body();
-        config.apply(body);
-        body.finishBody(CharacterSex.male);
-
-        System.out.println(body);
     }
 }

@@ -7,6 +7,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.requirements.RequirementShortcuts;
 
 public class ArmLocked extends Status {
@@ -25,7 +26,7 @@ public class ArmLocked extends Status {
     public String describe(Combat c) {
         Character opp = c.getOpponent(affected);
         return String.format("%s hands are intertwined with %s, preventing %s escape.",
-                        opp.nameOrPossessivePronoun(), !affected.human() && !affected.useFemalePronouns()
+                        Global.capitalizeFirstLetter(opp.nameOrPossessivePronoun()), !affected.human() && !affected.useFemalePronouns()
                         ? "his" : affected.possessiveAdjective() + "s", affected.possessiveAdjective());
     }
 

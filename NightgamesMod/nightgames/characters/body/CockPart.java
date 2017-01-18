@@ -2,11 +2,9 @@ package nightgames.characters.body;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.mods.PartMod;
-import nightgames.global.Global;
 
 public interface CockPart extends BodyPart {
     double getSize();
-
     BodyPart applyMod(PartMod mod);
 
     @Override
@@ -14,15 +12,7 @@ public interface CockPart extends BodyPart {
         return -3;
     }
 
-    default PussyPart getEquivalentPussy() {
-        for (PussyPart pussy : PussyPart.values()) {
-            CockMod equivalentMod = pussy.getEquivalentCockMod();
-            if (equivalentMod != CockMod.error && moddedPartCountsAs(Global.noneCharacter(), equivalentMod)) {
-                return pussy;
-            }
-        }
-        return PussyPart.normal;
-    }
+    PussyPart getEquivalentPussy();
 
     default String adjective(Character c) {
         return "phallic";

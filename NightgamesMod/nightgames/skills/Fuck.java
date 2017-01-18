@@ -65,7 +65,7 @@ public class Fuck extends Skill {
                 stancePossible &= !c.getStance().anallyPenetrated(c, target);
             }
         }
-        stancePossible &= !c.getStance().havingSex(c);
+        stancePossible &= !c.getStance().havingSex(c) && !c.getStance().isFaceSitting(getSelf());
         return possible && ready && stancePossible && getSelf().clothingFuckable(selfO) && canGetToCrotch(target);
     }
 

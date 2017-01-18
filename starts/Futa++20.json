@@ -100,7 +100,7 @@
 						"type":"blessed",
 						"length":6
 					},
-					"pussy": "divine"
+					"pussy": "nightgames.characters.body.mods.DivineMod"
 
 				}
 			},
@@ -240,7 +240,7 @@
 						"type":"enlightened",
 						"length":6
 					},
-					"pussy":"fiery"
+					"pussy":"nightgames.characters.body.mods.FieryMod"
 				}
 			},
 			"traits": [
@@ -274,7 +274,7 @@
 						"type":"primal",
 						"length":6
 					},
-					"pussy": "feral"
+					"pussy": "nightgames.characters.body.mods.FeralMod"
 
 				}
 			},
@@ -325,7 +325,7 @@
 						"type":"bionic",
 						"length":6
 					},
-					"pussy": "cybernetic"
+					"pussy": "nightgames.characters.body.mods.CyberneticMod"
 
 				}
 			},
@@ -365,7 +365,7 @@
 						"type":"incubus",
 						"length":6
 					},
-					"pussy": "succubus"
+					"pussy": "nightgames.characters.body.mods.DemonicMod"
 				}
 			},
 			"growth": {

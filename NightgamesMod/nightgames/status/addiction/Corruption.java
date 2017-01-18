@@ -16,6 +16,7 @@ import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
@@ -50,10 +51,10 @@ public class Corruption extends Addiction {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and a set of black bat wings grows from your back!</b>");
                 affected.body.temporaryAddOrReplacePartWithType(WingsPart.demonic, 20);
-            } else if (affected.hasPussy() && affected.body.getRandomPussy() != PussyPart.succubus) {
+            } else if (affected.hasPussy() && !affected.body.getRandomPussy().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and your pussy turns into that of a succubus!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(PussyPart.succubus, 20);
+                affected.body.temporaryAddOrReplacePartWithType(affected.body.getRandomPussy().applyMod(DemonicMod.INSTANCE), 20);
             } else if (affected.hasDick() && !affected.body.getRandomCock().moddedPartCountsAs(affected, CockMod.incubus)) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and your cock turns into that of an incubus!</b>");
@@ -61,7 +62,7 @@ public class Corruption extends Addiction {
             } else if (!affected.hasPussy() && cause.hasDick()) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and a succubus's pussy forms between your legs!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(PussyPart.succubus, 20);
+                affected.body.temporaryAddOrReplacePartWithType(PussyPart.generic.applyMod(DemonicMod.INSTANCE), 20);
             } else if (!affected.hasDick()) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and an incubus's cock forms between your legs!</b>");

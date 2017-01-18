@@ -9,7 +9,8 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.ExtendedTonguedMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -19,9 +20,9 @@ import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.strategy.OralStrategy;
 import nightgames.skills.strategy.BreastStrategy;
 import nightgames.skills.strategy.NurseStrategy;
+import nightgames.skills.strategy.OralStrategy;
 import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
 import nightgames.status.Stsflag;
@@ -198,9 +199,9 @@ public class Cassie extends BasePersonality {
     private void useMouthFocus() {
         Global.flag(CASSIE_MOUTH_FOCUS);
         character.getGrowth().addTrait(11, Trait.experttongue);
-        character.getGrowth().addTrait(25, Trait.tongueTraining2);
+        character.getGrowth().addBodyPartMod(25, "mouth", ExtendedTonguedMod.INSTANCE);
         character.getGrowth().addTrait(38, Trait.tongueTraining3);
-        character.getGrowth().addTrait(57, Trait.addictivefluids);
+        character.getGrowth().addBodyPartMod(57, "mouth", new ArcaneMod());
     }
     private void useEnchantressBonus() {
         Global.flag(CASSIE_ENCHANTRESS_FOCUS);
@@ -238,7 +239,7 @@ public class Cassie extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
@@ -682,7 +683,7 @@ public class Cassie extends BasePersonality {
 
     public void advance() {
         character.getGrowth().addTrait(10, Trait.witch);
-        character.body.addReplace(PussyPart.arcane, 1);
+        character.body.addReplace(character.body.getRandomPussy().applyMod(ArcaneMod.INSTANCE), 1);
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.runic), 1);
         }

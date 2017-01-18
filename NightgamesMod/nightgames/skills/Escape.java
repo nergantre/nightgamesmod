@@ -88,7 +88,7 @@ public class Escape extends Skill {
             if (getSelf().human()) {
                 if (getSelf().hasStatus(Stsflag.cockbound)) {
                     c.write(getSelf(), "You try to escape " + target.getName()
-                                    + "'s iron grip on your dick. However, her pussy tongue has other ideas. She runs her tongue up and down your cock and leaves you gasping with pleasure.");
+                                    + "'s iron grip on your dick. However, her extended-tongue has other ideas. She runs her tongue up and down your cock and leaves you gasping with pleasure.");
                     int m = 8;
                     getSelf().body.pleasure(target, target.body.getRandom("pussy"), getSelf().body.getRandom("cock"), m,
                                     c, this);

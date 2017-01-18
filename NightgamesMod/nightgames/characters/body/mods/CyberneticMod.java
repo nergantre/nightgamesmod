@@ -7,8 +7,10 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Shamed;
 
-public class CyberneticHoleMod extends PartMod {
-    public CyberneticHoleMod() {
+public class CyberneticMod extends PartMod {
+    public static final CyberneticMod INSTANCE = new CyberneticMod();
+
+    public CyberneticMod() {
         super("cybernetic", -.1, .8, -.5, 0);
     }
 
@@ -44,5 +46,10 @@ public class CyberneticHoleMod extends PartMod {
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 
         return otherPart.moddedPartCountsAs(other, CockMod.incubus) ? 1 : otherPart.moddedPartCountsAs(other, CockMod.enlightened) ? -1 : 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "cybernetics";
     }
 }

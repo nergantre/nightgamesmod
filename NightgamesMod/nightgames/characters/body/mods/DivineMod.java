@@ -11,8 +11,10 @@ import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-public class DivineHoleMod extends PartMod {
-    public DivineHoleMod() {
+public class DivineMod extends PartMod {
+    public static final DivineMod INSTANCE = new DivineMod();
+
+    public DivineMod() {
         super("divine", 0, 1.0, 0.0, -10);
     }
 
@@ -75,5 +77,10 @@ public class DivineHoleMod extends PartMod {
             pleasureMod += charge.magnitude;
         }
         return pleasureMod;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "divine aura";
     }
 }

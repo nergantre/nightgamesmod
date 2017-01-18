@@ -10,7 +10,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Slimed extends DurationStatus {
-    private static final int MAX_STACKS = 25;
+    private static final int MAX_STACKS = 10;
     private Character origin;
     private int stacks;
 
@@ -39,13 +39,13 @@ public class Slimed extends DurationStatus {
 
     @Override
     public String describe(Combat c) {
-    	if (stacks < 10) {
+    	if (stacks < 2) {
     		return Global.format("A few chunks of {other:name-possessive} slimey body is stuck on {self:direct-object}.", affected, origin);
-    	} else if (stacks < 33) {
+    	} else if (stacks < 5) {
     		return Global.format("Bits and pieces of {other:name-possessive} slime are stuck on {self:name-do}.", affected, origin);
-    	} else if (stacks < 66) {
+    	} else if (stacks < 8) {
     		return Global.format("It's becoming difficult to move with so much of {other:name-possessive} slime on {self:name-possessive} body.", affected, origin);
-    	} else if (stacks < 100) {
+    	} else if (stacks < 10) {
     		return Global.format("It's very difficult to move with so much of {other:name-possessive} slime on {self:name-possessive} body.", affected, origin);
     	} else {
     		return Global.format("{self:SUBJECT-ACTION:are|is} covered head to toe with {other:name-possessive} slime, making it impossible to move!", affected, origin);
@@ -69,6 +69,11 @@ public class Slimed extends DurationStatus {
     @Override
     public void tick(Combat c) {
     	super.tick(c);
+    	if (affected.is(Stsflag.plasticized)) {
+            Global.writeFormattedIfCombat(c, "The slime just slides off {self:possessive} plastic-wrapped form.", affected, origin);
+            affected.removeStatus(this);
+            return;
+    	}
         if (getDuration() <= 0) {
         	stacks = Math.max(0, stacks - 10);
         	if (stacks == 0) {

@@ -1144,6 +1144,7 @@ public class GUI extends JFrame implements Observer {
         clearCommand();
         commandPanel.add(encounterButton("Attack " + target.getName(), enc, target, Encs.ambush));
         commandPanel.add(encounterButton("Wait", enc, target, Encs.wait));
+        commandPanel.add(encounterButton("Flee", enc, target, Encs.fleehidden));
         Global.getMatch().pause();
         commandPanel.refresh();
     }

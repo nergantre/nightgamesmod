@@ -10,7 +10,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.FieryMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -105,15 +105,12 @@ public class JewelTime extends BaseNPCTime {
         fieryPussy.ingredients.put(Item.FemDraft, 10);
         fieryPussy.requirements.add(new BodyPartRequirement("pussy"));
         fieryPussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy")
-                            .stream()
-                            .anyMatch(part -> part == PussyPart.normal);
+            return self.hasPussy();
         });
-        fieryPussy.additionalRequirements = "A normal pussy";
         fieryPussy.option = "Fiery Pussy";
         fieryPussy.scene = "[Placeholder]<br/>Jewel trains your pussy to be fiery";
         fieryPussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.fiery, 1);
+            self.body.addReplace(self.body.getRandomPussy().applyMod(FieryMod.INSTANCE), 1);
             return true;
         };
         options.add(fieryPussy);

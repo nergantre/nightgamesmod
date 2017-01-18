@@ -113,7 +113,7 @@ public class DebugGUIPanel extends JPanel {
                 if (list.size() > 3 && list.get(3) != null) {
                     amt = Integer.valueOf(list.get(3));
                 }
-                target.mod(Attribute.valueOf(list.get(2)), amt);
+                target.modAttributeDontSaveData(Attribute.valueOf(list.get(2)), amt);
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {
@@ -155,6 +155,7 @@ public class DebugGUIPanel extends JPanel {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
                 StringBuilder sb = new StringBuilder();
+                sb.append("Level: " + target.getLevel() + "\n");
                 for (int i = 0; i < target.traits.size(); i++) {
                     sb.append(target.traits.get(i));
                     if (i % 4 == 2) {

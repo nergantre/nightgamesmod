@@ -10,7 +10,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.CyberneticMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -106,15 +106,12 @@ public class MaraTime extends BaseNPCTime {
         cyberneticPussy.ingredients.put(Item.Onahole, 1);
         cyberneticPussy.requirements.add(new BodyPartRequirement("pussy"));
         cyberneticPussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy")
-                            .stream()
-                            .anyMatch(part -> part == PussyPart.normal);
+            return self.hasPussy();
         });
-        cyberneticPussy.additionalRequirements = "A normal pussy";
         cyberneticPussy.option = "Cybernetic Pussy";
         cyberneticPussy.scene = "[Placeholder]<br/>Mara installs a cybernetic pussy on you";
         cyberneticPussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.cybernetic, 1);
+            self.body.addReplace(self.body.getRandomPussy().applyMod(CyberneticMod.INSTANCE), 1);
             return true;
         };
         options.add(cyberneticPussy);

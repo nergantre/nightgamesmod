@@ -21,7 +21,7 @@ public class ForeplayStrategy extends KnockdownThenActionStrategy {
 
     @Override
     protected Optional<Set<Skill>> getPreferredAfterKnockdownSkills(Combat c, Character self, Set<Skill> allowedSkills) {
-        if (c.getStance().havingSex(c)) {
+        if (c.getStance().havingSex(c) && c.getStance().getPartsFor(c, self, c.getStance().getPartner(c, self)).stream().allMatch(part -> part.isGenital())) {
             // terminate this strategy if already fucking
             return Optional.of(Collections.emptySet());
         }

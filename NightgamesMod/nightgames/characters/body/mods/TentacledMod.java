@@ -7,8 +7,10 @@ import nightgames.global.Global;
 import nightgames.status.CockBound;
 import nightgames.status.Stsflag;
 
-public class TentacledHoleMod extends PartMod {
-    public TentacledHoleMod() {
+public class TentacledMod extends PartMod {
+    public static final TentacledMod INSTANCE = new TentacledMod();
+
+    public TentacledMod() {
         super("tentacled", 0, 1, .2, 4);
     }
 
@@ -46,5 +48,10 @@ public class TentacledHoleMod extends PartMod {
             }
         }
         return 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "inner-tentacles";
     }
 }

@@ -9,8 +9,10 @@ import nightgames.characters.body.CockMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class FieryHoleMod extends PartMod {
-    public FieryHoleMod() {
+public class FieryMod extends PartMod {
+    public static final FieryMod INSTANCE = new FieryMod();
+
+    public FieryMod() {
         super("fiery", 0, .3, .2, -11);
     }
 
@@ -66,5 +68,10 @@ public class FieryHoleMod extends PartMod {
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 
         return otherPart.moddedPartCountsAs(other, CockMod.bionic) ? 1 : otherPart.moddedPartCountsAs(other, CockMod.primal) ? -1 : 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "molten depths";
     }
 }

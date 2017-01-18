@@ -15,6 +15,8 @@ import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.TentacledMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
@@ -194,7 +196,7 @@ public enum Item implements Loot {
                     (ItemEffect) new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus)),
                     15),
     FemDraft("Fem Draft", 150, "Temporarily grow a pussy", "a ", Collections.singleton(
-                    (ItemEffect) new BodyModEffect("drink", "throw", PussyPart.normal, BodyModEffect.Effect.replace)),
+                    (ItemEffect) new BodyModEffect("drink", "throw", PussyPart.generic, BodyModEffect.Effect.replace)),
                     15),
     Lactaid("Lactaid", 100, "Temporarily start lactating", "",
                     Arrays.asList((ItemEffect) new AddTraitEffect("drink", "throw", Trait.lactating)), 15),
@@ -204,7 +206,7 @@ public enum Item implements Loot {
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 15)),
                     new AddTraitEffect("drink", "throw", Trait.addictivefluids),
                     new AddTraitEffect("drink", "throw", Trait.succubus),
-                    new BodyModEffect("drink", "throw", PussyPart.succubus, BodyModEffect.Effect.replace),
+                    new PartModEffect("drink", "throw", "pussy", DemonicMod.INSTANCE, 15),
                     new BodyModEffect("drink", "throw", EarPart.pointed, BodyModEffect.Effect.replace),
                     new BodyModEffect("drink", "throw", WingsPart.demonic, BodyModEffect.Effect.replace),
                     new BodyModEffect("drink", "throw", TailPart.demonic, BodyModEffect.Effect.replace),
@@ -214,8 +216,7 @@ public enum Item implements Loot {
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .5),
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .25),
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .1),
-                                    new MaybeEffect(new BodyModEffect("drink", "throw", PussyPart.tentacled,
-                                                    BodyModEffect.Effect.replace, 15), .3)),
+                                    new MaybeEffect(new PartModEffect("drink", "throw", "pussy", TentacledMod.INSTANCE, 15), .3)),
                     15),
     JuggernautJuice("Juggernaut Juice", 250, "Makes you nigh invulnerable.", "a ",
                     Arrays.asList((ItemEffect) new BuffEffect("drink", "throw",

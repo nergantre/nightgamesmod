@@ -12,7 +12,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.mods.ErrorHoleMod;
+import nightgames.characters.body.mods.ErrorMod;
 import nightgames.characters.body.mods.PartMod;
 
 public class PartModAdapter implements JsonSerializer<PartMod>, JsonDeserializer<PartMod> {
@@ -31,7 +31,7 @@ public class PartModAdapter implements JsonSerializer<PartMod>, JsonDeserializer
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return new ErrorHoleMod();
+        return new ErrorMod();
     }
 
     @Override

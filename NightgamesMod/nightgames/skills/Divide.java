@@ -12,6 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.Pet;
+import nightgames.skills.petskills.SlimeParasite;
 
 public class Divide extends Skill {
     public Divide(Character self) {
@@ -20,7 +21,12 @@ public class Divide extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return getSelf().has(Trait.SlimeRoyalty) && getSelf().has(Trait.slime);
+        return getSelf().has(Trait.BinaryFission) && getSelf().has(Trait.slime);
+    }
+
+    @Override
+    public float priorityMod(Combat c) {
+        return 8.0f;
     }
 
     @Override
@@ -32,7 +38,7 @@ public class Divide extends Skill {
 
     @Override
     public int getMojoCost(Combat c) {
-        return 15;
+        return 30;
     }
 
     @Override
@@ -41,7 +47,12 @@ public class Divide extends Skill {
     }
 
     public static Pet makeClone(Combat c, Character self) {
-        int power = Math.max(1, self.getLevel() / 2);
+        int power;
+        if (self.has(Trait.NoblesseOblige)) {
+            power = Math.max(1, self.getLevel() * 3 / 4);
+        } else {
+            power = Math.max(1, self.getLevel() / 2);
+        }
         int ac = 4 + power / 3;
         CharacterPet pet = null;
         String clonePrefix = String.format("%s clone", self.nameOrPossessivePronoun());
@@ -66,6 +77,7 @@ public class Divide extends Skill {
             return pet;
         }
         pet.getSelf().add(Trait.MindlessClone);
+        pet.getSelf().getSkills().add(new SlimeParasite(pet.getSelf()));
         return pet;
 
     }

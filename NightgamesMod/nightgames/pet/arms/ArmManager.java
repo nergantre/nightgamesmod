@@ -11,15 +11,15 @@ import java.util.stream.Collectors;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.mods.ArcaneHoleMod;
-import nightgames.characters.body.mods.CyberneticHoleMod;
-import nightgames.characters.body.mods.DivineHoleMod;
-import nightgames.characters.body.mods.FeralHoleMod;
-import nightgames.characters.body.mods.FieryHoleMod;
-import nightgames.characters.body.mods.GooeyHoleMod;
-import nightgames.characters.body.mods.PlantHoleMod;
-import nightgames.characters.body.mods.SuccubusHoleMod;
-import nightgames.characters.body.mods.TentacledHoleMod;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.PlantMod;
+import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.TentacledMod;
 import nightgames.characters.body.mods.PartMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -106,11 +106,11 @@ public class ArmManager {
     
     private static final List<? extends PartMod> IMPALER_MODS = Collections.unmodifiableList(CockMod.ALL_MODS);
     private static final List<? extends PartMod> SUCKER_MODS = Arrays.asList(
-                    new ArcaneHoleMod(), new CyberneticHoleMod(),
-                    new DivineHoleMod(), new FeralHoleMod(),
-                    new FieryHoleMod(), new GooeyHoleMod(),
-                    new PlantHoleMod(), new SuccubusHoleMod(),
-                    new TentacledHoleMod());
+                    new ArcaneMod(), new CyberneticMod(),
+                    new DivineMod(), new FeralMod(),
+                    new FieryMod(), new GooeyMod(),
+                    new PlantMod(), new DemonicMod(),
+                    new TentacledMod());
 
     public void addArm(Arm arm) {
         arms.add(arm);

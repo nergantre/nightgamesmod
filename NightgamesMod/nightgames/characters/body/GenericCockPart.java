@@ -1,11 +1,14 @@
 package nightgames.characters.body;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Sensitized;
@@ -185,5 +188,15 @@ public class GenericCockPart extends GenericBodyPart implements CockPart {
     @Override
     public double getSize() {
         return size;
+    }
+
+    @Override
+    public PussyPart getEquivalentPussy() {
+        List<PartMod> newMods = getPartMods().stream().map(BodyUtils.EQUIVALENT_MODS::get).filter(mod -> mod != null).distinct().collect(Collectors.toList());
+        GenericBodyPart newPart = PussyPart.generateGeneric();
+        for (PartMod mod : newMods) {
+            newPart = (GenericBodyPart)newPart.applyMod(mod);
+        }
+        return (PussyPart)newPart;
     }
 }

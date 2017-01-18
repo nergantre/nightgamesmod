@@ -8,9 +8,10 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.ExtendedTonguedMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -62,7 +63,7 @@ public class Mei extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 3;
-        character.getGrowth().arousal = 5;
+        character.getGrowth().arousal = 8;
         character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
@@ -73,14 +74,14 @@ public class Mei extends BasePersonality {
         character.getGrowth().addTrait(15, Trait.lacedjuices);
         character.getGrowth().addTrait(20, Trait.tight);
         character.getGrowth().addTrait(25, Trait.sexTraining1);
-        character.getGrowth().addBodyPart(30, PussyPart.succubus);
+        character.getGrowth().addBodyPartMod(30, "pussy", DemonicMod.INSTANCE);
         character.getGrowth().addBodyPart(30, TailPart.demonic);
         character.getGrowth().addBodyPart(30, WingsPart.fallenangel);
         character.getGrowth().addTrait(30, Trait.fallenAngel);
         character.getGrowth().addTrait(35, Trait.energydrain);
         character.getGrowth().addTrait(40, Trait.soulsucker);
         character.getGrowth().addTrait(45, Trait.gluttony);
-        character.getGrowth().addTrait(50, Trait.vaginaltongue);
+        character.getGrowth().addBodyPartMod(50, "pussy", ExtendedTonguedMod.INSTANCE);
         character.getGrowth().addTrait(55, Trait.carnalvirtuoso);
         preferredAttributes.add(c -> Optional.of(Attribute.Seduction));
 

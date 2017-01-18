@@ -68,7 +68,7 @@ public class Maya extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 5;
+        character.getGrowth().arousal = 10;
         character.getGrowth().willpower = 2.0f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 5;
@@ -85,7 +85,6 @@ public class Maya extends BasePersonality {
         character.getGrowth().addTrait(0, Trait.Confident);
         character.getGrowth().addTrait(0, Trait.dickhandler);
         character.getGrowth().addTrait(0, Trait.tight);
-        character.getGrowth().addTrait(0, Trait.vaginaltongue);
         character.getGrowth().addTrait(0, Trait.insertion);
         character.getGrowth().addTrait(0, Trait.holecontrol);
         character.getGrowth().addTrait(0, Trait.autonomousPussy);

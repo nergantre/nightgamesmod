@@ -102,7 +102,7 @@ public class AssPart extends GenericBodyPart {
                 opponent.pain(c, self, Math.min(30, self.get(Attribute.Power)));
             }
         }
-        if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
+        if (self.has(Trait.drainingass) && !target.isType("strapon")) {
             if (Global.random(3) == 0) {
                 c.write(self, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
@@ -112,8 +112,8 @@ public class AssPart extends GenericBodyPart {
                 self.add(c, new Abuff(self, Attribute.Power, 3, 10));
             } else {
                 c.write(self, Global.format("The feel of {self:name-possessive} ass around"
-                                + " {other:name-possessive} {other:body-part:cock} drains"
-                                + " {other:direct-object} of {other:possessive} energy.", self, opponent));
+                                + " {other:name-possessive} %s drains"
+                                + " {other:direct-object} of {other:possessive} energy.", self, opponent, target.describe(opponent)));
                 opponent.drain(c, self, self.getLevel()/2);
             }
         }

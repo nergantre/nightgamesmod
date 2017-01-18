@@ -4,6 +4,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.mods.ExtendedTonguedMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -27,9 +28,9 @@ public class Blowjob extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
-        return target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
-                        && c.getStance().front(getSelf()) && canUse && !c.getStance().inserted(target)
-                        || getSelf().canRespond() && isVaginal(c, target);
+        return ((target.crotchAvailable() && target.hasDick() && c.getStance().oral(getSelf(), target)
+                        && c.getStance().front(getSelf()) && canUse)
+                        || (getSelf().canRespond() && isVaginal(c, target)));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Blowjob extends Skill {
 
     public boolean isVaginal(Combat c, Character target) {
         return c.getStance().isPartFuckingPartInserted(c, target, target.body.getRandomCock(), getSelf(), getSelf().body.getRandomPussy())
-                        && !c.getOpponent(getSelf()).has(Trait.strapped) && getSelf().has(Trait.vaginaltongue);
+                        && !c.getOpponent(getSelf()).has(Trait.strapped) && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), ExtendedTonguedMod.INSTANCE);
     }
 
     public boolean isFacesitting(Combat c, Character target) {
@@ -123,7 +124,7 @@ public class Blowjob extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        if (c.getStance().vaginallyPenetrated(c, getSelf()) && getSelf().has(Trait.vaginaltongue)) {
+        if (isVaginal(c, c.getStance().getPartner(c, getSelf()))) {
             return Tactics.fucking;
         } else {
             return Tactics.pleasure;

@@ -54,7 +54,7 @@ public class Eve extends BasePersonality {
         self.setTrophy(Item.EveTrophy);
         self.body.add(BreastsPart.d);
         self.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG));
-        self.body.add(PussyPart.normal);
+        self.body.add(PussyPart.generic);
         self.getMojo().setMax(120);
 
         self.getStamina().setMax(90);
@@ -68,7 +68,7 @@ public class Eve extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 3;
+        character.getGrowth().arousal = 6;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());

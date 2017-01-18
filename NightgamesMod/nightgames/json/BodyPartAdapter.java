@@ -30,7 +30,7 @@ public class BodyPartAdapter implements JsonSerializer<BodyPart>, JsonDeserializ
     static private Map<String, BodyPart> prototypes;
     static {
         prototypes = new HashMap<>();
-        prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
+        prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.generic);
         prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
         prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
         prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);

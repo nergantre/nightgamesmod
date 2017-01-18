@@ -8,8 +8,8 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.ArcaneMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -60,7 +60,7 @@ public class Caroline extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 4;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().willpower = .4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
@@ -72,7 +72,7 @@ public class Caroline extends BasePersonality {
         character.getGrowth().addTrait(15, Trait.healer);
         character.getGrowth().addTrait(20, Trait.romantic);
         character.getGrowth().addTrait(25, Trait.hawkeye);
-        character.getGrowth().addBodyPart(30, PussyPart.arcane);
+        character.getGrowth().addBodyPartMod(30, "pussy", ArcaneMod.INSTANCE);
         character.getGrowth().addBodyPart(30, WingsPart.ethereal);
         character.getGrowth().addTrait(30, Trait.kabbalah);
         character.getGrowth().addTrait(35, Trait.protective);

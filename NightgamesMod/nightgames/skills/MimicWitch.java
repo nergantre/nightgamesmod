@@ -5,7 +5,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.ArcaneMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -43,6 +43,28 @@ public class MimicWitch extends Skill {
             else 
                 printBlinded(c);
         }
+        if (getSelf().has(Trait.ImitatedStrength)) {
+            getSelf().addTemporaryTrait(Trait.witch, 10);
+            getSelf().addTemporaryTrait(Trait.lactating, 10);
+            if (getSelf().getLevel() >= 20) {
+                getSelf().addTemporaryTrait(Trait.responsive, 10);
+            }
+            if (getSelf().getLevel() >= 28) {
+                getSelf().addTemporaryTrait(Trait.temptingtits, 10);
+            }
+            if (getSelf().getLevel() >= 36) {
+                getSelf().addTemporaryTrait(Trait.beguilingbreasts, 10);
+            }
+            if (getSelf().getLevel() >= 44) {
+                getSelf().addTemporaryTrait(Trait.sedativecream, 10);
+            }
+            if (getSelf().getLevel() >= 52) {
+                getSelf().addTemporaryTrait(Trait.enchantingVoice, 10);
+            }
+            if (getSelf().getLevel() >= 60) {
+                getSelf().body.temporaryAddPartMod("mouth", ArcaneMod.INSTANCE, 10);
+            }
+        }
         getSelf().addTemporaryTrait(Trait.witch, 10);
         getSelf().addTemporaryTrait(Trait.enchantingVoice, 10);
         getSelf().addTemporaryTrait(Trait.magicEyeEnthrall, 10);
@@ -53,8 +75,16 @@ public class MimicWitch extends Skill {
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
         }
-        getSelf().add(c, new Abuff(getSelf(), Attribute.Arcane, Math.max(10, getSelf().get(Attribute.Slime)), 10));
-        getSelf().add(c, new SlimeMimicry("witch", PussyPart.arcane, CockMod.runic, getSelf(), 10));
+
+        int strength = Math.max(10, getSelf().get(Attribute.Slime)) * 2 / 3;
+        if (getSelf().has(Trait.Masquerade)) {
+            strength = strength * 3 / 2;
+        }
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Arcane, strength, 10));
+        getSelf().add(c, new SlimeMimicry("witch", getSelf(), 10));
+
+        getSelf().body.temporaryAddPartMod("pussy", ArcaneMod.INSTANCE, 10);
+        getSelf().body.temporaryAddPartMod("cock", CockMod.runic, 10);
         return true;
     }
 

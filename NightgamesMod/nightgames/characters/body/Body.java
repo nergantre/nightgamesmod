@@ -24,6 +24,7 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
@@ -59,7 +60,36 @@ public class Body implements Cloneable {
             duration = original.duration;
         }
     }
+    static class PartModReplacement {
+        private String type;
+        private PartMod mod;
+        private int duration;
 
+        public PartModReplacement(String type, PartMod mod, int duration) {
+            this.mod = mod;
+            this.type = type;
+            this.duration = duration;
+        }
+
+        public PartModReplacement(PartModReplacement rep) {
+            this.mod = rep.mod;
+            this.type = rep.type;
+            this.duration = rep.duration;
+        }
+
+        public PartMod getMod() {
+            return mod;
+        }
+        public String getType() {
+            return type;
+        }
+        public int getDuration() {
+            return duration;
+        }
+        public void modDuration(int mod) {
+            this.duration += mod;
+        }
+    }
     // yeah i know :(
     public static BodyPart nonePart = new GenericBodyPart("none", 0, 1, 1, "none", "");
     public static Set<String> pluralParts = new HashSet<>(Arrays.asList("hands", "feet", "wings", "breasts", "balls"));
@@ -71,6 +101,7 @@ public class Body implements Cloneable {
     LinkedHashSet<BodyPart> bodyParts;
     public double hotness;
     transient Collection<PartReplacement> replacements;
+    transient Map<String, List<PartModReplacement>> modReplacements;
     transient Collection<BodyPart> currentParts;
     transient public Character character;
     transient public BodyPart lastPleasuredBy;
@@ -80,8 +111,9 @@ public class Body implements Cloneable {
 
     public Body() {
         bodyParts = new LinkedHashSet<>();
-        currentParts = Collections.emptySet();
+        currentParts = new HashSet<>();
         replacements = new ArrayList<>();
+        modReplacements = new HashMap<>();
         lastPleasuredBy = nonePart;
         lastPleasured = nonePart;
         hotness = 1.0;
@@ -96,13 +128,12 @@ public class Body implements Cloneable {
         this();
         this.character = character;
         this.hotness = hotness;
-
     }
 
     public Collection<BodyPart> getCurrentParts() {
         return currentParts;
     }
-    
+
     public List<BodyPart> getCurrentPartsThatMatch(Predicate<BodyPart> filterPredicate){
         return currentParts.stream().filter(filterPredicate).collect(Collectors.toList());
     }
@@ -113,7 +144,18 @@ public class Body implements Cloneable {
             parts.removeAll(r.removed);
             parts.addAll(r.added);
         }
-        currentParts = parts;
+        currentParts.clear();
+        for (BodyPart part : parts) {
+            if (modReplacements.containsKey(part.getType()) && part instanceof GenericBodyPart) {
+                GenericBodyPart genericPart = (GenericBodyPart) part;
+                for (PartModReplacement replacement : modReplacements.get(part.getType())) {
+                    genericPart.applyMod(replacement.getMod());
+                }
+                currentParts.add(genericPart);
+            } else {
+                currentParts.add(part);
+            }
+        }
     }
 
     public void temporaryAddPart(BodyPart part, int duration) {
@@ -685,7 +727,8 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
             Optional<BodyFetish> otherFetish = opponent.body.getFetish(target.getType());
-            if (otherFetish.isPresent()) {
+            if (otherFetish.isPresent() && perceptionlessDamage > 0) {
+                c.write(character, Global.format("Playing with {other:possessive} {other:body-part:%s} arouses {self:direct-object} almost as much as {other:direct-object}.", opponent, character, target.getType()));
                 opponent.temptNoSkill(c, character, target, (int) Math.round(perceptionlessDamage));
             }
         } else {
@@ -775,7 +818,7 @@ public class Body implements Cloneable {
             }
             double hotness = (getHotness(opponent) - 1) / 2 + 1;
             double perception = (1.0 + (opponent.get(Attribute.Perception) - 5) / 10.0);
-            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
+            if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE) && Global.isDebugOn(DebugFlags.DEBUG_SKILLS_RATING)) {
                 System.out.println(String.format("Seduction Bonus: %.1f, hotness: %.1f, perception: %.1f", seductionBonus, hotness, perception));
             }
             double perceptionBonus = (hotness + seductionBonus) * perception;
@@ -870,13 +913,13 @@ public class Body implements Cloneable {
     private void replacePussyWithCock(CockPart basicCock) {
         PussyPart pussy = getRandomPussy();
         removeAll("pussy");
-        add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+        add(pussy == null ? GenericCockPart.generic : pussy.getEquivalentCock());
     }
 
     private void replaceCockWithPussy() {
         CockPart cock = getRandomCock();
         removeAll("cock");
-        add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+        add(cock == null ? PussyPart.generic : cock.getEquivalentPussy());
     }
 
     private void addEquivalentCockAndPussy(CockPart basicCock) {
@@ -884,11 +927,11 @@ public class Body implements Cloneable {
         boolean hasCock = getRandomCock() != null;
         if (!hasPussy) {
             CockPart cock = getRandomCock();
-            add(cock == null ? PussyPart.normal : cock.getEquivalentPussy());
+            add(cock == null ? PussyPart.generic : cock.getEquivalentPussy());
         }
         if (!hasCock) {
             PussyPart pussy = getRandomPussy();
-            add(pussy == null ? basicCock : basicCock.applyMod(pussy.getEquivalentCockMod()));
+            add(pussy == null ? GenericCockPart.generic : pussy.getEquivalentCock());
         }
     }
 
@@ -922,6 +965,15 @@ public class Body implements Cloneable {
                 return CharacterSex.trap;
             }
             return CharacterSex.male;
+        }
+    }
+    
+    public void temporaryAddPartMod(String partType, PartMod mod, int duration) {
+        modReplacements.computeIfAbsent(partType, type -> new ArrayList<>());
+        modReplacements.get(partType).add(new PartModReplacement(partType, mod, duration));
+        updateCurrentParts();
+        if (character != null) {
+            updateCharacter();
         }
     }
 
@@ -994,7 +1046,7 @@ public class Body implements Cloneable {
     public void makeGenitalOrgans(CharacterSex sex) {
         if (sex.hasPussy()) {
             if (!has("pussy")) {
-                add(PussyPart.normal);
+                add(PussyPart.generic);
             }
 
         }
@@ -1015,8 +1067,13 @@ public class Body implements Cloneable {
         Body newBody = (Body) super.clone();
         newBody.replacements = new ArrayList<>();
         replacements.forEach(rep -> newBody.replacements.add(new PartReplacement(rep)));
+        newBody.modReplacements = new HashMap<>();
+        modReplacements.forEach((type, reps) -> {
+            newBody.modReplacements.put(type, new ArrayList<>());
+            reps.forEach(rep -> newBody.modReplacements.get(type).add(new PartModReplacement(rep)));
+        });
         newBody.bodyParts = new LinkedHashSet<>(bodyParts);
-        newBody.currentParts = currentParts;
+        newBody.currentParts = new HashSet<>(currentParts);
         return newBody;
     }
 
@@ -1061,10 +1118,17 @@ public class Body implements Cloneable {
 
     private void advancedTemporaryParts(Combat c) {
         ArrayList<PartReplacement> expired = new ArrayList<>();
+        ArrayList<PartModReplacement> expiredMods = new ArrayList<>();
         for (PartReplacement r : replacements) {
             r.duration -= 1;
             if (r.duration <= 0) {
                 expired.add(r);
+            }
+        }
+        for (PartModReplacement r : modReplacements.values().stream().flatMap(List::stream).collect(Collectors.toList())) {
+            r.duration -= 1;
+            if (r.duration <= 0) {
+                expiredMods.add(r);
             }
         }
         Collections.reverse(expired);
@@ -1128,6 +1192,10 @@ public class Body implements Cloneable {
             }
             Global.writeIfCombat(c, character, sb.toString());
         }
+        for (PartModReplacement r : expiredMods) {
+            Global.writeIfCombat(c, character, Global.format("{self:NAME-POSSESSIVE} %s lost its %s.", character, character, r.getType(), r.getMod().describeAdjective(r.getType())));
+            modReplacements.get(r.getType()).remove(r);
+        }
     }
 
     public void tick(Combat c) {
@@ -1147,6 +1215,7 @@ public class Body implements Cloneable {
 
     public void clearReplacements() {
         replacements.clear();
+        modReplacements.clear();
         updateCurrentParts();
         if (character != null) {
             updateCharacter();
@@ -1248,6 +1317,11 @@ public class Body implements Cloneable {
     }
 
     public void purge(Combat c) {
+        for (List<PartModReplacement> replacements : modReplacements.values()) {
+            for (PartModReplacement r : replacements) {
+                r.duration = 0;
+            }
+        }
         for (PartReplacement r : replacements) {
             r.duration = 0;
         }
@@ -1308,5 +1382,12 @@ public class Body implements Cloneable {
 
     public FacePart getFace() {
         return (FacePart)getRandom("face");
+    }
+
+    public void removeTemporaryPartMod(String type, PartMod mod) {
+        List<PartModReplacement> replacements = modReplacements.get(type);
+        if (replacements != null) {
+            replacements.remove(mod);
+        }
     }
 }

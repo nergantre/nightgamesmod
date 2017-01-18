@@ -28,7 +28,7 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
         return modType;
     }
 
-    public String adjective() {
+    public String adjective(BodyPart part) {
         return modType;
     }
 
@@ -70,8 +70,8 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
         return Optional.empty();
     }
 
-    public Optional<String> getLongDescriptionOverride(Character self, BodyPart part) {
-        return Optional.empty();
+    public String getLongDescriptionOverride(Character self, BodyPart part, String previousDescription) {
+        return previousDescription;
     }
 
     public Optional<String> getDescriptionOverride(Character self, BodyPart part) {
@@ -93,5 +93,25 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
 
     public double getBaseSensitivity() {
         return sensitivity;
+    }
+
+    public abstract String describeAdjective(String partType);
+    
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof PartMod) {
+            return other.toString().equals(this.toString());
+        }
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return "PartMod:" + modType;
+    }
+    
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }

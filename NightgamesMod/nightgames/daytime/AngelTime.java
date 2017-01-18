@@ -11,8 +11,8 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DivineMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -110,19 +110,17 @@ public class AngelTime extends BaseNPCTime {
             divinePussy.ingredients.put(Item.HolyWater, 3);
             divinePussy.requirements.add(new BodyPartRequirement("pussy"));
             divinePussy.requirements.add((c, self, other) -> {
-                return self.body.get("pussy")
-                                .stream()
-                                .anyMatch(part -> part == PussyPart.normal);
+                return self.hasPussy();
             });
             divinePussy.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            divinePussy.additionalRequirements = "A normal pussy<br/>Divinity greater than 10";
+            divinePussy.additionalRequirements = "Divinity greater than 10";
             divinePussy.option = "Divine Pussy";
             divinePussy.scene =
                             "[Placeholder]<br/>Angel performs a sacrament on your pussy, imbuing it with holy powers.";
             divinePussy.effect = (c, self, other) -> {
-                self.body.addReplace(PussyPart.divine, 1);
+                self.body.addReplace(self.body.getRandomPussy().applyMod(DivineMod.INSTANCE), 1);
                 return true;
             };
             options.add(divinePussy);

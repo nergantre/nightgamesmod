@@ -9,6 +9,8 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.ExtendedTonguedMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -61,7 +63,7 @@ public class Reyka extends BasePersonality {
         self.getMojo().setMax(110);
 
         self.body.add(BreastsPart.dd);
-        self.body.add(PussyPart.succubus);
+        self.body.add(PussyPart.generic.applyMod(DemonicMod.INSTANCE));
         self.body.add(TailPart.demonic);
         self.body.add(WingsPart.demonic);
         self.body.add(EarPart.pointed);
@@ -72,7 +74,7 @@ public class Reyka extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 1;
-        character.getGrowth().arousal = 6;
+        character.getGrowth().arousal = 10;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
@@ -105,7 +107,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(44, Trait.analTraining1);
         character.getGrowth().addTrait(47, Trait.desensitized2);
         character.getGrowth().addTrait(50, Trait.sexTraining3);
-        character.getGrowth().addTrait(53, Trait.vaginaltongue);
+        character.getGrowth().addBodyPartMod(53, "pussy", ExtendedTonguedMod.INSTANCE);
         character.getGrowth().addTrait(56, Trait.carnalvirtuoso);
     }
 

@@ -11,8 +11,8 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.mods.SecondPussyHoleMod;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.SecondPussyMod;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -101,13 +101,12 @@ public class CassieTime extends BaseNPCTime {
         arcanePussy.ingredients.put(Item.FaeScroll, 1);
         arcanePussy.requirements.add(new BodyPartRequirement("pussy"));
         arcanePussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+            return self.hasPussy();
         });
-        arcanePussy.additionalRequirements = "A normal pussy";
         arcanePussy.option = "Arcane Pussy";
         arcanePussy.scene = "[Placeholder]<br/>Cassie draws intricate arcane tattoos on your pussy";
         arcanePussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.arcane, 1);
+            self.body.addReplace(self.body.getRandomPussy().applyMod(ArcaneMod.INSTANCE), 1);
             return true;
         };
         options.add(arcanePussy);
@@ -121,7 +120,7 @@ public class CassieTime extends BaseNPCTime {
             return self.body.get("mouth").stream().anyMatch(mouth -> mouth.isGeneric(self));
         });
         mouthPussy.requirements.add((c, self, other) -> {
-            return other.body.get("mouth").stream().anyMatch(mouth -> mouth.moddedPartCountsAs(other, new SecondPussyHoleMod()));
+            return other.body.get("mouth").stream().anyMatch(mouth -> mouth.moddedPartCountsAs(other, new SecondPussyMod()));
         });
         mouthPussy.additionalRequirements = "A normal mouth";
         mouthPussy.option = "Mouth Pussy";
@@ -151,7 +150,7 @@ public class CassieTime extends BaseNPCTime {
                                         + "You blank out with the strange sensations that your organ transmits back to you, and Cassie takes the opportunity to mouth-fuck you to an almost-instantaneous climax."
                                         + "<br/>Cassie walks by you and gives you a quick kiss which almost makes you cum yet again, <i>\"I'm so looking forward to seeing what you do with that tonight!\"</i>";
         mouthPussy.effect = (c, self, other) -> {
-            self.body.addReplace(((GenericBodyPart)self.body.getRandom("mouth")).applyMod(new SecondPussyHoleMod()), 1);
+            self.body.addReplace(((GenericBodyPart)self.body.getRandom("mouth")).applyMod(new SecondPussyMod()), 1);
             return true;
         };
         options.add(mouthPussy);

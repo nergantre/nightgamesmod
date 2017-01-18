@@ -9,8 +9,10 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.CockBound;
 
-public class GooeyHoleMod extends PartMod {
-    public GooeyHoleMod() {
+public class GooeyMod extends PartMod {
+    public static final GooeyMod INSTANCE = new GooeyMod();
+
+    public GooeyMod() {
         super("gooey", .2, .5, .2, 2);
     }
 
@@ -48,5 +50,10 @@ public class GooeyHoleMod extends PartMod {
 
     public Optional<String> getFluids() {
         return Optional.of("slime");
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "gooey consistency";
     }
 }

@@ -14,7 +14,7 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.mods.SecondPussyHoleMod;
+import nightgames.characters.body.mods.SecondPussyMod;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -332,7 +332,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Grow Pussy", 2500) {
             @Override
             void buy(Character buyer) {
-                buyer.body.addReplace(PussyPart.normal, 1);
+                buyer.body.addReplace(PussyPart.generic, 1);
             }
 
             @Override
@@ -424,13 +424,13 @@ public class BodyShop extends Activity {
                 PussyPart target = buyer.body.getRandomPussy();
                 assert target != null;
                 buyer.body.remove(target);
-                buyer.body.addReplace(PussyPart.normal, 1);
+                buyer.body.addReplace(PussyPart.generic, 1);
             }
 
             @Override
             boolean available(Character buyer) {
                 Optional<BodyPart> optTarget =
-                                buyer.body.get("pussy").stream().filter(c -> c != PussyPart.normal).findAny();
+                                buyer.body.get("pussy").stream().filter(c -> !c.isGeneric(buyer)).findAny();
                 return optTarget.isPresent();
             }
 
@@ -440,8 +440,6 @@ public class BodyShop extends Activity {
             }
         });
 
-        addTraitMod("Vaginal Tongue", "Remove V.Tongue", Trait.vaginaltongue, 10000, 10000,
-                        character -> character.hasPussy());
         addTraitMod("Laced Juices", "Remove L.Juices", Trait.lacedjuices, 1000, 1000,
                         noRequirement);
         addTraitMod("Permanent Lactation", "Stop Lactating", Trait.lactating, 1000, 1000,
@@ -453,7 +451,7 @@ public class BodyShop extends Activity {
                                         "{self:name-possessive} legs are wrapped in a shiny black material that look fused on.",
                                         .3, 1.5, .7, true, "feet", ""),
                         new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
-        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()), AssPart.generic, 2000, 2000);
+        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyMod()), AssPart.generic, 2000, 2000);
         addBodyPartMod("Fused Gloves",
                         new GenericBodyPart("Fused Gloves",
                                         "{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",

@@ -14,8 +14,8 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericCockPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
+import nightgames.characters.body.mods.FeralMod;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -131,15 +131,14 @@ public class KatTime extends BaseNPCTime {
         feralPussy.ingredients.put(Item.FemDraft, 10);
         feralPussy.requirements.add(new BodyPartRequirement("pussy"));
         feralPussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy").stream().anyMatch(pussy -> pussy == PussyPart.normal);
+            return self.hasPussy();
         });
         feralPussy.option = "Feral Pussy";
         feralPussy.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your pussy into a feral one.";
         feralPussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.feral, 1);
+            self.body.addReplace(self.body.getRandomPussy().applyMod(FeralMod.INSTANCE), 1);
             return true;
         };
-        feralPussy.additionalRequirements = "A normal pussy";
         options.add(feralPussy);
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);

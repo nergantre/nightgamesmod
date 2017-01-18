@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -26,7 +26,7 @@ public class Aphrodisiac extends Skill {
         return true;
     }
 
-    private final Predicate<BodyPart> hasSuccubusPussy = (bodyPart) -> bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), PussyPart.succubus);
+    private final Predicate<BodyPart> hasSuccubusPussy = (bodyPart) -> bodyPart.isType("pussy") && bodyPart.moddedPartCountsAs(getSelf(), DemonicMod.INSTANCE);
 
     @Override
     public boolean usable(Combat c, Character target) {

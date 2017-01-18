@@ -480,10 +480,14 @@ public class Command extends Skill {
                                     10 + Global.random(8), c, this);
                 break;
             case MASTER_INSERT:
-                c.write(getSelf(),
-                                String.format("With a mischevous smile, %s tells %s to be still,"
-                                                + " and that %s has a special surprise for %s.", getSelf().getName(),
-                                                target.subject(), getSelf().pronoun(), target.directObject()));
+                if (c.getStance().havingSex(c, getSelf())) {
+                    c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:order} {target:name-do} to be still.", getSelf(), target));
+                } else {
+                    c.write(getSelf(),
+                                    String.format("With a mischevous smile, %s tells %s to be still,"
+                                                    + " and that %s has a special surprise for %s.", getSelf().getName(),
+                                                    target.subject(), getSelf().pronoun(), target.directObject()));
+                }
                 getSelf().getSkills()
                       .stream()
                       .filter(skill -> Tactics.fucking.equals(skill.type(c)))

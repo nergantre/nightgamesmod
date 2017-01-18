@@ -5,8 +5,10 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class TrainedHoleMod extends PartMod {
-    public TrainedHoleMod() {
+public class TrainedMod extends PartMod {
+    public static final TrainedMod INSTANCE = new TrainedMod();
+
+    public TrainedMod() {
         super("trained", .2, .2, -.2, -100);
     }
 
@@ -17,5 +19,10 @@ public class TrainedHoleMod extends PartMod {
                         self, opponent, part.getType()));
         }
         return 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "expertly-trained appearance";
     }
 }

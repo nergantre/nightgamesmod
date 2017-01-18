@@ -14,12 +14,13 @@ import nightgames.global.Global;
  */
 public class Plasticized extends DurationStatus {
     public Plasticized(Character affected) {
-        this(affected, 10);
+        this(affected, 4);
     }
 
     public Plasticized(Character affected, int duration) {
         super("Plasticized", affected, duration);
         flag(Stsflag.stunned);
+        flag(Stsflag.plasticized);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
         flag(Stsflag.disabling);

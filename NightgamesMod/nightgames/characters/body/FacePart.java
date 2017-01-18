@@ -58,7 +58,7 @@ public class FacePart extends GenericBodyPart {
         } else if (femininity < .5) {
             desc = "androgynous ";
         } else if (femininity < 1.5) {
-            desc = "boyish face ";
+            desc = "boyish ";
         } else if (femininity < 2.5) {
             desc = "girlish ";
         } else if (femininity < 4) {

@@ -43,9 +43,9 @@ public class VideoGames extends Activity {
             }
             showScene(pickScene());
             if (paid) {
-                if (Global.random(5) == 0) {
+                if (Global.random(3) == 0) {
                     Global.gui().message("<br/><br/><b>You feel like your experiences have grown from playing the game.</b>");
-                    player.gainXP(50);
+                    player.gainXPPure(50);
                 }
             }
         }

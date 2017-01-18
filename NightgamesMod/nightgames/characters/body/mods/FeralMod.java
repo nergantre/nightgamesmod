@@ -10,8 +10,10 @@ import nightgames.status.IgnoreOrgasm;
 import nightgames.status.Pheromones;
 import nightgames.status.Stsflag;
 
-public class FeralHoleMod extends PartMod {
-    public FeralHoleMod() {
+public class FeralMod extends PartMod {
+    public static final FeralMod INSTANCE = new FeralMod();
+
+    public FeralMod() {
         super("feral", .2, .3, .2, -8);
     }
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
@@ -62,5 +64,10 @@ public class FeralHoleMod extends PartMod {
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 
         return otherPart.moddedPartCountsAs(other, CockMod.runic) ? 1 : otherPart.moddedPartCountsAs(other, CockMod.incubus) ? -1 : 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "feral musk";
     }
 }

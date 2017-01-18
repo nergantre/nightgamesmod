@@ -21,8 +21,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.mods.GooeyMod;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -118,7 +118,7 @@ public class Player extends Character {
 
     public void setGrowth() {
         getGrowth().stamina = 2;
-        getGrowth().arousal = 4;
+        getGrowth().arousal = 6;
         getGrowth().bonusStamina = 1;
         getGrowth().bonusArousal = 2;
         getGrowth().attributes = new int[]{2, 3, 3, 3};
@@ -722,8 +722,8 @@ public class Player extends Character {
             opponent.temptNoSkillNoSource(c, this, opponent.arousal.max() / 25);
         }
         if (has(Trait.slime)) {
-            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
-                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, GooeyMod.INSTANCE)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomPussy().applyMod(GooeyMod.INSTANCE), 999);
                 c.write(this, 
                                 Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
                                                 this, opponent, body.getRandomPussy()));
@@ -984,9 +984,9 @@ public class Player extends Character {
             purge(c);
             addTemporaryTrait(Trait.slime, 999);
             add(c, new PlayerSlimeDummy(this));
-            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, GooeyMod.INSTANCE)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomPussy().applyMod(GooeyMod.INSTANCE), 999);
                 body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
-                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }
             if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
                 body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
@@ -997,8 +997,6 @@ public class Player extends Character {
             }
             body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
             body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
-            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
             if (level >= 21) {
                 addTemporaryTrait(Trait.Sneaky, 999);
             }

@@ -10,9 +10,20 @@ import nightgames.pet.PetCharacter;
 import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 
-public class SuccubusHoleMod extends PartMod {
-    public SuccubusHoleMod() {
-        super("succubus", .1, .5, .2, 5);
+public class DemonicMod extends PartMod {
+    public static final DemonicMod INSTANCE = new DemonicMod();
+    public DemonicMod() {
+        super("demonic", .1, .5, .2, 5);
+    }
+
+    public String adjective(BodyPart part) {
+        if (part.getType().equals("pussy")) {
+            return "succubus";
+        }
+        if (part.getType().equals("ass")) {
+            return "devilish";
+        }
+        return "demonic";
     }
 
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) {
@@ -24,9 +35,10 @@ public class SuccubusHoleMod extends PartMod {
                             opponent.nameOrPossessivePronoun(), opponent.possessiveAdjective(),
                             target.describe(opponent)));
         } else {
-            String fuckingText = Global.format("{self:POSSESSIVE} hot flesh kneads {other:possessive} %s as {self:pronoun-action:" + (part.isType("mouth") ? "suck" : "ride") + "} {other:direct-object}, drawing ", self, opponent, target.describe(opponent));
+            String domSubText = c.getStance().dom(self) ? ("{self:pronoun-action:" + (part.isType("mouth") ? "suck" : "ride") + "} {other:direct-object}") : "{other:pronoun-action:fuck} {self:direct-object}";
+            String fuckingText = Global.format("{self:POSSESSIVE} hot flesh kneads {other:possessive} %s as " + domSubText + ", drawing ", self, opponent, target.describe(opponent));
             String normalText = Global.format("As {self:possessive} %s touch {other:direct-object}, {self:pronoun-action:draw} large ", self, opponent, part.getType(), target.describe(opponent));
-            c.write(self, (fucking ? fuckingText : normalText) + String.format("gouts of life energy out of %s %s, which is greedily absorbed by %s %s.",
+            c.write(self, (fucking ? fuckingText : normalText) + String.format("gouts of life energy out of %s %s which is greedily absorbed by %s %s.",
                             opponent.possessiveAdjective(), target.describe(opponent), self.possessiveAdjective(),
                             part.describe(self)));
             int strength;
@@ -67,5 +79,10 @@ public class SuccubusHoleMod extends PartMod {
 
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { 
         return otherPart.moddedPartCountsAs(other, CockMod.runic) ? -1 : otherPart.moddedPartCountsAs(other, CockMod.enlightened) ? 1 : 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "demonic nature";
     }
 }
