@@ -143,7 +143,9 @@
 			"body": {
 				"archetype":"REGULAR",
 				"genitals": {
-					"pussy":"nightgames.characters.body.mods.FieryMod"
+					"pussy": {
+						"_type": "nightgames.characters.body.mods.FieryMod"
+					}
 				}
 			},
 			"traits": [

@@ -36,7 +36,7 @@
 	],
 	"all_npcs" : {
 		"traits":["leveldrainer", "ExpertLevelDrainer", "stronghold", "tight", "holecontrol", "Unsatisfied", "Rut"],
-		"body": { "genitals": {"pussy": "nightgames.characters.body.mods.DemonicMod"}}
+		"body": { "genitals": {"pussy":{"_type": "nightgames.characters.body.mods.DemonicMod"}}}
 	},
 	"flags": []
 }
