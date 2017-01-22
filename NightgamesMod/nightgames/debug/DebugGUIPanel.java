@@ -106,7 +106,6 @@ public class DebugGUIPanel extends JPanel {
                 output.setText(list.get(2) + " is not a valid item");
             }
         }));
-
         consoleCommands.add(new DebugCommand("(\\w+)\\.addAtt (\\w+) ?(\\d+)?", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
@@ -115,6 +114,34 @@ public class DebugGUIPanel extends JPanel {
                     amt = Integer.valueOf(list.get(3));
                 }
                 target.modAttributeDontSaveData(Attribute.valueOf(list.get(2)), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAffection (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.gainAffection(Global.getPlayer(), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAttraction (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.gainAttraction(Global.getPlayer(), amt);
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {

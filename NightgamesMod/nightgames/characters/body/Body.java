@@ -878,6 +878,9 @@ public class Body implements Cloneable {
                 if (get("breasts").size() == 0) {
                     add(BreastsPart.b);
                 }
+                if (get("ass").size() == 0) {
+                    add(AssPart.generateGeneric().upgrade().upgrade());
+                }
                 break;
             case male:
                 baseFemininity -= 2;
@@ -890,6 +893,9 @@ public class Body implements Cloneable {
                 if (!has("face")) {
                     add(new FacePart(0, 2));
                 }
+                if (get("ass").size() == 0) {
+                    add(AssPart.generateGeneric().upgrade());
+                }
                 break;
             case herm:
                 baseFemininity += 1;
@@ -899,6 +905,9 @@ public class Body implements Cloneable {
                 if (get("breasts").size() == 0) {
                     add(BreastsPart.b);
                 }
+                if (get("ass").size() == 0) {
+                    add(AssPart.generateGeneric().upgrade().upgrade());
+                }
                 break;
             case shemale:
                 baseFemininity += 1;
@@ -907,6 +916,9 @@ public class Body implements Cloneable {
                 }
                 if (get("breasts").size() == 0) {
                     add(BreastsPart.d);
+                }
+                if (get("ass").size() == 0) {
+                    add(AssPart.generateGeneric().upgrade().upgrade());
                 }
                 break;
             case asexual:
@@ -1404,5 +1416,35 @@ public class Body implements Cloneable {
         if (replacements != null) {
             replacements.remove(mod);
         }
+    }
+
+    public AssPart getAssBelow(int size) {
+        List<BodyPart> parts = get("ass");
+        List<AssPart> upgradable = new ArrayList<>();
+        for (BodyPart part : parts) {
+            AssPart b = (AssPart) part;
+            if (b.getSize() < size) {
+                upgradable.add(b);
+            }
+        }
+        if (upgradable.size() == 0) {
+            return null;
+        }
+        return Global.pickRandom(upgradable).get();
+    }
+
+    public AssPart getAssAbove(int size) {
+        List<BodyPart> parts = get("ass");
+        List<AssPart> downgradable = new ArrayList<>();
+        for (BodyPart part : parts) {
+            AssPart b = (AssPart) part;
+            if (b.getSize() > size) {
+                downgradable.add(b);
+            }
+        }
+        if (downgradable.size() == 0) {
+            return null;
+        }
+        return Global.pickRandom(downgradable).get();
     }
 }

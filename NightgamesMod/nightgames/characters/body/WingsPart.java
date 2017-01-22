@@ -176,7 +176,7 @@ public enum WingsPart implements BodyPart,BodyPartMod {
     }
 
     @Override
-    public Collection<? extends BodyPartMod> getMods(Character self) {
+    public Collection<? extends BodyPartMod> getMods() {
         return Collections.singleton(this);
     }
 

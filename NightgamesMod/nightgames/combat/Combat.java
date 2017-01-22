@@ -332,6 +332,13 @@ public class Combat extends Observable implements Cloneable {
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.BioGel, 1);
         }
+        if (checkBottleCollection(victor, loser, GooeyMod.INSTANCE)) {
+            write(victor, Global.format(
+                            "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} excitement in an empty bottle</b>",
+                            victor, loser));
+            victor.consume(Item.EmptyBottle, 1, false);
+            victor.gain(Item.MoltenDrippings, 1);
+        }
         if (loser.human() && loser.getWillpower().max() < loser.getMaxWillpowerPossible()) {
             write("<br/>Ashamed at your loss, you resolve to win next time.");
             write("<br/><b>Gained 1 Willpower</b>.");

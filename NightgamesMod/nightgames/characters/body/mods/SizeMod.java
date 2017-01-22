@@ -35,13 +35,17 @@ public class SizeMod extends PartMod {
     }
     public static int ASS_SIZE_SMALL = 0;
     public static int ASS_SIZE_NORMAL = 1;
-    public static int ASS_SIZE_BIG = 2;
-    public static int ASS_SIZE_HUGE = 3;
+    public static int ASS_SIZE_GIRLISH = 2;
+    public static int ASS_SIZE_FLARED = 3;
+    public static int ASS_SIZE_LARGE = 4;
+    public static int ASS_SIZE_HUGE = 5;
     private static final Map<Integer, String> ASS_SIZE_DESCRIPTIONS = new HashMap<>(); 
     static {
         ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_SMALL, "small ");
         ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_NORMAL, "");
-        ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_BIG, "large ");
+        ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_GIRLISH, "girlish ");
+        ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_FLARED, "flared ");
+        ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_LARGE, "large ");
         ASS_SIZE_DESCRIPTIONS.put(ASS_SIZE_HUGE, "huge ");
     }
 

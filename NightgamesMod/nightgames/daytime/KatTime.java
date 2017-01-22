@@ -4,14 +4,10 @@ import static nightgames.requirements.RequirementShortcuts.bodypart;
 import static nightgames.requirements.RequirementShortcuts.not;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.TailPart;
@@ -105,42 +101,25 @@ public class KatTime extends BaseNPCTime {
             };
             options.add(removeCock);
         }
-        TransformationOption primalCock = new TransformationOption();
-        primalCock.ingredients.put(Item.PriapusDraft, 10);
-        primalCock.ingredients.put(Item.Rope, 10);
-        primalCock.ingredients.put(Item.Aphrodisiac, 25);
-        primalCock.requirements.add(new BodyPartRequirement("cock"));
-        primalCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock").stream().anyMatch(cock -> ((CockPart) cock).isGeneric(self));
-        });
-        primalCock.additionalRequirements = "A normal cock";
-        primalCock.option = "Primal Cock";
-        primalCock.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your penis into a primal cock.";
-        primalCock.effect = (c, self, other) -> {
-            Optional<BodyPart> optPart =
-                            self.body.get("cock").stream().filter(cock -> ((CockPart) cock).isGeneric(self)).findAny();
-            CockPart target = (CockPart) optPart.get();
-            self.body.remove(target);
-            self.body.add(target.applyMod(CockMod.primal));
-            return true;
-        };
+        {
+            TransformationOption primalCock = new ApplyPartModOption("cock", CockMod.primal);
+            primalCock.ingredients.put(Item.PriapusDraft, 10);
+            primalCock.ingredients.put(Item.Rope, 10);
+            primalCock.ingredients.put(Item.Aphrodisiac, 25);
+            primalCock.option = "Primal Cock";
+            primalCock.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your penis into a primal cock.";
+            options.add(primalCock);
+        }
 
-        options.add(primalCock);
-        TransformationOption feralPussy = new TransformationOption();
-        feralPussy.ingredients.put(Item.Rope, 10);
-        feralPussy.ingredients.put(Item.Aphrodisiac, 25);
-        feralPussy.ingredients.put(Item.FemDraft, 10);
-        feralPussy.requirements.add(new BodyPartRequirement("pussy"));
-        feralPussy.requirements.add((c, self, other) -> {
-            return self.hasPussy();
-        });
-        feralPussy.option = "Feral Pussy";
-        feralPussy.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your pussy into a feral one.";
-        feralPussy.effect = (c, self, other) -> {
-            self.body.addReplace(self.body.getRandomPussy().applyMod(FeralMod.INSTANCE), 1);
-            return true;
-        };
-        options.add(feralPussy);
+        {
+            TransformationOption feralPussy = new ApplyPartModOption("pussy", FeralMod.INSTANCE);
+            feralPussy.ingredients.put(Item.Rope, 10);
+            feralPussy.ingredients.put(Item.Aphrodisiac, 25);
+            feralPussy.ingredients.put(Item.FemDraft, 10);
+            feralPussy.option = "Feral Pussy";
+            feralPussy.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your pussy into a feral one.";
+            options.add(feralPussy);
+        }
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
         catTail.ingredients.put(Item.Aphrodisiac, 25);

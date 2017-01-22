@@ -16,6 +16,16 @@ public class FieryMod extends PartMod {
         super("fiery", 0, .3, .2, -11);
     }
 
+    public String adjective(BodyPart part) {
+        if (part.getType().equals("pussy")) {
+            return "fiery";
+        }
+        if (part.getType().equals("ass")) {
+            return "molten";
+        }
+        return "red-hot";
+    }
+
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
         if (!opponent.stunned()) {
             if (target.moddedPartCountsAs(opponent, CockMod.primal)) {

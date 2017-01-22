@@ -389,7 +389,7 @@ public class GenericBodyPart implements BodyPart {
         return part;
     }
 
-    public List<? extends BodyPartMod> getMods(Character npc) {
+    public List<? extends BodyPartMod> getMods() {
         return mods;
     }
 

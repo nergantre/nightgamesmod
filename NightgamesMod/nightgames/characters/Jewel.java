@@ -95,9 +95,9 @@ public class Jewel extends BasePersonality {
     private void useAnal() {
         Growth growth = character.getGrowth();
         Global.flag(JEWEL_ANAL_FOCUS);
-        growth.addTrait(11, Trait.oiledass);
-        growth.addTrait(25, Trait.temptingass);
-        growth.addTrait(37, Trait.powerfulcheeks);
+        growth.addTrait(11, Trait.powerfulcheeks);
+        growth.addBodyPartMod(25, "ass", FieryMod.INSTANCE);
+        growth.addTrait(37, Trait.temptingass);
         growth.addTrait(47, Trait.autonomousAss);
     }
 
@@ -260,7 +260,7 @@ public class Jewel extends BasePersonality {
         }
         if (character.getLevel() >= 40 && Global.checkFlag(JEWEL_ANAL_FOCUS)) {
             if (!character.body.getRandomAss()
-                               .getMods(character)
+                               .getMods()
                                .stream()
                                .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
                 character.body.addReplace(character.body.getRandomAss()
@@ -268,7 +268,7 @@ public class Jewel extends BasePersonality {
                                 1);
             }
         } else if (character.body.getRandomAss()
-                                 .getMods(character)
+                                 .getMods()
                                  .stream()
                                  .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
             character.body.addReplace(AssPart.generateGeneric(), 1);

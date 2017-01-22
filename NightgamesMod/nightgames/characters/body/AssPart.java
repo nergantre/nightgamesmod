@@ -6,6 +6,8 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
@@ -26,7 +28,23 @@ public class AssPart extends GenericBodyPart {
 
     @Override
     public double getFemininity(Character c) {
-        return getSize() - SizeMod.ASS_SIZE_NORMAL;
+        return getSize() - SizeMod.ASS_SIZE_GIRLISH;
+    }
+
+    @Override
+    public double getHotness(Character self, Character opponent) {
+        double hotness = super.getHotness(self, opponent);
+
+        Clothing top = self.getOutfit().getTopOfSlot(ClothingSlot.bottom);
+        hotness += -.1 + Math.sqrt(getSize()) * .2 * self.getOutfit()
+                                                .getExposure(ClothingSlot.bottom);
+        if (!opponent.hasDick()) {
+            hotness /= 2;
+        }
+        if (top == null) {
+            hotness += .1;
+        }
+        return Math.max(0, hotness);
     }
 
     @Override
@@ -35,8 +53,8 @@ public class AssPart extends GenericBodyPart {
         if (getSize() > SizeMod.ASS_SIZE_NORMAL & a == Attribute.Seduction) {
             bonus += (getSize() - SizeMod.ASS_SIZE_NORMAL) * 2;
         }
-        if (getSize() > SizeMod.ASS_SIZE_BIG & a == Attribute.Speed) {
-            bonus += (getSize() - SizeMod.ASS_SIZE_BIG);
+        if (getSize() > SizeMod.ASS_SIZE_FLARED & a == Attribute.Speed) {
+            bonus += (getSize() - SizeMod.ASS_SIZE_FLARED);
         }
         return bonus;
     }

@@ -13,7 +13,7 @@ import nightgames.status.addiction.Addiction;
 public class Daytime {
     private ArrayList<Activity> activities;
     private Player player;
-    private int time;
+    int time;
     private int daylength;
     private DaytimeEventManager eventMgr;
 

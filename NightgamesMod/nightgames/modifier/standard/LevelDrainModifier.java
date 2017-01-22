@@ -67,7 +67,7 @@ public class LevelDrainModifier extends BaseModifier {
                         && Global.getParticipants().stream().noneMatch(p -> p.has(Trait.leveldrainer));
     }
 
-    List<Item> EXTRA_LOOT = Arrays.asList(Item.BioGel, Item.RawAether, Item.LubricatingOils, Item.FeralMusk, Item.HolyWater, Item.ExtremeAphrodisiac, Item.nectar);
+    List<Item> EXTRA_LOOT = Arrays.asList(Item.BioGel, Item.MoltenDrippings, Item.RawAether, Item.LubricatingOils, Item.FeralMusk, Item.HolyWater, Item.ExtremeAphrodisiac, Item.nectar);
     @Override
     public void extraWinnings(Character player, int score) {
         if (score > 0) {

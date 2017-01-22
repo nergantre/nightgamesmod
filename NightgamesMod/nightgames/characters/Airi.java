@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
@@ -12,6 +13,7 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -75,6 +77,7 @@ public class Airi extends BasePersonality {
         self.getWillpower().setMax(80);
         self.initialGender = CharacterSex.female;
         self.body.add(new FacePart(.1, 3.0));
+        self.body.add(AssPart.generateGeneric().upgrade());
     }
 
     private void constructLines() {
@@ -429,6 +432,10 @@ public class Airi extends BasePersonality {
             BreastsPart part = self.body.getBreastsBelow(BreastsPart.h.getSize());
             if (part != null) {
                 self.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+            }
+            AssPart asspart = self.body.getAssBelow(SizeMod.ASS_SIZE_HUGE);
+            if (asspart != null) {
+                self.body.temporaryAddOrReplacePartWithType(asspart.upgrade().upgrade(), 10);
             }
             self.body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", .5, 1.5, .8, "skin", ""), 999);
             self.body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);

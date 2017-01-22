@@ -1303,7 +1303,7 @@ public class GUI extends JFrame implements Observer {
             timeLabel.setForeground(new Color(51, 101, 202));
         } else if (Global.getTime() == Time.DAY) { // not updating correctly during daytime
             if (Global.getDay() != null) {
-                timeLabel.setText(Global.getDay().getTime() + " pm");
+                timeLabel.setText(Global.getDay().getTime());
             } else {
                 timeLabel.setText("10:00 am");
             }

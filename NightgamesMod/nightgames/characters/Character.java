@@ -436,7 +436,7 @@ public abstract class Character extends Observable implements Cloneable {
         getGrowth().levelDown(this);
         levelPlan.remove(getLevel());
         level--;
-        return subject() + " lost a level! <br/>" + Global.gainSkills(this);
+        return Global.capitalizeFirstLetter(subject()) + " lost a level! <br/>" + Global.gainSkills(this);
     }
 
     public int getXP() {
@@ -446,11 +446,10 @@ public abstract class Character extends Observable implements Cloneable {
 
     public double modifyDamage(DamageType type, Character other, double baseDamage) {
         // so for each damage type, one level from the attacker should result in about 10% increased damage, while a point in defense should reduce damage by around 5% per level.
-        // this differential should be max capped to (3 * (100 + attacker's level * 5))%
-        // this differential should be min capped to (.5 * (100 + attacker's level * 5))%
-        
-        double maxDamage = baseDamage * 3 * (1 + .05 * getLevel());
-        double minDamage = baseDamage * .5 * (1 + .05 * getLevel());
+        // this differential should be max capped to (2 * (100 + attacker's level * 3))%
+        // this differential should be min capped to (.5 * (100 + attacker's level * 3))%
+        double maxDamage = baseDamage * 2 * (1 + .03 * getLevel());
+        double minDamage = baseDamage * .5 * (1 + .03 * getLevel());
         double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
         if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
             System.out.println(baseDamage + " from " + getTrueName() + " has multiplier " + multiplier + " against " + other.getTrueName() + " ["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
@@ -2692,6 +2691,10 @@ public abstract class Character extends Observable implements Cloneable {
         if (other == null) {
             System.err.println("Other is null");
             Thread.dumpStack();
+            return;
+        }
+        if (other == this) {
+            //skip narcissism.
             return;
         }
 

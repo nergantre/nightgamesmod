@@ -188,7 +188,7 @@ public enum EarPart implements BodyPart, BodyPartMod {
     }
 
     @Override
-    public Collection<? extends BodyPartMod> getMods(Character self) {
+    public Collection<? extends BodyPartMod> getMods() {
         if (this == normal) {
             return Collections.emptySet();
         }

@@ -102,7 +102,6 @@ public abstract class BaseNPCTime extends Activity {
                 Global.flag(transformationFlag);
             }
             options.stream()
-                   .filter(option -> option.requirements.stream().allMatch(req -> req.meets(null, player, npc)))
                    .forEach(opt -> {
                 Global.gui().message(opt.option + ":");
                 opt.ingredients.entrySet().forEach((entry) -> {
@@ -118,8 +117,12 @@ public abstract class BaseNPCTime extends Activity {
                 if (!opt.additionalRequirements.isEmpty()) {
                     Global.gui().message(opt.additionalRequirements);
                 }
+                if (opt.requirements.stream().allMatch(req -> req.meets(null, player, npc))) {
+                    Global.gui().choose(this, opt.option);
+                } else {
+                    Global.gui().message("<font color='rgb(214, 64, 101)'>Non-ingredient requirements not met</font>");
+                }
                 Global.gui().message("<br/>");
-                Global.gui().choose(this, opt.option);
             });
             Global.gui().choose(this, "Back");
         } else if (choice.equals("Start") || choice.equals("Back")) {

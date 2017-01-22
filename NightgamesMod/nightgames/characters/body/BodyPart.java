@@ -136,10 +136,10 @@ public interface BodyPart {
 
     // whether the part is modded
     public default boolean isGeneric(Character self) {
-        return getMods(self).isEmpty();
+        return getMods().isEmpty();
     }
 
-    public Collection<? extends BodyPartMod> getMods(Character self);
+    public Collection<? extends BodyPartMod> getMods();
 
     public static boolean hasType(Collection<BodyPart> parts, String type) {
         return parts.stream().anyMatch(part -> part.isType(type));
@@ -150,7 +150,7 @@ public interface BodyPart {
     }
 
     public default boolean moddedPartCountsAs(Character self, BodyPartMod comparedMod) {
-        return getMods(self).stream().anyMatch(mod -> mod.countsAs(self, comparedMod));
+        return getMods().stream().anyMatch(mod -> mod.countsAs(self, comparedMod));
     }
 
     static List<String> genitalTypes = Arrays.asList("pussy", "cock", "ass");

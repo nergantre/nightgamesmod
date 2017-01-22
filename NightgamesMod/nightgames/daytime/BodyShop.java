@@ -151,6 +151,48 @@ public class BodyShop extends Activity {
     private void populateSelection() {
         CharacterRequirement noRequirement = character -> true;
 
+        selection.add(new ShopSelection("Ass Expansion", 1500) {
+            @Override
+            void buy(Character buyer) {
+                AssPart target = buyer.body.getAssBelow(SizeMod.getMaximumSize("ass"));
+                assert target != null;
+                buyer.body.remove(target);
+                buyer.body.addReplace(target.upgrade(), 1);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                AssPart target = buyer.body.getAssBelow(SizeMod.getMaximumSize("ass"));
+                return target != null;
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return 10;
+            }
+        });
+
+        selection.add(new ShopSelection("Ass Reduction", 1500) {
+            @Override
+            void buy(Character buyer) {
+                AssPart target = buyer.body.getAssAbove(SizeMod.getMinimumSize("ass"));
+                assert target != null;
+                buyer.body.remove(target);
+                buyer.body.addReplace(target.downgrade(), 1);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                AssPart target = buyer.body.getAssAbove(SizeMod.getMinimumSize("ass"));
+                return target != null;
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return 10;
+            }
+        });
+
         selection.add(new ShopSelection("Breast Expansion", 1500) {
             @Override
             void buy(Character buyer) {

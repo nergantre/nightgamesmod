@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.combat.Result;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
@@ -30,6 +31,14 @@ public class RequirementShortcuts {
 
     public static BodyPartRequirement bodypart(String type) {
         return new BodyPartRequirement(type);
+    }
+
+    public static BodyPartModRequirement partmod(String type, PartMod mod) {
+        return new BodyPartModRequirement(type, mod);
+    }
+
+    public static NotRequirement noPartmod(String type, PartMod mod) {
+        return not(new BodyPartModRequirement(type, mod));
     }
 
     public static DomRequirement dom() {

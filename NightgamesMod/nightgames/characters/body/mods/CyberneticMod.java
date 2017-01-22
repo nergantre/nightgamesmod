@@ -14,6 +14,17 @@ public class CyberneticMod extends PartMod {
         super("cybernetic", -.1, .8, -.5, 0);
     }
 
+
+    public String adjective(BodyPart part) {
+        if (part.getType().equals("pussy")) {
+            return "cybernetic";
+        }
+        if (part.getType().equals("ass")) {
+            return "biomech";
+        }
+        return "prosthetic";
+    }
+
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) {
         int bonus = 0;
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
+import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
@@ -185,6 +186,7 @@ public class Cassie extends BasePersonality {
         Global.gainSkills(self);
         self.setTrophy(Item.CassieTrophy);
         self.body.add(BreastsPart.c);
+        self.body.add(AssPart.generateGeneric().upgrade().upgrade().upgrade());
         self.initialGender = CharacterSex.female;
     }
 

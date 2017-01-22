@@ -34,6 +34,7 @@ import nightgames.status.InducedEuphoria;
 import nightgames.status.Oiled;
 import nightgames.status.Shamed;
 import nightgames.status.Shield;
+import nightgames.status.Stunned;
 import nightgames.status.Trance;
 
 public enum Item implements Loot {
@@ -188,6 +189,15 @@ public enum Item implements Loot {
                                                     "throw", new FluidAddiction(Global.noneCharacter(),
                                                                     Global.noneCharacter(), 2, 10)),
                                     new ResourceEffect("wprestore", 500)))),
+                    RequirementShortcuts.none(),
+                    10),
+    MoltenDrippings("Molten Drippings", 100, "Excitement from a ki-filled pussy", "a bottle of ",
+                    Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
+                                    (ItemEffect) new ResourceEffect("pain", 500),
+                                    (ItemEffect) new BuffEffect("drink",
+                                                    "throw", new Stunned(Global.noneCharacter(), 100, false)),
+                                    (ItemEffect) new LevelUpEffect(1)
+                                    ))),
                     RequirementShortcuts.none(),
                     10),
     Ward("Dark Ward", 100, "", "a "),

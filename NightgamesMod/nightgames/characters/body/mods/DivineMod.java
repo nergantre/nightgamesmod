@@ -18,6 +18,16 @@ public class DivineMod extends PartMod {
         super("divine", 0, 1.0, 0.0, -10);
     }
 
+    public String adjective(BodyPart part) {
+        if (part.getType().equals("pussy")) {
+            return "divine";
+        }
+        if (part.getType().equals("ass")) {
+            return "sacred";
+        }
+        return "holy";
+    }
+
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
         if (self.getStatus(Stsflag.divinecharge) != null) {
             c.write(self, Global.format(
