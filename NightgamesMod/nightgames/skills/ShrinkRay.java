@@ -6,12 +6,14 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.status.Shamed;
 
+@SuppressWarnings("unused")
 public class ShrinkRay extends Skill {
 
     public ShrinkRay(Character self) {
@@ -60,28 +62,28 @@ public class ShrinkRay extends Skill {
         target.add(c, new Shamed(target));
         if (permanent) {
             if (target.hasDick()) {
-                CockPart part = target.body.getCockAbove(GenericCockPart.SIZE_TINY);
+                CockPart part = target.body.getCockAbove(SizeMod.getMinimumSize("cock"));
                 if (part != null) {
                     target.body.addReplace(part.downgrade(), 1);
                 } else {
                     target.body.remove(target.body.getRandomCock());
                 }
             } else {
-                BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.size);
+                BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.getSize());
                 if (part != null) {
                     target.body.addReplace(part.downgrade(), 1);
                 }
             }
         } else {
             if (target.hasDick()) {
-                CockPart part = target.body.getCockAbove(GenericCockPart.SIZE_TINY);
+                CockPart part = target.body.getCockAbove(SizeMod.getMinimumSize("cock"));
                 if (part != null) {
                     target.body.temporaryAddOrReplacePartWithType(part.downgrade(), part, 10);
                 } else {
                     target.body.temporaryRemovePart(target.body.getRandom("cock"), 10);
                 }
             } else {
-                BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.size);
+                BreastsPart part = target.body.getBreastsAbove(BreastsPart.flat.getSize());
                 if (part != null) {
                     target.body.temporaryAddOrReplacePartWithType(part.downgrade(), part, 10);
                 }

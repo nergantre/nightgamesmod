@@ -12,6 +12,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -105,14 +106,15 @@ public class GenericBodyPart implements BodyPart {
     @Override
     public String describe(Character c) {
         Optional<String> override = mods.stream().map(mod -> mod.getDescriptionOverride(c, this)).filter(Optional::isPresent).findFirst().flatMap(Function.identity());
-        String normalDescription = modlessDescription(c);
-        if (override.isPresent()) {
-            normalDescription = adjective() + " " +  override.get();
-        }
+        String normalDescription = override.orElseGet(() -> modlessDescription(c));
 
         return getModDescriptorString(c) + normalDescription;
     }
 
+    public int getSize() {
+        return ((SizeMod)mods.stream().filter(mod -> mod instanceof SizeMod).findAny().orElse(SizeMod.INSTANCE)).getSize();
+    }
+    
     @Override
     public double priority(Character c) {
         return (getPleasure(c, null) - 1) * 3;
@@ -193,11 +195,11 @@ public class GenericBodyPart implements BodyPart {
     }
 
     public JsonObject toJson() {
-        return JsonUtils.gson.toJsonTree(this, this.getClass()).getAsJsonObject();
+        return JsonUtils.getGson().toJsonTree(this, this.getClass()).getAsJsonObject();
     }
 
     public BodyPart fromJson(JsonObject object) {
-        return JsonUtils.gson.fromJson(object, this.getClass());
+        return JsonUtils.getGson().fromJson(object, this.getClass());
     }
 
     @Override public JsonObject save() {
@@ -374,11 +376,10 @@ public class GenericBodyPart implements BodyPart {
         return this.fromJson(this.toJson());
     }
 
-    public BodyPart applyMod(PartMod mod) {
+    public GenericBodyPart applyMod(PartMod mod) {
         GenericBodyPart newPart = (GenericBodyPart) instance();
-        if (!newPart.mods.contains(mod)) {
-            newPart.mods.add(mod);
-        }
+        newPart.mods.removeIf(otherMod -> otherMod.getVariant().equals(mod.getVariant()));
+        newPart.mods.add(mod);
         return newPart;
     }
 

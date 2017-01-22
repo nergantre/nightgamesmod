@@ -11,7 +11,6 @@ import nightgames.stance.Standing;
 import nightgames.status.Falling;
 
 public class Carry extends Fuck {
-
     public Carry(String name, Character self) {
         super(name, self, 5);
         addTag(SkillTag.pleasure);

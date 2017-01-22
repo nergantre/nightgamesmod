@@ -32,7 +32,7 @@ public class SecondPussyMod extends PartMod {
     }
 
     public Optional<String> getDescriptionOverride(Character self, BodyPart part) {
-        return Optional.of("pussy");
+        return Optional.of(part.adjective() + " pussy");
     }
 
     public Optional<Boolean> getErogenousOverride() {

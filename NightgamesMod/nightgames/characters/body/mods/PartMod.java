@@ -2,6 +2,8 @@ package nightgames.characters.body.mods;
 
 import java.util.Optional;
 
+import com.google.gson.JsonElement;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
@@ -9,11 +11,11 @@ import nightgames.characters.body.BodyPartMod;
 import nightgames.combat.Combat;
 
 public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
-    private final String modType;
-    private final double hotness;
-    private final double pleasure;
-    private final double sensitivity;
-    private int sortOrder;
+    protected String modType;
+    protected double hotness;
+    protected double pleasure;
+    protected double sensitivity;
+    protected int sortOrder;
 
     public PartMod(String modType, double hotness, double pleasure, double sensitivity, int sortOrder) {
         this.modType = modType;
@@ -21,6 +23,19 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
         this.pleasure = pleasure;
         this.sensitivity = sensitivity;
         this.sortOrder = sortOrder;
+    }
+
+    /*
+     * Implement these if necessary to load more data than the default construct can.
+     */
+    public void loadData(JsonElement element) {}
+    public JsonElement saveData() { return null; }
+
+    /**
+     * This should be overridden if there needs to be more than only one variant of the mod active at the same time.
+     */
+    public String getVariant() {
+        return modType;
     }
 
     @Override

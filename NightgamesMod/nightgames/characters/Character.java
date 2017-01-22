@@ -39,6 +39,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.ToysPart;
 import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.characters.custom.AiModifiers;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
@@ -1599,7 +1600,7 @@ public abstract class Character extends Observable implements Cloneable {
         saveObj.addProperty("human", human());
         saveObj.add("flags", JsonUtils.JsonFromMap(flags));
         saveObj.add("levelUps", JsonUtils.JsonFromMap(levelPlan));
-        saveObj.add("growth", JsonUtils.gson.toJsonTree(growth));
+        saveObj.add("growth", JsonUtils.getGson().toJsonTree(growth));
         saveInternal(saveObj);
         return saveObj;
     }
@@ -1616,7 +1617,7 @@ public abstract class Character extends Observable implements Cloneable {
         rank = object.get("rank").getAsInt();
         xp = object.get("xp").getAsInt();
         if (object.has("growth")) {
-            growth = JsonUtils.gson.fromJson(object.get("growth"), Growth.class);
+            growth = JsonUtils.getGson().fromJson(object.get("growth"), Growth.class);
         }
         money = object.get("money").getAsInt();
         {
@@ -3327,7 +3328,7 @@ public abstract class Character extends Observable implements Cloneable {
     public boolean useFemalePronouns() {
         return hasPussy() 
                         || !hasDick() 
-                        || (body.getLargestBreasts().size > BreastsPart.flat.size && body.getFace().getFemininity(this) > 0) 
+                        || (body.getLargestBreasts().getSize() > SizeMod.getMinimumSize("breasts") && body.getFace().getFemininity(this) > 0) 
                         || (body.getFace().getFemininity(this) >= 1.5) 
                         || Global.checkFlag(Flag.FemalePronounsOnly);
     }

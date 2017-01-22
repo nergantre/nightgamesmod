@@ -4,6 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.mods.CyberneticMod;
@@ -39,6 +42,25 @@ public class CockMod extends PartMod {
 
     CockMod(String name, double hotness, double pleasure, double sensitivity) {
         super(name, hotness, pleasure, sensitivity, 0);
+    }
+
+    CockMod() {
+        super("error", 0, 1, 1, 0);
+    }
+
+    @Override
+    public void loadData(JsonElement element) {
+        Optional<CockMod> other = getFromType(element.getAsString());
+        other.ifPresent(otherMod -> {
+            this.modType = otherMod.modType;
+            this.pleasure = otherMod.pleasure;
+            this.hotness = otherMod.hotness;
+            this.sensitivity = otherMod.sensitivity;
+        });
+    }
+
+    public JsonElement saveData() {
+        return new JsonPrimitive(getModType());
     }
 
     @Override

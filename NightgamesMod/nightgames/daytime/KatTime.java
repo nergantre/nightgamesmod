@@ -16,6 +16,7 @@ import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
@@ -85,7 +86,7 @@ public class KatTime extends BaseNPCTime {
                            + "Fortunately for you, the poor kitty seems exhausted by her new transformation and falls into a soft slumber after the exertion. "
                            + "You pick her up, depositing her onto her bed and covering her with a blanket before turning to leave. Hopefully the next time you meet in the games, she'll be a bit gentler than that.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.primal));
+                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.primal));
                 return true;
             };
             options.add(growCock);

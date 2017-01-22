@@ -6,6 +6,7 @@ import nightgames.characters.*;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -122,7 +123,7 @@ public class RequirementTest {
     }
 
     @Test public void insertedTest() throws Exception {
-        self.body.addReplace(new GenericCockPart(GenericCockPart.SIZE_HUGE), 1);
+        self.body.addReplace(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_HUGE)), 1);
         combat.setStance(new FlyingCarry(self, other));
         assertThat(inserted().meets(combat, self, other), is(true));
         assertThat(inserted().meets(combat, other, self), is(false));

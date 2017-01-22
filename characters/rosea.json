@@ -125,12 +125,37 @@
 	"body":{
         "parts":[
           {
-            "class":"nightgames.characters.body.BreastsPart",
-            "enum":"e"
+            "type": "breasts",
+            "desc": "breasts",
+            "prefix": "",
+            "hotness": 0.0,
+            "sensitivity": 1.0,
+            "pleasure": 1.0,
+            "descLong": "",
+            "notable": true,
+            "mods": [
+              {
+                "value": 6,
+                "_type": "nightgames.characters.body.mods.SizeMod"
+              }
+            ],
+            "class": "nightgames.characters.body.BreastsPart"
           },
           {
-            "class":"nightgames.characters.body.PussyPart",
-            "enum":"plant"
+            "type": "pussy",
+            "desc": "pussy",
+            "prefix": "a ",
+            "hotness": 0.0,
+            "sensitivity": 1.0,
+            "pleasure": 1.2,
+            "descLong": "",
+            "notable": true,
+            "mods": [
+              {
+                "_type": "nightgames.characters.body.mods.PlantMod"
+              }
+			],
+            "class": "nightgames.characters.body.PussyPart"
           },
           {
             "class":"nightgames.characters.body.EarPart",

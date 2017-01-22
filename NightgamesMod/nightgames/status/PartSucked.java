@@ -143,13 +143,13 @@ public class PartSucked extends Status implements InsertedStatus {
     @Override  public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
-        obj.addProperty("penetrator", JsonUtils.gson.toJson(penetrated));
+        obj.addProperty("penetrator", JsonUtils.getGson().toJson(penetrated));
         obj.addProperty("target", target);
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new PartSucked(null, null, JsonUtils.gson.fromJson(obj.get("penetrator"), BodyPart.class), obj.get("target").getAsString());
+        return new PartSucked(null, null, JsonUtils.getGson().fromJson(obj.get("penetrator"), BodyPart.class), obj.get("target").getAsString());
     }
 
     @Override

@@ -2,7 +2,7 @@ package nightgames.skills;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -119,7 +119,7 @@ public class FondleBreasts extends Skill {
 
     @Override
     public String getLabel(Combat c) {
-        return c.getOpponent(getSelf()).body.getBreastsAbove(BreastsPart.flat.size) != null ? "Fondle Breasts"
+        return c.getOpponent(getSelf()).body.getBreastsAbove(SizeMod.getMinimumSize("breasts")) != null ? "Fondle Breasts"
                         : "Tease Chest";
     }
 

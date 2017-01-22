@@ -34,7 +34,7 @@ body:
 	<uses the gender's standard body as a base>
 	archetype		One of the advanced classes. This applies things like genital mods, wings, tails and such. Can be overridden by other body parameters. Possible values are regular, succubus, cat, angel, cyborg, witch and slime. A value of "regular" will reset a character's parts to human.
 	genitals		The body's genitals. If unspecified, use the gender's genitals. If specified, the body will have precisely these genitals, not the default ones.
-	breasts			The breasts. Should be a BreastPart enum constant (a, b, c, d, dd, e, f, g, h, flat). Defaults to flat for male/asex, b for female/herm.
+	breasts			The breasts. Should be a number (0 is flat, 9 is colossal/h cup). Defaults to flat for male/asex, b for female/herm.
 	ass				The ass. Defaults to the regular ass, the only alternative (currently) is AnalPussy.
 	ears			Defaults to normal, can also be pointed or cat
 	tail			Defaults to none, can also be demonic or cat. (Slimy variations not supported)
@@ -44,8 +44,8 @@ body:
 
 genitals: (again, both are optional)
 	cock			See below
-	pussy			Defaults to normal, can also be arcane, fiery, succubus, feral, cybernetic, divine, plant, gooey, tentacled
+	pussy			Defaults to normal, can be a body mod class (eg nightgames.characters.body.mods.ArcaneHoleMod for arcane pussy) Check the source code (or maybe wiki if I have time) to see possible options.
 	
 cock:
 	type			Defaults to basic, can also be slimy, runic, blessed, incubus, primal, bionic, enlightened
-	length			Defaults to average, can also be tiny, small, big, huge, massive	
+	length			Defaults to average (6), can be 3 (tiny) to 10 (massive)

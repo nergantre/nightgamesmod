@@ -100,6 +100,9 @@ public class PussyPart extends GenericBodyPart {
                                             + "vaginal muscles to milk {other:name-possessive} cock, adding to the pleasure.",
                             self, opponent));
             bonus += self.has(Trait.tight) && self.has(Trait.holecontrol) ? 10 : 5;
+            if (!c.getStance().mobile(opponent) || !opponent.canRespond()) {
+                bonus /= 5;
+            }
         }
         return bonus;
     }

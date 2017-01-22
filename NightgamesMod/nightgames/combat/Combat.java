@@ -479,7 +479,7 @@ public class Combat extends Observable implements Cloneable {
             opponents.forEach(opponent -> opponent.weaken(this, opponent.getStamina().max() / 10));
         }
         String beguilingbreastCompletedFlag = Trait.beguilingbreasts.name() + "Completed";
-        if (character.has(Trait.beguilingbreasts) && character.body.getLargestBreasts().size >= BreastsPart.dd.size && !getCombatantData(character).getBooleanFlag(beguilingbreastCompletedFlag)
+        if (character.has(Trait.beguilingbreasts) && character.body.getLargestBreasts().getSize() >= BreastsPart.dd.getSize() && !getCombatantData(character).getBooleanFlag(beguilingbreastCompletedFlag)
                         && character.outfit.slotOpen(ClothingSlot.top)) {
             Character mainOpponent = getOpponent(character);
             write(character, Global.format("The instant {self:subject-action:lay|lays} {self:possessive} eyes on {other:name-possessive} bare breasts, {self:possessive} consciousness flies out of {self:possessive} mind. " +

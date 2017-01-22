@@ -38,7 +38,7 @@ public class BreastSmother extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
-                        && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
+                        && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && c.getStance().mobile(getSelf())
                         && (!c.getStance().mobile(target) || c.getStance().prone(target)) && getSelf().canAct();
     }
@@ -54,7 +54,7 @@ public class BreastSmother extends Skill {
         writeOutput(c, special ? Result.special : Result.normal, target);
 
 
-        double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().size;
+        double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().getSize();
 
         if (target.has(Trait.temptingtits)) {
             n += Global.random(5, 10);

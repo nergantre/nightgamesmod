@@ -17,6 +17,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
@@ -66,7 +67,7 @@ public class Corruption extends Addiction {
             } else if (!affected.hasDick()) {
                 c.write(affected,
                                 "<b>The dark taint changes you even further, and an incubus's cock forms between your legs!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.incubus), 20);
+                affected.body.temporaryAddOrReplacePartWithType(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.incubus), 20);
             } else {
                 c.write(affected,
                                 "The corruption is churning within you, but it seems that it's done all it can for now.");

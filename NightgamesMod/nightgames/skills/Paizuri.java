@@ -27,7 +27,7 @@ public class Paizuri extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
+        return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable()
                         && c.getStance().paizuri(getSelf(), target) && c.getStance().front(getSelf()) && getSelf().canAct()
                         && !c.getStance().inserted(target);
@@ -45,15 +45,15 @@ public class Paizuri extends Skill {
         // largest.
         for (int i = 0; i < 3; i++) {
             BreastsPart otherbreasts = getSelf().body.getRandomBreasts();
-            if (otherbreasts.size > MIN_REQUIRED_BREAST_SIZE) {
+            if (otherbreasts.getSize() > MIN_REQUIRED_BREAST_SIZE) {
                 breasts = otherbreasts;
                 break;
             }
         }
         
-        int fetishChance = 7 + breasts.size + getSelf().get(Attribute.Fetish) / 2;
+        int fetishChance = 7 + breasts.getSize() + getSelf().get(Attribute.Fetish) / 2;
 
-        int m = 5 + Global.random(5) + breasts.size;
+        int m = 5 + Global.random(5) + breasts.getSize();
         
         if(getSelf().is(Stsflag.oiled)) {
             m += Global.random(2, 5);
@@ -82,7 +82,7 @@ public class Paizuri extends Skill {
         }
         target.body.pleasure(getSelf(), getSelf().body.getRandom("breasts"), target.body.getRandom("cock"), m, c, this);
         if (Global.random(100) < fetishChance) {
-            target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .05 + (0.01 * breasts.size) + getSelf().get(Attribute.Fetish) * .01));
+            target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .05 + (0.01 * breasts.getSize()) + getSelf().get(Attribute.Fetish) * .01));
         }
         if (getSelf().has(Trait.temptingtits)) {
             target.temptWithSkill(c, getSelf(), getSelf().body.getRandom("breasts"), m/5, this);

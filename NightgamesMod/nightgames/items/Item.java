@@ -17,6 +17,7 @@ import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.characters.body.mods.TentacledMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -196,18 +197,18 @@ public enum Item implements Loot {
     Totem("Fetish Totem", 150, "A small penis shaped totem that can summon tentacles", "a "),
     Capacitor("Capacitor", 30, "", "a "),
     TinyDraft("Tiny Draft", 100, "Temporarily shrink a penis", "a ",
-                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
+                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_AVERAGE)),
                                     BodyModEffect.Effect.downgrade)),
-                    (c, self, target) -> self.body.getCockAbove(GenericCockPart.SIZE_TINY) != null,
+                    (c, self, target) -> self.body.getCockAbove(SizeMod.COCK_SIZE_TINY) != null,
                     15),
     PriapusDraft("Priapus Draft", 150, "Temporarily grow a penis", "a ",
-                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
+                    Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_AVERAGE)),
                                     BodyModEffect.Effect.growplus)),
-                    (c, self, target) -> !self.hasDick() || self.body.getCockBelow(GenericCockPart.SIZE_MASSIVE) != null,
+                    (c, self, target) -> !self.hasDick() || self.body.getCockBelow(SizeMod.COCK_SIZE_MASSIVE) != null,
                     15),
     BustDraft("Bust Draft", 80, "Temporarily grow breasts", "a ", Collections.singleton(
                     (ItemEffect) new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus)),
-                    (c, self, target) -> self.body.getBreastsBelow(BreastsPart.maximumSize().size) != null,
+                    (c, self, target) -> self.body.getBreastsBelow(SizeMod.getMaximumSize("breasts")) != null,
                     15),
     FemDraft("Fem Draft", 150, "Temporarily grow a pussy", "a ", Arrays.asList(
                     (ItemEffect) new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus),

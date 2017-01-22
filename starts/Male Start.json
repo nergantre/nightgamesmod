@@ -11,7 +11,7 @@
 			"name":"Angelo",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":0
 			},
 			"clothing": [
 				"Tshirt",
@@ -26,7 +26,7 @@
 			"name":"Casey",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":0
 			},
 			"clothing": [
 				"Tshirt",
@@ -41,7 +41,7 @@
 			"name":"Jason",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":0
 			},
 			"clothing": [
 				"Tshirt",
@@ -56,7 +56,7 @@
 			"name":"Mark",
 			"gender":"male",
 			"body": {
-				"breasts":"flat"
+				"breasts":0
 			},
 			"clothing": [
 				"Tshirt",

@@ -7,6 +7,7 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -53,7 +54,7 @@ public class Eve extends BasePersonality {
         Global.gainSkills(self);
         self.setTrophy(Item.EveTrophy);
         self.body.add(BreastsPart.d);
-        self.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG));
+        self.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)));
         self.body.add(PussyPart.generic);
         self.getMojo().setMax(120);
 

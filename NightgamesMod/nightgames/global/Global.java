@@ -1129,7 +1129,7 @@ public class Global {
 
         try (JsonWriter saver = new JsonWriter(new FileWriter(file))) {
             saver.setIndent("  ");
-            JsonUtils.gson.toJson(saveJson, saver);
+            JsonUtils.getGson().toJson(saveJson, saver);
         } catch (IOException | JsonIOException e) {
             System.err.println("Could not save file " + file + ": " + e.getMessage());
             e.printStackTrace();

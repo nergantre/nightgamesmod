@@ -22,20 +22,15 @@ import nightgames.characters.body.mods.PartMod;
 import nightgames.items.clothing.Clothing;
 
 public class JsonUtils {
-    public static Gson gson =
-                    new GsonBuilder().setPrettyPrinting()
-                                    .registerTypeAdapter(Clothing.class, new ClothingAdaptor())
-                                    .registerTypeAdapter(BodyPart.class, new BodyPartAdapter())
-                                    .registerTypeAdapter(PartMod.class, new PartModAdapter())
-                                    .create();
+    private static Gson gson = null;
 
     public static <T> Collection<T> collectionFromJson(JsonArray array, Class<T> clazz) {
         Type type = new ParameterizedCollectionType<>(clazz);
-        return gson.fromJson(array, type);
+        return getGson().fromJson(array, type);
     }
 
     public static JsonArray jsonFromCollection(Collection<?> collection) {
-        return gson.toJsonTree(collection).getAsJsonArray();
+        return getGson().toJsonTree(collection).getAsJsonArray();
     }
 
     /**
@@ -46,11 +41,11 @@ public class JsonUtils {
      */
     public static <K, V> Map<K, V> mapFromJson(JsonObject object, Class<K> keyClazz, Class<V> valueClazz) {
         Type type = new ParameterizedMapType<>(keyClazz, valueClazz);
-        return gson.fromJson(object, type);
+        return getGson().fromJson(object, type);
     }
 
     public static JsonObject JsonFromMap(Map<?, ?> map) {
-        return gson.toJsonTree(map).getAsJsonObject();
+        return getGson().toJsonTree(map).getAsJsonObject();
     }
 
     public static Optional<JsonElement> getOptional(JsonObject object, String key) {
@@ -79,4 +74,14 @@ public class JsonUtils {
         return parser.parse(reader);
     }
 
+    public static Gson getGson() {
+        if (gson == null) {
+            gson = new GsonBuilder().setPrettyPrinting()
+                            .registerTypeAdapter(Clothing.class, new ClothingAdaptor())
+                            .registerTypeAdapter(BodyPart.class, new BodyPartAdapter())
+                            .registerTypeAdapter(PartMod.class, new PartModAdapter())
+                            .create();
+        }
+        return gson;
+    }
 }

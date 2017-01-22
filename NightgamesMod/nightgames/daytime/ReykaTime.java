@@ -17,6 +17,7 @@ import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -55,7 +56,7 @@ public class ReykaTime extends BaseNPCTime {
             growCock.scene = "[Placeholder]<br/>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart(GenericCockPart.SIZE_BIG).applyMod(CockMod.incubus));
+                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.incubus));
                 return true;
             };
             options.add(growCock);
