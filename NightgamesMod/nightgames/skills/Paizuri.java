@@ -8,12 +8,16 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
 
 
 public class Paizuri extends Skill {
-
+    public Paizuri(String name, Character self) {
+        super(name, self);
+    }
+    
     public Paizuri(Character self) {
         super("Titfuck", self);
         addTag(SkillTag.positioning);
@@ -30,7 +34,7 @@ public class Paizuri extends Skill {
         return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable()
                         && c.getStance().paizuri(getSelf(), target) && c.getStance().front(getSelf()) && getSelf().canAct()
-                        && !c.getStance().inserted(target);
+                        && !c.getStance().inserted(target) && c.getStance().en != Stance.oralpin;
     }
 
     @Override
@@ -113,7 +117,10 @@ public class Paizuri extends Skill {
     @Override
     public String deal(Combat c, int damage, Result modifier, Character target) {
         StringBuilder b = new StringBuilder();
-        b.append("You squeeze their dick between your ");
+        b.append("You squeeze ");
+        b.append(target.possessivePronoun());
+        b.append(" dick between your ");
+        
         b.append(getSelf().body.getRandomBreasts().describe(getSelf()));
         if( getSelf().has(Trait.lactating))
         {
@@ -122,23 +129,24 @@ public class Paizuri extends Skill {
         b.append(". ");       
         
         if(getSelf().is(Stsflag.oiled)){
-            b.append("You rub your oiled tits up and down "
-                            + b.append(target.possessiveAdjective()) 
-                            + "'s shaft and teasingly lick the tip.");
-        }
-        else{
-            b.append("You rub them up and down "
-                            + b.append(target.possessiveAdjective())
-                            + "'s shaft and teasingly lick the tip.");
+            b.append("You rub your oiled tits up and down ");
+            b.append(target.possessivePronoun()) ;
+            b.append(" shaft and teasingly lick the tip.");
+        }else{
+            b.append("You rub them up and down ");
+            b.append(target.possessivePronoun());
+            b.append(" shaft and teasingly lick the tip.");
         }
         
         if (getSelf().has(Trait.temptingtits)) {
-            b.append(" Upon seeing your perfect tits around their cock "
-                             + b.append(target.getName())
-                            + "shudders with lust");
-            
+            b.append(" Upon seeing your perfect tits around ");
+            b.append(target.possessivePronoun());
+            b.append(" cock, ");
+            b.append(target.getName());
+            b.append(" shudders with lust");
+       
             if (getSelf().has(Trait.beguilingbreasts)) {
-                b.append(" and due to your beguiling nature, they can't help but drool at the show.");
+                b.append(" and due to your beguiling nature, " + target.possessiveAdjective() + " can't help drooling at the show.");
             }
             else  {
                 b.append(".");

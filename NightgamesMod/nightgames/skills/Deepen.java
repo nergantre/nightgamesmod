@@ -5,7 +5,6 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.status.Charmed;
 import nightgames.status.Enthralled;
 import nightgames.status.Lovestruck;
 import nightgames.status.Stsflag;

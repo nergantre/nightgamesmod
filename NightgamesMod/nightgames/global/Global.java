@@ -475,6 +475,7 @@ public class Global {
         getSkillPool().add(new SuccubusSurprise(ch));
         getSkillPool().add(new TemptressHandjob(ch));
         getSkillPool().add(new TemptressBlowjob(ch));
+        getSkillPool().add(new TemptressTitfuck(ch));
         getSkillPool().add(new TemptressRide(ch));
         getSkillPool().add(new TemptressStripTease(ch));
         getSkillPool().add(new Blindside(ch));
