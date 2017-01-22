@@ -104,7 +104,7 @@ public class SixNine extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c != bottom && c != bottom;
+        return false;
     }
 
     @Override

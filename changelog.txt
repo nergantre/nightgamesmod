@@ -1,3 +1,23 @@
+2.5.0.rc.2
+
+Bug fixes:
+- fixed some crash bugs relating to body part mods
+- fixed start configurations not loading correctly
+- fixed a bunch of scene/grammatical errors (thanks bronze chair)
+
+Minor/Balance?/Making things make sense:
+- kiss can no longer be used in the neutral position
+	- To compensate, it has been buffed slightly
+	- This actually was in the last patch, forgot about putting it into the patch notes
+- changed submissive hold to only be usable when having sex (you could use it in titfuck pin/oral pin, since now they are considered "inserted")
+- changed 69 stance to have the participants not able to "reach top".
+- removed facefuck/facesit's "reach top" requirement
+
+Things to look out for:
+- I've seen the text disappear at times with no crash. I haven't been able to consistently reproduce it unfortunately.
+	- Please try noting what was going on at the time/and or playing with the DEBUG_SCENE option turned on in the debug menu (credits -> debug)
+	- much appreciated :D
+
 2.5.0.rc.1
 
 Quality of Life:

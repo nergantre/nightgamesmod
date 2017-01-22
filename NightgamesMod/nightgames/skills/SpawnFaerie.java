@@ -48,12 +48,13 @@ public class SpawnFaerie extends Skill {
             switch (gender) {
                 case fairyfem:
                     c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyfem, power, ac).getSelf());
+                    break;
                 case fairymale:
                     c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairymale, power, ac).getSelf());
+                    break;
                 case fairyherm:
                 default:
                     c.addPet(getSelf(), new Fairy(getSelf(), Ptype.fairyherm, power, ac).getSelf());
-
             }
         } else {
             if (target.human()) {

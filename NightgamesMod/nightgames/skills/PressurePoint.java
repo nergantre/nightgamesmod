@@ -75,10 +75,10 @@ public class PressurePoint extends Skill {
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
         if (modifier == Result.miss) {
-            return Global.format("{self:SUBJECT-ACTION} reaches over to {other:name-possesive} lower body and {self:action:try} to drive {self:possesive} thumb into {other:possessive} stomach. "
+            return Global.format("{self:SUBJECT-ACTION} reaches over to {other:name-possessive} lower body and {self:action:try} to drive {self:possessive} thumb into {other:possessive} stomach. "
                             + "Afraid of the consequences, {self:pronoun-action:bat} {other:possessive} hands away immediately.", getSelf(), target);
         } else {
-            return Global.format("{self:SUBJECT-ACTION} reaches over to {other:name-possesive} lower body and {self:action:drive} {self:possessive} thumb into {other:possessive} soft stomach. {self:SUBJECT-ACTION:grin} and {self:action:say} in a cheesy voice, <i>\"You, have already cum.\"</i>", getSelf(), target);
+            return Global.format("{self:SUBJECT-ACTION} reaches over to {other:name-possessive} lower body and {self:action:drive} {self:possessive} thumb into {other:possessive} soft stomach. {self:SUBJECT-ACTION:grin} and {self:action:say} in a cheesy voice, <i>\"You, have already cum.\"</i>", getSelf(), target);
         }
     }
 }

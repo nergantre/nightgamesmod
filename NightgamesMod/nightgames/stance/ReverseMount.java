@@ -100,7 +100,7 @@ public class ReverseMount extends AbstractBehindStance {
     public int dominance() {
         return 2;
     }
-    
+
     @Override
     public int distance() {
         return 1;
@@ -109,8 +109,8 @@ public class ReverseMount extends AbstractBehindStance {
     @Override
     public void struggle(Combat c, Character struggler) {
         c.write(struggler, String.format("%s to gain a more dominant position, but with"
-                        + " %s straddling %s sitting on %s chest, there is nothing %s can do.",
-                        struggler.subjectAction("struggle"), top.subject(), struggler.directObject(),
+                        + " %s sitting on %s chest, there is nothing %s can do.",
+                        struggler.subjectAction("struggle"), top.subject(),
                         struggler.possessiveAdjective(), struggler.pronoun()));
         super.struggle(c, struggler);
     }

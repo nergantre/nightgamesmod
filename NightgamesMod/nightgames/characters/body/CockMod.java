@@ -40,11 +40,12 @@ public class CockMod extends PartMod {
     public static final CockMod enlightened = new CockMod("enlightened", 1.0, 1.2, .8);
     public static final List<CockMod> ALL_MODS = Arrays.asList(slimy, runic, blessed, incubus, primal, bionic, enlightened);
 
-    CockMod(String name, double hotness, double pleasure, double sensitivity) {
+    private CockMod(String name, double hotness, double pleasure, double sensitivity) {
         super(name, hotness, pleasure, sensitivity, 0);
     }
 
-    CockMod() {
+    // public constructor for adapter
+    public CockMod() {
         super("error", 0, 1, 1, 0);
     }
 

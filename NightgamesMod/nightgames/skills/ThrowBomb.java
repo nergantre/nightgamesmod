@@ -130,9 +130,8 @@ public class ThrowBomb extends Skill {
                 }
                 return Global.format(
                                 "{self:SUBJECT} takes out a small, round device and sticks it onto your chest."
-                                                + " Knowing {self:pronoun}, it would probably be best to get it off quickly.",
+                                                + " Knowing {self:direct-object}, it would probably be best to get it off quickly.",
                                 getSelf(), target);
         }
     }
-
 }

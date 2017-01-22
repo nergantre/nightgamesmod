@@ -246,7 +246,7 @@ class BodyConfiguration {
             }
 
             JsonUtils.getOptional(object, "pussy").ifPresent(modClass -> {
-                if (modClass.getAsString().equals("normal")) {
+                if (modClass.isJsonPrimitive() && modClass.getAsString().equals("normal")) {
                     config.pussy = Optional.of(PussyPart.generic);
                 } else {
                     PartMod pussyMod = JsonUtils.getGson().fromJson(modClass, PartMod.class);

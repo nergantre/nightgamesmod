@@ -27,7 +27,7 @@ public class FairyEnergize extends SimpleMasterSkill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             int m = Global.random(17, 24) + getSelf().getLevel() / 2;
             c.write(getSelf(), Global.format("{self:SUBJECT} flies around {other:name-do}, channeling energy into {other:direct-object}.", getSelf(), target));
-            target.buildMojo(c, m, getSelf().getName());
+            target.buildMojo(c, m, " (" +getSelf().getName()+ ")");
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT} flies around the edge of the fight looking for an opening.", getSelf(), target));
             return false;

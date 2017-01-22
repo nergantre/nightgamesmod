@@ -170,7 +170,7 @@ public class HeldOral extends AbstractFacingStance {
         Character opponent = getPartner(c, struggler);
         pleasureRandomCombination(c, struggler, opponent,
                         "{self:SUBJECT-ACTION:try} to peel {other:name-do} off your legs, but {other:pronoun-action:hold} on tightly. "
-                      + "After thoroughly exhausting {self:possessive} attempts, {other:pronoun-action:smile} smugly and gives {self:possesive} clit "
+                      + "After thoroughly exhausting {self:possessive} attempts, {other:pronoun-action:smile} smugly and gives {self:possessive} clit "
                       + "a victorious little lick.", 
     
                         "{self:SUBJECT-ACTION:try} to peel {other:name-do} off your legs, but {other:pronoun-action:hold} on tightly. "
@@ -184,7 +184,7 @@ public class HeldOral extends AbstractFacingStance {
         Character opponent = getPartner(c, escapee);
         pleasureRandomCombination(c, escapee, opponent,
                         "{self:SUBJECT-ACTION:try} to escape {other:name-possessive} grip on {self:possessive} waist, but {other:pronoun-action:hold} on tightly. "
-                      + "After thoroughly exhausting every angle, {self:pronoun} can only give up in defeat. {other:PRONOUN-ACTION:smile} smugly and gives {self:possesive} clit "
+                      + "After thoroughly exhausting every angle, {self:pronoun} can only give up in defeat. {other:PRONOUN-ACTION:smile} smugly and gives {self:possessive} clit "
                       + "a victorious little lick.", 
     
                         "{self:SUBJECT-ACTION:try} to peel {other:name-possessive} grip on {self:possessive} waist, but {other:pronoun-action:hold} on tightly. "
