@@ -70,7 +70,7 @@ public class PussyPart extends GenericBodyPart {
 
     @Override
     public String fullDescribe(Character c) {
-        return this.describe(c);
+        return Global.pickRandom(Arrays.asList("normal ", "ordinary ")).get() + this.describe(c);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PussyPart extends GenericBodyPart {
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = super.applyBonuses(self, opponent, target, damage, c);
-        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance()
+        if (self.canRespond() && (self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance()
                                                                        .vaginallyPenetrated(c, self)
                                                                        && target.isType("cock")) {
             String desc = "";
@@ -120,7 +120,7 @@ public class PussyPart extends GenericBodyPart {
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = super.applyReceiveBonuses(self, opponent, target, damage, c);
-        if (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) {
+        if (opponent.canRespond() && (opponent.has(Trait.pussyhandler) || opponent.has(Trait.anatomyknowledge)) && c.getStance().mobile(opponent)) {
             c.write(opponent,
                             Global.format("{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} pussy causes {self:subject} to shudder uncontrollably.",
                                             self, opponent));

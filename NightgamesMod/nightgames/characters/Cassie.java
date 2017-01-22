@@ -157,7 +157,7 @@ public class Cassie extends BasePersonality {
 
     @Override
     public void applyStrategy(NPC self) {
-        self.plan = Plan.hunting;
+        self.plan = Plan.retreating;
         self.mood = Emotion.confident;
         
         self.addPersonalStrategy(new OralStrategy());

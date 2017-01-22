@@ -56,7 +56,7 @@ public class Plasticized extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        Global.writeFormattedIfCombat(c, "{self:SUBJECT-ACTION:are|is} finally freed of {self:possessive} plastic prison!", affected, c.getOpponent(affected));
+        Global.writeFormattedIfCombat(c, "{self:SUBJECT-ACTION:are|is} finally freed of {self:possessive} plastic prison!", affected, other);
     }
 
     @Override

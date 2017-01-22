@@ -12,7 +12,9 @@ import nightgames.characters.Trait;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.skills.Skill;
+import nightgames.skills.damage.DamageType;
 import nightgames.status.InsertedStatus;
 
 public abstract class Position implements Cloneable {
@@ -38,15 +40,12 @@ public abstract class Position implements Cloneable {
         return 4;
     }
 
-    public int escape(Combat c, Character self) {
+    public int getEscapeMod(Combat c, Character self) {
+        int dc = 0;
         if (sub(self) && !mobile(self)) {
-            return -pinDifficulty(c, self) * Math.max(-5, 10 - time);
+            dc -= pinDifficulty(c, self) * Math.max(-5, 10 - time);
         }
-        return 0;
-    }
-
-    public void struggle() {
-        time += 2;
+        return dc;
     }
 
     public void decay(Combat c) {
@@ -415,7 +414,17 @@ public abstract class Position implements Cloneable {
     }
 
     public boolean reversable(Combat c) {
-        return reverse(c, false) == this;
+        return reverse(c, false) != this;
+    }
+
+    public void struggle(Combat c, Character struggler) {
+        time += 2;
+        Character partner = getPartner(c, struggler);
+        partner.weaken(c, (int) struggler.modifyDamage(DamageType.stance, partner, Global.random(6, 11)));
+    }
+
+    public void escape(Combat c, Character escapee) {
+        time += 2;
     }
 
     public boolean isPartFuckingPartInserted(Combat c, Character inserter, BodyPart stick, Character inserted, BodyPart hole) {

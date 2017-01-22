@@ -31,13 +31,12 @@ public class TentacleCling extends TentacleArmSkill {
         if (success) {
             c.write(PetCharacter.DUMMY, Global.format("A %s shoots out from behind {self:name-do}"
                             + " and wraps itself around {other:name-possessive} waist, restricting {other:possessive} movement.", owner, target, arm.getName()));
-            target.add(c, new TentacleBound(target, 75 + owner.get(Attribute.Slime), owner.nameOrPossessivePronoun() + " " + arm.getName(), 1));
+            target.add(c, new TentacleBound(target, 30 + 4 * Math.sqrt(owner.get(Attribute.Slime)), owner.nameOrPossessivePronoun() + " " + arm.getName(), 1));
         } else {
             c.write(PetCharacter.DUMMY, Global.format("A %s shoots out from behind {self:name-do}"
-                            + " and attempts to wrap itself around {other:name-possessive}. "
+                            + " and attempts to wrap itself around {other:name-possessive} waist. "
                             + "However, {other:pronoun-action:manage} to twist away just in time.", owner, target, arm.getName()));
         }
-        
         return false;
     }
 

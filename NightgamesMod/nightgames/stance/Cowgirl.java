@@ -25,6 +25,9 @@ public class Cowgirl extends FemdomSexStance {
 
     @Override
     public String image() {
+        if (bottom.useFemalePronouns()) {
+            return "cowgirl_futa.jpg";
+        }
         return "cowgirl.jpg";
     }
 

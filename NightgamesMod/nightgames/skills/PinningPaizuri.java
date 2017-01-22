@@ -29,16 +29,14 @@ public class PinningPaizuri extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance()
-                .mobile(getSelf())
-                        && c.getStance()
-                            .prone(target)
-                        && target.crotchAvailable() && getSelf().canAct() && !c.getStance()
-                                                                               .connected(c)
-                        && c.getStance().en != Stance.paizuripin
-                        && getSelf().hasBreasts() && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
-                        && target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable();
-                        
+        return c.getStance().mobile(getSelf())
+                && c.getStance().dom(getSelf())
+                && c.getStance().facing(getSelf(), target)
+                && target.crotchAvailable() && getSelf().canAct()
+                && !c.getStance().connected(c)
+                && c.getStance().en != Stance.paizuripin
+                && getSelf().hasBreasts() && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
+                && target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable();                        
     }
 
     @Override

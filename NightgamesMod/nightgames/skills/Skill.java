@@ -77,6 +77,9 @@ public abstract class Skill {
             // if the skill is restricted by status/stance, do not check for
             // requirements
             for (Skill sk : skills) {
+                if (sk.getTags(c).contains(SkillTag.mean) && user.has(Trait.softheart)) {
+                    continue;
+                }
                 if (!sk.requirements(c, target != null? target : sk.getDefaultTarget(c))) {
                     noReqs.add(sk);
                 }

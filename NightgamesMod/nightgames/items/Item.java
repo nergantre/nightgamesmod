@@ -10,6 +10,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
+import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
@@ -19,6 +20,8 @@ import nightgames.characters.body.mods.DemonicMod;
 import nightgames.characters.body.mods.TentacledMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
+import nightgames.requirements.Requirement;
+import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.Abuff;
 import nightgames.status.Alluring;
 import nightgames.status.Distorted;
@@ -108,6 +111,7 @@ public enum Item implements Loot {
                                                             return !user.has(Trait.succubus);
                                                         }
                                                     })),
+                    RequirementShortcuts.none(),
                     15),
     EmptyBottle("Empty Bottle", 100, "A small flask that can be used to collect liquids.", "an "),
     HolyWater("\"Holy Water\"", 100, "A small flask filled with \"Holy Water\"", "a bottle of ",
@@ -142,11 +146,13 @@ public enum Item implements Loot {
                                                             return user.isDemonic();
                                                         }
                                                     })),
+                    RequirementShortcuts.none(),
                     15),
     nectar("Nectar", 100, "A glob of amber nectar", "a glob of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
                                     (ItemEffect) new ResourceEffect("heal", 100), new ResourceEffect("build", 50),
                                     new ResourceEffect("arouse", 10)))),
+                    RequirementShortcuts.none(),
                     15),
     ExtremeAphrodisiac("Extreme Aphrodisiac", 100, "A succubus's pussy juices", "a bottle of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
@@ -154,22 +160,26 @@ public enum Item implements Loot {
                                                     new Trance(Global.noneCharacter(), 5)),
                                     new BuffEffect("drink", "throw", new InducedEuphoria(Global.noneCharacter())),
                                     new ResourceEffect("arouse", 50)))),
+                    RequirementShortcuts.none(),
                     5),
     RawAether("Raw Aether", 100, "Raw Aether collected from an enchanted pussy", "a bottle of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
                                     (ItemEffect) new BuffEffect("drink", "throw",
                                                     new Energized(Global.noneCharacter(), 25)),
                                     new ResourceEffect("build", 50)))),
+                    RequirementShortcuts.none(),
                     25),
     LubricatingOils("Lubricating Oils", 100, "Artificial lubricant collected from a cybernetic pussy", "a bottle of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
                                     (ItemEffect) new BuffEffect("drink", "throw", new Oiled(Global.noneCharacter())),
                                     new BuffEffect("drink", "throw",
                                                     new Horny(Global.noneCharacter(), 15, 10, "Aphrodisiac Oils"))))),
+                    RequirementShortcuts.none(),
                     25),
     FeralMusk("Feral Musk", 100, "Musk collected from a feral pussy", "a bottle of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList((ItemEffect) new BuffEffect("drink",
                                     "throw", new Frenzied(Global.noneCharacter(), 7))))),
+                    RequirementShortcuts.none(),
                     7),
     BioGel("Bio Gel", 100, "Goo collected from a slime-girl", "a bottle of ",
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
@@ -177,6 +187,7 @@ public enum Item implements Loot {
                                                     "throw", new FluidAddiction(Global.noneCharacter(),
                                                                     Global.noneCharacter(), 2, 10)),
                                     new ResourceEffect("wprestore", 500)))),
+                    RequirementShortcuts.none(),
                     10),
     Ward("Dark Ward", 100, "", "a "),
     FaeScroll("Summoning Scroll", 150, "", "a "),
@@ -187,57 +198,74 @@ public enum Item implements Loot {
     TinyDraft("Tiny Draft", 100, "Temporarily shrink a penis", "a ",
                     Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
                                     BodyModEffect.Effect.downgrade)),
+                    (c, self, target) -> self.body.getCockAbove(GenericCockPart.SIZE_TINY) != null,
                     15),
     PriapusDraft("Priapus Draft", 150, "Temporarily grow a penis", "a ",
                     Collections.singleton((ItemEffect) new BodyModEffect("drink", "throw", new GenericCockPart(GenericCockPart.SIZE_AVERAGE),
                                     BodyModEffect.Effect.growplus)),
+                    (c, self, target) -> !self.hasDick() || self.body.getCockBelow(GenericCockPart.SIZE_MASSIVE) != null,
                     15),
     BustDraft("Bust Draft", 80, "Temporarily grow breasts", "a ", Collections.singleton(
                     (ItemEffect) new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus)),
+                    (c, self, target) -> self.body.getBreastsBelow(BreastsPart.maximumSize().size) != null,
                     15),
-    FemDraft("Fem Draft", 150, "Temporarily grow a pussy", "a ", Collections.singleton(
+    FemDraft("Fem Draft", 150, "Temporarily grow a pussy", "a ", Arrays.asList(
+                    (ItemEffect) new BodyModEffect("drink", "throw", BreastsPart.c, BodyModEffect.Effect.growplus),
                     (ItemEffect) new BodyModEffect("drink", "throw", PussyPart.generic, BodyModEffect.Effect.replace)),
+                    (c, self, target) -> !self.hasPussy(),
                     15),
     Lactaid("Lactaid", 100, "Temporarily start lactating", "",
-                    Arrays.asList((ItemEffect) new AddTraitEffect("drink", "throw", Trait.lactating)), 15),
-    SuccubusDraft("Succubus Draft", 300, "Temporarily turn into a succubus", "a ",
+                    Arrays.asList((ItemEffect) new AddTraitEffect("drink", "throw", Trait.lactating)),
+                    RequirementShortcuts.rev(RequirementShortcuts.noTrait(Trait.lactating)),
+                    15),
+    SuccubusDraft("Succubus Draft", 600, "Temporarily turn into a succubus", "a ",
                     Arrays.asList((ItemEffect) new BuffEffect("drink", "throw",
                                     new Abuff(Global.noneCharacter(), Attribute.Dark, 10, 15)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 15)),
                     new AddTraitEffect("drink", "throw", Trait.addictivefluids),
                     new AddTraitEffect("drink", "throw", Trait.succubus),
                     new PartModEffect("drink", "throw", "pussy", DemonicMod.INSTANCE, 15),
+                    new PartModEffect("drink", "throw", "cock", CockMod.incubus, 15),
                     new BodyModEffect("drink", "throw", EarPart.pointed, BodyModEffect.Effect.replace),
                     new BodyModEffect("drink", "throw", WingsPart.demonic, BodyModEffect.Effect.replace),
                     new BodyModEffect("drink", "throw", TailPart.demonic, BodyModEffect.Effect.replace),
-                    new BodyModEffect("drink", "throw", BreastsPart.dd, BodyModEffect.Effect.growplus)), 15),
-    TentacleTonic("Tentacle Tonic", 250, "Temporarily grow tentacles", "a ",
+                    new BodyModEffect("drink", "throw", BreastsPart.dd, BodyModEffect.Effect.growplus)),
+                    RequirementShortcuts.rev(RequirementShortcuts.noTrait(Trait.succubus)),
+                    15),
+    TentacleTonic("Tentacle Tonic", 600, "Temporarily grow tentacles", "a ",
                     Arrays.asList((ItemEffect) new GrowTentaclesEffect("drink", "throw", 15),
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .5),
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .25),
                                     new MaybeEffect(new GrowTentaclesEffect("drink", "throw", 15), .1),
-                                    new MaybeEffect(new PartModEffect("drink", "throw", "pussy", TentacledMod.INSTANCE, 15), .3)),
+                                    new MaybeEffect(new PartModEffect("drink", "throw", "pussy", TentacledMod.INSTANCE, 15),.3)),
+                    RequirementShortcuts.none(),
                     15),
-    JuggernautJuice("Juggernaut Juice", 250, "Makes you nigh invulnerable.", "a ",
+    JuggernautJuice("Juggernaut Juice", 350, "Makes you nigh invulnerable.", "a ",
                     Arrays.asList((ItemEffect) new BuffEffect("drink", "throw",
                                     new Shield(Global.noneCharacter(), .5, 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, 5, 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, -5, 10)),
-                    new RemoveTraitEffect("drink", "throw", Trait.achilles)), 10),
-    BewitchingDraught("Bewitching Draught", 250, "Makes you inhumanly alluring.", "a ",
+                    new RemoveTraitEffect("drink", "throw", Trait.achilles)),
+                    RequirementShortcuts.rev(RequirementShortcuts.attribute(Attribute.Cunning, 5)),
+                    10),
+    BewitchingDraught("Bewitching Draught", 350, "Makes you inhumanly alluring.", "a ",
                     Arrays.asList((ItemEffect) new BuffEffect("drink", "throw",
                                     new Alluring(Global.noneCharacter(), 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, 5, 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Power, -5, 10)),
                     new AddTraitEffect("drink", "throw", Trait.RawSexuality),
-                    new AddTraitEffect("drink", "throw", Trait.augmentedPheromones)), 10),
+                    new AddTraitEffect("drink", "throw", Trait.augmentedPheromones)),
+                    RequirementShortcuts.rev(RequirementShortcuts.attribute(Attribute.Power, 5)),
+                    10),
     TinkersMix("TinkersMix", 250, "Not sure if it's a good idea to drink this...", "a ",
                     Arrays.asList((ItemEffect) new BuffEffect("drink", "throw",
                                     new Distorted(Global.noneCharacter(), 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Cunning, 5, 10)),
                     new BuffEffect("drink", "throw", new Abuff(Global.noneCharacter(), Attribute.Seduction, -5, 10)),
                     new AddTraitEffect("drink", "throw", Trait.lacedjuices),
-                    new AddTraitEffect("drink", "throw", Trait.aikidoNovice)), 10),
+                    new AddTraitEffect("drink", "throw", Trait.aikidoNovice)),
+                    RequirementShortcuts.rev(RequirementShortcuts.attribute(Attribute.Seduction, 5)),
+                    10),
     Flag("Flag", 0, "A small red ribbon. Worth points.", "The "),
     Blindfold("Blindfold", 50, "A blindfold one might use to sleep.", "a "),
     Needle("Drugged Needle", 10, "A thin needle coated in a mixture of aphrodisiacs and sedatives", "a "),
@@ -253,6 +281,7 @@ public enum Item implements Loot {
     private int price;
     private List<ItemEffect> effect;
     int duration;
+    private Requirement req;
 
     /**
      * @return the Item name
@@ -282,16 +311,17 @@ public enum Item implements Loot {
     }
 
     private Item(String name, int price, String desc, String prefix) {
-        this(name, price, desc, prefix, Collections.singleton(new ItemEffect()), 0);
+        this(name, price, desc, prefix, Collections.singleton(new ItemEffect()), RequirementShortcuts.none(), 0);
     }
 
-    private Item(String name, int price, String desc, String prefix, Collection<ItemEffect> effect, int duration) {
+    private Item(String name, int price, String desc, String prefix, Collection<ItemEffect> effect, Requirement req, int duration) {
         this.name = name;
         this.price = price;
         this.desc = desc;
         this.prefix = prefix;
         this.effect = new ArrayList<ItemEffect>(effect);
         this.duration = duration;
+        this.req = req;
     }
 
     public List<ItemEffect> getEffects() {
@@ -305,11 +335,8 @@ public enum Item implements Loot {
     public ItemAmount amount(int amount) {
         return new ItemAmount(this, amount);
     }
-    
-    public boolean usable(Character by) {
-        switch (this) {
-            case SuccubusDraft: return !by.has(Trait.succubus);
-            default: return true;
-        }
+
+    public boolean usable(Combat c, Character self, Character target) {
+        return req.meets(c, self, target);
     }
 }

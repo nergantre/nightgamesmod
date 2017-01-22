@@ -2,7 +2,6 @@ package nightgames.stance;
 
 import java.util.Collections;
 import java.util.List;
-
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -129,5 +128,31 @@ public class HeldPaizuri extends AbstractFacingStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    private void pleasureStruggle(Combat c, Character self, Character opponent, String cockString) {
+        int targM = Global.random(6, 11);
+        c.write(self, Global.format(cockString, self, opponent));
+        self.body.pleasure(opponent, opponent.body.getRandomBreasts(), self.body.getRandomCock(), targM, c);
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        Character opponent = getPartner(c, struggler);
+        pleasureStruggle(c, struggler, opponent,
+                        "{self:SUBJECT-ACTION:try} to remove {self:posssessive} cock from between {other:name-possessive} impressive cleavage, but {other:pronoun-action:have} other ideas. "
+                      + "Using {other:possessive} hands to press her soft breasts together, the impish {other:girl} follows {self:possessive} attempts to escape and {other:action:manage} "
+                      + "to titfuck {self:direct-object} even as {self:pronoun-action:struggle}.");
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        Character opponent = getPartner(c, escapee);
+        pleasureStruggle(c, escapee, opponent,
+                        "{self:SUBJECT-ACTION:try} to sneak out of {other:name-possessive} breast-press, but {other:pronoun-action:have} other ideas. "
+                      + "The well-endowed {other:girl} presses {other:possessive} chest against {self:possessive} crotch and slides it back and forth around {self:possessive} shaft. "
+                      + "Not only does it cut off {self:possessive} escape, but it also has the beneficial consequence of arousing the hell out of {self:direct-object}.");
+        super.escape(c, escapee);
     }
 }

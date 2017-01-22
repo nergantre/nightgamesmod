@@ -23,4 +23,8 @@ public abstract class ArmSkill {
     }
     
     public abstract boolean resolve(Combat c, Arm arm, Character owner, Character target);
+    
+    protected int bonusChance() {
+        return 0;
+    }
 }

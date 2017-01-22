@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.mods.PartMod;
@@ -25,6 +26,11 @@ public class TentacleImpaler extends TentacleArm {
     @Override
     List<ArmSkill> getSkills(Combat c, Character owner, Character target) {
         return Collections.singletonList(new TentacleFuck());
+    }
+
+    @Override
+    int attackOdds(Combat c, Character owner, Character target) {
+        return (int) Math.min(60, 5 + owner.get(Attribute.Slime) * .6);
     }
 
     @Override

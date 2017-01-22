@@ -1136,6 +1136,14 @@ public abstract class Character extends Observable implements Cloneable {
         return false;
     }
 
+    public boolean removeTemporarilyAddedTrait(Trait t) {
+        if (temporaryAddedTraits.containsKey(t)) {
+            temporaryAddedTraits.remove(t);
+            return true;
+        }
+        return false;
+    }
+
     public boolean removeTemporaryTrait(Trait t, int duration) {
         if (temporaryRemovedTraits.containsKey(t)) {
             temporaryRemovedTraits.put(t, Math.max(duration, temporaryRemovedTraits.get(t)));
@@ -1420,7 +1428,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean stunned() {
         for (Status s : getStatuses()) {
-            if (s.flags().contains(Stsflag.stunned)) {
+            if (s.flags().contains(Stsflag.stunned) || s.flags().contains(Stsflag.falling)) {
                 return true;
             }
         }
@@ -1483,6 +1491,9 @@ public abstract class Character extends Observable implements Cloneable {
         if (has(Trait.freeSpirit)) {
             total += 5;
         }
+        if (has(Trait.Slippery)) {
+            total += 10;
+        }
         if (from != null) {
             if (from.has(Trait.Clingy)) {
                 total -= 5;
@@ -1495,21 +1506,14 @@ public abstract class Character extends Observable implements Cloneable {
             total += 5;
         }
         if (c != null) {
-            int stanceMod = c.getStance().escape(c, this);
+            int stanceMod = c.getStance().getEscapeMod(c, this);
             if (stanceMod < 0) {
-                total += stanceMod;
+                if (bound()) {
+                    total += stanceMod / 2;
+                } else {
+                    total += stanceMod;
+                }
             }
-        }
-        return total;
-    }
-
-    public int escape(Combat c, Character from) {
-        int total = getEscape(c, from);
-        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
-            System.out.println("Escape: " + total);
-        }
-        if (c.getStance().escape(c, this) < 0) {
-            c.getStance().struggle();
         }
         return total;
     }
@@ -1710,7 +1714,7 @@ public abstract class Character extends Observable implements Cloneable {
                 pet.arouse(amount, c, Global.format("({self:master}'s orgasm)", this, opponent));
                 pet.doOrgasm(c, pet, null, null);
             }
-            c.setStance(new Neutral(this, opponent));
+            c.setStance(new Neutral(this, c.getOpponent(this)));
             if (!checkOrgasm()) {
                 return;
             } else {
@@ -1855,9 +1859,15 @@ public abstract class Character extends Observable implements Cloneable {
         if (c.getStance().inserted(this) && !has(Trait.strapped)) {
             Character partner = c.getStance().getPenetratedCharacter(c, this);
             if (times == 1) {
+                String hole = "pulsing hole";
+                if (opponentPart != null && opponentPart.isType("breasts")) {
+                    hole = "cleavage";
+                } else if (opponentPart != null && opponentPart.isType("mouth")) {
+                    hole = "hungry mouth";
+                }
                 c.write(this, Global.format(
-                                "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:name-do}. In no time, {self:possessive} hot seed spills into {other:possessive} pulsing hole.</b>",
-                                this, partner));
+                                "<b>{self:SUBJECT-ACTION:tense|tenses} up as {self:possessive} hips wildly buck against {other:name-do}. In no time, {self:possessive} hot seed spills into {other:possessive} %s.</b>",
+                                this, partner, hole));
             } else {
                 c.write(this, Global.format(
                                 "<b>{other:NAME-POSSESSIVE} devilish orfice does not let up, and {other:possessive} intense actions somehow force {self:name-do} to cum again instantly.</b>",
@@ -2275,13 +2285,13 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean spotCheck(Character checked) {
         int dc = checked.get(Attribute.Cunning) / 3;
-        if (state == State.hidden) {
+        if (checked.state == State.hidden) {
             dc += (checked.get(Attribute.Cunning) * 2 / 3) + 20;
         }
-        if (has(Trait.Sneaky)) {
+        if (checked.has(Trait.Sneaky)) {
             dc += 20;
         }
-        dc = dc * 5 / Math.max(1, get(Attribute.Perception));
+        dc -= dc * 5 / Math.max(1, get(Attribute.Perception));
         return check(Attribute.Cunning, dc);
     }
 
@@ -2821,6 +2831,12 @@ public abstract class Character extends Observable implements Cloneable {
         return null;
     }
 
+    // terrible code? who me? nahhhhh.
+    @SuppressWarnings("unchecked")
+    public <T extends Status> Collection<T> getStatusOfClass(Class<T> clazz) {
+        return status.stream().filter(s -> s.getClass().isInstance(clazz)).map(s -> (T)s).collect(Collectors.toList());
+    }
+
     public List<InsertedStatus> getInsertedStatus() {
         return status.stream()
                         .filter(status -> status instanceof InsertedStatus)
@@ -2877,7 +2893,7 @@ public abstract class Character extends Observable implements Cloneable {
         return false;
     }
 
-    public void endofbattle() {
+    public void endofbattle(Combat c) {
         for (Status s : status) {
             if (!s.lingering()) {
                 removelist.add(s);
@@ -2895,6 +2911,9 @@ public abstract class Character extends Observable implements Cloneable {
         }
         if (has(ClothingTrait.higherheels)) {
             setFlag("heelsTraining", getFlag("heelsTraining") + 1);
+        }
+        if (is(Stsflag.disguised) || has(Trait.slime)) {
+            purge(c);
         }
     }
 

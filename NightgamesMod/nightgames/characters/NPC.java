@@ -93,10 +93,17 @@ public class NPC extends Character {
     @Override
     public String describe(int per, Combat c) {
         String description = ai.describeAll(c, this);
+        boolean wroteStatus = false;
         for (Status s : status) {
-            description = description + "<br/>" + s.describe(c);
+            String statusDesc = s.describe(c);
+            if (!statusDesc.isEmpty()) {
+                description = description + statusDesc + "<br/>";
+                wroteStatus = true;
+            }
         }
-        description = description + "<br/><br/>";
+        if (wroteStatus) {
+            description += "<br/>";
+        }
         description = description + outfit.describe(this);
         description = description + observe(per);
         description = description + c.getCombatantData(this).getManager().describe(this);
@@ -683,7 +690,7 @@ public class NPC extends Character {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target), this, true);
+                        c.setStance(new Neutral(this, c.getOpponent(this)), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
@@ -859,7 +866,7 @@ public class NPC extends Character {
     @Override
     public String getPortrait(Combat c) {
         Disguised disguised = (Disguised) getStatus(Stsflag.disguised);
-        if (disguised != null) {
+        if (disguised != null && !c.isEnded()) {
             return disguised.getTarget().ai.image(c);
         }
         return ai.image(c);
@@ -930,7 +937,6 @@ public class NPC extends Character {
         moodSwing();
         decayMood();
         update();
-        notifyObservers();
     }
 
     public Map<String, List<CharacterLine>> getLines() {

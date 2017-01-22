@@ -29,7 +29,7 @@ public class TentacleInjectAphrodisiac extends TentacleArmSkill {
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Slime);
 
         if (success) {
-            c.write(owner, Global.format("{self:NAME-POSSESSIVE} tentacle with a needle-like tip makes a sudden motion and comes flying at {other:name-do}. "
+            c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} tentacle with a needle-like tip makes a sudden motion and comes flying at {other:name-do}. "
                             + "With no time to dodge, {other:pronoun} can only yelp in pain at the sudden prick of a hypodermic needle penetrating {other:possessive} skin. "
                             + "{other:SUBJECT} quickly {other:action:pull} the tentacle off {other:possessive} arm, but by then it's too late: an unnatural heat rips through {other:possessive} body, "
                             + "causing {other:direct-object} to drop to {other:possessive} knees.", owner, target));

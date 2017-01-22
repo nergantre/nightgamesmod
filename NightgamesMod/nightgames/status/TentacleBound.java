@@ -7,7 +7,7 @@ import nightgames.characters.Character;
 public class TentacleBound extends Bound {
     private int stacks = 0;
 
-    public TentacleBound(Character affected, float dc, String source, int stacks) {
+    public TentacleBound(Character affected, double dc, String source, int stacks) {
         super("Tentacle Bound", affected, dc, source, null);
         flag(Stsflag.tentacleBound);
     }

@@ -12,7 +12,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.pet.CharacterPet;
 import nightgames.pet.Pet;
-import nightgames.skills.petskills.SlimeParasite;
+import nightgames.skills.petskills.SlimeCloneParasite;
 
 public class Divide extends Skill {
     public Divide(Character self) {
@@ -77,7 +77,7 @@ public class Divide extends Skill {
             return pet;
         }
         pet.getSelf().add(Trait.MindlessClone);
-        pet.getSelf().getSkills().add(new SlimeParasite(pet.getSelf()));
+        pet.getSelf().getSkills().add(new SlimeCloneParasite(pet.getSelf()));
         return pet;
 
     }

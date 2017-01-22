@@ -29,7 +29,7 @@ public class TentacleInjectVenom extends TentacleArmSkill {
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Slime);
 
         if (success) {
-            c.write(owner, Global.format("{self:NAME-POSSESSIVE} injector tentacle shoots forward and embeds itself in {other:name-possessive} arm. "
+            c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} injector tentacle shoots forward and embeds itself in {other:name-possessive} arm. "
                             + "{other:pronoun-action:yelp} and {other:action:pull} it out straight away. Unfortunately, "
                             + "{other:pronoun} already {other:action:start} to feel sluggish as {other:pronoun-action:realize} "
                             + "{other:pronoun-action:have} been poisoned.", owner, target));

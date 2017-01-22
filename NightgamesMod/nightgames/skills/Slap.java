@@ -17,7 +17,6 @@ public class Slap extends Skill {
 
     public Slap(Character self) {
         super("Slap", self);
-        addTag(SkillTag.mean);
         addTag(SkillTag.hurt);
         addTag(SkillTag.positioning);
         addTag(SkillTag.staminaDamage);

@@ -16,8 +16,8 @@ import nightgames.pet.PetCharacter;
 import nightgames.skills.Skill;
 import nightgames.skills.Tactics;
 
-public class SlimeParasite extends SimpleEnemySkill {
-    public SlimeParasite(Character self) {
+public class SlimeCloneParasite extends SimpleEnemySkill {
+    public SlimeCloneParasite(Character self) {
         super("Parasitism", self);
         addTag(SkillTag.debuff);
     }
@@ -33,7 +33,6 @@ public class SlimeParasite extends SimpleEnemySkill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-
         return super.requirements(c, user, target) && user instanceof PetCharacter && ((PetCharacter)user).getSelf().owner().has(Trait.MimicBodyPart);
     }
 
@@ -65,7 +64,7 @@ public class SlimeParasite extends SimpleEnemySkill {
 
     @Override
     public Skill copy(Character user) {
-        return new SlimeParasite(user);
+        return new SlimeCloneParasite(user);
     }
 
     @Override

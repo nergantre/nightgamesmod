@@ -47,9 +47,9 @@ public class DemonicMod extends PartMod {
                                 "Since %s had focused so much of %s in %s %s, there is much more for %s to take.",
                                 opponent.subject(), opponent.reflectivePronoun(), opponent.possessiveAdjective(),
                                 target.describe(opponent), self.subject()));
-                strength = 10 + self.get(Attribute.Dark);
+                strength = Global.random(20, 31);
             } else {
-                strength = 10 + self.get(Attribute.Dark) / 2;
+                strength = Global.random(10, 21);
             }
             strength = (int) self.modifyDamage(DamageType.drain, opponent, strength);
             opponent.drain(c, self, strength);

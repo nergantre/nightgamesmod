@@ -107,12 +107,8 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
 
     @Override
     public String describe(Combat c) {
-        if (top.human()) {
-            return "";
-        } else {
             return String.format("%s is fucking %s ass while %s pounding away at %s pussy.",
                             top.subject(), bottom.nameOrPossessivePronoun(), domSexCharacter(c).subjectAction("are", "is"), bottom.possessiveAdjective());
-        }
     }
 
     @Override
@@ -122,10 +118,10 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
 
     @Override
     public String image() {
-        if (top.useFemalePronouns() || domSexCharacter.useFemalePronouns()) {
-            return "ThreesomeMFMDoublePenFuta.jpg";
+        if (!top.useFemalePronouns()) {
+            return "ThreesomeMFMDoublePen.jpg";
         }
-        return "ThreesomeMFMDoublePen.jpg";
+        return "ThreesomeMFMDoublePenFuta.jpg";
     }
 
     @Override

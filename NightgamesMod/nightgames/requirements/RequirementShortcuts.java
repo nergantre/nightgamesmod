@@ -9,6 +9,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Result;
 import nightgames.items.Item;
 import nightgames.items.ItemAmount;
+import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
 
 /**
@@ -67,6 +68,13 @@ public class RequirementShortcuts {
         return new NoneRequirement();
     }
 
+    public static Requirement buffedAttLessThan(Attribute att, int amount) {
+        return (c, self, other) -> {
+            int buff = self.getStatusOfClass(Abuff.class).stream().filter(abuff -> abuff.getModdedAttribute().equals(att)).mapToInt(abuff -> abuff.value()).sum();
+            return buff < amount;
+        };
+    }
+
     public static NotRequirement not(Requirement subReq) {
         return new NotRequirement(subReq);
     }
@@ -117,6 +125,10 @@ public class RequirementShortcuts {
 
     public static TraitRequirement trait(Trait trait) {
         return new TraitRequirement(trait);
+    }
+
+    public static NotRequirement noTrait(Trait trait) {
+        return not(trait(trait));
     }
 
     public static WinningRequirement winning() {

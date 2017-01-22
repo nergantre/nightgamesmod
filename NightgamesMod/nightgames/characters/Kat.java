@@ -370,6 +370,18 @@ public class Kat extends BasePersonality {
                             + "stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She "
                             + "looks a bit timid, but there's a gleam of desire in her eyes.";
         });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "You don't even think Kat notices your meager strength draining into her much larger pool as she passionately fucks you in her bestial lust. <i>\"Nyahaha! Can't stop... WONT stop!\"</i>";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "Your eyes widen as you feel your experience and training leave you and enter Kat's hungry body alongside your climax. "
+                                + "Kat however doesn't seem to really know what is going on, <i>\"Meowrrrr... That feels <b>REALLY</b> gooooodd... mmm...\"</i>";
+            } else {
+                String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
+                return "The sexy kitty doesn't pause for even a second as you cum your life force into her gluttonous " + part + ". <i>Aahh ahh! You're delicious nyaa!</i>";
+            }
+        });
     }
 
     @Override

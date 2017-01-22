@@ -109,7 +109,7 @@ public class Anilingus extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return 75;
+        return !c.getStance().isBeingFaceSatBy(c, getSelf(), target) && c.getStance().reachTop(target)? 75 : 200;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Charmed extends DurationStatus {
     @Override
     public String describe(Combat c) {
         if (affected.human()) {
-            return "You feel an irresistible attraction to " + c.getOpponent(affected).directObject() + " and can't imagine harming "+c.getOpponent(affected).getName()+".";
+            return "You feel an irresistible attraction to " + c.getOpponent(affected).nameDirectObject() + " and can't imagine harming "+c.getOpponent(affected).directObject()+".";
         } else {
             return affected.getName() + " is looking at "+c.getOpponent(affected).nameDirectObject()
                             +" like a lovestruck teenager.";

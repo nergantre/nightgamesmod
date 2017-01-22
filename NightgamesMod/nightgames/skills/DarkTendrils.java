@@ -40,7 +40,7 @@ public class DarkTendrils extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (Global.random(2) == 1) {
                 writeOutput(c, Result.normal, target);
-                target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Dark), 55), "shadows"));
+                target.add(c, new Bound(target, 35 + 2 * Math.sqrt(getSelf().get(Attribute.Dark)), "shadows"));
                 target.add(c, new Falling(target));
             } else if (getSelf().check(Attribute.Dark, target.knockdownDC() - getSelf().getMojo().get())) {
                 writeOutput(c, Result.weak, target);

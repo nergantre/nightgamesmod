@@ -119,6 +119,7 @@ public class Player extends Character {
     public void setGrowth() {
         getGrowth().stamina = 2;
         getGrowth().arousal = 6;
+        getGrowth().willpower = .4f;
         getGrowth().bonusStamina = 1;
         getGrowth().bonusArousal = 2;
         getGrowth().attributes = new int[]{2, 3, 3, 3};
@@ -253,6 +254,7 @@ public class Player extends Character {
         gui.message("You run into <b>" + opponent.nameDirectObject()
                         + "</b> and you both hesitate for a moment, deciding whether to attack or retreat.");
         assessOpponent(opponent);
+        gui.message("<br/>");
         gui.promptFF(enc, opponent);
     }
 
@@ -301,6 +303,8 @@ public class Player extends Character {
         gui.message("You spot <b>" + opponent.nameDirectObject()
                         + "</b> but she hasn't seen you yet. You could probably catch her off guard, or you could remain hidden and hope she doesn't notice you.");
         assessOpponent(opponent);
+        gui.message("<br/>");
+
         gui.promptAmbush(enc, opponent);
     }
 
@@ -539,6 +543,8 @@ public class Player extends Character {
                             + "</b> skinny dipping in the pool. She hasn't noticed you yet. It would be pretty easy to catch her off-guard.");
         }
         assessOpponent(target);
+        gui.message("<br/>");
+
         gui.promptShower(encounter, target);
     }
 
@@ -622,6 +628,8 @@ public class Player extends Character {
         Global.gui()
               .message("Do you want to take the opportunity to ambush <b>" + target.getName() + "</b>?");
         assessOpponent(target);
+        gui.message("<br/>");
+
         gui.promptOpportunity(enc, target, trap);
     }
 
@@ -660,7 +668,7 @@ public class Player extends Character {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target), this, true);
+                        c.setStance(new Neutral(this, c.getOpponent(this)), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),

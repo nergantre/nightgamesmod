@@ -1,7 +1,9 @@
 package nightgames.stance;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
@@ -131,7 +133,7 @@ public class HeldOral extends AbstractFacingStance {
         }
         return 2;
     }
-    
+
     @Override
     public int dominance() {
         return 3;
@@ -140,5 +142,54 @@ public class HeldOral extends AbstractFacingStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    private void pleasureRandomCombination(Combat c, Character self, Character opponent, String pussyString, String cockString) {
+        int targM = Global.random(6, 11);
+        List<Runnable> possibleActions = new ArrayList<>();
+        if (self.hasPussy()) {
+            possibleActions.add(() -> {
+                c.write(self, Global.format(pussyString, self, opponent));
+                self.body.pleasure(opponent, opponent.body.getRandom("mouth"), self.body.getRandomPussy(), targM, c);
+            });
+        }
+        if (self.hasDick()) {
+            possibleActions.add(() -> {
+                c.write(self, Global.format(cockString, self, opponent));
+                self.body.pleasure(opponent, opponent.body.getRandom("mouth"), self.body.getRandomCock(), targM, c);
+            });
+        }
+        Optional<Runnable> action = Global.pickRandom(possibleActions);
+        if (action.isPresent()) {
+            action.get().run();
+        }
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        Character opponent = getPartner(c, struggler);
+        pleasureRandomCombination(c, struggler, opponent,
+                        "{self:SUBJECT-ACTION:try} to peel {other:name-do} off your legs, but {other:pronoun-action:hold} on tightly. "
+                      + "After thoroughly exhausting {self:possessive} attempts, {other:pronoun-action:smile} smugly and gives {self:possesive} clit "
+                      + "a victorious little lick.", 
+    
+                        "{self:SUBJECT-ACTION:try} to peel {other:name-do} off your legs, but {other:pronoun-action:hold} on tightly. "
+                      + "After thoroughly exhausting {self:possessive} attempts, {other:pronoun-action:smile} smugly and runs {other:possessive} tongue "
+                      + "along {self:possessive} shaft to demostrate {other:possessive} victory.");
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        Character opponent = getPartner(c, escapee);
+        pleasureRandomCombination(c, escapee, opponent,
+                        "{self:SUBJECT-ACTION:try} to escape {other:name-possessive} grip on {self:possessive} waist, but {other:pronoun-action:hold} on tightly. "
+                      + "After thoroughly exhausting every angle, {self:pronoun} can only give up in defeat. {other:PRONOUN-ACTION:smile} smugly and gives {self:possesive} clit "
+                      + "a victorious little lick.", 
+    
+                        "{self:SUBJECT-ACTION:try} to peel {other:name-possessive} grip on {self:possessive} waist, but {other:pronoun-action:hold} on tightly. "
+                      + "After thoroughly exhausting every angle, {self:pronoun} can only give up in defeat. {other:PRONOUN-ACTION:smile} smugly and runs {other:possessive} tongue "
+                      + "along {self:possessive} shaft to demostrate {other:possessive} victory.");
+        super.escape(c, escapee);
     }
 }

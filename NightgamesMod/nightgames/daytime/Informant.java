@@ -3,6 +3,7 @@ package nightgames.daytime;
 import java.util.HashMap;
 import java.util.Map;
 
+import nightgames.characters.Airi;
 import nightgames.characters.Character;
 import nightgames.characters.Eve;
 import nightgames.characters.Kat;
@@ -392,6 +393,17 @@ public class Informant extends Activity {
                 Global.gui()
                       .choose(this, "Reyka: $1000");
             }
+            if (!Global.checkFlag(Flag.Airi) && Global.checkFlag(Flag.workshop)) {
+                Global.gui()
+                      .message("<i>\"So there's a second year bio student that was involved with a bit of an accident last year. Aya? No... Arin? No... Oh yes, her name was Airi! "
+                             + "She's a pretty moussy little Japanese girl, but she got along well enough. Anyways, back to her accident. I think her experiement was supposed to to "
+                             + "give her an edge in the games with some new powerful versions of the body warping decoctions you can find at the black market. I can't say that it completely failed, "
+                             + "but she's definitely came out a bit... stranger than before. I think she was worried about her lack of presence, but I'd say she's even more... formless than before. "
+                             + "\"</i> Aesop guffaws at his own joke that you don't understand. <i>\""
+                             + "She's definitely still a cutie though. So whaddaya say, want me to try and talk to her for you?\"</i><br/><br/>");
+                Global.gui()
+                      .choose(this, "Airi: $1000");
+            }
             if (!Global.checkFlag(Flag.Kat) && Global.checkFlag(Flag.magicstore)) {
                 Global.gui()
                       .message("<i>\"So last year Kat (funny name, you'll see why later) was responsible for a couple of all time firsts. The first 'first'.... The first unprecedented event "
@@ -475,6 +487,21 @@ public class Informant extends Activity {
                 acted = true;
                 Global.newChallenger(Global.getNPCByType(new Reyka().getType()).ai);
                 Global.flag(Flag.Reyka);
+            } else {
+                Global.gui()
+                      .message("You don't have enough money<br/><br/>");
+            }
+        }
+        if (choice.equals("Airi: $1000")) {
+            if (player.money >= 1000) {
+                player.money -= 1000;
+                Global.gui()
+                      .message("<i>\"Sounds good, I'll try finding her. She's probably holed up in some lab again. Ahh I should have charged you double for that. "
+                                      + "Word of advice, Airi's isn't all that personable to begin with, but her entire uh \"personality\" changes when she cums. "
+                                      + "Don't let it catch you off guard.\"</i>");
+                acted = true;
+                Global.newChallenger(Global.getNPCByType(new Airi().getType()).ai);
+                Global.flag(Flag.Airi);
             } else {
                 Global.gui()
                       .message("You don't have enough money<br/><br/>");

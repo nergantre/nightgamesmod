@@ -122,9 +122,9 @@ public class ThrowSlime extends Skill {
         public Status build(Character user, Character target) {
             switch (this) {
                 case BOUND_S:
-                    return new Bound(target, 70, "slime");
+                    return new Bound(target, 55 + 4 * Math.sqrt(user.get(Attribute.Slime)), "slime");
                 case BOUND_W:
-                    return new Bound(target, 35, "slime");
+                    return new Bound(target, 20 + 2 * Math.sqrt(user.get(Attribute.Slime)), "slime");
                 case FALL:
                     return new Falling(target);
                 case FLAT_1:

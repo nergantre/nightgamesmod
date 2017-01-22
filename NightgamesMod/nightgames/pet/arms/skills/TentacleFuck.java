@@ -35,8 +35,8 @@ public class TentacleFuck extends TentacleArmSkill {
 
         if (success) {
             c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} %s shoots forward, snaking through {other:possessive} guard "
-                            + "and impaling itself inside {self:possessive} defenseless pussy. "
-                            + "{self:SUBJECT:try} pulling it out with {self:possessive} hands but the slippery appendage easily eludes {other:possessive} grip. "
+                            + "and impaling itself inside {other:possessive} defenseless pussy. "
+                            + "{other:SUBJECT:try} pulling it out with {other:possessive} hands but the slippery appendage easily eludes {other:possessive} grip. "
                             + "The entire business just ends ups arousing {other:direct-object} to no end.", owner, target, arm.getName()));
             target.body.pleasure(owner, tentaclePart, target.body.getRandomPussy(), strength, c);
             target.add(c, new PartFucked(target, owner, tentaclePart, "pussy"));

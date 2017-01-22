@@ -16,7 +16,7 @@ public class TentacleReel extends TentacleArmSkill {
 
     @Override
     public boolean usable(Combat c, Arm arm, Character owner, Character target) {
-        return super.usable(c, arm, owner, target) && target.is(Stsflag.tentacleBound);
+        return super.usable(c, arm, owner, target) && target.is(Stsflag.tentacleBound) && !target.isPet();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class TentacleReel extends TentacleArmSkill {
             return false;
         }
 
-        if (bound.getStacks() > 2) {
+        if (bound.getStacks() >= 2) {
             c.write(PetCharacter.DUMMY, Global.format("The %s wrapped around {other:name-possessive} waist manages to pull {other:direct-object} right up against {self:name-do}. "
                             + "It does not stop there though; the tentacle somehow manages to pull {other:direct-object} into {self:possessive} very body, engulfing {other:direct-object} inside.", owner, target, arm.getName()));
             target.free();

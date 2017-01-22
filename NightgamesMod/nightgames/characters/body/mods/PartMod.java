@@ -107,7 +107,7 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
     
     @Override
     public String toString() {
-        return "PartMod:" + modType;
+        return "PartMod:" + getClass().getSimpleName() + ":" + modType;
     }
     
     @Override

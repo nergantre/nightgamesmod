@@ -103,6 +103,7 @@ import nightgames.json.JsonUtils;
 import nightgames.modifier.CustomModifierLoader;
 import nightgames.modifier.Modifier;
 import nightgames.modifier.standard.FTCModifier;
+import nightgames.modifier.standard.LevelDrainModifier;
 import nightgames.modifier.standard.NoItemsModifier;
 import nightgames.modifier.standard.NoModifier;
 import nightgames.modifier.standard.NoRecoveryModifier;
@@ -617,6 +618,7 @@ public class Global {
         modifierPool.add(new UnderwearOnlyModifier());
         modifierPool.add(new VibrationModifier());
         modifierPool.add(new VulnerableModifier());
+        modifierPool.add(new LevelDrainModifier());
 
         File customModFile = new File("data/customModifiers.json");
         if (customModFile.canRead()) {
@@ -753,6 +755,19 @@ public class Global {
 
     public static void startNight() {
         decideMatchType().buildPrematch(human);
+    }
+
+    public static List<Character> getMatchParticipantsInAffectionOrder() {
+        if (match == null) {
+            return Collections.emptyList();
+        }
+        return getInAffectionOrder(match.combatants.stream().filter(c -> !c.human()).collect(Collectors.toList()));
+    }
+
+    public static List<Character> getInAffectionOrder(List<Character> viableList) {
+        List<Character> results = new ArrayList<>(viableList);
+        results.sort((a, b) -> a.getAffection(getPlayer()) - b.getAffection(getPlayer()));
+        return results;
     }
 
     public static void setUpMatch(Modifier matchmod) {
@@ -1256,7 +1271,11 @@ public class Global {
 
     public static boolean newChallenger(Personality challenger) {
         if (!players.contains(challenger.getCharacter())) {
-            while (challenger.getCharacter().getLevel() <= human.getLevel()) {
+            int targetLevel = human.getLevel();
+            if (challenger.getCharacter().has(Trait.leveldrainer)) {
+                targetLevel -= 4;
+            }
+            while (challenger.getCharacter().getLevel() <= targetLevel) {
                 challenger.getCharacter().ding();
             }
             players.add(challenger.getCharacter());
@@ -1528,6 +1547,9 @@ public class Global {
         });
         matchActions.put("guy", (self, first, second, third) -> {
             return self.guyOrGirl();
+        });
+        matchActions.put("man", (self, first, second, third) -> {
+            return self.useFemalePronouns() ? "woman" : "man";
         });
         matchActions.put("boy", (self, first, second, third) -> {
             return self.boyOrGirl();

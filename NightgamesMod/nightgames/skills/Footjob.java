@@ -111,8 +111,7 @@ public class Footjob extends Skill {
                 } else {
                     message += "is practically leaking pre-cum all over your soles.";
                 }
-            }
-            if (target.hasPussy()) {
+            } else if (target.hasPussy()) {
                 message = "You rub your foot against " + target.getName()
                                 + "'s pussy lips while rubbing {other:possessive} clit with your big toe. ";
                 if (target.getArousal().percent() < 30) {
@@ -140,8 +139,7 @@ public class Footjob extends Skill {
                                 getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),
                                 getSelf().subject(), target.directObject(), getSelf().possessiveAdjective(),
                                 target.possessiveAdjective());
-            }
-            if (target.hasPussy()) {
+            } else if (target.hasPussy()) {
                 return String.format("%s teases the lips of %s slit with %s foot. From time "
                                 + "to time, %s teases %s by slipping %s big toe inside and wiggling it around.",
                                 getSelf().subject(), target.nameOrPossessivePronoun(), getSelf().possessiveAdjective(),

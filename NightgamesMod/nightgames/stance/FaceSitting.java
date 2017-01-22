@@ -48,6 +48,9 @@ public class FaceSitting extends AbstractBehindStance {
 
     @Override
     public String image() {
+        if (!top.useFemalePronouns()) {
+            return "facesitting_m.jpg";
+        }
         if (top.hasPussy() && bottom.hasPussy()) {
             return "facesitting_ff.jpg";
         }
@@ -219,5 +222,34 @@ public class FaceSitting extends AbstractBehindStance {
 
     public boolean isFacesatOn(Character self) {
         return self == bottom;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        if (struggler.human()) {
+            c.write(struggler, "You try to free yourself from " + top.getName()
+                            + ", but she drops her ass over your face again, forcing you to service her.");
+        } else if (c.shouldPrintReceive(top, c)) {
+            c.write(struggler, String.format("%s struggles against %s, but %s %s %s ass "
+                            + "over %s face again, forcing %s to service %s.", struggler.subject(),
+                            top.nameDirectObject(), top.pronoun(), top.action("drop"),
+                            top.possessiveAdjective(), struggler.possessiveAdjective(),
+                            struggler.directObject(), top.directObject()));
+        }
+        if (top.hasPussy() && !top.has(Trait.temptingass)) {
+            new Cunnilingus(struggler).resolve(c, top);
+        } else {
+            new Anilingus(struggler).resolve(c, top);
+        }
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format(
+                        "{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                                        + " {other:direct-object} behind {self:direct-object} with {other:possessive} long legs wrapped around {self:possessive} waist securely, there is nothing {self:pronoun} can do.",
+                        escapee, top));
+        super.escape(c, escapee);
     }
 }

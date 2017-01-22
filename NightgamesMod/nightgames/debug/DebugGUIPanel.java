@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -156,15 +157,16 @@ public class DebugGUIPanel extends JPanel {
                 Character target = Global.getCharacterByType(list.get(1));
                 StringBuilder sb = new StringBuilder();
                 sb.append("Level: " + target.getLevel() + "\n");
-                for (int i = 0; i < target.traits.size(); i++) {
-                    sb.append(target.traits.get(i));
+                List<Trait> traits = new ArrayList<>(target.getTraits());
+                for (int i = 0; i < traits.size(); i++) {
+                    sb.append(traits.get(i));
                     if (i % 4 == 2) {
                         sb.append("\n");
-                    } else if (i != target.traits.size() - 1) {
+                    } else if (i != traits.size() - 1) {
                         sb.append(", ");
                     }
                 }
-                String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
+                String attString = Arrays.stream(Attribute.values()).filter(att -> target.get(att) != 0).map(att -> String.format("%s: %d", att, target.get(att))).collect(Collectors.joining("\n"));
                 output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\nAttractiveness: %.01f\n%s\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
                                 target.getMojo().toString(), target.getWillpower().toString(), target.body.getHotness(Global.getPlayer()), attString, sb.toString()));

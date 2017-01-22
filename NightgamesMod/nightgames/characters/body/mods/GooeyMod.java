@@ -17,7 +17,7 @@ public class GooeyMod extends PartMod {
     }
 
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
-        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part)) {
+        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part) && !selfCame) {
             String partName = part.describe(self);
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} %s clenches down hard"

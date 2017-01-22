@@ -2,6 +2,7 @@ package nightgames.stance;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
@@ -199,5 +200,62 @@ public class Engulfed extends Position {
     @Override
     public int distance() {
         return 0;
+    }
+
+    private void pleasureRandomCombination(Combat c, Character self, Character opponent) {
+        int selfM = Global.random(6, 11);
+        int targM = Global.random(6, 11);
+        List<Runnable> possibleActions = new ArrayList<>();
+        if (opponent.hasDick()) {
+            if (self.hasPussy()) {
+                possibleActions.add(() -> {
+                    opponent.body.pleasure(self, self.body.getRandomPussy(), opponent.body.getRandomCock(), selfM, c);
+                    self.body.pleasure(opponent, opponent.body.getRandomCock(), self.body.getRandomPussy(), targM, c);
+                });
+            }
+            possibleActions.add(() -> {
+                opponent.body.pleasure(self, self.body.getRandomAss(), opponent.body.getRandomCock(), selfM, c);
+                self.body.pleasure(opponent, opponent.body.getRandomCock(), self.body.getRandomAss(), targM, c);
+            });
+        }
+        if (self.hasDick()) {
+            if (opponent.hasPussy()) {
+                possibleActions.add(() -> {
+                    opponent.body.pleasure(self, self.body.getRandomCock(), opponent.body.getRandomPussy(), selfM, c);
+                    self.body.pleasure(opponent, opponent.body.getRandomPussy(), self.body.getRandomCock(), targM, c);
+                });
+            }
+            possibleActions.add(() -> {
+                opponent.body.pleasure(self, self.body.getRandomCock(), opponent.body.getRandomAss(), selfM, c);
+                self.body.pleasure(opponent, opponent.body.getRandomAss(), self.body.getRandomCock(), targM, c);
+            });
+        }
+        Optional<Runnable> action = Global.pickRandom(possibleActions);
+        if (action.isPresent()) {
+            action.get().run();
+        }
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        Character opponent = getPartner(c, struggler);
+        c.write(struggler, Global.format("{self:SUBJECT-ACTION:attempt} to find {self:possessive} way out of "
+                        + "the endless slimey hell {self:pronoun-action:have} found {self:reflective} in. "
+                        + "However, none of {self:possessive} attempts make any purchase, as {other:possessive} formless body merely swallows "
+                        + "{self:direct-object} back up when {self:pronoun-action:try}. "
+                        + "All it really ends up accomplishing is some friction between {self:possessive} genitals and {other:poss-pronoun}.", struggler, opponent));
+        pleasureRandomCombination(c, struggler, opponent);
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        Character opponent = getPartner(c, escapee);
+        c.write(escapee, Global.format("{self:SUBJECT-ACTION:attempt} to talk {self:possessive} way out of "
+                        + "the endless slimey hell {self:pronoun-action:have} found {self:reflective} in. "
+                        + "However, none of {self:possessive} attempts to have {other:name-do} release {self:direct-object} does any good, "
+                        + "as {other:pronoun} just stares at {self:direct-object} emotionlessly while teasing {self:possessive} lower half encased in {other:possessive} slime.", escapee, opponent));
+        pleasureRandomCombination(c, escapee, opponent);
+        super.escape(c, escapee);
     }
 }

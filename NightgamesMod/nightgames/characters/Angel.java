@@ -59,7 +59,7 @@ public class Angel extends BasePersonality {
 
     @Override public void applyStrategy(NPC self) {
         NPC npcSelf = (NPC) self;
-        npcSelf.plan = Plan.retreating;
+        npcSelf.plan = Plan.hunting;
         npcSelf.mood = Emotion.confident;
     }
 

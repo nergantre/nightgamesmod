@@ -25,9 +25,9 @@ public class TentacleInjectSensitivity extends TentacleArmSkill {
         boolean success = sub || Global.random(100) < 10 + owner.get(Attribute.Slime);
 
         if (success) {
-            c.write(owner, Global.format("With a sudden whipping motion, {self:NAME-POSSESSIVE} needle-tipped tentacle flies forward and stabs itself into {other:name-possessive} skin. "
+            c.write(PetCharacter.DUMMY, Global.format("With a sudden whipping motion, {self:NAME-POSSESSIVE} needle-tipped tentacle flies forward and stabs itself into {other:name-possessive} skin. "
                             + "Without giving you a chance to react, the slimey appendage injects a mystery fluid into your body. "
-                            + "The effects are unfortunately quite clear to {other:direct-object} as {other:pronoun-action:feel} {other:possessive} body's sensitivity get cranked up to 11.", owner, target));
+                            + "The effects are unfortunately quite clear to {other:direct-object} as {other:pronoun-action:feel} {other:possessive} body's sensitivity get cranked up to eleven.", owner, target));
             target.add(c, new Hypersensitive(target, 10));
             return true;
         } else {

@@ -100,7 +100,7 @@ public class GenericCockPart extends GenericBodyPart implements CockPart {
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = super.applyBonuses(self, opponent, target, damage, c);
-        if (self.has(Trait.polecontrol)) {
+        if (self.has(Trait.polecontrol) && self.canRespond()) {
             String desc = "";
             if (self.has(Trait.polecontrol)) {
                 desc += "expert ";
@@ -130,7 +130,7 @@ public class GenericCockPart extends GenericBodyPart implements CockPart {
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = super.applyReceiveBonuses(self, opponent, target, damage, c);
-        if (opponent.has(Trait.dickhandler) || opponent.has(Trait.anatomyknowledge)) {
+        if ((opponent.has(Trait.dickhandler) || opponent.has(Trait.anatomyknowledge)) && opponent.canRespond() && c.getStance().mobile(opponent)) {
             c.write(opponent,
                             Global.format("{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} cock causes {self:subject} to shudder uncontrollably.",
                                             self, opponent));

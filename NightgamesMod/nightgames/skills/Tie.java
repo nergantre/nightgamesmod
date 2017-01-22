@@ -1,5 +1,6 @@
 package nightgames.skills;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -21,8 +22,8 @@ public class Tie extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return !target.wary() && getSelf().canAct() && c.getStance().reachTop(getSelf())
-                        && !c.getStance().reachTop(target)
-                        && (getSelf().has(Item.ZipTie) || getSelf().has(Item.Handcuffs)) && c.getStance().dom(getSelf())
+                        && (getSelf().has(Item.ZipTie) || getSelf().has(Item.Handcuffs))
+                        && c.getStance().dom(getSelf())
                         && !target.is(Stsflag.bound)
                         && !target.is(Stsflag.maglocked);
     }
@@ -32,12 +33,12 @@ public class Tie extends Skill {
         if (getSelf().has(Item.Handcuffs, 1)) {
             getSelf().consume(Item.Handcuffs, 1);
             writeOutput(c, Result.special, target);
-            target.add(c, new Bound(target, 75, "handcuffs"));
+            target.add(c, new Bound(target, (40 + 3 * Math.sqrt(getSelf().get(Attribute.Cunning))), "handcuffs"));
         } else {
             getSelf().consume(Item.ZipTie, 1);
             if (target.roll(getSelf(), c, accuracy(c, target))) {
                 writeOutput(c, Result.normal, target);
-                target.add(c, new Bound(target, 50, "ziptie"));
+                target.add(c, new Bound(target, (25 + 3 * Math.sqrt(getSelf().get(Attribute.Cunning))), "ziptie"));
             } else {
                 writeOutput(c, Result.miss, target);
                 return false;

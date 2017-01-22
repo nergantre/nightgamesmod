@@ -109,7 +109,7 @@ public class Blowjob extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return isVaginal(c, target) || isFacesitting(c, target) || !c.getStance().mobile(target) ? 200 : 75;
+        return isVaginal(c, target) || isFacesitting(c, target) || !c.getStance().reachTop(target)? 200 : 75;
     }
 
     @Override

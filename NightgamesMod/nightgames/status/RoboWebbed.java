@@ -8,7 +8,7 @@ import nightgames.global.Global;
 import nightgames.trap.Trap;
 
 public class RoboWebbed extends Bound {
-    public RoboWebbed(Character affected, float dc, Trap roboWeb) {
+    public RoboWebbed(Character affected, double dc, Trap roboWeb) {
         super("RoboWebbed", affected, dc, "robo-web", roboWeb);
     }
 

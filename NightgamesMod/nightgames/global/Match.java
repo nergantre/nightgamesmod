@@ -174,6 +174,7 @@ public class Match {
         if (bonus > 0) {
             Global.gui().message("You earned an additional $" + bonus + " for accepting the handicap.");
         }
+        condition.extraWinnings(player, score.get(player));
         if (winner == player) {
             Global.gui().message("You also earned a bonus of $" + 5 * player.prize() + " for placing first.");
             Global.flag(Flag.victory);

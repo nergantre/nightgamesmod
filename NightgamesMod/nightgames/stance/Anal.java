@@ -34,7 +34,7 @@ public class Anal extends AnalSexStance {
             return "futa_futa_doggy.jpg";
         } else if (!bottom.hasDick() && top.useFemalePronouns()) {
             return "futa_doggy.jpg";
-        } else if (!bottom.hasDick()) {
+        } else if (!top.useFemalePronouns()) {
             return "analf.jpg";
         } else {
             return "pegging.jpg";

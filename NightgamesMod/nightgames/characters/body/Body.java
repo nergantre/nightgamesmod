@@ -149,7 +149,7 @@ public class Body implements Cloneable {
             if (modReplacements.containsKey(part.getType()) && part instanceof GenericBodyPart) {
                 GenericBodyPart genericPart = (GenericBodyPart) part;
                 for (PartModReplacement replacement : modReplacements.get(part.getType())) {
-                    genericPart.applyMod(replacement.getMod());
+                    genericPart = (GenericBodyPart) genericPart.applyMod(replacement.getMod());
                 }
                 currentParts.add(genericPart);
             } else {
@@ -272,22 +272,22 @@ public class Body implements Cloneable {
         }
 
         if (hotness > 3.2) {
-            message = "%s{self:possessive} %s is <font color='rgb(100,255,250)'>absolute perfection<font color='white'>, "
+            message = "%s{self:possessive} %s is <font color='rgb(100,255,250)'>absolute perfection</font>, "
                             + "as if perfectly sculpted by a divine hand.";
         } else if (hotness > 2.6){
-            message = "%s{self:possessive} %s is <font color='rgb(85,185,255)'>exquisitely beautiful<font color='white'>. "
+            message = "%s{self:possessive} %s is <font color='rgb(85,185,255)'>exquisitely beautiful</font>. "
                             + "There aren't many like {self:direct-object} in the world.";
         } else if (hotness > 2.1){
-            message = "%s{self:pronoun-action:have|has} a <font color='rgb(210,130,250)'>{self:if-female:lovely}{self:if-male:handsome} %s<font color='white'>"
+            message = "%s{self:pronoun-action:have|has} a <font color='rgb(210,130,250)'>{self:if-female:lovely}{self:if-male:handsome} %s</font>"
                             + "{other:if-human: that definitely ignites a fire between your legs}.";
         } else if (hotness > 1.6){
-            message = "%s{self:possessive} %s is <font color='rgb(250,130,220)'>quite attractive<font color='white'>, "
+            message = "%s{self:possessive} %s is <font color='rgb(250,130,220)'>quite attractive</font>, "
                             + "although not particularly outstanding in any regard.";
         } else if (hotness > 1.0) {
-            message = "%s{self:possessive} %s is <font color='rgb(255,130,150)'>so-so<font color='white'>. "
+            message = "%s{self:possessive} %s is <font color='rgb(255,130,150)'>so-so</font>. "
                             + "{self:PRONOUN} would blend in with all the other {self:guy}s on campus.";
         } else {
-            message = "%s{self:possessive} %s is <font color='rgb(255,105,105)'>not very attractive<font color='white'>... "
+            message = "%s{self:possessive} %s is <font color='rgb(255,105,105)'>not very attractive</font>... "
                             + "Hopefully {self:pronoun} can make up for it in technique.";
         }
         if (Global.checkFlag(Flag.systemMessages)) {
@@ -669,9 +669,18 @@ public class Body implements Cloneable {
             unsatisfied = true;
         }
 
+        double dominance = 0.0;
+        if (character.human() && character instanceof Player && ((Player)character).checkAddiction(AddictionType.DOMINANCE, opponent)
+                       && c.getStance().dom(opponent)) {
+            float mag = ((Player)character).getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
+            float dom = c.getStance().getDominanceOfStance(opponent);
+            dominance = mag * (dom / 5.0);
+        }
+        perceptionBonus += dominance;
+
         double multiplier = Math.max(0, 1 + ((sensitivity - 1) + (pleasure - 1) + (perceptionBonus - 1)));
         double staleness = 1.0;
-        double stageMultiplier = 1.0;
+        double stageMultiplier = 0.0;
         boolean staleMove = false;
         if (skill != null) {
             if (skill.getSelf() != null && c.getCombatantData(skill.getSelf()) != null) {
@@ -683,15 +692,6 @@ public class Body implements Cloneable {
             stageMultiplier = skill.getStage().multiplierFor(character);
         }
         multiplier = Math.max(0, multiplier + stageMultiplier) * staleness;
-
-        double dominance = 0.0;
-        if (character.human() && character instanceof Player && ((Player)character).checkAddiction(AddictionType.DOMINANCE, opponent)
-                       && c.getStance().dom(opponent)) {
-            float mag = ((Player)character).getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
-            float dom = c.getStance().getDominanceOfStance(opponent);
-            dominance = mag * (dom / 5.0);
-        }
-        multiplier += dominance;
 
         double damage = base * multiplier;
         double perceptionlessDamage = base * (multiplier - (perceptionBonus - 1));
@@ -708,16 +708,30 @@ public class Body implements Cloneable {
             }
             String firstColor =
                             character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
+            if (character.isPet()) {
+                if (((PetCharacter)character).getSelf().owner().human()) {
+                    firstColor = "<font color='rgb(130,225,200)'>";
+                } else {
+                    firstColor = "<font color='rgb(210,130,255)'>";
+                }
+            }
             String secondColor =
                             opponent.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
+            if (opponent.isPet()) {
+                if (((PetCharacter)opponent).getSelf().owner().human()) {
+                    secondColor = "<font color='rgb(130,225,200)'>";
+                } else {
+                    secondColor = "<font color='rgb(210,130,255)'>";
+                }
+            }
             String bonusString = baseBonusDamage > 0
-                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", baseBonusDamage)
-                            : baseBonusDamage < 0 ? String.format(" + <font color='rgb(50,100,255)'>%.1f<font color='white'>", baseBonusDamage) : "";
+                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f</font>", baseBonusDamage)
+                            : baseBonusDamage < 0 ? String.format(" + <font color='rgb(50,100,255)'>%.1f</font>", baseBonusDamage) : "";
             String stageString = skill == null ? "" : String.format(" + stage:%.2f", skill.multiplierForStage(character));
             String dominanceString = dominance < 0.01 ? "" : String.format(" + dominance:%.2f", dominance);
             String staleString = staleness < .99 ? String.format(" x staleness: %.2f", staleness) : "";
             String battleString = String.format(
-                            "%s%s %s<font color='white'> was pleasured by %s%s<font color='white'> for <font color='rgb(255,50,200)'>%d<font color='white'> "
+                            "%s%s %s</font> was pleasured by %s%s</font> for <font color='rgb(255,50,200)'>%d</font> "
                                             + "base:%.1f (%.1f%s) x multiplier: %.2f (1 + sen:%.1f + ple:%.1f + per:%.1f %s %s)%s\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), secondColor, pleasuredBy, result, base, magnitude, bonusString,
@@ -727,18 +741,18 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
             Optional<BodyFetish> otherFetish = opponent.body.getFetish(target.getType());
-            if (otherFetish.isPresent() && perceptionlessDamage > 0) {
+            if (otherFetish.isPresent() && perceptionlessDamage > 0 && skill != null && skill.getSelf().equals(character)) {
                 c.write(character, Global.format("Playing with {other:possessive} {other:body-part:%s} arouses {self:direct-object} almost as much as {other:direct-object}.", opponent, character, target.getType()));
-                opponent.temptNoSkill(c, character, target, (int) Math.round(perceptionlessDamage));
+                opponent.temptNoSkill(c, character, target, (int) Math.round(perceptionlessDamage * otherFetish.get().magnitude));
             }
         } else {
             String firstColor =
                             character.human() ? "<font color='rgb(150,150,255)'>" : "<font color='rgb(255,150,150)'>";
             String bonusString = baseBonusDamage > 0
-                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f<font color='white'>", baseBonusDamage)
+                            ? String.format(" + <font color='rgb(255,100,50)'>%.1f</font>", baseBonusDamage)
                             : "";
             String battleString = String.format(
-                            "%s%s %s<font color='white'> was pleasured for <font color='rgb(255,50,200)'>%d<font color='white'> "
+                            "%s%s %s</font> was pleasured for <font color='rgb(255,50,200)'>%d</font> "
                                             + "base:%.1f (%.2f%s) x multiplier: %.2f (sen:%.1f + ple:%.1f + per:%.1f)\n",
                             firstColor, Global.capitalizeFirstLetter(character.nameOrPossessivePronoun()),
                             target.describe(character), result, base, magnitude, bonusString, multiplier,

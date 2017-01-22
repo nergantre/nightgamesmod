@@ -215,6 +215,7 @@ public enum Trait {
 
     // resistances
     freeSpirit("Free Spirit", "Better at escaping pins and resisting mind control"),
+    Slippery("Slippery", "Hard to hold onto"),
     calm("Calm", "Chance at resisting arousal over time"),
     skeptical("Skeptical", "Chance at resisting mental statuses"),
     graceful("Graceful", "Chance at resisting knockdowns"),
@@ -226,7 +227,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
-    flexibleRole("Flexible Roles", "Okay at being the dom."), // Cassie gets this when she takes both specializations to remove the submissive negatives
+    flexibleRole("Flexible Roles", "Also good on top."), // Cassie gets this when she takes both specializations to remove the submissive negatives
     naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),

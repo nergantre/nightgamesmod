@@ -93,6 +93,7 @@ import nightgames.status.addiction.AddictionType;
 
 public class Combat extends Observable implements Cloneable {
     private enum CombatPhase {
+        START,
         PRETURN,
         SKILL_SELECTION,
         PET_ACTIONS,
@@ -104,7 +105,6 @@ public class Combat extends Observable implements Cloneable {
         P2_ACT_SECOND,
         UPKEEP,
         LEVEL_DRAIN,
-        RESULTS_SCENE_ACTION_COMPLETED,
         RESULTS_SCENE,
         FINISHED_SCENE,
         ENDED,
@@ -152,7 +152,7 @@ public class Combat extends Observable implements Cloneable {
         otherCombatants = new ArrayList<>();
         wroteMessage = false;
         winner = Optional.empty();
-        phase = CombatPhase.PRETURN;
+        phase = CombatPhase.START;
         cloned = false;
         if (doExtendedLog()) {
             log = new CombatLog(this);
@@ -199,7 +199,6 @@ public class Combat extends Observable implements Cloneable {
             self.add(this, new SapphicSeduction(self));
         }
 
-        
         if (self.has(Trait.footfetishist)) {
             applyFetish(self, other, "feet");
         } 
@@ -683,7 +682,6 @@ public class Combat extends Observable implements Cloneable {
             Character drainer = p1.has(Trait.leveldrainer) ? p1 : p2;
             Character drained = p1.has(Trait.leveldrainer) ? p2 : p1;
             if (drainer.equals(winner.orElse(null)) && !getCombatantData(drainer).getBooleanFlag("has_drained")) {
-                nextPhase = CombatPhase.RESULTS_SCENE_ACTION_COMPLETED;
                 if (!getStance().havingSex(this) || !getStance().dom(drainer)) {
                     Position mountStance = new Mount(drainer, drained);
                     if (mountStance.insert(this, drained, drainer) != mountStance) {
@@ -703,7 +701,7 @@ public class Combat extends Observable implements Cloneable {
                                         + "on top of {other:direct-object}. However, {self:pronoun} could not figure a "
                                         + "way to drain {other:possessive} levels.", drainer, drained));
                         checkLosses(true);
-                        return CombatPhase.RESULTS_SCENE_ACTION_COMPLETED;
+                        return CombatPhase.RESULTS_SCENE;
                     }
                 } else if (phase == CombatPhase.LEVEL_DRAIN) {
                     if (getCombatantData(drainer).getIntegerFlag("level_drain_thrusts") < 10) {
@@ -733,7 +731,8 @@ public class Combat extends Observable implements Cloneable {
         if (!cloned && isBeingObserved()) {
             Global.gui().loadPortrait(this, p1, p2);
         }
-        if (phase != CombatPhase.FINISHED_SCENE && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED && checkLosses(false)) {
+        wroteMessage = false;
+        if (phase != CombatPhase.FINISHED_SCENE && phase != CombatPhase.RESULTS_SCENE && checkLosses(false)) {
             phase = determinePostCombatPhase();
             if (phase != CombatPhase.RESULTS_SCENE) {
                 next();
@@ -745,14 +744,17 @@ public class Combat extends Observable implements Cloneable {
             }
             return;
         }
-        if ((p1.orgasmed || p2.orgasmed) && phase != CombatPhase.RESULTS_SCENE && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED && SKIPPABLE_PHASES.contains(phase)) {
+        if ((p1.orgasmed || p2.orgasmed) && phase != CombatPhase.RESULTS_SCENE && SKIPPABLE_PHASES.contains(phase)) {
             phase = CombatPhase.UPKEEP;
         }
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.println("Current phase = " + phase);
         }
-        wroteMessage = false;
         switch (phase) {
+            case START:
+                phase = CombatPhase.PRETURN;
+                turn();
+                break;
             case PRETURN:
                 doPreturnUpkeep();
                 phase = CombatPhase.SKILL_SELECTION;
@@ -802,14 +804,9 @@ public class Combat extends Observable implements Cloneable {
             case UPKEEP:
                 doEndOfTurnUpkeep();
                 phase = CombatPhase.PRETURN;
-                if (wroteMessage) {
-                    next();
-                } else {
-                    turn();
-                }
+                next();
                 break;
             case RESULTS_SCENE:
-            case RESULTS_SCENE_ACTION_COMPLETED:
                 checkLosses(true);
                 phase = CombatPhase.FINISHED_SCENE;
                 next();
@@ -838,9 +835,12 @@ public class Combat extends Observable implements Cloneable {
 
     private String describe(Character player, Character other) {
         if (beingObserved) {
-            return Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
-                            + player.describe(player.get(Attribute.Perception), this) + "<br/><br/>"
-                            + other.describe(player.get(Attribute.Perception), this) + "<br/><br/>";
+            return "<font color='rgb(255,220,220)'>"
+                            + other.describe(player.get(Attribute.Perception), this)
+                            + "</font><br/><br/><font color='rgb(220,220,255)'>"
+                            + player.describe(player.get(Attribute.Perception), this)
+                            + "</font><br/><br/><font color='rgb(134,196,49)'><b>"
+                            + Global.capitalizeFirstLetter(getStance().describe(this)) + "</b></font>";
         } else if (!player.is(Stsflag.blinded)) {
             return other.describe(player.get(Attribute.Perception), this) + "<br/><br/>"
                             + Global.capitalizeFirstLetter(getStance().describe(this)) + "<br/><br/>"
@@ -956,17 +956,6 @@ public class Combat extends Observable implements Cloneable {
         if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
             System.out.println(self.getTrueName() + " uses " + action.getLabel(this));
         }
-        /*
-         * TODO fix this so it works with the new combat system
-        if (doExtendedLog()) {
-            log.logTurn(p1act, p2act);
-        } else if (Global.isDebugOn(DebugFlags.DEBUG_SPECTATE) && beingObserved) {
-            write("<br/>");
-            write(log.logTurnToString(p1act, p2act, "<br/>"));
-        } else {
-            useSkills();
-        }
-        */
         boolean results = resolveSkill(action, target);
         this.write("<br/>");
         updateMessage();
@@ -1314,7 +1303,7 @@ public class Combat extends Observable implements Cloneable {
                                         other.pronoun(), other.action("support"), p.directObject(),
                                         p.directObject()));
                     }
-                } else if (getStance().havingSex(this) && getStance().dom(p) && getStance().reversable(this)) {
+                } else if (getStance().havingSex(this, p) && getStance().dom(p) && getStance().reversable(this)) {
                     write(getOpponent(p), Global.format("{other:SUBJECT-ACTION:take|takes} the chance to shift into a more dominant position.", p, getOpponent(p)));
                     setStance(getStance().reverse(this, true));
                 } else {
@@ -1347,9 +1336,8 @@ public class Combat extends Observable implements Cloneable {
 
     private void next() {
         if (phase != CombatPhase.ENDED) {
-            if (!beingObserved || shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) 
+            if (!(wroteMessage || phase == CombatPhase.START) || !beingObserved || shouldAutoresolve() || (Global.checkFlag(Flag.AutoNext) 
                             && phase != CombatPhase.SKILL_SELECTION 
-                            && phase != CombatPhase.RESULTS_SCENE_ACTION_COMPLETED
                             && phase != CombatPhase.RESULTS_SCENE 
                             && phase != CombatPhase.PRETURN)) {
                 turn();
@@ -1420,8 +1408,8 @@ public class Combat extends Observable implements Cloneable {
 
         p1.state = State.ready;
         p2.state = State.ready;
-        p1.endofbattle();
-        p2.endofbattle();
+        p1.endofbattle(this);
+        p2.endofbattle(this);
         getCombatantData(p1).getRemovedItems().forEach(p1::gain);
         getCombatantData(p2).getRemovedItems().forEach(p2::gain);
         location.endEncounter();
@@ -1540,11 +1528,13 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public void checkStanceStatus(Character c, Position oldStance, Position newStance) {
-        if ((oldStance.prone(c) || !oldStance.mobile(c)) && !newStance.prone(c) && newStance.mobile(c)) {
-            c.add(this, new Braced(c));
-            c.add(this, new Wary(c, 3));
-        } else if (!oldStance.mobile(c) && newStance.mobile(c)) {
-            c.add(this, new Wary(c, 3));
+        if (oldStance.sub(c) && !newStance.sub(c)) {
+            if ((oldStance.prone(c) || !oldStance.mobile(c)) && !newStance.prone(c) && newStance.mobile(c)) {
+                c.add(this, new Braced(c));
+                c.add(this, new Wary(c, 3));
+            } else if (!oldStance.mobile(c) && newStance.mobile(c)) {
+                c.add(this, new Wary(c, 3));
+            }
         }
     }
 
@@ -1778,6 +1768,6 @@ public class Combat extends Observable implements Cloneable {
     }
 
     public boolean isEnded() {
-        return phase == CombatPhase.FINISHED_SCENE;
+        return phase == CombatPhase.FINISHED_SCENE || phase == CombatPhase.ENDED;
     }
 }

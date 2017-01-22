@@ -40,7 +40,7 @@ public enum BreastsPart implements BodyPart {
         this.size = size;
     }
 
-    public static String synonyms[] = {"breasts", "tits", "boobs",};
+    public static String synonyms[] = {"breasts", "tits", "boobs", "chest"};
 
     @Override
     public void describeLong(StringBuilder b, Character c) {
@@ -238,14 +238,15 @@ public enum BreastsPart implements BodyPart {
                 } else if (addictionLevel < Addiction.HIGH_THRESHOLD) {
                     // dependent
                     c.write(opponent,
-                                    Global.format("{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're available. {other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering any other thoughts. "
+                                    Global.format("{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're in front of {other:direct-object}. "
+                                                    + "{other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering all rational thought. "
                                                     + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                     + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
                                     self, opponent));
                 } else {
                     // enslaved
                     c.write(opponent,
-                                    Global.format("{other:SUBJECT} slavishly wrap {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
+                                    Global.format("{other:SUBJECT} slavishly {other:action:wrap} {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
                                                     + "{other:POSSESSIVE} vision darkens around the edges and {other:possessive} world is completely focused on draining {self:possessive} wonderful breasts. "
                                                     + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                     + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
@@ -258,7 +259,6 @@ public enum BreastsPart implements BodyPart {
                 if (opponent.is(Stsflag.magicmilkcraving)) {
                     // temporarily relieve craving
                     addiction.alleviateCombat(Addiction.LOW_INCREASE);
-    
                 }
                 if (c.getCombatantData(opponent) != null) {
                     int timesDrank = c.getCombatantData(opponent)
