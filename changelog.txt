@@ -1,4 +1,4 @@
-2.5.0.rc1
+2.5.0.rc.1
 
 Quality of Life:
 - Colorized more text in the combat window to make it easier to read
@@ -72,8 +72,6 @@ Bug fixes:
 - Start options with elevated attributes now will automatically generate levelup data so level draining actually does stuff.
 - I can't even remember. It's been too long.
 - I know I pulled in some fixes from logosK, so thanks for that
-
-- Minor: added a few 
 
 2.4.5.5.b
 GUI:

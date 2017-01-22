@@ -98,8 +98,6 @@
 				<include name="changelog.txt" />
 				<include name="changelog_dndw.txt" />
 				<include name="Trait List.txt" />
-				<include name="CreatorGui.fxml" />
-				<include name="NG Creator Manual.pdf" />
 				<exclude name="**/Thumbs.db" />
 				<exclude name="**/.DS_Store" />
 			</fileset>
