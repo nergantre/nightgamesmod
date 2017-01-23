@@ -99,7 +99,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(11, Trait.addictivefluids);
         character.getGrowth().addTrait(14, Trait.graceful);
         character.getGrowth().addTrait(17, Trait.insertion);
-        character.getGrowth().addTrait(20, Trait.corrupting);
+        character.getGrowth().addTrait(20, Trait.Corrupting);
         character.getGrowth().addTrait(20, Trait.spiritphage);
         character.getGrowth().addTrait(23, Trait.tongueTraining2);
         character.getGrowth().addTrait(26, Trait.magicEyeTrance);

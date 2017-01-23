@@ -1,10 +1,14 @@
 package nightgames.skills;
 
+import java.util.Optional;
+
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.status.Collared;
+import nightgames.status.Compulsive;
+import nightgames.status.Compulsive.Situation;
 import nightgames.status.Stsflag;
 
 public class RemoveBomb extends Skill {
@@ -30,11 +34,11 @@ public class RemoveBomb extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().is(Stsflag.collared) && Global.random(100) < 40) {
-            Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
-            stat.spendCharges(c, 1);
-            writeOutput(c, Result.special, target);
+        Optional<String> compulsion = Compulsive.describe(c, getSelf(), Situation.PREVENT_REMOVE_BOMB);
+        if (compulsion.isPresent() && Global.random(100) < 40) {
+            c.write(getSelf(), compulsion.get());
             getSelf().pain(c, null, 20 + Global.random(40));
+            Compulsive.doPostCompulsion(c, getSelf(), Situation.PREVENT_REMOVE_BOMB);
             return false;
         }
         if (c.getStance().dom(target)) {

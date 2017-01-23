@@ -165,7 +165,6 @@ public enum Trait {
     druglacedprecum("Drug-laced Precum", "Drugs in your precum are perfect for increasing an enemies sensitivity"), // Anybody part that comes into contact with your precum becomes increasingly sensitive for x turns.
     magicmilk("Magicked Milk", "Magically augmented milk. It's a a strong addictive aphrodisiac, as well as a subtle hypnotic."), // .
     zealinspiring("Zeal Inspiring", "Instills true belief in people, inspiring them to follow her"),
-    corrupting("Corrupting Influence", "Corrupts to the very core."),
     breeder("Breeder", "Particularly inviting"),
     mindcontroller("Mind Controller", "Can take control of others' minds. Inventive, yes?"),
     darkpromises("Dark Promises", "Can enthrall with the right words"), // whisper upgrade, can enthrall
@@ -465,6 +464,20 @@ public enum Trait {
     ComeHither("Come Hither", "Can draw Charmed opponents to herself"),
     TenderKisses("Tender Kisses", "Kisses may extend existing Charmed status"),
     PinkHaze("Pink Haze", "Charmed opponents think she is even more beautiful"),
+    
+    // Reyka Corruption Focus
+    Corrupting("Corrupting Influence", "Corrupts to the very core."),
+    InfernalAllegiance("Infernal Allegiance", "'Encourages' corrupted opponents to play along"),
+    LastingCorruption("Lasting Corruption", "Partially Corrupted fades more slowly"),
+    TotalSubjugation("Total Subjugation", "An orgasm in a Succubus Embrace significantly corrupts"),
+    Subversion("Subversion", "Corruption is stronger while Charmed"),
+    
+    // Reyka Draining Focus
+    Greedy("Greedy", "Attribute draining lasts 50% longer"),
+    RaptorMentis("Raptor Mentis", "Attribute draining effects also drain Willpower"),
+    BottomlessPit("Bottomless Pit", "Enhances draining by demonic genitalia"),
+    SpecificSapping("Specific Sapping", "Draining effects make escape more difficult for 1 turn"),
+    WillingSacrifice("Willing Sacrifice", "Draining is stronger while Charmed"),
     
     stronghold("Strong Hold", "Harder to escape Arm/Leg Locks"),
 

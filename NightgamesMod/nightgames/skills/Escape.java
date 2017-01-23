@@ -1,5 +1,7 @@
 package nightgames.skills;
 
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
@@ -9,6 +11,8 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.arms.skills.Grab;
 import nightgames.stance.Neutral;
 import nightgames.status.Collared;
+import nightgames.status.Compulsive;
+import nightgames.status.Compulsive.Situation;
 import nightgames.status.Stsflag;
 
 public class Escape extends Skill {
@@ -91,13 +95,11 @@ public class Escape extends Skill {
     }
 
     private boolean blockedByCollar(Combat c, Character target) {
-        Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
-        if (stat != null) {
-            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to struggle, but"
-                            + " the collar is having none of it and shocks {self:direct-object}"
-                            + " into submission.", getSelf(), target));
-            getSelf().pain(c, null, Global.random(20, 50));
-            stat.spendCharges(c, 2);
+        Optional<String> compulsion = Compulsive.describe(c, getSelf(), Situation.PREVENT_ESCAPE);
+        if (compulsion.isPresent()) {
+            c.write(getSelf(), compulsion.get());
+            getSelf().pain(c, null, 20 + Global.random(40));
+            Compulsive.doPostCompulsion(c, getSelf(), Situation.PREVENT_ESCAPE);
             return true;
         }
         return false;

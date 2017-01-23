@@ -73,6 +73,8 @@ import nightgames.status.Alluring;
 import nightgames.status.BodyFetish;
 import nightgames.status.Braced;
 import nightgames.status.Collared;
+import nightgames.status.Compulsive;
+import nightgames.status.Compulsive.Situation;
 import nightgames.status.CounterStatus;
 import nightgames.status.DivineCharge;
 import nightgames.status.Enthralled;
@@ -1069,42 +1071,17 @@ public class Combat extends Observable implements Cloneable {
             other.add(this, new Flatfooted(other, 1, false));
         }
 
-        if (self.is(Stsflag.collared) && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {
+        Optional<String> compulsion = Compulsive.describe(this, self, Compulsive.Situation.STANCE_FLIP);
+        if (compulsion.isPresent() && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {
             self.pain(this, null, Global.random(20, 50));
             Position nw = stance.reverse(this, false);
             if (!stance.equals(nw)) {
                 stance = nw;
-                write(Global.format("Appearantly punishing {self:name-do} for being dominant, the collar"
-                                + " around {self:possessive} neck gives {self:direct-object} a painful"
-                                + " shock. At the same time, {other:subject-action:grab|grabs}"
-                                + " hold of {self:possessive} body and gets {other:reflective}"
-                                + " into a more advantegeous position.", self, other));
             } else {
                 stance = new Pin(other, self);
-                write(Global.format("Distracted by a shock from the collar around {self:possessive}"
-                                + " neck, {self:subject-action:have|has} no chance to resist as"
-                                + " {other:subject-action:put|puts} {self:direct-object}"
-                                + " in a pin.", self, other));
             }
-        }
-        
-        if (self.is(Stsflag.collared) && Global.random(10) < 3 && new Reversal(other).usable(this, self)) {
-            self.pain(this, null, Global.random(20, 50));
-            Position nw = stance.reverse(this, false);
-            if (!stance.equals(nw)) {
-                stance = nw;
-                write(Global.format("Apparantly punishing {self:name-do} for being dominant, the collar"
-                                + " around {self:possessive} neck gives {self:direct-object} a painful"
-                                + " shock. At the same time, {other:subject-action:grab|grabs}"
-                                + " hold of {self:possessive} body and gets {other:reflective}"
-                                + " into a more advantegeous position.", self, other));
-            } else {
-                stance = new Pin(other, self);
-                write(Global.format("Distracted by a shock from the collar around {self:possessive}"
-                                + " neck, {self:subject-action:have|has} no chance to resist as"
-                                + " {other:subject-action:put|puts} {self:direct-object}"
-                                + " in a pin.", self, other));
-            }
+            write(self, compulsion.get());
+            Compulsive.doPostCompulsion(this, self, Situation.STANCE_FLIP);
         }
     }
 
@@ -1173,24 +1150,12 @@ public class Combat extends Observable implements Cloneable {
                     write(skill.user(), Global.format("{self:SUBJECT-ACTION:fuck|fucks} {other:name-do} <b>hard</b>, so much so that {other:pronoun-action:are|is} momentarily floored by the stimulation.", skill.user(), target));
                     target.add(this, new Stunned(target, 1, false));
                 }
-                if (skill.type(this) == Tactics.damage && skill.user().is(Stsflag.collared)) {
-                    Collared stat = (Collared) skill.user().getStatus(Stsflag.collared);
-                    stat.spendCharges(this, 1);
-                    write(Global.format("The training collar around {self:name-possessive}"
-                                    + "neck reacts to {self:possessive} aggression by sending"
-                                    + " a powerful shock down {self:possessive} spine.", 
-                                    skill.user(), target));
-                    skill.user().pain(this, null, Global.random(10, 40));
+                if (skill.type(this) == Tactics.damage) {
+                    checkAndDoPainCompulsion(skill.user());
                 }
             }
-            if (skill.type(this) == Tactics.damage && skill.user().is(Stsflag.collared)) {
-                Collared stat = (Collared) skill.user().getStatus(Stsflag.collared);
-                stat.spendCharges(this, 1);
-                write(Global.format("The training collar around {self:name-possessive}"
-                                + "neck reacts to {self:possessive} aggression by sending"
-                                + " a powerful shock down {self:possessive} spine.", 
-                                skill.user(), target));
-                skill.user().pain(this, null, Global.random(10, 40));
+            if (skill.type(this) == Tactics.damage) {
+                checkAndDoPainCompulsion(skill.user());
             }
             if (madeContact) {
             	resolveContactBonuses(skill.user(), target);
@@ -1208,6 +1173,15 @@ public class Combat extends Observable implements Cloneable {
         return orgasmed;
     }
 
+    private void checkAndDoPainCompulsion(Character self) {
+        Optional<String> compulsion = Compulsive.describe(this, self, Situation.PUNISH_PAIN);
+        if (compulsion.isPresent()) {
+            self.pain(this, null, Global.random(10, 40));
+            write(compulsion.get());
+            Compulsive.doPostCompulsion(this, self, Situation.PUNISH_PAIN);
+        }
+    }
+    
     private void resolveContactBonuses(Character contacted, Character contacter) {
 		if (contacted.has(Trait.VolatileSubstrate) && contacted.has(Trait.slime)) {
 			contacter.add(this, new Slimed(contacter, contacted, 1));

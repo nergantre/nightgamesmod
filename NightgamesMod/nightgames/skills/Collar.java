@@ -27,6 +27,11 @@ public class Collar extends Skill {
     }
 
     @Override
+    public float priorityMod(Combat c) {
+        return !c.getOpponent(getSelf()).is(Stsflag.collared) ? 10 : 2;
+    }
+    
+    @Override
     public String getLabel(Combat c) {
         return c.getOpponent(getSelf()).is(Stsflag.collared) ? "Recharge Collar" : "Place Collar";
     }
@@ -54,7 +59,7 @@ public class Collar extends Skill {
                             + " {self:pronoun-action:ask|asks} {other:direct-object}, <i>\"That little"
                             + " collar is going to make sure you behave. You can be a good %s, right {other:name}?\"<i>"
                             , getSelf(), target, target.boyOrGirl()));
-            target.add(c, new Collared(target));
+            target.add(c, new Collared(target, getSelf()));
         }
         return true;
     }
