@@ -1,10 +1,13 @@
 package nightgames.stance;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.skills.Skill;
@@ -24,13 +27,39 @@ public class FFMFacesittingThreesome extends FFMCowgirlThreesome {
                             + "into {other:name-possessive} face while %s fucking {other:direct-object} in the Cowgirl position.", top, bottom, domSexCharacter.subjectAction("are", "is"));
         }
     }
-
+    
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
+            return topParts(combat);
+        }
+        if (self == top) {
+                return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+        } else if (self == bottom) {
+            if (other == top) {
+                return Arrays.asList(top.body.getRandom("mouth")).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            } else if (other == domSexCharacter) {
+                return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            }
+        }
+        return Collections.emptyList();
+    }
+    
     @Override
     public void checkOngoing(Combat c) {
         if (!c.getOtherCombatants().contains(domSexCharacter)) {
             c.write(bottom, Global.format("With the disappearance of {self:name-do}, {other:subject-action:manage|manages} to escape.", domSexCharacter, bottom));
             c.setStance(new Neutral(top, bottom));
         }
+    }
+
+    public List<Character> getAllPartners(Combat c, Character self) {
+        if (self == bottom) {
+            return Arrays.asList(top, domSexCharacter);
+        }
+        return Collections.singletonList(getPartner(c, self));
     }
 
     @Override

@@ -104,7 +104,7 @@ public class SixNine extends AbstractBehindStance {
 
     @Override
     public boolean reachTop(Character c) {
-        return c != bottom && c != bottom;
+        return false;
     }
 
     @Override
@@ -160,5 +160,22 @@ public class SixNine extends AbstractBehindStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        c.write(struggler, String.format("%s to gain a more dominant position, but with"
+                        + " %s on top of %s sitting on %s chest, there is nothing %s can do.",
+                        struggler.subjectAction("struggle"), top.subject(), struggler.directObject(),
+                        struggler.possessiveAdjective(), struggler.pronoun()));
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format("{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                        + " {other:direct-object} sitting firmly on {self:possessive} chest, there is nothing {self:pronoun} can do.",
+                        escapee, top));
+        super.escape(c, escapee);
     }
 }

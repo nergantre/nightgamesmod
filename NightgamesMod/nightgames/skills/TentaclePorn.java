@@ -71,7 +71,7 @@ public class TentaclePorn extends Skill {
             } else {
                 writeOutput(c, Result.weak, target);
             }
-            target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Fetish), 50), "tentacles"));
+            target.add(c, new Bound(target, 30 + 2 * Math.sqrt(getSelf().get(Attribute.Fetish) + getSelf().get(Attribute.Slime)), "tentacles"));
         } else {
             writeOutput(c, Result.miss, target);
             return false;

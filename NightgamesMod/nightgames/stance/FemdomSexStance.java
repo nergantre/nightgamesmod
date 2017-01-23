@@ -5,8 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.status.CockBound;
+import nightgames.status.Stsflag;
 
 public abstract class FemdomSexStance extends Position {
     public FemdomSexStance(Character top, Character bottom, Stance stance) {
@@ -85,5 +89,64 @@ public abstract class FemdomSexStance extends Position {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        Character opponent = getPartner(c, struggler);
+        boolean cockbound = opponent.is(Stsflag.cockbound);
+
+        int selfM = Global.random(6, 11);
+        int targM = Global.random(6, 11);
+        if (cockbound) {
+            CockBound s = (CockBound) struggler.getStatus(Stsflag.cockbound);
+            c.write(struggler,
+                            Global.format("{self:SUBJECT-ACTION:try|tries} to struggle out of {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} "
+                                            + s.binding
+                                            + " has other ideas. {other:SUBJECT-ACTION:run|runs} {other:possessive} "
+                                            + s.binding
+                                            + " up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
+                            struggler, opponent));
+            selfM += 5;
+        } else {
+            c.write(struggler, Global.format("{self:SUBJECT-ACTION:try} to tip {other:name-do} off balance, but {other:pronoun-action:drop} {other:possessive} hips firmly, "
+                            + "pushing {self:possessive} cock deep inside {other:reflective} and pinning {self:direct-object} to the floor. "
+                            + "The sensations from wrestling with {self:possessive} cock buried inside {other:direct-object} almost make {self:direct-object} cum.", struggler, opponent));
+        }
+        if (!struggler.has(Trait.strapped)) {
+            struggler.body.pleasure(opponent, opponent.body.getRandomPussy(), struggler.body.getRandomCock(), selfM, c);
+        }
+        opponent.body.pleasure(struggler, struggler.body.getRandomInsertable(), opponent.body.getRandomPussy(), targM, c);
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        Character opponent = getPartner(c, escapee);
+        boolean cockbound = opponent.is(Stsflag.cockbound);
+
+        int selfM = Global.random(6, 11);
+        int targM = Global.random(6, 11);
+        if (cockbound) {
+            CockBound s = (CockBound) escapee.getStatus(Stsflag.cockbound);
+            c.write(escapee,
+                            Global.format("{self:SUBJECT-ACTION:try|tries} to escape {other:possessive} iron grip on {self:possessive} dick. However, {other:possessive} "
+                                            + s.binding
+                                            + " has other ideas. {other:SUBJECT-ACTION:run|runs} {other:possessive} "
+                                            + s.binding
+                                            + " up and down {self:possessive} cock and leaves {self:direct-object} gasping with pleasure.",
+                            escapee, opponent));
+            selfM += 5;
+        } else {
+            c.write(escapee, Global.format("{self:SUBJECT-ACTION:attempt} to escape {other:name-possessive} embrace, "
+                            + "but {other:pronoun-action:drop} {other:possessive} hips firmly, pushing {self:possessive} "
+                            + "cock deep inside {other:reflective} and pinning {self:direct-object} to the floor. "
+                            + "The sensations from moving around so much with {self:possessive} cock buried inside {other:direct-object} almost make {self:direct-object} cum.", escapee, opponent));
+        }
+        if (!escapee.has(Trait.strapped)) {
+            escapee.body.pleasure(opponent, opponent.body.getRandomPussy(), escapee.body.getRandomCock(), selfM, c);
+        }
+        opponent.body.pleasure(escapee, escapee.body.getRandomInsertable(), opponent.body.getRandomPussy(), targM, c);
+        super.escape(c, escapee);
     }
 }

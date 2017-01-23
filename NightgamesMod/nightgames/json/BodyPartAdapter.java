@@ -13,17 +13,13 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import nightgames.characters.body.AssPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
-import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.MouthPart;
-import nightgames.characters.body.MouthPussyPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.StraponPart;
 import nightgames.characters.body.TailPart;
@@ -34,13 +30,8 @@ public class BodyPartAdapter implements JsonSerializer<BodyPart>, JsonDeserializ
     static private Map<String, BodyPart> prototypes;
     static {
         prototypes = new HashMap<>();
-        prototypes.put(PussyPart.class.getCanonicalName(), PussyPart.normal);
-        prototypes.put(BreastsPart.class.getCanonicalName(), BreastsPart.c);
-        prototypes.put(BasicCockPart.class.getCanonicalName(), BasicCockPart.average);
-        // for compatibility with < v1.8.1
-        prototypes.put(CockPart.class.getCanonicalName(), BasicCockPart.average);
-        prototypes.put(ModdedCockPart.class.getCanonicalName(),
-                        new ModdedCockPart(BasicCockPart.average, CockMod.bionic));
+        prototypes.put(PussyPart.class.getCanonicalName(), new PussyPart());
+        prototypes.put(BreastsPart.class.getCanonicalName(), new BreastsPart());
         prototypes.put(WingsPart.class.getCanonicalName(), WingsPart.demonic);
         prototypes.put(TailPart.class.getCanonicalName(), TailPart.cat);
         prototypes.put(EarPart.class.getCanonicalName(), EarPart.normal);
@@ -48,7 +39,7 @@ public class BodyPartAdapter implements JsonSerializer<BodyPart>, JsonDeserializ
         prototypes.put(TentaclePart.class.getCanonicalName(), new TentaclePart("tentacles", "back", "semen", 0, 1, 1));
         prototypes.put(AssPart.class.getCanonicalName(), new AssPart("ass", 0, 1, 1));
         prototypes.put(MouthPart.class.getCanonicalName(), new MouthPart("mouth", 0, 1, 1));
-        prototypes.put(MouthPussyPart.class.getCanonicalName(), new MouthPussyPart());
+        prototypes.put(GenericCockPart.class.getCanonicalName(), new GenericCockPart());
         prototypes.put(GenericBodyPart.class.getCanonicalName(), new GenericBodyPart("", 0, 1, 1, "none", "none"));
         prototypes.put(FacePart.class.getCanonicalName(), new FacePart(.1, 2.3));
     }

@@ -1,5 +1,8 @@
 package nightgames.characters.body;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -185,11 +188,11 @@ public enum EarPart implements BodyPart, BodyPartMod {
     }
 
     @Override
-    public BodyPartMod getMod(Character self) {
+    public Collection<? extends BodyPartMod> getMods() {
         if (this == normal) {
-            return BodyPartMod.noMod;
+            return Collections.emptySet();
         }
-        return this;
+        return Collections.singleton(this);
     }
 
     @Override

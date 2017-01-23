@@ -70,7 +70,7 @@
 
 	<target depends="init,buildinfo" name="build-project">
 		<echo message="${ant.project.name}: ${ant.file}" />
-		<javac debug="true" debuglevel="${debuglevel}" destdir="${classes}" includeantruntime="false" srcdir="${source}">
+		<javac debug="true" debuglevel="${debuglevel}" encoding="UTF-8" destdir="${classes}" includeantruntime="false" srcdir="${source}">
 			<classpath refid="nightgamesmod.classpath" />
 		</javac>
 	</target>
@@ -98,8 +98,6 @@
 				<include name="changelog.txt" />
 				<include name="changelog_dndw.txt" />
 				<include name="Trait List.txt" />
-				<include name="CreatorGui.fxml" />
-				<include name="NG Creator Manual.pdf" />
 				<exclude name="**/Thumbs.db" />
 				<exclude name="**/.DS_Store" />
 			</fileset>

@@ -3,7 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.FeralMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -32,7 +32,7 @@ public class FaceSit extends Skill {
     public float priorityMod(Combat c) {
         return getSelf().has(Trait.lacedjuices) || getSelf().has(Trait.addictivefluids)
                         || (getSelf().body.has("pussy") && getSelf().body.
-                                        getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.feral)) ? 3.0f : 0;
+                                        getRandomPussy().moddedPartCountsAs(getSelf(), FeralMod.INSTANCE)) ? 3.0f : 0;
     }
 
     @Override
@@ -40,8 +40,7 @@ public class FaceSit extends Skill {
         return getSelf().crotchAvailable() && getSelf().canAct() && c.getStance().dom(getSelf())
                         && c.getStance().prone(target) && !c.getStance().penetrated(c, getSelf())
                         && !c.getStance().inserted(getSelf()) && c.getStance().prone(target)
-                        && !getSelf().has(Trait.shy)
-                        && c.getStance().reachTop(getSelf());
+                        && !getSelf().has(Trait.shy);
     }
 
     @Override
@@ -88,7 +87,11 @@ public class FaceSit extends Skill {
         if (!c.getStance().isFaceSitting(getSelf())) {
             c.setStance(new FaceSitting(getSelf(), target), getSelf(), true);
         }
-        if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
+        int fetishChance = 5 + 2 * getSelf().get(Attribute.Fetish);
+        if (getSelf().has(Trait.bewitchingbottom)) {
+            fetishChance *= 2;
+        }
+        if (Global.random(100) < fetishChance) {
             target.add(c, new BodyFetish(target, getSelf(), "ass", .25));
         }
       

@@ -1,62 +1,25 @@
 package nightgames.characters.body;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import com.google.gson.JsonObject;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.mods.HoleMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.json.JsonUtils;
+import nightgames.items.clothing.Clothing;
+import nightgames.items.clothing.ClothingSlot;
 import nightgames.status.Abuff;
 import nightgames.status.Stsflag;
 import nightgames.status.Trance;
 
 public class AssPart extends GenericBodyPart {
-    public static int SIZE_SMALL = 0;
-    public static int SIZE_NORMAL = 1;
-    public static int SIZE_BIG = 2;
-    public static int SIZE_HUGE = 3;
-    public static AssPart generic = new AssPart("ass", 0, 1.2, SIZE_NORMAL);
-    private int size;
-    private List<HoleMod> mods;
-    private static final Map<Integer, String> SIZE_DESCRIPTIONS = new HashMap<>(); 
-    static {
-        SIZE_DESCRIPTIONS.put(SIZE_SMALL, "small ");
-        SIZE_DESCRIPTIONS.put(SIZE_NORMAL, "");
-        SIZE_DESCRIPTIONS.put(SIZE_BIG, "large ");
-        SIZE_DESCRIPTIONS.put(SIZE_HUGE, "huge ");
-    }
-
-    public JsonObject toJson() {
-        return JsonUtils.gson.toJsonTree(this, this.getClass()).getAsJsonObject();
-    }
-
-    public BodyPart fromJson(JsonObject object) {
-        return JsonUtils.gson.fromJson(object, this.getClass());
-    }
-
+    public static AssPart generic = generateGeneric();
     public static AssPart generateGeneric() {
-        return new AssPart("ass", 0, 1.2, 1);
-    }
-
-    public AssPart(String desc, String longDesc, double hotness, double pleasure, double sensitivity, int size) {
-        super(desc, longDesc, hotness, pleasure, sensitivity, false, "ass", "a ");
-        this.mods = new ArrayList<>();
-        this.size = size;
+        return new AssPart();
     }
 
     public AssPart(String desc, double hotness, double pleasure, double sensitivity) {
-        this(desc, "", hotness, pleasure, sensitivity, SIZE_NORMAL);
+        super(desc, "", hotness, pleasure, sensitivity, false, "ass", "a ");
     }
 
     public AssPart() {
@@ -64,72 +27,41 @@ public class AssPart extends GenericBodyPart {
     }
 
     @Override
-    public boolean isNotable() {
-        return mods.stream().map(mod -> mod.getDescriptionOverride(Global.noneCharacter(), this)).anyMatch(Optional::isPresent);
-    }
-
-    @Override
-    public String canonicalDescription() {
-        return mods.stream().sorted().map(HoleMod::getModType).collect(Collectors.joining(" ")) + " " + desc;
-    }
-
-    @Override
     public double getFemininity(Character c) {
-        return size - SIZE_NORMAL;
+        return getSize() - SizeMod.ASS_SIZE_GIRLISH;
+    }
+
+    @Override
+    public double getHotness(Character self, Character opponent) {
+        double hotness = super.getHotness(self, opponent);
+
+        Clothing top = self.getOutfit().getTopOfSlot(ClothingSlot.bottom);
+        hotness += -.1 + Math.sqrt(getSize()) * .2 * self.getOutfit()
+                                                .getExposure(ClothingSlot.bottom);
+        if (!opponent.hasDick()) {
+            hotness /= 2;
+        }
+        if (top == null) {
+            hotness += .1;
+        }
+        return Math.max(0, hotness);
     }
 
     @Override
     public int mod(Attribute a, int total) { 
-        int bonus = 0;
-        for (HoleMod mod : mods) {
-            bonus += mod.mod(a, total);
+        int bonus = super.mod(a, total);
+        if (getSize() > SizeMod.ASS_SIZE_NORMAL & a == Attribute.Seduction) {
+            bonus += (getSize() - SizeMod.ASS_SIZE_NORMAL) * 2;
         }
-        if (size > SIZE_NORMAL & a == Attribute.Seduction) {
-            bonus += (size - SIZE_NORMAL) * 2;
-        }
-        if (size > SIZE_BIG & a == Attribute.Speed) {
-            bonus += (size - SIZE_BIG);
+        if (getSize() > SizeMod.ASS_SIZE_FLARED & a == Attribute.Speed) {
+            bonus += (getSize() - SizeMod.ASS_SIZE_FLARED);
         }
         return bonus;
     }
 
     @Override
-    public String fullDescribe(Character c) {
-        return SIZE_DESCRIPTIONS.get(size) + describe(c);
-    }
-
-    @Override
-    public String describe(Character c) {
-        Optional<String> override = mods.stream().map(mod -> mod.getDescriptionOverride(c, this)).filter(Optional::isPresent).findFirst().flatMap(Function.identity());
-        String normalDescription = super.describe(c);
-        if (override.isPresent()) {
-            normalDescription = adjective() + " " +  override.get();
-        }
-
-        return mods.stream().sorted()
-                        .filter(mod -> !mod.getDescriptionOverride(c, this).isPresent())
-                        .map(HoleMod::getModType)
-                        .map(string -> string + " ")
-                        .collect(Collectors.joining())
-                        + normalDescription;
-    }
-
-    @Override
-    public void describeLong(StringBuilder b, Character c) {
-        Optional<String> override = mods.stream().map(mod -> mod.getDescriptionOverride(c, this)).filter(Optional::isPresent).findFirst().flatMap(Function.identity());
-        if (override.isPresent()) {
-            b.append(override);
-        }
-    }
-
-    @Override
     public double getPleasure(Character self, BodyPart target) {
         double pleasureMod = super.getPleasure(self, target);
-        double pleasureBonus = 1.0;
-        for (HoleMod mod : mods) {
-            pleasureBonus += mod.modPleasure(self);
-        }
-        pleasureMod *= pleasureBonus;
         pleasureMod += self.has(Trait.analTraining1) ? .5 : 0;
         pleasureMod += self.has(Trait.analTraining2) ? .7 : 0;
         pleasureMod += self.has(Trait.analTraining3) ? .7 : 0;
@@ -137,31 +69,8 @@ public class AssPart extends GenericBodyPart {
     }
 
     @Override
-    public double getHotness(Character self, Character opponent) {
-        double hotnessMod = super.getHotness(self, opponent);
-        double bonus = 1.0;
-        for (HoleMod mod : mods) {
-            bonus += mod.modHotness(self);
-        }
-        return hotnessMod * bonus;
-    }
-
-    @Override
-    public double getSensitivity(Character self, BodyPart target) {
-        double sensitivityMod = super.getSensitivity(self, target);
-        double bonus = 1.0;
-        for (HoleMod mod : mods) {
-            bonus += mod.modSensitivity(self);
-        }
-        return sensitivityMod * bonus;
-    }
-
-    @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
-        double bonus = 0;
-        for (HoleMod mod : mods) {
-            bonus += mod.applyBonuses(c, self, opponent, this, target, damage);
-        }
+        double bonus = super.applyBonuses(self, opponent, target, damage, c);
         if (self.has(Trait.oiledass) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} naturally oiled asshole swallows {other:name-possessive} cock with ease.",
@@ -169,7 +78,7 @@ public class AssPart extends GenericBodyPart {
             bonus += 5;
         }
 
-        if ((self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(c, self)) {
+        if (self.canRespond() && (self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance().anallyPenetrated(c, self)) {
             String desc = "";
             if (self.has(Trait.tight)) {
                 desc += "powerful ";
@@ -185,8 +94,11 @@ public class AssPart extends GenericBodyPart {
             if (self.has(Trait.tight)) {
                 opponent.pain(c, self, Math.min(30, self.get(Attribute.Power)));
             }
+            if (!c.getStance().mobile(opponent) || !opponent.canRespond()) {
+                bonus /= 5;
+            }
         }
-        if (self.has(Trait.drainingass) && !opponent.has(Trait.strapped) && c.getStance().anallyPenetratedBy(c, self, opponent)) {
+        if (self.has(Trait.drainingass) && !target.isType("strapon")) {
             if (Global.random(3) == 0) {
                 c.write(self, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
@@ -196,43 +108,17 @@ public class AssPart extends GenericBodyPart {
                 self.add(c, new Abuff(self, Attribute.Power, 3, 10));
             } else {
                 c.write(self, Global.format("The feel of {self:name-possessive} ass around"
-                                + " {other:name-possessive} {other:body-part:cock} drains"
-                                + " {other:direct-object} of {other:possessive} energy.", self, opponent));
+                                + " {other:name-possessive} %s drains"
+                                + " {other:direct-object} of {other:possessive} energy.", self, opponent, target.describe(opponent)));
                 opponent.drain(c, self, self.getLevel()/2);
             }
         }
         return bonus;
     }
 
-    // Should be called whenever a combatant is penetrated in any way
-    public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
-        super.onStartPenetration(c, self, opponent, target);
-        for (HoleMod mod : mods) {
-            mod.onStartPenetration(c, self, opponent, this, target);
-        }
-    }
-
-    // Should be called when either combatant orgasms
-    public void onOrgasm(Combat c, Character self, Character opponent) {
-        super.onOrgasm(c, self, opponent);
-        for (HoleMod mod : mods) {
-            mod.onOrgasm(c, self, opponent, this);
-        }
-    }
-
-    // Should be called when either combatant orgasms in/with body parts
-    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
-        super.onOrgasmWith(c, self, opponent, other, selfCame);
-        for (HoleMod mod : mods) {
-            mod.onOrgasmWith(c, self, opponent, this, other, selfCame);
-        }
-    }
-
     @Override
     public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
-        for (HoleMod mod : mods) {
-            mod.tickHolding(c, self, opponent, this, otherOrgan);
-        }
+        super.tickHolding(c, self, opponent, otherOrgan);
         if (self.has(Trait.autonomousAss)) {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} " + fullDescribe(self)
@@ -245,11 +131,8 @@ public class AssPart extends GenericBodyPart {
 
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
-        double bonus = 0;
-        for (HoleMod mod : mods) {
-            bonus += mod.applyReceiveBonuses(c, self, opponent, this, target, damage);
-        }
-        if (opponent.has(Trait.asshandler) || opponent.has(Trait.anatomyknowledge)) {
+        double bonus = super.applyReceiveBonuses(self, opponent, target, damage, c);
+        if ((opponent.has(Trait.asshandler) || opponent.has(Trait.anatomyknowledge)) && opponent.canRespond() && c.getStance().mobile(opponent)) {
             c.write(opponent,
                             Global.format("{other:NAME-POSSESSIVE} expert handling of {self:name-possessive} ass causes {self:subject} to shudder uncontrollably.",
                                             self, opponent));
@@ -280,21 +163,15 @@ public class AssPart extends GenericBodyPart {
         return c.has(Trait.oiledass) || c.is(Stsflag.oiled);
     }
 
-    @Override
-    public String getFluids(Character c) {
-        Optional<String> nonJuicesMod = mods.stream().filter(mod -> mod.getFluids().isPresent() && !mod.getFluids().equals("juices")).findFirst().flatMap(HoleMod::getFluids);
-        if (nonJuicesMod.isPresent()) {
-            return nonJuicesMod.get();
-        }
+    public String getFluidsNoMods(Character c) {
         if (c.has(Trait.oiledass)) {
             return "oils";
         }
-        Optional<String> anyMod = mods.stream().filter(mod -> mod.getFluids().isPresent()).findFirst().flatMap(HoleMod::getFluids);
-        return anyMod.orElse("");
+        return "";
     }
 
     @Override
-    public boolean isErogenous() {
+    public boolean getDefaultErogenous() {
         return true;
     }
 
@@ -303,44 +180,17 @@ public class AssPart extends GenericBodyPart {
             return (c.has(Trait.tight) ? 1 : 0) + (c.has(Trait.holecontrol) ? 1 : 0) + (c.has(Trait.oiledass) ? 1 : 0)
                             + (c.has(Trait.autonomousAss) ? 4 : 0);
     }
-    public int counterValue(BodyPart otherPart, Character self, Character other) {
-        int counterValue = 0;
-        for (HoleMod mod : mods) {
-            counterValue += mod.counterValue(this, otherPart, self, other);
-        }
-        return counterValue;
-    }
 
     @Override
     public String adjective() {
         return "anal";
     }
 
-    private AssPart instance() {
-        AssPart newPart = new AssPart(desc, descLong, hotness, pleasure, sensitivity, size);
-        newPart.mods = new ArrayList<>(mods);
-        return newPart;
-    }
-
-    public AssPart applyMod(HoleMod mod) {
-        AssPart newPart = instance();
-        newPart.mods.add(mod);
-        return newPart;
-    }
-
     public BodyPart upgrade() {
-        AssPart newPart = instance();
-        newPart.size = Global.clamp(newPart.size + 1, SIZE_SMALL, SIZE_HUGE);
-        return newPart;
+        return this.applyMod(new SizeMod(SizeMod.clampToValidSize(this, getSize() + 1)));
     }
 
     public BodyPart downgrade() {
-        AssPart newPart = instance();
-        newPart.size = Global.clamp(newPart.size - 1, SIZE_SMALL, SIZE_HUGE);
-        return newPart;
-    }
-
-    public List<? extends BodyPartMod> getMods(Character npc) {
-        return mods;
+        return this.applyMod(new SizeMod(SizeMod.clampToValidSize(this, getSize() - 1)));
     }
 }

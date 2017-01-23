@@ -9,11 +9,7 @@ import java.util.Optional;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import nightgames.characters.CharacterSex;
 import nightgames.characters.body.AssPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
@@ -21,12 +17,20 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.ModdedCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
 import nightgames.characters.body.WingsPart;
-import nightgames.characters.body.mods.SecondPussyHoleMod;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.SecondPussyMod;
+import nightgames.characters.body.mods.SizeMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.json.JsonUtils;
 
 class BodyConfiguration {
@@ -73,11 +77,10 @@ class BodyConfiguration {
         if (obj.has("archetype"))
             config.type = Optional.of(Archetype.valueOf(obj.get("archetype").getAsString().toUpperCase()));
         if (obj.has("breasts"))
-            config.breasts = Optional.of(BreastsPart.valueOf(obj.get("breasts").getAsString()
-                                                                   .toLowerCase()));
+            config.breasts = Optional.of((BreastsPart)new BreastsPart().applyMod(new SizeMod(obj.get("breasts").getAsInt())));
         if (obj.has("ass"))
             config.ass = Optional.of(obj.get("ass").getAsString()
-                                           .equals("basic") ? AssPart.generateGeneric() : AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()));
+                                           .equals("basic") ? AssPart.generateGeneric() : (AssPart)AssPart.generateGeneric().applyMod(new SecondPussyMod()));
 
         if (obj.has("ears"))
             config.ears = Optional.of(EarPart.valueOf(obj.get("ears").getAsString()
@@ -233,19 +236,23 @@ class BodyConfiguration {
 
         public static GenitalConfiguration parse(JsonObject object) {
             GenitalConfiguration config = new GenitalConfiguration();
-
             if (object.has("cock")) {
                 CockConfiguration cock = new CockConfiguration();
                 JsonObject cockJson = object.getAsJsonObject("cock");
-                JsonUtils.getOptional(cockJson, "length").map(JsonElement::getAsString)
-                                .ifPresent(length -> cock.length = BasicCockPart.valueOf(length.toLowerCase()));
-                cock.type = JsonUtils.getOptional(cockJson, "type").map(JsonElement::getAsString)
-                                .map(String::toLowerCase).filter(type -> !type.equals("basic")).map(CockMod::valueOf);
+                JsonUtils.getOptional(cockJson, "length").map(JsonElement::getAsInt)
+                                .ifPresent(length -> cock.length = length);
+                cock.type = JsonUtils.getOptional(cockJson, "type").flatMap(json -> CockMod.getFromType(json.getAsString()));
                 config.cock = Optional.of(cock);
             }
 
-            config.pussy = JsonUtils.getOptional(object, "pussy").map(JsonElement::getAsString).map(PussyPart::valueOf);
-
+            JsonUtils.getOptional(object, "pussy").ifPresent(modClass -> {
+                if (modClass.isJsonPrimitive() && modClass.getAsString().equals("normal")) {
+                    config.pussy = Optional.of(PussyPart.generic);
+                } else {
+                    PartMod pussyMod = JsonUtils.getGson().fromJson(modClass, PartMod.class);
+                    config.pussy = Optional.of((PussyPart)PussyPart.generic.applyMod(pussyMod));
+                }
+            });
             return config;
         }
 
@@ -263,39 +270,38 @@ class BodyConfiguration {
 
     static class CockConfiguration {
         Optional<CockMod> type;
-        BasicCockPart length;
+        int length;
 
         CockConfiguration() {
             type = Optional.empty();
-            length = BasicCockPart.average;
+            length = 6;
         }
 
         private CockPart build() {
-            return type.isPresent() ? new ModdedCockPart(length, type.get()) : length;
+            GenericCockPart generic = (GenericCockPart) new GenericCockPart().applyMod(new SizeMod(length));
+            return type.isPresent() ? (CockPart) generic.applyMod(type.get()) : generic;
         }
     }
 
-
     enum Archetype {
-        REGULAR(null, PussyPart.normal),
-        DEMON(CockMod.incubus, PussyPart.succubus),
-        CAT(CockMod.primal, PussyPart.feral),
-        CYBORG(CockMod.bionic, PussyPart.cybernetic),
-        ANGEL(CockMod.blessed, PussyPart.divine),
-        WITCH(CockMod.runic, PussyPart.arcane),
-        SLIME(CockMod.slimy, PussyPart.gooey);
+        REGULAR(null, PussyPart.generic),
+        DEMON(CockMod.incubus, PussyPart.generic.applyMod(DemonicMod.INSTANCE)),
+        CAT(CockMod.primal, PussyPart.generic.applyMod(FeralMod.INSTANCE)),
+        CYBORG(CockMod.bionic, PussyPart.generic.applyMod(CyberneticMod.INSTANCE)),
+        ANGEL(CockMod.blessed, PussyPart.generic.applyMod(DivineMod.INSTANCE)),
+        WITCH(CockMod.runic, PussyPart.generic.applyMod(ArcaneMod.INSTANCE)),
+        SLIME(CockMod.slimy, PussyPart.generic.applyMod(GooeyMod.INSTANCE));
         private final CockMod cockMod;
-        private final PussyPart pussy;
+        private final BodyPart pussy;
 
-        Archetype(CockMod cockMod, PussyPart pussy) {
+        Archetype(CockMod cockMod, BodyPart pussy) {
             this.cockMod = cockMod;
             this.pussy = pussy;
         }
 
         private void apply(Body body) {
             if (body.has("cock") && this != REGULAR) {
-                BasicCockPart size = BasicCockPart.valueOf(body.getLargestCock().getName());
-                body.addReplace(new ModdedCockPart(size, cockMod), 1);
+                body.addReplace(body.getRandomCock().applyMod(cockMod), 1);
             }
             if (body.has("pussy") && this != REGULAR)
                 body.addReplace(pussy, 1);
@@ -316,19 +322,5 @@ class BodyConfiguration {
                     break;
             }
         }
-    }
-
-
-
-    public static void main(String[] args) {
-        String test = "{\"archetype\":\"regular\",\"genitals\":{\"cock\":{\"type\":\"bionic\",\"length\":\"huge"
-                        + "\"}},\"breasts\":\"c\",\"ass\":\"AnalPussy\",\"ears\":\"pointed\",\"tail\":\"cat\",\"wings"
-                        + "\":\"demonic\",\"tentacles\":[],\"hotness\":1.0}";
-        BodyConfiguration config = parse(new JsonParser().parse(test).getAsJsonObject());
-        Body body = new Body();
-        config.apply(body);
-        body.finishBody(CharacterSex.male);
-
-        System.out.println(body);
     }
 }

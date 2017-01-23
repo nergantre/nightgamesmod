@@ -10,8 +10,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.mods.TrainedHoleMod;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.TrainedMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -37,7 +37,7 @@ public class Jewel extends BasePersonality {
     public static final String JEWEL_MARTIAL_FOCUS = "JewelMartialFocus";
     public static final String JEWEL_MENTAL_FOCUS = "JewelMentalFocus";
     public static final String JEWEL_PHYSICAL_FOCUS = "JewelPhysicalFocus";
-    
+
     public Jewel() {
         this(Optional.empty(), Optional.empty());
     }
@@ -72,7 +72,8 @@ public class Jewel extends BasePersonality {
         self.modAttributeDontSaveData(Attribute.Power, 2);
         self.modAttributeDontSaveData(Attribute.Speed, 1);
         Global.gainSkills(self);
-        self.getMojo().setMax(80);
+        self.getMojo()
+            .setMax(80);
 
         self.setTrophy(Item.JewelTrophy);
         self.body.add(BreastsPart.c);
@@ -90,14 +91,16 @@ public class Jewel extends BasePersonality {
         growth.addTrait(37, Trait.naturalTop);
         growth.addTrait(47, Trait.takedown);
     }
+
     private void useAnal() {
         Growth growth = character.getGrowth();
         Global.flag(JEWEL_ANAL_FOCUS);
-        growth.addTrait(11, Trait.holecontrol);
-        growth.addTrait(25, Trait.tight);
-        growth.addTrait(37, Trait.powerfulcheeks);
-        growth.addTrait(47, Trait.temptingass);
+        growth.addTrait(11, Trait.powerfulcheeks);
+        growth.addBodyPartMod(25, "ass", FieryMod.INSTANCE);
+        growth.addTrait(37, Trait.temptingass);
+        growth.addTrait(47, Trait.autonomousAss);
     }
+
     private void usePhysical() {
         Growth growth = character.getGrowth();
         Global.flag(JEWEL_PHYSICAL_FOCUS);
@@ -125,85 +128,87 @@ public class Jewel extends BasePersonality {
         }
         growth.addTrait(55, Trait.overwhelmingPresence);
     }
-    
+
     @Override
     public void setGrowth() {
         Growth growth = character.getGrowth();
         growth.stamina = 3;
-        growth.arousal = 3;
+        growth.arousal = 6;
         growth.bonusStamina = 3;
         growth.bonusArousal = 1;
         growth.willpower = 1.7f;
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_ANAL_FOCUS) 
+            return character.getLevel() >= 10 && !Global.checkFlag(JEWEL_ANAL_FOCUS)
                             && !Global.checkFlag(JEWEL_MARTIAL_FOCUS);
         }, (c, self, player) -> character.subject() + " leans back a bit as she watches you recover from your fight."
                         + " <i>\"Hey, " + player.getName() + ". Pop quiz. If I were to knock you on your ass and then"
-                        + " ride your cock with </i>my<i> ass, which part would you enjoy more?\"</i>", Arrays.asList(
-                        new CombatSceneChoice("The takedown", (c, self, other) -> {
+                        + " ride your cock with </i>my<i> ass, which part would you enjoy more?\"</i>",
+                        Arrays.asList(new CombatSceneChoice("The takedown", (c, self, other) -> {
                             c.write("Jewel raises a single shapely eyebrow, <i>\"Oh really? Well, at least you're being honest. "
                                             + "I'll reward your honesty. Oh yes, I will.\"</i>");
                             useMartial();
                             return true;
-                        }),
-                        new CombatSceneChoice("The ass-fucking", (c, self, other) -> {
+                        }), new CombatSceneChoice("The ass-fucking", (c, self, other) -> {
                             c.write("Jewel smirks knowingly, <i>\"Of course. Why do I even ask? Not very subtle, are you?"
                                             + " Well, anyway, I'm sure I can use that. Better get yourself ready.\"</i>");
                             useAnal();
                             return true;
-                        }),
-                        new CombatSceneChoice("Rather be on top- you can take her [Hard Mode]", (c, self, other) -> {
-                            c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
-                                            + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
-                                            + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
-                                            + "idea.<br/>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
-                                            + "and more <b>worthy</b> than you are, and it's clear that my going <b>easy></b> on you has given you a swelled sense of your "
-                                            + "own ability.</i>\"<br/>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
-                                            + "from Jewel's past- perhaps something she kept hearing growing up among a mostly-male military related to stereotypes about girls being "
-                                            + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
-                                            + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
-                            useAnal();
-                            useMartial();
-                            growth.extraAttributes += 1;
-                            // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{25,47},Global.getPlayer());
-                            return true;
-                        })
-        )));
+                        }), new CombatSceneChoice("Rather be on top- you can take her [Hard Mode]",
+                                        (c, self, other) -> {
+                                            c.write("<i>\"You think you can take me?!\"<i> Jewel exclaims, narrowing her eyes angrily. Jewel seems to be legitimately irritated, "
+                                                            + "but she relaxes after a few seconds, seeming to accept the boast as not being an insult to her prowess- though there's "
+                                                            + "a dangerous glint in her eyes that wasn't there before, and you start to worry that provoking her might not have been the wisest"
+                                                            + "idea.<br/>\"I think you've just signed up for some good long lessons in learning your place. I'm stronger, more skilled, "
+                                                            + "and more <b>worthy</b> than you are, and it's clear that my going <b>easy></b> on you has given you a swelled sense of your "
+                                                            + "own ability.</i>\"<br/>Jewel sneers at you, and then turns and stalks away. You must have accidentally hit upon something sensitive "
+                                                            + "from Jewel's past- perhaps something she kept hearing growing up among a mostly-male military related to stereotypes about girls being "
+                                                            + "weak and submissive. Once she's calmed down, you'll have to find her and apologize, but you suspect that from now on Jewel is going "
+                                                            + "to be putting a lot more effort into the games. If you want to keep up, you'll probably have to step up your own efforts as well.");
+                                            useAnal();
+                                            useMartial();
+                                            growth.extraAttributes += 1;
+                                            // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
+                                            Global.getPlayer()
+                                                  .getGrowth()
+                                                  .addTraitPoints(new int[] {25, 47}, Global.getPlayer());
+                                            return true;
+                                        }))));
 
         character.addCombatScene(new CombatScene((c, self, other) -> {
-            return character.getLevel() >= 20 && !Global.checkFlag(JEWEL_MENTAL_FOCUS) 
-                            && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
-        }, (c, self, player) -> "Jewel stands over you after the fight while looking at you rather coldly, <i>\"So, " + player.getName() + ". You're going to be doing what I tell"
+            return character.getLevel() >= 20 && !Global.checkFlag(JEWEL_MENTAL_FOCUS)
+                            && !Global.checkFlag(JEWEL_PHYSICAL_FOCUS)
+                            && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS));
+        }, (c, self, player) -> "Jewel stands over you after the fight while looking at you rather coldly, <i>\"So, "
+                        + player.getName() + ". You're going to be doing what I tell"
                         + " you. No, don't interrupt. You are. My question is, are you just going"
-                        + " to listen to me, or am I going to have to physically force you?\"</i>", Arrays.asList(
-                        new CombatSceneChoice("No, No! I'll listen!", (c, self, other) -> {
+                        + " to listen to me, or am I going to have to physically force you?\"</i>",
+                        Arrays.asList(new CombatSceneChoice("No, No! I'll listen!", (c, self, other) -> {
                             c.write("She smiles, <i>\"Good. Remember that. Because I </i>will<i>"
                                             + " be making demands.\"</i>");
                             useMental();
                             return true;
-                        }),
-                        new CombatSceneChoice("Yeah. No. Try me.", (c, self, other) -> {
+                        }), new CombatSceneChoice("Yeah. No. Try me.", (c, self, other) -> {
                             c.write("Jewel lets a dirty smirk slide onto her face, <i>\"Oh ho ho! Think you're tough, do you? I am already looking"
                                             + " forward to knocking those balls you've apparently found"
                                             + " somewhere all the way up to your throat! And I'll make sure"
                                             + " you enjoy it too.\"</i>");
                             usePhysical();
                             return true;
-                        }),
-                        new CombatSceneChoice("Make fun of her. [Hard Mode]", (c, self, other) -> {
+                        }), new CombatSceneChoice("Make fun of her. [Hard Mode]", (c, self, other) -> {
                             c.write("You can't believe your ears. Jewel thinks you're going to just lie down and be her bitch? There's no way that's happening! "
                                             + "You let her know what you think, and that there's no way some little girl is going to make you do anything. Jewel's eyes narrow dangerously, "
-                                            + "<i>\"" + other.getName() + ", I think you just dug your own grave. We'll see if this <b>little girl</b> can change your mind the next time we meet.\"</i>");
+                                            + "<i>\"" + other.getName()
+                                            + ", I think you just dug your own grave. We'll see if this <b>little girl</b> can change your mind the next time we meet.\"</i>");
                             useMental();
                             usePhysical();
                             character.getGrowth().extraAttributes += 1;
                             // some compensation for the added difficulty. She gets 4 traits and 3 attribute points/level, and you only get 2 traits, but you are fighting more people than just her.
-                            Global.getPlayer().getGrowth().addTraitPoints(new int[]{1,57},Global.getPlayer());
+                            Global.getPlayer()
+                                  .getGrowth()
+                                  .addTraitPoints(new int[] {1, 57}, Global.getPlayer());
                             return true;
-                        })
-        )));
+                        }))));
 
         preferredAttributes.add(c -> c.get(Attribute.Ki) < 15 ? Optional.of(Attribute.Ki) : Optional.empty());
         preferredAttributes.add(c -> c.get(Attribute.Ki) >= 15 && c.get(Attribute.Fetish) < 100
@@ -221,40 +226,51 @@ public class Jewel extends BasePersonality {
         growth.addTrait(13, Trait.powerfulhips);
         growth.addTrait(16, Trait.shameless);
         growth.addTrait(19, Trait.limbTraining1);
-        growth.addTrait(19, Trait.oiledass);
+        growth.addTrait(19, Trait.tight);
         growth.addTrait(20, Trait.dominatrix);
         growth.addTrait(22, Trait.alwaysready);
         // 22 - Choice 2, trait 1 -- Two traits at this level? alwaysready isn't that powerful
         // 25 - Choice 1, trait 2
         growth.addTrait(28, Trait.limbTraining2);
-        growth.addTrait(31, Trait.analTraining2);
+        growth.addTrait(31, Trait.holecontrol);
         growth.addTrait(34, Trait.exhibitionist);
         // 37 - Choice 1, trait 3
-        character.getStamina().setMax(100);
-        character.getArousal().setMax(70);
+        character.getStamina()
+                 .setMax(100);
+        character.getArousal()
+                 .setMax(70);
         // 39 - Choice 2, trait 2
 
-        growth.addTrait(43, Trait.analTraining3);
+        growth.addTrait(43, Trait.analTraining2);
         growth.addTrait(46, Trait.strongwilled);
         // 47 - Choice 1, trait 4
         growth.addTrait(49, Trait.smqueen);
         // 50 - Choice 2, trait 3
-        growth.addTrait(52, Trait.autonomousAss);
+        growth.addTrait(52, Trait.analTraining3);
         growth.addTrait(58, Trait.naturalTop);
     }
 
     @Override
     public void rest(int time) {
         if (character.rank >= 1) {
-            if (!character.has(Trait.fighter) && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS))) {
+            if (!character.has(Trait.fighter)
+                            && (Global.checkFlag(JEWEL_MARTIAL_FOCUS) || Global.checkFlag(JEWEL_ANAL_FOCUS))) {
                 advance();
             }
         }
         if (character.getLevel() >= 40 && Global.checkFlag(JEWEL_ANAL_FOCUS)) {
-            if (!character.body.getRandomAss().getMods(character).stream().anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
-                character.body.addReplace(character.body.getRandomAss().applyMod(new TrainedHoleMod()), 1);
+            if (!character.body.getRandomAss()
+                               .getMods()
+                               .stream()
+                               .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
+                character.body.addReplace(character.body.getRandomAss()
+                                                        .applyMod(new TrainedMod()),
+                                1);
             }
-        } else if (character.body.getRandomAss().getMods(character).stream().anyMatch(mod -> mod.countsAs(character, new TrainedHoleMod()))) {
+        } else if (character.body.getRandomAss()
+                                 .getMods()
+                                 .stream()
+                                 .anyMatch(mod -> mod.countsAs(character, new TrainedMod()))) {
             character.body.addReplace(AssPart.generateGeneric(), 1);
         }
         super.rest(time);
@@ -330,14 +346,17 @@ public class Jewel extends BasePersonality {
         });
 
         character.addLine(CharacterLine.TAUNT_LINER, (c, self, other) -> {
-            if (self.has(Trait.bitingwords) && c.getStance().dom(self)) {
-                ArrayList<String> possible = new ArrayList<>(); 
+            if (self.has(Trait.bitingwords) && c.getStance()
+                                                .dom(self)) {
+                ArrayList<String> possible = new ArrayList<>();
                 possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there "
-                                + c.getOpponent(self).getName()
+                                + other.getName()
                                 + ".\"</i>");
                 possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quite comfortable there. Maybe you're a natural bottom?\"</i>");
                 if (other.hasBalls()) {
-                    possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless " + c.getOpponent(character).boyOrGirl() + "s like you should just give up. Why even try when you end up as my seat every time?\"</i>");
+                    possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless "
+                                    + other.boyOrGirl()
+                                    + "s like you should just give up. Why even try when you end up as my seat every time?\"</i>");
                 }
                 return possible.get(Global.random(possible.size()));
             }
@@ -368,8 +387,7 @@ public class Jewel extends BasePersonality {
             final String finalLines[] = {
                             "Jewels lets out an uncharacterically cute groan when she cums and glares fiercely at you when you chuckle, <i>\"I didn't cum! You didn't hear anything!\"</i>",
                             "<i>\"Ahhn feels sho good... No I wont lose!\"</i>",
-                            "Jewel's body flushs bright red, <i>\"My body feels like it's on fire!\"</i>",
-                            };
+                            "Jewel's body flushs bright red, <i>\"My body feels like it's on fire!\"</i>",};
             switch (self.orgasms) {
                 case 0:
                     return "Jewel glares at you after calming down, <i>\"That one doesn't count... Come on, let's have a rematch!\"</i>";
@@ -378,38 +396,43 @@ public class Jewel extends BasePersonality {
                 case 2:
                     return "<i>\"Shit shit, I won't let you win!\"</i>";
                 default:
-                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+                    return Global.pickRandom(Arrays.asList(finalLines))
+                                 .get();
             }
         });
 
         character.addLine(CharacterLine.MAKE_ORGASM_LINER, (c, self, other) -> {
-            final String finalLines[] = {
-                            "<i>\"Wow, still going! You're the best you know? You can't expect everyone to last this long\"</i>",
-                            "<i>\"Keep it coming partner! I'll take all that you've got.\"</i>",
-                            "<i>\"I hope you're not dry yet, let's continue!\"</i>",
-                            "<i>\"Not dry yet? Great, let's continue!\"</i>",
-                            };
+            final String finalLines[] =
+                            {"<i>\"Wow, still going! You're the best you know? You can't expect everyone to last this long\"</i>",
+                                            "<i>\"Keep it coming partner! I'll take all that you've got.\"</i>",
+                                            "<i>\"I hope you're not dry yet, let's continue!\"</i>",
+                                            "<i>\"Not dry yet? Great, let's continue!\"</i>",};
             switch (other.orgasms) {
                 case 0:
-                    return "<i>\"Heh, no matter what, you're just a horny little " + c.getOpponent(character).boyOrGirl()
-                                + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
+                    return "<i>\"Heh, no matter what, you're just a horny little " + other.boyOrGirl()
+                                    + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
                 case 1:
                     return "<i>\"Oooh that's two now. Hope you can keep going!\"</i>";
                 case 2:
                     return "<i>\"Mmmm not done yet are we? Let's try for a fourth!\"</i>";
                 default:
-                    return Global.pickRandom(Arrays.asList(finalLines)).get();
+                    return Global.pickRandom(Arrays.asList(finalLines))
+                                 .get();
             }
         });
 
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.getType()).orElse("pussy");
+            String part = Global.pickRandom(c.getStance()
+                                             .getPartsFor(c, self, other))
+                                .map(bp -> bp.getType())
+                                .orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
-                return "Jewel smirks at you with a sadistic grin on her face as her " + self.body.getRandom(part).describe(self) 
+                return "Jewel smirks at you with a sadistic grin on her face as her " + self.body.getRandom(part)
+                                                                                                 .describe(self)
                                 + " plunders your strength once again. <i>\"Poor {other:guy}, being dominated by someone who used to be so much weaker than you.\"</i> "
                                 + "The red-head leans close to your ear, <i>\"Don't worry... I wont be making the same mistake. You'll always be my bottom-bitch from now on.\"</i>";
             } else if (other.getLevel() >= self.getLevel()) {
-                return "Jewel clings on to your struggling body as your strength flows out of you and into the lovely red-head. As the flow subsides, she smirks "
+                return "Jewel clings on to your struggling body as your strength streams out of you and into the lovely red-head. As the flow subsides, she smirks "
                                 + "<i>\"Finders keepers...\"</i>";
             } else {
                 return "Jewel rocks her powerful hips on top of you as you cum your soul out into her " + part + ". "
@@ -434,8 +457,10 @@ public class Jewel extends BasePersonality {
     @Override
     public String victory(Combat c, Result flag) {
         Character other = c.getOpponent(character);
-        Collection<BodyPart> otherOrgans = c.getStance().partsFor(c, other);
-        if (BodyPart.hasType(otherOrgans, "ass") && c.getStance().anallyPenetrated(c, other)) {
+        Collection<BodyPart> otherOrgans = c.getStance()
+                                            .getPartsFor(c, other, other);
+        if (BodyPart.hasType(otherOrgans, "ass") && c.getStance()
+                                                     .anallyPenetrated(c, other)) {
             BodyPart insertable = character.body.getRandomInsertable();
             String selfODesc = insertable == null ? "[none]" : insertable.describe(character);
             return "You gasp as Jewel pounds away at your ass without mercy. You're going to cum, you realize. "
@@ -509,7 +534,8 @@ public class Jewel extends BasePersonality {
                             + "hurricane that just passed by.";
             return message;
         }
-        if (c.getStance().vaginallyPenetratedBy(c, character, other)) {
+        if (c.getStance()
+             .vaginallyPenetratedBy(c, character, other)) {
             return "Jewel rocks her hips on top of you, full of confidence and in complete control. She reaches behind her with one hand to play with your balls, as if to prove "
                             + "you're completely at her mercy. Her powerful inner muscles squeeze your cock in time with her movements, creating an irresistable sensation. You moan as "
                             + "you pass the point of no return, but in one swift motion, she moves off your dick and finishes you off by hand. Your semen spills onto your stomach fruitlessly, "
@@ -519,8 +545,11 @@ public class Jewel extends BasePersonality {
                             + "tongue into her entrance until you feel her body shudder. You get a faceful of her love juice. <br/><br/>Jewel hops to her feet, apparently recovering from her orgasm in just "
                             + "a couple seconds. <i>\"You're a good loser at least, but if you really want me, you're going to need to do better than that.\"</i> At that, she walks away without a "
                             + "second glance in your direction.";
-        } else if (c.getStance().vaginallyPenetratedBy(c, other, character)) {
-            return "Jewel fucks you passionately from behind. Her " + character.body.getRandomInsertable().describe(character) + " jackhammers into your poor cunt, While holding your body down with one hand, the red head plays with your clit with the other, "
+        } else if (c.getStance()
+                    .vaginallyPenetratedBy(c, other, character)) {
+            return "Jewel fucks you passionately from behind. Her " + character.body.getRandomInsertable()
+                                                                                    .describe(character)
+                            + " jackhammers into your poor cunt, While holding your body down with one hand, the red head plays with your clit with the other, "
                             + "as if to prove you're completely at her mercy. She teases you with thrusts of varying depth, sometimes quick and shallow, sometimes slow and deep, creating an irresistable sensation in your pussy. "
                             + "You moan as you pass the point of no return, but in one swift motion, she pulls out and finishes you off by hand, leaving you rather surprised and a bit unfulfilled "
                             + "<br/><br/><i>\"That was a good effort, but losers deserve some punishments.\"</i> She crawls up your body until she's straddling your face and "
@@ -566,9 +595,8 @@ public class Jewel extends BasePersonality {
                     message += "She grabs your tender spent dick, which doesn't really hurt, but gets your undivided attention.";
                 } else if (other.hasPussy()) {
                     message += "She pinches your tender clit, which doesn't really hurt, but gets your undivided attention.";
-                } 
-                message += "<i>\"Try not to bore me next time or I may not play so nice with you.\"</i>"
-                                + "<br/>"
+                }
+                message += "<i>\"Try not to bore me next time or I may not play so nice with you.\"</i>" + "<br/>"
                                 + "She gets dressed and walks away with your clothes, leaving you naked and beaten."
                                 + "<br/>";
             }
@@ -596,7 +624,8 @@ public class Jewel extends BasePersonality {
                             + "being under you.\"</i> She practically hops back to her feet. Jesus, her recovery speed is inhuman. <i>\"Of course, next time I'm going to have to throw you to the ground "
                             + "and ravage you. I promise you'll love it.\"</i>";
         }
-        if (c.getStance().vaginallyPenetratedBy(c, character, other)) {
+        if (c.getStance()
+             .vaginallyPenetratedBy(c, character, other)) {
             return "You fuck Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and wraps her legs tightly around your hips. Judging by her moaning, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck. You feel a small tremor run through her body in response, followed by a much stronger shudder when she orgasms moments later. Her vaginal walls "
@@ -613,7 +642,8 @@ public class Jewel extends BasePersonality {
                             + "seems to be in the same state. You maul her tits and thrust completely into her as you shoot your load. She screams in ecstasy when she cums and you both collapse to "
                             + "the floor. <br/><br/>You lie there, enjoying the afterglow. She rolls over and kisses you firmly. She seemed to enjoy that a lot. Is she still going to retaliate tenfold? <i>\"Oh "
                             + "yes, a combination of submission and pleasure. I'm sure I'll think of something good.\"</i>";
-        } else if (c.getStance().vaginallyPenetratedBy(c, other, character)) {
+        } else if (c.getStance()
+                    .vaginallyPenetratedBy(c, other, character)) {
             return "You ride Jewel passionately, driving her closer to orgasm. She runs her fingers through your hair and buckles her hips against you. Judging by her grunting, "
                             + "she must know that she's losing, but that seems to be turning her on even more. Well, there's no reason to go easy on her. You bury your face in her neck and start to "
                             + "lick and suck while skillfully manipulating your hips, grinding against her hardness. You feel a small tremor run through her body in response, followed by a much stronger "
@@ -694,26 +724,26 @@ public class Jewel extends BasePersonality {
                             + "you cum in her hands.";
         }
         if (target.hasDick()) {
-            return String.format(
-                            "Jewel looks over %s, trying to decide what to do with %s."
-                                            + " She stands up and presses her bare foot against %s dick and balls. "
-                                            + "%s groans in pleasure and pain as Jewel roughly grinds her foot against "
-                                            + "the sensitive organs. <i>\"Do you like that? You can't help it, can "
-                                            + "you?\"</i> She grins sadistically. <i>\"I've stomped many " + c.getOpponent(character).boyOrGirl() + "s into "
-                                            + "the ground, but no matter how much pride they have, they always end "
-                                            + "up moaning in pleasure. It's like penises exist just to be dominated.\""
-                                            + "</i> You feel a chill run down your back, watching Jewel's display of"
-                                            + " dominance, but you're also rock hard. %s lets out a loud moan and "
-                                            + "covers Jewel's foot with cum.",
-                            target.getName(), target.directObject(), target.possessiveAdjective(), target.getName(),
-                            target.getName());
+            return String.format("Jewel looks over %s, trying to decide what to do with %s."
+                            + " She stands up and presses her bare foot against %s dick and balls. "
+                            + "%s groans in pleasure and pain as Jewel roughly grinds her foot against "
+                            + "the sensitive organs. <i>\"Do you like that? You can't help it, can "
+                            + "you?\"</i> She grins sadistically. <i>\"I've stomped many " + c.getOpponent(character)
+                                                                                              .boyOrGirl()
+                            + "s into " + "the ground, but no matter how much pride they have, they always end "
+                            + "up moaning in pleasure. It's like penises exist just to be dominated.\""
+                            + "</i> You feel a chill run down your back, watching Jewel's display of"
+                            + " dominance, but you're also rock hard. %s lets out a loud moan and "
+                            + "covers Jewel's foot with cum.", target.getName(), target.directObject(),
+                            target.possessiveAdjective(), target.getName(), target.getName());
         }
         return "Jewel looks over " + target.getName()
                         + ", trying to decide what to do with her. She leans in and kisses the helpless girl firmly on the lips. Breaking the kiss, "
                         + "she starts to probe and inspect " + target.getName()
                         + "'s other lips, making her twitch and whimper with each touch. " + target.getName()
                         + " apparently passes the inspection, "
-                        + "because Jewel slides her hips forward and presses her own wet pussy against " + target.getName()
+                        + "because Jewel slides her hips forward and presses her own wet pussy against "
+                        + target.getName()
                         + "'s. Both girls moan softly as Jewel begins moving her hips, grinding their lips and clits together. For a moment, "
                         + "you think Jewel's plan may backfire and she may cum first, but " + target.getName()
                         + " soon shudders to climax in your arms. Jewel doesn't stop until she reaches "
@@ -751,16 +781,20 @@ public class Jewel extends BasePersonality {
     }
 
     public void advance() {
-        character.getGrowth().addTrait(10, Trait.fighter);
-        character.body.addReplace(PussyPart.fiery, 100);
+        character.getGrowth()
+                 .addTrait(10, Trait.fighter);
+        character.body.addReplace(character.body.getRandomPussy().applyMod(FieryMod.INSTANCE), 1);
         if (character.hasDick()) {
-            character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.enlightened), 1);
+            character.body.addReplace(character.body.getRandomCock()
+                                                    .applyMod(CockMod.enlightened),
+                            1);
         }
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("gi"));
         character.outfitPlan.add(Clothing.getByID("panties"));
         character.mod(Attribute.Ki, 1);
-        character.getGrowth().addOrRemoveTraits(character);
+        character.getGrowth()
+                 .addOrRemoveTraits(character);
     }
 
     @Override

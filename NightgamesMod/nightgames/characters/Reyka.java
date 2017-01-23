@@ -9,6 +9,8 @@ import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.ExtendedTonguedMod;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -16,6 +18,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.strategy.DisablingStrategy;
+import nightgames.skills.strategy.BreastStrategy;
 import nightgames.skills.strategy.FacesitStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.KnockdownStrategy;
@@ -38,6 +41,8 @@ public class Reyka extends BasePersonality {
         self.plan = Plan.hunting;
         self.mood = Emotion.confident;
 
+        self.addPersonalStrategy(new FootjobStrategy());
+        self.addPersonalStrategy(new BreastStrategy());
         self.addPersonalStrategy(new FacesitStrategy());
         self.addPersonalStrategy(new KnockdownStrategy());
         self.addPersonalStrategy(new DisablingStrategy());
@@ -62,7 +67,7 @@ public class Reyka extends BasePersonality {
         self.getMojo().setMax(110);
 
         self.body.add(BreastsPart.dd);
-        self.body.add(PussyPart.succubus);
+        self.body.add(PussyPart.generic.applyMod(DemonicMod.INSTANCE));
         self.body.add(TailPart.demonic);
         self.body.add(WingsPart.demonic);
         self.body.add(EarPart.pointed);
@@ -73,7 +78,7 @@ public class Reyka extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 1;
-        character.getGrowth().arousal = 6;
+        character.getGrowth().arousal = 10;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Dark) < 50 && c.get(Attribute.Dark) <= c.get(Attribute.Fetish) + 10
@@ -106,7 +111,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(44, Trait.analTraining1);
         character.getGrowth().addTrait(47, Trait.desensitized2);
         character.getGrowth().addTrait(50, Trait.sexTraining3);
-        character.getGrowth().addTrait(53, Trait.vaginaltongue);
+        character.getGrowth().addBodyPartMod(53, "pussy", ExtendedTonguedMod.INSTANCE);
         character.getGrowth().addTrait(56, Trait.carnalvirtuoso);
     }
 
@@ -222,6 +227,27 @@ public class Reyka extends BasePersonality {
                             + " Her gaze speaks of indescribable pleasure, but your mind reminds you"
                             + " of the cost of indulging in a succubus' body: Give her half a chance"
                             + " and she will suck out your very soul.";
+        });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
+            if (other.getLevel() < self.getLevel() - 5) {
+                if (c.getStance().vaginallyPenetratedBy(c, other, self)) {
+                    return "The succubus gives you a sad smile as you cum uncontrollably into her nightmarish cunt, with your experience and training leaving you yet again. <i>{other:name}... You know, you're not really enough for me now. I'm still hungry!</i>";
+                } else if (c.getStance().anallyPenetratedBy(c, other, self)) {
+                    return "The succubus gives you a sad smile as you cum uncontrollably into her nightmarish backdoor, with your experience and training leaving you yet again. <i>{other:name}... You know, you're not really enough for me now. I'm still hungry!</i>";
+                } else {
+                    return "The succubus gives you a sad smile as you cum uncontrollably around her nightmarish cock, with your experience and training leaving you yet again. <i>{other:name}... You know, you're not really enough for me now. I'm still hungry!</i>";
+                }
+            } else if (other.getLevel() >= self.getLevel()) {
+                if (c.getStance().inserted(other)) {
+                    return "Reyka gives you a saucy grin as your cum floods her diabolic fuckhole \"<i>Oh ho ho, thank you for the donation kind sir! But you know what they say about charity right? It pays to make it a habit!</i>\"";
+                } else {
+                    return "Reyka gives you a saucy grin as she draws out your power with your orgasm \"<i>Oh ho ho, thank you for the donation kind sir! But you know what they say about charity right? It pays to make it a habit!</i>\"";
+                }
+            } else {
+                return "Reyka gives off a rapturous air as bits and pieces of your soul is absorbed by her demonic " + part + "  <i>\"Mmmm that is <b>good</b>! This is usually the part where I turn on my summoner and do my demon thing, but I think I'll make an exception this time... for now.\"</i>";
+            }
         });
     }
 

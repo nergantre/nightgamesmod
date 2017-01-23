@@ -9,12 +9,15 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.CockBound;
 
-public class GooeyHoleMod extends HoleMod {
-    public GooeyHoleMod() {
+public class GooeyMod extends PartMod {
+    public static final GooeyMod INSTANCE = new GooeyMod();
+
+    public GooeyMod() {
         super("gooey", .2, .5, .2, 2);
     }
+
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
-        if (target.isType("cock")) {
+        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part) && !selfCame) {
             String partName = part.describe(self);
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} %s clenches down hard"
@@ -27,7 +30,7 @@ public class GooeyHoleMod extends HoleMod {
     }
 
     public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart part, BodyPart target) {
-        if (target.isType("cock")) {
+        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part)) {
             String partName = part.describe(self);
             c.write(self, Global.format("{self:NAME-POSSESSIVE} %s envelops"
                             + " {other:possessive} {other:body-part:cock} in a sticky grip, making extraction more"
@@ -47,5 +50,10 @@ public class GooeyHoleMod extends HoleMod {
 
     public Optional<String> getFluids() {
         return Optional.of("slime");
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "gooey consistency";
     }
 }

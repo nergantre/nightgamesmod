@@ -51,7 +51,7 @@ public class BreastGrowth extends Skill {
     public boolean resolve(Combat c, Character target) {
         Result res;
         if (target.roll(getSelf(), c, accuracy(c, target))) {
-            if (target.body.getRandomBreasts() == BreastsPart.flat) {
+            if (target.body.getRandomBreasts().equals(BreastsPart.flat)) {
                 res = Result.special;
             } else {
                 res = Result.normal;
@@ -64,7 +64,7 @@ public class BreastGrowth extends Skill {
         writeOutput(c, permanent ? 1 : 0, res, target);
         if (res != Result.miss) {
             target.add(c, new Hypersensitive(target, 10));
-            BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.size);
+            BreastsPart part = target.body.getBreastsBelow(BreastsPart.f.getSize());
             if (permanent) {
                 if (part != null) {
                     target.body.addReplace(part.upgrade(), 1);

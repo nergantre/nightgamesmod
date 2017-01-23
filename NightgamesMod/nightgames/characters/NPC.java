@@ -93,10 +93,17 @@ public class NPC extends Character {
     @Override
     public String describe(int per, Combat c) {
         String description = ai.describeAll(c, this);
+        boolean wroteStatus = false;
         for (Status s : status) {
-            description = description + "<br/>" + s.describe(c);
+            String statusDesc = s.describe(c);
+            if (!statusDesc.isEmpty()) {
+                description = description + statusDesc + "<br/>";
+                wroteStatus = true;
+            }
         }
-        description = description + "<br/><br/>";
+        if (wroteStatus) {
+            description += "<br/>";
+        }
         description = description + outfit.describe(this);
         description = description + observe(per);
         description = description + c.getCombatantData(this).getManager().describe(this);
@@ -105,10 +112,8 @@ public class NPC extends Character {
 
     private String observe(int per) {
         String visible = "";
-        for (Status s : status) {
-            if (s.flags().contains(Stsflag.unreadable)) {
-                return visible;
-            }
+        if (is(Stsflag.unreadable)) {
+            return visible;
         }
         if (per >= 9) {
             visible = visible + "Her arousal is at " + arousal.percent() + "%<br/>";
@@ -163,7 +168,6 @@ public class NPC extends Character {
         if (per >= 5) {
             visible += Stage.describe(this);
         }
-        
         if (per >= 6 && status.size() > 0) {
             visible += "List of statuses:<br/><i>";
             visible += status.stream().filter(s -> !s.flags().contains(Stsflag.disguised) || per >= 9).map(Status::toString).collect(Collectors.joining(", "));
@@ -260,8 +264,9 @@ public class NPC extends Character {
     }
 
     @Override
-    public void act(Combat c) {
+    public boolean act(Combat c) {
         act(c, c.getOpponent(this));
+        return false;
     }
 
     public void act(Combat c, Character target) {
@@ -421,38 +426,38 @@ public class NPC extends Character {
     }
 
     @Override
-    public String orgasmLiner(Combat c) {
-        return getRandomLineFor(CharacterLine.ORGASM_LINER, c);
+    public String orgasmLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.ORGASM_LINER, c, target);
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c);
+        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c, target);
     }
 
     @Override
     public String bbLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.BB_LINER, c);
+        return getRandomLineFor(CharacterLine.BB_LINER, c, target);
     }
 
     @Override
     public String nakedLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.NAKED_LINER, c);
+        return getRandomLineFor(CharacterLine.NAKED_LINER, c, target);
     }
 
     @Override
     public String stunLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.STUNNED_LINER, c);
+        return getRandomLineFor(CharacterLine.STUNNED_LINER, c, target);
     }
 
     @Override
     public String taunt(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.TAUNT_LINER, c);
+        return getRandomLineFor(CharacterLine.TAUNT_LINER, c, target);
     }
 
     @Override
     public String temptLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.TEMPT_LINER, c);
+        return getRandomLineFor(CharacterLine.TEMPT_LINER, c, target);
     }
 
     @Override
@@ -574,7 +579,6 @@ public class NPC extends Character {
     @Override
     public void spy(Character opponent, IEncounter enc) {
         if (ai.attack(opponent)) {
-            // enc.ambush(this, opponent);
             enc.parse(Encs.ambush, this, opponent);
         } else {
             location.endEncounter();
@@ -584,10 +588,10 @@ public class NPC extends Character {
     @Override
     public void ding() {
         level++;
-        ai.ding();
-        String message = Global.gainSkills(this);
-        if (human()) {
-            Global.gui().message(message);
+        ai.ding(this);
+        Combat currentCombat = Global.gui().combat;
+        if (currentCombat != null && currentCombat.isBeingObserved() && (currentCombat.p1 == this || currentCombat.p2 == this)) {
+            Global.writeIfCombatUpdateImmediately(currentCombat, this, Global.format("{self:subject-action:have} leveled up!", this, this));
         }
     }
 
@@ -680,7 +684,7 @@ public class NPC extends Character {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target), this, true);
+                        c.setStance(new Neutral(this, c.getOpponent(this)), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
@@ -784,9 +788,9 @@ public class NPC extends Character {
     }
 
     @Override
-    public void eot(Combat c, Character opponent, Skill last) {
-        super.eot(c, opponent, last);
-        ai.eot(c, opponent, last);
+    public void eot(Combat c, Character opponent) {
+        super.eot(c, opponent);
+        ai.eot(c, opponent);
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
             c.write(opponent, "<br/>You see " + getName()
                             + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
@@ -856,7 +860,7 @@ public class NPC extends Character {
     @Override
     public String getPortrait(Combat c) {
         Disguised disguised = (Disguised) getStatus(Stsflag.disguised);
-        if (disguised != null) {
+        if (disguised != null && !c.isEnded()) {
             return disguised.getTarget().ai.image(c);
         }
         return ai.image(c);
@@ -877,6 +881,10 @@ public class NPC extends Character {
     }
 
     public Optional<String> getComment(Combat c) {
+        // can't really talk when they're disabled
+        if (!canRespond()) {
+            return Optional.empty();
+        }
         Set<CommentSituation> applicable = CommentSituation.getApplicableComments(c, this, c.getOpponent(this));
         Set<CommentSituation> forbidden = EnumSet.allOf(CommentSituation.class);
         forbidden.removeAll(applicable);
@@ -923,7 +931,6 @@ public class NPC extends Character {
         moodSwing();
         decayMood();
         update();
-        notifyObservers();
     }
 
     public Map<String, List<CharacterLine>> getLines() {

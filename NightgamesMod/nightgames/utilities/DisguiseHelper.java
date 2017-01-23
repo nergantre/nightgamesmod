@@ -1,15 +1,20 @@
 package nightgames.utilities;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import nightgames.characters.Character;
 import nightgames.characters.NPC;
+import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.status.Disguised;
-import nightgames.characters.Character;
 
 public class DisguiseHelper {
     public static void disguiseCharacter(Character self, NPC target) {
         self.addNonCombat(new Disguised(self, target));
         self.body.clearReplacements();
-        self.body.getCurrentParts().forEach(part -> self.body.temporaryRemovePart(part, 1000));
+        Collection<BodyPart> currentParts = new ArrayList<>(self.body.getCurrentParts()); 
+        currentParts.forEach(part -> self.body.temporaryRemovePart(part, 1000));
         target.body.getCurrentParts().forEach(part -> self.body.temporaryAddPart(part, 1000));
         self.getTraits().forEach(t -> self.removeTemporaryTrait(t, 1000));
         target.getTraits().forEach(t -> self.addTemporaryTrait(t, 1000));

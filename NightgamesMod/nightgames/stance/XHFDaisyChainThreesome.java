@@ -60,16 +60,6 @@ public class XHFDaisyChainThreesome extends MaledomSexStance {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character c) {
-        if (c == domSexCharacter(combat)) {
-            return topParts(combat);
-        } else if (c == top) {
-            return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
-                            .collect(Collectors.toList());
-        }
-        return c.equals(bottom) ? bottomParts() : Collections.emptyList();
-    }
-
     @Override
     public List<BodyPart> bottomParts() {
         ArrayList<BodyPart> list = new ArrayList<>();
@@ -77,6 +67,32 @@ public class XHFDaisyChainThreesome extends MaledomSexStance {
         list.add(bottom.body.getRandomCock());
         return list.stream().filter(part -> part != null && part.present())
                         .collect(Collectors.toList());
+    }
+
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
+            return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                            .collect(Collectors.toList());
+        } else if (self == top && other == bottom) {
+            return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                            .collect(Collectors.toList());
+        } else if (self == bottom) {
+            if (other == top) {
+                return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            } else if (other == domSexCharacter) {
+                return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            }
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Character> getAllPartners(Combat c, Character self) {
+        if (self == bottom) {
+            return Arrays.asList(top, domSexCharacter);
+        }
+        return Collections.singletonList(getPartner(c, self));
     }
 
     @Override

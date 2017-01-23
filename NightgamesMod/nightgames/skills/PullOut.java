@@ -63,23 +63,23 @@ public class PullOut extends Skill {
         }
         boolean isLocked = getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked);
         int baseDifficulty = isLocked ? 17 : 10;
-        if (target.has(Trait.bewitchingbottom)) {
-            Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
-            if(fetish.isPresent()) {
-                baseDifficulty += 7 * fetish.get().magnitude;
-            }
-        }
         if (target.has(Trait.stronghold)) {
             baseDifficulty += 5;
         }
         int powerMod = Math.min(20, Math.max(5, target.get(Attribute.Power) - getSelf().get(Attribute.Power)));
         if (c.getStance().en == Stance.anal) {
+            if (target.has(Trait.bewitchingbottom)) {
+                Optional<BodyFetish> fetish = getSelf().body.getFetish("ass");
+                if(fetish.isPresent()) {
+                    baseDifficulty += 7 * fetish.get().magnitude;
+                }
+            }
             if (!target.has(Trait.powerfulcheeks)) {
                 writeOutput(c, result, target);
                 c.setStance(c.getStance().insertRandom(c));
                 return true;
             } else if (getSelf().check(Attribute.Power, 
-                            baseDifficulty - getSelf().escape(c, target) + powerMod)) {
+                            baseDifficulty - getSelf().getEscape(c, target) + powerMod)) {
                 if (isLocked) {
                     c.write(getSelf(), Global.format("Despite {other:name-possessive} inhumanly tight"
                                     + " ass and {other:possessive} strong grip on {self:direct-object},"
@@ -114,7 +114,7 @@ public class PullOut extends Skill {
         } else {
             if (isLocked || target.has(Trait.tight) && c.getStance().inserted(getSelf())) {
                 boolean escaped = getSelf().check(Attribute.Power,
-                                10 - getSelf().escape(c, target) + target.get(Attribute.Power));
+                                10 - getSelf().getEscape(c, target) + target.get(Attribute.Power));
                 if (escaped) {
                     writeOutput(c, result, target);
                 } else {

@@ -3,12 +3,14 @@ package nightgames.characters;
 import java.util.Arrays;
 import java.util.Optional;
 
+import nightgames.characters.body.AssPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
+import nightgames.characters.body.mods.FeralMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -65,7 +67,8 @@ public class Kat extends BasePersonality {
         self.getMojo().setMax(80);
 
         self.body.add(BreastsPart.a);
-        self.body.add(PussyPart.feral);
+        self.body.add(PussyPart.generic.applyMod(FeralMod.INSTANCE));
+        self.body.add(AssPart.generateGeneric().upgrade());
         self.body.add(TailPart.cat);
         self.body.add(EarPart.cat);
         // mostly feminine face
@@ -111,6 +114,7 @@ public class Kat extends BasePersonality {
     private void useFrenzy() {
         Global.flag(KAT_FRENZY_FOCUS);
         character.getGrowth().addTrait(22, Trait.Rut);
+        character.getGrowth().addTrait(22, Trait.NaturalHeat);
         character.getGrowth().addTrait(28, Trait.PrimalHeat);
         if (Global.checkFlag(KAT_SPEED_FOCUS)) {
             character.getGrowth().addTrait(43, Trait.Jackhammer);
@@ -125,7 +129,7 @@ public class Kat extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 2;
         character.addCombatScene(new CombatScene((c, self, other) -> {
@@ -367,6 +371,18 @@ public class Kat extends BasePersonality {
             return "It's easy to forget that Kat's older than you when she looks like she's about to start high school. She's a very short and slim, though you know she's "
                             + "stronger than she looks. Adorable cat ears poke through her short, strawberry blonde hair. She "
                             + "looks a bit timid, but there's a gleam of desire in her eyes.";
+        });
+
+        character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
+            if (other.getLevel() < self.getLevel() - 5) {
+                return "You don't even think Kat notices your meager strength draining into her much larger pool as she passionately fucks you in her bestial lust. <i>\"Nyahaha! Can't stop... WONT stop!\"</i>";
+            } else if (other.getLevel() >= self.getLevel()) {
+                return "Your eyes widen as you feel your experience and training leave you and enter Kat's hungry body alongside your climax. "
+                                + "Kat however doesn't seem to really know what is going on, <i>\"Meowrrrr... That feels <b>REALLY</b> gooooodd... mmm...\"</i>";
+            } else {
+                String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
+                return "The sexy kitty doesn't pause for even a second as you cum your life force into her gluttonous " + part + ". <i>Aahh ahh! You're delicious nyaa!</i>";
+            }
         });
     }
 

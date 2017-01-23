@@ -30,8 +30,8 @@ public class PussyGrind extends Skill {
     }
 
     public boolean fuckable(Combat c, Character target) {
-        return BodyPart.hasType(c.getStance().partsFor(c, getSelf()), "pussy")
-                        && BodyPart.hasType(c.getStance().partsFor(c, target), "pussy");
+        return BodyPart.hasType(c.getStance().getPartsFor(c, getSelf(), target), "pussy")
+                        && BodyPart.hasType(c.getStance().getPartsFor(c, target, getSelf()), "pussy");
     }
 
     @Override

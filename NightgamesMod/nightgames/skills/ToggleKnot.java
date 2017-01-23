@@ -21,7 +21,7 @@ public class ToggleKnot extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.body.get("cock").stream().anyMatch(cock -> cock.getMod(user).countsAs(user, CockMod.primal));
+        return user.body.get("cock").stream().anyMatch(cock -> cock.moddedPartCountsAs(user, CockMod.primal));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ToggleKnot extends Skill {
                 c.write(getSelf(),
                                 "Deciding she's had enough for now, you let your cock return to its regular shape, once again permitting movement.");
             } else if (c.shouldPrintReceive(target, c)) {
-                String part = Global.pickRandom(c.getStance().partsFor(c, target)).orElse(Body.nonePart).describe(target);
+                String part = Global.pickRandom(c.getStance().getPartsFor(c, target, getSelf())).orElse(Body.nonePart).describe(target);
                 c.write(getSelf(), String.format("%s the intense pressure in %s %s "
                                 + "recede as %s allows %s knot to deflate.", target.subjectAction("feel"),
                                 target.possessiveAdjective(), part, getSelf().subject(),

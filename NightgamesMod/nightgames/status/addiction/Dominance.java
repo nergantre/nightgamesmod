@@ -104,7 +104,7 @@ public class Dominance extends Addiction {
     @Override
     protected String describeWithdrawal() {
         return "Your body longs for the exquisite pain and submission " + cause.getName() + " can bring you,"
-                        + " reducing your stamina and causing masochisitc tendencies.";
+                        + " reducing your stamina and causing masochisitic tendencies.";
     }
 
     @Override

@@ -30,9 +30,9 @@ public class Stunned extends DurationStatus {
     @Override
     public String describe(Combat c) {
         if (affected.human()) {
-            return "You were knocked off your feet!";
+            return "You are stunned!";
         } else {
-            return affected.getName() + " was knocked off " + affected.possessiveAdjective() + " feet!";
+            return affected.getName() + " is stunned!";
         }
     }
 

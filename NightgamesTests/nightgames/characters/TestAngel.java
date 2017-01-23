@@ -1,6 +1,7 @@
 package nightgames.characters;
 
 import nightgames.characters.body.*;
+import nightgames.characters.body.mods.DivineMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -47,7 +48,7 @@ public class TestAngel extends BasePersonality {
         baseChar.body = new Body(baseChar, 1);
         baseChar.body.add(BreastsPart.dd);
         baseChar.body.add(new FacePart(.1, 4.2));
-        baseChar.body.add(PussyPart.normal);
+        baseChar.body.add(PussyPart.generic);
         baseChar.body.add(MouthPart.generic);
         baseChar.body.add(new GenericBodyPart("hands", 0, 1, 1, "hands", ""));
         baseChar.body.add(new GenericBodyPart("feet", 0, 1, 1, "feet", ""));
@@ -94,7 +95,7 @@ public class TestAngel extends BasePersonality {
         self.body.add(BreastsPart.dd);
         // very feminine face
         self.body.add(new FacePart(.1, 4.2));
-        self.body.add(PussyPart.normal);
+        self.body.add(PussyPart.generic);
         self.initialGender = CharacterSex.female;
     }
 
@@ -418,7 +419,7 @@ public class TestAngel extends BasePersonality {
         character.add(Trait.demigoddess);
         character.add(Trait.divinity);
         character.add(Trait.proheels);
-        character.body.addReplace(PussyPart.divine, 1);
+        character.body.addReplace(PussyPart.generic.applyMod(DivineMod.INSTANCE), 1);
         character.body.addReplace(WingsPart.angelic, 5);
         character.unequipAllClothing();
         character.outfitPlan.add(Clothing.getByID("translucentshawl"));

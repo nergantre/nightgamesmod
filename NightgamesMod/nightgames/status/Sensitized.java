@@ -127,12 +127,12 @@ public class Sensitized extends DurationStatus {
         obj.addProperty("magnitude", magnitude);
         obj.addProperty("maximum", maximum);
         obj.addProperty("duration", getDuration());
-        obj.add("part", JsonUtils.gson.toJsonTree(part));
+        obj.add("part", JsonUtils.getGson().toJsonTree(part));
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new Sensitized(Global.noneCharacter(), JsonUtils.gson.fromJson(obj.get("part"), BodyPart.class), obj.get("magnitude").getAsFloat(),
+        return new Sensitized(Global.noneCharacter(), JsonUtils.getGson().fromJson(obj.get("part"), BodyPart.class), obj.get("magnitude").getAsFloat(),
                         obj.get("maximum").getAsFloat(), obj.get("duration").getAsInt());
     }
 

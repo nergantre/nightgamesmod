@@ -1,11 +1,10 @@
 package nightgames.characters.body;
 
-import com.google.gson.JsonObject;
-
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
@@ -16,101 +15,36 @@ import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-public enum BreastsPart implements BodyPart {
-    flat("flat", "", 0),
-    a("A Cup", "tiny", 1),
-    b("B Cup", "smallish", 2),
-    c("C Cup", "modest", 3),
-    d("D Cup", "round", 4),
-    dd("DD Cup", "large", 5),
-    e("E Cup", "huge", 6),
-    f("F Cup", "glorious", 7),
-    g("G Cup", "massive", 8),
-    h("H Cup", "colossal", 9);
+public class BreastsPart extends GenericBodyPart {
+    public static BreastsPart flat = (BreastsPart) new BreastsPart().applyMod(new SizeMod(0));
+    public static BreastsPart a = (BreastsPart) new BreastsPart().applyMod(new SizeMod(1));
+    public static BreastsPart b = (BreastsPart) new BreastsPart().applyMod(new SizeMod(2));
+    public static BreastsPart c = (BreastsPart) new BreastsPart().applyMod(new SizeMod(3));
+    public static BreastsPart d = (BreastsPart) new BreastsPart().applyMod(new SizeMod(4));
+    public static BreastsPart dd = (BreastsPart) new BreastsPart().applyMod(new SizeMod(4));
+    public static BreastsPart f = (BreastsPart) new BreastsPart().applyMod(new SizeMod(5));
+    public static BreastsPart g = (BreastsPart) new BreastsPart().applyMod(new SizeMod(6));
+    public static BreastsPart h = (BreastsPart) new BreastsPart().applyMod(new SizeMod(7));
 
-    public String desc;
-    public String name;
-    public int size;
-
-    BreastsPart(String name, String desc, int size) {
-        this.desc = desc;
-        this.name = name;
-        this.size = size;
+    public static BreastsPart generateGeneric() {
+        return new BreastsPart();
     }
 
-    public static String synonyms[] = {"breasts", "tits", "boobs",};
-
-    @Override
-    public void describeLong(StringBuilder b, Character c) {
-        if (c.hasPussy() || size > 0) {
-            b.append(Global.capitalizeFirstLetter(describe(c, true)));
-            b.append(" adorn " + c.nameOrPossessivePronoun() + " chest.");
-        }
+    public BreastsPart() {
+        super("breasts", "", 0.0, 1.0, 1.0, true, "breasts", "");
     }
 
     @Override
-    public String canonicalDescription() {
-        return name;
-    }
-
-    @Override
-    public double priority(Character c) {
-        return getPleasure(c, null);
-    }
-
-    public String describe(Character c, boolean forceAdjective) {
-        if (c.hasPussy() || size > 0) {
-            if (forceAdjective) {
-                boolean first = Global.random(2) == 0;
-                boolean second = first ? Global.random(2) == 0 : true;
-                return (first ? desc + ' ' : "") + (second ? name + ' ' : "")
-                                + synonyms[Global.random(synonyms.length)];
-            } else {
-                return Global.maybeString(desc + ' ') + Global.maybeString(name + ' ')
-                                + synonyms[Global.random(synonyms.length)];
-            }
-        } else {
-            if (c.get(Attribute.Power) > 25) {
-                return "muscular pecs";
-            }
-            return "flat chest";
-        }
-    }
-
-    @Override
-    public String describe(Character c) {
-        return describe(c, true);
-    }
-
-    @Override
-    public String fullDescribe(Character c) {
-        return describe(c, true);
-    }
-
-    @Override
-    public boolean isType(String type) {
-        return type.equalsIgnoreCase("breasts");
-    }
-
-    @Override
-    public String getType() {
-        return "breasts";
-    }
-
-    @Override
-    public String toString() {
-        return desc + ' ' + name;
-    }
-
-    @Override
-    public boolean isReady(Character self) {
-        return true;
+    public double getFemininity(Character c) {
+        return 3 * ((double) getSize()) / maximumSize().getSize();
     }
 
     @Override
     public double getHotness(Character self, Character opponent) {
+        double hotness = super.getHotness(self, opponent);
+        
         Clothing top = self.getOutfit().getTopOfSlot(ClothingSlot.top);
-        double hotness = -.1 + Math.sqrt(size) * .15 * self.getOutfit()
+        hotness += -.1 + Math.sqrt(getSize()) * .15 * self.getOutfit()
                                                 .getExposure(ClothingSlot.top);
         if (!opponent.hasDick()) {
             hotness /= 2;
@@ -123,89 +57,59 @@ public enum BreastsPart implements BodyPart {
 
     @Override
     public double getPleasure(Character self, BodyPart target) {
-        return .25 + size * .35;
+        return (.25 + getSize() * .35) * super.getPleasure(self, target);
     }
 
     @Override
     public double getSensitivity(Character self, BodyPart target) {
-        return .75 + size * .2;
-    }
-
-    @Override
-    public BodyPart upgrade() {
-        BreastsPart values[] = BreastsPart.values();
-        if (ordinal() < values.length - 1) {
-            return values[ordinal() + 1];
-        } else {
-            return this;
-        }
-    }
-
-    @Override
-    public double getFemininity(Character self) {
-        return 3 * ((double) size) / maximumSize().size;
+        return (.75 + getSize() * .2) * super.getSensitivity(self, target);
     }
 
     public static BreastsPart maximumSize() {
-        BreastsPart max = flat;
-        for (BreastsPart b : BreastsPart.values()) {
-            if (b.size > max.size) {
-                max = b;
-            }
-        }
-        return max;
+        return h;
     }
 
     @Override
-    public BodyPart downgrade() {
-        if (ordinal() > 0) {
-            return BreastsPart.values()[ordinal() - 1];
-        } else {
-            return this;
+    public int mod(Attribute a, int total) {
+        switch (a) {
+            case Speed:
+                return -Math.max(getSize() - 3, 0) / 2;
+            case Seduction:
+                return Math.max(getSize() - 3, 0);
+            default:
+                return 0;
         }
     }
 
-     @Override public JsonObject save() {
-        JsonObject obj = new JsonObject();
-        obj.addProperty("enum", name());
-        return obj;
+    public static String synonyms[] = {"breasts", "tits", "boobs", "chest"};
+
+    @Override
+    public void describeLong(StringBuilder b, Character c) {
+        if (c.hasPussy() || getSize() > 0) {
+            b.append(Global.capitalizeFirstLetter(describe(c)));
+            b.append(" adorn " + c.nameOrPossessivePronoun() + " chest.");
+        }
     }
 
-    @Override public BodyPart load(JsonObject obj) {
-        return BreastsPart.valueOf(obj.get("enum").getAsString());
+    protected String modlessDescription(Character c) {
+        return Global.pickRandom(synonyms).get();
     }
 
     @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
-        return Math.max(5, size) + Global.random(Math.min(0, size - 4));
+        double bonus = super.applyBonuses(self, opponent, target, damage, c);
+        bonus += Math.max(5, getSize()) + Global.random(Math.min(0, getSize() - 4));
+        return bonus;
     }
 
     @Override
-    public String getFluids(Character c) {
-        return c.has(Trait.lactating) ? "milk" : "";
-    }
-
-    @Override
-    public double getFluidAddictiveness(Character c) {
-        if (c.has(Trait.lactating) && c.has(Trait.addictivefluids)) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public boolean isErogenous() {
-        return size > BreastsPart.flat.size;
-    }
-
-    @Override
-    public boolean isNotable() {
-        return true;
+    public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+        super.tickHolding(c, self, opponent, otherOrgan);
     }
 
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
+        double bonus = super.applyReceiveBonuses(self, opponent, target, damage, c);
         if (self.has(Trait.lactating) && target.isType("mouth")) {
             if (self.has(Trait.magicmilk)) {
                 float addictionLevel;
@@ -236,14 +140,15 @@ public enum BreastsPart implements BodyPart {
                 } else if (addictionLevel < Addiction.HIGH_THRESHOLD) {
                     // dependent
                     c.write(opponent,
-                                    Global.format("{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're available. {other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering any other thoughts. "
+                                    Global.format("{other:NAME} desperately {other:action:suck|sucks} at {self:name-possessive} milky teats as soon as they're in front of {other:direct-object}. "
+                                                    + "{other:POSSESSIVE} burning need to imbibe {self:possessive} sweet milk is overpowering all rational thought. "
                                                     + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                     + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
                                     self, opponent));
                 } else {
                     // enslaved
                     c.write(opponent,
-                                    Global.format("{other:SUBJECT} slavishly wrap {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
+                                    Global.format("{other:SUBJECT} slavishly {other:action:wrap} {other:possessive} lips around {self:name-possessive} immaculate teats and start suckling. "
                                                     + "{other:POSSESSIVE} vision darkens around the edges and {other:possessive} world is completely focused on draining {self:possessive} wonderful breasts. "
                                                     + "{self:SUBJECT} smiles at {other:direct-object} and gently cradles {other:possessive} head, rocking {other:direct-object} back and forth while {other:subject} drink. "
                                                     + "The warm milk settles in {other:possessive} belly, slowly setting {other:possessive} body on fire with arousal.",
@@ -256,7 +161,6 @@ public enum BreastsPart implements BodyPart {
                 if (opponent.is(Stsflag.magicmilkcraving)) {
                     // temporarily relieve craving
                     addiction.alleviateCombat(Addiction.LOW_INCREASE);
-    
                 }
                 if (c.getCombatantData(opponent) != null) {
                     int timesDrank = c.getCombatantData(opponent)
@@ -279,63 +183,54 @@ public enum BreastsPart implements BodyPart {
                                                 self, opponent));
                 opponent.add(c, new Charmed(opponent, 2));
             }
+            if (self.has(Trait.PheromonedMilk) && !opponent.has(Trait.Rut)) {
+                c.write(opponent, Global.format("<b>Drinking {self:possessive} breast milk sends {other:direct-object} into a chemically induced rut!</b>",
+                                                self, opponent));
+                opponent.addTemporaryTrait(Trait.Rut, 10);
+            }
         }
-        return 0;
+        return bonus;
     }
 
     @Override
-    public String prefix() {
+    public boolean isReady(Character c) {
+        return true;
+    }
+
+    public String getFluidsNoMods(Character c) {
+        if (c.has(Trait.lactating)) {
+            return "milk";
+        }
         return "";
     }
 
     @Override
-    public int compare(BodyPart other) {
-        if (other instanceof BreastsPart) {
-            return size - ((BreastsPart) other).size;
-        }
-        return 0;
-    }
-
-    @Override
-    public boolean isVisible(Character c) {
+    public boolean getDefaultErogenous() {
         return true;
     }
 
     @Override
-    public double applySubBonuses(Character self, Character opponent, BodyPart with, BodyPart target, double damage,
-                    Combat c) {
-        return 0;
-    }
-
-    @Override
-    public int mod(Attribute a, int total) {
-        switch (a) {
-            case Speed:
-                return -Math.max(size - 3, 0) / 2;
-            case Seduction:
-                return Math.max(size - 3, 0);
-            default:
-                return 0;
+    public double priority(Character c) {
+        double priority = getPleasure(c, null);
+        if (c.has(Trait.temptingtits)) {
+            priority += .5;
         }
-    }
-
-    @Override
-    public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
-
-    }
-
-    @Override
-    public int counterValue(BodyPart otherPart, Character self, Character other) {
-        return 0;
-    }
-
-    @Override
-    public BodyPartMod getMod(Character self) {
-        return BodyPartMod.noMod;
+        if (c.has(Trait.beguilingbreasts)) {
+            priority += .5;
+        }
+        return priority;
     }
 
     @Override
     public String adjective() {
-        return "mammary";
+        return "breast";
+    }
+
+    public BodyPart upgrade() {
+        return this.applyMod(new SizeMod(SizeMod.clampToValidSize(this, getSize() + 1)));
+    }
+
+    public BodyPart downgrade() {
+        return this.applyMod(new SizeMod(SizeMod.clampToValidSize(this, getSize() - 1)));
     }
 }

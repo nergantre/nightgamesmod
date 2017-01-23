@@ -37,7 +37,7 @@ public class Neutral extends Position {
 
     @Override
     public boolean kiss(Character c, Character target) {
-        return true;
+        return false;
     }
 
     @Override

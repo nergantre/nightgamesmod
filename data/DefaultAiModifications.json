@@ -340,14 +340,6 @@
 				"type" : "opponent-status",
 				"value" : "countered",
 				"weight" : 1.0
-			},{
-				"type" : "opponent-status",
-				"value" : "pegged",
-				"weight" : 1.5
-			},{
-				"type" : "opponent-status",
-				"value" : "fucked",
-				"weight" : 1.5
 			}
 		]
 	},{
@@ -1082,10 +1074,6 @@
 				"value" : "frenzied",
 				"weight" : 2.0
 			},{
-				"type" : "self-status",
-				"value" : "fucked",
-				"weight" : 2.0
-			},{
 				"type" : "opponent-status",
 				"value" : "cockbound",
 				"weight" : 2.0
@@ -1261,14 +1249,6 @@
 			},{
 				"type" : "opponent-status",
 				"value" : "aggressive",
-				"weight" : 2.0
-			},{
-				"type" : "opponent-status",
-				"value" : "fucked",
-				"weight" : 2.0
-			},{
-				"type" : "opponent-status",
-				"value" : "pegged",
 				"weight" : 2.0
 			}
 		]

@@ -3,8 +3,10 @@ package nightgames.requirements;
 import nightgames.actions.Movement;
 import nightgames.areas.Area;
 import nightgames.characters.*;
-import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -92,8 +94,8 @@ public class RequirementTest {
     }
 
     @Test public void bodypartTest() throws Exception {
-        self.body.addReplace(PussyPart.normal, 1);
-        other.body.addReplace(PussyPart.fiery, 1);
+        self.body.addReplace(PussyPart.generic, 1);
+        other.body.addReplace(PussyPart.generic.applyMod(FieryMod.INSTANCE), 1);
         assertThat(bodypart("pussy").meets(combat, self, other), is(true));
         assertThat(bodypart("pussy").meets(combat, other, self), is(true));
         other.body.removeAll("pussy");
@@ -121,7 +123,7 @@ public class RequirementTest {
     }
 
     @Test public void insertedTest() throws Exception {
-        self.body.addReplace(BasicCockPart.huge, 1);
+        self.body.addReplace(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_HUGE)), 1);
         combat.setStance(new FlyingCarry(self, other));
         assertThat(inserted().meets(combat, self, other), is(true));
         assertThat(inserted().meets(combat, other, self), is(false));
@@ -207,7 +209,7 @@ public class RequirementTest {
     }
 
     @Test public void positionTest() throws Exception {
-        self.body.addReplace(BasicCockPart.huge, 1);
+        self.body.addReplace(new GenericCockPart(), 1);
         PositionRequirement flyfuck = position("FlyingCarry");
         combat.setStance(new FlyingCarry(self, other));
         assertThat(flyfuck.meets(combat, self, other), is(true));
@@ -248,9 +250,9 @@ public class RequirementTest {
     }
 
     @Test public void specificBodyPartTest() throws Exception {
-        self.body.addReplace(PussyPart.normal, 1);
-        other.body.addReplace(PussyPart.fiery, 1);
-        SpecificBodyPartRequirement fierypussy = specificpart(PussyPart.fiery);
+        self.body.addReplace(PussyPart.generic, 1);
+        other.body.addReplace(PussyPart.generic.applyMod(FieryMod.INSTANCE), 1);
+        SpecificBodyPartRequirement fierypussy = specificpart(PussyPart.generic.applyMod(FieryMod.INSTANCE));
         assertThat(fierypussy.meets(combat, self, other), is(false));
         assertThat(fierypussy.meets(combat, other, self), is(true));
         other.body.removeAll("pussy");

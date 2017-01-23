@@ -21,8 +21,12 @@ public class Suggestion extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && c.getStance().mobile(getSelf()) && !c.getStance().behind(getSelf())
-                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && !target.is(Stsflag.charmed)
-                        && getSelf().canSpend(5);
+                        && !c.getStance().behind(target) && !c.getStance().sub(getSelf()) && !target.is(Stsflag.charmed);
+    }
+    
+    @Override
+    public int getMojoCost(Combat c) {
+        return 5;
     }
 
     @Override
@@ -32,7 +36,6 @@ public class Suggestion extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        getSelf().spendMojo(c, 5);
         if (!target.is(Stsflag.cynical)) {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
@@ -64,11 +67,11 @@ public class Suggestion extends Skill {
         if (modifier == Result.miss) {
             return String.format(
                             "You attempt to put %s under hypnotic suggestion, but %s doesn't appear to be affected.",
-                            new Object[] {target.getName(), target.pronoun()});
+                            target.getName(), target.pronoun());
         }
         return String.format(
                         "You speak in a calm, rhythmic tone, lulling %s into a hypnotic trance. Her eyes seem to glaze over slightly, momentarily slipping under your influence.",
-                        new Object[] {target.getName()});
+                        target.getName());
     }
 
     @Override

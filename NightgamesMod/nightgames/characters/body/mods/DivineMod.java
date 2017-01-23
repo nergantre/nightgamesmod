@@ -11,20 +11,30 @@ import nightgames.status.Stsflag;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
-public class DivineHoleMod extends HoleMod {
-    public DivineHoleMod() {
+public class DivineMod extends PartMod {
+    public static final DivineMod INSTANCE = new DivineMod();
+
+    public DivineMod() {
         super("divine", 0, 1.0, 0.0, -10);
     }
 
-    public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
-        if (target.isType("cock")) {
-            if (self.getStatus(Stsflag.divinecharge) != null) {
-                c.write(self, Global.format(
-                                "{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} pussy seeps into {other:name-possessive} cock, sending unimaginable pleasure directly into {other:possessive} soul.",
-                                self, opponent));
-            }
-            // no need for any effects, the bonus is in the pleasure mod
+    public String adjective(BodyPart part) {
+        if (part.getType().equals("pussy")) {
+            return "divine";
         }
+        if (part.getType().equals("ass")) {
+            return "sacred";
+        }
+        return "holy";
+    }
+
+    public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
+        if (self.getStatus(Stsflag.divinecharge) != null) {
+            c.write(self, Global.format(
+                            "{self:NAME-POSSESSIVE} concentrated divine energy in {self:possessive} %s seeps into {other:name-possessive} %s, sending unimaginable pleasure directly into {other:possessive} soul.",
+                            self, opponent, part.getType(), target.getType()));
+        }
+        // no need for any effects, the bonus is in the pleasure mod
         return 0;
     }
 
@@ -77,5 +87,10 @@ public class DivineHoleMod extends HoleMod {
             pleasureMod += charge.magnitude;
         }
         return pleasureMod;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "divine aura";
     }
 }

@@ -6,12 +6,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
-import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.EarPart;
+import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -20,6 +19,7 @@ import nightgames.requirements.RequirementShortcuts;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
+@SuppressWarnings("unused")
 public class JewelTime extends BaseNPCTime {
     public JewelTime(Character player) {
         super(player, Global.getNPC("Jewel"));
@@ -27,7 +27,7 @@ public class JewelTime extends BaseNPCTime {
         giftedString = "\"Thanks! You're a pretty nice you know?\"";
         giftString = "\"A present? I'm not going to go easy on you even if you bribe me you know?\"";
         transformationOptionString = "Training";
-        transformationIntro = "[Placeholder]<br/>Jewel explains her training to you and how you can too train yourself.";
+        transformationIntro = "[Placeholder]<br/>Jewel explains her training to you and how you too can train yourself.";
         loveIntro = "You're about to go see Jewel, but she shows up at your dorm room first. You invite her inside and she sits on your bed with her legs crossed. <i>\"I need "
                         + "some advice and you're my best friend, but I'm not sure if I should ask you. It's probably something I should talk to another girl about, but there aren't any other girls "
                         + "I can really confide in. When I was growing up I mostly hung out with the boys, so all that girl talk is kinda.... Will you hear me out?\"</i> You're not sure how much "
@@ -58,7 +58,7 @@ public class JewelTime extends BaseNPCTime {
             growCock.option = "Jewel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.enlightened));
+                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.enlightened));
                 return true;
             };
             options.add(growCock);
@@ -76,48 +76,57 @@ public class JewelTime extends BaseNPCTime {
             };
             options.add(removeCock);
         }
-        TransformationOption enlightenedCock = new TransformationOption();
-        enlightenedCock.ingredients.put(Item.PriapusDraft, 10);
-        enlightenedCock.ingredients.put(Item.EnergyDrink, 20);
-        enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
-        enlightenedCock.requirements.add(new BodyPartRequirement("cock"));
-        enlightenedCock.requirements.add((c, self, other) -> {
-            return self.body.get("cock")
-                            .stream()
-                            .anyMatch(cock -> ((CockPart) cock).isGeneric(self));
-        });
-        enlightenedCock.additionalRequirements = "A normal cock";
-        enlightenedCock.option = "Enlightened Cock";
-        enlightenedCock.scene = "[Placeholder]<br/>Jewel trains your cock to be enlightened.";
-        enlightenedCock.effect = (c, self, other) -> {
-            Optional<BodyPart> optPart = self.body.get("cock")
-                                                  .stream()
-                                                  .filter(cock -> ((CockPart) cock).isGeneric(self))
-                                                  .findAny();
-            BasicCockPart target = (BasicCockPart) optPart.get();
-            self.body.remove(target);
-            self.body.add(new ModdedCockPart(target, CockMod.enlightened));
-            return true;
-        };
-        options.add(enlightenedCock);
-        TransformationOption fieryPussy = new TransformationOption();
-        fieryPussy.ingredients.put(Item.EnergyDrink, 20);
-        fieryPussy.ingredients.put(Item.JuggernautJuice, 10);
-        fieryPussy.ingredients.put(Item.FemDraft, 10);
-        fieryPussy.requirements.add(new BodyPartRequirement("pussy"));
-        fieryPussy.requirements.add((c, self, other) -> {
-            return self.body.get("pussy")
-                            .stream()
-                            .anyMatch(part -> part == PussyPart.normal);
-        });
-        fieryPussy.additionalRequirements = "A normal pussy";
-        fieryPussy.option = "Fiery Pussy";
-        fieryPussy.scene = "[Placeholder]<br/>Jewel trains your pussy to be fiery";
-        fieryPussy.effect = (c, self, other) -> {
-            self.body.addReplace(PussyPart.fiery, 1);
-            return true;
-        };
-        options.add(fieryPussy);
+        {
+            TransformationOption enlightenedCock = new ApplyPartModOption("cock", CockMod.enlightened);
+            enlightenedCock.ingredients.put(Item.PriapusDraft, 10);
+            enlightenedCock.ingredients.put(Item.EnergyDrink, 20);
+            enlightenedCock.ingredients.put(Item.JuggernautJuice, 10);
+            enlightenedCock.option = "Enlightened Cock";
+            enlightenedCock.scene = "[Placeholder]<br/>Jewel shows you how to focus your spiritual energy into your cock.";
+            options.add(enlightenedCock);
+        }
+        {
+            TransformationOption fieryPussy = new ApplyPartModOption("pussy", FieryMod.INSTANCE);
+            fieryPussy.ingredients.put(Item.FemDraft, 10);
+            fieryPussy.ingredients.put(Item.EnergyDrink, 20);
+            fieryPussy.ingredients.put(Item.JuggernautJuice, 10);
+            fieryPussy.option = "Fiery Pussy";
+            fieryPussy.scene = "[Placeholder]<br/>Jewel trains you so you can concentrate your ki inside your cunt.";
+            options.add(fieryPussy);
+        }
+        {
+            TransformationOption moltenAss = new ApplyPartModOption("ass", FieryMod.INSTANCE);
+            moltenAss.ingredients.put(Item.MoltenDrippings, 2);
+            moltenAss.ingredients.put(Item.EnergyDrink, 20);
+            moltenAss.ingredients.put(Item.JuggernautJuice, 10);
+            moltenAss.requirements.add((c, self, other) -> {
+                return self.getLevel() >= 30;
+            });
+            moltenAss.additionalRequirements = "Level: 30";
+            moltenAss.option = "Molten Ass";
+            moltenAss.scene = "[Placeholder]<br/>Jewel trains you so you can concentrate your ki inside your ass.";
+            options.add(moltenAss);
+        }
+        {
+            TransformationOption retraining = new TransformationOption();
+            retraining.ingredients.put(Item.MoltenDrippings, 1);
+            retraining.requirements.add((c, s, o) -> Global.getDay().time <= 16);
+            retraining.additionalRequirements = "Be before 4 pm.";
+            retraining.option = "Retraining";
+            retraining.scene = "[Placeholder] Jewel spends the rest of the day breaking you down and building you back up again. By the end of your time together, you feel like a new person!";
+            retraining.effect = (c, self, other) -> {
+                Global.getDay().time = 21;
+                int level = self.getLevel();
+                for (int i = 1; i < level; i++) {
+                    Global.gui().message(self.dong());
+                }
+                for (int i = 1; i < level; i++) {
+                    self.ding();
+                }
+                return true;
+            };
+            options.add(retraining);
+        }
     }
 
     @Override

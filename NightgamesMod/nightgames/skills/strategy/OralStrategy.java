@@ -33,11 +33,17 @@ public class OralStrategy extends KnockdownThenActionStrategy {
         if (self.getMood().equals(Emotion.confident)) {
             weight += .25;
         }
+        if (c.getStance().havingSex(c)) {
+            return 0;
+        }
         return weight;
     }
 
     @Override
     protected Optional<Set<Skill>> getPreferredSkills(Combat c, Character self, Set<Skill> allowedSkills) {
+        if (c.getStance().havingSex(c)) {
+            return Optional.empty();
+        }
         return emptyIfSetEmpty(allowedSkills.stream()
                         .filter(skill -> ((skill.getTags(c).contains(SkillTag.oral)
                                         && skill.getTags(c).contains(SkillTag.pleasure)

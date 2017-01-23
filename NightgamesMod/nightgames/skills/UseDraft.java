@@ -36,7 +36,7 @@ public class UseDraft extends Skill {
     public Collection<String> subChoices(Combat c) {
         ArrayList<String> usables = new ArrayList<String>();
         for (Item i : getSelf().getInventory().keySet()) {
-            if (getSelf().has(i) && i.getEffects().get(0).drinkable() && i.usable(getSelf())) {
+            if (getSelf().has(i) && i.getEffects().get(0).drinkable() && i.usable(c, getSelf(), getSelf())) {
                 usables.add(i.getName());
             }
         }
@@ -87,7 +87,7 @@ public class UseDraft extends Skill {
         } else {
             ArrayList<Item> usables = new ArrayList<Item>();
             for (Item i : getSelf().getInventory().keySet()) {
-                if (i.getEffects().get(0).drinkable()) {
+                if (i.getEffects().get(0).drinkable() && i.usable(c, getSelf(), getSelf())) {
                     usables.add(i);
                 }
             }

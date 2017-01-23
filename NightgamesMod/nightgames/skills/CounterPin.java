@@ -31,7 +31,7 @@ public class CounterPin extends CounterBase {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct();
+        return !c.getStance().dom(getSelf()) && !c.getStance().dom(target) && getSelf().canAct() && target.canAct();
     }
 
     @Override

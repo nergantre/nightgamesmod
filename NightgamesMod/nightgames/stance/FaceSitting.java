@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
@@ -18,6 +19,7 @@ import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Wait;
 import nightgames.skills.damage.DamageType;
+import nightgames.status.Abuff;
 
 public class FaceSitting extends AbstractBehindStance {
     FaceSitting(Character top, Character bottom, Stance en) {
@@ -46,6 +48,9 @@ public class FaceSitting extends AbstractBehindStance {
 
     @Override
     public String image() {
+        if (!top.useFemalePronouns()) {
+            return "facesitting_m.jpg";
+        }
         if (top.hasPussy() && bottom.hasPussy()) {
             return "facesitting_ff.jpg";
         }
@@ -151,6 +156,20 @@ public class FaceSitting extends AbstractBehindStance {
             int m = Global.random(5) + 5;
             bottom.drain(c, top, (int) top.modifyDamage(DamageType.drain, bottom, m));
         }
+        if (top.has(Trait.drainingass)) {
+            if (Global.random(3) == 0) {
+                c.write(top, Global.format("{self:name-possessive} ass seems to <i>inhale</i>, drawing"
+                                + " great gouts of {other:name-possessive} strength from {other:possessive}"
+                                + " body.", top, bottom));
+                bottom.drain(c, top, top.getLevel());
+                bottom.add(c, new Abuff(bottom, Attribute.Power, -3, 10));
+                top.add(c, new Abuff(top, Attribute.Power, 3, 10));
+            } else {
+                c.write(top, Global.format("{other:SUBJECT-ACTION:feel} both {other:possessive} breath and energy being stolen by {self:NAME-POSSESSIVE} ass overlapping {other:POSSESSIVE} face."
+                                + " .", top, bottom));
+                bottom.drain(c, top, top.getLevel()/2);
+            }
+        }
     }
 
     @Override
@@ -203,5 +222,34 @@ public class FaceSitting extends AbstractBehindStance {
 
     public boolean isFacesatOn(Character self) {
         return self == bottom;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        if (struggler.human()) {
+            c.write(struggler, "You try to free yourself from " + top.getName()
+                            + ", but she drops her ass over your face again, forcing you to service her.");
+        } else if (c.shouldPrintReceive(top, c)) {
+            c.write(struggler, String.format("%s struggles against %s, but %s %s %s ass "
+                            + "over %s face again, forcing %s to service %s.", struggler.subject(),
+                            top.nameDirectObject(), top.pronoun(), top.action("drop"),
+                            top.possessiveAdjective(), struggler.possessiveAdjective(),
+                            struggler.directObject(), top.directObject()));
+        }
+        if (top.hasPussy() && !top.has(Trait.temptingass)) {
+            new Cunnilingus(struggler).resolve(c, top);
+        } else {
+            new Anilingus(struggler).resolve(c, top);
+        }
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format(
+                        "{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                                        + " {other:direct-object} behind {self:direct-object} with {other:possessive} long legs wrapped around {self:possessive} waist securely, there is nothing {self:pronoun} can do.",
+                        escapee, top));
+        super.escape(c, escapee);
     }
 }

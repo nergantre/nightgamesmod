@@ -172,7 +172,7 @@ public class TailPeg extends Skill {
                                 + " legs with your tail and plunge it into " + target.possessiveAdjective()
                                 + " wet slit. " + target.getName() + " moans loudly at the sudden intrusion.";
             case strong:
-                if (target.body.getLargestBreasts().size >= 2) {
+                if (target.body.getLargestBreasts().getSize() >= 2) {
                     return "You hug " + target.getName()
                                     + " from behind and cup her breasts with your hands. Taking advantage of her surprise, you shove your tail into her ass, and tickle her prostate with the tip.";
                 } else {

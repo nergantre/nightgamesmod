@@ -17,6 +17,7 @@ public abstract class BaseNPCTime extends Activity {
     protected NPC npc;
     String knownFlag = "";
     String noRequestedItems = "{self:SUBJECT} frowns when {self:pronoun} sees that you don't have the requested items.";
+    String notEnoughMoney = "{self:SUBJECT} frowns when {self:pronoun} sees that you don't have the money required.";
     String giftedString = "\"Awww thanks!\"";
     String giftString = "\"A present? You shouldn't have!\"";
     String transformationOptionString = "Transformations";
@@ -59,7 +60,7 @@ public abstract class BaseNPCTime extends Activity {
         Global.gui().clearText();
         Global.gui().clearCommand();
         List<Loot> giftables = getGiftables();
-        Map<Item, Integer> MyInventory = this.player.getInventory();
+        Map<Item, Integer> inventory = this.player.getInventory();
 
         Optional<TransformationOption> optionalOption =
                         options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
@@ -70,14 +71,21 @@ public abstract class BaseNPCTime extends Activity {
             TransformationOption option = optionalOption.get();
             boolean hasAll = option.ingredients.entrySet().stream()
                             .allMatch(entry -> player.has(entry.getKey(), entry.getValue()));
-            if (hasAll) {
+            int moneyCost = option.moneyCost.apply(this.player);
+            if (!hasAll) {
+                Global.gui().message(Global.format(noRequestedItems, npc, player));
+                Global.gui().choose(this, "Back");
+            } else if (player.money < moneyCost) {
+                Global.gui().message(Global.format(notEnoughMoney, npc, player));
+                Global.gui().choose(this, "Back");
+            } else {
                 Global.gui().message(Global.format(option.scene, npc, player));
                 option.ingredients.entrySet().stream().forEach(entry -> player.consume(entry.getKey(), entry.getValue(), false));
                 option.effect.execute(null, player, npc);
+                if (moneyCost > 0) {
+                    player.modMoney(- moneyCost);
+                }
                 Global.gui().choose(this, "Leave");
-            } else {
-                Global.gui().message(Global.format(noRequestedItems, npc, player));
-                Global.gui().choose(this, "Back");
             }
         } else if (optionalGiftOption.isPresent()) {
             Global.gui().message(Global.format(giftedString, npc, player));
@@ -102,24 +110,30 @@ public abstract class BaseNPCTime extends Activity {
                 Global.flag(transformationFlag);
             }
             options.stream()
-                   .filter(option -> option.requirements.stream().allMatch(req -> req.meets(null, player, npc)))
                    .forEach(opt -> {
                 Global.gui().message(opt.option + ":");
                 opt.ingredients.entrySet().forEach((entry) -> {
-                    if (MyInventory.get(entry.getKey()) == null || MyInventory.get(entry.getKey()) == 0) {
+                    if (inventory.get(entry.getKey()) == null || inventory.get(entry.getKey()) == 0) {
                         Global.gui().message(
                                         entry.getValue() + " " + entry.getKey().getName() + " (you don't have any)");
-
                     } else {
                         Global.gui().message(entry.getValue() + " " + entry.getKey().getName() + " (you have: "
-                                        + MyInventory.get(entry.getKey()) + ")");
+                                        + inventory.get(entry.getKey()) + ")");
                     }
                 });
+                int moneyCost = opt.moneyCost.apply(this.player);
+                if (moneyCost > 0) {
+                    Global.gui().message(moneyCost + "$");
+                }
                 if (!opt.additionalRequirements.isEmpty()) {
                     Global.gui().message(opt.additionalRequirements);
                 }
+                if (opt.requirements.stream().allMatch(req -> req.meets(null, player, npc))) {
+                    Global.gui().choose(this, opt.option);
+                } else {
+                    Global.gui().message("<font color='rgb(214, 64, 101)'>Non-ingredient requirements not met</font>");
+                }
                 Global.gui().message("<br/>");
-                Global.gui().choose(this, opt.option);
             });
             Global.gui().choose(this, "Back");
         } else if (choice.equals("Start") || choice.equals("Back")) {

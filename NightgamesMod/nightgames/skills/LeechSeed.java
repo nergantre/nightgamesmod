@@ -25,7 +25,7 @@ public class LeechSeed extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().canRespond() && getSelf().body.has("tentacles") && !target.is(Stsflag.seeded)
-                        && !(target.is(Stsflag.pegged) && c.getStance().penetrated(c, target))
+                        && !(c.getStance().anallyPenetrated(c, target) && c.getStance().vaginallyPenetrated(c, target))
                         && target.outfit.slotOpen(ClothingSlot.bottom);
     }
 
@@ -38,12 +38,11 @@ public class LeechSeed extends Skill {
     public boolean resolve(Combat c, Character target) {
         if (!target.canAct() || target.roll(getSelf(), c, accuracy(c, target))) {
             Result results = Result.anal;
-            if (!target.is(Stsflag.fucked) && target.hasPussy()) {
+            if (!c.getStance().vaginallyPenetrated(c, target)) {
                 results = Result.normal;
             }
             writeOutput(c, results, target);
             if (results == Result.normal) {
-
                 target.add(c, new Seeded(target, getSelf(), "pussy"));
             } else {
                 target.add(c, new Seeded(target, getSelf(), "ass"));

@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
+import nightgames.status.Stsflag;
 
 public abstract class MaledomSexStance extends Position {
     public MaledomSexStance(Character top, Character bottom, Stance stance) {
@@ -87,5 +90,58 @@ public abstract class MaledomSexStance extends Position {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        Character opponent = getPartner(c, struggler);
+        boolean knotted = opponent.is(Stsflag.knotted);
+
+        int selfM = Global.random(6, 11);
+        int targM = Global.random(6, 11);
+        if (knotted) {
+            c.write(struggler,
+                            Global.format("{self:SUBJECT-ACTION:struggle} fruitlessly against the lump of {other:name-possessive} knotted cock, "
+                                            + "arousing the hell out of both of you in the process.",
+                            struggler, opponent));
+            selfM += 5;
+        } else {
+            c.write(struggler, Global.format("{self:SUBJECT-ACTION:try} to tip {other:name-do} off balance, but {other:pronoun-action:grip} {other:possessive} hips firmly, "
+                            + "pushing {other:possessive} cock deep inside {self:direct-object} and pinning {self:direct-object} to the floor. "
+                            + "The sensations from wrestling with {other:possessive} cock buried inside {self:direct-object} almost make {self:direct-object} cum.", struggler, opponent));
+        }
+
+        struggler.body.pleasure(opponent, opponent.body.getRandomInsertable(), struggler.body.getRandomPussy(), selfM, c);
+        if (!opponent.has(Trait.strapped)) {
+            opponent.body.pleasure(struggler, struggler.body.getRandomPussy(), opponent.body.getRandomCock(), targM, c);            
+        }
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        Character opponent = getPartner(c, escapee);
+        boolean knotted = opponent.is(Stsflag.knotted);
+
+        int selfM = Global.random(6, 11);
+        int targM = Global.random(6, 11);
+        if (knotted) {
+            c.write(escapee,
+                            Global.format("{self:SUBJECT-ACTION:tickle} {other:name-do} and {self:action:try} to escape with {other:direct-object} distracted. "
+                                            + "Problem is, the knot in {other:possessive} {other:body-part:cock} makes trying to pull out a arousing yet futile task.",
+                            escapee, opponent));
+            selfM += 5;
+        } else {
+            c.write(escapee, Global.format("{self:SUBJECT-ACTION:try} to escape {other:name-possessive} relentless pounding, "
+                            + "but {other:pronoun-action:grip} {other:possessive} hips firmly, pushing {other:possessive} cock deep inside {self:direct-object} once again "
+                            + "and pinning {self:direct-object} to the floor. "
+                            + "The sensations from moving around so much with {other:possessive} cock buried inside {self:direct-object} almost make {self:direct-object} cum.", escapee, opponent));
+        }
+
+        escapee.body.pleasure(opponent, opponent.body.getRandomInsertable(), escapee.body.getRandomPussy(), selfM, c);
+        if (!opponent.has(Trait.strapped)) {
+            opponent.body.pleasure(escapee, escapee.body.getRandomPussy(), opponent.body.getRandomCock(), targM, c);            
+        }
+        super.escape(c, escapee);
     }
 }

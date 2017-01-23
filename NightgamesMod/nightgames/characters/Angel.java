@@ -6,8 +6,8 @@ import java.util.Optional;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DivineMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -59,14 +59,14 @@ public class Angel extends BasePersonality {
 
     @Override public void applyStrategy(NPC self) {
         NPC npcSelf = (NPC) self;
-        npcSelf.plan = Plan.retreating;
+        npcSelf.plan = Plan.hunting;
         npcSelf.mood = Emotion.confident;
     }
 
     @Override
     public void setGrowth() {
-        character.getGrowth().stamina = 1;
-        character.getGrowth().arousal = 5;
+        character.getGrowth().stamina = 2;
+        character.getGrowth().arousal = 9;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 4;
 
@@ -391,7 +391,7 @@ public class Angel extends BasePersonality {
                                 + "\"<i>Mmmm... Honestly I don't need any more of your power. I'm already quite a bit stronger than you now, you know? "
                                 + "But that look on your face as you realize your hard work and training amounts to nothing... I can't get enough of that.</i>\"";
             } else if (other.getLevel() >= self.getLevel()) {
-                return "{self:SUBJECT} leans over your shoulder and purrs into your ear as your strength leaves your body, \"<i>Thank you for the donation. But you wont stop now will you?</i>\"";
+                return "{self:SUBJECT} leans over your shoulder and purrs into your ear as the strength leaves your body, \"<i>Thank you for the donation. But you wont stop now right?</i>\"";
             } else {
                 return "Angel finally seems to have caught up to you in strength. That's... not good. The divine seductress rocks her hips once more experimentally, "
                                 + "and shows you a satisfied smile as you uncontrollably let out a final splurt of cum.";
@@ -624,7 +624,7 @@ public class Angel extends BasePersonality {
         character.getGrowth().addTrait(10, Trait.demigoddess);
         character.getGrowth().addTrait(10, Trait.divinity);
         character.getGrowth().addTrait(10, Trait.proheels);
-        character.body.addReplace(PussyPart.divine, 1);
+        character.body.addReplace(character.body.getRandomPussy().applyMod(new DivineMod()), 1);
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.blessed), 1);
         }

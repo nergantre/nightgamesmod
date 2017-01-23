@@ -1,10 +1,14 @@
 package nightgames.modifier;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import nightgames.actions.Action;
 import nightgames.characters.Character;
 import nightgames.global.Match;
 import nightgames.modifier.skill.SkillModifier;
 
+@SuppressWarnings("unused")
 public interface Modifier {
 
     /**
@@ -48,4 +52,6 @@ public interface Modifier {
     String intro();
 
     String acceptance();
+    
+    default void extraWinnings(Character player, int score) {}
 }

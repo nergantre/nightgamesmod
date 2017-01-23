@@ -11,7 +11,7 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class TailFucked extends Status {
+public class TailFucked extends Status implements InsertedStatus {
     private String target;
     private Character other;
 
@@ -22,7 +22,6 @@ public class TailFucked extends Status {
         requirements.add(eitherinserted());
         flag(Stsflag.bound);
         flag(Stsflag.debuff);
-        flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
     }
 
     @Override
@@ -150,5 +149,25 @@ public class TailFucked extends Status {
     @Override
     public int regen(Combat c) {
         return 0;
+    }
+
+    @Override
+    public BodyPart getHolePart() {
+        return affected.body.getRandom(target);
+    }
+
+    @Override
+    public Character getReceiver() {
+        return affected;
+    }
+
+    @Override
+    public BodyPart getStickPart() {
+        return other.body.getRandom("tail");
+    }
+
+    @Override
+    public Character getPitcher() {
+        return other;
     }
 }

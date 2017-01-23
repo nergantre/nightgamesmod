@@ -97,23 +97,54 @@
 	"body":{
         "parts":[
           {
-            "class":"nightgames.characters.body.BreastsPart",
-            "enum":"d"
+            "type": "breasts",
+            "desc": "breasts",
+            "prefix": "",
+            "hotness": 0.0,
+            "sensitivity": 1.0,
+            "pleasure": 1.0,
+            "descLong": "",
+            "notable": true,
+            "mods": [
+              {
+                "value": 4,
+                "_type": "nightgames.characters.body.mods.SizeMod"
+              }
+            ],
+            "class": "nightgames.characters.body.BreastsPart"
           },
           {
-            "class":"nightgames.characters.body.PussyPart",
-            "enum":"normal"
+            "type": "pussy",
+            "desc": "pussy",
+            "prefix": "a ",
+            "hotness": 0.0,
+            "sensitivity": 1.0,
+            "pleasure": 1.2,
+            "descLong": "",
+            "notable": true,
+            "mods": [],
+            "class": "nightgames.characters.body.PussyPart"
           },
           {
             "class":"nightgames.characters.body.EarPart",
             "enum":"normal"
           },
           {
-          	"class":"nightgames.characters.body.AssPart",
-          	"desc":"ass",
-          	"hotness":0.5,
-          	"pleasure":1.1,
-          	"sensitivity":1.0
+            "type": "ass",
+            "desc": "ass",
+            "prefix": "a ",
+            "hotness": 0.4,
+            "sensitivity": 1.0,
+            "pleasure": 1.2,
+            "descLong": "",
+            "notable": false,
+            "mods": [
+              {
+                "value": 1,
+                "_type": "nightgames.characters.body.mods.SizeMod"
+              }
+			],
+            "class": "nightgames.characters.body.AssPart"
           },
           {
           	"class":"nightgames.characters.body.MouthPart",
@@ -156,7 +187,7 @@
             "desc":"feet"
           }
         ],
-        "hotness":1.5
+        "hotness":1.1
       },
 	"items":{
 		"initial":[{

@@ -59,14 +59,22 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character c) {
-        if (c == domSexCharacter(combat)) {
+    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+        if (self == domSexCharacter(combat) && other == bottom) {
             return topParts(combat);
-        } else if (c == top) {
+        } else if (self == top && other == bottom) {
             return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                             .collect(Collectors.toList());
+        } else if (self == bottom) {
+            if (other == top) {
+                return Arrays.asList(top.body.getRandomAss()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            } else if (other == domSexCharacter) {
+                return Arrays.asList(top.body.getRandomPussy()).stream().filter(part -> part != null && part.present())
+                                .collect(Collectors.toList());
+            }
         }
-        return c.equals(bottom) ? bottomParts() : Collections.emptyList();
+        return Collections.emptyList();
     }
 
     @Override
@@ -90,14 +98,17 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
         }
     }
 
+    public List<Character> getAllPartners(Combat c, Character self) {
+        if (self == bottom) {
+            return Arrays.asList(top, domSexCharacter);
+        }
+        return Collections.singletonList(getPartner(c, self));
+    }
+
     @Override
     public String describe(Combat c) {
-        if (top.human()) {
-            return "";
-        } else {
-            return String.format("%s is fucking %s face while %s taking %s from behind.",
-                            top.subject(), bottom.nameOrPossessivePronoun(), domSexCharacter(c).subjectAction("are", "is"), bottom.directObject());
-        }
+            return String.format("%s is fucking %s ass while %s pounding away at %s pussy.",
+                            top.subject(), bottom.nameOrPossessivePronoun(), domSexCharacter(c).subjectAction("are", "is"), bottom.possessiveAdjective());
     }
 
     @Override
@@ -107,10 +118,10 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
 
     @Override
     public String image() {
-        if (top.useFemalePronouns() || domSexCharacter.useFemalePronouns()) {
-            return "ThreesomeMFMDoublePenFuta.jpg";
+        if (!top.useFemalePronouns()) {
+            return "ThreesomeMFMDoublePen.jpg";
         }
-        return "ThreesomeMFMDoublePen.jpg";
+        return "ThreesomeMFMDoublePenFuta.jpg";
     }
 
     @Override

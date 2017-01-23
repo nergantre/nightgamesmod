@@ -1,11 +1,20 @@
 package nightgames.characters.body;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.mods.PartMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
+import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
@@ -23,6 +32,7 @@ public class GenericBodyPart implements BodyPart {
     public double pleasure;
     public String descLong;
     private boolean notable;
+    private List<PartMod> mods;
 
     public GenericBodyPart(String desc, String descLong, double hotness, double pleasure, double sensitivity,
                     boolean notable, String type, String prefix) {
@@ -34,6 +44,7 @@ public class GenericBodyPart implements BodyPart {
         this.type = type;
         this.notable = notable;
         this.prefix = prefix;
+        this.mods = new ArrayList<>();
     }
 
     public GenericBodyPart(String desc, double hotness, double pleasure, double sensitivity, String type,
@@ -57,12 +68,15 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public String canonicalDescription() {
-        return desc;
+        return mods.stream().sorted().map(PartMod::getModType).collect(Collectors.joining(" ")) + " " + desc;
     }
 
     @Override
     public void describeLong(StringBuilder b, Character c) {
         String parsedDesc = Global.format(descLong, c, c);
+        for (PartMod mod : mods) {
+            parsedDesc = mod.getLongDescriptionOverride(c, this, parsedDesc);
+        }
         b.append(parsedDesc);
     }
 
@@ -76,11 +90,31 @@ public class GenericBodyPart implements BodyPart {
         return type;
     }
 
-    @Override
-    public String describe(Character c) {
+    protected String modlessDescription(Character c) {
         return desc;
     }
+    
+    public String getModDescriptorString(Character c) {
+        return mods.stream().sorted()
+        .filter(mod -> !mod.getDescriptionOverride(c, this).isPresent())
+        .map(mod -> mod.adjective(this))
+        .filter(s -> !s.isEmpty())
+        .map(string -> string + " ")
+        .collect(Collectors.joining());
+    }
 
+    @Override
+    public String describe(Character c) {
+        Optional<String> override = mods.stream().map(mod -> mod.getDescriptionOverride(c, this)).filter(Optional::isPresent).findFirst().flatMap(Function.identity());
+        String normalDescription = override.orElseGet(() -> modlessDescription(c));
+
+        return getModDescriptorString(c) + normalDescription;
+    }
+
+    public int getSize() {
+        return ((SizeMod)mods.stream().filter(mod -> mod instanceof SizeMod).findAny().orElse(SizeMod.INSTANCE)).getSize();
+    }
+    
     @Override
     public double priority(Character c) {
         return (getPleasure(c, null) - 1) * 3;
@@ -88,7 +122,7 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public String fullDescribe(Character c) {
-        if (notable) {
+        if (isNotable()) {
             return describe(c);
         } else {
             return "normal " + describe(c);
@@ -102,12 +136,22 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public double getHotness(Character self, Character opponent) {
-        return hotness;
+        double hotnessMod = hotness;
+        double bonus = 1.0;
+        for (PartMod mod : mods) {
+            bonus += mod.modHotness(self);
+        }
+        return hotnessMod * bonus;
     }
 
     @Override
     public double getPleasure(Character self, BodyPart target) {
         double pleasureMod = pleasure;
+        double pleasureBonus = 1.0;
+        for (PartMod mod : mods) {
+            pleasureBonus += mod.modPleasure(self);
+        }
+        pleasureMod *= pleasureBonus;
         if (type.equals("hands") || type.equals("feet")) {
             pleasureMod += self.has(Trait.limbTraining1) ? .5 : 0;
             pleasureMod += self.has(Trait.limbTraining2) ? .7 : 0;
@@ -122,7 +166,12 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public double getSensitivity(Character self, BodyPart target) {
-        return sensitivity;
+        double sensitivityMod = sensitivity;
+        double bonus = 1.0;
+        for (PartMod mod : mods) {
+            bonus += mod.modSensitivity(self);
+        }
+        return sensitivityMod * bonus;
     }
 
     @Override
@@ -146,11 +195,11 @@ public class GenericBodyPart implements BodyPart {
     }
 
     public JsonObject toJson() {
-        return JsonUtils.gson.toJsonTree(this, this.getClass()).getAsJsonObject();
+        return JsonUtils.getGson().toJsonTree(this, this.getClass()).getAsJsonObject();
     }
 
     public BodyPart fromJson(JsonObject object) {
-        return JsonUtils.gson.fromJson(object, this.getClass());
+        return JsonUtils.getGson().fromJson(object, this.getClass());
     }
 
     @Override public JsonObject save() {
@@ -162,8 +211,47 @@ public class GenericBodyPart implements BodyPart {
     }
 
     @Override
+    public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart target) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.printf("Starting Penetration for %s -> (%s, %s, %s)\n", describe(self), self, opponent,
+                            target.describe(opponent));
+        }
+        for (PartMod mod : mods) {
+            mod.onStartPenetration(c, self, opponent, this, target);
+        }
+    }
+
+    @Override
+    public void onOrgasm(Combat c, Character self, Character opponent) {
+        for (PartMod mod : mods) {
+            mod.onOrgasm(c, self, opponent, this);
+        }
+    }
+
+    @Override
+    public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
+        for (PartMod mod : mods) {
+            mod.tickHolding(c, self, opponent, this, otherOrgan);
+        }
+    }
+
+    @Override
+    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart other, boolean selfCame) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.printf("Processing OrgasmWith for %s -> (%s, %s, %s, %s)\n", describe(self), self, opponent,
+                            other.describe(opponent), Boolean.toString(selfCame));
+        }
+        for (PartMod mod : mods) {
+            mod.onOrgasmWith(c, self, opponent, this, other, selfCame);
+        }
+    }
+
+    @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         int bonus = 0;
+        for (PartMod mod : mods) {
+            bonus += mod.applyBonuses(c, self, opponent, this, target, damage);
+        }
         if (self.has(ClothingTrait.nursegloves) && type.equals("hands")) {
             c.write(self, Global
                             .format("{self:name-possessive} rubber gloves provide a unique sensation as {self:subject-action:run|runs} {self:possessive} hands over {other:possessive} "
@@ -189,24 +277,44 @@ public class GenericBodyPart implements BodyPart {
         return bonus;
     }
 
-    @Override
-    public String getFluids(Character c) {
+    public String getFluidsNoMods(Character c) {
         return "";
     }
 
     @Override
-    public boolean isErogenous() {
+    public String getFluids(Character c) {
+        Optional<String> nonJuicesMod = mods.stream().filter(mod -> mod.getFluids().isPresent() && !mod.getFluids().equals("juices")).findFirst().flatMap(PartMod::getFluids);
+        if (nonJuicesMod.isPresent()) {
+            return nonJuicesMod.get();
+        }
+        Optional<String> anyMod = mods.stream().filter(mod -> mod.getFluids().isPresent()).findFirst().flatMap(PartMod::getFluids);
+        return anyMod.orElse(getFluidsNoMods(c));
+    }
+
+    @Override
+    public final boolean isErogenous() {
+        if (mods.stream().anyMatch(mod -> mod.getErogenousOverride().isPresent())) {
+            return mods.stream().map(mod -> mod.getErogenousOverride()).filter(Optional::isPresent).map(Optional::get).reduce(false, (a, b) -> a || b);            
+        }
+        return getDefaultErogenous();
+    }
+    
+    protected boolean getDefaultErogenous() {
         return false;
     }
 
     @Override
     public boolean isNotable() {
-        return notable;
+        return notable || !mods.isEmpty();
     }
 
     @Override
     public double applyReceiveBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
-        return 0;
+        double bonus = 0;
+        for (PartMod mod : mods) {
+            bonus += mod.applyReceiveBonuses(c, self, opponent, this, target, damage);
+        }
+        return bonus;
     }
 
     @Override
@@ -242,27 +350,50 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public int mod(Attribute a, int total) {
-        return 0;
-    }
-
-    @Override
-    public void tickHolding(Combat c, Character self, Character opponent, BodyPart otherOrgan) {
-
+        int bonus = 0;
+        for (PartMod mod : mods) {
+            bonus += mod.mod(a, total);
+        }
+        return bonus;
     }
 
     @Override
     public int counterValue(BodyPart otherPart, Character self, Character other) {
-        return 0;
-    }
-
-    @Override
-    public BodyPartMod getMod(Character self) {
-        return BodyPartMod.noMod;
+        int counterValue = 0;
+        for (PartMod mod : mods) {
+            counterValue += mod.counterValue(this, otherPart, self, other);
+        }
+        return counterValue;
     }
 
     @Override
     public String adjective() {
         // implement when needed
         return type;
+    }
+
+    public BodyPart instance() {
+        return this.fromJson(this.toJson());
+    }
+
+    public GenericBodyPart applyMod(PartMod mod) {
+        GenericBodyPart newPart = (GenericBodyPart) instance();
+        newPart.mods.removeIf(otherMod -> otherMod.getVariant().equals(mod.getVariant()));
+        newPart.mods.add(mod);
+        return newPart;
+    }
+
+    public BodyPart removeAllMods() {
+        GenericBodyPart part = (GenericBodyPart) instance();
+        part.mods.clear();
+        return part;
+    }
+
+    public List<? extends BodyPartMod> getMods() {
+        return mods;
+    }
+
+    protected List<PartMod> getPartMods() {
+        return mods;
     }
 }

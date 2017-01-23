@@ -7,13 +7,15 @@ import nightgames.global.Global;
 import nightgames.status.CockBound;
 import nightgames.status.Stsflag;
 
-public class TentacledHoleMod extends HoleMod {
-    public TentacledHoleMod() {
+public class TentacledMod extends PartMod {
+    public static final TentacledMod INSTANCE = new TentacledMod();
+
+    public TentacledMod() {
         super("tentacled", 0, 1, .2, 4);
     }
 
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
-        if (target.isType("cock")) {
+        if (c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part)) {
             String partType = part.getType();
             if (!opponent.is(Stsflag.cockbound)) {
                 if (!self.human()) {
@@ -46,5 +48,10 @@ public class TentacledHoleMod extends HoleMod {
             }
         }
         return 0;
+    }
+
+    @Override
+    public String describeAdjective(String partType) {
+        return "inner-tentacles";
     }
 }

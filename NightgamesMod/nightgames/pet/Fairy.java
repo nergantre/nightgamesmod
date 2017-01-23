@@ -12,16 +12,12 @@ import nightgames.skills.petskills.FairyShield;
 import nightgames.skills.petskills.FairyTease;
 
 public class Fairy extends Pet {
-    
-    private Ptype gender;
-    
     public Fairy(Character owner, Ptype gender) {
         this(owner, gender, 2, 4);
     }
 
     public Fairy(Character owner, Ptype gender, int power, int ac) {
         super("faerie", owner, gender, power, ac);
-        this.gender=gender;
     }
 
     @Override
@@ -35,7 +31,7 @@ public class Fairy extends Pet {
 
     @Override
     public void vanquish(Combat c, Pet opponent) {
-        int switcher = 10 * this.gender.ordinal() + opponent.type().ordinal();//there are fewer than 10 pet types. 0,1,2 are fem,herm,male
+        int switcher = 10 * this.type().ordinal() + opponent.type().ordinal();//there are fewer than 10 pet types. 0,1,2 are fem,herm,male
         //unfortunately Java doesn't support dynamically evaluated switch constants, so it has to be if/else.
         if (switcher == getNum(Ptype.fairyfem, Ptype.fairyfem)) {
             c.write(getSelf(), "The two faeries circle around each other vying for the upper hand. " + own()
@@ -97,14 +93,14 @@ public class Fairy extends Pet {
 
     @Override
     public void caught(Combat c, Character captor) {
-        if (captor.human() && (gender == Ptype.fairyfem || gender == Ptype.fairyherm)) {
+        if (captor.human() && (type() == Ptype.fairyfem || type() == Ptype.fairyherm)) {
             c.write(captor, "You snag " + getSelf().getName() + " out of the air. She squirms in your hand, but has no chance of breaking free. You lick the fae from pussy to breasts and the little thing squeals "
                             + "in pleasure. The taste is surprisingly sweet and makes your tongue tingle. You continue lapping up the flavor until she climaxes and disappears.");
         } else {
             c.write(captor, Global.format("{other:SUBJECT-ACTION:manage|manages} to catch {self:name-do} and starts pleasuring her with the tip of {other:possessive} finger. The sensitive fae clings to the probing finger desperately as she thrashes "
                             + "in ecstasy. Before %s can do anything to help, {self:subject} vanishes in a burst of orgasmic magic.", getSelf(), captor, owner().subject()));
         }
-        if (captor.human() && gender == Ptype.fairymale) {
+        if (captor.human() && type() == Ptype.fairymale) {
             c.write(captor, "You snag " + getSelf().getName() + " out of the air. He squirms in your hand, but has no chance of breaking free. You lick the fae from his chest to small prick and the little thing squeals "
                             + "in pleasure. The taste is surprisingly sweet and makes your tongue tingle. You continue lapping up the flavor until he climaxes and disappears.");
         } else {
@@ -116,7 +112,7 @@ public class Fairy extends Pet {
     }
     
     private CharacterSex getCharacterSex() {
-        switch (gender) {
+        switch (type()) {
             case fairyfem:
                 return CharacterSex.female;
             case fairymale:
@@ -133,7 +129,7 @@ public class Fairy extends Pet {
         Growth growth = new Growth();
         PetCharacter self = new PetCharacter(this, owner().nameOrPossessivePronoun() + " " + getName(), getName(), growth, getPower());
         // fairies are about 20 centimeters tall
-        self.body.setHeight(22 - (gender==Ptype.fairyfem?2:0));
+        self.body.setHeight(22 - (type()==Ptype.fairyfem?2:0));
         self.body.makeGenitalOrgans(getCharacterSex());
         self.body.finishBody(getCharacterSex());
         self.learn(new FairyEnergize(self));

@@ -10,6 +10,17 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.CockMod;
+import nightgames.characters.body.mods.ArcaneMod;
+import nightgames.characters.body.mods.CyberneticMod;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.FieryMod;
+import nightgames.characters.body.mods.GooeyMod;
+import nightgames.characters.body.mods.PlantMod;
+import nightgames.characters.body.mods.DemonicMod;
+import nightgames.characters.body.mods.TentacledMod;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.pet.PetCharacter;
@@ -40,9 +51,11 @@ public class ArmManager {
                 if (Global.randomdouble() < .5) {
                     arms.add(new Grabber(this));
                     arms.add(new Grabber(this));
+                    arms.add(new ToyArm(this));
                 } else {
                     arms.add(new Stripper(this));
                     arms.add(new Stripper(this));
+                    arms.add(new ToyArm(this));
                 }
             } else {
                 double r = Global.randomdouble();
@@ -51,25 +64,53 @@ public class ArmManager {
                     arms.add(new Grabber(this));
                     arms.add(new HeatCannon(this));
                     arms.add(new Stripper(this));
+                    arms.add(new ToyArm(this));
                 } else if (r > .5) {
                     arms.add(new Grabber(this));
                     arms.add(new Grabber(this));
                     arms.add(new Stabilizer(this));
                     arms.add(new Stabilizer(this));
+                    arms.add(new ToyArm(this));
                 } else if (r > .25) {
                     arms.add(new HealCannon(this));
                     arms.add(new Stripper(this));
                     arms.add(new DefabCannon(this));
                     arms.add(new HeatCannon(this));
+                    arms.add(new ToyArm(this));
                 } else {
                     arms.add(new Stabilizer(this));
                     arms.add(new Stabilizer(this));
                     arms.add(new HeatCannon(this));
                     arms.add(new DefabCannon(this));
+                    arms.add(new ToyArm(this));
                 }
             }
         }
+        if (owner.has(Trait.Pseudopod) && owner.has(Trait.slime)) {
+            addArm(new TentacleClinger(this));
+            if (owner.level >= 58 && owner.has(Trait.Imposter)) {
+                addArm(new TentacleImpaler(this, Global.pickRandom(IMPALER_MODS)));
+                addArm(new TentacleSucker(this, Global.pickRandom(SUCKER_MODS)));
+            } else if (owner.level >= 28) {
+                addArm(new TentacleImpaler(this, Optional.empty()));
+                addArm(new TentacleSucker(this, Optional.empty()));
+            }
+            if (owner.level >= 48) {
+                addArm(new TentacleInjector(this));
+            }
+            if (owner.level >= 58 && owner.has(Trait.VolatileSubstrate)) {
+                addArm(new TentacleSquirter(this));
+            }
+        }
     }
+    
+    private static final List<? extends PartMod> IMPALER_MODS = Collections.unmodifiableList(CockMod.ALL_MODS);
+    private static final List<? extends PartMod> SUCKER_MODS = Arrays.asList(
+                    new ArcaneMod(), new CyberneticMod(),
+                    new DivineMod(), new FeralMod(),
+                    new FieryMod(), new GooeyMod(),
+                    new PlantMod(), new DemonicMod(),
+                    new TentacledMod());
 
     public void addArm(Arm arm) {
         arms.add(arm);
@@ -83,7 +124,7 @@ public class ArmManager {
         return new ArrayList<>(arms);
     }
 
-    private String describeArms() {
+    private String describeArms(List<? extends Arm> arms) {
         Map<ArmType, List<Arm>> grouped = arms.stream()
                                                   .collect(Collectors.groupingBy(Arm::getType));
         int counter = 0;
@@ -106,12 +147,19 @@ public class ArmManager {
     }
 
     public String describe(Character owner) {
-        if (!arms.isEmpty()) {
-            return "<p>You can see " + describeArms() + " strapped behind "
-                            + owner.possessiveAdjective() + " back.<br/>";
-        } else { 
-            return "";
+        List<RoboArm> roboArms = arms.stream().filter(arm -> arm instanceof RoboArm).map(arm -> (RoboArm)arm).collect(Collectors.toList());
+        List<TentacleArm> tentacleArms = arms.stream().filter(arm -> arm instanceof TentacleArm).map(arm -> (TentacleArm)arm).collect(Collectors.toList());
+        String msg = "";
+        if (!roboArms.isEmpty()) {
+            msg += "<b>You can see " + describeArms(roboArms) + " strapped behind "
+                            + owner.possessiveAdjective() + " back.</b><br/>";
         }
+        if (!tentacleArms.isEmpty()) {
+            msg += "You can see " + tentacleArms.size() + " tentacles attached to " + owner.possessiveAdjective() + " back.<br/>";
+            msg += tentacleArms.stream().map(arm -> arm.describe()).collect(Collectors.joining("<br/>"));
+            msg += "<br/>";
+        }
+        return msg;
     }
 
     private List<Arm> handleMultiArmMoves(Combat c, Character owner, Character target) {
@@ -131,14 +179,14 @@ public class ArmManager {
 
     private void doArmAction(Arm arm, Combat c, Character owner, Character target) {
         if (arm.attackOdds(c, owner, target) > Global.random(100)) {
-            ArmSkill skill = Global.pickRandom(arm.getSkills(c, owner, target)
+            Optional<ArmSkill> skill = Global.pickRandom(arm.getSkills(c, owner, target)
                                                   .stream()
                                                   .filter(s -> s.usable(c, arm, owner, target))
-                                                  .toArray(ArmSkill[]::new)).get();
-            if (skill != null) {
+                                                  .toArray(ArmSkill[]::new));
+            if (skill.isPresent()) {
                 c.write(PetCharacter.DUMMY, String.format("<b>%s %s uses %s</b>", owner.nameOrPossessivePronoun(),
-                                arm.getName(), skill.getName()));
-                skill.resolve(c, arm, owner, target);
+                                arm.getName(), skill.get().getName()));
+                skill.get().resolve(c, arm, owner, target);
                 return;
             }
         }
@@ -147,7 +195,6 @@ public class ArmManager {
 
     public void act(Combat c, Character owner, Character target) {
         if (arms.isEmpty()) {
-            // fast return if no arms
             return;
         }
         List<Arm> available = handleMultiArmMoves(c, owner, target);

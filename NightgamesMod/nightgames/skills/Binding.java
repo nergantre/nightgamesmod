@@ -39,7 +39,7 @@ public class Binding extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         writeOutput(c, Result.normal, target);
-        target.add(c, new Bound(target, Math.min(10 + 3 * getSelf().get(Attribute.Arcane), 70), "seal"));
+        target.add(c, new Bound(target, 45 + 3 * Math.sqrt(getSelf().get(Attribute.Arcane)), "seal"));
         target.emote(Emotion.nervous, 5);
         getSelf().emote(Emotion.confident, 20);
         getSelf().emote(Emotion.dominant, 10);

@@ -90,11 +90,11 @@
 				"archetype":"DEMON",
 				"genitals": {
 					"cock": {
-						"length":"big"
+						"length":8
 					},
 					"pussy":"normal"
 				},
-				"breasts":"d"
+				"breasts":4
 			},
 			"traits": [
 				"succubus",
@@ -125,7 +125,9 @@
 			"body": {
 				"archetype":"DEMON",
 				"genitals": {
-					"pussy":"fiery"
+					"pussy":{
+						"_type": "nightgames.characters.body.mods.FieryMod"
+					}
 				}
 			},
 			"traits": [

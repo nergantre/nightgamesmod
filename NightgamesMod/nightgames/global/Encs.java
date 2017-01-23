@@ -8,6 +8,7 @@ public enum Encs {
     stealclothes,
     fight,
     flee,
+    fleehidden,
     wait,
     smoke,
 

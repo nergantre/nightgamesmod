@@ -10,15 +10,14 @@ import nightgames.status.Enthralled;
 import nightgames.status.Stsflag;
 
 public class EyesOfTemptation extends Skill {
-
     public EyesOfTemptation(Character self) {
         super("Eyes of Temptation", self, 5);
     }
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Seduction) >= 45 || user.get(Attribute.Dark) >= 20
-                        || user.get(Attribute.Arcane) >= 15;
+        return user.get(Attribute.Hypnosis) >= 10 || user.get(Attribute.Dark) >= 15
+                        || user.get(Attribute.Arcane) >= 20;
     }
 
     @Override

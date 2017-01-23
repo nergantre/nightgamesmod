@@ -23,8 +23,8 @@ public class Yank extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance().en  == Stance.neutral && target.has(ClothingTrait.harpoonDildo)
-                        || target.has(ClothingTrait.harpoonOnahole);
+        return c.getStance().en  == Stance.neutral && (target.has(ClothingTrait.harpoonDildo)
+                        || target.has(ClothingTrait.harpoonOnahole));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Yank extends Skill {
         if (target.roll(getSelf(), c, acc)) {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:yank|yanks} {other:name-do}"
                             + " forward by the toy still connecting them, and "
-                            + " {other:pronoun-action} falls stumbles and falls.", getSelf(), target));
+                            + " {other:pronoun-action} stumbles and falls.", getSelf(), target));
             target.add(c, new Falling(target));
             if (Global.random(100) < removeChance) {
                 c.write("The powerful tug dislodges the toy, causing it to retract back where it was launched from.");

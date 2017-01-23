@@ -173,17 +173,8 @@ public class Encounter implements Serializable, IEncounter {
             if (p1ff && p2ff) {
                 startFightTimer();
                 if (p1.human() || p2.human()) {
-                    if (p1.human()) {
-                        Global.gui()
-                              .message(p2.challenge(p1));
-                    } else {
-                        Global.gui()
-                              .message(p1.challenge(p2));
-                    }
-                    this.fight = Global.gui()
-                                       .beginCombat(p1, p2);
+                    this.fight = Global.gui().beginCombat(p1, p2);
                 } else {
-                    // this.fight=new NullGUI().beginCombat(p1,p2);
                     this.fight = new Combat(p1, p2, location);
                 }
             } else if (p1ff) {
@@ -258,7 +249,18 @@ public class Encounter implements Serializable, IEncounter {
                     }
                 }
             } else {
-                if (p1.get(Attribute.Speed) + Global.random(10) >= p2.get(Attribute.Speed) + Global.random(10)) {
+                boolean humanPresent = p1.human() || p2.human();
+                if (p1Guaranteed.isPresent()) {
+                    if (humanPresent) {
+                        Global.gui().message(p1Guaranteed.get());
+                    }
+                    p1.flee(location);
+                } else if (p2Guaranteed.isPresent()) {
+                    if (humanPresent) {
+                        Global.gui().message(p2Guaranteed.get());
+                    }
+                    p2.flee(location);
+                } else if (p1.get(Attribute.Speed) + Global.random(10) >= p2.get(Attribute.Speed) + Global.random(10)) {
                     if (p2.human()) {
                         Global.gui()
                               .message(p1.getName() + " dashes away before you can move.");
@@ -551,6 +553,10 @@ public class Encounter implements Serializable, IEncounter {
             case flee:
                 fightOrFlight(self, false, Optional.empty());
                 break;
+            case fleehidden:
+                checkin += 2;
+                fightOrFlight(self, false, Optional.of(fleeHiddenMessage(self, target)));
+                break;
             case smoke:
                 fightOrFlight(self, false, Optional.of(smokeMessage(self)));
                 self.consume(Item.SmokeBomb, 1);
@@ -564,6 +570,10 @@ public class Encounter implements Serializable, IEncounter {
         return String.format("%s a smoke bomb and %s.", 
                         Global.capitalizeFirstLetter(c.subjectAction("drop", "drops"))
                         , c.action("disappear", "disappears"));
+    }
+
+    private String fleeHiddenMessage(Character c, Character other) {
+        return Global.format("{self:SUBJECT-ACTION:flee} before {other:subject-action:can} notice {self:direct-object}.", c, other);
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,7 +106,6 @@ public class DebugGUIPanel extends JPanel {
                 output.setText(list.get(2) + " is not a valid item");
             }
         }));
-
         consoleCommands.add(new DebugCommand("(\\w+)\\.addAtt (\\w+) ?(\\d+)?", (output, list) -> {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
@@ -113,7 +113,35 @@ public class DebugGUIPanel extends JPanel {
                 if (list.size() > 3 && list.get(3) != null) {
                     amt = Integer.valueOf(list.get(3));
                 }
-                target.mod(Attribute.valueOf(list.get(2)), amt);
+                target.modAttributeDontSaveData(Attribute.valueOf(list.get(2)), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAffection (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.gainAffection(Global.getPlayer(), amt);
+            } catch (NullPointerException e) {
+                output.setText(list.get(1) + " is not a valid charater");
+            } catch (IllegalArgumentException e) {
+                output.setText(list.get(2) + " is not a valid item");
+            }
+        }));
+        consoleCommands.add(new DebugCommand("(\\w+)\\.addAttraction (\\w+) ?(\\d+)?", (output, list) -> {
+            try {
+                Character target = Global.getCharacterByType(list.get(1));
+                int amt = 1;
+                if (list.size() > 3 && list.get(3) != null) {
+                    amt = Integer.valueOf(list.get(3));
+                }
+                target.gainAttraction(Global.getPlayer(), amt);
             } catch (NullPointerException e) {
                 output.setText(list.get(1) + " is not a valid charater");
             } catch (IllegalArgumentException e) {
@@ -155,15 +183,17 @@ public class DebugGUIPanel extends JPanel {
             try {
                 Character target = Global.getCharacterByType(list.get(1));
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < target.traits.size(); i++) {
-                    sb.append(target.traits.get(i));
+                sb.append("Level: " + target.getLevel() + "\n");
+                List<Trait> traits = new ArrayList<>(target.getTraits());
+                for (int i = 0; i < traits.size(); i++) {
+                    sb.append(traits.get(i));
                     if (i % 4 == 2) {
                         sb.append("\n");
-                    } else if (i != target.traits.size() - 1) {
+                    } else if (i != traits.size() - 1) {
                         sb.append(", ");
                     }
                 }
-                String attString = target.att.entrySet().stream().map(e -> String.format("%s: %d", e.getKey(), e.getValue())).collect(Collectors.joining("\n"));
+                String attString = Arrays.stream(Attribute.values()).filter(att -> target.get(att) != 0).map(att -> String.format("%s: %d", att, target.get(att))).collect(Collectors.joining("\n"));
                 output.setText(String.format("Stamina [%s]\nArousal [%s]\nMojo [%s]\nWillpower [%s]\nAttractiveness: %.01f\n%s\n%s",
                                 target.getStamina().toString(), target.getArousal().toString(),
                                 target.getMojo().toString(), target.getWillpower().toString(), target.body.getHotness(Global.getPlayer()), attString, sb.toString()));

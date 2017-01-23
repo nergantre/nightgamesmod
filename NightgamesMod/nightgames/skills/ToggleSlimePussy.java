@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.GooeyMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -70,7 +71,7 @@ public class ToggleSlimePussy extends Skill {
             } else {
                 msg += "but you see no outside changs. Perhaps they are hidden under {self:possessive} clothes?";
             }
-            getSelf().body.add(PussyPart.gooey);
+            getSelf().body.add(PussyPart.generic.applyMod(GooeyMod.INSTANCE));
         }
         if (!target.human() || !target.is(Stsflag.blinded))
             c.write(getSelf(), Global.format(msg, getSelf(), target));
@@ -100,6 +101,6 @@ public class ToggleSlimePussy extends Skill {
     }
 
     private boolean hasSlimePussy() {
-        return getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), PussyPart.gooey);
+        return getSelf().hasPussy() && getSelf().body.getRandomPussy().moddedPartCountsAs(getSelf(), GooeyMod.INSTANCE);
     }
 }

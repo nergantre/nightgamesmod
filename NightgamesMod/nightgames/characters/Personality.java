@@ -39,7 +39,7 @@ public interface Personality extends Serializable {
 
     boolean attack(Character opponent);
 
-    void ding();
+    void ding(Character self);
 
     boolean fit();
 
@@ -71,7 +71,7 @@ public interface Personality extends Serializable {
         // no op
     }
 
-    default void eot(Combat c, Character opponent, Skill last) {
+    default void eot(Combat c, Character opponent) {
         // noop
     }
 

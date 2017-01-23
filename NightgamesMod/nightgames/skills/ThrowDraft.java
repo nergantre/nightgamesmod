@@ -101,7 +101,7 @@ public class ThrowDraft extends Skill {
         } else {
             ArrayList<Item> usables = new ArrayList<Item>();
             for (Item i : getSelf().getInventory().keySet()) {
-                if (i.getEffects().get(0).throwable()) {
+                if (i.getEffects().get(0).throwable() && i.usable(c, getSelf(), c.getOpponent(getSelf()))) {
                     usables.add(i);
                 }
             }
@@ -123,7 +123,7 @@ public class ThrowDraft extends Skill {
                 c.write(target, "...But nothing happened (Stable Form).");
             } else {
                 boolean eventful = false;
-                if (used.usable(target)) {
+                if (used.usable(c, getSelf(), getSelf())) {
                     for (ItemEffect e : used.getEffects()) {
                         eventful |= e.use(c, target, getSelf(), used);
                     }

@@ -146,7 +146,7 @@ public class JsonSourceNPCDataLoader {
     }
 
     protected static ItemAmount readItem(JsonObject obj) {
-        return JsonUtils.gson.fromJson(obj, ItemAmount.class);
+        return JsonUtils.getGson().fromJson(obj, ItemAmount.class);
     }
 
     protected static void loadGrowthResources(JsonObject object, Growth growth) {
@@ -177,7 +177,7 @@ public class JsonSourceNPCDataLoader {
     protected static void loadPreferredAttributes(JsonArray arr, List<PreferredAttribute> preferredAttributes) {
         for (JsonElement element : arr) {
             JsonObject obj = element.getAsJsonObject();
-            Attribute att = JsonUtils.gson.fromJson(obj.get("attribute"), Attribute.class);
+            Attribute att = JsonUtils.getGson().fromJson(obj.get("attribute"), Attribute.class);
             final int max = JsonUtils.getOptional(obj, "max").map(JsonElement::getAsInt).orElse(Integer.MAX_VALUE);
             preferredAttributes.add(new MaxAttribute(att, max));
         }
@@ -186,7 +186,7 @@ public class JsonSourceNPCDataLoader {
     private static void loadGrowthTraits(JsonArray arr, Growth growth) {
         for (JsonElement element : arr) {
             JsonObject obj = element.getAsJsonObject();
-            growth.addTrait(obj.get("level").getAsInt(), JsonUtils.gson.fromJson(obj.get("trait"), Trait.class));
+            growth.addTrait(obj.get("level").getAsInt(), JsonUtils.getGson().fromJson(obj.get("trait"), Trait.class));
         }
     }
 

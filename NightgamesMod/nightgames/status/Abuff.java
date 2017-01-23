@@ -76,6 +76,10 @@ public class Abuff extends DurationStatus {
         return 0;
     }
 
+    public Attribute getModdedAttribute() {
+        return modded;
+    }
+
     @Override
     public String getVariant() {
         return modded.toString();

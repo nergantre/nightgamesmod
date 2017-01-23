@@ -69,7 +69,7 @@ public class Yui extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 3;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().willpower = 1.4f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;

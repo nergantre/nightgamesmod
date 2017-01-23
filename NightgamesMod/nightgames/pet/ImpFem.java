@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
 import nightgames.characters.Growth;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.DemonicMod;
 import nightgames.combat.Combat;
 import nightgames.skills.Grind;
 import nightgames.skills.Piston;
@@ -92,9 +93,9 @@ public class ImpFem extends Pet {
         // imps are about as tall as goblins, maybe a bit shorter
         self.body.setHeight(110);
         if (getPower() > 30) {
-            self.body.add(PussyPart.succubus);            
+            self.body.add(PussyPart.generic.applyMod(DemonicMod.INSTANCE));            
         } else {
-            self.body.add(PussyPart.normal);
+            self.body.add(PussyPart.generic);
         }
         self.body.finishBody(CharacterSex.female);
         self.learn(new ImpAssault(self));

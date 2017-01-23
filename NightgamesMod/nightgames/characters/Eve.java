@@ -2,11 +2,12 @@ package nightgames.characters;
 
 import java.util.Optional;
 
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -53,8 +54,8 @@ public class Eve extends BasePersonality {
         Global.gainSkills(self);
         self.setTrophy(Item.EveTrophy);
         self.body.add(BreastsPart.d);
-        self.body.add(BasicCockPart.big);
-        self.body.add(PussyPart.normal);
+        self.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)));
+        self.body.add(PussyPart.generic);
         self.getMojo().setMax(120);
 
         self.getStamina().setMax(90);
@@ -68,7 +69,7 @@ public class Eve extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 3;
+        character.getGrowth().arousal = 6;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 3;
         preferredAttributes.add(c -> c.get(Attribute.Fetish) < 80 ? Optional.of(Attribute.Fetish) : Optional.empty());

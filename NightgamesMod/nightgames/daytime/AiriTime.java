@@ -6,7 +6,8 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
+import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
 import nightgames.requirements.BodyPartRequirement;
 import nightgames.requirements.NotRequirement;
@@ -52,7 +53,7 @@ public class AiriTime extends BaseNPCTime {
                             + "but you know that she now packs a powerful new weapon!";
             growCock.additionalRequirements = "Free";
             growCock.effect = (c, self, other) -> {
-                other.body.add(BasicCockPart.big);
+                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)));
                 return true;
             };
             options.add(growCock);

@@ -5,31 +5,17 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.CockMod;
-import nightgames.characters.body.PussyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class SlimeMimicry extends DurationStatus {
     private final String mimickedName;
-    private final PussyPart pussyMimicked;
-    private final CockMod cockMimicked;
 
-    public SlimeMimicry(String name, PussyPart pussyMimicked, CockMod cockMimicked, Character affected, int duration) {
+    public SlimeMimicry(String name, Character affected, int duration) {
         super("Mimicry: " + Global.capitalizeFirstLetter(name), affected, duration);
         this.mimickedName = name;
-        this.pussyMimicked = pussyMimicked;
-        this.cockMimicked = cockMimicked;
         this.flag(Stsflag.mimicry);
         this.flag(Stsflag.form);
-    }
-
-    public PussyPart getPussyMimicked() {
-        return pussyMimicked;
-    }
-
-    public CockMod getCockMimicked() {
-        return cockMimicked;
     }
 
     @Override
@@ -99,23 +85,21 @@ public class SlimeMimicry extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new SlimeMimicry(getMimickedName(), pussyMimicked, cockMimicked, newAffected, getDuration());
+        return new SlimeMimicry(getMimickedName(), newAffected, getDuration());
     }
 
-     @Override public JsonObject saveToJson() {
+    @Override public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("mimickedName", getMimickedName());
-        obj.addProperty("pussyMimicked", pussyMimicked.name());
-        obj.addProperty("cockMimicked", cockMimicked.name());
         obj.addProperty("duration", getDuration());
         return obj;
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
         return new SlimeMimicry(obj.get("mimickedName").getAsString(),
-                        PussyPart.valueOf(obj.get("pussyMimicked").getAsString()),
-                        CockMod.valueOf(obj.get("cockMimicked").getAsString()), null, obj.get("duration").getAsInt());
+                        null,
+                        obj.get("duration").getAsInt());
     }
 
     public String getMimickedName() {

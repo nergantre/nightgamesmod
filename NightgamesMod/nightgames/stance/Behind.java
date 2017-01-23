@@ -2,9 +2,9 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Behind extends AbstractBehindStance {
-
     public Behind(Character top, Character bottom) {
         super(top, bottom, Stance.behind);
     }
@@ -102,5 +102,22 @@ public class Behind extends AbstractBehindStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        c.write(struggler, String.format("%s to gain a more dominant position, but with"
+                        + " %s behind %s holding %s waist firmly, there is nothing %s can do.",
+                        struggler.subjectAction("struggle"), top.subject(), struggler.directObject(),
+                        struggler.possessiveAdjective(), struggler.pronoun()));
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format("{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                        + " {other:direct-object} behind {self:direct-object} holding {self:possessive} waist firmly, there is nothing {self:pronoun} can do.",
+                        escapee, top));
+        super.escape(c, escapee);
     }
 }

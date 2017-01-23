@@ -10,9 +10,10 @@ import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
-public class Seeded extends Status {
+public class Seeded extends Status implements InsertedStatus {
     private String target;
     private Character other;
+    public static final BodyPart SEED_PART = new GenericBodyPart("seed", 0.0, 1.0, 0.0, "seed", "a ");;
     private double time;
     private int stage;
 
@@ -22,7 +23,6 @@ public class Seeded extends Status {
         this.other = other;
         this.stage = 0;
         this.time = 0;
-        flag(hole.equals("ass") ? Stsflag.pegged : Stsflag.fucked);
         flag(Stsflag.seeded);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
@@ -222,5 +222,25 @@ public class Seeded extends Status {
     @Override
     public int regen(Combat c) {
         return 0;
+    }
+
+    @Override
+    public BodyPart getHolePart() {
+        return affected.body.getRandom(target);
+    }
+
+    @Override
+    public Character getReceiver() {
+        return affected;
+    }
+
+    @Override
+    public BodyPart getStickPart() {
+        return SEED_PART;
+    }
+
+    @Override
+    public Character getPitcher() {
+        return other;
     }
 }

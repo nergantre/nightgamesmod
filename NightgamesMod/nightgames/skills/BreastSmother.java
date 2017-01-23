@@ -15,7 +15,6 @@ import nightgames.status.BodyFetish;
 import nightgames.status.Charmed;
 
 public class BreastSmother extends Skill {
-
     public BreastSmother(Character self) {
         super("Breast Smother", self);
         addTag(SkillTag.dominant);
@@ -33,19 +32,19 @@ public class BreastSmother extends Skill {
         return 6;
     }
 
-    static int MIN_REQUIRED_BREAST_SIZE = 5;
+    static int MIN_REQUIRED_BREAST_SIZE = 4;
     
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
-                        && getSelf().body.getLargestBreasts().size >= MIN_REQUIRED_BREAST_SIZE
+                        && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && c.getStance().mobile(getSelf())
                         && (!c.getStance().mobile(target) || c.getStance().prone(target)) && getSelf().canAct();
     }
 
     @Override
     public String describe(Combat c) {
-        return "Shove your opponent's face between your tits to crush their resistance.";
+        return "Shove your opponent's face between your tits to crush her resistance.";
     }
 
     @Override
@@ -54,7 +53,7 @@ public class BreastSmother extends Skill {
         writeOutput(c, special ? Result.special : Result.normal, target);
 
 
-        double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().size;
+        double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().getSize();
 
         if (target.has(Trait.temptingtits)) {
             n += Global.random(5, 10);
@@ -114,23 +113,22 @@ public class BreastSmother extends Skill {
         
         if (modifier == Result.special) {
             b.append( "You quickly wrap up " + target.getName() + "'s head in your arms and press your "
-                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " into their face. ");
+                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " into " + target.nameOrPossessivePronoun() + " face. ");
         }
         else {
             b.append( "You rock " + target.getName() + "'s head between your "
-                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " trying to force them to gasp.");                           
+                            + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " trying to force " + target.directObject() + " to gasp.");                           
         }
         
         if (getSelf().has(Trait.temptingtits)) {
-            b.append("They can't help but groan in pleasure from having their face stuck between your perfect tits");           
-                          
+            b.append(Global.capitalizeFirstLetter(target.possessiveAdjective()) + " can't help but groan in pleasure from having " + target.possessiveAdjective() + " face stuck between your perfect tits");                          
             if (getSelf().has(Trait.beguilingbreasts)) {
-                b.append(", and you can't help but smile as they snuggle deeper into your cleavage");
+                b.append(", and you smile as " + target.pronoun() + " snuggles deeper into your cleavage");
             } 
             b.append(".");
             
         } else{
-            b.append(" " + target.getName() + " muffles something in confusion into your breasts before they begin to panic as they realize they cannot breathe!");            
+            b.append(" " + target.getName() + " muffles something in confusion into your breasts before " + target.pronoun() + " begins to panic as " + target.pronoun() + " realizes " + target.pronoun() + " cannot breathe!");            
         }   
         return b.toString();
 }
@@ -139,10 +137,10 @@ public class BreastSmother extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         StringBuilder b = new StringBuilder();
         if (modifier == Result.special) {
-            b.append( getSelf().subject()+ " quickly wraps up your head between their "
+            b.append( getSelf().subject()+ " quickly wraps up your head between " + getSelf().possessiveAdjective() + " "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + ", filling your vision instantly with them. ");
         } else {
-            b.append( getSelf().subject()+ " rocks your head between their "
+            b.append( getSelf().subject()+ " rocks your head between " + target.possessiveAdjective() + " "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " trying to force you to gasp for air. ");
         }
         

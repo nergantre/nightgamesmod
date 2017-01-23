@@ -1,3 +1,118 @@
+2.5.0.rc.3
+Bug fixes:
+- fixed a bug with the fast combat display not displaying the correct things
+- fixed a bug where orgasming between turn 1 and turn 2 won't skip player 2's turn
+- fixed a crash bug related to disguise
+- added in the money cost to mods like I said I would in the previous mods
+- fixed gui not working correctly when the player levels in combat
+
+Stuff I forgot to put into the old change logs (since rc1):
+- Raised the prices of drafts a bit since they're much more effective now with mods being stackable
+	- lowered the number of drafts needed for transformations a bit to compensate
+- Added the "Molten drippings" item
+	- this is collectable with an empty bottle from defeating someone with a fiery pussy (ie Jewel)
+	- this is drinkable and throwable like other drafts
+	- effects are: deals 500 pain damage, stuns the target for 25 turns, and makes them level up
+	- only usable during combat
+
+Minor:
+- Added a minor non-placeholder message for players using tempt
+
+2.5.0.rc.2
+
+Bug fixes:
+- fixed some crash bugs relating to body part mods
+- fixed start configurations not loading correctly
+- fixed a bunch of scene/grammatical errors (thanks bronze chair)
+
+Minor/Balance?/Making things make sense:
+- kiss can no longer be used in the neutral position
+	- To compensate, it has been buffed slightly
+	- This actually was in the last patch, forgot about putting it into the patch notes
+- changed submissive hold to only be usable when having sex (you could use it in titfuck pin/oral pin, since now they are considered "inserted")
+- changed 69 stance to have the participants not able to "reach top".
+- removed facefuck/facesit's "reach top" requirement
+
+Things to look out for:
+- I've seen the text disappear at times with no crash. I haven't been able to consistently reproduce it unfortunately.
+	- Please try noting what was going on at the time/and or playing with the DEBUG_SCENE option turned on in the debug menu (credits -> debug)
+	- much appreciated :D
+
+2.5.0.rc.1
+
+Quality of Life:
+- Colorized more text in the combat window to make it easier to read
+- Squashed a few messages together to reduce the amount of text
+
+New:
+- Body part modifications have been generalized to other things.
+	- Added some new body modification options for most NPCs
+		- Cassie now offers arcane lipstick and runic ass tattoos in addition to her old options
+		- Reyka now offers devil's ass and demonic mouth options in addition to her old options
+		- Angel now offers sacred ass in addition to her old options
+		- Jewel now offers molten ass and retraining (reset your levels) in addition to her old options
+		- Mara now offers biomech ass and prosthetic mouth upgrades in addition to her old options
+	- Body modification options now cost money, but you can now apply more than one mod at once.
+		- The $ cost will go up dramatically with more mods.
+		- It's currently balanced around having two, maybe three mods at most.
+		- The developer will not be held accountable for what happens with more.
+
+- Added a few new start options
+	- Added reverse level drain challenge (big thanks to dndw)
+		- In this mode, all NPCs will gain the "Level Drainer" trait.
+			- This trait makes it so that they will not receive experience normally
+			- Instead, every time they make another non-leveldrainer combatant cum while having sex,
+			  they will steal a level from their victim (limited to once per fight on non-hardmode variants)
+			- If they win a match without draining a level, they will automatically do so
+			- If you lose a match to a level drainer, you will not get experience for that loss.
+	- Added futa and hardmode versions of the reverse level drain challenge
+
+- Added a new match modifier
+	- Added Level drain match modifier
+		- This has a chance of appearing if you out level the competition by a couple levels
+		- It has similar rules to the reverse level drain challenge
+
+- Airi	has been completely revamped (and retconned a bit. Sue me.)
+	- She now has new trait focuses.
+		- Level 13 focuses consists of slime/stickiness or mimicry.
+		- Level 22 focuses consists of replication/cloning or tentacles (developer's note: don't choose hardmode here... oh god)
+	- Her traits have also been rebalanced to accommodate this
+	- There's a few new scenes for her when she wins before transforming or while disguised.
+
+- Mara has been completely revamped (thanks dndw, you're the best :D)
+	- She now has new trait focuses.
+		- Level 10 focuses consists of a new harpoon toy or an arsenal of gadgets
+		- Level 20 focuses consists of mind control or autonomous robotic arms
+	- Her traits have also been rebalanced to accommodate this
+
+- Jewel's anal focus line has been changed a bit. Most of her traits now apply to face sitting as well as anal sex.
+	- This is to buff her a bit more vs female characters.
+	- She will also get the molten ass mod as a part of this line.
+	- Fiery Pussy has been buffed
+		- It will now inflict pain every turn in addition to when fucking with it.
+		- If the target is stunned, it will gain a heavy bonus to pleasure applied.
+
+- Cassie got a few more changes for her focues.
+	- She gets the new Illusionist trait in the enchantress focus, which adds half of her Arcane attribute as hypnotism 
+	- In her mouth specialization focus, she will no longer have the mouth pussy mod.
+		- Instead she will get an extended tongue at 25 and arcane lipstick at 57
+
+- Added ass sizes
+	- Currently you can modify them in the body shop
+	- This affects your feminity/hotness/bonus seduction/speed a bit currently
+
+Balance/Mechanics changes:
+- Struggle/Escape will now pleasure both combatants when used in a sex stance.
+- Pole control/Hole control and Tight has been nerfed to be half as effective when in a submissive position
+- Ass/Cock/Pussy handler and Anatomical Knowlegdge traits have nerfed to only apply when not in a submissive position
+- Kat's feral ignore orgasm has been nerfed. It actually was just coded incorrect, and had an insane chance to ignore orgasms, especially when her animism was low (???)
+- Attribute scaling formulas were nerfed a bit
+
+Bug fixes:
+- Start options with elevated attributes now will automatically generate levelup data so level draining actually does stuff.
+- I can't even remember. It's been too long.
+- I know I pulled in some fixes from logosK, so thanks for that
+
 2.4.5.5.b
 GUI:
 - Redid the status panel a bit. The status panel should now scroll and the inventory was moved to its own window

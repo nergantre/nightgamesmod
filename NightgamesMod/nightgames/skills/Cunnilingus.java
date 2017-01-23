@@ -3,6 +3,7 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
+import nightgames.characters.body.Body;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -11,6 +12,7 @@ import nightgames.stance.ReverseMount;
 import nightgames.stance.SixNine;
 import nightgames.status.Enthralled;
 
+@SuppressWarnings("unused")
 public class Cunnilingus extends Skill {
 
     public Cunnilingus(Character self) {
@@ -25,7 +27,7 @@ public class Cunnilingus extends Skill {
         boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
         boolean pussyAvailable = target.crotchAvailable() && target.hasPussy();
-        boolean stanceAvailable = c.getStance().oral(getSelf(), target) && !c.getStance().vaginallyPenetrated(c, target);
+        boolean stanceAvailable = c.getStance().oral(getSelf(), target) && (!c.getStance().vaginallyPenetrated(c, target) || c.getStance().getPartsFor(c, getSelf(), target).contains(getSelf().body.getRandom("mouth")));
         boolean usable = pussyAvailable && stanceAvailable && canUse;
         return usable;
     }
@@ -99,7 +101,7 @@ public class Cunnilingus extends Skill {
 
     @Override
     public int accuracy(Combat c, Character target) {
-        return !c.getStance().isBeingFaceSatBy(c, getSelf(), target) && c.getStance().mobile(target) ? 75 : 200;
+        return !c.getStance().isBeingFaceSatBy(c, getSelf(), target) && c.getStance().reachTop(target)? 75 : 200;
     }
 
     @Override

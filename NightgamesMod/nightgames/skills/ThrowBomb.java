@@ -12,8 +12,6 @@ import nightgames.status.PheromoneBombed;
 import nightgames.status.Stsflag;
 
 public class ThrowBomb extends Skill {
-
-
     private static final String DOM_SEX =
                     "{other:SUBJECT}, having pulled a small sphere from somewhere, leans down and places"
                                     + " said sphere on your chest. It gives of a soft beep. You try to roll it"
@@ -26,9 +24,9 @@ public class ThrowBomb extends Skill {
                     + " you from below, it might be best to remove it. Soon.";
 
     public ThrowBomb(Character self) {
-        super("Throw Bomb", self);
+        super("Throw Bomb", self, 4);
     }
-    
+
     @Override
     public String getLabel(Combat c) {
         return c.getStance().en == Stance.neutral ? "Throw Bomb" : "Stick Bomb";
@@ -43,8 +41,8 @@ public class ThrowBomb extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && getSelf().has(Item.Battery, 3) && target.outfit.slotOpen(ClothingSlot.top)
                         && !target.is(Stsflag.bombed)
-                        && c.getStance().front(getSelf())
-                        || (c.getStance().behind(getSelf()) && c.getStance().dom(getSelf()));
+                        && (c.getStance().front(getSelf())
+                        || (c.getStance().behind(getSelf()) && c.getStance().dom(getSelf())));
     }
 
     @Override
@@ -132,9 +130,8 @@ public class ThrowBomb extends Skill {
                 }
                 return Global.format(
                                 "{self:SUBJECT} takes out a small, round device and sticks it onto your chest."
-                                                + " Knowing {self:pronoun}, it would probably be best to get it off quickly.",
+                                                + " Knowing {self:direct-object}, it would probably be best to get it off quickly.",
                                 getSelf(), target);
         }
     }
-
 }

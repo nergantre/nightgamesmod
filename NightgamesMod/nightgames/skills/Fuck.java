@@ -65,7 +65,7 @@ public class Fuck extends Skill {
                 stancePossible &= !c.getStance().anallyPenetrated(c, target);
             }
         }
-        stancePossible &= !c.getStance().havingSex(c);
+        stancePossible &= !c.getStance().havingSex(c) && !c.getStance().isFaceSitting(getSelf());
         return possible && ready && stancePossible && getSelf().clothingFuckable(selfO) && canGetToCrotch(target);
     }
 
@@ -109,7 +109,7 @@ public class Fuck extends Skill {
                             bottomMessage);
         }
 
-        if (!target.crotchAvailable() && getSelfOrgan().getMod(getSelf()).equals(CockMod.slimy)) {
+        if (!target.crotchAvailable() && getSelfOrgan().moddedPartCountsAs(getSelf(), CockMod.slimy)) {
             Clothing destroyed = target.strip(ClothingSlot.bottom, c);
             assert target.outfit.slotEmpty(ClothingSlot.bottom);
             String start;

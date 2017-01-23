@@ -74,4 +74,10 @@ public class TestPosition extends Position {
     public int distance() {
         return 0;
     }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        // TODO Auto-generated method stub
+        
+    }
 }

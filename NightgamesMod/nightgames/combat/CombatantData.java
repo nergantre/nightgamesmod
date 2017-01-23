@@ -164,7 +164,7 @@ public class CombatantData implements Cloneable {
         return manager;
     }
 
-    protected void setManager(ArmManager manager) {
+    public void setManager(ArmManager manager) {
         this.manager = manager.instance();
     }
 }

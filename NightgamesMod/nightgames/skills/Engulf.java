@@ -22,7 +22,7 @@ public class Engulf extends CounterBase {
         if (self.human()) {
             return "You have spread yourself out, ready to engulf your opponent.";
         } else {
-            return String.format("%s spread %s thin, arms open invitingly.", self.getName(), self.reflectivePronoun());
+            return String.format("%s spread %s thin, arms opened invitingly.", self.getName(), self.reflectivePronoun());
         }
     }
 
@@ -108,7 +108,7 @@ public class Engulf extends CounterBase {
         if (target.hasPussy())
             msg += "pussy, ";
         msg += "ass and every other inch of {other:possessive} skin. ";
-        msg += getSelf().getRandomLineFor(CharacterLine.ENGULF_LINER, c);
+        msg += getSelf().getRandomLineFor(CharacterLine.ENGULF_LINER, c, target);
         c.write(getSelf(), Global.format(msg, getSelf(), target));
         c.setStance(new Engulfed(getSelf(), target), getSelf(), true);
         getSelf().emote(Emotion.dominant, 50);

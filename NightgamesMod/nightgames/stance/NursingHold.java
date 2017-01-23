@@ -8,6 +8,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.skills.Escape;
 import nightgames.skills.Nothing;
 import nightgames.skills.Skill;
@@ -138,5 +139,30 @@ public class NursingHold extends AbstractFacingStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        if (struggler.human()) {
+            c.write(struggler, "You try to free yourself from " + top.getName()
+                            + ", but she pops a teat into your mouth and soon you're sucking like a newborn again.");
+        } else if (c.shouldPrintReceive(top, c)) {
+            c.write(struggler, String.format("%s struggles against %s, but %s %s %s nipple "
+                            + "against %s mouth again, forcing %s to suckle.", struggler.subject(),
+                            top.nameDirectObject(), top.pronoun(), top.action("presses"),
+                            top.possessiveAdjective(), struggler.possessiveAdjective(),
+                            struggler.directObject()));
+        }
+        (new Suckle(struggler)).resolve(c, top);
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format("{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                        + " {other:direct-object} impressive chest in front of {self:possessive} face, {self:pronoun-action:are} easily convinced to stop.",
+                        escapee, top));
+        (new Suckle(escapee)).resolve(c, top);
+        super.escape(c, escapee);
     }
 }

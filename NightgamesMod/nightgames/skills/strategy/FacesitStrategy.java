@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
+import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
@@ -17,7 +18,19 @@ public class FacesitStrategy extends KnockdownThenActionStrategy {
     public double weight(Combat c, Character self) {
         double weight = 1;
         if (self.getMood().equals(Emotion.dominant)) {
-            weight *= 2;
+            weight += 1;
+        }
+        if (self.has(Trait.drainingass)) {
+            weight += 2;
+        }
+        if (self.has(Trait.bewitchingbottom)) {
+            weight += 1;
+        }
+        if (self.has(Trait.temptingass)) {
+            weight += 1;
+        }
+        if (self.has(Trait.powerfulcheeks) && weight > 0) {
+            weight += 1;
         }
         if (!(new FaceSit(self)).requirements(c, self, c.getOpponent(self))) {
             weight = 0;

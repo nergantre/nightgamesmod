@@ -21,8 +21,8 @@ import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TentaclePart;
+import nightgames.characters.body.mods.GooeyMod;
 import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
@@ -33,7 +33,6 @@ import nightgames.global.Global;
 import nightgames.gui.GUI;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
-import nightgames.skills.Skill;
 import nightgames.skills.Stage;
 import nightgames.skills.Tactics;
 import nightgames.skills.damage.DamageType;
@@ -119,7 +118,8 @@ public class Player extends Character {
 
     public void setGrowth() {
         getGrowth().stamina = 2;
-        getGrowth().arousal = 4;
+        getGrowth().arousal = 6;
+        getGrowth().willpower = .4f;
         getGrowth().bonusStamina = 1;
         getGrowth().bonusArousal = 2;
         getGrowth().attributes = new int[]{2, 3, 3, 3};
@@ -191,7 +191,7 @@ public class Player extends Character {
     }
 
     @Override
-    public void act(Combat c) {
+    public boolean act(Combat c) {
         Character target;
         if (c.p1 == this) {
             target = c.p2;
@@ -199,6 +199,7 @@ public class Player extends Character {
             target = c.p1;
         }
         pickSkillsWithGUI(c, target);
+        return true;
     }
 
     @Override
@@ -254,6 +255,7 @@ public class Player extends Character {
         gui.message("You run into <b>" + opponent.nameDirectObject()
                         + "</b> and you both hesitate for a moment, deciding whether to attack or retreat.");
         assessOpponent(opponent);
+        gui.message("<br/>");
         gui.promptFF(enc, opponent);
     }
 
@@ -302,6 +304,8 @@ public class Player extends Character {
         gui.message("You spot <b>" + opponent.nameDirectObject()
                         + "</b> but she hasn't seen you yet. You could probably catch her off guard, or you could remain hidden and hope she doesn't notice you.");
         assessOpponent(opponent);
+        gui.message("<br/>");
+
         gui.promptAmbush(enc, opponent);
     }
 
@@ -406,7 +410,7 @@ public class Player extends Character {
         getStamina().gain(getGrowth().stamina);
         getArousal().gain(getGrowth().arousal);
         availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
-        gui.message("You've gained a Level!<br/>Select which attributes to increase.");
+        Global.writeIfCombatUpdateImmediately(gui.combat, this, "You've gained a Level!<br/>Select which attributes to increase.");
         if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10 /*|| (Global.checkFlag(Flag.SuperTraitMode) && ((level < 10 && getLevel()%2 == 0) || (getLevel() % 3 != 0 && level > 10)))*/) {
             traitPoints += 1;
         }
@@ -540,6 +544,8 @@ public class Player extends Character {
                             + "</b> skinny dipping in the pool. She hasn't noticed you yet. It would be pretty easy to catch her off-guard.");
         }
         assessOpponent(target);
+        gui.message("<br/>");
+
         gui.promptShower(encounter, target);
     }
 
@@ -623,6 +629,8 @@ public class Player extends Character {
         Global.gui()
               .message("Do you want to take the opportunity to ambush <b>" + target.getName() + "</b>?");
         assessOpponent(target);
+        gui.message("<br/>");
+
         gui.promptOpportunity(enc, target, trap);
     }
 
@@ -661,7 +669,7 @@ public class Player extends Character {
                         c.write(this, Global.format(
                                         "{self:NAME-POSSESSIVE} quick wits find a gap in {other:name-possessive} hold and {self:action:slip|slips} away.",
                                         this, target));
-                        c.setStance(new Neutral(this, target), this, true);
+                        c.setStance(new Neutral(this, c.getOpponent(this)), this, true);
                     }
                 } else {
                     target.body.pleasure(this, body.getRandom("hands"), target.body.getRandomBreasts(),
@@ -703,8 +711,8 @@ public class Player extends Character {
     }
 
     @Override
-    public void eot(Combat c, Character opponent, Skill last) {
-        super.eot(c, opponent, last);
+    public void eot(Combat c, Character opponent) {
+        super.eot(c, opponent);
         if (opponent.has(Trait.pheromones) && opponent.getArousal()
                                                       .percent() >= 20
                         && opponent.rollPheromones(c)) {
@@ -723,8 +731,8 @@ public class Player extends Character {
             opponent.temptNoSkillNoSource(c, this, opponent.arousal.max() / 25);
         }
         if (has(Trait.slime)) {
-            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
-                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, GooeyMod.INSTANCE)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomPussy().applyMod(GooeyMod.INSTANCE), 999);
                 c.write(this, 
                                 Global.format("{self:NAME-POSSESSIVE} %s turned back into a gooey pussy.",
                                                 this, opponent, body.getRandomPussy()));
@@ -985,21 +993,19 @@ public class Player extends Character {
             purge(c);
             addTemporaryTrait(Trait.slime, 999);
             add(c, new PlayerSlimeDummy(this));
-            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, PussyPart.gooey)) {
+            if (hasPussy() && !body.getRandomPussy().moddedPartCountsAs(this, GooeyMod.INSTANCE)) {
+                body.temporaryAddOrReplacePartWithType(body.getRandomPussy().applyMod(GooeyMod.INSTANCE), 999);
                 body.temporaryAddOrReplacePartWithType(new TentaclePart("slime filaments", "pussy", "slime", 0.0, 1.0, 1.0), 999);
-                body.temporaryAddOrReplacePartWithType(PussyPart.gooey, 999);
             }
             if (hasDick() && !body.getRandomCock().moddedPartCountsAs(this, CockMod.slimy)) {
                 body.temporaryAddOrReplacePartWithType(body.getRandomCock().applyMod(CockMod.slimy), 999);
             }
-            BreastsPart part = body.getBreastsBelow(BreastsPart.h.size);
+            BreastsPart part = body.getBreastsBelow(BreastsPart.h.getSize());
             if (part != null && body.getRandomBreasts() != BreastsPart.flat) {
                 body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
             }
             body.temporaryAddOrReplacePartWithType(new GenericBodyPart("gooey skin", 2.0, 1.5, .8, "skin", ""), 999);
             body.temporaryAddOrReplacePartWithType(new TentaclePart("slime pseudopod", "back", "slime", 0.0, 1.0, 1.0), 999);
-            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "hands", "slime", 0.0, 1.0, 1.0), 999);
-            body.temporaryAddOrReplacePartWithType(new TentaclePart("gooey feelers", "feet", "slime", 0.0, 1.0, 1.0), 999);
             if (level >= 21) {
                 addTemporaryTrait(Trait.Sneaky, 999);
             }

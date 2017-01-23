@@ -15,13 +15,6 @@ import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public enum Trait {
-    // Physical
-    vaginaltongue("Vaginal Tongue", "Have a second tongue", (b, c, t) -> {
-        if (c.crotchAvailable()) {
-            b.append("Occasionally, a pink tongue slides out of her pussy and licks her lower lips.");
-        }
-    }),
-
     sadist("Sadist", "Skilled at providing pleasure alongside pain",
                     (b, c, t) -> b.append(Global.capitalizeFirstLetter(
                                     String.format("%s sneers in an unsettling way.", c.subject())))),
@@ -155,6 +148,8 @@ public enum Trait {
         }
     }),
     sedativecream("Sedative Cream", "Lactate that weakens the drinker"), // the first time in a fight that you see bare breasts you are entranced
+    PheromonedMilk("Pheromoned Milk", "Milk can cause drinker to go into heat"),
+    Illusionist("Illusionist", "Arcane doubles as Hypnotism"),
 
     defthands("Deft hands", "They know where to go"), // hands damage upgrade
     nimbletoes("Nimble toes", "Good both in the street and in the bed."), // feet damage upgrade
@@ -220,6 +215,7 @@ public enum Trait {
 
     // resistances
     freeSpirit("Free Spirit", "Better at escaping pins and resisting mind control"),
+    Slippery("Slippery", "Hard to hold onto"),
     calm("Calm", "Chance at resisting arousal over time"),
     skeptical("Skeptical", "Chance at resisting mental statuses"),
     graceful("Graceful", "Chance at resisting knockdowns"),
@@ -231,7 +227,7 @@ public enum Trait {
     autonomousPussy("Autonomous Pussy", "Her pussy instinctively forces anything inside of it to cum."),
     // AI traits
     submissive("Submissive", "Enjoys being the sub."),
-    flexibleRole("Flexible Roles", "Okay at being the dom."), // Cassie gets this when she takes both specializations to remove the submissive negatives
+    flexibleRole("Flexible Roles", "Also good on top."), // Cassie gets this when she takes both specializations to remove the submissive negatives
     naturalTop("Natural Top", "Being the dom comes easy."),
     obsequiousAppeal("Obsequious Appeal", "So tempting when on the bottom."),
     catstongue("Cat's Tongue", "Rough but sensual."),
@@ -298,6 +294,7 @@ public enum Trait {
     // Class subtrait
     divinity("Divinity", "Has aspects of divinity."),
     leveldrainer("Level Drainer", "Natrually adept at draining levels."),
+    ExpertLevelDrainer("Expert Level Drainer", "Can drain more than one level at a time."),
 
     // Strength
     dexterous("Dexterous", "Dexterous limbs and fingers. Underwear is not an obstacle."),
@@ -386,7 +383,8 @@ public enum Trait {
         b.append(Global.format("A complex aroma lingers in the air.", c, c))),
 
     // Frenzy Focus
-    Rut("Rut", "Half arousal damage during frenzy, chance to go into a frenzy when over half arousal."),
+    Rut("Rut", "Chance to go into a frenzy when over half arousal."),
+    NaturalHeat("Natural Heat", "Half arousal damage during frenzy."),
     PrimalHeat("Primal Heat", "Bonus to seduction while frenzied based on Animism"),
     Jackhammer("Jackhammer", "Chance to thrust/ride twice"),
     Piledriver("Piledriver", "Chance to stun when fucking"),
@@ -402,12 +400,12 @@ public enum Trait {
 
     // Transformation/Mimicry - self buffs
     Imposter("Imposter", "Can appear like a different combatant"),
-    UnstableGenome("UnstableGenome", "Upon transformation, gain Attributes at random"),
+    ImitatedStrength("Imitated Strength", "Gains traits when mimicking targets."),
     ThePrestige("The Prestige", "Will engulf upon unveiling the disguise"),
     Masquerade("Masquerade", "Improves quality of mimicry"),
 
-    // Queen Slime - Clones build
-    SlimeRoyalty("Slime Royalty", "Can now divide the body"),
+    // Replication - Clones build
+    BinaryFission("Binary Fission", "Can now divide the body"),
     RapidMeiosis("Rapid Meiosis", "Upon cumming, create additional clones"),
     // + slime
     StickyFinale("Sticky Finale", "Clones explode when defeated"),
@@ -419,15 +417,8 @@ public enum Trait {
     // debuff trait for clones so they aren't too overwhelming
     MindlessClone("Mindless Clone", "Half sentience makes them less tempting"),
 
-    // Slime Carrier - Immortal pet build
-    SlimeCarrier("Slime Carrier", "Rides on her slime half instead of transforming"),
-    Symbiosis("Symbiosis", "Slime carrier can heal and build mojo for the host"),
-    // + parasite
-    RoperAspect("Roper Aspect", "Slime Carrier has additional capabilities"),
-    // + transformation
-    SuccubusAspect("Succubus Aspect", "Main body has additional capabilities"),
-    // autonomous pussy
-    SplitSentience("Split Sentience", "Slime carrier powers up when main body is disabled."),
+    // Tentacle builds
+    Pseudopod("Pseudopod", "Comes with extra tentacles"),
 
     // Jewel's unique traits
     powerfulcheeks("Powerful Cheeks", "As in asscheeks. Makes pulling out more difficult."),

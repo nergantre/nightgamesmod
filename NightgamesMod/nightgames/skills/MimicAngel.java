@@ -5,8 +5,8 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DivineMod;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -27,7 +27,7 @@ public class MimicAngel extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && !getSelf().is(Stsflag.mimicry) && Global.getNPC("Angel").has(Trait.divinity);
+        return getSelf().canRespond() && !getSelf().is(Stsflag.mimicry) && Global.getNPC("Angel").has(Trait.demigoddess);
     }
 
     @Override
@@ -45,17 +45,40 @@ public class MimicAngel extends Skill {
             else 
                 printBlinded(c);
         }
-        getSelf().addTemporaryTrait(Trait.divinity, 10);
-        getSelf().addTemporaryTrait(Trait.objectOfWorship, 10);
-        getSelf().addTemporaryTrait(Trait.erophage, 10);
-        getSelf().addTemporaryTrait(Trait.revered, 10);
+        if (getSelf().has(Trait.ImitatedStrength)) {
+            getSelf().addTemporaryTrait(Trait.divinity, 10);
+            if (getSelf().getLevel() >= 20) {
+                getSelf().addTemporaryTrait(Trait.objectOfWorship, 10);
+            }
+            if (getSelf().getLevel() >= 28) {
+                getSelf().addTemporaryTrait(Trait.lastStand, 10);
+            }
+            if (getSelf().getLevel() >= 36) {
+                getSelf().addTemporaryTrait(Trait.erophage, 10);
+            }
+            if (getSelf().getLevel() >= 44) {
+                getSelf().addTemporaryTrait(Trait.sacrosanct, 10);
+            }
+            if (getSelf().getLevel() >= 52) {
+                getSelf().addTemporaryTrait(Trait.genuflection, 10);
+            }
+            if (getSelf().getLevel() >= 60) {
+                getSelf().addTemporaryTrait(Trait.revered, 10);
+            }
+        }
         getSelf().body.temporaryAddOrReplacePartWithType(WingsPart.angelicslime, 10);
-        BreastsPart part = getSelf().body.getBreastsBelow(BreastsPart.h.size);
+        BreastsPart part = getSelf().body.getBreastsBelow(BreastsPart.h.getSize());
         if (part != null) {
             getSelf().body.temporaryAddOrReplacePartWithType(part.upgrade().upgrade(), 10);
         }
-        getSelf().add(c, new Abuff(getSelf(), Attribute.Divinity, Math.max(10, getSelf().get(Attribute.Slime)), 10));
-        getSelf().add(c, new SlimeMimicry("angel", PussyPart.divine, CockMod.blessed, getSelf(), 10));
+        int strength = Math.max(10, getSelf().get(Attribute.Slime)) * 2 / 3;
+        if (getSelf().has(Trait.Masquerade)) {
+            strength = strength * 3 / 2;
+        }
+        getSelf().add(c, new Abuff(getSelf(), Attribute.Divinity, strength, 10));
+        getSelf().add(c, new SlimeMimicry("angel", getSelf(), 10));
+        getSelf().body.temporaryAddPartMod("pussy", DivineMod.INSTANCE, 10);
+        getSelf().body.temporaryAddPartMod("cock", CockMod.blessed, 10);
         return true;
     }
 

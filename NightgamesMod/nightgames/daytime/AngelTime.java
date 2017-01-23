@@ -6,13 +6,11 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.BasicCockPart;
-import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.CockPart;
-import nightgames.characters.body.ModdedCockPart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.DivineMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.requirements.BodyPartRequirement;
@@ -59,7 +57,7 @@ public class AngelTime extends BaseNPCTime {
             growCock.option = "Angel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new ModdedCockPart(BasicCockPart.big, CockMod.blessed));
+                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.blessed));
                 return true;
             };
             options.add(growCock);
@@ -78,54 +76,39 @@ public class AngelTime extends BaseNPCTime {
             options.add(removeCock);
         }
         {
-            TransformationOption blessedCock = new TransformationOption();
+            TransformationOption blessedCock = new ApplyPartModOption("cock", CockMod.blessed);
             blessedCock.ingredients.put(Item.HolyWater, 3);
-            blessedCock.requirements.add(new BodyPartRequirement("cock"));
-            blessedCock.requirements.add((c, self, other) -> {
-                return self.body.get("cock")
-                                .stream()
-                                .anyMatch(cock -> ((CockPart) cock).isGeneric(self));
-            });
             blessedCock.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            blessedCock.additionalRequirements = "A normal cock<br/>Divinity greater than 10";
+            blessedCock.additionalRequirements = "Divinity: 10";
             blessedCock.option = "Blessed Cock";
-            blessedCock.scene =
-                            "[Placeholder]<br/>Angel performs a sacrament on your cock, imbuing it with holy powers.";
-            blessedCock.effect = (c, self, other) -> {
-                Optional<BodyPart> optPart = self.body.get("cock")
-                                                      .stream()
-                                                      .filter(cock -> ((CockPart) cock).isGeneric(self))
-                                                      .findAny();
-                BasicCockPart target = (BasicCockPart) optPart.get();
-                self.body.remove(target);
-                self.body.add(new ModdedCockPart(target, CockMod.blessed));
-                return true;
-            };
+            blessedCock.scene = "[Placeholder]<br/>Angel performs a sacrament on your cock, imbuing it with holy powers.";
             options.add(blessedCock);
         }
         {
-            TransformationOption divinePussy = new TransformationOption();
+            TransformationOption divinePussy = new ApplyPartModOption("pussy", DivineMod.INSTANCE);
             divinePussy.ingredients.put(Item.HolyWater, 3);
-            divinePussy.requirements.add(new BodyPartRequirement("pussy"));
-            divinePussy.requirements.add((c, self, other) -> {
-                return self.body.get("pussy")
-                                .stream()
-                                .anyMatch(part -> part == PussyPart.normal);
-            });
             divinePussy.requirements.add((c, self, other) -> {
                 return self.get(Attribute.Divinity) >= 10;
             });
-            divinePussy.additionalRequirements = "A normal pussy<br/>Divinity greater than 10";
+            divinePussy.additionalRequirements = "Divinity: 10";
             divinePussy.option = "Divine Pussy";
             divinePussy.scene =
                             "[Placeholder]<br/>Angel performs a sacrament on your pussy, imbuing it with holy powers.";
-            divinePussy.effect = (c, self, other) -> {
-                self.body.addReplace(PussyPart.divine, 1);
-                return true;
-            };
             options.add(divinePussy);
+        }
+        {
+            TransformationOption sacredAss = new ApplyPartModOption("ass", DivineMod.INSTANCE);
+            sacredAss.ingredients.put(Item.HolyWater, 6);
+            sacredAss.requirements.add((c, self, other) -> {
+                return self.get(Attribute.Divinity) >= 20;
+            });
+            sacredAss.additionalRequirements = "Divinity: 20";
+            sacredAss.option = "Sacred Ass";
+            sacredAss.scene =
+                            "[Placeholder]<br/>Angel blesses your ass, imbuing it with holy powers.";
+            options.add(sacredAss);
         }
         {
             TransformationOption angelWings = new TransformationOption();

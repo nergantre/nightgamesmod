@@ -2,6 +2,7 @@ package nightgames.stance;
 
 import nightgames.characters.Character;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Mount extends AbstractFacingStance {
 
@@ -104,5 +105,21 @@ public class Mount extends AbstractFacingStance {
     @Override
     public int distance() {
         return 1;
+    }
+
+    @Override
+    public void struggle(Combat c, Character struggler) {
+        c.write(struggler, Global.format("{self:SUBJECT-ACTION:try} to struggle out of {other:name-possessive} hold, but with"
+                        + " {other:direct-object} sitting firmly on {self:possessive} chest, there is nothing {self:pronoun} can do.",
+                        struggler, top));
+        super.struggle(c, struggler);
+    }
+
+    @Override
+    public void escape(Combat c, Character escapee) {
+        c.write(escapee, Global.format("{self:SUBJECT-ACTION:try} to escape {other:name-possessive} hold, but with"
+                        + " {other:direct-object} sitting firmly on {self:possessive} chest, there is nothing {self:pronoun} can do.",
+                        escapee, top));
+        super.escape(c, escapee);
     }
 }

@@ -8,8 +8,8 @@ import nightgames.actions.Movement;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.WingsPart;
+import nightgames.characters.body.mods.FieryMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -59,7 +59,7 @@ public class Sarah extends BasePersonality {
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 5;
-        character.getGrowth().arousal = 3;
+        character.getGrowth().arousal = 6;
         character.getGrowth().willpower = .8f;
         character.getGrowth().bonusStamina = 2;
         character.getGrowth().bonusArousal = 2;
@@ -70,7 +70,7 @@ public class Sarah extends BasePersonality {
         character.getGrowth().addTrait(15, Trait.sadist);
         character.getGrowth().addTrait(20, Trait.disablingblows);
         character.getGrowth().addTrait(25, Trait.nimbletoes);
-        character.getGrowth().addBodyPart(30, PussyPart.fiery);
+        character.getGrowth().addBodyPartMod(30, "pussy", FieryMod.INSTANCE);
         character.getGrowth().addBodyPart(30, WingsPart.angelic);
         character.getGrowth().addTrait(30, Trait.valkyrie);
         character.getGrowth().addTrait(35, Trait.overwhelmingPresence);

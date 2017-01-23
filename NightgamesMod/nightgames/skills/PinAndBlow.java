@@ -25,13 +25,13 @@ public class PinAndBlow extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return c.getStance()
-                .mobile(getSelf())
-                        && c.getStance()
-                            .prone(target)
-                        && target.crotchAvailable() && getSelf().canAct() && !c.getStance()
-                                                                               .connected(c)
-                        && c.getStance().en != Stance.oralpin;
+        return c.getStance().mobile(getSelf())
+                && c.getStance().dom(getSelf())
+                && (c.getStance().prone(target)  ||  c.getStance().en == Stance.paizuripin)
+                && c.getStance().facing(getSelf(), target)
+                && target.crotchAvailable() && getSelf().canAct()
+                && !c.getStance().connected(c)
+                && c.getStance().en != Stance.oralpin;
     }
 
     @Override
@@ -80,9 +80,19 @@ public class PinAndBlow extends Skill {
 
     @Override
     public String receive(Combat c, int damage, Result modifier, Character target) {
-        return Global.format(
-                        "{self:SUBJECT-ACTION:bow|bows} {other:name-do} over, and {self:action:settle|settles} {self:possessive} head between {other:possessive} legs.",
-                        getSelf(), target);
+        
+        if( c.getStance().en == Stance.paizuripin)
+        {
+            return Global.format(
+                            "{self:SUBJECT-ACTION:free|frees} {other:possessive} cock from her breasts, and quickly {self:action:settle|settles} {self:possessive} head between {other:possessive} legs.",
+                            getSelf(), target);
+        }else
+        {
+            return Global.format(
+                            "{self:SUBJECT-ACTION:bow|bows} {other:name-do} over, and {self:action:settle|settles} {self:possessive} head between {other:possessive} legs.",
+                            getSelf(), target);
+        }                       
+                       
     }
 
     @Override

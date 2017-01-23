@@ -14,12 +14,13 @@ import nightgames.global.Global;
  */
 public class Plasticized extends DurationStatus {
     public Plasticized(Character affected) {
-        this(affected, 10);
+        this(affected, 4);
     }
 
     public Plasticized(Character affected, int duration) {
         super("Plasticized", affected, duration);
         flag(Stsflag.stunned);
+        flag(Stsflag.plasticized);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
         flag(Stsflag.disabling);
@@ -55,7 +56,7 @@ public class Plasticized extends DurationStatus {
 
     @Override
     public void onRemove(Combat c, Character other) {
-        Global.writeFormattedIfCombat(c, "{self:SUBJECT-ACTION:are|is} finally freed of {self:possessive} plastic prison!", affected, c.getOpponent(affected));
+        Global.writeFormattedIfCombat(c, "{self:SUBJECT-ACTION:are|is} finally freed of {self:possessive} plastic prison!", affected, other);
     }
 
     @Override

@@ -7,14 +7,15 @@ import java.util.Optional;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AssPart;
-import nightgames.characters.body.BasicCockPart;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
+import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
-import nightgames.characters.body.mods.SecondPussyHoleMod;
+import nightgames.characters.body.mods.SecondPussyMod;
+import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
@@ -150,10 +151,10 @@ public class BodyShop extends Activity {
     private void populateSelection() {
         CharacterRequirement noRequirement = character -> true;
 
-        selection.add(new ShopSelection("Breast Expansion", 1500) {
+        selection.add(new ShopSelection("Ass Expansion", 1500) {
             @Override
             void buy(Character buyer) {
-                BreastsPart target = buyer.body.getBreastsBelow(BreastsPart.maximumSize().size);
+                AssPart target = buyer.body.getAssBelow(SizeMod.getMaximumSize("ass"));
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.upgrade(), 1);
@@ -161,7 +162,49 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                BreastsPart target = buyer.body.getBreastsBelow(BreastsPart.maximumSize().size);
+                AssPart target = buyer.body.getAssBelow(SizeMod.getMaximumSize("ass"));
+                return target != null;
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return 10;
+            }
+        });
+
+        selection.add(new ShopSelection("Ass Reduction", 1500) {
+            @Override
+            void buy(Character buyer) {
+                AssPart target = buyer.body.getAssAbove(SizeMod.getMinimumSize("ass"));
+                assert target != null;
+                buyer.body.remove(target);
+                buyer.body.addReplace(target.downgrade(), 1);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                AssPart target = buyer.body.getAssAbove(SizeMod.getMinimumSize("ass"));
+                return target != null;
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return 10;
+            }
+        });
+
+        selection.add(new ShopSelection("Breast Expansion", 1500) {
+            @Override
+            void buy(Character buyer) {
+                BreastsPart target = buyer.body.getBreastsBelow(SizeMod.getMaximumSize("breasts"));
+                assert target != null;
+                buyer.body.remove(target);
+                buyer.body.addReplace(target.upgrade(), 1);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                BreastsPart target = buyer.body.getBreastsBelow(SizeMod.getMaximumSize("breasts"));
                 return target != null;
             }
 
@@ -174,7 +217,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Breast Reduction", 1500) {
             @Override
             void buy(Character buyer) {
-                BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
+                BreastsPart target = buyer.body.getBreastsAbove(SizeMod.getMinimumSize("breasts"));
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.downgrade(), 1);
@@ -182,7 +225,7 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                BreastsPart target = buyer.body.getBreastsAbove(BreastsPart.flat.size);
+                BreastsPart target = buyer.body.getBreastsAbove(SizeMod.getMinimumSize("breasts"));
                 return target != null;
             }
 
@@ -195,7 +238,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Grow Cock", 2500) {
             @Override
             void buy(Character buyer) {
-                buyer.body.addReplace(BasicCockPart.tiny, 1);
+                buyer.body.addReplace(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_TINY)), 1);
             }
 
             @Override
@@ -332,7 +375,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Grow Pussy", 2500) {
             @Override
             void buy(Character buyer) {
-                buyer.body.addReplace(PussyPart.normal, 1);
+                buyer.body.addReplace(PussyPart.generic, 1);
             }
 
             @Override
@@ -349,7 +392,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Cock Expansion", 1500) {
             @Override
             void buy(Character buyer) {
-                CockPart target = buyer.body.getCockBelow(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockBelow(SizeMod.COCK_SIZE_MASSIVE);
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.upgrade(), 1);
@@ -357,7 +400,7 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                CockPart target = buyer.body.getCockBelow(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockBelow(SizeMod.COCK_SIZE_MASSIVE);
                 return target != null;
             }
 
@@ -365,7 +408,7 @@ public class BodyShop extends Activity {
             double priority(Character buyer) {
                 CockPart part = buyer.body.getRandomCock();
                 if (part != null) {
-                    return BasicCockPart.big.size > part.getSize() ? 10 : 3;
+                    return SizeMod.COCK_SIZE_BIG > part.getSize() ? 10 : 3;
                 }
                 return 0;
             }
@@ -374,7 +417,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Cock Reduction", 1500) {
             @Override
             void buy(Character buyer) {
-                CockPart target = buyer.body.getCockAbove(BasicCockPart.tiny.size);
+                CockPart target = buyer.body.getCockAbove(SizeMod.COCK_SIZE_TINY);
                 assert target != null;
                 buyer.body.remove(target);
                 buyer.body.addReplace(target.downgrade(), 1);
@@ -382,7 +425,7 @@ public class BodyShop extends Activity {
 
             @Override
             boolean available(Character buyer) {
-                CockPart target = buyer.body.getCockAbove(BasicCockPart.maximumSize().size);
+                CockPart target = buyer.body.getCockAbove(SizeMod.COCK_SIZE_TINY);
                 return target != null;
             }
 
@@ -390,7 +433,7 @@ public class BodyShop extends Activity {
             double priority(Character buyer) {
                 CockPart part = buyer.body.getRandomCock();
                 if (part != null) {
-                    return BasicCockPart.small.size < part.getSize() ? 3 : 0;
+                    return SizeMod.COCK_SIZE_SMALL < part.getSize() ? 3 : 0;
                 }
                 return 0;
             }
@@ -402,14 +445,7 @@ public class BodyShop extends Activity {
                 CockPart target = buyer.body.getRandomCock();
                 assert target != null;
                 buyer.body.remove(target);
-                BasicCockPart best = BasicCockPart.massive;
-                for (BasicCockPart part : BasicCockPart.values()) {
-                    double delta = Math.abs(target.getSize() - part.getSize());
-                    if (delta < Math.abs(target.getSize() - best.getSize())) {
-                        best = part;
-                    }
-                }
-                buyer.body.addReplace(best, 1);
+                buyer.body.addReplace(target.removeAllMods(), 1);
             }
 
             @Override
@@ -431,13 +467,13 @@ public class BodyShop extends Activity {
                 PussyPart target = buyer.body.getRandomPussy();
                 assert target != null;
                 buyer.body.remove(target);
-                buyer.body.addReplace(PussyPart.normal, 1);
+                buyer.body.addReplace(PussyPart.generic, 1);
             }
 
             @Override
             boolean available(Character buyer) {
                 Optional<BodyPart> optTarget =
-                                buyer.body.get("pussy").stream().filter(c -> c != PussyPart.normal).findAny();
+                                buyer.body.get("pussy").stream().filter(c -> !c.isGeneric(buyer)).findAny();
                 return optTarget.isPresent();
             }
 
@@ -447,8 +483,6 @@ public class BodyShop extends Activity {
             }
         });
 
-        addTraitMod("Vaginal Tongue", "Remove V.Tongue", Trait.vaginaltongue, 10000, 10000,
-                        character -> character.hasPussy());
         addTraitMod("Laced Juices", "Remove L.Juices", Trait.lacedjuices, 1000, 1000,
                         noRequirement);
         addTraitMod("Permanent Lactation", "Stop Lactating", Trait.lactating, 1000, 1000,
@@ -460,7 +494,7 @@ public class BodyShop extends Activity {
                                         "{self:name-possessive} legs are wrapped in a shiny black material that look fused on.",
                                         .3, 1.5, .7, true, "feet", ""),
                         new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
-        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyHoleMod()), AssPart.generic, 2000, 2000);
+        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyMod()), AssPart.generic, 2000, 2000);
         addBodyPartMod("Fused Gloves",
                         new GenericBodyPart("Fused Gloves",
                                         "{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",

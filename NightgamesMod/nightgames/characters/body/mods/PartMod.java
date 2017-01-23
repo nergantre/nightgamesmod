@@ -2,20 +2,22 @@ package nightgames.characters.body.mods;
 
 import java.util.Optional;
 
+import com.google.gson.JsonElement;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BodyPartMod;
 import nightgames.combat.Combat;
 
-public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
-    private final String modType;
-    private final double hotness;
-    private final double pleasure;
-    private final double sensitivity;
-    private int sortOrder;
+public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
+    protected String modType;
+    protected double hotness;
+    protected double pleasure;
+    protected double sensitivity;
+    protected int sortOrder;
 
-    public HoleMod(String modType, double hotness, double pleasure, double sensitivity, int sortOrder) {
+    public PartMod(String modType, double hotness, double pleasure, double sensitivity, int sortOrder) {
         this.modType = modType;
         this.hotness = hotness;
         this.pleasure = pleasure;
@@ -23,8 +25,25 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
         this.sortOrder = sortOrder;
     }
 
+    /*
+     * Implement these if necessary to load more data than the default construct can.
+     */
+    public void loadData(JsonElement element) {}
+    public JsonElement saveData() { return null; }
+
+    /**
+     * This should be overridden if there needs to be more than only one variant of the mod active at the same time.
+     */
+    public String getVariant() {
+        return modType;
+    }
+
     @Override
     public String getModType() {
+        return modType;
+    }
+
+    public String adjective(BodyPart part) {
         return modType;
     }
 
@@ -39,15 +58,15 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {}
     
     public double modPleasure(Character self) {
-        return pleasure;
+        return getBasePleasure();
     }
 
     public double modHotness(Character self) {
-        return hotness;
+        return getBaseHotness();
     }
 
     public double modSensitivity(Character self) {
-        return sensitivity;
+        return getBaseSensitivity();
     }
 
     protected String lowerOrRear(BodyPart part) {
@@ -62,8 +81,12 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
         return Optional.empty();
     }
 
-    public Optional<String> getLongDescriptionOverride(Character self, BodyPart part) {
+    public Optional<Boolean> getErogenousOverride() {
         return Optional.empty();
+    }
+
+    public String getLongDescriptionOverride(Character self, BodyPart part, String previousDescription) {
+        return previousDescription;
     }
 
     public Optional<String> getDescriptionOverride(Character self, BodyPart part) {
@@ -71,7 +94,39 @@ public abstract class HoleMod implements BodyPartMod, Comparable<HoleMod> {
     }
 
     @Override
-    public int compareTo(HoleMod other) {
+    public int compareTo(PartMod other) {
         return Integer.compare(sortOrder, other.sortOrder);
+    }
+
+    public double getBaseHotness() {
+        return hotness;
+    }
+
+    public double getBasePleasure() {
+        return pleasure;
+    }
+
+    public double getBaseSensitivity() {
+        return sensitivity;
+    }
+
+    public abstract String describeAdjective(String partType);
+    
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof PartMod) {
+            return other.toString().equals(this.toString());
+        }
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return "PartMod:" + getClass().getSimpleName() + ":" + modType;
+    }
+    
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }

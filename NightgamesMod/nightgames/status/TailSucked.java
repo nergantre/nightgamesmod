@@ -10,7 +10,7 @@ import nightgames.global.Global;
 import nightgames.skills.TailSuck;
 import nightgames.skills.damage.DamageType;
 
-public class TailSucked extends Status {
+public class TailSucked extends Status implements InsertedStatus {
 
     private Character sucker;
     private int power;
@@ -23,8 +23,6 @@ public class TailSucked extends Status {
                         && new TailSuck(other).usable(c, self));
         flag(Stsflag.bound);
         flag(Stsflag.debuff);
-        flag(Stsflag.tailsucked);
-        flag(Stsflag.inserted);
     }
 
     @Override
@@ -145,4 +143,27 @@ public class TailSucked extends Status {
         return 0;
     }
 
+    public Character getSucker() {
+        return sucker;
+    }
+
+    @Override
+    public BodyPart getHolePart() {
+        return sucker.body.getRandom("tail");
+    }
+
+    @Override
+    public Character getReceiver() {
+        return sucker;
+    }
+
+    @Override
+    public BodyPart getStickPart() {
+        return affected.body.getRandomCock();
+    }
+
+    @Override
+    public Character getPitcher() {
+        return affected;
+    }
 }

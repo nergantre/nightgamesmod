@@ -3,9 +3,10 @@ package nightgames.characters;
 import java.util.Arrays;
 import java.util.Optional;
 
+import nightgames.characters.body.AssPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.CyberneticMod;
 import nightgames.characters.custom.CharacterLine;
 import nightgames.combat.Combat;
 import nightgames.combat.CombatScene;
@@ -117,13 +118,14 @@ public class Mara extends BasePersonality {
          });
 
         character.addLine(CharacterLine.LEVEL_DRAIN_LINER, (c, self, other) -> {
-            String part = Global.pickRandom(c.getStance().partsFor(c, self)).map(bp -> bp.describe(self)).orElse("pussy");
+            String part = Global.pickRandom(c.getStance().getPartsFor(c, self, other)).map(bp -> bp.describe(self)).orElse("pussy");
             if (other.getLevel() < self.getLevel() - 5) {
                 return "\"<i>Annddd... here it comes!</i>\" {self:SUBJECT} happily squeals as the now familiar sensation of your strength entering {self:possessive} flows through the petite girl. "
                                 + "You try struggling out, but {self:subject} simply holds you down with a single hand. \"<i>Now now, don't get antsy! "
                                 + "You know you're already much weaker than me right? So don't struggle and just let me take everything!</i>\"";
             } else if (other.getLevel() >= self.getLevel()) {
-                return "{self:SUBJECT} narrows {self:possessive} eyes in pleasure as your strength is absorbed by {self:possessive} " + part + " as you cum. <i>\"Oh {other:boy}, that is some GOOD stuff! Don't be shy, give me some more, yes?\"</i>";
+                return "{self:SUBJECT} narrows {self:possessive} eyes in pleasure as your strength is absorbed by {self:possessive} " + part + " as you cum. <i>\"Oh {other:boy}, that is some GOOD stuff! "
+                                + "Don't be stingy, give me some more!\"</i>";
             } else {
                 return "\"<i>You know {other:NAME}, I don't know why I bothered working so hard before. "
                                 + "Training, studying, preparing took so much time! It's so much <b>easier</b> to just take it from you! "
@@ -174,13 +176,14 @@ public class Mara extends BasePersonality {
         Global.gainSkills(self);
         self.setTrophy(Item.MaraTrophy);
         self.body.add(new FacePart(.1, 1.1));
+        self.body.add(AssPart.generateGeneric().upgrade());
         self.initialGender = CharacterSex.female;
     }
 
     @Override
     public void setGrowth() {
         character.getGrowth().stamina = 2;
-        character.getGrowth().arousal = 4;
+        character.getGrowth().arousal = 7;
         character.getGrowth().bonusStamina = 1;
         character.getGrowth().bonusArousal = 2;
 
@@ -209,7 +212,7 @@ public class Mara extends BasePersonality {
                                             self, other,
                                             other.hasDick() ? "{self:PRONOUN} whips out a tape measure from... somewhere..."
                                                             + " and starts measuring up your {other:body-part:cock}."
-                                                            : "{self:PROUNOUN} reaches down and sticks a finger into"
+                                                            : "{self:PRONOUN} reaches down and sticks a finger into"
                                                                             + " your still-bare, still-wet {other:body-part:pussy},"
                                                                             + " wriggling it around a bit inside."));
                             useHarpoon();
@@ -373,8 +376,8 @@ public class Mara extends BasePersonality {
     }
 
     @Override
-    protected void onLevelUp() {
-        if (character.rank >= 4) {
+    protected void onLevelUp(Character self) {
+        if (self.rank >= 4) {
 
         }
     }
@@ -446,7 +449,7 @@ public class Mara extends BasePersonality {
 
     private void advance() {
         character.getGrowth().addTrait(10, Trait.madscientist);
-        character.body.addReplace(PussyPart.cybernetic, 1);
+        character.body.addReplace(character.body.getRandomPussy().applyMod(CyberneticMod.INSTANCE), 1);
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock()
                                                     .applyMod(CockMod.bionic),
