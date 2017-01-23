@@ -1721,6 +1721,12 @@ public class Global {
     public static void setTraitRequirements(TraitTree traitRequirements) {
         Global.traitRequirements = traitRequirements;
     }
+    public static void writeIfCombatUpdateImmediately(Combat c, Character self, String string) {
+        writeIfCombat(c, self, string);
+        if (c != null) {
+            c.updateMessage();
+        }
+    }
 
 	public static void writeIfCombat(Combat c, Character self, String string) {
 	    if (c != null) {

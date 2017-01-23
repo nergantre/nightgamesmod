@@ -19,7 +19,10 @@ public class SubSkillButton extends KeyableButton {
         getButton().setFont(new Font("Baskerville Old Face", Font.PLAIN, 18));
         this.action = action;
         getButton().setBackground(new Color(200, 200, 200));
-        getButton().addActionListener(arg0 -> c.act(action.user(), action, choice));
+        getButton().addActionListener(arg0 -> {
+            c.act(action.user(), action, choice);
+            c.resume();
+        });
     }
 
     @Override

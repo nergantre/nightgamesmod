@@ -195,7 +195,7 @@ public enum Item implements Loot {
                     Arrays.asList((ItemEffect) new GroupEffect(Arrays.asList(
                                     (ItemEffect) new ResourceEffect("pain", 500),
                                     (ItemEffect) new BuffEffect("drink",
-                                                    "throw", new Stunned(Global.noneCharacter(), 100, false)),
+                                                    "throw", new Stunned(Global.noneCharacter(), 25, false)),
                                     (ItemEffect) new LevelUpEffect(1)
                                     ))),
                     RequirementShortcuts.none(),

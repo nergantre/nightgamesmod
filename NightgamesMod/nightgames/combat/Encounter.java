@@ -173,17 +173,8 @@ public class Encounter implements Serializable, IEncounter {
             if (p1ff && p2ff) {
                 startFightTimer();
                 if (p1.human() || p2.human()) {
-                    if (p1.human()) {
-                        Global.gui()
-                              .message(p2.challenge(p1));
-                    } else {
-                        Global.gui()
-                              .message(p1.challenge(p2));
-                    }
-                    this.fight = Global.gui()
-                                       .beginCombat(p1, p2);
+                    this.fight = Global.gui().beginCombat(p1, p2);
                 } else {
-                    // this.fight=new NullGUI().beginCombat(p1,p2);
                     this.fight = new Combat(p1, p2, location);
                 }
             } else if (p1ff) {

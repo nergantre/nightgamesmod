@@ -175,7 +175,7 @@ public abstract class BasePersonality implements Personality {
     @Override
     public String describeAll(Combat c, Character self) {
         StringBuilder b = new StringBuilder();
-        b.append(self.getRandomLineFor(CharacterLine.DESCRIBE_LINER, c));
+        b.append(self.getRandomLineFor(CharacterLine.DESCRIBE_LINER, c, c.getOpponent(self)));
         b.append("<br/><br/>");
         self.body.describe(b, c.getOpponent(self), " ");
         b.append("<br/>");

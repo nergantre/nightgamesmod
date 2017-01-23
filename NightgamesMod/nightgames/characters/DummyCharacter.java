@@ -54,7 +54,9 @@ public class DummyCharacter extends Character {
     }
 
     @Override
-    public void act(Combat c) {}
+    public boolean act(Combat c) {
+        return false;
+    }
 
     @Override
     public void move() {}

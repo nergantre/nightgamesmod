@@ -350,14 +350,12 @@ public class Jewel extends BasePersonality {
                                                 .dom(self)) {
                 ArrayList<String> possible = new ArrayList<>();
                 possible.add("Jewel looks down at you with a sadistic smirk, <i>\"That's a nice look on you there "
-                                + c.getOpponent(self)
-                                   .getName()
+                                + other.getName()
                                 + ".\"</i>");
                 possible.add("Shifting her weight a bit to glare into your eyes, Jewel says happily, <i>\"Aha, it looks like you're quite comfortable there. Maybe you're a natural bottom?\"</i>");
                 if (other.hasBalls()) {
                     possible.add("Jewel cups your vulnerable balls and gives them a light squeeze. <i>\"Worthless "
-                                    + c.getOpponent(character)
-                                       .boyOrGirl()
+                                    + other.boyOrGirl()
                                     + "s like you should just give up. Why even try when you end up as my seat every time?\"</i>");
                 }
                 return possible.get(Global.random(possible.size()));
@@ -411,8 +409,7 @@ public class Jewel extends BasePersonality {
                                             "<i>\"Not dry yet? Great, let's continue!\"</i>",};
             switch (other.orgasms) {
                 case 0:
-                    return "<i>\"Heh, no matter what, you're just a horny little " + c.getOpponent(character)
-                                                                                      .boyOrGirl()
+                    return "<i>\"Heh, no matter what, you're just a horny little " + other.boyOrGirl()
                                     + " aren'tcha? Come on, no time for rest, let's see how many times in a row you can cum\"</i>";
                 case 1:
                     return "<i>\"Oooh that's two now. Hope you can keep going!\"</i>";

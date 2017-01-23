@@ -1,3 +1,23 @@
+2.5.0.rc.3
+Bug fixes:
+- fixed a bug with the fast combat display not displaying the correct things
+- fixed a bug where orgasming between turn 1 and turn 2 won't skip player 2's turn
+- fixed a crash bug related to disguise
+- added in the money cost to mods like I said I would in the previous mods
+- fixed gui not working correctly when the player levels in combat
+
+Stuff I forgot to put into the old change logs (since rc1):
+- Raised the prices of drafts a bit since they're much more effective now with mods being stackable
+	- lowered the number of drafts needed for transformations a bit to compensate
+- Added the "Molten drippings" item
+	- this is collectable with an empty bottle from defeating someone with a fiery pussy (ie Jewel)
+	- this is drinkable and throwable like other drafts
+	- effects are: deals 500 pain damage, stuns the target for 25 turns, and makes them level up
+	- only usable during combat
+
+Minor:
+- Added a minor non-placeholder message for players using tempt
+
 2.5.0.rc.2
 
 Bug fixes:

@@ -45,49 +45,44 @@ public class NPCPetCharacter extends PetCharacter {
         return Global.pickRandom(lines.get(lineType)).orElse((cb, sf, ot) -> "").getLine(c, this, other);
     }
 
-    public String getRandomLineFor(String lineType, Combat c) {
-        Character other = c == null ? null : c.getOpponent(this);
-        return getRandomLineFor(lineType, c, other);
-    }
-
     @Override
     public String challenge(Character other) {
         return getRandomLineFor(CharacterLine.CHALLENGE, null, other);
     }
 
     @Override
-    public String orgasmLiner(Combat c) {
-        return getRandomLineFor(CharacterLine.ORGASM_LINER, c);
+    public String orgasmLiner(Combat c, Character target) {
+        return getRandomLineFor(CharacterLine.ORGASM_LINER, c, target);
     }
 
     @Override
     public String makeOrgasmLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c);
+        return getRandomLineFor(CharacterLine.MAKE_ORGASM_LINER, c, target);
     }
 
     @Override
     public String bbLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.BB_LINER, c);
+        return getRandomLineFor(CharacterLine.BB_LINER, c, target);
     }
 
     @Override
     public String nakedLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.NAKED_LINER, c);
+        return getRandomLineFor(CharacterLine.NAKED_LINER, c, target);
     }
 
     @Override
     public String stunLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.STUNNED_LINER, c);
+        return getRandomLineFor(CharacterLine.STUNNED_LINER, c, target);
     }
 
     @Override
     public String taunt(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.TAUNT_LINER, c);
+        return getRandomLineFor(CharacterLine.TAUNT_LINER, c, target);
     }
 
     @Override
     public String temptLiner(Combat c, Character target) {
-        return getRandomLineFor(CharacterLine.TEMPT_LINER, c);
+        return getRandomLineFor(CharacterLine.TEMPT_LINER, c, target);
     }
 
     @Override

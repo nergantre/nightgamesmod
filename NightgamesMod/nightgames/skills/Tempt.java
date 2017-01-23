@@ -45,8 +45,8 @@ public class Tempt extends Skill {
                                             getSelf(), target));
             target.add(c, new Enthralled(target, getSelf(), 3));
         } else if (getSelf().has(Trait.commandingvoice) && Global.random(3) == 0) {
-            c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:speak|speaks} with such unquestionable"
-                            + " authority that {self:subject-action:don't|doesn't} even consider not obeying."
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:speak|speaks} with such unquestionable"
+                            + " authority that {other:subject-action:don't|doesn't} even consider disobeying."
                             , getSelf(), target));
             target.add(c, new Trance(target, 1, false));
         }

@@ -76,7 +76,7 @@ public class CassieTime extends BaseNPCTime {
         {
             TransformationOption runicCock = new ApplyPartModOption("cock", CockMod.runic);
             runicCock.ingredients.put(Item.PriapusDraft, 10);
-            runicCock.ingredients.put(Item.BewitchingDraught, 20);
+            runicCock.ingredients.put(Item.BewitchingDraught, 10);
             runicCock.ingredients.put(Item.FaeScroll, 1);
             runicCock.option = "Runic Cock";
             runicCock.scene = "[Placeholder]<br/>Cassie enchants your cock with the power of the fairies.";
@@ -84,7 +84,7 @@ public class CassieTime extends BaseNPCTime {
         }
         {
             TransformationOption arcanePussy = new ApplyPartModOption("pussy", ArcaneMod.INSTANCE);
-            arcanePussy.ingredients.put(Item.BewitchingDraught, 20);
+            arcanePussy.ingredients.put(Item.BewitchingDraught, 15);
             arcanePussy.ingredients.put(Item.FemDraft, 10);
             arcanePussy.ingredients.put(Item.FaeScroll, 1);
             arcanePussy.option = "Arcane Pussy";
@@ -93,7 +93,7 @@ public class CassieTime extends BaseNPCTime {
         }
         {
             TransformationOption arcaneMouth = new ApplyPartModOption("mouth", ArcaneMod.INSTANCE);
-            arcaneMouth.ingredients.put(Item.BewitchingDraught, 20);
+            arcaneMouth.ingredients.put(Item.BewitchingDraught, 15);
             arcaneMouth.ingredients.put(Item.FaeScroll, 3);
             arcaneMouth.requirements.add((c, self, other) -> {
                 return self.getLevel() >= 30;
@@ -105,7 +105,7 @@ public class CassieTime extends BaseNPCTime {
         }
         {
             TransformationOption arcaneAss = new ApplyPartModOption("ass", ArcaneMod.INSTANCE);
-            arcaneAss.ingredients.put(Item.BewitchingDraught, 20);
+            arcaneAss.ingredients.put(Item.BewitchingDraught, 15);
             arcaneAss.ingredients.put(Item.FaeScroll, 3);
             arcaneAss.requirements.add((c, self, other) -> {
                 return self.getLevel() >= 30;
@@ -119,7 +119,7 @@ public class CassieTime extends BaseNPCTime {
             TransformationOption mouthPussy = new ApplyPartModOption("mouth", SecondPussyMod.INSTANCE);
 
             mouthPussy.ingredients.put(Item.BewitchingDraught, 10);
-            mouthPussy.ingredients.put(Item.FemDraft, 20);
+            mouthPussy.ingredients.put(Item.FemDraft, 10);
             mouthPussy.ingredients.put(Item.Dildo, 1);
             mouthPussy.ingredients.put(Item.FaeScroll, 3);
             mouthPussy.option = "Mouth Pussy";
