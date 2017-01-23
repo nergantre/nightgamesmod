@@ -1,6 +1,8 @@
 package nightgames.skills;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,10 +94,14 @@ public class StripMinor extends Skill {
         } else {
             slot = Global.pickRandom(target.outfit.getAllStrippable()
                                 .stream()
+                                .filter(a -> Collections.disjoint(a.getSlots(), Arrays.asList(ClothingSlot.top, ClothingSlot.bottom)))
                                 .flatMap(a -> a.getSlots()
                                                .stream())
-                                .filter(s -> s != ClothingSlot.top && s != ClothingSlot.bottom)
-                                .collect(Collectors.toList())).get();
+                                .collect(Collectors.toList())).orElse(null);
+            if (slot == null) {
+                c.write(getSelf(), getSelf().subject() + " tried to strip something minor, but nothing was there.");
+                return false;
+            }
             clothing = target.outfit.getTopOfSlot(slot);
         }
         int difficulty = target.getOutfit()

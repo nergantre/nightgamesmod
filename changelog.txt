@@ -1,3 +1,12 @@
+2.5.0.rc.4
+Bug fixes:
+- fixed an issue introduced with rc.3 that prevented players from leveling up.
+	- this also fixes the issue where DEBUG_SKILL_CHOICES would freeze the game and 
+	   non-lingering status effects would remain after leveling up (causing other crashes)
+- fixed an issue where loss exp was not being calculated correctly.
+- fixed an issue where strip minor could strip non-minor articles of clothing if it also covered a minor slot.
+- fixed an issue where pull out was always using the text for facesitting
+
 2.5.0.rc.3
 Bug fixes:
 - fixed a bug with the fast combat display not displaying the correct things

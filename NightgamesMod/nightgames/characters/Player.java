@@ -574,7 +574,7 @@ public class Player extends Character {
     @Override
     public void victory3p(Combat c, Character target, Character assist) {
         gainXP(getVictoryXP(target));
-        target.gainXP(getDefeatXP(this));
+        target.gainXP(target.getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));

@@ -8,6 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.items.clothing.ClothingTrait;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 
@@ -26,7 +27,7 @@ public class StripBottom extends Skill {
 
     @Override public boolean usable(Combat c, Character target) {
         return (c.getStance().oral(getSelf(), target) || c.getStance().reachBottom(getSelf())) && !target.crotchAvailable()
-                        && getSelf().canAct();
+                        && getSelf().canAct() && (target.has(ClothingTrait.harpoonDildo) || target.has(ClothingTrait.harpoonOnahole));
     }
 
     @Override public int getMojoCost(Combat c) {

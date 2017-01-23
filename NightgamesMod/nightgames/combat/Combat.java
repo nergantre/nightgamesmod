@@ -1393,7 +1393,6 @@ public class Combat extends Observable implements Cloneable {
             }
             return;
         }
-        processedEnding = true;
         boolean hasScene = false;
         if (p1.human() || p2.human()) {
             if (postCombatScenesSeen < 3) {
@@ -1411,6 +1410,7 @@ public class Combat extends Observable implements Cloneable {
             }
         }
 
+        processedEnding = true;
         p1.state = State.ready;
         p2.state = State.ready;
         p1.endofbattle(this);
@@ -1430,7 +1430,7 @@ public class Combat extends Observable implements Cloneable {
         if (!p2.has(Trait.Pseudopod)) {
             Global.getMatch().getMatchData().getDataFor(p2).setArmManager(getCombatantData(p2).getManager());
         }
-        if (beingObserved) {
+        if (!ding && beingObserved) {
             Global.gui().endCombat();
         }
     }

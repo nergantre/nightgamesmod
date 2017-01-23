@@ -186,7 +186,7 @@ public class NPC extends Character {
             target = c.p1;
         }
         gainXP(getVictoryXP(target));
-        target.gainXP(getDefeatXP(this));
+        target.gainXP(target.getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -210,7 +210,7 @@ public class NPC extends Character {
             target = c.p1;
         }
         gainXP(getDefeatXP(target));
-        target.gainXP(getVictoryXP(this));
+        target.gainXP(target.getVictoryXP(this));
         arousal.empty();
         if (!target.human() || !Global.getMatch().condition.name().equals("norecovery")) {
             target.arousal.empty();
@@ -241,7 +241,7 @@ public class NPC extends Character {
     @Override
     public void victory3p(Combat c, Character target, Character assist) {
         gainXP(getVictoryXP(target));
-        target.gainXP(getDefeatXP(this));
+        target.gainXP(target.getDefeatXP(this));
         target.arousal.empty();
         if (target.has(Trait.insatiable)) {
             target.arousal.restore((int) (arousal.max() * .2));
@@ -265,13 +265,13 @@ public class NPC extends Character {
 
     @Override
     public boolean act(Combat c) {
-        act(c, c.getOpponent(this));
-        return false;
+        return act(c, c.getOpponent(this));
     }
 
-    public void act(Combat c, Character target) {
+    private boolean act(Combat c, Character target) {
         if (target.human() && Global.isDebugOn(DebugFlags.DEBUG_SKILL_CHOICES)) {
             pickSkillsWithGUI(c, target);
+            return true;
         } else {
             // if there's no strategy, try getting a new one.
             if (!c.getCombatantData(this).getStrategy().isPresent()) {
@@ -311,6 +311,7 @@ public class NPC extends Character {
                 available.add(new Nothing(this));
             }
             c.act(this, ai.act(available, c), "");
+            return false;
         }
     }
 
