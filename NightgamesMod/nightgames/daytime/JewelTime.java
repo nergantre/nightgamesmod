@@ -8,7 +8,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.mods.FieryMod;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
@@ -57,7 +57,7 @@ public class JewelTime extends BaseNPCTime {
             growCock.option = "Jewel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.enlightened));
+                other.body.add(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.enlightened));
                 return true;
             };
             options.add(growCock);

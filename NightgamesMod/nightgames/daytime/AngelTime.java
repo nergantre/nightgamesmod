@@ -7,7 +7,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.WingsPart;
 import nightgames.characters.body.mods.DivineMod;
 import nightgames.characters.body.mods.SizeMod;
@@ -56,7 +56,7 @@ public class AngelTime extends BaseNPCTime {
             growCock.option = "Angel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Angel chugs down the three priapus drafts one after another and grows a splendid new blessed cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.blessed));
+                other.body.add(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.blessed));
                 return true;
             };
             options.add(growCock);

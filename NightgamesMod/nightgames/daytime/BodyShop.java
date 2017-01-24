@@ -12,7 +12,6 @@ import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
-import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.mods.SecondPussyMod;
 import nightgames.characters.body.mods.SizeMod;
@@ -238,7 +237,7 @@ public class BodyShop extends Activity {
         selection.add(new ShopSelection("Grow Cock", 2500) {
             @Override
             void buy(Character buyer) {
-                buyer.body.addReplace(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_TINY)), 1);
+                buyer.body.addReplace(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_TINY)), 1);
             }
 
             @Override

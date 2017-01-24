@@ -111,8 +111,12 @@ public class GenericBodyPart implements BodyPart {
         return getModDescriptorString(c) + normalDescription;
     }
 
+    public SizeMod getSizeMod() {
+        return ((SizeMod)mods.stream().filter(mod -> mod instanceof SizeMod).findAny().orElse(new SizeMod(SizeMod.getMinimumSize(getType()))));
+    }
+
     public int getSize() {
-        return ((SizeMod)mods.stream().filter(mod -> mod instanceof SizeMod).findAny().orElse(SizeMod.INSTANCE)).getSize();
+        return getSizeMod().getSize();
     }
     
     @Override

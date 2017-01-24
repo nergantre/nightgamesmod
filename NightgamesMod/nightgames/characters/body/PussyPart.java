@@ -83,6 +83,11 @@ public class PussyPart extends GenericBodyPart {
     }
 
     @Override
+    public boolean isVisible(Character c) {
+        return c.crotchAvailable();
+    }
+
+    @Override
     public double applyBonuses(Character self, Character opponent, BodyPart target, double damage, Combat c) {
         double bonus = super.applyBonuses(self, opponent, target, damage, c);
         if (self.canRespond() && (self.has(Trait.tight) || self.has(Trait.holecontrol)) && c.getStance()
@@ -176,7 +181,7 @@ public class PussyPart extends GenericBodyPart {
                         .map(Optional::get)
                         .distinct()
                         .collect(Collectors.toList());
-        GenericBodyPart newPart = GenericCockPart.generateGeneric();
+        GenericBodyPart newPart = CockPart.generateGeneric();
         for (PartMod mod : newMods) {
             newPart = (GenericBodyPart)newPart.applyMod(mod);
         }
