@@ -162,8 +162,7 @@ public class FaceSitting extends AbstractBehindStance {
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
                                 + " body.", top, bottom));
                 bottom.drain(c, top, top.getLevel());
-                bottom.add(c, new Abuff(bottom, Attribute.Power, -3, 10));
-                top.add(c, new Abuff(top, Attribute.Power, 3, 10));
+                Abuff.drain(c, top, bottom, Attribute.Power, 3, 10, true);
             } else {
                 c.write(top, Global.format("{other:SUBJECT-ACTION:feel} both {other:possessive} breath and energy being stolen by {self:NAME-POSSESSIVE} ass overlapping {other:POSSESSIVE} face."
                                 + " .", top, bottom));

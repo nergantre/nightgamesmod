@@ -104,8 +104,7 @@ public class AssPart extends GenericBodyPart {
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
                                 + " body.", self, opponent));
                 opponent.drain(c, self, self.getLevel());
-                opponent.add(c, new Abuff(opponent, Attribute.Power, -3, 10));
-                self.add(c, new Abuff(self, Attribute.Power, 3, 10));
+                Abuff.drain(c, self, opponent, Attribute.Power, 3, 10, true);
             } else {
                 c.write(self, Global.format("The feel of {self:name-possessive} ass around"
                                 + " {other:name-possessive} %s drains"

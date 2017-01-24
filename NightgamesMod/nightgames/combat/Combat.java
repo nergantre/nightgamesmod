@@ -1366,6 +1366,8 @@ public class Combat extends Observable implements Cloneable {
      */
     public void end() {
         if (processedEnding) {
+            p1.state = State.ready;
+            p2.state = State.ready;
             if (beingObserved) {
                 Global.gui().endCombat();
             }
@@ -1408,7 +1410,7 @@ public class Combat extends Observable implements Cloneable {
         if (!p2.has(Trait.Pseudopod)) {
             Global.getMatch().getMatchData().getDataFor(p2).setArmManager(getCombatantData(p2).getManager());
         }
-        if (beingObserved) {
+        if (!ding && beingObserved) {
             Global.gui().endCombat();
         }
     }

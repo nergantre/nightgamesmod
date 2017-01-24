@@ -1805,7 +1805,8 @@ public abstract class Character extends Observable implements Cloneable {
 
             if (p.checkAddiction(AddictionType.CORRUPTION, opponent) && selfPart != null && opponentPart != null 
                             && opponentPart.isType("pussy") && selfPart
-                            .isType("cock") && c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1) {
+                            .isType("cock") && (c.getCombatantData(this).getIntegerFlag("ChoseToFuck") == 1
+                            || opponent.has(Trait.TotalSubjugation) && c.getStance().en == Stance.succubusembrace)) {
                 c.write(this, "Your willing sacrifice to " + opponent.getName() + " greatly reinforces"
                                 + " the corruption inside of you.");
                 p.addict(AddictionType.CORRUPTION, opponent, Addiction.HIGH_INCREASE);

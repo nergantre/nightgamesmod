@@ -96,6 +96,7 @@ public class WingWrapped extends Status {
                                 + " {other:direct-object}.", affected, wrapper));
                 affected.add(c, new Abuff(affected, Attribute.Power, -3, 20));
                 wrapper.add(c, new Abuff(affected, Attribute.Power, 3, 20));
+                Abuff.drain(c, wrapper, affected, Attribute.Power, 3, 20, true);
             }
         }
     }

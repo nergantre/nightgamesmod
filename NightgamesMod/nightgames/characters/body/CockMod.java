@@ -255,12 +255,9 @@ public class CockMod extends PartMod {
                                     part.describe(self), opponent.directObject(), self.directObject()));
                     int attDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
                     int willDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
-                    opponent.add(c, new Abuff(opponent, Attribute.Power, -attDamage, 20));
-                    opponent.add(c, new Abuff(opponent, Attribute.Cunning, -attDamage, 20));
-                    opponent.add(c, new Abuff(opponent, Attribute.Seduction, -attDamage, 20));
-                    self.add(c, new Abuff(self, Attribute.Power, attDamage, 20));
-                    self.add(c, new Abuff(self, Attribute.Cunning, attDamage, 20));
-                    self.add(c, new Abuff(self, Attribute.Seduction, attDamage, 20));
+                    Abuff.drain(c, self, opponent, Attribute.Power, attDamage, 20, true);
+                    Abuff.drain(c, self, opponent, Attribute.Cunning, attDamage, 20, true);
+                    Abuff.drain(c, self, opponent, Attribute.Seduction, attDamage, 20, true);
                     opponent.drainWillpower(c, self, (int) self.modifyDamage(DamageType.drain, opponent, willDamage));
                 }
             }

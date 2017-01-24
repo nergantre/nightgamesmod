@@ -2,7 +2,9 @@ package nightgames.status.addiction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -10,6 +12,7 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericCockPart;
@@ -21,8 +24,10 @@ import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
+import nightgames.status.Compulsion;
 import nightgames.status.DarkChaos;
 import nightgames.status.Status;
+import nightgames.status.Stsflag;
 
 public class Corruption extends Addiction {
 
@@ -39,6 +44,9 @@ public class Corruption extends Addiction {
         super.tick(c);
         Severity sev = getCombatSeverity();
         int amt = sev.ordinal() * 2;
+        if (cause.has(Trait.Subversion)) {
+            amt *= 1.5;
+        }
         List<Abuff> buffs = new ArrayList<>();
         if (noMoreAttrs()) {
             if (sev != Severity.HIGH) {
@@ -82,6 +90,7 @@ public class Corruption extends Addiction {
                     break;
                 buffs.add(new Abuff(affected, att, -1, 20));
                 buffs.add(new Abuff(affected, Attribute.Dark, 1, 20));
+                
             }
             switch (sev) {
                 case HIGH:
@@ -100,8 +109,18 @@ public class Corruption extends Addiction {
             }
             buffs.forEach(b -> affected.addlist.add(b));
         }
+        if (cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel()) {
+            c.write(affected, "A wave of obedience radiates out from the dark essence within you, constraining"
+                            + " your free will. It will make fighting " 
+                            + cause.getTrueName() + " much more difficult...");
+            affected.add(c, new Compulsion(affected, cause));
+        }
     }
 
+    private boolean shouldCompel() {
+        return getSeverity().ordinal() * 20 < Global.random(100);
+    }
+    
     private boolean noMoreAttrs() {
         return getDrainAttr() == null;
     }

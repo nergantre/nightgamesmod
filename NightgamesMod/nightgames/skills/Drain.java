@@ -52,12 +52,7 @@ public class Drain extends Skill {
     }
 
     private void steal(Combat c, Character target, Attribute att, int amount) {
-        amount = Math.min(target.get(att), amount);
-        if (amount <= 0) {
-            return;
-        }
-        target.add(c, new Abuff(target, att, -amount, 20));
-        getSelf().add(c, new Abuff(getSelf(), att, amount, 20));
+        Abuff.drain(c, getSelf(), target, att, amount, 20, true);
     }
 
     @Override

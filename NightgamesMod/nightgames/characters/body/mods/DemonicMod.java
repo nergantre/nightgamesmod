@@ -64,8 +64,7 @@ public class DemonicMod extends PartMod {
                                                                                                 .size())];
                 if (stolen != Attribute.Perception && opponent.get(stolen) > 0) {
                     int stolenStrength = Math.min(strength / 10, opponent.get(stolen));
-                    opponent.add(c, new Abuff(opponent, stolen, -stolenStrength, 20));
-                    self.add(c, new Abuff(self, stolen, stolenStrength, 20));
+                    Abuff.drain(c, self, opponent, stolen, stolenStrength, 20, true);
                     if (self.isPet()) {
                         Character master = ((PetCharacter) self).getSelf().owner();
                         master.add(c, new Abuff(master, stolen, stolenStrength, 20));

@@ -4,12 +4,48 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Abuff extends DurationStatus {
     private Attribute modded;
     private int value;
+
+    public static void drain(Combat c, Character drainer, Character drained, 
+                    Attribute att, int value, int duration, boolean write) {
+        if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
+            value *= 1.5;
+        }
+        if (drainer.has(Trait.Greedy)) {
+            duration *= 1.5;
+        }
+        int realValue = Math.min(drained.getPure(att) - 
+                        (Attribute.isBasic(drained, att) ? 3 : 0), value);
+        drainer.add(c, new Abuff(drainer, att, realValue, duration));
+        drained.add(c, new Abuff(drained, att, -realValue, duration));
+        if (drainer.has(Trait.RaptorMentis)) {
+            drained.drainMojo(c, drainer, Math.max(5, realValue));
+        }
+        if (write) {
+            if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
+                c.write(drainer, Global.format("With {other:name-possessive} mental defences lowered as they are,"
+                                + " {self:subject-action:are|is} able to draw in more of {other:possessive} %s than"
+                                + " normal."
+                                , drainer, drained, att.toString()));
+            }
+            if (drainer.has(Trait.Greedy)) {
+                c.write(drainer, Global.format("{self:SUBJECT-ACTION:suck|sucks} {other:name-possessive} %s"
+                                + " deeply into {self:reflective}, holding onto it for longer than usual."
+                                , drainer, drained, att.toString()));
+            }
+            if (drainer.has(Trait.RaptorMentis)) {
+                c.write(drainer, Global.format("Additionally, the draining leaves a profound emptiness in its"
+                                + " wake, sapping {other:name-possessive} confidence.", drainer, drained));
+            }
+        }
+    }
 
     public Abuff(Character affected, Attribute att, int value, int duration) {
         super(String.format("%s %+d", att.toString(), value), affected, duration);
@@ -19,6 +55,9 @@ public class Abuff extends DurationStatus {
         }
         this.modded = att;
         this.value = value;
+        if (affected.has(Trait.Greedy) && value > 0) {
+            setDuration((int) (duration * 1.5));
+        }
     }
 
     @Override
@@ -166,7 +205,8 @@ public class Abuff extends DurationStatus {
         return new Abuff(newAffected, modded, value, getDuration());
     }
 
-    @Override  public JsonObject saveToJson() {
+    @Override
+    public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("modded", modded.name());
@@ -175,8 +215,13 @@ public class Abuff extends DurationStatus {
         return obj;
     }
 
-    @Override public Status loadFromJson(JsonObject obj) {
-        return new Abuff(null, Attribute.valueOf(obj.get("modded").getAsString()), obj.get("value").getAsInt(),
-                        obj.get("duration").getAsInt());
+    @Override
+    public Status loadFromJson(JsonObject obj) {
+        return new Abuff(null, Attribute.valueOf(obj.get("modded")
+                                                    .getAsString()),
+                        obj.get("value")
+                           .getAsInt(),
+                        obj.get("duration")
+                           .getAsInt());
     }
 }

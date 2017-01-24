@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Player;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.status.addiction.Addiction;
@@ -18,7 +19,7 @@ public class PartiallyCorrupted extends DurationStatus {
     private final Character cause;
 
     public PartiallyCorrupted(Player affected, Character cause) {
-        super("Partially Corrupted", affected, 4);
+        super("Partially Corrupted", affected, cause.has(Trait.LastingCorruption) ? 6 : 4);
         counter = 1;
         this.cause = cause;
         flag(Stsflag.partiallyCorrupted);
@@ -50,9 +51,10 @@ public class PartiallyCorrupted extends DurationStatus {
         setDuration(Math.max(other.getDuration(), getDuration()));
         counter += other.counter;
         if (counter > THRESHOLD) {
-            ((Player)affected).addict(AddictionType.CORRUPTION, cause, Addiction.MED_INCREASE);
+            ((Player) affected).addict(AddictionType.CORRUPTION, cause,
+                            cause.has(Trait.Subversion) ? Addiction.HIGH_INCREASE : Addiction.MED_INCREASE);
             // TODO: message?
-            ((Player)affected).removelist.add(this);
+            ((Player) affected).removelist.add(this);
         }
     }
 
@@ -121,16 +123,19 @@ public class PartiallyCorrupted extends DurationStatus {
         return new PartiallyCorrupted((Player) newAffected, newOther);
     }
 
-    @Override  public JsonObject saveToJson() {
+    @Override
+    public JsonObject saveToJson() {
         JsonObject obj = new JsonObject();
         obj.addProperty("type", getClass().getSimpleName());
         obj.addProperty("counter", counter);
         return obj;
     }
 
-    @Override public Status loadFromJson(JsonObject obj) {
+    @Override
+    public Status loadFromJson(JsonObject obj) {
         PartiallyCorrupted pc = new PartiallyCorrupted(null, null);
-        pc.counter = obj.get("counter").getAsInt();
+        pc.counter = obj.get("counter")
+                        .getAsInt();
         return pc;
     }
 
