@@ -337,7 +337,7 @@ public class Eve extends BasePersonality {
                             + " are many better ways to lose than getting pegged in the ass. You "
                             + "struggle as best you can, but you're well aware it's completely futile."
                             + " Pretty quickly, she gives you a slap on the ass and leaves your anus"
-                            + " alone. <i>\"Bad angle for insertion, lucky for you " + c.getOpponent(character).boyOrGirl() + ". You're going"
+                            + " alone. <i>\"Bad angle for insertion, lucky for you " + target.boyOrGirl() + ". You're going"
                             + " to have to find another way to entertain me.\"</i> It seems a little"
                             + " unfair that she's putting the responsibility of entertainment on you"
                             + ", when you're almost completely incapacitated. She doesn't actually "
@@ -390,7 +390,7 @@ public class Eve extends BasePersonality {
                         + "and bends down to suck on your defenseless dick. You groan in pleasure as her tongue plays with your glans. Suddenly, she yelps in surprise and loses her balance. "
                         + "You spot Eve standing behind her, fondling her exposed girl parts. " + target.getName()
                         + " tries to get back to her feet, but Eve easily forces her onto her back. "
-                        + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + c.getOpponent(character).boyOrGirl() + ".\"</i> "
+                        + "<i>\"When I saw your sexy ass waving in front of me, I thought about giving you a good fucking, but then I noticed how enthusiastically you were blowing that " + assist.boyOrGirl() + ".\"</i> "
                         + "She straddles the other girl's face and presses her girl-cock against her lips. <i>\"Let's see you put those skills to better use.\"</i><br/>"
                         + "Apparently you've been forgotten. Oh well. " + target.getName()
                         + "'s pussy looks pretty lonely. Looks like this will be your win.<br/>";

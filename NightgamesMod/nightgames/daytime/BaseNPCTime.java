@@ -12,6 +12,7 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.Loot;
 import nightgames.items.clothing.Clothing;
+import nightgames.requirements.RequirementWithDescription;
 
 public abstract class BaseNPCTime extends Activity {
     protected NPC npc;
@@ -55,13 +56,18 @@ public abstract class BaseNPCTime extends Activity {
         return Optional.empty();
     }
     
+    private String formatRequirementString(String description, boolean meets) {
+        if (meets) {
+            return String.format("<font color='rgb(90,210,100)'>%s</font>", description);
+        } else {
+            return String.format("<font color='rgb(210,90,90)'>%s</font>", description);
+        }
+    }
     @Override
     public void visit(String choice) {
         Global.gui().clearText();
         Global.gui().clearCommand();
         List<Loot> giftables = getGiftables();
-        Map<Item, Integer> inventory = this.player.getInventory();
-
         Optional<TransformationOption> optionalOption =
                         options.stream().filter(opt -> choice.equals(opt.option)).findFirst();
         Optional<Loot> optionalGiftOption = giftables.stream()
@@ -111,27 +117,27 @@ public abstract class BaseNPCTime extends Activity {
             }
             options.stream()
                    .forEach(opt -> {
+                boolean allowed = true;
                 Global.gui().message(opt.option + ":");
-                opt.ingredients.entrySet().forEach((entry) -> {
-                    if (inventory.get(entry.getKey()) == null || inventory.get(entry.getKey()) == 0) {
-                        Global.gui().message(
-                                        entry.getValue() + " " + entry.getKey().getName() + " (you don't have any)");
-                    } else {
-                        Global.gui().message(entry.getValue() + " " + entry.getKey().getName() + " (you have: "
-                                        + inventory.get(entry.getKey()) + ")");
-                    }
-                });
+                for (Map.Entry<Item, Integer> entry : opt.ingredients.entrySet()) {
+                    String message = entry.getValue() + " " + entry.getKey().getName();
+                    boolean meets = player.has(entry.getKey(), entry.getValue());
+                    Global.gui().message(formatRequirementString(message, meets));
+                    allowed &= meets;
+                }
+                for (RequirementWithDescription req : opt.requirements) {
+                    boolean meets = req.getRequirement().meets(null, player, npc);
+                    Global.gui().message(formatRequirementString(req.getDescription(), meets));
+                    allowed &= meets;
+                }
                 int moneyCost = opt.moneyCost.apply(this.player);
                 if (moneyCost > 0) {
-                    Global.gui().message(moneyCost + "$");
+                    boolean meets = player.money >= moneyCost;
+                    Global.gui().message(formatRequirementString(moneyCost + "$", meets));
+                    allowed &= meets;
                 }
-                if (!opt.additionalRequirements.isEmpty()) {
-                    Global.gui().message(opt.additionalRequirements);
-                }
-                if (opt.requirements.stream().allMatch(req -> req.meets(null, player, npc))) {
+                if (allowed) {
                     Global.gui().choose(this, opt.option);
-                } else {
-                    Global.gui().message("<font color='rgb(214, 64, 101)'>Non-ingredient requirements not met</font>");
                 }
                 Global.gui().message("<br/>");
             });

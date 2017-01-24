@@ -227,7 +227,7 @@ public class Body implements Cloneable {
     public void describe(StringBuilder b, Character other, String delimiter) {
         describe(b, other, delimiter, true);
     }
-    
+
     public void describe(StringBuilder b, Character other, String delimiter, boolean hideInvisible) {
         for (BodyPart part : getCurrentParts()) {
             if ((!hideInvisible || part.isVisible(character)) && part.isNotable()) {
@@ -240,7 +240,7 @@ public class Body implements Cloneable {
         }
         b.append(formatHotnessText(other));
     }
-    
+
     private String formatHotnessText(Character other) {
         double hotness = getHotness(other);
         String message;
@@ -1453,6 +1453,17 @@ public class Body implements Cloneable {
             return "they";
         } else {
             return "it";
+        }
+    }
+
+    // yeah i know it's not that simple, but best try right now
+    public static String partArticle(String type) {
+        if (pluralParts.contains(type)) {
+            return "";
+        } else if ("aeiouAEIOU".contains(type.substring(0, 1))){
+            return "an ";
+        } else {
+            return "a ";
         }
     }
 }

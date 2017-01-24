@@ -41,8 +41,7 @@ public class KatTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
-            growCock.additionalRequirements = "";
+            growCock.addRequirement(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))), "Has no penis");
             growCock.option = "Kat: Grow a cock";
             growCock.scene = "<br/><i>\"Mrrr... Y-you want me to w-what!?\"</i> Kat doesn't seem to be too amused at your suggestion for a little switch-up. "
                            + "She glows red like a tomato, and starts stammering like she just learned how to talk. "
@@ -90,8 +89,7 @@ public class KatTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
-            removeCock.additionalRequirements = "";
+            removeCock.addRequirement(RequirementShortcuts.rev(new BodyPartRequirement("cock")), "Has a penis");
             removeCock.option = "Kat: Remove her cock";
             removeCock.scene = "<br/>Kat gladly drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris. "
                             + "Kat shyly whispers, <i>\"Mrrowwww, t-that was embarassing... but it did feel pretty good when I had it...\"</i>";
@@ -110,7 +108,6 @@ public class KatTime extends BaseNPCTime {
             primalCock.scene = "[Placeholder]<br/>Kat uses her totemic magic to convert your penis into a primal cock.";
             options.add(primalCock);
         }
-
         {
             TransformationOption feralPussy = new ApplyPartModOption("pussy", FeralMod.INSTANCE);
             feralPussy.ingredients.put(Item.Rope, 10);
@@ -123,10 +120,7 @@ public class KatTime extends BaseNPCTime {
         TransformationOption catTail = new TransformationOption();
         catTail.ingredients.put(Item.Rope, 10);
         catTail.ingredients.put(Item.Aphrodisiac, 25);
-        catTail.requirements.add(not(bodypart("tail")));
-        catTail.requirements.add((c, self, other) -> {
-            return self.body.get("tail").stream().anyMatch(part -> part != TailPart.cat) || !self.body.has("tail");
-        });
+        catTail.addRequirement(not(bodypart("tail")), "Has no tail");
         catTail.option = "Cat Tail";
         catTail.scene = "[Placeholder]<br/>Kat uses her totemic magic to grow you a cat tail.";
         catTail.effect = (c, self, other) -> {
@@ -137,10 +131,9 @@ public class KatTime extends BaseNPCTime {
         TransformationOption catEars = new TransformationOption();
         catEars.ingredients.put(Item.Rope, 10);
         catEars.ingredients.put(Item.Aphrodisiac, 25);
-        catEars.requirements.add(new BodyPartRequirement("ears"));
-        catEars.requirements.add((c, self, other) -> {
+        catEars.addRequirement((c, self, other) -> {
             return self.body.get("ears").stream().anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
-        });
+        }, "No cat ears");
         catEars.option = "Cat Ears";
         catEars.scene = "[Placeholder]<br/>Kat uses her totemic magic to grow you cat ears.";
         catEars.effect = (c, self, other) -> {

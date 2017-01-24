@@ -48,8 +48,7 @@ public class ReykaTime extends BaseNPCTime {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 1);
             growCock.ingredients.put(Item.Talisman, 1);
-            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
-            growCock.additionalRequirements = "";
+            growCock.addRequirement(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))), "Has no penis");
             growCock.option = "Reyka: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Reyka downs the bottle of the priapus draft after channeling her dark magic into the talisman and attaching it to her clitoris. "
                             + "The two of you wait, and soon enough, a large demonic cock sprouts out under the talisman, ripping it off from her body.";
@@ -62,8 +61,7 @@ public class ReykaTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
-            removeCock.additionalRequirements = "";
+            removeCock.addRequirement(RequirementShortcuts.rev(new BodyPartRequirement("cock")), "Has a penis");
             removeCock.option = "Reyka: Remove her cock";
             removeCock.scene = "<br/>Reyka doesn't seem extremely pleased with your request to remove her new found maleness, but complies anyways with your wishes. "
                             + "Taking the FemDrafts you offer her, she drinks them one after another and waits with her cock still proudly erect. "
@@ -115,7 +113,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonWings = new TransformationOption();
         demonWings.ingredients.put(Item.SuccubusDraft, 10);
         demonWings.ingredients.put(Item.semen, 5);
-        demonWings.requirements.add(not(bodypart("wings")));
+        demonWings.addRequirement(not(bodypart("wings")), "No wings");
         demonWings.option = "Demonic Wings";
         demonWings.scene =
                         "Reyka smiles and crushes the ingredients together and draws a magic formation on your back and shoulders. "
@@ -131,12 +129,7 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption demonTail = new TransformationOption();
         demonTail.ingredients.put(Item.SuccubusDraft, 10);
         demonTail.ingredients.put(Item.semen, 5);
-        demonTail.requirements.add(not(bodypart("tail")));
-        demonTail.requirements.add((c, self, other) -> {
-            return self.body.get("tail")
-                            .stream()
-                            .anyMatch(part -> part != TailPart.demonic) || !self.body.has("tail");
-        });
+        demonTail.addRequirement(not(bodypart("tail")), "No tail");
         demonTail.option = "Spade Tail";
         demonTail.scene =
                         "[Placeholder]<br/>Reyka marks the top of you ass with a magic symbol and fingers your ass until you grow a demonic tail.";
@@ -148,12 +141,11 @@ public class ReykaTime extends BaseNPCTime {
         TransformationOption pointedEars = new TransformationOption();
         pointedEars.ingredients.put(Item.SuccubusDraft, 10);
         pointedEars.ingredients.put(Item.semen, 5);
-        pointedEars.requirements.add(new BodyPartRequirement("ears"));
-        pointedEars.requirements.add((c, self, other) -> {
+        pointedEars.addRequirement((c, self, other) -> {
             return self.body.get("ears")
                             .stream()
-                            .anyMatch(part -> part != EarPart.cat) || !self.body.has("ears");
-        });
+                            .anyMatch(part -> part != EarPart.pointed) || !self.body.has("ears");
+        }, "No pointed ears");
         pointedEars.option = "Pointed Ears";
         pointedEars.scene =
                         "Reyka fetches the ingredients from your pockets with her tail and mixes them together with her palm. She mutters something unintelligible under her breath and suddenly a "
@@ -183,10 +175,9 @@ public class ReykaTime extends BaseNPCTime {
             devilishAss.ingredients.put(Item.BewitchingDraught, 10);
             devilishAss.ingredients.put(Item.semen, 5);
             devilishAss.option = "Devil's Ass";
-            devilishAss.requirements.add((c, self, other) -> {
+            devilishAss.addRequirement((c, self, other) -> {
                 return self.getLevel() >= 30;
-            });
-            devilishAss.additionalRequirements = "Level: 30";
+            }, "At least level 30");
             devilishAss.scene = "[Placeholder]<br/>Reyka mixes the potions together with her tail and fucks you thoroughly with it, turning your once-human ass into a cock-hungry corrupted hole.";
             options.add(devilishAss);
         }
@@ -196,10 +187,9 @@ public class ReykaTime extends BaseNPCTime {
             demonicMouth.ingredients.put(Item.BewitchingDraught, 10);
             demonicMouth.ingredients.put(Item.semen, 5);
             demonicMouth.option = "Demonic Mouth";
-            demonicMouth.requirements.add((c, self, other) -> {
+            demonicMouth.addRequirement((c, self, other) -> {
                 return self.getLevel() >= 30;
-            });
-            demonicMouth.additionalRequirements = "Level: 30";
+            }, "At least level 30");
             demonicMouth.scene = "[Placeholder]<br/>Reyka drinks the potions and kisses you. Somehow the mixture corrupts the inside of your mouth into that of a demon's.";
             options.add(demonicMouth);
         }
