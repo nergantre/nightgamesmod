@@ -1,12 +1,19 @@
 package nightgames.skills;
 
+import java.util.Optional;
+
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
+import nightgames.status.Collared;
+import nightgames.status.Compulsive;
+import nightgames.status.Compulsive.Situation;
+import nightgames.status.Stsflag;
 
 public class Reversal extends Skill {
 
@@ -33,6 +40,13 @@ public class Reversal extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        Optional<String> compulsion = Compulsive.describe(c, getSelf(), Situation.PREVENT_REVERSAL);
+        if (compulsion.isPresent()) {
+            c.write(getSelf(), compulsion.get());
+            getSelf().pain(c, null, Global.random(20, 50));
+            Compulsive.doPostCompulsion(c, getSelf(), Situation.PREVENT_REVERSAL);
+            return false;
+        }
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
 

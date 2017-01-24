@@ -17,6 +17,7 @@ public class LegLocked extends Status {
         requirements.add(RequirementShortcuts.eitherinserted());
         requirements.add(RequirementShortcuts.dom());
         requirements.add((c, self, other) -> toughness > .01);
+        requirements.add((c, self, other) -> other.canRespond());
         toughness = dc;
         flag(Stsflag.leglocked);
         flag(Stsflag.debuff);

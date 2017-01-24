@@ -28,6 +28,7 @@ import nightgames.characters.body.mods.ArcaneMod;
 import nightgames.characters.body.mods.CyberneticMod;
 import nightgames.characters.body.mods.DivineMod;
 import nightgames.characters.body.mods.FeralMod;
+import nightgames.characters.body.mods.FieryMod;
 import nightgames.characters.body.mods.GooeyMod;
 import nightgames.characters.body.mods.PartMod;
 import nightgames.characters.body.mods.PlantMod;
@@ -354,7 +355,7 @@ public class Combat extends Observable implements Cloneable {
             victor.consume(Item.EmptyBottle, 1, false);
             victor.gain(Item.BioGel, 1);
         }
-        if (checkBottleCollection(victor, loser, GooeyMod.INSTANCE)) {
+        if (checkBottleCollection(victor, loser, FieryMod.INSTANCE)) {
             write(victor, Global.format(
                             "<br/><b>{other:SUBJECT-ACTION:shoot|shoots} {self:name-do} a dirty look as {self:subject-action:move|moves} to collect some of {other:possessive} excitement in an empty bottle</b>",
                             victor, loser));

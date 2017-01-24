@@ -20,6 +20,7 @@ public class Collared extends Status implements Compulsive {
         flag(Stsflag.compelled);
         charges = 10;
         this.owner = owner;
+        charges = 15;
     }
 
     public void spendCharges(Combat c, int amt) {
@@ -35,7 +36,7 @@ public class Collared extends Status implements Compulsive {
     }
 
     public void recharge() {
-        charges += 10;
+        charges += 15;
     }
     
     @Override
@@ -163,6 +164,10 @@ public class Collared extends Status implements Compulsive {
                                                 + " shock. At the same time, {other:subject-action:grab|grabs}"
                                                 + " hold of {self:possessive} body and gets {other:reflective}"
                                                 + " into a more advantegeous position.", affected, owner);
+            case PREVENT_REVERSAL:
+                return Global.format("{self:SUBJECT-ACTION:try|tries} to get the"
+                            + " upper hand, but the collar adamantly refuses by"
+                            + " shocking {self:direct-object}.", affected, owner);
             default:
                 return "ERROR: Missing compulsion type in Collared";
             

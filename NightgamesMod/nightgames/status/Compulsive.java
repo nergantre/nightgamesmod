@@ -37,7 +37,8 @@ public interface Compulsive {
         PUNISH_PAIN,
         PREVENT_ESCAPE,
         PREVENT_STRUGGLE,
-        PREVENT_REMOVE_BOMB
+        PREVENT_REMOVE_BOMB,
+        PREVENT_REVERSAL
     }
     
 }

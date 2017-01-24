@@ -143,6 +143,11 @@ public class Compulsion extends DurationStatus implements Compulsive {
                                                 + " At the same time, {other:subject-action:grab|grabs}"
                                                 + " hold of {self:possessive} body and gets {other:reflective}"
                                                 + " into a more advantegeous position.", affected, compeller);
+            case PREVENT_REVERSAL:
+                return Global.format("{self:SUBJECT-ACTION:try|tries} to gain the upper hand"
+                                + " over {other:name-do}, but the compulsion disallows it and"
+                                + " freezes {self:possessive} body until {self:pronoun-action:change|changes}"
+                                + " {self:possessive} mind.", affected, compeller);
             default:
                 return "ERROR: Missing compulsion type in Collared";
             
