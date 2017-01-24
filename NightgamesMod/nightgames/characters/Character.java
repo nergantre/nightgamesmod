@@ -96,6 +96,7 @@ import nightgames.status.addiction.AddictionType;
 import nightgames.status.addiction.Dominance;
 import nightgames.status.addiction.MindControl;
 import nightgames.trap.Trap;
+import nightgames.utilities.DebugHelper;
 import nightgames.utilities.ProseUtils;
 
 @SuppressWarnings("unused")
@@ -119,7 +120,7 @@ public abstract class Character extends Observable implements Cloneable {
     private CopyOnWriteArrayList<Skill> skills;
     public Set<Status> status;
     public Set<Stsflag> statusFlags;
-    public CopyOnWriteArrayList<Trait> traits;
+    private CopyOnWriteArrayList<Trait> traits;
     protected Map<Trait, Integer> temporaryAddedTraits;
     protected Map<Trait, Integer> temporaryRemovedTraits;
     public Set<Status> removelist;
@@ -1124,6 +1125,15 @@ public abstract class Character extends Observable implements Cloneable {
         allTraits.removeAll(temporaryRemovedTraits.keySet());
         return allTraits;
     }
+    
+    public void clearTraits() {
+        List<Trait> traitsToRemove = new ArrayList<>(traits);
+        traitsToRemove.forEach(this::removeTraitDontSaveData);
+    }
+
+    public Collection<Trait> getTraitsPure() {
+        return Collections.unmodifiableCollection(traits);
+    }
 
     public boolean addTemporaryTrait(Trait t, int duration) {
         if (!getTraits().contains(t)) {
@@ -1184,22 +1194,42 @@ public abstract class Character extends Observable implements Cloneable {
         getLevelUpFor(getLevel()).modAttribute(a, i);
     }
 
-    public boolean add(Trait t) {
+    public boolean addTraitDontSaveData(Trait t) {
+        if (t == null) {
+            System.err.println("Tried to add an null trait!");
+            DebugHelper.printStackFrame(3, 1);
+            return false;
+        }
         if (traits.addIfAbsent(t)) {
             if (t.equals(Trait.mojoMaster)) {
                 mojo.gain(20);
             }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean add(Trait t) {
+        if (addTraitDontSaveData(t)) {
             getLevelUpFor(getLevel()).addTrait(t);
             return true;
         }
         return false;
     }
 
-    public boolean remove(Trait t) {
+    public boolean removeTraitDontSaveData(Trait t) {
         if (traits.remove(t)) {
             if (t.equals(Trait.mojoMaster)) {
                 mojo.gain(-20);
             }
+            getLevelUpFor(getLevel()).removeTrait(t);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean remove(Trait t) {
+        if (removeTraitDontSaveData(t)) {
             getLevelUpFor(getLevel()).removeTrait(t);
             return true;
         }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -167,7 +168,7 @@ class CombatLog {
         sb.append(c.getTrueName())
           .append(" at start:").append(linebreak);
         sb.append(c.att.toString());
-        sb.append(c.traits.toString());
+        sb.append(c.getTraits().toString());
         sb.append(c.status.toString());
         sb.append(", ");
         c.body.describe(sb, other, " ", false);
@@ -186,8 +187,8 @@ class CombatLog {
     }
 
     private static void describeTraitChange(Character c, Character clone, StringBuilder sb) {
-        List<Trait> current = c.traits;
-        List<Trait> last = clone.traits;
+        Collection<Trait> current = c.getTraits();
+        Collection<Trait> last = clone.getTraits();
         if (!current.equals(last)) {
             sb.append('[');
             current.stream()

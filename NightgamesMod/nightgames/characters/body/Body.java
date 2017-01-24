@@ -1447,4 +1447,12 @@ public class Body implements Cloneable {
         }
         return Global.pickRandom(downgradable).get();
     }
+
+    public static String partPronoun(String type) {
+        if (pluralParts.contains(type)) {
+            return "they";
+        } else {
+            return "it";
+        }
+    }
 }

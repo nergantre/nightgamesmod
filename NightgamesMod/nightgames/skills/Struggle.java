@@ -305,7 +305,6 @@ public class Struggle extends Skill {
                 c.write("ERROR: Something went wrong with the MagLocks...");
                 return false;
             }
-            
             // Two MagLocks, difficult to remove
             if (!target.check(Attribute.Science, dc)) {
                 String msg = "{self:SUBJECT-ACTION:struggle|struggles} against the powerful"

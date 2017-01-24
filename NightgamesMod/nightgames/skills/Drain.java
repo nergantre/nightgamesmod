@@ -87,7 +87,7 @@ public class Drain extends Skill {
                 break;
             case 3:
                 steal(c, target, Attribute.Cunning, strength);
-                target.loseMojo(c, target.getMojo().get());
+                target.drainMojo(c, getSelf(), target.getMojo().get() / 2);
                 break;
             case 4:
                 steal(c, target, Attribute.Power, strength);
@@ -101,10 +101,9 @@ public class Drain extends Skill {
                 steal(c, target, Attribute.Power, strength);
                 steal(c, target, Attribute.Seduction, strength);
                 steal(c, target, Attribute.Cunning, strength);
-                target.mod(Attribute.Perception, 1);
                 target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, staminaStrength));
-                target.loseMojo(c, 10);
-                target.temptNoSource(c, getSelf(), 10, this);
+                target.drainMojo(c, getSelf(), target.getMojo().get());
+                target.temptNoSource(c, getSelf(), 20, this);
                 break;
             default:
                 break;

@@ -21,6 +21,7 @@ import nightgames.characters.NPC;
 import nightgames.characters.Player;
 import nightgames.characters.State;
 import nightgames.characters.Trait;
+import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.mods.ArcaneMod;
@@ -228,7 +229,7 @@ public class Combat extends Observable implements Cloneable {
     public void applyFetish(Character self, Character other, String FetishType) {
         if ( !other.body.get(FetishType).isEmpty() && !self.body.getFetish(FetishType).isPresent()) {
             if (self.human()) {
-                write(self, "As your first battle of the night begins, you can't help but think about " + other.nameOrPossessivePronoun() + " " + FetishType + " and how it would feel on your skin.");
+                write(self, "As your first battle of the night begins, you can't help but think about " + other.nameOrPossessivePronoun() + " " + FetishType + " and how " + Body.partPronoun(FetishType) + " would feel on your skin.");
             } 
             self.add(this, new BodyFetish(self, null, FetishType, .25));
         }
@@ -728,7 +729,7 @@ public class Combat extends Observable implements Cloneable {
                         setStance(mountStance.insert(this, drainer, drainer));
                     } else if (drainer.hasPussy() && drained.hasPussy()) {
                         write(drainer, Global.format("With {other:name-do} defeated and unable to fight back, {self:subject-action:climb|climbs} "
-                                        + "on top of {other:direct-object} and {self:action:press} {self:possessive} wet snatch on top of {poss-pronoun}.", drainer, drained));
+                                        + "on top of {other:direct-object} and {self:action:press} {self:possessive} wet snatch on top of {other:poss-pronoun}.", drainer, drained));
                         setStance(new TribadismStance(drainer, drained));
                     } else {
                         write(drainer, Global.format("With {other:name-do} defeated and unable to fight back, {self:subject-action:climb|climbs} "
@@ -1387,6 +1388,8 @@ public class Combat extends Observable implements Cloneable {
      * @return true if it should end the fight, false if there are still more scenes
      */
     public void end() {
+        p1.state = State.ready;
+        p2.state = State.ready;
         if (processedEnding) {
             if (beingObserved) {
                 Global.gui().endCombat();
@@ -1409,10 +1412,7 @@ public class Combat extends Observable implements Cloneable {
                 Global.gui().next(this);
             }
         }
-
         processedEnding = true;
-        p1.state = State.ready;
-        p2.state = State.ready;
         p1.endofbattle(this);
         p2.endofbattle(this);
         getCombatantData(p1).getRemovedItems().forEach(p1::gain);

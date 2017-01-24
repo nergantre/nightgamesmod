@@ -13,7 +13,7 @@ import nightgames.status.Stsflag;
 
 public class ThrowBomb extends Skill {
     private static final String DOM_SEX =
-                    "{other:SUBJECT}, having pulled a small sphere from somewhere, leans down and places"
+                    "{self:SUBJECT}, having pulled a small sphere from somewhere, leans down and places"
                                     + " said sphere on your chest. It gives of a soft beep. You try to roll it"
                                     + " of you by twisting you torso, but the device sticks to you as if it were"
                                     + " glued in place.";

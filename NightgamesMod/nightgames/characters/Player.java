@@ -110,7 +110,7 @@ public class Player extends Character {
     }
 
     private void finishCharacter(List<Trait> pickedTraits, Map<Attribute, Integer> selectedAttributes) {
-        traits.addAll(pickedTraits);
+        pickedTraits.forEach(this::addTraitDontSaveData);
         att.putAll(selectedAttributes);
         change();
         body.finishBody(initialGender);

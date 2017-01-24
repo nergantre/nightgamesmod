@@ -37,9 +37,9 @@ public class TestAngel extends BasePersonality {
         baseChar.money = 0;
         baseChar.xp = 0;
 
-        baseChar.traits.clear();
-        baseChar.traits.add(Trait.undisciplined);
-        baseChar.traits.add(Trait.lickable);
+        baseChar.clearTraits();
+        baseChar.add(Trait.undisciplined);
+        baseChar.add(Trait.lickable);
 
         baseChar.plan = Plan.hunting;
         baseChar.mood = Emotion.confident;

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -98,7 +99,7 @@ public abstract class Status implements Cloneable {
         flags.remove(status);
     }
 
-    public HashSet<Stsflag> flags() {
+    public Set<Stsflag> flags() {
         return flags;
     }
 

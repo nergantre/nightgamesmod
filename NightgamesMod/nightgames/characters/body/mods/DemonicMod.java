@@ -37,7 +37,7 @@ public class DemonicMod extends PartMod {
         } else {
             String domSubText = c.getStance().dom(self) ? ("{self:pronoun-action:" + (part.isType("mouth") ? "suck" : "ride") + "} {other:direct-object}") : "{other:pronoun-action:fuck} {self:direct-object}";
             String fuckingText = Global.format("{self:POSSESSIVE} hot flesh kneads {other:possessive} %s as " + domSubText + ", drawing ", self, opponent, target.describe(opponent));
-            String normalText = Global.format("As {self:possessive} %s touch {other:direct-object}, {self:pronoun-action:draw} large ", self, opponent, part.getType(), target.describe(opponent));
+            String normalText = Global.format("As {self:possessive} %s touches {other:poss-pronoun}, {self:pronoun-action:draw} large ", self, opponent, part.getType(), target.describe(opponent));
             c.write(self, (fucking ? fuckingText : normalText) + String.format("gouts of life energy out of %s %s which is greedily absorbed by %s %s.",
                             opponent.possessiveAdjective(), target.describe(opponent), self.possessiveAdjective(),
                             part.describe(self)));

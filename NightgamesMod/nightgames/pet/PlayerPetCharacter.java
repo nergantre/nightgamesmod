@@ -1,8 +1,6 @@
 package nightgames.pet;
 
 import java.util.HashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.combat.Combat;
@@ -22,7 +20,8 @@ public class PlayerPetCharacter extends PetCharacter {
             this.level += 1;
         }
         this.att = new HashMap<>(prototype.att);
-        this.traits = new CopyOnWriteArrayList<>(prototype.traits);
+        this.clearTraits();
+        prototype.getTraitsPure().forEach(this::addTraitDontSaveData);
         this.getSkills().clear();
         this.body = prototypeCharacter.body.clone(this);
         this.outfit = new Outfit(prototypeCharacter.outfit);

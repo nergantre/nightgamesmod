@@ -481,7 +481,7 @@ public class Command extends Skill {
                 break;
             case MASTER_INSERT:
                 if (c.getStance().havingSex(c, getSelf())) {
-                    c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:order} {target:name-do} to be still.", getSelf(), target));
+                    c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:order} {other:name-do} to be still.", getSelf(), target));
                 } else {
                     c.write(getSelf(),
                                     String.format("With a mischevous smile, %s tells %s to be still,"

@@ -1,7 +1,7 @@
 package nightgames.status;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -11,8 +11,6 @@ import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.items.Item;
-import nightgames.skills.Nothing;
-import nightgames.skills.Skill;
 
 public class MagLocked extends Status {
 
@@ -29,7 +27,7 @@ public class MagLocked extends Status {
         if (count < 3)
             count++;
     }
-    
+
     public void addLock() {
         if (count < 3) count++;
     }
@@ -87,12 +85,14 @@ public class MagLocked extends Status {
             affected.removelist.add(this);
         }
     }
-    
+
     @Override
-    public Collection<Skill> allowedSkills(Combat c) {
-        return count == 3 ? Collections.singleton(new Nothing(affected)) : Collections.emptySet();
+    public Set<Stsflag> flags() {
+        Set<Stsflag> flags = new HashSet<>(super.flags().size() + 1);
+        flags.add(Stsflag.stunned);
+        return flags;
     }
-    
+
     @Override
     public int regen(Combat c) {
         return 0;
