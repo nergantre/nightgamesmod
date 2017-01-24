@@ -1935,8 +1935,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String getRandomLineFor(String lineType, Combat c, Character target) {
-        Character other = c == null ? null : c.getOpponent(this);
-        return getRandomLineFor(lineType, c, other);
+        return "";
     }
 
     private void resolvePostOrgasmForOpponent(Combat c, Character opponent, BodyPart selfPart, BodyPart opponentPart) {
