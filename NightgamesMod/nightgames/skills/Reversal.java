@@ -5,8 +5,11 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
+import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
+import nightgames.status.Collared;
+import nightgames.status.Stsflag;
 
 public class Reversal extends Skill {
 
@@ -28,6 +31,15 @@ public class Reversal extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
+        Collared stat = (Collared) getSelf().getStatus(Stsflag.collared);
+        if (stat != null) {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try|tries} to get the"
+                            + " upper hand, but the collar adamantly refuses by"
+                            + " shocking {self:direct-object}.", getSelf(), target));
+            getSelf().pain(c, null, Global.random(20, 50));
+            stat.spendCharges(c, 2);
+            return false;
+        }
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             writeOutput(c, Result.normal, target);
 

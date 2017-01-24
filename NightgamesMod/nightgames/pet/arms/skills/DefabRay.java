@@ -33,7 +33,7 @@ public class DefabRay extends ArmSkill {
             target.shred(slot);
             c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} %s points at you, its"
                             + " head faintly glowing with a blue light. Suddenly, an eerily similar light"
-                            + " surrounds {target:name-possessive} %s, and it soon disappears entirely!"
+                            + " surrounds {other:name-possessive} %s, and it soon disappears entirely!"
                             , owner, target, arm.getName(), item.toString()));
             return true;
         }
