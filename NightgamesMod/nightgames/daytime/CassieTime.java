@@ -7,7 +7,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.CockMod;
-import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.mods.ArcaneMod;
 import nightgames.characters.body.mods.SecondPussyMod;
 import nightgames.characters.body.mods.SizeMod;
@@ -50,12 +50,11 @@ public class CassieTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
-            growCock.additionalRequirements = "";
+            growCock.addRequirement(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))), "Has no penis");
             growCock.option = "Cassie: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Cassie hesistantly drinks the 3 priapus drafts and grows a large runic cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.runic));
+                other.body.add(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.runic));
                 return true;
             };
             options.add(growCock);
@@ -63,8 +62,7 @@ public class CassieTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
-            removeCock.additionalRequirements = "";
+            removeCock.addRequirement(RequirementShortcuts.rev(new BodyPartRequirement("cock")), "Has a Penis");
             removeCock.option = "Cassie: Remove her cock";
             removeCock.scene = "[Placeholder]<br/>Cassie hesistantly drinks the three femdrafts and her runic cock shrinks into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
@@ -95,10 +93,9 @@ public class CassieTime extends BaseNPCTime {
             TransformationOption arcaneMouth = new ApplyPartModOption("mouth", ArcaneMod.INSTANCE);
             arcaneMouth.ingredients.put(Item.BewitchingDraught, 15);
             arcaneMouth.ingredients.put(Item.FaeScroll, 3);
-            arcaneMouth.requirements.add((c, self, other) -> {
+            arcaneMouth.addRequirement((c, self, other) -> {
                 return self.getLevel() >= 30;
-            });
-            arcaneMouth.additionalRequirements = "Level: 30";
+            }, "At least level 30");
             arcaneMouth.option = "Arcane Lipstick";
             arcaneMouth.scene = "[Placeholder]<br/>Cassie enchants a tube of lipstick and gives it to you.";
             options.add(arcaneMouth);
@@ -107,10 +104,9 @@ public class CassieTime extends BaseNPCTime {
             TransformationOption arcaneAss = new ApplyPartModOption("ass", ArcaneMod.INSTANCE);
             arcaneAss.ingredients.put(Item.BewitchingDraught, 15);
             arcaneAss.ingredients.put(Item.FaeScroll, 3);
-            arcaneAss.requirements.add((c, self, other) -> {
+            arcaneAss.addRequirement((c, self, other) -> {
                 return self.getLevel() >= 30;
-            });
-            arcaneAss.additionalRequirements = "Level: 30";
+            }, "At least level 30");
             arcaneAss.option = "Runic Ass Tattoos";
             arcaneAss.scene = "[Placeholder]<br/>Cassie decorates your rosebud with some runic tattoos.";
             options.add(arcaneAss);

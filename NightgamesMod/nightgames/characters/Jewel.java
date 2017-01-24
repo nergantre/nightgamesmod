@@ -728,9 +728,8 @@ public class Jewel extends BasePersonality {
                             + " She stands up and presses her bare foot against %s dick and balls. "
                             + "%s groans in pleasure and pain as Jewel roughly grinds her foot against "
                             + "the sensitive organs. <i>\"Do you like that? You can't help it, can "
-                            + "you?\"</i> She grins sadistically. <i>\"I've stomped many " + c.getOpponent(character)
-                                                                                              .boyOrGirl()
-                            + "s into " + "the ground, but no matter how much pride they have, they always end "
+                            + "you?\"</i> She grins sadistically. <i>\"I've stomped many boys into "
+                            + "the ground, but no matter how much pride they have, they always end "
                             + "up moaning in pleasure. It's like penises exist just to be dominated.\""
                             + "</i> You feel a chill run down your back, watching Jewel's display of"
                             + " dominance, but you're also rock hard. %s lets out a loud moan and "
@@ -752,10 +751,6 @@ public class Jewel extends BasePersonality {
 
     @Override
     public String intervene3p(Combat c, Character target, Character assist) {
-        Character other = c.getOpponent(character);
-        String vulnerability = other.hasBalls() ? "balls. You fall to the floor"
-                        : other.hasPussy() ? "pussy. You fall to the floor"
-                                        : other.hasBreasts() ? "breasts. You cringe" : "face. You cower";
         if (target.human()) {
             return "You skillfully force " + assist.getName()
                             + " to the floor and begin pleasuring her into submission. You rub and finger her pussy until she's shivering and "
@@ -765,6 +760,9 @@ public class Jewel extends BasePersonality {
                             + "you defenseless. By this time, " + assist.getName()
                             + " has recovered and looks ready to take revenge.<br/>";
         } else {
+            String vulnerability = assist.hasBalls() ? "balls. You fall to the floor"
+                            : assist.hasPussy() ? "pussy. You fall to the floor"
+                                            : assist.hasBreasts() ? "breasts. You cringe" : "face. You cower";
             return "You wrestle with " + target.getName()
                             + " until you're both naked and sweaty. You seem to have a slight advantage until she manages to get a free hand between "
                             + "your legs and slap your " + vulnerability + " in pain, but " + target.getName()

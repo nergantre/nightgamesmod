@@ -5,7 +5,7 @@ public enum ArmType {
     STRIPPER("Stripper", "a hook-like attachment"),
     STABILIZER("Stabilizer", "a wide, flat base"),
     HEAT_RAY("Heat Ray Cannon", "a red, slitted opening"),
-    DEFAB_CANNON("Defrabrication Cannon", "a spherical, metallic tip"),
+    DEFAB_CANNON("Defabrication Cannon", "a spherical, metallic tip"),
     HEAL_CANNON("Heal Cannon", "a blocky tip"),
     TOY_ARM("Silicone Arm", "a malleable silicone ball"),
     TENTACLE_INJECTOR("Injector Tentacle", "a needle tip leaking fluid"),

@@ -271,7 +271,7 @@ public abstract class Position implements Cloneable {
         return parts;
     }
 
-    private List<BodyPart> partsForStanceOnly(Combat combat, Character self, Character other) {
+    public List<BodyPart> partsForStanceOnly(Combat combat, Character self, Character other) {
         if (self.equals(top)) {
             return topParts(combat);
         } else if (self.equals(bottom)) {

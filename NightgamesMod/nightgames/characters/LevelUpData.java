@@ -27,10 +27,10 @@ public class LevelUpData implements Cloneable {
             self.modAttributeDontSaveData(entry.getKey(), -entry.getValue().intValue());
         }
         for (Trait lostTrait : traitsRemoved) {
-            self.traits.addIfAbsent(lostTrait);
+            self.addTraitDontSaveData(lostTrait);
         }
         for (Trait newTrait : traitsAdded) {
-            self.traits.remove(newTrait);
+            self.removeTraitDontSaveData(newTrait);
         }
     }
 
@@ -39,10 +39,10 @@ public class LevelUpData implements Cloneable {
             self.modAttributeDontSaveData(entry.getKey(), entry.getValue().intValue());
         }
         for (Trait lostTrait : traitsRemoved) {
-            self.traits.remove(lostTrait);
+            self.removeTraitDontSaveData(lostTrait);
         }
         for (Trait newTrait : traitsAdded) {
-            self.traits.addIfAbsent(newTrait);
+            self.addTraitDontSaveData(newTrait);
         }
     }
 

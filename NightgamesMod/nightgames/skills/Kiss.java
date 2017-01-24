@@ -151,7 +151,7 @@ public class Kiss extends Skill {
         if (modifier == Result.divine) {
             return "You pull " + target.getName()
                             + " to you and kiss her passionately, sending your divine aura into her body though her mouth. "
-                            + "You tangle your tongue around hers and probe the sensitive insides her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
+                            + "You tangle your tongue around hers and probe the sensitive insides of her mouth while mirroring the action in the space of her soul, sending quakes of pleasure through her physical and astral body. "
                             + "As you finally break the kiss, she looks energized but desperate for more.";
         }
         if (modifier == Result.special) {

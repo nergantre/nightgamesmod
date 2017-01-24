@@ -10,7 +10,6 @@ import com.google.gson.JsonPrimitive;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
-import nightgames.characters.body.BreastsPart;
 import nightgames.global.Global;
 
 public class SizeMod extends PartMod {
@@ -28,9 +27,9 @@ public class SizeMod extends PartMod {
         COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_SMALL, "small ");
         COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_LITTLE, "small ");
         COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_AVERAGE, "");
-        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_LARGE, "large ");
-        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_BIG, "big ");
-        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_HUGE, "huge ");
+        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_LARGE, "big ");
+        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_BIG, "huge ");
+        COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_HUGE, "gigantic ");
         COCK_SIZE_DESCRIPTIONS.put(COCK_SIZE_MASSIVE, "massive ");
     }
     public static int ASS_SIZE_SMALL = 0;
@@ -106,7 +105,11 @@ public class SizeMod extends PartMod {
             return ASS_SIZE_DESCRIPTIONS.get(size);
         }
         if (part.getType().equals("breasts")) {
-            return BREAST_SIZE_DESCRIPTIONS.get(size);
+            if (Global.random(2) == 0) {
+                return BREAST_SIZE_DESCRIPTIONS.get(size);
+            } else {
+                return BREAST_SIZE_CUPS.get(size);
+            }
         }
         return "";
     }
@@ -123,9 +126,7 @@ public class SizeMod extends PartMod {
     public Optional<String> getDescriptionOverride(Character self, BodyPart part) {
         if (part.isType("breasts")) {
             if ((size > 0 || self.useFemalePronouns())) {
-                if (Global.random(2) == 0) {
-                    return Optional.of(BREAST_SIZE_CUPS.get(size) + " " + Global.pickRandom(BreastsPart.synonyms).get());                
-                }
+                return Optional.empty();
             } else {
                 if (self.get(Attribute.Power) > self.getLevel() + 5) {
                     return Optional.of("muscular pecs");

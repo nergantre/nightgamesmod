@@ -144,7 +144,7 @@ public class ThrowDraft extends Skill {
 
     @Override
     public Tactics type(Combat c) {
-        return Tactics.misc;
+        return Tactics.debuff;
     }
 
     @Override

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import nightgames.characters.BasePersonality;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
@@ -54,7 +52,8 @@ public class CustomNPC extends BasePersonality {
         self.closet.addAll(self.outfitPlan);
         self.change();
         self.att = new HashMap<>(data.getStats().attributes);
-        self.traits = new CopyOnWriteArrayList<>(data.getStats().traits);
+        self.clearTraits();
+        data.getStats().traits.forEach(self::addTraitDontSaveData);
         self.getArousal().setMax(data.getStats().arousal);
         self.getStamina().setMax(data.getStats().stamina);
         self.getMojo().setMax(data.getStats().mojo);

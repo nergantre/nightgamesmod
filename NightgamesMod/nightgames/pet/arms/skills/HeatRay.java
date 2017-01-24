@@ -20,14 +20,14 @@ public class HeatRay extends ArmSkill {
         
         if (success) {
             c.write(PetCharacter.DUMMY, Global.format("{self:NAME-POSSESSIVE} %s levels its"
-                            + " opening at {other:name-do} menancingly. {other:PRONOUN-ACTION:don't|doesn't}"
-                            + " see anyting, but {other:pronoun} certainly {other:action:feel|feels} what"
+                            + " opening at {other:name-do} menacingly. {other:PRONOUN-ACTION:don't|doesn't}"
+                            + " see anything, but {other:pronoun} certainly {other:action:feel|feels} what"
                             + " the device is doing as areas all over {other:possessive} body grow uncomfortably,"
                             + " almost painfully hot.", owner, target, arm.getName()));
             target.pain(c, owner, 15 + Global.random((int) (owner.get(Attribute.Science) * 1.5)));
             return true;
         }
-        
+
         return false;
     }
 

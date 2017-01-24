@@ -6,7 +6,7 @@ import java.util.Optional;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
-import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
 import nightgames.requirements.BodyPartRequirement;
@@ -31,8 +31,7 @@ public class AiriTime extends BaseNPCTime {
         options = new ArrayList<>();
         {
             TransformationOption growCock = new TransformationOption();
-            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
-            growCock.additionalRequirements = "";
+            growCock.addRequirement(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))), "Airi has no penis");
             growCock.option = "Airi: Grow a cock";
             growCock.scene = "<br/>You ask Airi if she would consider growing a cock. "
                             + "Surprisingly, she agrees fairly easily, considering her usual recalcitrant personality. "
@@ -51,17 +50,15 @@ public class AiriTime extends BaseNPCTime {
                             + "You hesitantly touch the distended goo cock and without warning Airi lets out a soft cry and her cock spews "
                             + "blue viscous cum all over your hand. The cock's coloring fades back into her pale flesh tone as it softens, "
                             + "but you know that she now packs a powerful new weapon!";
-            growCock.additionalRequirements = "Free";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)));
+                other.body.add(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)));
                 return true;
             };
             options.add(growCock);
         }
         {
             TransformationOption removeCock = new TransformationOption();
-            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
-            removeCock.additionalRequirements = "";
+            removeCock.addRequirement(RequirementShortcuts.rev(new BodyPartRequirement("cock")), "Airi has a penis");
             removeCock.option = "Airi: Remove her cock";
             removeCock.scene = "<br/>Airi frowns when you ask her if she can remove her new cock, \"<i>If you didn't like it, don't ask me for one in the first place. "
                             + "I guess you {other:guy}s are fickle. Fine, I'll do it but you're going to help me...</i>\""
@@ -85,7 +82,6 @@ public class AiriTime extends BaseNPCTime {
                             + "Recovering from her orgasm, Airi gets up off you and slowly returns to her human form. You notice that her cock has disappeared like she promised. "
                             + "Groaning a bit, you realize that the act of cumming probably liquified her gooey rod and sent it straight down your throat. She literally made you eat her cock. "
                             + "Before you leave, Airi gives you an apologetic pat and whispers in your ear, <i>\"Some advice... I'd recommend using the bathroom <b>alone</b> the next time you need to go...\"</i> Aw man, that's not cool.";
-            removeCock.additionalRequirements = "Free";
             removeCock.effect = (c, self, other) -> {
                 other.body.removeAll("cock");
                 return true;

@@ -27,8 +27,9 @@ public class FFMFacesittingThreesome extends FFMCowgirlThreesome {
                             + "into {other:name-possessive} face while %s fucking {other:direct-object} in the Cowgirl position.", top, bottom, domSexCharacter.subjectAction("are", "is"));
         }
     }
-    
-    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+
+    @Override
+    public List<BodyPart> partsForStanceOnly(Combat combat, Character self, Character other) {
         if (self == domSexCharacter(combat) && other == bottom) {
             return topParts(combat);
         }

@@ -1,6 +1,8 @@
 package nightgames.skills;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,22 +28,11 @@ public class StripMinor extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        List<Clothing> strippable = target.outfit.getAllStrippable();
-        boolean top = c.getStance()
-                       .reachTop(getSelf())
-                        && strippable.stream()
-                                     .flatMap(a -> a.getSlots()
-                                                    .stream())
-                                     .anyMatch(StripMinor::isTop);
-        boolean bottom = c.getStance()
-                          .reachBottom(getSelf())
-                        && strippable.stream()
-                                     .flatMap(a -> a.getSlots()
-                                                    .stream())
-                                     .anyMatch(StripMinor::isBottom);
-        return getSelf().canAct() && (top || bottom);
+        // ignore target for now... because yup I don't want to refactor subchoices just yet.
+        List<Clothing> strippable = getStrippableArticles(c);
+        return getSelf().canAct() && !strippable.isEmpty();
     }
-    
+
     @Override
     public int getMojoCost(Combat c) {
         return c.getStance().dom(getSelf()) ? 0 : 8;
@@ -52,17 +43,35 @@ public class StripMinor extends Skill {
         return "Attempt to remove a minor article of clothing from your opponent.";
     }
 
-    @Override
-    public Collection<String> subChoices(Combat c) {
+    private static final List<ClothingSlot> TOP_SLOTS = Arrays.asList(ClothingSlot.head, ClothingSlot.neck, ClothingSlot.arms, ClothingSlot.hands);
+    private static final List<ClothingSlot> BOTTOM_SLOTS = Arrays.asList(ClothingSlot.legs, ClothingSlot.feet);
+
+    private boolean canStripArticle(Combat c, Clothing article) {
+        // if it contains top or bottom, don't let character use strip minor. That's in strip top/bottom
+        if (Collections.disjoint(article.getSlots(), Arrays.asList(ClothingSlot.top, ClothingSlot.bottom))) {
+            // if you can reach top and there's something to strip from the top, then do that
+            if (!Collections.disjoint(article.getSlots(), TOP_SLOTS) && c.getStance().reachTop(getSelf())) {
+                return true;
+            }
+            // if you can reach bottom and there's something to strip from the bottom, then do that
+            if (!Collections.disjoint(article.getSlots(), BOTTOM_SLOTS) && c.getStance().reachBottom(getSelf())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Clothing> getStrippableArticles(Combat c) {
         return c.getOpponent(getSelf()).getOutfit()
                         .getAllStrippable()
                         .stream()
-                        .filter(a -> !(a.getSlots()
-                                        .contains(ClothingSlot.top)
-                                        || a.getSlots()
-                                            .contains(ClothingSlot.bottom)))
-                        .map(clothing -> clothing.getName())
+                        .filter(article -> canStripArticle(c, article))
                         .collect(Collectors.toList());
+    }
+
+    @Override
+    public Collection<String> subChoices(Combat c) {
+        return getStrippableArticles(c).stream().map(Clothing::getName).map(Global::capitalizeFirstLetter).collect(Collectors.toList());
     }
 
     @Override
@@ -73,42 +82,25 @@ public class StripMinor extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         Clothing clothing;
-        ClothingSlot slot;
+        Optional<Clothing> articleToStrip;
         if (getSelf().human()) {
-            Optional<Clothing> stripped = target.getOutfit()
-                                                   .getEquipped()
+            articleToStrip = target.getOutfit().getEquipped()
                                                    .stream()
-                                                   .filter(article -> article.getName()
-                                                                             .equals(choice))
+                                                   .filter(article -> article.getName().toLowerCase().equals(choice.toLowerCase()))
                                                    .findAny();
-            if (stripped.isPresent()) {
-                clothing = stripped.get();
-                slot = (ClothingSlot) clothing.getSlots()
-                                              .toArray()[0];
-            } else {
-                c.writeSystemMessage("<b>Error: Tried to do StripMinor, but the sub choice disappeared?</b>");
-                return false;
-            }
         } else {
-            slot = Global.pickRandom(target.outfit.getAllStrippable()
-                                .stream()
-                                .flatMap(a -> a.getSlots()
-                                               .stream())
-                                .filter(s -> s != ClothingSlot.top && s != ClothingSlot.bottom)
-                                .collect(Collectors.toList())).get();
-            clothing = target.outfit.getTopOfSlot(slot);
+            articleToStrip = Global.pickRandom(getStrippableArticles(c));
         }
-        int difficulty = target.getOutfit()
-                               .getTopOfSlot(slot)
-                               .dc()
-                        + target.getLevel() + (target.getStamina()
-                                                     .percent()
-                                        / 4
-                                        - target.getArousal()
-                                                .percent())
-                                        / 5
-                        - (!target.canAct() || c.getStance()
-                                                .sub(target) ? 20 : 0);
+        if (!articleToStrip.isPresent()) {
+            c.write(getSelf(), Global.format("{self:SUBJECT} tried to strip {other:name-possessive} %s, but found that it is already gone.", getSelf(), target, articleToStrip.get().getName()));
+            return false;
+        }
+        clothing = articleToStrip.get();
+        int difficulty = clothing.dc() 
+                        + target.getLevel()
+                        + (target.getStamina().percent() / 4
+                        - target.getArousal().percent()) / 5
+                        - (!target.canAct() || c.getStance().sub(target) ? 20 : 0);
         difficulty -= 15;
         if (getSelf().check(Attribute.Cunning, difficulty) || !target.canAct()) {
             c.write(getSelf(),
@@ -147,14 +139,4 @@ public class StripMinor extends Skill {
     public String receive(Combat c, int damage, Result modifier, Character target) {
         return null;
     }
-
-    private static boolean isTop(ClothingSlot slot) {
-        return slot == ClothingSlot.head || slot == ClothingSlot.neck || slot == ClothingSlot.arms
-                        || slot == ClothingSlot.hands;
-    }
-
-    private static boolean isBottom(ClothingSlot slot) {
-        return slot == ClothingSlot.legs || slot == ClothingSlot.feet;
-    }
-
 }

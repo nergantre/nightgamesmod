@@ -59,7 +59,8 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
         }
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+    @Override
+    public List<BodyPart> partsForStanceOnly(Combat combat, Character self, Character other) {
         if (self == domSexCharacter(combat) && other == bottom) {
             return topParts(combat);
         } else if (self == top && other == bottom) {

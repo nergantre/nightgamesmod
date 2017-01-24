@@ -8,7 +8,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.EarPart;
-import nightgames.characters.body.GenericCockPart;
+import nightgames.characters.body.CockPart;
 import nightgames.characters.body.mods.FieryMod;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.Global;
@@ -53,12 +53,11 @@ public class JewelTime extends BaseNPCTime {
         {
             TransformationOption growCock = new TransformationOption();
             growCock.ingredients.put(Item.PriapusDraft, 3);
-            growCock.requirements.add(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))));
-            growCock.additionalRequirements = "";
+            growCock.addRequirement(RequirementShortcuts.rev(new NotRequirement(new BodyPartRequirement("cock"))), "Has no penis");
             growCock.option = "Jewel: Grow a cock";
             growCock.scene = "[Placeholder]<br/>Jewel chugs down the three priapus drafts one after the other, making her clit grow into a large enlightened cock.";
             growCock.effect = (c, self, other) -> {
-                other.body.add(new GenericCockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.enlightened));
+                other.body.add(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.enlightened));
                 return true;
             };
             options.add(growCock);
@@ -66,8 +65,7 @@ public class JewelTime extends BaseNPCTime {
         {
             TransformationOption removeCock = new TransformationOption();
             removeCock.ingredients.put(Item.FemDraft, 3);
-            removeCock.requirements.add(RequirementShortcuts.rev(new BodyPartRequirement("cock")));
-            removeCock.additionalRequirements = "";
+            removeCock.addRequirement(RequirementShortcuts.rev(new BodyPartRequirement("cock")), "Has a penis");
             removeCock.option = "Jewel: Remove her cock";
             removeCock.scene = "[Placeholder]<br/>Jewel drinks the three femdrafts one after another and her penis shrinks back into her normal clitoris.";
             removeCock.effect = (c, self, other) -> {
@@ -99,10 +97,9 @@ public class JewelTime extends BaseNPCTime {
             moltenAss.ingredients.put(Item.MoltenDrippings, 2);
             moltenAss.ingredients.put(Item.EnergyDrink, 20);
             moltenAss.ingredients.put(Item.JuggernautJuice, 10);
-            moltenAss.requirements.add((c, self, other) -> {
+            moltenAss.addRequirement((c, self, other) -> {
                 return self.getLevel() >= 30;
-            });
-            moltenAss.additionalRequirements = "Level: 30";
+            }, "At least level 30");
             moltenAss.option = "Molten Ass";
             moltenAss.scene = "[Placeholder]<br/>Jewel trains you so you can concentrate your ki inside your ass.";
             options.add(moltenAss);
@@ -110,8 +107,7 @@ public class JewelTime extends BaseNPCTime {
         {
             TransformationOption retraining = new TransformationOption();
             retraining.ingredients.put(Item.MoltenDrippings, 1);
-            retraining.requirements.add((c, s, o) -> Global.getDay().time <= 16);
-            retraining.additionalRequirements = "Be before 4 pm.";
+            retraining.addRequirement((c, s, o) -> Global.getDay().time <= 16, "Be before 4 pm");
             retraining.option = "Retraining";
             retraining.scene = "[Placeholder] Jewel spends the rest of the day breaking you down and building you back up again. By the end of your time together, you feel like a new person!";
             retraining.effect = (c, self, other) -> {

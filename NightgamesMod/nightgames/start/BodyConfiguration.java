@@ -17,7 +17,6 @@ import nightgames.characters.body.CockMod;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.FacePart;
-import nightgames.characters.body.GenericCockPart;
 import nightgames.characters.body.PussyPart;
 import nightgames.characters.body.TailPart;
 import nightgames.characters.body.TentaclePart;
@@ -278,7 +277,7 @@ class BodyConfiguration {
         }
 
         private CockPart build() {
-            GenericCockPart generic = (GenericCockPart) new GenericCockPart().applyMod(new SizeMod(length));
+            CockPart generic = (CockPart) new CockPart().applyMod(new SizeMod(length));
             return type.isPresent() ? (CockPart) generic.applyMod(type.get()) : generic;
         }
     }

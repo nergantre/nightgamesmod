@@ -729,7 +729,7 @@ public class GUI extends JFrame implements Observer {
 
     // portrait loader
     public void loadPortrait(Combat c, Character player, Character enemy) {
-        if (!Global.checkFlag(Flag.noportraits)) {
+        if (!Global.checkFlag(Flag.noportraits) && c != null && c.isBeingObserved()) {
             if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
                 System.out.println("Load portraits");
             }

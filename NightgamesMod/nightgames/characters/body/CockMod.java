@@ -196,7 +196,6 @@ public class CockMod extends PartMod {
         return bonus;
     }
 
-
     public Optional<String> getFluids() {
         if (this.equals(bionic)) {
             return Optional.of("artificial lubricant");

@@ -33,7 +33,6 @@ public class PlayerConfigurationTest {
         Path file = new File("NightgamesTests/nightgames/start/TestStartConfig.json").toPath();
         startConfig = StartConfiguration.parse(JsonUtils.rootJson(file).getAsJsonObject());
         playerConfig = startConfig.player;
-
     }
 
     @Test public void testPlayerCreation() throws Exception {
@@ -46,7 +45,7 @@ public class PlayerConfigurationTest {
                         chosenAttributes);
         assertEquals(5, malePlayer.level);
         assertEquals(15000, malePlayer.money);
-        assertThat(malePlayer.traits, IsCollectionContaining
+        assertThat(malePlayer.getTraitsPure(), IsCollectionContaining
                         .hasItems(Trait.pussyhandler, Trait.dickhandler, Trait.limbTraining1, Trait.tongueTraining1,
                                         Trait.powerfulhips, Trait.romantic, Trait.insatiable));
         assertThat(malePlayer.outfit.getEquipped(),

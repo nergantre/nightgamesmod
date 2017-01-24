@@ -1,3 +1,28 @@
+2.5.0.rc.5
+WARNING: Saves will not be compatible with rc.4 and less (unless you want to do a search and replace of GenericCockPart -> CockPart in your save file)
+
+QoL/GUI:
+- Requirements for transformations are now green if you meet them or red if you don't.
+
+Bug Fixes:
+- Fixed penises never being described 
+- Cocks and pussies will not be described if the opponent has a lower garment
+	- Cocks will be described as a bulge if > average sized even if they do have something on.
+- Fixed crash bugs with certain lines
+- Fixed stripping bugs
+- Fixed mods not showing up
+- Fixed some crash bugs related to traits (maybe)
+- Fixed a bunch of text bugs (thanks BronzeChair)
+
+2.5.0.rc.4
+Bug fixes:
+- fixed an issue introduced with rc.3 that prevented players from leveling up.
+	- this also fixes the issue where DEBUG_SKILL_CHOICES would freeze the game and 
+	   non-lingering status effects would remain after leveling up (causing other crashes)
+- fixed an issue where loss exp was not being calculated correctly.
+- fixed an issue where strip minor could strip non-minor articles of clothing if it also covered a minor slot.
+- fixed an issue where pull out was always using the text for facesitting
+
 2.5.0.rc.3
 Bug fixes:
 - fixed a bug with the fast combat display not displaying the correct things

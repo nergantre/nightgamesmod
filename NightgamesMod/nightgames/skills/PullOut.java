@@ -58,7 +58,7 @@ public class PullOut extends Skill {
             }
         } else if (c.getStance().inserted(target)) {
             result = Result.reverse;
-        } else {
+        } else if (c.getStance().isFacesatOn(target)) {
             result = Result.special;
         }
         boolean isLocked = getSelf().hasStatus(Stsflag.leglocked) || getSelf().hasStatus(Stsflag.armlocked);

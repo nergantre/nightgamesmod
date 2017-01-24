@@ -35,6 +35,11 @@ public class BreastsPart extends GenericBodyPart {
     }
 
     @Override
+    public boolean isVisible(Character c) {
+        return c.crotchAvailable() || getSize() > 0;
+    }
+
+    @Override
     public double getFemininity(Character c) {
         return 3 * ((double) getSize()) / maximumSize().getSize();
     }
@@ -81,12 +86,12 @@ public class BreastsPart extends GenericBodyPart {
         }
     }
 
-    public static String synonyms[] = {"breasts", "tits", "boobs", "chest"};
+    public static String synonyms[] = {"breasts", "tits", "boobs"};
 
     @Override
     public void describeLong(StringBuilder b, Character c) {
         if (c.hasPussy() || getSize() > 0) {
-            b.append(Global.capitalizeFirstLetter(describe(c)));
+            b.append(Global.capitalizeFirstLetter(fullDescribe(c)));
             b.append(" adorn " + c.nameOrPossessivePronoun() + " chest.");
         }
     }

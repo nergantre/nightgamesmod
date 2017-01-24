@@ -69,7 +69,8 @@ public class XHFDaisyChainThreesome extends MaledomSexStance {
                         .collect(Collectors.toList());
     }
 
-    public List<BodyPart> partsFor(Combat combat, Character self, Character other) {
+    @Override
+    public List<BodyPart> partsForStanceOnly(Combat combat, Character self, Character other) {
         if (self == domSexCharacter(combat) && other == bottom) {
             return Arrays.asList(top.body.getRandomInsertable()).stream().filter(part -> part != null && part.present())
                             .collect(Collectors.toList());
