@@ -126,8 +126,8 @@ public class AnalProne extends AnalSexStance {
         } else {
             if (writeMessage) {
                 c.write(bottom, Global.format(
-                                "As {other:subject-action:are|is} thrusting into {self:name-do}, {self:subject-action:suddenly pull|suddenly pulls} {self:possessive} face up towards {other:direct-object}, and kisses {other:direct-object} deeply. "
-                                                + "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly pushes|quickly pushes} {other:direct-object} down and {self:action:start|starts} fucking {other:direct-object} back on top of {other:direct-object}.",
+                                "As {other:subject-action:are|is} thrusting into {self:name-do}, {self:subject-action:suddenly pull|suddenly pulls} {self:possessive} face up towards {other:direct-object}, and {self:action:kiss|kisses} {other:direct-object} deeply. "
+                                                + "Taking advantage of {other:possessive} surprise, {self:SUBJECT-ACTION:quickly push|quickly pushes} {other:direct-object} down and {self:action:start|starts} fucking {other:direct-object} back on top of {other:direct-object}.",
                                                 bottom, top));
             }
             return new AnalCowgirl(bottom, top);

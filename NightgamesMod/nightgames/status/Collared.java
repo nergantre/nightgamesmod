@@ -15,7 +15,7 @@ public class Collared extends Status {
     public Collared(Character affected) {
         super("Collared", affected);
         flag(Stsflag.collared);
-        charges = 10;
+        charges = 15;
     }
 
     public void spendCharges(Combat c, int amt) {
@@ -31,7 +31,7 @@ public class Collared extends Status {
     }
 
     public void recharge() {
-        charges += 10;
+        charges += 15;
     }
     
     @Override

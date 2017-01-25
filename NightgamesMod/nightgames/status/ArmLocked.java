@@ -18,6 +18,7 @@ public class ArmLocked extends Status {
         toughness = dc;
         requirements.add(RequirementShortcuts.eitherinserted());
         requirements.add(RequirementShortcuts.dom());
+        requirements.add((c, self, other) -> other.canRespond());
         requirements.add((c, self, other) -> toughness > .01);
         flag(Stsflag.armlocked);
     }

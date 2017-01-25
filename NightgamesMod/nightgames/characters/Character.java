@@ -2184,7 +2184,7 @@ public abstract class Character extends Observable implements Cloneable {
                 }
 
                 c.write(Global.format("{other:NAME-POSSESSIVE} harpoon dildo is still stuck in {self:name-possessive}"
-                                + " {self:body-part:pussy}, vibrating against {other:possessive} walls.", this, opponent));
+                                + " {self:body-part:pussy}, vibrating against {self:possessive} walls.", this, opponent));
                 body.pleasure(opponent, ToysPart.dildo, body.getRandomPussy(), damage, c);
             }
         }
@@ -2209,7 +2209,7 @@ public abstract class Character extends Observable implements Cloneable {
                 }
                 
                 c.write(Global.format("{other:NAME-POSSESSIVE} harpoon onahole is still stuck on {self:name-possessive}"
-                                + " {self:body-part:cock}, vibrating against {other:possessive} shaft.", this, opponent));
+                                + " {self:body-part:cock}, vibrating against {self:possessive} shaft.", this, opponent));
                 body.pleasure(opponent, ToysPart.onahole, body.getRandomCock(), damage, c);
             }
         }
@@ -2312,6 +2312,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public boolean spotCheck(Character checked) {
+        if (bound()) {
+            return false;
+        }
         int dc = checked.get(Attribute.Cunning) / 3;
         if (checked.state == State.hidden) {
             dc += (checked.get(Attribute.Cunning) * 2 / 3) + 20;
