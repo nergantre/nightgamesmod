@@ -1,5 +1,8 @@
 package nightgames.characters;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -494,6 +497,10 @@ public enum Trait {
     mindcontrolresistance("", "temporary resistance to mind games - hidden"),
     none("", "");
     
+    private static void override(Map<Trait, Collection<Trait>> o, Trait key, Trait... overrides) {
+        o.put(key, Arrays.asList(overrides));
+    }
+    
     private String desc;
     private TraitDescription longDesc;
     private String name;
@@ -543,10 +550,15 @@ public enum Trait {
             b.append(' ');
         }
     }
+    
+    public boolean isOverridden(Character ch) {
+        return OVERRIDES.containsKey(this) && OVERRIDES.get(this).stream().anyMatch(t -> ch.has(t));
+    }
 
     public static Map<Trait, Resistance> resistances;
     public static Resistance nullResistance;
-
+    public static final Map<Trait, Collection<Trait>> OVERRIDES;
+    
     static {
         nullResistance = (combat, c, s) -> "";
         resistances = new HashMap<>();
@@ -632,6 +644,16 @@ public enum Trait {
            }
            return "";
         });
+        Map<Trait, Collection<Trait>> o = new HashMap<>();
+        override(o, tongueTraining1, tongueTraining2, tongueTraining3);
+        override(o, tongueTraining2, tongueTraining3);
+        override(o, sexTraining1, sexTraining2, sexTraining3);
+        override(o, sexTraining2, sexTraining3);
+        override(o, limbTraining1, limbTraining2, limbTraining3);
+        override(o, limbTraining2, limbTraining3);
+        override(o, analTraining1, analTraining2, analTraining3);
+        override(o, analTraining2, analTraining3);
+        OVERRIDES = Collections.unmodifiableMap(o);
     }
 
     public static Resistance getResistance(Trait t) {

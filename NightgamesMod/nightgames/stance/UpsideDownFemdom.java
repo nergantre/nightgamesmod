@@ -91,8 +91,9 @@ public class UpsideDownFemdom extends FemdomSexStance {
                                 bottom, top));
             } else {
                 c.write(bottom, Global.format(
-                                "{self:SUBJECT} suddenly pushes against the floor and knocks you to the ground with {self:possessive} hips. "
-                                                + "You land on the floor with {self:direct-object} on top of you, fucking you in a missionary position.",
+                                "{self:SUBJECT} suddenly pushes against the floor and knocks {other:name-do} to the ground with {self:possessive} hips. "
+                                                + "{other:PRONOUN-ACTION:land} on the floor with {self:name-do} on top of"
+                                                + " {other:direct-object}, fucking {other:direct-object} in a missionary position.",
                                 bottom, top));
             }
         }

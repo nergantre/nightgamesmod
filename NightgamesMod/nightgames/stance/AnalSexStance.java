@@ -93,8 +93,9 @@ public abstract class AnalSexStance extends Position {
                                 struggler.subject(), opponent.subjectAction("have", "has")));
             }
             c.write(bottom, Global.format("{other:POSSESSIVE} hard cock grinding against {self:possessive} "
-                            + "bowels as %s to twist out of %s grip brings both of you closer to the edge.", inserted, inserter,
-                            struggler.pronoun() + struggler.action("attempt"), opponent.possessiveAdjective()));
+                            + "bowels as %s to twist out of %s grip brings both of %s closer to the edge.", inserted, inserter,
+                            struggler.pronoun() + struggler.action(" attempt"), opponent.possessiveAdjective(), 
+                            c.bothDirectObject(opponent)));
         }
         bottom.body.pleasure(top, Global.pickRandom(topParts(c)).orElse(null), Global.pickRandom(bottomParts()).orElse(null), Global.random(6, 10), c);
         top.body.pleasure(bottom, Global.pickRandom(bottomParts()).orElse(null), Global.pickRandom(topParts(c)).orElse(null), Global.random(6, 10), c);

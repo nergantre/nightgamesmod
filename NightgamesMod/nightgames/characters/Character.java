@@ -1222,7 +1222,6 @@ public abstract class Character extends Observable implements Cloneable {
             if (t.equals(Trait.mojoMaster)) {
                 mojo.gain(-20);
             }
-            getLevelUpFor(getLevel()).removeTrait(t);
             return true;
         }
         return false;
@@ -2836,7 +2835,7 @@ public abstract class Character extends Observable implements Cloneable {
             dc += getStatus(Stsflag.braced).value();
         }
         if (has(Trait.stabilized)) {
-            dc += 10 + 2 * Math.sqrt(get(Attribute.Science));
+            dc += 12 + 3 * Math.sqrt(get(Attribute.Science));
         }
         if (has(ClothingTrait.heels) && !has(Trait.proheels)) {
             dc -= 7;

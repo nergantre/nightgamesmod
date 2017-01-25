@@ -135,6 +135,7 @@ public class Player extends Character {
         if (getTraits().size() > 0) {
             b.append("<br/>Traits:<br/>");
             List<Trait> traits = new ArrayList<>(getTraits());
+            traits.removeIf(t -> t.isOverridden(this));
             traits.sort((first, second) -> first.toString()
                                                 .compareTo(second.toString()));
             b.append(traits.stream()

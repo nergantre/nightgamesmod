@@ -745,8 +745,7 @@ public class Body implements Cloneable {
                 c.writeSystemMessage(battleString);
             }
             Optional<BodyFetish> otherFetish = opponent.body.getFetish(target.getType());
-            if (otherFetish.isPresent() && perceptionlessDamage > 0 && skill != null 
-                            && skill.getSelf().equals(character) && opponent != character) {
+            if (otherFetish.isPresent() && perceptionlessDamage > 0 && skill != null && skill.getSelf().equals(character) && opponent != character) {
                 c.write(character, Global.format("Playing with {other:possessive} {other:body-part:%s} arouses {self:direct-object} almost as much as {other:direct-object}.", opponent, character, target.getType()));
                 opponent.temptNoSkill(c, character, target, (int) Math.round(perceptionlessDamage * otherFetish.get().magnitude));
             }

@@ -47,7 +47,7 @@ public class Escape extends Skill {
                     c.write(getSelf(), getSelf().getName() + " manages to free " + getSelf().reflectivePronoun() + ".");
                 }
                 getSelf().free();
-                c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 0);
+                c.getCombatantData(getSelf()).setIntegerFlag(Grab.FLAG, 0);
             } else {
                 if (getSelf().human()) {
                     c.write(getSelf(), "You try to slip your restraints, but can't get free.");

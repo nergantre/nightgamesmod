@@ -476,11 +476,20 @@ public class Combat extends Observable implements Cloneable {
     private void doEndOfTurnUpkeep() {
         p1.eot(this, p2);
         p2.eot(this, p1);
-        otherCombatants.forEach(other -> other.eot(this, getOpponent(other)));
+        // iterate through all the pets here so we don't get concurrent modification issues
+        List<PetCharacter> pets = new ArrayList<>(otherCombatants);
+        pets.forEach(other -> {
+            if (otherCombatants.contains(other)) {
+                other.eot(this, getOpponent(other));
+            }
+        });  
         checkStamina(p1);
         checkStamina(p2);
-        otherCombatants.forEach(this::checkStamina);
-
+        pets.forEach(other -> {
+            if (otherCombatants.contains(other)) {
+                checkStamina(other);
+            }
+        });
         doStanceTick(p1);
         doStanceTick(p2);
 
@@ -851,9 +860,9 @@ public class Combat extends Observable implements Cloneable {
     private String describe(Character player, Character other) {
         if (beingObserved) {
             return "<font color='rgb(255,220,220)'>"
-                            + other.describe(player.get(Attribute.Perception), this)
+                            + other.describe(Global.getPlayer().get(Attribute.Perception), this)
                             + "</font><br/><br/><font color='rgb(220,220,255)'>"
-                            + player.describe(player.get(Attribute.Perception), this)
+                            + player.describe(Global.getPlayer().get(Attribute.Perception), this)
                             + "</font><br/><br/><font color='rgb(134,196,49)'><b>"
                             + Global.capitalizeFirstLetter(getStance().describe(this)) + "</b></font>";
         } else if (!player.is(Stsflag.blinded)) {

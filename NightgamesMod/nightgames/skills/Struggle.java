@@ -75,7 +75,7 @@ public class Struggle extends Skill {
     }
     
     private boolean hasSingleGrabber(Combat c, Character target) {
-        return c.getCombatantData(target).getIntegerFlag(Grab.FLAG) == 1;
+        return c.getCombatantData(getSelf()).getIntegerFlag(Grab.FLAG) == 1;
     }
     
     private boolean blockedByCollar(Combat c, Character target) {
@@ -349,7 +349,7 @@ public class Struggle extends Skill {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:wrench|wrenches}"
                             + " {other:name-possessive} Grabber off {self:possessive}"
                             + " wrist without too much trouble.", getSelf(), target));
-            c.getCombatantData(target).setIntegerFlag(Grab.FLAG, 0);
+            c.getCombatantData(getSelf()).setIntegerFlag(Grab.FLAG, 0);
             return true;
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:pull|pulls} mightily"

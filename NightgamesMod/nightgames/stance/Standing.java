@@ -90,7 +90,8 @@ public class Standing extends MaledomSexStance {
                                 + " lands heavily on your lap.");
                 c.setStance(new Cowgirl(bottom, top));
             } else {
-                c.write(top.getName() + " loses her balance and falls, pulling you down on top of her.");
+                c.write(Global.format("{self:SUBJECT-ACTION:lose} {self:possessive} balance and {self:action:fall}, "
+                                + "pulling {other:name-do} down on top of {self:direct-object}.", top, bottom));
                 c.setStance(new Cowgirl(bottom, top));
             }
         } else {

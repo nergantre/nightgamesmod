@@ -21,6 +21,16 @@ public class Pin extends AbstractFacingStance {
     }
 
     @Override
+    public void checkOngoing(Combat c) {
+        if (!top.canAct() && bottom.canAct()) {
+            c.write(bottom, Global.format("With {self:subject} unable to resist, "
+                            + "{bottom:subject-action:roll} over on top of {self:direct-object}."
+                            , top, bottom));
+            c.setStance(new Mount(bottom, top));
+        }
+    }
+    
+    @Override
     public int pinDifficulty(Combat c, Character self) {
         return 10;
     }

@@ -12,6 +12,11 @@ public class StabilizerIdle extends ArmSkill {
     public StabilizerIdle() {
         super("Stabilizer Idle", 20);
     }
+    
+    @Override
+    public boolean usable(Combat c, Arm arm, Character owner, Character target) {
+        return super.usable(c, arm, owner, target) && c.getStance().en == Stance.neutral;
+    }
 
     @Override
     public boolean resolve(Combat c, Arm arm, Character owner, Character target) {

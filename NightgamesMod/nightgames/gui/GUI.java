@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Panel;
@@ -163,7 +164,14 @@ public class GUI extends JFrame implements Observer {
     private static final String USE_CLOSET_UI = "CLOSET";
 
     public GUI() {
-
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                        | UnsupportedLookAndFeelException e1) {
+            System.err.println("Unable to set look-and-feel");
+            e1.printStackTrace();
+        }
+        
         // frame title
         setTitle("NightGames Mod");
         setBackground(GUIColors.bgDark);
@@ -1381,15 +1389,30 @@ public class GUI extends JFrame implements Observer {
         ArrayList<JLabel> attlbls = new ArrayList<>();
         for (Attribute a : Attribute.values()) {
             int amt = player.get(a);
+            int pure = player.getPure(a);
             if (amt > 0) {
-                JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
+                if (amt == pure) {
+                    JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
+                    dirtyTrick.setForeground(GUIColors.textColorLight);
+                    attlbls.add(count, dirtyTrick);
+                    statsPanel.add(attlbls.get(count++));
+                } else {
+                    JLabel base = new JLabel(String.format("%n%n%s: %d ", a.name(), pure));
+                    base.setSize(base.getPreferredSize());
+                    base.setForeground(GUIColors.textColorLight);
+                    JLabel mod = new JLabel(String.format("(%s%d)", amt > pure ? "+" : "-", Math.abs(amt - pure)));
+                    mod.setForeground(amt > pure ? GUIColors.Green : GUIColors.Red);
+                    mod.setFont(getFont().deriveFont(10.f));
+                    JPanel p = new JPanel();
+                    p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+                    p.setBackground(GUIColors.bgLight);
+                    p.add(base);
+                    p.add(mod);
+                    p.add(Box.createHorizontalGlue());
+                    statsPanel.add(p);
+                }
 
-                dirtyTrick.setForeground(GUIColors.textColorLight);
 
-                attlbls.add(count, dirtyTrick);
-
-                statsPanel.add(attlbls.get(count));
-                count++;
             }
         }
 

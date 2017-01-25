@@ -793,8 +793,10 @@ public class NPC extends Character {
         super.eot(c, opponent);
         ai.eot(c, opponent);
         if (opponent.has(Trait.pheromones) && opponent.getArousal().percent() >= 20 && opponent.rollPheromones(c)) {
-            c.write(opponent, "<br/>You see " + getName()
-                            + " swoon slightly as she gets close to you. Seems like she's starting to feel the effects of your musk.");
+            c.write(opponent, Global.format("<br/>{other:SUBJECT-ACTION:see} {self:subject} swoon slightly "
+                            + "as {self:pronoun-action:get} close to {other:direct-object}. "
+                            + "Seems like {self:pronoun-action:are} starting to feel "
+                            + "the effects of {other:possessive} musk.", this, opponent));
             add(c, Pheromones.getWith(opponent, this, opponent.getPheromonePower(), 10));
         }
         if (has(Trait.RawSexuality)) {
