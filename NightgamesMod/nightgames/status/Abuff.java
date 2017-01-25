@@ -12,6 +12,7 @@ import nightgames.global.Global;
 public class Abuff extends DurationStatus {
     private Attribute modded;
     private int value;
+    private Character other;
 
     public static void drain(Combat c, Character drainer, Character drained, 
                     Attribute att, int value, int duration, boolean write) {
@@ -23,8 +24,8 @@ public class Abuff extends DurationStatus {
         }
         int realValue = Math.min(drained.getPure(att) - 
                         (Attribute.isBasic(drained, att) ? 3 : 0), value);
-        drainer.add(c, new Abuff(drainer, att, realValue, duration));
-        drained.add(c, new Abuff(drained, att, -realValue, duration));
+        drainer.add(c, new Abuff(drainer, drained, att, realValue, duration));
+        drained.add(c, new Abuff(drained, drainer, att, -realValue, duration));
         if (drainer.has(Trait.RaptorMentis)) {
             drained.drainMojo(c, drainer, Math.max(5, realValue));
         }
@@ -47,7 +48,7 @@ public class Abuff extends DurationStatus {
         }
     }
 
-    public Abuff(Character affected, Attribute att, int value, int duration) {
+    public Abuff(Character affected, Character other, Attribute att, int value, int duration) {
         super(String.format("%s %+d", att.toString(), value), affected, duration);
         flag(Stsflag.purgable);
         if (value < 0) {
@@ -55,9 +56,11 @@ public class Abuff extends DurationStatus {
         }
         this.modded = att;
         this.value = value;
-        if (affected.has(Trait.Greedy) && value > 0) {
-            setDuration((int) (duration * 1.5));
-        }
+        this.other = other;
+    }
+    
+    public Abuff(Character affected, Attribute att, int value, int duration) {
+        this(affected, null, att, value, duration);
     }
 
     @Override
@@ -172,7 +175,7 @@ public class Abuff extends DurationStatus {
 
     @Override
     public int escape() {
-        return 0;
+        return other != null && other.has(Trait.SpecificSapping) && value < 0 ? Math.max(-10, -value) : 0;
     }
 
     @Override
@@ -202,7 +205,7 @@ public class Abuff extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Abuff(newAffected, modded, value, getDuration());
+        return new Abuff(newAffected, newOther, modded, value, getDuration());
     }
 
     @Override

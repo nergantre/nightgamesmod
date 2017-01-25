@@ -184,7 +184,9 @@ public class BreastsPart extends GenericBodyPart {
             }
             if (self.has(Trait.Pacification)) {
                 c.write(opponent,
-                                Global.format("The power seems to leave {other:name-possessive} body as {other:pronoun-action:sip|sips} {self:possessive} cloying cream.",
+                                Global.format("With every drop of {self:name-possessive} infernal milk {other:subject-action:swallow},"
+                                                + " {self:pronoun} seems more and more impossibly beautiful to {other:possessive} eyes."
+                                                + " Why would {other:pronoun} want to mar such perfect beauty?",
                                                 self, opponent));
                 opponent.add(c, new Charmed(opponent, 2));
             }

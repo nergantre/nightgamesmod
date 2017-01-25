@@ -12,7 +12,7 @@ import nightgames.stance.SuccubusEmbrace;
 public class Embrace extends Skill {
 
     public Embrace(Character self) {
-        super("Embrace", self);
+        super("Embrace", self, 6);
     }
 
     @Override

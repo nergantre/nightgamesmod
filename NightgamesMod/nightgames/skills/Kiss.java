@@ -110,7 +110,7 @@ public class Kiss extends Skill {
             DurationStatus charmed = (DurationStatus) target.getStatus(Stsflag.charmed);
             charmed.setDuration(charmed.getDuration() + Global.random(1, 2));
             c.write(getSelf(), Global.format("<b>The exquisite tenderness of {self:name-possessive} kisses"
-                            + " reinforce the haze clouding {other:name-possessive} mind.</b>", getSelf(), target));
+                            + " reinforces the haze clouding {other:name-possessive} mind.</b>", getSelf(), target));
         }
         BodyPart selfMouth = getSelf().body.getRandom("mouth");
         target.body.pleasure(getSelf(), selfMouth, target.body.getRandom("mouth"), m, c, this);

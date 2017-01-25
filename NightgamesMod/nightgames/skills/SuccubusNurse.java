@@ -38,6 +38,16 @@ public class SuccubusNurse extends Skill {
     public int getMojoCost(Combat c) {
         return getSelf().has(Trait.Pacification) ? 15 : 0;
     }
+    
+    @Override
+    public float priorityMod(Combat c) {
+        if (!getSelf().has(Trait.lactating)) {
+            return -3.f;
+        } else if (getSelf().has(Trait.Pacification)) {
+            return 5.f;
+        }
+        return 2.f;
+    }
 
     @Override
     public String describe(Combat c) {
