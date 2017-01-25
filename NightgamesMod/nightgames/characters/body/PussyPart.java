@@ -70,7 +70,11 @@ public class PussyPart extends GenericBodyPart {
 
     @Override
     public String fullDescribe(Character c) {
-        return Global.pickRandom(Arrays.asList("normal ", "ordinary ")).get() + this.describe(c);
+        if (isGeneric(c)) {            
+            return Global.pickRandom(Arrays.asList("normal ", "ordinary ")).get() + this.describe(c);
+        } else {
+            return describe(c);
+        }
     }
 
     @Override

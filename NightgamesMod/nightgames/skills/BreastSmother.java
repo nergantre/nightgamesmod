@@ -140,7 +140,7 @@ public class BreastSmother extends Skill {
             b.append( getSelf().subject()+ " quickly wraps up your head between " + getSelf().possessiveAdjective() + " "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + ", filling your vision instantly with them. ");
         } else {
-            b.append( getSelf().subject()+ " rocks your head between " + target.possessiveAdjective() + " "
+            b.append( getSelf().subject()+ " rocks your head between " + getSelf().possessiveAdjective() + " "
                             + getSelf().body.getRandomBreasts().fullDescribe(getSelf()) + " trying to force you to gasp for air. ");
         }
         

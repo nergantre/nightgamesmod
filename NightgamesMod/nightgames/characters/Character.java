@@ -544,7 +544,7 @@ public abstract class Character extends Observable implements Cloneable {
             }
         }
         if (c != null) {
-            if (has(Trait.cute) && other != null && primary && physical) {
+            if (has(Trait.cute) && other != null && other != this && primary && physical) {
                 bonus -= Math.min(get(Attribute.Seduction), 50) * pain / 100;
                 c.write(this, Global.format(
                                 "{self:NAME-POSSESSIVE} innocent appearance throws {other:direct-object} off and {other:subject-action:use|uses} much less strength than intended.",
@@ -1222,7 +1222,6 @@ public abstract class Character extends Observable implements Cloneable {
             if (t.equals(Trait.mojoMaster)) {
                 mojo.gain(-20);
             }
-            getLevelUpFor(getLevel()).removeTrait(t);
             return true;
         }
         return false;

@@ -41,7 +41,7 @@ public class ThrowBomb extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && getSelf().has(Item.Battery, 3) && target.outfit.slotOpen(ClothingSlot.top)
                         && !target.is(Stsflag.bombed)
-                        && (c.getStance().front(getSelf())
+                        && (c.getStance().facing(getSelf(), target)
                         || (c.getStance().behind(getSelf()) && c.getStance().dom(getSelf())));
     }
 

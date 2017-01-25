@@ -473,11 +473,20 @@ public class Combat extends Observable implements Cloneable {
     private void doEndOfTurnUpkeep() {
         p1.eot(this, p2);
         p2.eot(this, p1);
-        otherCombatants.forEach(other -> other.eot(this, getOpponent(other)));
+        // iterate through all the pets here so we don't get concurrent modification issues
+        List<PetCharacter> pets = new ArrayList<>(otherCombatants);
+        pets.forEach(other -> {
+            if (otherCombatants.contains(other)) {
+                other.eot(this, getOpponent(other));
+            }
+        });  
         checkStamina(p1);
         checkStamina(p2);
-        otherCombatants.forEach(this::checkStamina);
-
+        pets.forEach(other -> {
+            if (otherCombatants.contains(other)) {
+                checkStamina(other);
+            }
+        });
         doStanceTick(p1);
         doStanceTick(p2);
 
