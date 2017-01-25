@@ -44,8 +44,9 @@ public class DivineMod extends PartMod {
             c.write(self, Global.format(
                             "{self:NAME-POSSESSIVE} " + part.fullDescribe(self)
                                             + " radiates a golden glow when {self:pronoun-action:moan|moans}. "
-                                            + "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is} feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.",
-                            self, opponent));
+                                            + "%s feeding on {self:possessive} own pleasure to charge up {self:possessive} divine energy.",
+                            self, opponent, self == opponent ? "{self:SUBJECT-ACTION:are|is}" 
+                                            : "{other:SUBJECT-ACTION:realize|realizes} {self:subject-action:are|is}"));
             self.add(c, new DivineCharge(self, .25));
         } else {
             c.write(self, Global.format(
