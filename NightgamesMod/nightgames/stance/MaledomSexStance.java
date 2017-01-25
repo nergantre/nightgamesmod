@@ -102,8 +102,8 @@ public abstract class MaledomSexStance extends Position {
         if (knotted) {
             c.write(struggler,
                             Global.format("{self:SUBJECT-ACTION:struggle} fruitlessly against the lump of {other:name-possessive} knotted cock, "
-                                            + "arousing the hell out of both of you in the process.",
-                            struggler, opponent));
+                                            + "arousing the hell out of both of %s in the process.",
+                            struggler, opponent, c.bothDirectObject(opponent)));
             selfM += 5;
         } else {
             c.write(struggler, Global.format("{self:SUBJECT-ACTION:try} to tip {other:name-do} off balance, but {other:pronoun-action:grip} {other:possessive} hips firmly, "

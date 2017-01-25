@@ -95,7 +95,7 @@ public class LaunchHarpoon extends Skill {
         } else {
             c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:let|lets} {self:possessive} harpoon-like"
                             + " toy fly from its slot on {self:possessive} arm device towards"
-                            + " {other:name-do}, but {other:pronoun} easily {other:action:evade|evades} it,", 
+                            + " {other:name-do}, but {other:pronoun} easily {other:action:evade|evades} it.", 
                             getSelf(), target));
         }
         return false;

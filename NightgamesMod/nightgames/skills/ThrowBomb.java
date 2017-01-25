@@ -42,7 +42,8 @@ public class ThrowBomb extends Skill {
         return getSelf().canAct() && getSelf().has(Item.Battery, 3) && target.outfit.slotOpen(ClothingSlot.top)
                         && !target.is(Stsflag.bombed)
                         && (c.getStance().facing(getSelf(), target)
-                        || (c.getStance().behind(getSelf()) && c.getStance().dom(getSelf())));
+                        || (c.getStance().behind(getSelf()) && c.getStance().dom(getSelf())))
+                        && (c.getStance().en != Stance.pin || c.getStance().dom(getSelf()));
     }
 
     @Override
@@ -95,9 +96,9 @@ public class ThrowBomb extends Skill {
             case pin:
             case behindfootjob:
                 return Global.format(
-                                "{self:SUBJECT} reaches around you from behind and holds a spherical device"
-                                                + " to your chest. It beeps softly when it makes contact, and"
-                                                + " when {self:pronoun} pulls {self:possessive} hand back it sticks to you,"
+                                "{self:SUBJECT} reaches around {other:name-do} from behind and holds a spherical device"
+                                                + " to {other:possessive} chest. It beeps softly when it makes contact, and"
+                                                + " when {self:pronoun} pulls {self:possessive} hand back it sticks to {other:name-do},"
                                                 + " still beeping intermittently.",
                                 getSelf(), target);
             case cowgirl:
@@ -109,27 +110,29 @@ public class ThrowBomb extends Skill {
             case neutral:
                 if (modifier == Result.miss) {
                     return Global.format(
-                                    "{self:SUBJECT} throws something at you. It looks somewhat like a baseball at first,"
-                                                    + " but as you step to the side and see it fly past you note that it's actually"
+                                    "{self:SUBJECT} throws something at {other:name-do}. It looks somewhat like a baseball at first,"
+                                                    + " but as {other:pronoun-action:step} to the side and see it fly past {other:subject-action:note}"
+                                                    + " that it's actually"
                                                     + " a metal sphere; a machine of some sort. It's probably a good thing it sailed past.",
                                     getSelf(), target);
                 }
                 return Global.format(
-                                "With a near-perfect baseball pitch, {self:subject} throws some kind of object at you."
-                                                + " It hits you square in the chest, beeping as it impacts. It seems to be a"
-                                                + " small device, though you can't tell what it's supposed to do. You do know"
-                                                + " that it's sticking to you quite insistently, and you might not want to find"
-                                                + " out what else it can do.",
+                                "With a near-perfect baseball pitch, {self:subject} throws some kind of object at {other:name-do}."
+                                                + " It hits {other:direct-object} square in the chest, beeping as it impacts. It seems to be a"
+                                                + " small device, though {other:direct-object} can't tell what it's supposed to do. "
+                                                + " {other:SUBJECT-ACTION:do|does} know"
+                                                + " that it's sticking to {other:direct-object} quite insistently, and {other:pronoun}"
+                                                + " might not want to find out what else it can do.",
                                 getSelf(), target);
             default:
                 if (modifier == Result.miss) {
                     return Global.format(
-                                    "{self:SUBJECT} brandishes a small spherical device, but you slap it out of"
+                                    "{self:SUBJECT} brandishes a small spherical device, but {other:subject-action:slap} it out of"
                                                     + " {self:possessive} hands before {self:pronoun} can do anything with it.",
                                     getSelf(), target);
                 }
                 return Global.format(
-                                "{self:SUBJECT} takes out a small, round device and sticks it onto your chest."
+                                "{self:SUBJECT} takes out a small, round device and sticks it onto {other:name-possessive} chest."
                                                 + " Knowing {self:direct-object}, it would probably be best to get it off quickly.",
                                 getSelf(), target);
         }

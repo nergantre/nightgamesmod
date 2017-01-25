@@ -88,7 +88,8 @@ public class Jumped extends FemdomSexStance {
                 c.write("Your legs give out and you fall on the floor. " + top.getName() + " lands heavily on your lap.");
                 c.setStance(new Cowgirl(top, bottom));
             } else {
-                c.write(bottom.getName() + " loses her balance and falls, pulling you down on top of her.");
+                c.write(Global.format("{other:SUBJECT-ACTION:lose} {other:possessive} balance and {other:action:fall},"
+                                + " pulling {self:name-do} down on top of {other:direct-object}.", top, bottom));
                 c.setStance(new Cowgirl(top, bottom));
             }
         } else {

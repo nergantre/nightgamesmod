@@ -858,9 +858,9 @@ public class Combat extends Observable implements Cloneable {
     private String describe(Character player, Character other) {
         if (beingObserved) {
             return "<font color='rgb(255,220,220)'>"
-                            + other.describe(player.get(Attribute.Perception), this)
+                            + other.describe(Global.getPlayer().get(Attribute.Perception), this)
                             + "</font><br/><br/><font color='rgb(220,220,255)'>"
-                            + player.describe(player.get(Attribute.Perception), this)
+                            + player.describe(Global.getPlayer().get(Attribute.Perception), this)
                             + "</font><br/><br/><font color='rgb(134,196,49)'><b>"
                             + Global.capitalizeFirstLetter(getStance().describe(this)) + "</b></font>";
         } else if (!player.is(Stsflag.blinded)) {

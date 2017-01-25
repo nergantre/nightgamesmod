@@ -17,15 +17,16 @@ public class AnalProne extends AnalSexStance {
             return String.format("You're holding %s legs over your shoulder while your cock in buried in %s's ass.",
                             bottom.nameOrPossessivePronoun(), bottom.possessiveAdjective());
         } else if (top.has(Trait.strapped)) {
-            return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s strapon dildo.",
+            return String.format("%s flat on %s back with %s feet over %s head while %s pegs %s with %s strapon dildo.",
                             bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
                             bottom.possessiveAdjective(), bottom.possessiveAdjective(),
-                            top.subject(), top.possessiveAdjective());
+                            top.subject(), bottom.directObject(), top.possessiveAdjective());
         } else {
-            return String.format("%s flat on %s back with %s feet over %s head while %s pegs you with %s %s.",
+            return String.format("%s flat on %s back with %s feet over %s head while %s pegs &s with %s %s.",
                             bottom.subjectAction("are", "is"), bottom.possessiveAdjective(),
                             bottom.possessiveAdjective(), bottom.possessiveAdjective(),
-                            top.subject(), top.possessiveAdjective(), top.body.getRandomInsertable().describe(top));
+                            top.subject(), bottom.directObject(),
+                            top.possessiveAdjective(), top.body.getRandomInsertable().describe(top));
         }
     }
 
@@ -98,7 +99,8 @@ public class AnalProne extends AnalSexStance {
             if (inserted.human()) {
                 c.write("With " + inserter.getName() + "'s pole gone, your ass gets a respite.");
             } else {
-                c.write(inserted.getName() + " sighs with relief with your dick gone.");
+                c.write(inserted.getName() + " sighs with relief with "+inserter.nameOrPossessivePronoun()
+                            +" dick gone.");
             }
             c.setStance(insertRandom(c));
         }

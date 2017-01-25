@@ -40,17 +40,9 @@ public class UseOnahole extends Skill {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             if (getSelf().has(Item.Onahole2)) {
                 m += 5;
-                if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.upgrade, target));
-                } else {
-                    c.write(getSelf(), deal(c, 0, Result.upgrade, target));
-                }
+                writeOutput(c, Result.upgrade, target);
             } else {
-                if (target.human()) {
-                    c.write(getSelf(), receive(c, 0, Result.normal, target));
-                } else {
-                    c.write(getSelf(), deal(c, 0, Result.upgrade, target));
-                }
+                writeOutput(c, Result.normal, target);
             }
             m = (int)getSelf().modifyDamage(DamageType.gadgets, target, m);
             target.body.pleasure(getSelf(), null, target.body.getRandomCock(), m, c, this);

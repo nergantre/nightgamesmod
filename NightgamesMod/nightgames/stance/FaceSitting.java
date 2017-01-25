@@ -151,8 +151,9 @@ public class FaceSitting extends AbstractBehindStance {
         top.emote(Emotion.horny, 10);
         if (top.has(Trait.energydrain)) {
             c.write(top, Global.format(
-                            "{self:NAME-POSSESSIVE} body glows purple as {other:subject-action:feel|feels} {other:possessive} very spirit drained through your connection.",
-                            top, bottom));
+                            "{self:NAME-POSSESSIVE} body glows purple as {other:subject-action:feel|feels}"
+                            + " {other:possessive} very spirit drained through %s connection.",
+                            top, bottom, c.bothPossessive(bottom)));
             int m = Global.random(5) + 5;
             bottom.drain(c, top, (int) top.modifyDamage(DamageType.drain, bottom, m));
         }

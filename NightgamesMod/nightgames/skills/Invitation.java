@@ -48,8 +48,8 @@ public class Invitation extends Skill {
         Character opp = c.getOpponent(getSelf());
         boolean humanIsBreeder = opp.human() && (opp instanceof Player) && ((Player)opp).checkAddiction(AddictionType.BREEDER, getSelf());
         if (getSelf().has(Trait.breeder) && humanIsBreeder)
-            return 50;
-        return 0;
+            return 0;
+        return 50;
     }
 
     @Override

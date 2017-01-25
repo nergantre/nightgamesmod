@@ -24,7 +24,7 @@ public class JewelTime extends BaseNPCTime {
     public JewelTime(Character player) {
         super(player, Global.getNPC("Jewel"));
         knownFlag = "JewelKnown";
-        giftedString = "\"Thanks! You're a pretty nice you know?\"";
+        giftedString = "\"Thanks! You're pretty nice you know?\"";
         giftString = "\"A present? I'm not going to go easy on you even if you bribe me you know?\"";
         transformationOptionString = "Training";
         transformationIntro = "[Placeholder]<br/>Jewel explains her training to you and how you too can train yourself.";
