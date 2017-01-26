@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -40,8 +39,7 @@ public class PullOut extends Skill {
         if (!user.human()) {
             return false;
         }
-        Player p = (Player) user;
-        Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
+        Optional<Addiction> addiction = user.getAddiction(AddictionType.BREEDER);
         if (!addiction.isPresent()) {
             return false;
         }

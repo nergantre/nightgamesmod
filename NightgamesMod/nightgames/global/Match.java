@@ -256,16 +256,11 @@ public class Match {
     }
 
     public void manageConditions(Character player) {
-        /*
-         * if (condition == DefaultModifier.vibration) { player.tempt(5); } else if (condition == DefaultModifier.vulnerable) { if (!player.is(Stsflag.hypersensitive)) { player.add(new Hypersensitive(player)); } }
-         */
         condition.handleOutfit(player);
         condition.handleItems(player);
         condition.handleStatus(player);
         condition.handleTurn(player, this);
-        if (player.human()) {
-            Global.getPlayer().getAddictions().forEach(Addiction::refreshWithdrawal);
-        }
+        player.getAddictions().forEach(Addiction::refreshWithdrawal);
     }
 
     public int meanLvl() {

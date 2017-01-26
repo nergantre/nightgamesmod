@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
@@ -35,7 +34,7 @@ public abstract class Addiction extends Status {
 
     protected boolean inWithdrawal;
 
-    protected Addiction(Player affected, String name, Character cause, float magnitude) {
+    protected Addiction(Character affected, String name, Character cause, float magnitude) {
         super(name, affected);
         this.name = name;
         this.cause = cause;
@@ -47,7 +46,7 @@ public abstract class Addiction extends Status {
         flags = EnumSet.noneOf(Stsflag.class);
     }
 
-    protected Addiction(Player affected, String name, Character cause) {
+    protected Addiction(Character affected, String name, Character cause) {
         this(affected, name, cause, .01f);
     }
 
@@ -252,7 +251,7 @@ public abstract class Addiction extends Status {
               .message(describeIncrease());
     }
 
-    public static Addiction load(Player player, AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
+    public static Addiction load(Character player, AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
         Addiction a = type.build(player, cause, mag);
         a.magnitude = mag;
         a.combatMagnitude = combat;

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.status.addiction.Addiction;
@@ -75,7 +74,7 @@ public class CrisisOfFaith extends Status {
 
     @Override
     public int gainmojo(int x) {
-        return (int) (x * (1.0f - ((Player)affected).getAddiction(AddictionType.ZEAL).map(Addiction::getMagnitude)
+        return (int) (x * (1.0f - affected.getAddiction(AddictionType.ZEAL).map(Addiction::getMagnitude)
                         .orElse(0f)));
     }
 

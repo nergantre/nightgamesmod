@@ -22,7 +22,6 @@ import com.google.gson.JsonObject;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.CharacterSex;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.mods.PartMod;
 import nightgames.characters.body.mods.SizeMod;
@@ -674,9 +673,8 @@ public class Body implements Cloneable {
         }
 
         double dominance = 0.0;
-        if (character.human() && character instanceof Player && ((Player)character).checkAddiction(AddictionType.DOMINANCE, opponent)
-                       && c.getStance().dom(opponent)) {
-            float mag = ((Player)character).getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
+        if (character.checkAddiction(AddictionType.DOMINANCE, opponent) && c.getStance().dom(opponent)) {
+            float mag = character.getAddiction(AddictionType.DOMINANCE).get().getMagnitude();
             float dom = c.getStance().getDominanceOfStance(opponent);
             dominance = mag * (dom / 5.0);
         }

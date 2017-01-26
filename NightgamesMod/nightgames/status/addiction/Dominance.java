@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -15,26 +14,24 @@ import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 public class Dominance extends Addiction {
-
     private int originalWill;
 
-    public Dominance(Player affected, Character cause, float magnitude) {
+    public Dominance(Character affected, Character cause, float magnitude) {
         super(affected, "Dominance", cause, magnitude);
         flags.add(Stsflag.victimComplex);
         originalWill = -1;
     }
 
-    public Dominance(Player affected, Character cause) {
+    public Dominance(Character affected, Character cause) {
         this(affected, cause, .01f);
     }
 
-    public static boolean mojoIsBlocked(Combat c) {
+    public static boolean mojoIsBlocked(Character affected, Combat c) {
         if (c == null)
             return false;
-        Player player = Global.getPlayer();
+        Character player = affected;
         Character opp = c.getOpponent(player);
-        if (!Global.getPlayer()
-                   .checkAddiction(AddictionType.DOMINANCE, opp))
+        if (!affected.checkAddiction(AddictionType.DOMINANCE, opp))
             return false;
         int sev = player.getAddictionSeverity(AddictionType.DOMINANCE)
                         .ordinal();
@@ -47,12 +44,9 @@ public class Dominance extends Addiction {
     protected Optional<Status> withdrawalEffects() {
         if (originalWill < 0) {
             double mod = Math.min(1.0, 1.0 / (double) getSeverity().ordinal() + .4);
-            originalWill = Global.getPlayer()
-                                    .getWillpower()
+            originalWill = affected.getWillpower()
                                     .max();
-            Global.getPlayer()
-                  .getWillpower()
-                  .setTemporaryMax((int) (originalWill * mod));
+            affected.getWillpower().setTemporaryMax((int) (originalWill * mod));
         }
         return Optional.of(new Masochistic(affected));
     }
@@ -220,15 +214,14 @@ public class Dominance extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Dominance((Player) newAffected, newOther, magnitude);
+        return new Dominance((Character) newAffected, newOther, magnitude);
     }
 
     @Override
     public Status loadFromJson(JsonObject obj) {
-        return new Dominance(Global.getPlayer(), Global.getCharacterByType(obj.get("cause")
+        return new Dominance(Global.noneCharacter(), Global.getCharacterByType(obj.get("cause")
                                                           .getAsString()),
                         (float) obj.get("magnitude")
                                    .getAsInt());
     }
-
 }

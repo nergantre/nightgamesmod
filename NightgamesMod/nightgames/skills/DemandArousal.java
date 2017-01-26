@@ -1,7 +1,6 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -23,8 +22,8 @@ public class DemandArousal extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().facing(getSelf(), target) && target.human()
-                        && ((Player) target).checkAddiction(AddictionType.MIND_CONTROL, getSelf());
+        return getSelf().canRespond() && c.getStance().facing(getSelf(), target) 
+                        && target.checkAddiction(AddictionType.MIND_CONTROL, getSelf());
     }
 
     @Override
@@ -34,8 +33,7 @@ public class DemandArousal extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        Player p = (Player) target;
-        Addiction addict = p.getAddiction(AddictionType.MIND_CONTROL)
+        Addiction addict = target.getAddiction(AddictionType.MIND_CONTROL)
                             .get();
         int dmg = (int) ((20 + Global.randomdouble() * 20) * addict.getMagnitude());
         float alleviation;
@@ -79,7 +77,7 @@ public class DemandArousal extends Skill {
                 break;
         }
         c.write(getSelf(), Global.format(msg, getSelf(), target));
-        p.temptWithSkill(c, getSelf(), null, dmg, this);
+        target.temptWithSkill(c, getSelf(), null, dmg, this);
         addict.alleviate(alleviation);
 
         return true;

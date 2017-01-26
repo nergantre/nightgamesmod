@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -38,14 +37,14 @@ public class ShamefulDisplay extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         if (getSelf().human()) {
-            Player player = (Player)getSelf();
             c.write(getSelf(), deal(c, 0, Result.normal, target));
-            if (player.checkAddiction(AddictionType.MIND_CONTROL, target)) {
-                player.unaddictCombat(AddictionType.MIND_CONTROL, target, Addiction.LOW_INCREASE, c);
-                c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
-            }
         } else if (c.shouldPrintReceive(target, c)) {
             c.write(getSelf(), receive(c, 0, Result.normal, target));
+        }
+        if (getSelf().checkAddiction(AddictionType.MIND_CONTROL, target)) {
+            getSelf().unaddictCombat(AddictionType.MIND_CONTROL, 
+                            target, Addiction.LOW_INCREASE, c);
+            c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over " + getSelf().nameDirectObject());
         }
         getSelf().add(c, new Shamed(getSelf()));
         int divisor = target.getMood() == Emotion.dominant ? 3 : 4;

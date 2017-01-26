@@ -1,15 +1,11 @@
 package nightgames.characters;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import nightgames.actions.Action;
 import nightgames.actions.Leap;
@@ -27,7 +23,6 @@ import nightgames.combat.Combat;
 import nightgames.combat.IEncounter;
 import nightgames.combat.Result;
 import nightgames.ftc.FTCMatch;
-import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.gui.GUI;
@@ -46,16 +41,12 @@ import nightgames.status.Pheromones;
 import nightgames.status.PlayerSlimeDummy;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
-import nightgames.status.addiction.Addiction;
-import nightgames.status.addiction.Addiction.Severity;
-import nightgames.status.addiction.AddictionType;
 import nightgames.trap.Trap;
 
 public class Player extends Character {
     public GUI gui;
     public int traitPoints;
     private int levelsToGain;
-    private List<Addiction> addictions;
 
     public Player(String name) {
         this(name, CharacterSex.male, Optional.empty(), new ArrayList<>(), new HashMap<>());
@@ -66,7 +57,6 @@ public class Player extends Character {
                     Map<Attribute, Integer> selectedAttributes) {
         super(name, 1);
         initialGender = sex;
-        addictions = new ArrayList<>();
         levelsToGain = 0;
         applyBasicStats(this);
         setGrowth();
@@ -80,11 +70,6 @@ public class Player extends Character {
     @Override
     public void finishClone(Character other) {
         super.finishClone(other);
-        List<Addiction> oldaddictions = addictions;
-        addictions = new ArrayList<>();
-        for (Status s : oldaddictions) {
-            addictions.add((Addiction)s.instance(this, other));
-        }
     }
 
     public void applyBasicStats(Character self) {
@@ -433,7 +418,7 @@ public class Player extends Character {
 
     @Override
     public void bathe() {
-        status.removeIf(s -> !s.isAddiction());
+        status.removeIf(s -> s.flags().contains(Stsflag.purgable));
         stamina.fill();
         if (location.name.equals("Showers")) {
             gui.message("You let the hot water wash away your exhaustion and soon you're back to peak condition.");
@@ -825,158 +810,6 @@ public class Player extends Character {
     @Override
     public boolean resist3p(Combat c, Character target, Character assist) {
         return has(Trait.cursed);
-    }
-
-    public boolean hasAddiction(AddictionType type) {
-        return addictions.stream()
-                         .anyMatch(a -> a.getType() == type);
-    }
-
-    public Optional<Addiction> getAddiction(AddictionType type) {
-        return addictions.stream().filter(a -> a.getType() == type).findAny();
-    }
-    
-    public Optional<Addiction> getStrongestAddiction() {
-        return addictions.stream().max(Comparator.comparing(Addiction::getSeverity));
-    }
-
-    public void addict(AddictionType type, Character cause, float mag) {
-        boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        Optional<Addiction> addiction = getAddiction(type);
-        if (addiction.isPresent()) {
-            if (dbg) {
-                System.out.printf("Aggravating %s on player by %.3f\n", type.name(), mag);
-            }
-            Addiction a = addiction.get();
-            a.aggravate(mag);
-            if (dbg) {
-                System.out.printf("%s magnitude is now %.3f\n", a.getType()
-                                                                 .name(),
-                                a.getMagnitude());
-            }
-        } else {
-            if (dbg) {
-                System.out.printf("Creating initial %s on player with %.3f\n", type.name(), mag);
-            }
-            Addiction addict = type.build(this, cause, mag);
-            addictions.add(addict);
-            addict.describeInitial();
-        }
-    }
-
-    public void unaddict(AddictionType type, float mag) {
-        boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        if (dbg) {
-            System.out.printf("Alleviating %s on player by %.3f\n", type.name(), mag);
-        }
-        Optional<Addiction> addiction = getAddiction(type);
-        if (!addiction.isPresent()) {
-            return;
-        }
-        Addiction addict = addiction.get();
-        addict.alleviate(mag);
-        if (addict.shouldRemove()) {
-            if (dbg) {
-                System.out.printf("Removing %s from player", type.name());
-            }
-            addictions.remove(addict);
-        }
-    }
-
-    public void addictCombat(AddictionType type, Character cause, float mag, Combat c) {
-        boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        Optional<Addiction> addiction = getAddiction(type);
-        if (addiction.isPresent()) {
-            if (dbg) {
-                System.out.printf("Aggravating %s on player by %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getTrueName());
-            }
-            Addiction a = addiction.get();
-            a.aggravateCombat(mag);
-            if (dbg) {
-                System.out.printf("%s magnitude is now %.3f\n", a.getType()
-                                                                 .name(),
-                                a.getMagnitude());
-            }
-        } else {
-            if (dbg) {
-                System.out.printf("Creating initial %s on player with %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getTrueName());
-            }
-            Addiction addict = type.build(this, cause, Addiction.LOW_THRESHOLD);
-            addict.aggravateCombat(mag);
-            addictions.add(addict);
-        }
-    }
-
-    public void unaddictCombat(AddictionType type, Character cause, float mag, Combat c) {
-        boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
-        Optional<Addiction> addict = getAddiction(type);
-        if (addict.isPresent()) {
-            if (dbg) {
-                System.out.printf("Alleviating %s on player by %.3f (Combat vs %s)\n", type.name(), mag,
-                                cause.getTrueName());
-            }
-            addict.get().alleviateCombat(mag);
-        }
-    }
-
-    public List<Addiction> getAddictions() {
-        return addictions;
-    }
-
-    public boolean checkAddiction() {
-        return addictions.stream().anyMatch(a -> a.atLeast(Severity.LOW));
-    }
-    
-    public boolean checkAddiction(AddictionType type) {
-        return getAddiction(type).map(Addiction::isActive).orElse(false);
-    }
-    
-    public boolean checkAddiction(AddictionType type, Character cause) {
-        return getAddiction(type).map(addiction -> addiction.isActive() && addiction.wasCausedBy(cause)).orElse(false);
-    }
-    
-    @Override
-    public void regen(Combat c, boolean combat) {
-        super.regen(c, combat);
-        addictions.forEach(Addiction::refreshWithdrawal);
-    }
-    
-     @Override protected void saveInternal(JsonObject object) {
-        JsonArray addictions = new JsonArray();
-        this.addictions.stream().map(Status::saveToJson).forEach(addictions::add);
-        object.add("addictions", addictions);
-    }
-
-    @Override protected void loadInternal(JsonObject object) {
-        JsonArray addictions = object.getAsJsonArray("addictions");
-        if (addictions == null)
-            return;
-        for (Object a : addictions) {
-            JsonObject json = (JsonObject) a;
-            AddictionType type = AddictionType.valueOf(json.get("type").getAsString());
-            Character cause = Global.getCharacterByType(json.get("cause").getAsString());
-            float mag = json.get("magnitude").getAsFloat();
-            float combat = json.get("combat").getAsFloat();
-            boolean overloading = json.has("overloading") ? json.get("overloading").getAsBoolean() : false;
-            boolean reenforced = json.has("reenforced") ? json.get("reenforced").getAsBoolean() : false;
-            Addiction addiction = Addiction.load(this, type, cause, mag, combat, overloading, reenforced);
-            this.addictions.add(addiction);
-        }
-    }
-
-    public Severity getAddictionSeverity(AddictionType type) {
-        return getAddiction(type).map(Addiction::getSeverity).orElse(Severity.NONE);
-    }
-
-    @Override
-    public int getEscape(Combat c, Character other) {
-        int escape = super.getEscape(c, other);
-        if (c != null && checkAddiction(AddictionType.DOMINANCE, c.getOpponent(this))) {
-            escape -= getAddiction(AddictionType.DOMINANCE).get().getCombatSeverity().ordinal() * 8;
-        }
-        return escape;
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -21,17 +20,17 @@ import nightgames.status.Stsflag;
 
 public class MindControl extends Addiction {
 
-    public MindControl(Player affected, Character cause, float magnitude) {
+    public MindControl(Character affected, Character cause, float magnitude) {
         super(affected, "Mind Control", cause, magnitude);
     }
 
-    public MindControl(Player affected, Character cause) {
+    public MindControl(Character affected, Character cause) {
         this(affected, cause, .01f);
     }
 
     @Override
     protected Optional<Status> withdrawalEffects() {
-        return Optional.of(new MindControlWithdrawal());
+        return Optional.of(new MindControlWithdrawal(affected));
     }
 
     @Override
@@ -233,12 +232,11 @@ public class MindControl extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        assert newAffected.human();
-        return new MindControl((Player)newAffected, newOther, magnitude);
+        return new MindControl(newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new MindControl(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new MindControl(Global.noneCharacter(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         obj.get("magnitude").getAsInt());
     }
 
@@ -246,9 +244,8 @@ public class MindControl extends Addiction {
         private boolean succeeded;
         private String description;
 
-        public Result(Character controller, Position pos) {
-            if (Global.getPlayer()
-                      .is(Stsflag.blinded)) {
+        public Result(Character affected, Character controller, Position pos) {
+            if (affected.is(Stsflag.blinded)) {
                 succeeded = false;
                 description = "Since you can't see, you are protected from " + controller.getName() + "'s controlling gaze.";
             } else
@@ -319,8 +316,7 @@ public class MindControl extends Addiction {
                         break;
                     case neutral:
                     case standingover:
-                        if (Global.getPlayer()
-                                  .canAct()) {
+                        if (affected.canAct()) {
                             succeeded = false;
                             description = "With the freedom of movement you have at the moment, turning your gaze away"
                                             + " from " + controller.getName() + "'s hypnotic eyes is quite easy even with "
@@ -332,7 +328,7 @@ public class MindControl extends Addiction {
                         }
                         break;
                     default:
-                        if (pos.facing(Global.getPlayer(), controller)) {
+                        if (pos.facing(affected, controller)) {
                             succeeded = true;
                             description = controller.getName() + " gazes into your eyes as " + controller.pronoun() 
                                             + " pushes you over the edge. ";
@@ -387,9 +383,8 @@ public class MindControl extends Addiction {
     }
 
     public class MindControlWithdrawal extends Status {
-
-        public MindControlWithdrawal() {
-            super("Mind Control Withdrawal", Global.getPlayer());
+        public MindControlWithdrawal(Character affected) {
+            super("Mind Control Withdrawal", affected);
         }
 
         @Override
@@ -474,7 +469,7 @@ public class MindControl extends Addiction {
 
         @Override
         public Status instance(Character newAffected, Character newOther) {
-            return new MindControlWithdrawal();
+            return new MindControlWithdrawal(newAffected);
         }
 
         @Override public JsonObject saveToJson() {

@@ -1,7 +1,6 @@
 package nightgames.status.addiction;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 
 public enum AddictionType {
     MAGIC_MILK(MagicMilkAddiction::new),
@@ -13,7 +12,7 @@ public enum AddictionType {
     ;
     
     interface AddictionConstructor {
-        Addiction construct(Player affected, Character supplier, Float magnitude);
+        Addiction construct(Character affected, Character supplier, Float magnitude);
     }
     
     private final AddictionConstructor constructor;
@@ -22,11 +21,11 @@ public enum AddictionType {
         this.constructor = constructor;
     }
 
-    public Addiction build(Player affected, Character cause) {
+    public Addiction build(Character affected, Character cause) {
         return build(affected, cause, .01f);
     }
     
-    public Addiction build(Player affected, Character cause, float mag) {
+    public Addiction build(Character affected, Character cause, float mag) {
         return constructor.construct(affected, cause, mag);
     }
 }

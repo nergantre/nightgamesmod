@@ -627,13 +627,11 @@ public enum Trait {
         });
         resistances.put(Trait.mindcontrolresistance, (combat, c, s) -> {
            if (s.mindgames() && combat != null && combat.getOpponent(c).has(Trait.mindcontroller)) {
-               if (c instanceof Player) {
-                   float magnitude = ((Player)c).getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
-                                                   .orElse(0f);
-                   float threshold = 40 * magnitude;
-                   if (Global.random(100) < threshold) {
-                       return "Mara's Control";
-                   }
+               float magnitude = c.getAddiction(AddictionType.MIND_CONTROL).map(Addiction::getMagnitude)
+                                               .orElse(0f);
+               float threshold = 40 * magnitude;
+               if (Global.random(100) < threshold) {
+                   return "Mara's Control";
                }
            }
            return "";

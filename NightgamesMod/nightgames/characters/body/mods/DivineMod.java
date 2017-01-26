@@ -1,7 +1,6 @@
 package nightgames.characters.body.mods;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -58,14 +57,13 @@ public class DivineMod extends PartMod {
     }
 
     public void onOrgasm(Combat c, Character self, Character opponent, BodyPart part) {
-        if (self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player
-                        && Global.random(4) > 0) {
+        if (self.has(Trait.zealinspiring) && Global.random(4) > 0) {
             c.write(self, Global.format(
                             "As {other:possessive} cum floods {self:name-possessive} "
                                             + "%s, a holy aura surrounds {self:direct-object}. The soothing"
                                             + " light washes over {other:pronoun}, filling {other:direct-object} with a zealous need to worship {self:possessive} divine body.",
                             self, opponent, part.describe(self)));
-            ((Player)opponent).addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
+            opponent.addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
         }
     }
 
