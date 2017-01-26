@@ -22,12 +22,6 @@ public class OrgasmicTighten extends Thrust {
     }
 
     @Override
-    public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().penetratedBy(c, getSelf(), target)
-                        && c.getStance().havingSexNoStrapped(c) && target.hasDick();
-    }
-
-    @Override
     public int[] getDamage(Combat c, Character target) {
         int[] result = new int[2];
 

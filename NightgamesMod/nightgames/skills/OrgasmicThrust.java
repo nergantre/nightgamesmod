@@ -23,12 +23,6 @@ public class OrgasmicThrust extends Thrust {
         return false;
     }
 
-    @Override
-    public boolean usable(Combat c, Character target) {
-        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canAct()
-                        && c.getStance().canthrust(c, getSelf()) && c.getStance().havingSexOtherNoStrapped(c, getSelf());
-    }
-
     public BodyPart getSelfOrgan(Combat c, Character target) {
         BodyPart part = super.getSelfOrgan(c, target);
         if (part != null && part.isType("cock")) {

@@ -36,10 +36,13 @@ public class Thrust extends Skill {
         return !user.has(Trait.temptress) || user.get(Attribute.Technique) < 11;
     }
 
+    protected boolean havingSex(Combat c, Character target) {
+        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canRespond() && c.getStance().havingSexOtherNoStrapped(c, getSelf());
+    }
+
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canRespond()
-                        && c.getStance().canthrust(c, getSelf()) && c.getStance().havingSexOtherNoStrapped(c, getSelf());
+        return havingSex(c, target) && c.getStance().canthrust(c, getSelf());
     }
 
     public BodyPart getSelfOrgan(Combat c, Character target) {
@@ -110,7 +113,7 @@ public class Thrust extends Skill {
         BodyPart selfO = getSelfOrgan(c, target);
         BodyPart targetO = getTargetOrgan(c, target);
         if (selfO == null || targetO == null) {
-        	System.err.println("Something very odd happened during thrust, stance is " + c.getStance());
+        	System.err.println("Something very odd happened during " + getClass().getSimpleName() + ", stance is " + c.getStance());
         	System.err.println(getSelf().save().toString());
         	System.err.println(target.save().toString());
         	c.write("Something very weird happened, please make a bug report with the logs.");

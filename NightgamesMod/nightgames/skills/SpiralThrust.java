@@ -20,12 +20,6 @@ public class SpiralThrust extends Thrust {
     public boolean requirements(Combat c, Character user, Character target) {
         return user.has(Trait.spiral);
     }
-
-    @Override
-    public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().canthrust(c, getSelf()) && c.getStance().inserted()
-                        && c.getStance().havingSexOtherNoStrapped(c, getSelf());
-    }
     
     @Override
     public float priorityMod(Combat c) {

@@ -18,12 +18,6 @@ public class Piston extends Thrust {
     }
 
     @Override
-    public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().canthrust(c, getSelf())
-                        && c.getStance().havingSexOtherNoStrapped(c, getSelf());
-    }
-
-    @Override
     public int getMojoBuilt(Combat c) {
         return 0;
     }

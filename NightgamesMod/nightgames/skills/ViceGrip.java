@@ -8,7 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.stance.Stance;
 
-public class ViceGrip extends Thrust {
+public class ViceGrip extends Tighten {
     public ViceGrip(Character self) {
         super("Vice", self);
     }
@@ -20,8 +20,7 @@ public class ViceGrip extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().vaginallyPenetratedBy(c, getSelf(), target)
-                        && c.getStance().havingSexNoStrapped(c) && target.hasDick() && (target.stunned() || target.getStamina().percent() < 25) && target.getArousal().percent() >= 50;
+        return havingSex(c, target) && (target.stunned() || target.getStamina().percent() < 25) && target.getArousal().percent() >= 50;
     }
 
     @Override

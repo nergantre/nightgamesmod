@@ -36,22 +36,34 @@ public class Diversion extends Skill {
 
     @Override
     public boolean resolve(Combat c, Character target) {
-        if (getSelf().breastsAvailable()) {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.special, target));
-            } else {
-                c.write(getSelf(), receive(c, 0, Result.special, target));
-            }
-        } else {
-            if (getSelf().human()) {
-                c.write(getSelf(), deal(c, 0, Result.normal, target));
-            } else {
-                c.write(getSelf(), receive(c, 0, Result.normal, target));
-            }
+        Clothing article = getSelf().strip(ClothingSlot.top, c);
+        if (article == null) {
+            getSelf().strip(ClothingSlot.bottom, c);
         }
-        c.setStance(new Behind(getSelf(), target), getSelf(), true);
-        target.add(c, new Flatfooted(target, 1));
-        return true;
+        if (article != null) {
+            if (getSelf().human()) {
+                c.write(getSelf(), "You quickly strip off your " + article.getName()
+                                + " and throw it to the right, while you jump to the left. " + target.getName()
+                                + " catches your discarded clothing, " + "losing sight of you in the process.");
+            } else {
+                c.write(getSelf(), String.format("% sight of %s for just a moment, but then %s %s moving behind "
+                                + "%s in %s peripheral vision. %s quickly %s around and grab %s, "
+                                + "but you find yourself holding just %s %s. Wait... what the fuck?",
+                                target.subjectAction("lose"), getSelf().nameDirectObject(), target.pronoun(),
+                                target.action("see"),
+                                getSelf().directObject(), target.directObject(),
+                                Global.capitalizeFirstLetter(target.subject()), target.action("spin"),
+                                getSelf().nameDirectObject(), getSelf().possessiveAdjective(),
+                                article.getName()));
+            }
+            c.setStance(new Behind(getSelf(), target), getSelf(), true);
+            target.add(c, new Flatfooted(target, 1));
+            return true;
+        } else {
+            c.write(getSelf(), Global.format("{self:SUBJECT-ACTION:try} to divert {other:name-possessive} attention by stripping off {self:possessive} clothing, "
+                            + "only to find out {self:pronoun-action:have} nothing left. ", getSelf(), target));
+            return false;
+        }
     }
 
     @Override

@@ -12,9 +12,24 @@ import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 
 public class Tighten extends Thrust {
-    public Tighten(Character self) {
-        super("Tighten", self);
+    public Tighten(String name, Character self) {
+        super(name, self);
         removeTag(SkillTag.pleasureSelf);
+    }
+
+    public Tighten(Character self) {
+        this("Tighten", self);
+    }
+
+    @Override
+    public BodyPart getSelfOrgan(Combat c, Character target) {
+        if (c.getStance().anallyPenetratedBy(c, getSelf(), target)) {
+            return getSelf().body.getRandom("ass");
+        } else if (c.getStance().vaginallyPenetratedBy(c, getSelf(), target)) {
+            return getSelf().body.getRandomPussy();
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -24,8 +39,7 @@ public class Tighten extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canRespond() && c.getStance().penetratedBy(c, getSelf(), target)
-                        && c.getStance().havingSexNoStrapped(c) && target.hasDick();
+        return havingSex(c, target);
     }
 
     @Override

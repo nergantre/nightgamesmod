@@ -22,8 +22,7 @@ public class Grind extends Thrust {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().canAct() && c.getStance().canthrust(c, getSelf())
-                        && c.getStance().havingSexOtherNoStrapped(c, getSelf()) && c.getStance().en != Stance.anal;
+        return super.usable(c, target) && c.getStance().en != Stance.anal;
     }
 
     @Override
