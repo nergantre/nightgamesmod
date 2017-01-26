@@ -1,3 +1,15 @@
+2.5.0
+
+Bug fixes:
+- Fixed some thrust related bugs
+	- Fixed a crash bug when thrust is being used in certain threesome positions
+	- Fixed a bug where if you were in a XHF daisychain stance and you were the herm getting sandwiched,
+	   thrust/piston would display the wrong skill name
+- Fixed titfuck pin stance causing crashes when the bottom has their dick suddenly disappera
+- Fixed NPCs using diversion causing crash bugs due to string format problems
+	- By the way, if you're a coder and are working on the mod, please try to use the Global.format whenever possible.
+	  It makes things a lot easier for me :)
+
 2.5.0.rc.6
 
 QoL/GUI (Thanks dndw!):
