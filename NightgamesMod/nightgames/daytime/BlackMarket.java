@@ -83,7 +83,8 @@ public class BlackMarket extends Store {
                                                         + "strikes the artifact with the rod. A shock runs through your consciousness, and the sense of danger disappears. The dark power is still present, but it "
                                                         + "seems tame now, willing to obey your command should you call for it. <i>\"The ritual is complete. You can keep the artifact as a souvenir, but all its "
                                                         + "power is in you now.\"</i><br/><br/>");
-                        player.mod(Attribute.Dark, 1);
+                        player.modAttributeDontSaveData(Attribute.Dark, 1);
+                        Global.flag("Trained" + Attribute.Dark.name());
                         acted = true;
                         trained = true;
                     } else {
@@ -106,7 +107,8 @@ public class BlackMarket extends Store {
                                                         + "choice. This one will grant you the masochism fetish if used properly. I'm quite good with these. Get undressed and we'll get started.\"</i> Your trepidation "
                                                         + "must show on your face, because her smiles becomes slightly more reassuring. <i>\"Sometimes the path to power can be painful. The gifts in these items may "
                                                         + "bring you victory, but there's no easy way to unlock them. Besides, you'll enjoy it before we're through. That's the whole point after all.\"</i><br/><br/>");
-                        player.mod(Attribute.Fetish, 1);
+                        player.modAttributeDontSaveData(Attribute.Fetish, 1);
+                        Global.flag("Trained" + Attribute.Fetish.name());
                         acted = true;
                         trained = true;
                     } else {
@@ -158,21 +160,21 @@ public class BlackMarket extends Store {
             if (remaining >= 2000 * (npc.getPure(Attribute.Dark) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Dark) + 1);
                 remaining -= 1000 * (npc.getPure(Attribute.Dark) + 1);
-                npc.mod(Attribute.Dark, 1);
+                npc.modAttributeDontSaveData(Attribute.Dark, 1);
             }
             npc.money -= 1000 * (npc.get(Attribute.Dark) + 1);
             remaining -= 1000 * (npc.get(Attribute.Dark) + 1);
-            npc.mod(Attribute.Dark, 1);
+            npc.modAttributeDontSaveData(Attribute.Dark, 1);
         }
         if (npc.getPure(Attribute.Fetish) > 0 && remaining >= 1000 * (npc.getPure(Attribute.Fetish) + 1)) {
             if (remaining >= 2000 * (npc.getPure(Attribute.Fetish) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Fetish) + 1);
                 remaining -= 1000 * (npc.getPure(Attribute.Fetish) + 1);
-                npc.mod(Attribute.Fetish, 1);
+                npc.modAttributeDontSaveData(Attribute.Fetish, 1);
             }
             npc.money -= 1000 * (npc.getPure(Attribute.Fetish) + 1);
             remaining -= 1000 * (npc.getPure(Attribute.Fetish) + 1);
-            npc.mod(Attribute.Fetish, 1);
+            npc.modAttributeDontSaveData(Attribute.Fetish, 1);
         }
         int bored = 0;
         while (remaining > 25 && bored < 5) {

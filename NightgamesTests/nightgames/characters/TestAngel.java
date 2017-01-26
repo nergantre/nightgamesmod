@@ -426,7 +426,7 @@ public class TestAngel extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("bikinitop"));
         character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
         character.outfitPlan.add(Clothing.getByID("highheels"));
-        character.mod(Attribute.Divinity, 1);
+        character.modAttributeDontSaveData(Attribute.Divinity, 1);
     }
 
     @Override public boolean checkMood(Combat c, Emotion mood, int value) {

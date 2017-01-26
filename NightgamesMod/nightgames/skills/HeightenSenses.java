@@ -5,6 +5,7 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.status.Abuff;
 import nightgames.status.Hypersensitive;
 import nightgames.status.Stsflag;
 
@@ -48,7 +49,7 @@ public class HeightenSenses extends Skill {
             } else {
                 c.write(getSelf(), receive(c, 0, Result.strong, target));
             }
-            target.mod(Attribute.Perception, 1);
+            target.add(c, new Abuff(target, Attribute.Perception, 1, 20));
         } else {
             if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));

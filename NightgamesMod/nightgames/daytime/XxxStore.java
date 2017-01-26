@@ -64,7 +64,8 @@ public class XxxStore extends Store {
                                                 + "After a long pause, you squeeze her small, but obviously corporeal breast. She lets out a girly yelp, which earns you some more looks from customers. \"It was just a "
                                                 + "joke. You didn't have to grope me so roughly. My name is Alice.\"<br/><br/>");
                 Global.flag(Flag.metAlice);
-                player.mod(Attribute.Submissive, 1);
+                player.modAttributeDontSaveData(Attribute.Submissive, 1);
+                Global.flag("Trained" + Attribute.Submissive.name());
                 acted = true;
             }
             if (choice.startsWith("Talk to Alice")) {
@@ -88,7 +89,7 @@ public class XxxStore extends Store {
                 }
 
                 Global.unflag(Flag.AliceAvailable);
-                player.mod(Attribute.Submissive, 1);
+                player.modAttributeDontSaveData(Attribute.Submissive, 1);
                 acted = true;
             }
 

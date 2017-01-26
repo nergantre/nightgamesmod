@@ -221,7 +221,8 @@ public class MagicTraining extends Activity {
                                                         + "You walk back to your dorm, thinking about the awesome applications of magic.");
                 }
                 player.money -= 1000 * (player.getPure(Attribute.Arcane) + 1);
-                player.mod(Attribute.Arcane, 1);
+                player.modAttributeDontSaveData(Attribute.Arcane, 1);
+                Global.flag("Trained" + Attribute.Arcane.name());
                 acted = true;
             } else {
                 Global.gui().message("You don't have enough money for training.");
@@ -236,7 +237,7 @@ public class MagicTraining extends Activity {
                                 + "from civilized habits. Aisha volunteers to help out by teasing"
                                 + " you to sufficient arousal for your instincts to come out. She "
                                 + "also provides some actual help by monitoring your spirit's power.");
-                player.mod(Attribute.Animism, 1);
+                player.modAttributeDontSaveData(Attribute.Animism, 1);
                 acted = true;
             } else {
                 Global.gui().message("You don't have enough money for training.");
@@ -344,7 +345,8 @@ public class MagicTraining extends Activity {
                             + "tone. <i>\"I think we can consider that a success. If Kat is willing to "
                             + "continue to help you out, you should ask her to train you to control your new powers. "
                             + "I want you to do it here, so I can continue to watch you... just to be safe, of course.\"</i>");
-            player.mod(Attribute.Animism, 1);
+            player.modAttributeDontSaveData(Attribute.Animism, 1);
+            Global.flag("Trained" + Attribute.Animism.name());
             acted = true;
             Global.gui().choose(this, "Leave");
         } else if (choice.startsWith("Buy a minor scroll: $200")) {
@@ -364,11 +366,11 @@ public class MagicTraining extends Activity {
             if (budget >= 2000 * (npc.getPure(Attribute.Arcane) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
 //                budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
-                npc.mod(Attribute.Dark, 1);
+                npc.modAttributeDontSaveData(Attribute.Dark, 1);
             }
             npc.money -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
             //budget -= 1000 * (npc.getPure(Attribute.Arcane) + 1);
-            npc.mod(Attribute.Arcane, 1);
+            npc.modAttributeDontSaveData(Attribute.Arcane, 1);
         }
     }
 

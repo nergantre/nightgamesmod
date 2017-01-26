@@ -1,5 +1,6 @@
 package nightgames.characters;
 
+import nightgames.global.Global;
 import nightgames.nskills.tags.AttributeSkillTag;
 import nightgames.nskills.tags.SkillTag;
 
@@ -48,7 +49,7 @@ public enum Attribute {
         }
         return a != Speed && a != Perception && (self.has(Trait.divinity) || a != Divinity);
     }
-    
+
     private static String findYourself(String desc) {
         return "{self:action:find|finds} {self:reflective} " + desc;
     }

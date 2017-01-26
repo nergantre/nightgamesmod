@@ -223,7 +223,7 @@ public class Angel extends BasePersonality {
 
     private void useNymphomania() {
         Global.flag(ANGEL_NYMPHOMANIA_FOCUS);
-        character.mod(Attribute.Nymphomania, 1);
+        character.modAttributeDontSaveData(Attribute.Nymphomania, 1);
         character.getGrowth().addTrait(12, Trait.lastStand);
         character.getGrowth().addTrait(20, Trait.nymphomania);
         character.getGrowth().addTrait(25, Trait.RawSexuality);
@@ -634,7 +634,7 @@ public class Angel extends BasePersonality {
         character.outfitPlan.add(Clothing.getByID("bikinitop"));
         character.outfitPlan.add(Clothing.getByID("bikinibottoms"));
         character.outfitPlan.add(Clothing.getByID("highheels"));
-        character.mod(Attribute.Divinity, 1);
+        character.modAttributeDontSaveData(Attribute.Divinity, 1);
         character.getGrowth().addOrRemoveTraits(character);
     }
 

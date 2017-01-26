@@ -210,14 +210,14 @@ public class Daytime {
             b = 100 - 2 * two.get(Attribute.Perception);
         }
         if (Global.random(100) >= a) {
-            one.mod(att, 1);
+            one.modAttributeDontSaveData(att, 1);
             if (one.human()) {
                 Global.gui()
                       .message("<b>Your " + att + " has improved.</b>");
             }
         }
         if (Global.random(100) >= b) {
-            two.mod(att, 1);
+            two.modAttributeDontSaveData(att, 1);
             if (two.human()) {
                 Global.gui()
                       .message("<b>Your " + att + " has improved.</b>");

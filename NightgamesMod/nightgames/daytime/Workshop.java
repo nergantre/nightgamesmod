@@ -129,7 +129,8 @@ public class Workshop extends Activity {
                                                 + "feel like you've gotten the benefits of a week of classes.<br/><br/><i>\"Some of this equipment is likely to consume battery power rapidly. If you need to "
                                                 + "recharge during a match, there are a few compatible charging stations in the Mechanical Engineering workshops.\"</i>");
                 player.money -= 1000 * (player.getPure(Attribute.Science) + 1);
-                player.mod(Attribute.Science, 1);
+                player.modAttributeDontSaveData(Attribute.Science, 1);
+                Global.flag("Trained" + Attribute.Science.name());
                 if (!player.has(Item.ShockGlove)) {
                     player.gain(Item.ShockGlove);
                 }
@@ -170,7 +171,7 @@ public class Workshop extends Activity {
         if (npc.getPure(Attribute.Science) > 0 && remaining >= 1000) {
             npc.money -= 1000;
             remaining -= 1000;
-            npc.mod(Attribute.Science, 1);
+            npc.modAttributeDontSaveData(Attribute.Science, 1);
             if (!npc.has(Item.ShockGlove)) {
                 npc.gain(Item.ShockGlove);
             }
@@ -208,7 +209,7 @@ public class Workshop extends Activity {
         if (npc.getPure(Attribute.Science) > 0 && remaining >= 1000) {
             npc.money -= 1000;
             remaining -= 1000;
-            npc.mod(Attribute.Science, 1);
+            npc.modAttributeDontSaveData(Attribute.Science, 1);
             if (!npc.has(Item.ShockGlove)) {
                 npc.gain(Item.ShockGlove);
             }

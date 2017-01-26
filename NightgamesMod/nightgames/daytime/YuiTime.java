@@ -76,7 +76,8 @@ public class YuiTime extends BaseNPCTime {
             Global.gui()
                   .message("Yui's skills at subterfuge turn out to be as strong as she claimed. She's also quite a good teacher. Apparently she helped train her "
                                   + "younger sister, so she's used to it. Nothing she teaches you is overtly sexual, but you can see some useful applications for the Games.");
-            player.mod(Attribute.Ninjutsu, 1);
+            player.modAttributeDontSaveData(Attribute.Ninjutsu, 1);
+            Global.flag("Trained" + Attribute.Ninjutsu.name());
             Global.gui()
                   .choose(this, "Leave");
         }

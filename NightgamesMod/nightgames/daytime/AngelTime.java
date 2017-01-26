@@ -129,7 +129,7 @@ public class AngelTime extends BaseNPCTime {
             divinity.option = "Bestow Divinity";
             divinity.scene = "[Placeholder]<br/>Angel has sex with you, lending you a part of her divinity.";
             divinity.effect = (c, self, other) -> {
-                self.mod(Attribute.Divinity, 1);
+                self.modAttributeDontSaveData(Attribute.Divinity, 1);
                 return true;
             };
             options.add(divinity);

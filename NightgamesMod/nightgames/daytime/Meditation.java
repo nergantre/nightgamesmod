@@ -75,7 +75,8 @@ public class Meditation extends Activity {
                                                 + "lying. Fortunately the dojo doesn't appear to have any other students, so the two of you have plenty of privacy. It's also closer to the circumstances you're "
                                                 + "normally fighting in.<br/><br/><i>\"Your Ki skills can be very useful, but be careful to pace yourself or you may run out of stamina.\"</i>");
                 player.money -= 1000 * (player.getPure(Attribute.Ki) + 1);
-                player.mod(Attribute.Ki, 1);
+                player.modAttributeDontSaveData(Attribute.Ki, 1);
+                Global.flag("Trained" + Attribute.Ki.name());
                 acted = true;
                 if (!player.has(Clothing.getByID("gi"))) {
                     player.gain(Clothing.getByID("gi"));
@@ -109,7 +110,7 @@ public class Meditation extends Activity {
                                                 + "before you hit your peak and cum in your pants. Suzume giggles when she realizes what happened. <i>\"I probably should have warned you to bring a change of underwear with you. Don't worry, "
                                                 + "your hypersensitivity will level out over the next hour or so. You'll be a bit more perceptive, but not like you are now.\"</i>");
                 if (player.getPure(Attribute.Perception) < 9) {
-                    player.mod(Attribute.Perception, 1);
+                    player.modAttributeDontSaveData(Attribute.Perception, 1);
                 }
             } else {
                 Global.gui().message(
@@ -141,7 +142,7 @@ public class Meditation extends Activity {
                                                 + "genitals, helps you to your feet, and hands you your missing clothes. <i>\"Your sensitivity should already be starting to return. You'll keep some of your endurance, but you'll probably "
                                                 + "feel it when someone undresses you.\"</i>");
                 if (player.getPure(Attribute.Perception) > 1) {
-                    player.mod(Attribute.Perception, -1);
+                    player.modAttributeDontSaveData(Attribute.Perception, -1);
                 }
             } else {
                 Global.gui().message(
@@ -172,18 +173,17 @@ public class Meditation extends Activity {
         if (npc.getPure(Attribute.Ki) > 0 && budget >= 1000 * (npc.getPure(Attribute.Ki) + 1)) {
             if (budget >= 2000 * (npc.getPure(Attribute.Ki) + 2)) {
                 npc.money -= 1000 * (npc.getPure(Attribute.Ki) + 1);
-//                budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
-                npc.mod(Attribute.Dark, 1);
+                npc.modAttributeDontSaveData(Attribute.Ki, 1);
             }
             npc.money -= 1000 * (npc.getPure(Attribute.Ki) + 1);
             //budget -= 1000 * (npc.getPure(Attribute.Ki) + 1);
-            npc.mod(Attribute.Ki, 1);
+            npc.modAttributeDontSaveData(Attribute.Ki, 1);
         }
         int r = Global.random(4);
         if (r == 3 && npc.getPure(Attribute.Perception) < 9) {
-            npc.mod(Attribute.Perception, 1);
+            npc.modAttributeDontSaveData(Attribute.Perception, 1);
         } else if (r == 2 && npc.getPure(Attribute.Perception) > 1) {
-            npc.mod(Attribute.Perception, -1);
+            npc.modAttributeDontSaveData(Attribute.Perception, -1);
         }
     }
 
