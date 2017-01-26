@@ -58,9 +58,7 @@ public class Tighten extends Thrust {
         BodyPart selfO = getSelfOrgan(c, target);
         BodyPart targetO = getTargetOrgan(c, target);
         Result result;
-        if (c.getStance().inserted(target)) {
-            result = Result.reverse;
-        } else if (c.getStance().en == Stance.anal) {
+        if (c.getStance().en == Stance.anal) {
             result = Result.anal;
         } else {
             result = Result.normal;

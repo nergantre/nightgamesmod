@@ -144,8 +144,7 @@ public class WildThrust extends Thrust {
 
     @Override
     public String getName(Combat c) {
-        if (c.getStance()
-             .inserted(getSelf())) {
+        if (c.getStance().penetratedBy(c, c.getStance().getPartner(c, getSelf()), getSelf())) {
             return "Wild Thrust";
         } else {
             return "Wild Ride";

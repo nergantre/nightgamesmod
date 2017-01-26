@@ -37,6 +37,7 @@ import nightgames.stance.FlowerSex;
 import nightgames.stance.FlyingCarry;
 import nightgames.stance.FlyingCowgirl;
 import nightgames.stance.HeldOral;
+import nightgames.stance.HeldPaizuri;
 import nightgames.stance.Jumped;
 import nightgames.stance.Missionary;
 import nightgames.stance.Mount;
@@ -71,7 +72,8 @@ public class SkillsTest {
 			npcs1.add(new CustomNPC(JsonSourceNPCDataLoader.load(SkillsTest.class.getResourceAsStream("femaletestnpc.js"))));
 			npcs1.add(new CustomNPC(JsonSourceNPCDataLoader.load(SkillsTest.class.getResourceAsStream("maletestnpc.js"))));
 			npcs1.add(new CustomNPC(JsonSourceNPCDataLoader.load(SkillsTest.class.getResourceAsStream("asextestnpc.js"))));
-			npcs1.forEach(npc -> npc.getCharacter().setFakeHuman(true));
+			// don't set fake human right now because there are a lot of casts being done
+			//npcs1.forEach(npc -> npc.getCharacter().setFakeHuman(true));
 
 			npcs2.add(new CustomNPC(JsonSourceNPCDataLoader.load(SkillsTest.class.getResourceAsStream("hermtestnpc.js"))));
 			npcs2.add(new CustomNPC(JsonSourceNPCDataLoader.load(SkillsTest.class.getResourceAsStream("femaletestnpc.js"))));
@@ -110,7 +112,9 @@ public class SkillsTest {
 		stances.add(new StandingOver(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
 		stances.add(new TribadismStance(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
 		stances.add(new UpsideDownFemdom(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
-		stances.add(new UpsideDownMaledom(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
+        stances.add(new UpsideDownMaledom(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
+        stances.add(new HeldOral(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
+        stances.add(new HeldPaizuri(npcs1.get(0).getCharacter(), npcs1.get(1).getCharacter()));
 	}
 
 	public void testSkill(Character npc1, Character npc2, Position pos) throws CloneNotSupportedException {

@@ -1,26 +1,19 @@
 {
-	"type" : "NPCTestAsexual",
-	"name" : "TestAsexual",
+	"type" : "NPCRosea",
+	"name" : "Rosea",
 	"outfit" : {
-		"top" : ["shirt"],
-		"bottom" : ["pants", "panties", "shoes"]
+		"top" : ["leafbra", "vinedress"],
+		"bottom" : ["vinethong"]
 	},
-	"trophy" : "MiscTrophy",
+	"trophy" : "RoseaTrophy",
 	"stats" : {
 		"base" : {
 			"level" : 10,
 			"attributes" : {
-				"Seduction" : 100,
-				"Cunning" : 70,
-				"Power" : 50,
-				"Dark" : 50,
-				"Animism" : 50,
-				"Science" : 50,
-				"Divinity" : 50,
-				"Arcane" : 50,
-				"Fetish" : 50,
-				"Ki" : 50,
-				"Bio" : 50,
+				"Seduction" : 18,
+				"Cunning" : 13,
+				"Power" : 7,
+				"Bio" : 5
 			},
 			"resources" : {
 				"stamina" : 100,
@@ -29,6 +22,11 @@
 				"willpower" : 100
 			},
 			"traits" : [
+				"dryad",
+				"immobile",
+				"lethargic",
+				"naturalgrowth",
+				"alwaysready"
 			]
 		},
 		"growth" : {
@@ -47,28 +45,135 @@
 			"traits" : [{
 					"level" : 12,
 					"trait" : "silvertongue"
+				},
+				{
+					"level" : 15,
+					"trait" : "sexTraining1"
+				},
+				{
+					"level" : 18,
+					"trait" : "tight"
+				},
+				{
+					"level" : 21,
+					"trait" : "limbTraining1"
+				},
+				{
+					"level" : 24,
+					"trait" : "augmentedPheromones"
+				},
+				{
+					"level" : 27,
+					"trait" : "exhibitionist"
+				},
+				{
+					"level" : 30,
+					"trait" : "sexTraining2"
+				},
+				{
+					"level" : 33,
+					"trait" : "tongueTraining1"
+				},
+				{
+					"level" : 36,
+					"trait" : "autonomousPussy"
+				},
+				{
+					"level" : 39,
+					"trait" : "limbTraining2"
+				},
+				{
+					"level" : 42,
+					"trait" : "holecontrol"
+				},
+				{
+					"level" : 45,
+					"trait" : "sexTraining3"
+				},
+				{
+					"level" : 48,
+					"trait" : "magicEyeFrenzy"
+				},
+				{
+					"level" : 51,
+					"trait" : "lactating"
+				},
+				{
+					"level" : 54,
+					"trait" : "insertion"
+				},
+				{
+					"level" : 57,
+					"trait" : "tongueTraining2"
+				},
+				{
+					"level" : 60,
+					"trait" : "frenzyingjuices"
 				}
 			],
 			"preferredAttributes" : [{
+					"attribute" : "Bio",
+					"max" : 50
+				}, {
 					"attribute" : "Seduction"
-			}
+				}
 			]
 		}
 	},
 	"plan" : "hunting",
-	"sex" : "asexual",
+	"sex" : "female",
 	"body":{
         "parts":[
           {
-            "class":"nightgames.characters.body.BreastsPart",
-            "enum":"flat"
+            "type": "breasts",
+            "desc": "breasts",
+            "prefix": "",
+            "hotness": 0.0,
+            "sensitivity": 1.0,
+            "pleasure": 1.0,
+            "descLong": "",
+            "notable": true,
+            "mods": [
+              {
+                "value": 6,
+                "_type": "nightgames.characters.body.mods.SizeMod"
+              }
+            ],
+            "class": "nightgames.characters.body.BreastsPart"
           },
           {
             "class":"nightgames.characters.body.EarPart",
-            "enum":"normal"
+            "enum":"pointed"
           },
+          {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"back",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          },
+		  {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"hands",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          },
+		  {
+            "class":"nightgames.characters.body.TentaclePart",
+			"desc":"vines",
+			"attachpoint":"feet",
+			"hotness":0.1,
+			"pleasure":1.2,
+			"sensitivity":0,
+			"fluids":"nectar"
+          }
         ],
-        "hotness":1.0
+        "hotness":1.5
       },
 	"items" : {
 		"initial" : [{
@@ -102,7 +207,7 @@
 		"tempt" : [
 			{
 				"requirements": {
-					"inserted" : true
+                  "inserted": ""
 				},
 				"text" : "<b>\"Don't worry cutie, I'll wring out your cum straight away.\"</b>"
 			},
@@ -144,21 +249,21 @@
 			}
 		],
 		"night" : [{
-				"text" : "Tired after the night's games, you start trudging back to your place. As you're about to leave the grounds however, you smell a sweet scene in the air. The aroma seems to arouse you, but at the same time making your accumulated fatigue disappear like magic. You grin and thank {self:name-do} in your mind."
+				"text" : "Tired after the night's games, you start trudging back to your place. As you're about to leave the grounds however, you smell a sweet scent in the air. The aroma seems to arouse you, but at the same time making your accumulated fatigue disappear like magic. You grin and thank {self:name-do} in your mind."
 			}
 		],
 		"victory" : [{
 				"requirements" :
 				{
-					"result" : "anal",
-					"inserted" : true
+                  "reverse": {
+                    "result": "anal"
+                  }
 				},
 				"text" : "She wins by fucking your ass"
 			}, {
 				"requirements" :
 				{
-					"result" : "anal",
-					"reverse" : {"inserted" : true}
+                  "result": "anal"
 				},
 				"text" : "She wins by you fucking her ass"
 			}, {
@@ -168,35 +273,6 @@
 					}
 				,
 				"text" : "She wins by fucking you"
-			}, {
-				"requirements" :
-				{
-					"and" : [
-							"bodypart" : "pussy",
-							"bodypart" : "tail"
-					]
-				}
-				,
-				"text" : "She wins by... having a pussy and a tail?"
-			}, {
-				"requirements" :
-				{
-					"or": [
-						"dom" : "",
-						"item" : {
-								"item" : "Dildo",
-								"amount" : 1
-						}
-
-					]
-				},
-				"text" : "She wins by... either being in a dominant position OR having a dildo?"
-			}, {
-				"requirements" :
-				{
-					"not": {"position" : "Neutral"}
-				},
-				"text" : "She wins while not being in the neutral stance."
 			}, {
 				"text" : "Default NPC victory scene"
 			}
@@ -210,18 +286,18 @@
 			}
 		],
 		"victory3p" : [{
-				"text" : "Rosea brings you to an orgasm while {other:subject} holds you down."
+				"text" : "{self:name} brings you to an orgasm while {other:subject} holds you down."
 			}],
 		"victory3pAssist" :[{
-				"text" : "Rosea brings {other:name-do} to an orgasm while you hold {other:direct-object} down."
+				"text" : "{self:name} brings {other:name-do} to an orgasm while you hold {other:direct-object} down."
 			}
 		],
 		"intervene3p" : [{
-				"text" : "While the fight is happening between you and {other:subject}, Rosea sneaks up behind you and holds you down."
+				"text" : "While the fight is happening between you and {other:subject}, {self:name} sneaks up behind you and holds you down."
 			}
 		],
 		"intervene3pAssist": [{
-				"text" : "While the fight is happening, Rosea sneaks behind {other:name-do} and holds {other:direct-object} down."
+				"text" : "While the fight is happening, {self:name} sneaks behind {other:name-do} and holds {other:direct-object} down."
 			}
 		]
 	},
@@ -242,7 +318,7 @@
 			{"modMoney" : -1000}
 		],
 		"introduction" : "Rosea's a tree. If you want, I can plant her in the middle of the front lawn.",
-		"confirm" : "Alright, you'll see her tomorrow at dusk"
+		"confirm" : "Alright, you'll see her tomorrow at dusk."
 	},
 	"portraits" : [{
 			"requirements" : {
@@ -282,5 +358,8 @@
 			"text" : "rosea_desperate.png"
 		}
 	],
-	"defaultPortrait" : "rosea_confident.png"
+	"defaultPortrait" : "rosea_confident.png",
+	"ai-modifiers" : [
+		
+	]
 }

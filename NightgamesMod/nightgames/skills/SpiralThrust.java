@@ -120,7 +120,7 @@ public class SpiralThrust extends Thrust {
 
     @Override
     public String getLabel(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
+        if (c.getStance().penetratedBy(c, c.getStance().getPartner(c, getSelf()), getSelf())) {
             return "Spiral Thrust";
         } else {
             return "Spiral";

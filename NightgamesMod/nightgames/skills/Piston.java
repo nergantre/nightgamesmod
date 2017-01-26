@@ -90,7 +90,7 @@ public class Piston extends Thrust {
 
     @Override
     public String getName(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
+        if (c.getStance().penetratedBy(c, c.getStance().getPartner(c, getSelf()), getSelf())) {
             return "Piston";
         } else {
             return "Bounce";

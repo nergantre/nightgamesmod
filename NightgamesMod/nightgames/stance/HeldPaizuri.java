@@ -70,11 +70,19 @@ public class HeldPaizuri extends AbstractFacingStance {
     }
 
     public List<BodyPart> topParts(Combat c) {
-        return Collections.singletonList(top.body.getRandom("breasts"));
+        BodyPart part = top.body.getRandom("breasts");
+        if (part != null) {
+            return Collections.singletonList(part);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public List<BodyPart> bottomParts() {
-        return Collections.singletonList(bottom.body.getRandom("cock"));
+        if (bottom.hasDick()) {
+            return Collections.singletonList(bottom.body.getRandom("cock"));
+        }
+        return Collections.emptyList();
     }
 
     @Override

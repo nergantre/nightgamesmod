@@ -120,7 +120,7 @@ public class Thrust extends Skill {
         	return false;
         }
         Result result;
-        if (c.getStance().inserted(target)) {
+        if (c.getStance().penetratedBy(c, getSelf(), c.getStance().getPartner(c, getSelf()))) {
             result = Result.reverse;
         } else if (c.getStance().en == Stance.anal) {
             result = Result.anal;
@@ -221,7 +221,7 @@ public class Thrust extends Skill {
 
     @Override
     public String getName(Combat c) {
-        if (c.getStance().inserted(getSelf())) {
+        if (c.getStance().penetratedBy(c, c.getStance().getPartner(c, getSelf()), getSelf())) {
             return "Thrust";
         } else {
             return "Ride";

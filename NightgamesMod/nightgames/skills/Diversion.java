@@ -46,14 +46,11 @@ public class Diversion extends Skill {
                                 + " and throw it to the right, while you jump to the left. " + target.getName()
                                 + " catches your discarded clothing, " + "losing sight of you in the process.");
             } else {
-                c.write(getSelf(), String.format("% sight of %s for just a moment, but then %s %s moving behind "
-                                + "%s in %s peripheral vision. %s quickly %s around and grab %s, "
-                                + "but you find yourself holding just %s %s. Wait... what the fuck?",
-                                target.subjectAction("lose"), getSelf().nameDirectObject(), target.pronoun(),
-                                target.action("see"),
-                                getSelf().directObject(), target.directObject(),
-                                Global.capitalizeFirstLetter(target.subject()), target.action("spin"),
-                                getSelf().nameDirectObject(), getSelf().possessiveAdjective(),
+                c.write(getSelf(), Global.format("{other:SUBJECT-ACTION:lose} sight of {self:name-do} for just a moment, "
+                                + "but then {other:pronoun-action:see} moving behind "
+                                + "{other:reflective} in {other:possessive} peripheral vision. {other:SUBJECT} quickly {other:action:spin} "
+                                + "around and {other:action:grab} {self:direct-object}, but {other:pronoun-action:find} {other:reflective} "
+                                + "holding just {self:possessive} %s. Wait... what the fuck?", getSelf(), target,
                                 article.getName()));
             }
             c.setStance(new Behind(getSelf(), target), getSelf(), true);

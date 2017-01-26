@@ -32,7 +32,12 @@ public class HeldOral extends AbstractFacingStance {
         return c == top;
     }
     public List<BodyPart> topParts(Combat c) {
-        return Collections.singletonList(top.body.getRandom("mouth"));
+        BodyPart part = top.body.getRandom("mouth");
+        if (part != null) {
+            return Collections.singletonList(part);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public List<BodyPart> bottomParts() {
