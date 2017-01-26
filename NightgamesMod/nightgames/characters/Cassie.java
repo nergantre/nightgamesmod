@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import nightgames.actions.Action;
 import nightgames.actions.Movement;
 import nightgames.characters.body.AssPart;
@@ -459,7 +461,7 @@ public class Cassie extends BasePersonality {
                             + " to you. <i>\"Can you touch my nipples more? I really like that.\"</i> You reach up and play with "
                             + "her breasts as she continues to grind against you. She stops your pillow talk by kissing you desperately just before you feel her body tense up in orgasm. She collapses on top of you and kisses "
                             + "your cheek contently. <i>\"I'll keep practicing and make you feel even better next time, \"</i> she tells you happily. <i>\"I promise.\"</i> ";
-        } else if (c.getStance().vaginallyPenetrated(c, character)) {
+        } else if (c.getStance().vaginallyPenetrated(c, c.getOpponent(character))) {
             return "You feel yourself rapidly nearing the point of no return as Cassie thrusts her hardon into your wet snatch. You fondle and tease her sensitive nipples to increase her pleasure, but it's a losing battle. You're "
                             + "going to cum first. She smiles gently and kisses you as your pussy spasms wrapped around her cock when you cum. She shivers slightly, but you know she hasn't climaxed yet. When she breaks the kiss, her flushed "
                             + "face lights up in a broad smile. <i>\"It feels like you came pretty hard. Did you feel good?\"</i> You groan and slump flat on the ground in defeat. She gives you a light kiss on the tip of your nose "

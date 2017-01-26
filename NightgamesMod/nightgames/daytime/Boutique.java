@@ -13,7 +13,7 @@ public class Boutique extends Store {
 
     @Override
     public boolean known() {
-        if (player.hasPussy()) {
+        if (player.useFemalePronouns()) {
             return Global.checkFlag(Flag.basicStores);
         }
         return false;

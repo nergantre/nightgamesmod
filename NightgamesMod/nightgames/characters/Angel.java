@@ -86,8 +86,8 @@ public class Angel extends BasePersonality {
                                             + "<br/><br/>"
                                             + "As if to prove a point, she sits down again on your rehardened cock. "
                                             + "You groan as she slides rocks herself back and forth yet again, fucking you with a soft smile. "
-                                            + "<i>\"Quality over quantity as they say. I'll train you so you'll only be able to cum inside me. Wouldn't that be amusing " + other.getName() + "?\"</i>"
-                                            + "It's too much for your poor oversensitive cock, as you pump what remains into Angel a final time."
+                                            + "<i>\"Quality over quantity as they say. I'll train you so you'll only be able to cum inside me. Wouldn't that be amusing " + other.getName() + "?\" </i>"
+                                            + "It's too much for your poor oversensitive cock, as you pump what remains in you into Angel a final time."
                                             + "<br/>"
                                             + "Angel gives you a quick kiss on the lips before leaving. <i>\"Thanks for listening to me "+ other.getName() + ", but you better be ready for me next time.\"</i>");
                             useSex();
@@ -437,9 +437,9 @@ public class Angel extends BasePersonality {
                             + "tongue and all. You try to get away from her, but she holds you down and merciless pounds away at your overused pussy. You can tell she is turned on as well, but "
                             + "it'll do you no good, as you're already feeling yourself slip over the edge. "
                             + "<br/><br/>Finally it becomes too much, and you cum hard. You wrap your arms and legs unconsciously cling to Angel's body and you seek out "
-                            + "a needy kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
+                            + "a kiss from her. Angel takes note of your convulsing body, and smirks, <i>\"I think you need some more training. I could make "
                             + "anyone cum instantly while they're in me.\"</i> After a small pause, Angel grins devilishly and resumes pumping in and out of your pussy "
-                            + "in long leisurely strokes. <i>\"Hmm in fact, why don't I practice with you a bit? You know what they say, practice makes perfect!\" "
+                            + "in long leisurely strokes. <i>\"Hmm in fact, why don't I train you a bit? You know what they say, practice makes perfect!\" "
                             + "You groan in frustration as your oversensitive cunt receives her cock again. "
                             + "<br/><br/>This could be a long night.";
         } else if (c.getStance().inserted(opponent)) {

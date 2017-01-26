@@ -3364,7 +3364,8 @@ public abstract class Character extends Observable implements Cloneable {
                         || !hasDick() 
                         || (body.getLargestBreasts().getSize() > SizeMod.getMinimumSize("breasts") && body.getFace().getFemininity(this) > 0) 
                         || (body.getFace().getFemininity(this) >= 1.5) 
-                        || Global.checkFlag(Flag.FemalePronounsOnly);
+                        || (human() && Global.checkFlag(Flag.PCFemalePronounsOnly))
+                        || (!human() && Global.checkFlag(Flag.NPCFemalePronounsOnly));
     }
 
     public String nameDirectObject() {
@@ -3420,6 +3421,9 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public String temptLiner(Combat c, Character target) {
+        if (c.getStance().sub(this)) {
+            return Global.format("{self:SUBJECT-ACTION:try} to entice {other:name-do} by wiggling suggestively in {other:possessive} grip.", this, target);
+        }
         return Global.format("{self:SUBJECT-ACTION:pat} {self:possessive} groin and {self:action:promise} {self:pronoun-action:will} show {other:direct-object} a REAL good time.", this, target);
     }
 

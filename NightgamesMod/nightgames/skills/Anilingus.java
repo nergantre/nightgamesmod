@@ -12,6 +12,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
+import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Stsflag;
 
@@ -37,7 +38,7 @@ public class Anilingus extends Skill {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30;
+        return getSelf().has(Trait.shameless) || getSelf().get(Attribute.Seduction) >= 30 || c.getStance().en == Stance.facesitting;
     }
 
     @Override

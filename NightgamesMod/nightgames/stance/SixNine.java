@@ -33,7 +33,7 @@ public class SixNine extends AbstractBehindStance {
         } else {
             return String.format("%s and %s are on the floor in 69 position. "
                             + "%s sitting on top of %s with %s %s right in "
-                            + "front of %s face and %s %s in %s mouth.", bottom.subject(),
+                            + "front of %s face and %s %s next to %s mouth.", bottom.subject(),
                             top.subject(), top.subjectAction("are", "is"), bottom.nameDirectObject(),
                             top.possessiveAdjective(), topParts, bottom.possessiveAdjective(),
                             bottom.possessiveAdjective(), bottomParts, top.possessiveAdjective());

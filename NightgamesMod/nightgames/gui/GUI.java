@@ -348,7 +348,7 @@ public class GUI extends JFrame implements Observer {
         optionsPanel.add(rdfntnorm);
         optionsPanel.add(rdnfntlrg);
         
-        JLabel pronounLabel = new JLabel("Pronoun Usage");
+        JLabel pronounLabel = new JLabel("Human Pronoun Usage");
         ButtonGroup pronoun = new ButtonGroup();
         JRadioButton rdPronounBody = new JRadioButton("Based on Anatomy");
         JRadioButton rdPronounFemale = new JRadioButton("Always Female");
@@ -357,6 +357,16 @@ public class GUI extends JFrame implements Observer {
         optionsPanel.add(pronounLabel);
         optionsPanel.add(rdPronounBody);
         optionsPanel.add(rdPronounFemale);
+
+        JLabel npcPronounLabel = new JLabel("NPC Pronoun Usage");
+        ButtonGroup npcPronoun = new ButtonGroup();
+        JRadioButton rdNPCPronounBody = new JRadioButton("Based on Anatomy");
+        JRadioButton rdNPCPronounFemale = new JRadioButton("Always Female");
+        npcPronoun.add(rdNPCPronounBody);
+        npcPronoun.add(rdNPCPronounFemale);
+        optionsPanel.add(npcPronounLabel);
+        optionsPanel.add(rdNPCPronounBody);
+        optionsPanel.add(rdNPCPronounFemale);
 
         // m/f preference (no (other) males in the games yet... good for
         // modders?)
@@ -431,7 +441,12 @@ public class GUI extends JFrame implements Observer {
             } else {
                 rdfntnorm.setSelected(true);
             }
-            if (Global.checkFlag(Flag.FemalePronounsOnly)) {
+            if (Global.checkFlag(Flag.NPCFemalePronounsOnly)) {
+                rdNPCPronounFemale.setSelected(true);
+            } else {
+                rdNPCPronounBody.setSelected(true);
+            }
+            if (Global.checkFlag(Flag.PCFemalePronounsOnly)) {
                 rdPronounFemale.setSelected(true);
             } else {
                 rdPronounBody.setSelected(true);
@@ -446,7 +461,8 @@ public class GUI extends JFrame implements Observer {
                 Global.setFlag(Flag.hardmode, rdhard.isSelected());
                 Global.setFlag(Flag.autosave, rdautosaveon.isSelected());
                 Global.setFlag(Flag.noportraits, rdporoff.isSelected());
-                Global.setFlag(Flag.FemalePronounsOnly, rdPronounFemale.isSelected());
+                Global.setFlag(Flag.NPCFemalePronounsOnly, rdNPCPronounFemale.isSelected());
+                Global.setFlag(Flag.PCFemalePronounsOnly, rdPronounFemale.isSelected());
                 if (!rdporon.isSelected()) {
                     showNone();
                 }

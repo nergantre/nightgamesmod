@@ -1,6 +1,5 @@
 package nightgames.characters;
 
-import nightgames.global.Global;
 import nightgames.nskills.tags.AttributeSkillTag;
 import nightgames.nskills.tags.SkillTag;
 

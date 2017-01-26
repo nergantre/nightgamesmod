@@ -52,7 +52,7 @@ public class ReceiveAnalStrategy extends AbstractStrategy {
 
     @Override
     public int initialDuration(Combat c, Character self) {
-        return Global.random(3, 6);
+        return Global.random(5, 8);
     }
 
     @Override

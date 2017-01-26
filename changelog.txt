@@ -4,7 +4,15 @@ QoL/GUI (Thanks dndw!):
 - Attributes now display when they are buffed or reduced
 - Training perks now only show the highest level
 
+Other:
+- Tribadism can now only be used when both opponents have naked crotches. (It was getting pretty weird, you could scissor with a trench coat on...)
+- Incubus cocks will no longer be called incubus girl-cocks
+- The boutique should be unlocked now if the PC is feminine enough (or I guess if you check the always use female pronoun option)
+- Split forced female pronoun usage PC only and NPC in the options menu
+- You can no longer use blowjob if they are face sitting on you
+
 Bug fixes:
+- Fixed a bug where resetting traits or draining levels will remove daytime trained attributes
 - Fixed a crash bug involving pets disappearing
 - Fixed fucking skills to only be usable when they're supposed to be usable
 - Fixed opponents receiving cum on parts that they shouldn't be when using titfuck pin/oral pin
@@ -12,10 +20,6 @@ Bug fixes:
 	- Thanks dndw + bronzechair + everyone that's been reporting bugs!
 	- Sorry didn't want to read through every single line to make the report :)
 - Fixed mojo cost bug so now it actually costs the expected 50 mojo (thanks dndw!)
-
-Other:
-- Tribadism can now only be used when both opponents have naked crotches. (It was getting pretty weird, you could scissor with a trench coat on...)
-- Incubus cocks will no longer be called incubus girl-cocks
 
 2.5.0.rc.5
 WARNING: Saves will not be compatible with rc.4 and less (unless you want to do a search and replace of GenericCockPart -> CockPart in your save file)
