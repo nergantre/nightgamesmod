@@ -7,7 +7,6 @@ import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
-import nightgames.status.Compulsive.Situation;
 
 public class Compulsion extends DurationStatus implements Compulsive {
 

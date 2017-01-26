@@ -46,7 +46,7 @@ public class Tribadism extends Skill {
             }
         }
         stancePossible &= !c.getStance().havingSex(c);
-        return possible && stancePossible && getSelf().clothingFuckable(selfO) && target.crotchAvailable();
+        return possible && stancePossible && getSelf().crotchAvailable() && target.crotchAvailable();
     }
 
     @Override

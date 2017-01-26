@@ -6,7 +6,6 @@ import nightgames.characters.Character;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
-import nightgames.status.Collared;
 import nightgames.status.Compulsive;
 import nightgames.status.Compulsive.Situation;
 import nightgames.status.Stsflag;

@@ -10,7 +10,6 @@ import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.pet.arms.skills.Grab;
 import nightgames.stance.Neutral;
-import nightgames.status.Collared;
 import nightgames.status.Compulsive;
 import nightgames.status.Compulsive.Situation;
 import nightgames.status.Stsflag;

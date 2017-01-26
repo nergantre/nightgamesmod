@@ -27,6 +27,7 @@ public class AssJob extends Skill {
     public boolean usable(Combat c, Character target) {
         return getSelf().canAct() && target.hasDick() && selfNakedOrUnderwear()
                         && !c.getStance().havingSex(c, target)
+                        && !c.getStance().facing(getSelf(), target)
                         && (c.getStance().behind(target)
                                         || (c.getStance().en == Stance.reversemount && c.getStance().dom(getSelf()))
                                         || c.getStance().mobile(getSelf()) && !c.getStance().prone(getSelf())

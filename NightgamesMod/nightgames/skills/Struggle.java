@@ -20,7 +20,6 @@ import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.status.Bound;
 import nightgames.status.CockBound;
-import nightgames.status.Collared;
 import nightgames.status.Compulsive;
 import nightgames.status.MagLocked;
 import nightgames.status.Stsflag;

@@ -31,10 +31,12 @@ public class Paizuri extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().hasBreasts() && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
+        return getSelf().hasBreasts()
+                        && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && target.hasDick() && getSelf().breastsAvailable() && target.crotchAvailable()
-                        && c.getStance().paizuri(getSelf(), target) && c.getStance().front(getSelf()) && getSelf().canAct()
-                        && !c.getStance().inserted(target) && c.getStance().en != Stance.oralpin;
+                        && c.getStance().paizuri(getSelf(), target)
+                        && c.getStance().front(getSelf()) && getSelf().canAct()
+                        && c.getStance().en != Stance.oralpin;
     }
 
     @Override

@@ -1373,7 +1373,7 @@ public class Global {
 
     @SafeVarargs
     public static <T> Optional<T> pickRandom(T ... arr) {
-        if (arr.length == 0) return Optional.empty();
+        if (arr == null || arr.length == 0) return Optional.empty();
         return Optional.of(arr[Global.random(arr.length)]);
     }
     

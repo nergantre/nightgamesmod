@@ -1,6 +1,7 @@
 package nightgames.skills;
 
 import java.util.Collection;
+import java.util.List;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
@@ -14,6 +15,7 @@ import nightgames.skills.damage.DamageType;
 import nightgames.stance.Stance;
 import nightgames.status.BodyFetish;
 import nightgames.status.Shamed;
+import nightgames.status.Stsflag;
 import nightgames.status.TailFucked;
 
 public class TailPeg extends Skill {
@@ -32,7 +34,8 @@ public class TailPeg extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return getSelf().getArousal().get() >= 30 && getSelf().canAct() && target.crotchAvailable()
-                        && c.getStance().en != Stance.standing && c.getStance().en != Stance.standingover;
+                        && c.getStance().en != Stance.standing && c.getStance().en != Stance.standingover
+                        && (!target.is(Stsflag.debuff, "Tail Pegged") || !target.is(Stsflag.debuff, "Tail Fucked"));
     }
 
     @Override
@@ -58,20 +61,21 @@ public class TailPeg extends Skill {
     }
 
     public int accuracy(Combat c, Character target) {
-        return (c.getStance().havingSex(c) ? 100 : 60);
+        boolean intercourse = !c.getStance().getPartsFor(c, getSelf(), target).isEmpty() && c.getStance().penisInserted(target);
+        return intercourse ? 100 : 60;
     }
     @Override
     public boolean resolve(Combat c, Character target) {
         if (target.roll(getSelf(), c, accuracy(c, target))) {
             int strength = Math.min(20, 10 + getSelf().get(Attribute.Dark) / 4);
-            boolean vaginal = c.getStance().anallyPenetrated(c, c.getOpponent(getSelf()));
+            boolean intercourse = !c.getStance().getPartsFor(c, getSelf(), target).isEmpty() && c.getStance().penisInserted(target);
             boolean shamed = false;
-            if (!vaginal && Global.random(4) == 2) {
+            if (!intercourse && Global.random(4) == 2) {
                 target.add(c, new Shamed(target));
                 shamed = true;
             }
             if (target.human()) {
-                if (vaginal) {
+                if (intercourse) {
                     c.write(getSelf(), receive(c, 0, Result.intercourse, target));
                 } else if (c.getStance().inserted(target)) {
                     c.write(getSelf(), receive(c, 0, Result.special, target));
@@ -87,7 +91,7 @@ public class TailPeg extends Skill {
                                     + " has destroyed your confidence.");
                 }
             } else if (getSelf().human()) {
-                if (vaginal) {
+                if (intercourse) {
                     c.write(getSelf(), deal(c, 0, Result.intercourse, target));
                 }
                 if (c.getStance().inserted(target)) {
@@ -104,12 +108,12 @@ public class TailPeg extends Skill {
                                     + "'s confidence.");
                 }
             }
-            if (c.getStance().havingSex(c)) {
-                if (vaginal) {
+            if (intercourse) {
+                if (!c.getStance().vaginallyPenetrated(c, target)) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("pussy"),
                                     strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "pussy"));
-                } else {
+                } else if (!c.getStance().anallyPenetrated(c, target)) {
                     target.body.pleasure(getSelf(), getSelf().body.getRandom("tail"), target.body.getRandom("ass"),
                                     strength, c, this);
                     target.add(c, new TailFucked(target, getSelf(), "ass"));
@@ -227,16 +231,22 @@ public class TailPeg extends Skill {
                                 target.possessiveAdjective(), target.possessiveAdjective(),
                                 target.pronoun(), target.action("lose"), target.possessiveAdjective());
             case intercourse:
+                List<BodyPart> parts = c.getStance().getPartsFor(c, getSelf(), target);
+                String part = "hands";
+                if (!parts.isEmpty()) {
+                    part = Global.pickRandom(parts).get().describe(getSelf());
+                }
                 return String.format("%s smirks and coils %s tail around in front of %s. %s briefly %s "
                                 + "at it and %s the appendage move under %s and %s. %s to keep it"
                                 + " out by clamping %s legs together, but a squeeze of %s"
-                                + " ass breaks %s concentration, so the tail slides smoothly into %s pussy.",
+                                + " %s breaks %s concentration, so the tail slides smoothly into %s pussy.",
                                 getSelf().subject(), getSelf().possessiveAdjective(), 
                                 target.nameDirectObject(), Global.capitalizeFirstLetter(target.pronoun()),
                                 target.action("look"), target.action("see"), target.directObject(),
                                 target.action("panic"),
                                 Global.capitalizeFirstLetter(target.subjectAction("try", "tries")),
                                 target.possessiveAdjective(), getSelf().nameOrPossessivePronoun(),
+                                part,
                                 target.possessiveAdjective(), target.possessiveAdjective());
             case strong:
                 return String.format("%s hugs %s from behind and rubs %s chest against %s back."

@@ -474,7 +474,7 @@ public enum Trait {
     LastingCorruption("Lasting Corruption", "Partially Corrupted fades more slowly"),
     TotalSubjugation("Total Subjugation", "An orgasm in a Succubus Embrace significantly corrupts"),
     Subversion("Subversion", "Corruption is stronger while Charmed"),
-    
+
     // Reyka Draining Focus
     Greedy("Greedy", "Attribute draining lasts 50% longer"),
     RaptorMentis("Raptor Mentis", "Attribute draining effects also drain Willpower"),

@@ -124,7 +124,7 @@ public class Abuff extends DurationStatus {
 
     @Override
     public String getVariant() {
-        return modded.toString();
+        return "ABUFF:" + modded.toString();
     }
 
     @Override

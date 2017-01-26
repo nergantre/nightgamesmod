@@ -10,10 +10,8 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Pin;
-import nightgames.status.Collared;
 import nightgames.status.Compulsive;
 import nightgames.status.Compulsive.Situation;
-import nightgames.status.Stsflag;
 
 public class Reversal extends Skill {
 

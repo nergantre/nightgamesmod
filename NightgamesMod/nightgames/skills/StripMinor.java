@@ -92,8 +92,8 @@ public class StripMinor extends Skill {
             articleToStrip = Global.pickRandom(getStrippableArticles(c));
         }
         if (!articleToStrip.isPresent()) {
-            c.write(getSelf(), Global.format("{self:SUBJECT} tried to go after {other:name-possessive} clothing, b"
-                            + "ut found that the intended target is already gone.", getSelf(), target));
+            c.write(getSelf(), Global.format("{self:SUBJECT} tried to go after {other:name-possessive} clothing, "
+                            + "but found that the intended piece is already gone.", getSelf(), target));
             return false;
         }
         clothing = articleToStrip.get();

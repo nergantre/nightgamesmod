@@ -11,7 +11,6 @@ import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
 import nightgames.skills.damage.Staleness;
 import nightgames.stance.Stance;
-import nightgames.status.Charmed;
 import nightgames.status.DurationStatus;
 import nightgames.status.Lovestruck;
 import nightgames.status.Stsflag;

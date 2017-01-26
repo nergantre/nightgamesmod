@@ -74,7 +74,6 @@ import nightgames.status.Abuff;
 import nightgames.status.Alluring;
 import nightgames.status.BodyFetish;
 import nightgames.status.Braced;
-import nightgames.status.Collared;
 import nightgames.status.Compulsive;
 import nightgames.status.Compulsive.Situation;
 import nightgames.status.CounterStatus;

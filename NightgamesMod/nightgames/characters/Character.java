@@ -1326,7 +1326,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public boolean has(Status status) {
         return this.status.stream().anyMatch(s -> s.flags().containsAll(status.flags()) && status.flags()
-                        .containsAll(status.flags()) && s.getVariant().equals(status.getVariant()));
+                        .containsAll(status.flags()) && s.getClass().equals(status.getClass()) && s.getVariant().equals(status.getVariant()));
     }
 
     public void add(Combat c, Status status) {
@@ -1356,7 +1356,7 @@ public abstract class Character extends Observable implements Cloneable {
         if (!done) {
             boolean unique = true;
             for (Status s : this.status) {
-                if (s.getVariant().equals(status.getVariant())) {
+                if (s.getClass().equals(status.getClass()) && s.getVariant().equals(status.getVariant())) {
                     s.replace(status);
                     message = s.initialMessage(c, true);
                     done = true;
@@ -1907,10 +1907,9 @@ public abstract class Character extends Observable implements Cloneable {
                                 "<b>{other:NAME-POSSESSIVE} devilish orfice does not let up, and {other:possessive} intense actions somehow force {self:name-do} to cum again instantly.</b>",
                                 this, partner));
             }
-            if (c.getStance().en == Stance.anal) {
-                partner.body.receiveCum(c, this, partner.body.getRandom("ass"));
-            } else {
-                partner.body.receiveCum(c, this, partner.body.getRandom("pussy"));
+            Optional<BodyPart> opponentHolePart = Global.pickRandom(c.getStance().getPartsFor(c, opponent, this));
+            if (opponentHolePart.isPresent()) {
+                partner.body.receiveCum(c, this, opponentHolePart.get());
             }
         } else if (selfPart != null && selfPart.isType("cock") && opponentPart != null
                         && !opponentPart.isType("none")) {
@@ -3927,7 +3926,7 @@ public abstract class Character extends Observable implements Cloneable {
         this.name = name;
     }
 
-    public boolean hasStatusVariant(String sourceString) {
-        return status.stream().anyMatch(s -> s.getVariant().equals(sourceString));
+    public boolean hasStatusVariant(String variant) {
+        return status.stream().anyMatch(s -> s.getVariant().equals(variant));
     }
 }

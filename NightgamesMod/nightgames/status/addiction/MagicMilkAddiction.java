@@ -14,7 +14,6 @@ import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 public class MagicMilkAddiction extends Addiction {
-
     private int originalMaxWill;
 
     public MagicMilkAddiction(Player affected, Character cause, float magnitude) {
@@ -286,7 +285,6 @@ public class MagicMilkAddiction extends Addiction {
             default:
                 return "You wake up in the morning with your throat feeling strangely parched. You step into the kitchen and take out a carton of milk to attempt to slake your thirst. "
                                 + "Five minutes and a empty carton later, you still don't feel much better. You decide to ignore it and head to class.<br/><br/>";
-
         }
     }
 

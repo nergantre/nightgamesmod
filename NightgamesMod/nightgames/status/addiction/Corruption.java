@@ -2,9 +2,7 @@ package nightgames.status.addiction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -90,7 +88,6 @@ public class Corruption extends Addiction {
                     break;
                 buffs.add(new Abuff(affected, att, -1, 20));
                 buffs.add(new Abuff(affected, Attribute.Dark, 1, 20));
-                
             }
             switch (sev) {
                 case HIGH:
@@ -109,7 +106,7 @@ public class Corruption extends Addiction {
             }
             buffs.forEach(b -> affected.addlist.add(b));
         }
-        if (cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel()) {
+        if (c != null && cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel() && c.getOpponent(affected).equals(cause)) {
             c.write(affected, "A wave of obedience radiates out from the dark essence within you, constraining"
                             + " your free will. It will make fighting " 
                             + cause.getTrueName() + " much more difficult...");

@@ -62,7 +62,7 @@ public class CockPart extends GenericBodyPart {
     @Override
     protected String modlessDescription(Character c) {
         String syn = Global.pickRandom(synonyms).get();
-        return (c.hasPussy() ? "girl-" : "") + syn;
+        return (c.hasPussy() && !moddedPartCountsAs(c, CockMod.incubus) ? "girl-" : "") + syn;
     }
 
     @Override
