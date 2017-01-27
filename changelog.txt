@@ -1,3 +1,8 @@
+2.5.0.1
+
+- Fix crash bugs when the main four have no pussies and turn 10.
+- Fix divine mod + zeal inspiring trigger
+
 2.5.0
 
 Bug fixes (since 2.5.0.rc6):
