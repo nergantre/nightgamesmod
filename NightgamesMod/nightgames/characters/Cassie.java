@@ -30,6 +30,7 @@ import nightgames.start.NpcConfiguration;
 import nightgames.status.Energized;
 import nightgames.status.Stsflag;
 
+@SuppressWarnings("unused")
 public class Cassie extends BasePersonality {
     /**
      *
@@ -687,7 +688,9 @@ public class Cassie extends BasePersonality {
 
     public void advance() {
         character.getGrowth().addTrait(10, Trait.witch);
-        character.body.addReplace(character.body.getRandomPussy().applyMod(ArcaneMod.INSTANCE), 1);
+        if (character.hasPussy()) {
+            character.body.addReplace(character.body.getRandomPussy().applyMod(ArcaneMod.INSTANCE), 1);
+        }
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.runic), 1);
         }

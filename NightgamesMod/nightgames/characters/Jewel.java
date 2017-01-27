@@ -781,7 +781,9 @@ public class Jewel extends BasePersonality {
     public void advance() {
         character.getGrowth()
                  .addTrait(10, Trait.fighter);
-        character.body.addReplace(character.body.getRandomPussy().applyMod(FieryMod.INSTANCE), 1);
+        if (character.hasPussy()) {
+            character.body.addReplace(character.body.getRandomPussy().applyMod(FieryMod.INSTANCE), 1);
+        }
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock()
                                                     .applyMod(CockMod.enlightened),

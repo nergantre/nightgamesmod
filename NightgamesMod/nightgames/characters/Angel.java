@@ -624,7 +624,9 @@ public class Angel extends BasePersonality {
         character.getGrowth().addTrait(10, Trait.demigoddess);
         character.getGrowth().addTrait(10, Trait.divinity);
         character.getGrowth().addTrait(10, Trait.proheels);
-        character.body.addReplace(character.body.getRandomPussy().applyMod(new DivineMod()), 1);
+        if (character.hasPussy()) {
+            character.body.addReplace(character.body.getRandomPussy().applyMod(new DivineMod()), 1);
+        }
         if (character.hasDick()) {
             character.body.addReplace(character.body.getRandomCock().applyMod(CockMod.blessed), 1);
         }

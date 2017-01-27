@@ -57,15 +57,17 @@ public class DivineMod extends PartMod {
         return 0;
     }
 
-    public void onOrgasm(Combat c, Character self, Character opponent, BodyPart part) {
-        if (self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player
-                        && Global.random(4) > 0) {
-            c.write(self, Global.format(
-                            "As {other:possessive} cum floods {self:name-possessive} "
-                                            + "%s, a holy aura surrounds {self:direct-object}. The soothing"
-                                            + " light washes over {other:pronoun}, filling {other:direct-object} with a zealous need to worship {self:possessive} divine body.",
-                            self, opponent, part.describe(self)));
-            ((Player)opponent).addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
+    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
+        if (self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player && !selfCame && Global.random(4) > 0) {
+            if (c.getStance().partsForStanceOnly(c, self, opponent).contains(part) && c.getStance().partsForStanceOnly(c, opponent, self).stream().anyMatch(otherPart -> otherPart.isType("cock"))) {
+                c.write(self, Global.format(
+                                "As {other:possessive} cum floods {self:name-possessive} "
+                                                + "%s, a holy aura surrounds {self:direct-object}. The soothing"
+                                                + " light washes over {other:pronoun}, filling {other:direct-object} with a zealous need to worship {self:possessive} divine body.",
+                                self, opponent, part.describe(self)));
+ 
+                ((Player)opponent).addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
+            }
         }
     }
 
