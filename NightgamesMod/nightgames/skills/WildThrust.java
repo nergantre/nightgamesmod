@@ -40,6 +40,13 @@ public class WildThrust extends Thrust {
                             + "momentarily dazed. {self:SUBJECT-ACTION:do|does} not let this chance slip and {self:action:rotate|rotates} {self:possessive} body so that {self:pronoun-action:are|is} on top!", getSelf(), target));
             c.setStance(c.getStance().reverse(c, false));
         }
+        if (effective && getSelf().has(Trait.breeder) && c.getStance().vaginallyPenetratedBy(c, getSelf(), target)
+                         && target.human()) {
+            c.write(getSelf(), Global.format("The sheer ferocity of {self:name-possessive} movements"
+                            + " fill you with an unnatural desire to sate {self:possessive} thirst with"
+                            + " your cum.", getSelf(), target));
+            ((Player) target).addict(AddictionType.BREEDER, getSelf(), Addiction.LOW_INCREASE);
+        }
         return effective;
     }
 
