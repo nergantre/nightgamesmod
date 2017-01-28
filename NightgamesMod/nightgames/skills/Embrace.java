@@ -5,9 +5,13 @@ import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
+import nightgames.stance.IncubusEmbrace;
 import nightgames.stance.Position;
 import nightgames.stance.Stance;
 import nightgames.stance.SuccubusEmbrace;
+import nightgames.status.Stsflag;
+import nightgames.status.TailFucked;
+import nightgames.status.TailSucked;
 
 public class Embrace extends Skill {
 
@@ -31,7 +35,7 @@ public class Embrace extends Skill {
     }
 
     private boolean validPosition(Position stance, Combat c, Character target) {
-        if (!stance.vaginallyPenetrated(c) || !stance.dom(getSelf())) {
+        if (!stance.connected(c) || !stance.dom(getSelf())) {
             return false;
         }
         if (stance.en == Stance.succubusembrace || stance.en == Stance.upsidedownmaledom
@@ -39,10 +43,10 @@ public class Embrace extends Skill {
                         || (stance.en == Stance.flying && !stance.penetrated(c, getSelf()))) {
             return false;
         }
-        if (stance.vaginallyPenetrated(c, target) && stance.en == Stance.doggy) {
+        if (stance.penetrated(c, target) && stance.en == Stance.doggy || stance.en == Stance.anal) {
             return true;
         }
-        return stance.facing(target, getSelf());
+        return stance.vaginallyPenetrated(c, getSelf()) && stance.facing(target, getSelf());
     }
 
     @Override
@@ -68,12 +72,41 @@ public class Embrace extends Skill {
                                             + " {self:body-part:wings} wrap around {other:direct-object}, holding"
                                             + " {other:direct-object} firmly in place.", getSelf(), target, trans));
             next = new SuccubusEmbrace(getSelf(), target);
+        } else if ((c.getStance().en == Stance.anal || c.getStance().en == Stance.doggy)
+                        && c.getStance().penetratedBy(c, target, getSelf())) {
+            if (target.hasDick()) {
+                next = new IncubusEmbrace(getSelf(), target, () -> {
+                    c.write(getSelf(), Global.format("{self:NAME-POSSESSIVE} {self:body-part:tail}"
+                                    + " reaches around and opens up in front of {other:name-possessive}"
+                                    + " hard {other:body-part:cock}. In a quick motion, the turgid shaft"
+                                    + " is swallowed up completely. The bulbous head at the end of the"
+                                    + " tail flexes mightily, creating an intense suction for its"
+                                    + " prisoner and drawing out {other:name-possessive} strength.", getSelf(), target));
+                    return new TailSucked(target, getSelf(), 2);
+                }, Stsflag.tailsucked);
+            } else if (c.getStance().anallyPenetrated(c, target) && target.hasPussy()) {
+                next = new IncubusEmbrace(getSelf(), target, () -> {
+                    c.write(getSelf(), Global.format("{self:NAME-POSSESSIVE} prehensile"
+                                    + " {self:body-part:tail} snakes around {other:name-possessive}"
+                                    + " waist and then downward between {other:possessive} legs."
+                                    + " Having quickly found its target and coated it in copious"
+                                    + " amounts of lubricants, the tail shoots up {other:name-possessive}"
+                                    + " {other:body-part:pussy} in a single, powerful thrust. The undulating"
+                                    + " appendage does not stop, though, and keeps on pistoning in and out"
+                                    + " at a speed which is leaving {other:name-do} even more breathless"
+                                    + " than {other:pronoun} already {other:action:were|was}.", getSelf(), target));
+                    return new TailFucked(getSelf(), target, "pussy");
+                }, Stsflag.tailfucked);
+            } else {
+                next = new IncubusEmbrace(getSelf(), target);
+            }
+            c.write(getSelf(), trans);
         } else {
-            // TODO
-            next = null;
-            assert false : "Not implemented";
+            c.write("<u><b>Error: Unexpected stance for Embrace. Moving on.</b></u>");
+            Thread.dumpStack();
+            return false;
         }
-
+ 
         c.setStance(next, getSelf(), true);
 
         return false;
@@ -120,17 +153,18 @@ public class Embrace extends Skill {
                     return "";
                 }
             case doggy:
+            case anal:
                 assert !selfCatches;
-                return "";
+                return Global.format("{self:SUBJECT-ACTION:lean} forward and {self:action:grab}"
+                                + " {other:subject} %s. {self:PRONOUN} then hoists %s back upright and"
+                                + " {self:action:wrap} {self:possessive} wings around {other:name-do}, continuing"
+                                + " {self:possessive} thrusts with new vigor.", getSelf(), target, target.hasBreasts() ?
+                                                  "by {other:possessive} {other:body-part:breasts}"
+                                                : "in a tight bear-hug", c.bothDirectObject(target));
             case missionary:
-                assert !selfCatches;
-                return "";
             default:
-                if (selfCatches) {
-                    return "";
-                } else {
-                    return "";
-                }
+                Thread.dumpStack();
+                return "<b><u>Unplanned transition in Embrace.</u></b>";
         }
     }
 

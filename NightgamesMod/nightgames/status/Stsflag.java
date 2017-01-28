@@ -78,5 +78,7 @@ public enum Stsflag {
     pressurepoint,
     orgasmPurged,
     plasticized, 
-    compelled,
+    compelled, 
+    tailsucked, 
+    tailfucked,
 }

@@ -25,6 +25,7 @@ public class TailSucked extends Status implements InsertedStatus {
                         && new TailSuck(other).usable(c, self));
         flag(Stsflag.bound);
         flag(Stsflag.debuff);
+        flag(Stsflag.tailsucked);
     }
 
     @Override

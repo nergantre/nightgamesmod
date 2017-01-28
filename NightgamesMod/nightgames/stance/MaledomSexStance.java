@@ -43,7 +43,7 @@ public abstract class MaledomSexStance extends Position {
             }
             c.setStance(insertRandom(c));
         }
-        if (!inserted.hasPussy()) {
+        if (!inserted.hasPussy() && !anallyPenetratedBy(c, inserted, inserter)) {
             if (inserted.human()) {
                 c.write("With your pussy suddenly disappearing, " + inserter.subject()
                                 + " can't continue fucking you anymore.");
