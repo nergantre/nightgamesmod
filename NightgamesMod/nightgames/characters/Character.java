@@ -1201,7 +1201,7 @@ public abstract class Character extends Observable implements Cloneable {
     public boolean addTraitDontSaveData(Trait t) {
         if (t == null) {
             System.err.println("Tried to add an null trait!");
-            DebugHelper.printStackFrame(3, 1);
+            DebugHelper.printStackFrame(5, 1);
             return false;
         }
         if (traits.addIfAbsent(t)) {

@@ -42,7 +42,7 @@ public class Corruption extends Addiction {
         super.tick(c);
         Severity sev = getCombatSeverity();
         int amt = sev.ordinal() * 2;
-        if (cause.has(Trait.Subversion)) {
+        if (cause.has(Trait.Subversion) && affected.is(Stsflag.charmed)) {
             amt *= 1.5;
         }
         List<Abuff> buffs = new ArrayList<>();

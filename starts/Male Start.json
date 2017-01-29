@@ -8,67 +8,34 @@
 	"npcs": [
 		{
 			"type":"Angel",
-			"name":"Angelo",
-			"gender":"male",
-			"body": {
-				"breasts":0
-			},
-			"clothing": [
-				"Tshirt",
-				"boxers",
-				"jeans",
-				"socks",
-				"sneakers"
-			]
+			"name":"Angelo"
 		},
 		{
 			"type":"Cassie",
-			"name":"Casey",
-			"gender":"male",
-			"body": {
-				"breasts":0
-			},
-			"clothing": [
-				"Tshirt",
-				"boxers",
-				"jeans",
-				"socks",
-				"sneakers"
-			]
+			"name":"Casey"
 		},
 		{
 			"type":"Jewel",
-			"name":"Jason",
-			"gender":"male",
-			"body": {
-				"breasts":0
-			},
-			"clothing": [
-				"Tshirt",
-				"boxers",
-				"jeans",
-				"socks",
-				"sneakers"
-			]
+			"name":"Jason"
 		},
 		{
 			"type":"Mara",
-			"name":"Mark",
-			"gender":"male",
-			"body": {
-				"breasts":0
-			},
-			"clothing": [
-				"Tshirt",
-				"boxers",
-				"jeans",
-				"socks",
-				"sneakers"
-			]
+			"name":"Mark"
 		}
 	],
 	"all_npcs" : {
-		
+		"gender": "male",
+		"body": {
+			"breasts": 0,
+			"faceFemininity": -1.5
+		},
+		"clothing": [
+			"Tshirt",
+			"boxers",
+			"jeans",
+			"socks",
+			"sneakers"
+		]
 	},
 	"flags": []
 }
