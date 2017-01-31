@@ -67,7 +67,7 @@ public class Growth implements Cloneable {
     public void addTrait(int level, Trait trait) {
         if (trait == null) {
             System.err.println("Tried to add a null trait to a growth.");
-            DebugHelper.printStackFrame(5, 1);
+            DebugHelper.printStackFrame(4, 1);
             return;
         }
         if (!traits.containsKey(level)) {
