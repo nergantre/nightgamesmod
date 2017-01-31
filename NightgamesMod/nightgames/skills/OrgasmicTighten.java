@@ -22,6 +22,17 @@ public class OrgasmicTighten extends Thrust {
     }
 
     @Override
+    public BodyPart getSelfOrgan(Combat c, Character target) {
+        if (c.getStance().anallyPenetratedBy(c, getSelf(), target)) {
+            return getSelf().body.getRandom("ass");
+        } else if (c.getStance().vaginallyPenetratedBy(c, getSelf(), target)) {
+            return getSelf().body.getRandomPussy();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public int[] getDamage(Combat c, Character target) {
         int[] result = new int[2];
 
@@ -87,11 +98,6 @@ public class OrgasmicTighten extends Thrust {
     @Override
     public String describe(Combat c) {
         return "Squeeze opponent's dick, no pleasure to self";
-    }
-
-    @Override
-    public String getName(Combat c) {
-        return "Tighten";
     }
 
     @Override

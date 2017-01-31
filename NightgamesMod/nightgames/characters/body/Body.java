@@ -343,6 +343,12 @@ public class Body implements Cloneable {
                            .collect(Collectors.toList());
     }
 
+    public List<BodyPart> getPure(String type) {
+        return bodyParts.stream()
+                           .filter(p -> p.isType(type))
+                           .collect(Collectors.toList());
+    }
+
     public PussyPart getRandomPussy() {
         return (PussyPart) getRandom("pussy");
 
@@ -1467,6 +1473,26 @@ public class Body implements Cloneable {
             return "an ";
         } else {
             return "a ";
+        }
+    }
+
+    public void applyMod(String partType, PartMod mod) {
+        BodyPart part = Global.pickRandom(getPure(partType)).orElse(null);
+        if (part != null && part instanceof GenericBodyPart) {
+            GenericBodyPart genericPart = (GenericBodyPart) part;
+            addReplace(genericPart.applyMod(mod), 1);
+        } else {
+            System.err.println("Tried to apply mod " + mod + " but found non-generic part: " + part);
+        }
+    }
+
+    public void removeMod(String partType, PartMod mod) {
+        Optional<BodyPart> part = getPure(partType).stream().filter(p -> p.moddedPartCountsAs(character, mod)).findAny();
+        if (part.isPresent() && part.get() instanceof GenericBodyPart) {
+            GenericBodyPart genericPart = (GenericBodyPart) part.get();
+            addReplace(genericPart.removeMod(mod), 1);
+        } else {
+            System.err.println("Tried to remove mod " + mod + " but found non-generic part: " + part);
         }
     }
 }

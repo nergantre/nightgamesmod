@@ -7,12 +7,14 @@ import java.util.Optional;
 import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.AssPart;
+import nightgames.characters.body.Body;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BreastsPart;
 import nightgames.characters.body.CockPart;
 import nightgames.characters.body.EarPart;
 import nightgames.characters.body.GenericBodyPart;
 import nightgames.characters.body.PussyPart;
+import nightgames.characters.body.mods.PartMod;
 import nightgames.characters.body.mods.SecondPussyMod;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.global.DebugFlags;
@@ -55,12 +57,12 @@ public class BodyShop extends Activity {
         boolean isSatisfied(Character character);
     }
 
-    private void addBodyPartMod(String name, final BodyPart part, final BodyPart normal, int growPrice,
+    private void addBodyPart(String name, final BodyPart part, final BodyPart normal, int growPrice,
                     int removePrice) {
-        addBodyPartMod(name, part, normal, growPrice, removePrice, 5, false);
+        addBodyPart(name, part, normal, growPrice, removePrice, 5, false);
     }
 
-    private void addBodyPartMod(String name, final BodyPart part, final BodyPart normal, int growPrice, int removePrice,
+    private void addBodyPart(String name, final BodyPart part, final BodyPart normal, int growPrice, int removePrice,
                     final int priority, final boolean onlyReplace) {
         selection.add(new ShopSelection(name, growPrice) {
             @Override
@@ -106,6 +108,44 @@ public class BodyShop extends Activity {
                 } else {
                     return buyer.body.contains(part);
                 }
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return 1;
+            }
+        });
+    }
+
+    private void addBodyPartMod(String name, final PartMod mod, final String partType, int growPrice, int removePrice,
+                    final int priority) {
+        selection.add(new ShopSelection(name, growPrice) {
+            @Override
+            void buy(Character buyer) {
+                Body body = buyer.body;
+                body.applyMod(partType, mod);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                return buyer.body.get(partType).stream().anyMatch(part -> !part.moddedPartCountsAs(buyer, mod));
+            }
+
+            @Override
+            double priority(Character buyer) {
+                return priority;
+            }
+        });
+
+        selection.add(new ShopSelection("Remove " + name, removePrice) {
+            @Override
+            void buy(Character buyer) {
+                buyer.body.removeMod(partType, mod);
+            }
+
+            @Override
+            boolean available(Character buyer) {
+                return buyer.body.get(partType).stream().anyMatch(part -> part.moddedPartCountsAs(buyer, mod));
             }
 
             @Override
@@ -488,13 +528,13 @@ public class BodyShop extends Activity {
                         noRequirement);
         addTraitMod("Pheromones", "Remove Pheromones", Trait.augmentedPheromones, 1500, 1500,
                         noRequirement);
-        addBodyPartMod("Fused Boots",
+        addBodyPart("Fused Boots",
                         new GenericBodyPart("Fused Boots",
                                         "{self:name-possessive} legs are wrapped in a shiny black material that look fused on.",
                                         .3, 1.5, .7, true, "feet", ""),
                         new GenericBodyPart("feet", 0, 1, 1, "feet", ""), 1000, 1000);
-        addBodyPartMod("Anal Pussy", AssPart.generateGeneric().applyMod(new SecondPussyMod()), AssPart.generic, 2000, 2000);
-        addBodyPartMod("Fused Gloves",
+        addBodyPartMod("Anal Pussy", SecondPussyMod.INSTANCE, "ass", 2000, 2000, 0);
+        addBodyPart("Fused Gloves",
                         new GenericBodyPart("Fused Gloves",
                                         "{self:name-possessive} arms and hands are wrapped in a shiny black material that look fused on.",
                                         .2, 1.5, .7, true, "hands", ""),

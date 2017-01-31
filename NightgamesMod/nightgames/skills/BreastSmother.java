@@ -36,7 +36,9 @@ public class BreastSmother extends Skill {
     
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().breastsAvailable() && c.getStance().reachTop(getSelf()) && c.getStance().front(getSelf())
+        return getSelf().breastsAvailable()
+                        && c.getStance().reachTop(getSelf())
+                        && c.getStance().front(getSelf())
                         && getSelf().body.getLargestBreasts().getSize() >= MIN_REQUIRED_BREAST_SIZE
                         && c.getStance().mobile(getSelf())
                         && (!c.getStance().mobile(target) || c.getStance().prone(target)) && getSelf().canAct();
@@ -51,7 +53,6 @@ public class BreastSmother extends Skill {
     public boolean resolve(Combat c, Character target) {
         boolean special = c.getStance().en != Stance.breastsmothering && !c.getStance().havingSex(c);        
         writeOutput(c, special ? Result.special : Result.normal, target);
-
 
         double n = 10 + Global.random(5) + getSelf().body.getLargestBreasts().getSize();
 
@@ -70,7 +71,7 @@ public class BreastSmother extends Skill {
         target.weaken(c, (int) getSelf().modifyDamage(DamageType.physical, target, Global.random(5, 15)));
 
         target.loseWillpower(c, Math.min(5, target.getWillpower().max() * 10 / 100 ));     
-        
+
         if (special) {
             c.setStance(new BreastSmothering(getSelf(), target), getSelf(), true);      
             getSelf().emote(Emotion.dominant, 20);
@@ -147,17 +148,15 @@ public class BreastSmother extends Skill {
         if (getSelf().has(Trait.temptingtits)) {
             b.append("You can't help but groan in pleasure from having your face stuck between ");
             b.append(getSelf().possessiveAdjective());
-            b.append(" perfect tits as they take your breath away");           
-                          
+            b.append(" perfect tits as they take your breath away");             
             if (getSelf().has(Trait.beguilingbreasts)) {
                 b.append(", and due to their beguiling nature you can't help but want to stay there as long as possible");
             }
             b.append(".");
-            
-        } else{
+        } else {
             b.append(" You let out a few panicked sounds muffled by the breasts now covering your face as you realize you cannot breathe!");
-        }        
-        
+        }
+
         return b.toString();
     }
 

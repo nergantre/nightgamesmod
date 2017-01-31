@@ -387,6 +387,12 @@ public class GenericBodyPart implements BodyPart {
         return newPart;
     }
 
+    public GenericBodyPart removeMod(PartMod mod) {
+        GenericBodyPart newPart = (GenericBodyPart) instance();
+        newPart.mods.removeIf(otherMod -> otherMod.getVariant().equals(mod.getVariant()));
+        return newPart;
+    }
+
     public BodyPart removeAllMods() {
         GenericBodyPart part = (GenericBodyPart) instance();
         part.mods.clear();
