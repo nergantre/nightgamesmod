@@ -35,7 +35,7 @@ public class Bound extends Status {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("%s now bound by %s.\n", affected.subjectAction("are", "is"), binding);
     }
 

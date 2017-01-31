@@ -1543,6 +1543,14 @@ public class Global {
             }
         });
 
+        matchActions.put("mister", (self, first, second, third) -> {
+            if (self.useFemalePronouns()) {
+                return "miss";
+            } else {
+                return "mister";
+            }
+        });
+
         matchActions.put("true-name", (self, first, second, third) -> {
             return self.getTrueName();
         });

@@ -210,7 +210,7 @@ public class Corruption extends Addiction {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         if (inWithdrawal) {
             return "The blackness resonates with " + cause.getName() + ", growing even more powerful and troublesome than before.";
         }

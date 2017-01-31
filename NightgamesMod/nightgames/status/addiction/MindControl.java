@@ -134,7 +134,7 @@ public class MindControl extends Addiction {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         if (inWithdrawal) {
             return "There " + cause.pronoun() + " is! " + cause.getName() + " does not look pleased after you haven't visited "
                     + cause.directObject() + " all day.";
@@ -403,7 +403,7 @@ public class MindControl extends Addiction {
         }
 
         @Override
-        public String initialMessage(Combat c, boolean replaced) {
+        public String initialMessage(Combat c, Optional<Status> replacement) {
             return ""; // handled by withdrawal message
         }
 

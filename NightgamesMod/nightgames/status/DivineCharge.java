@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -55,8 +57,8 @@ public class DivineCharge extends Status {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
-        if (!replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
+        if (!replacement.isPresent()) {
             return String.format("%s concentrating divine energy in %s %s.\n", affected.subjectAction("are", "is"),
                             affected.possessiveAdjective(), getPart(c));
         }

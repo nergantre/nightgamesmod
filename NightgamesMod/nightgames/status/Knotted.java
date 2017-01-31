@@ -3,6 +3,8 @@ package nightgames.status;
 import static nightgames.requirements.RequirementShortcuts.inserted;
 import static nightgames.requirements.RequirementShortcuts.rev;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -26,7 +28,7 @@ public class Knotted extends Status {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("The base of %s %s swells up, forming a tight seal within %s %s and keeping it inside.",
                         opponent.nameOrPossessivePronoun(), c.getStance().insertedPartFor(c, opponent).describe(opponent),
                         affected.nameOrPossessivePronoun(),

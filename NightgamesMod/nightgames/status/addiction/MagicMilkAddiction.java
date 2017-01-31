@@ -114,7 +114,7 @@ public class MagicMilkAddiction extends Addiction {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         if (inWithdrawal) {
             return "The burning thirst wells up at the sight of " + cause.getName() + ". It would be so easy to subdue,"
                         + " just a little sip...";

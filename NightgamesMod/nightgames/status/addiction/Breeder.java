@@ -134,7 +134,7 @@ public class Breeder extends Addiction {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         if (inWithdrawal) {
             return "Arousal rages through your body at the sight of " + c.getOpponent(affected).getName() 
                             + ", expecting a well-earned fuck.";

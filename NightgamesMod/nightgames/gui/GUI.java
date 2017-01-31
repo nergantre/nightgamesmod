@@ -1408,27 +1408,27 @@ public class GUI extends JFrame implements Observer {
             int pure = player.getPure(a);
             if (amt > 0) {
                 if (amt == pure) {
-                    JLabel dirtyTrick = new JLabel(a.name() + ": " + amt);
-                    dirtyTrick.setForeground(GUIColors.textColorLight);
-                    attlbls.add(count, dirtyTrick);
+                    JLabel label = new JLabel(a.name() + ": " + amt);
+                    label.setForeground(GUIColors.textColorLight);
+                    attlbls.add(count, label);
                     statsPanel.add(attlbls.get(count++));
                 } else {
-                    JLabel base = new JLabel(String.format("%n%n%s: %d ", a.name(), pure));
-                    base.setSize(base.getPreferredSize());
-                    base.setForeground(GUIColors.textColorLight);
-                    JLabel mod = new JLabel(String.format("(%s%d)", amt > pure ? "+" : "-", Math.abs(amt - pure)));
-                    mod.setForeground(amt > pure ? GUIColors.Green : GUIColors.Red);
-                    mod.setFont(getFont().deriveFont(10.f));
-                    JPanel p = new JPanel();
-                    p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-                    p.setBackground(GUIColors.bgLight);
-                    p.add(base);
-                    p.add(mod);
-                    p.add(Box.createHorizontalGlue());
-                    statsPanel.add(p);
+                    String attrColor;
+                    String bonusColor;
+                    if (amt < pure) {
+                        attrColor = "255,100,100";
+                        bonusColor = "255,0,0";
+                    } else {
+                        attrColor = "100,255,255";
+                        bonusColor = "0,255,0";
+                    }
+                    String labelString = String.format("<html>%s: <font color='rgb(%s)'>%d</font> <font size=2 color='rgb(%s)'>(%+d)</font></html>",
+                                    a.name(), attrColor, amt, bonusColor, amt - pure);
+                    JLabel label = new JLabel(labelString);
+                    label.setForeground(GUIColors.textColorLight);
+                    attlbls.add(count, label);
+                    statsPanel.add(attlbls.get(count++));
                 }
-
-
             }
         }
 

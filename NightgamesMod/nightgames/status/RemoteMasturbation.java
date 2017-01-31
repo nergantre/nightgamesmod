@@ -2,6 +2,7 @@ package nightgames.status;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
@@ -37,7 +38,7 @@ public class RemoteMasturbation extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return ""; // handled in RemoteControl trap
     }
 

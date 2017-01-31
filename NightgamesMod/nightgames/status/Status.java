@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import com.google.gson.JsonObject;
@@ -47,7 +48,7 @@ public abstract class Status implements Cloneable {
         return requirements.stream().allMatch((req) -> req.meets(c, self, other));
     }
 
-    public abstract String initialMessage(Combat c, boolean replaced);
+    public abstract String initialMessage(Combat c, Optional<Status> replacement);
 
     public abstract String describe(Combat c);
 

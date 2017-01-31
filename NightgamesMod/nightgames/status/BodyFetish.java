@@ -3,6 +3,7 @@ package nightgames.status;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
@@ -49,8 +50,8 @@ public class BodyFetish extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
-        if (replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
+        if (replacement.isPresent()) {
             return String.format("%s %s fetish has grown.\n", affected.nameOrPossessivePronoun(), part);
         } else {
             return String.format("%s now affected by a %s fetish.\n", affected.subjectAction("are", "is"), part);

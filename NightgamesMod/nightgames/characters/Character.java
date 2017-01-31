@@ -1358,7 +1358,7 @@ public abstract class Character extends Observable implements Cloneable {
             for (Status s : this.status) {
                 if (s.getClass().equals(status.getClass()) && s.getVariant().equals(status.getVariant())) {
                     s.replace(status);
-                    message = s.initialMessage(c, true);
+                    message = s.initialMessage(c, Optional.of(status));
                     done = true;
                     effectiveStatus = s;
                     break;
@@ -1369,7 +1369,7 @@ public abstract class Character extends Observable implements Cloneable {
             }
             if (!done && unique) {
                 this.status.add(status);
-                message = status.initialMessage(c, false);
+                message = status.initialMessage(c, Optional.empty());
             }
         }
         if (done) {

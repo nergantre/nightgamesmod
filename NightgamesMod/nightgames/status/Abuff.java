@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -64,9 +66,10 @@ public class Abuff extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         String person, adjective, modification;
         person = affected.nameOrPossessivePronoun();
+        int value = ((Abuff)replacement.get()).value;
 
         if (Math.abs(value) > 5) {
             adjective = "greatly";
@@ -78,8 +81,7 @@ public class Abuff extends DurationStatus {
         } else {
             modification = "sapped.";
         }
-
-        return String.format("%s %s is now %s %s\n", person, modded, adjective, modification);
+        return String.format("%s %s is %s %s\n", person, modded, adjective, modification);
     }
 
     @Override

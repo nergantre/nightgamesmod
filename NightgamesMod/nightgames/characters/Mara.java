@@ -108,7 +108,7 @@ public class Mara extends BasePersonality {
                 case 0:
                     return "{self:SUBJECT} lets out an impish little smirk, <i>\"Haha, all that talk, but you cum as soon as I touch you.\"</i>";
                 case 1:
-                    return "<i>\"Looks like Mr. Happy over here can't help himself! That's twice now, how long can you go?\"</i>";
+                    return "<i>\"Looks like {other:MISTER} Happy over here can't help {other:reflective}! That's twice now, how long can you go?\"</i>";
                 case 2:
                     return "<i>\"Oh man, not many people lasted to three. I got more coming for you though!\"</i>";
                 default:

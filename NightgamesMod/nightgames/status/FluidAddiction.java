@@ -3,6 +3,7 @@ package nightgames.status;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
@@ -118,8 +119,8 @@ public class FluidAddiction extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
-        if (replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
+        if (replacement.isPresent()) {
             return String.format("%s still %s to %s fluids.\n", affected.subjectAction("are", "is"),
                             toString().toLowerCase(), target.nameOrPossessivePronoun());
         }

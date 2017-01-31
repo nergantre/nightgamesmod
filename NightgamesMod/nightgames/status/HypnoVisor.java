@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -25,7 +27,7 @@ public class HypnoVisor extends Status {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return "The Hypno Visor comes to life, baragging you with images which you can't make sense"
                         + " of, but somehow just seem <i>right</i>.";
     }

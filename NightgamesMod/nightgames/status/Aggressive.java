@@ -2,6 +2,7 @@ package nightgames.status;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.gson.JsonObject;
@@ -27,7 +28,7 @@ public class Aggressive extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("%s now aggressive, and cannot use non-physical skills.",
                         affected.subjectAction("are", "is"));
     }

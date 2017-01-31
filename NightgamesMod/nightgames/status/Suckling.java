@@ -2,6 +2,7 @@ package nightgames.status;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
@@ -30,7 +31,7 @@ public class Suckling extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("%s fighting an urge to drink from %s nipples.\n", affected.subjectAction("are", "is"),
                         skill.getSelf().nameOrPossessivePronoun());
     }

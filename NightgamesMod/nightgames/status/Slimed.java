@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -26,10 +28,10 @@ public class Slimed extends DurationStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
-    	if (replaced) {
-    	    if (stacks < 0) {
-    	        return "";
+    public String initialMessage(Combat c, Optional<Status> replacement) {
+    	if (replacement.isPresent()) {
+    	    if (((Slimed)replacement.get()).stacks < 0) {
+                return Global.format("Some of the slime covering {self:direct-object} fall off {self:name-possessive} body.\n", affected, origin);
     	    } else {
     	        return Global.format("More pieces of {other:name-possessive} slime are getting stuck to {self:name-possessive} body.\n", affected, origin);
     	    }

@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
@@ -26,7 +28,7 @@ public class TailSucked extends Status implements InsertedStatus {
     }
 
     @Override
-    public String initialMessage(Combat c, boolean replaced) {
+    public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("%s tail is sucking %s energy straight from %s %s.", sucker.nameOrPossessivePronoun(),
                         affected.nameOrPossessivePronoun(), affected.possessiveAdjective(),
                         affected.body.getRandomCock().describe(affected));
