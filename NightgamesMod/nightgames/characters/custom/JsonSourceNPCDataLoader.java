@@ -29,6 +29,7 @@ import nightgames.requirements.JsonRequirementLoader;
 import nightgames.skills.Skill;
 import nightgames.stance.Stance;
 import nightgames.status.Stsflag;
+import nightgames.utilities.DebugHelper;
 
 public class JsonSourceNPCDataLoader {
     private static JsonRequirementLoader requirementLoader = new JsonRequirementLoader();
@@ -186,7 +187,13 @@ public class JsonSourceNPCDataLoader {
     private static void loadGrowthTraits(JsonArray arr, Growth growth) {
         for (JsonElement element : arr) {
             JsonObject obj = element.getAsJsonObject();
-            growth.addTrait(obj.get("level").getAsInt(), JsonUtils.getGson().fromJson(obj.get("trait"), Trait.class));
+            Trait trait = JsonUtils.getGson().fromJson(obj.get("trait"), Trait.class);
+            if (trait != null) {
+                growth.addTrait(obj.get("level").getAsInt(), trait);
+            } else {
+                System.err.println("Tried to load a null trait into growth!");
+                DebugHelper.printStackFrame(3, 1);
+            }
         }
     }
 

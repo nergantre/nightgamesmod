@@ -60,9 +60,7 @@ public class Frottage extends Skill {
             target.loseMojo(c, 10);
             dealer = null;
         } else {
-            if (target.human()) {
-                c.write(getSelf(), receive(c, m, Result.normal, target));
-            }
+            c.write(getSelf(), receive(c, m, Result.normal, target));
         }
 
         if (dealer != null) {
@@ -107,7 +105,7 @@ public class Frottage extends Skill {
                             getSelf().possessiveAdjective(),
                             target.subjectAction("flinch", "flinches"), target.action("pull"), target.possessiveAdjective(),
                             getSelf().subject(), target.possessiveAdjective(), target.possessiveAdjective());
-        } else if (getSelf().hasDick()) {
+        } else if (getSelf().hasDick() && target.hasDick()) {
             return String.format("%s pushes %s %s against the sensitive head of %s member, "
                             + "dominating %s manhood.", getSelf().subject(), getSelf().possessiveAdjective(),
                             getSelf().body.getRandomCock().describe(getSelf()), target.nameOrPossessivePronoun(),

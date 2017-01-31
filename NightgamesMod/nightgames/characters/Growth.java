@@ -12,6 +12,7 @@ import nightgames.characters.body.mods.PartMod;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
+import nightgames.utilities.DebugHelper;
 
 public class Growth implements Cloneable {
     public class PartModApplication {
@@ -64,6 +65,11 @@ public class Growth implements Cloneable {
     }
 
     public void addTrait(int level, Trait trait) {
+        if (trait == null) {
+            System.err.println("Tried to add an null trait to growth!");
+            DebugHelper.printStackFrame(3, 1);
+            return;
+        }
         if (!traits.containsKey(level)) {
             traits.put(level, new ArrayList<Trait>());
         }
@@ -71,7 +77,7 @@ public class Growth implements Cloneable {
     }
 
     public Map<Integer, List<Trait>> getTraits() {
-        return new HashMap<>(traits);
+        return Collections.unmodifiableMap(new HashMap<>(traits));
     }
     
     public void addTraitPoints(int[] levels, Character charfor) {

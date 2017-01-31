@@ -1176,7 +1176,7 @@ public abstract class Character extends Observable implements Cloneable {
 
     public void modAttributeDontSaveData(Attribute a, int i, boolean silent) {
         if (human() && i != 0 && !silent) {
-            Global.gui().message("You have " + (i > 0 ? "gained" : "lost") + " " + i + " " + a.name());
+            Global.writeIfCombatUpdateImmediately(Global.gui().combat, this, "You have " + (i > 0 ? "gained" : "lost") + " " + Math.abs(i) + " " + a.name());
         }
         if (a.equals(Attribute.Willpower)) {
             getWillpower().gain(i * 2);

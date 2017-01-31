@@ -37,7 +37,9 @@ public class Thrust extends Skill {
     }
 
     protected boolean havingSex(Combat c, Character target) {
-        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canRespond() && c.getStance().havingSexOtherNoStrapped(c, getSelf());
+        return getSelfOrgan(c, target) != null && getTargetOrgan(c, target) != null && getSelf().canRespond()
+                        && (c.getStance().havingSexOtherNoStrapped(c, getSelf())
+                                        || c.getStance().partsForStanceOnly(c, getSelf(), target).stream().anyMatch(part -> part.isType("cock")));
     }
 
     @Override

@@ -16,6 +16,19 @@ public class ArcaneMod extends PartMod {
         super("arcane", .05, .1, 0, -5);
     }
 
+    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
+        /* TODO
+        if (c.getStance().partsForStanceOnly(c, self, opponent).contains(part)) {
+            if (c.getStance().partsForStanceOnly(c, opponent, self).stream().anyMatch(otherPart -> otherPart.isType("cock"))) {
+                c.write(self, Global.format(
+                                "The intricate tattoos surrounding %s lights up as you pump your semen into into it. TODO",
+                                self, opponent, part.describe(self)));
+                
+            }
+        }
+        */
+    }
+
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) { 
         int strength;
         boolean fucking = c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part);

@@ -135,7 +135,7 @@ public class GenericBodyPart implements BodyPart {
 
     @Override
     public String toString() {
-        return fullDescribe(null);
+        return fullDescribe(Global.noneCharacter());
     }
 
     @Override

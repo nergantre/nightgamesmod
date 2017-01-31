@@ -28,6 +28,7 @@ public enum Stance {
     engulfed,
     oralpin,
     paizuripin,
+    titfucking,
     flowertrap,
     coiled,
     upsidedownmaledom,
