@@ -1406,7 +1406,7 @@ public class GUI extends JFrame implements Observer {
         for (Attribute a : Attribute.values()) {
             int amt = player.get(a);
             int pure = player.getPure(a);
-            if (amt > 0) {
+            if (pure > 0 || amt > 0) {
                 if (amt == pure) {
                     JLabel label = new JLabel(a.name() + ": " + amt);
                     label.setForeground(GUIColors.textColorLight);

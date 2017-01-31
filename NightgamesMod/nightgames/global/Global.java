@@ -1466,6 +1466,13 @@ public class Global {
             }
             return "";
         });
+
+        matchActions.put("if-nonhuman", (self, first, second, third) -> {
+            if (self != null && third != null) {
+                return !self.human() ? third : "";
+            }
+            return "";
+        });
         matchActions.put("subject", (self, first, second, third) -> {
             if (self != null) {
                 return self.subject();

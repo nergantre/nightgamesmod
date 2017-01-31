@@ -67,21 +67,17 @@ public class Abuff extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, Optional<Status> replacement) {
-        String person, adjective, modification;
-        person = affected.nameOrPossessivePronoun();
-        int value = ((Abuff)replacement.get()).value;
-
-        if (Math.abs(value) > 5) {
-            adjective = "greatly";
+        int newValue;
+        if (replacement.isPresent()) {
+            newValue = ((Abuff)replacement.get()).value;
         } else {
-            adjective = "";
+            newValue = this.value;
         }
-        if (value > 0) {
-            modification = "augmented.";
+        if (newValue < 0) {
+            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}", affected, affected, modded.getLowerPhrase());
         } else {
-            modification = "sapped.";
+            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}", affected, affected, modded.getRaisePhrase());
         }
-        return String.format("%s %s is %s %s\n", person, modded, adjective, modification);
     }
 
     @Override
