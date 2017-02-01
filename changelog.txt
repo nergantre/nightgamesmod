@@ -1,3 +1,8 @@
+2.5.0.3
+Bug fixes:
+- Fixed a bug where level ups were being displayed even though the player isn't leveling up in combat.
+- Fixed a bug where drained messages would use the wrong person's name when being drained by multiple characters
+
 2.5.0.2
 
 QoL/GUI:

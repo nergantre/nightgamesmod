@@ -714,13 +714,13 @@ public class Global {
         final int maxLevel = maxLevelTracker / players.size();
         players.stream().filter(c -> c.has(Trait.naturalgrowth)).filter(c -> c.getLevel() < maxLevel + 2).forEach(c -> {
             while (c.getLevel() < maxLevel + 2) {
-                c.ding();
+                c.ding(null);
             }
         });
         players.stream().filter(c -> c.has(Trait.unnaturalgrowth)).filter(c -> c.getLevel() < maxLevel + 5)
                         .forEach(c -> {
                             while (c.getLevel() < maxLevel + 5) {
-                                c.ding();
+                                c.ding(null);
                             }
                         });
 
@@ -1281,7 +1281,7 @@ public class Global {
                 targetLevel -= 4;
             }
             while (challenger.getCharacter().getLevel() <= targetLevel) {
-                challenger.getCharacter().ding();
+                challenger.getCharacter().ding(null);
             }
             players.add(challenger.getCharacter());
             return true;

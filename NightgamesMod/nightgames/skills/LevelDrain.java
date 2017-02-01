@@ -43,14 +43,14 @@ public class LevelDrain extends Drain {
         return 60;
     }
 
-    private int stealXP(Character target) {
+    private int stealXP(Combat c, Character target) {
         int xpStolen = target.getXP();
         if (xpStolen <= 0) {
             return 0;
         }
         target.loseXP(xpStolen);
         getSelf().gainXPPure(xpStolen);
-        getSelf().levelUpIfPossible();
+        getSelf().levelUpIfPossible(c);
         return xpStolen;
     }
 
@@ -68,7 +68,7 @@ public class LevelDrain extends Drain {
                 getSelf().arouse(getSelf().getArousal().max(), c);
                 break;
             case 1:
-                int stolen = stealXP(target);
+                int stolen = stealXP(c, target);
                 if (stolen > 0) {
                     getSelf().add(c, new Satiated(getSelf(), stolen, 0));
                     if (getSelf().human()) {
@@ -90,7 +90,7 @@ public class LevelDrain extends Drain {
                                     + " XP!\n");
                 }
                 getSelf().gainXPPure(xpStolen);
-                getSelf().levelUpIfPossible();
+                getSelf().levelUpIfPossible(c);
                 target.temptNoSource(c, getSelf(), target.getArousal().max(), this);
                 String levelDrainLine = getSelf().getRandomLineFor(CharacterLine.LEVEL_DRAIN_LINER, c, target);
                 if (!levelDrainLine.isEmpty()) {

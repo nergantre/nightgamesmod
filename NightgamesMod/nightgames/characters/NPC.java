@@ -587,12 +587,11 @@ public class NPC extends Character {
     }
 
     @Override
-    public void ding() {
+    public void ding(Combat c) {
         level++;
         ai.ding(this);
-        Combat currentCombat = Global.gui().combat;
-        if (currentCombat != null && currentCombat.isBeingObserved() && (currentCombat.p1 == this || currentCombat.p2 == this)) {
-            Global.writeIfCombatUpdateImmediately(currentCombat, this, Global.format("{self:subject-action:have} leveled up!", this, this));
+        if (c != null && c.isBeingObserved()) {
+            Global.writeIfCombatUpdateImmediately(c, this, Global.format("{self:subject-action:have} leveled up!", this, this));
         }
     }
 

@@ -398,23 +398,23 @@ public class Player extends Character {
     }
 
     @Override
-    public void ding() {
+    public void ding(Combat c) {
         levelsToGain += 1;
         if (levelsToGain == 1) {
-            actuallyDing();
+            actuallyDing(c);
             if (cloned == 0) {
                 gui.ding();
             }
         }
     }
 
-    public void actuallyDing() {
+    public void actuallyDing(Combat c) {
         level += 1;
         getStamina().gain(getGrowth().stamina);
         getArousal().gain(getGrowth().arousal);
         availableAttributePoints += getGrowth().attributes[Math.min(rank, getGrowth().attributes.length-1)];
-        Global.writeIfCombatUpdateImmediately(gui.combat, this, "You've gained a Level!<br/>Select which attributes to increase.");
-        if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10 /*|| (Global.checkFlag(Flag.SuperTraitMode) && ((level < 10 && getLevel()%2 == 0) || (getLevel() % 3 != 0 && level > 10)))*/) {
+        Global.writeIfCombatUpdateImmediately(c, this, "You've gained a Level!<br/>Select which attributes to increase.");
+        if (getLevel() % 3 == 0 && level < 10 || (getLevel() + 1) % 2 == 0 && level > 10) {
             traitPoints += 1;
         }
     }

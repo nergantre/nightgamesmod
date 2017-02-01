@@ -430,7 +430,7 @@ public abstract class Character extends Observable implements Cloneable {
         rank++;
     }
 
-    public abstract void ding();
+    public abstract void ding(Combat c);
 
     public String dong() {
         getLevelUpFor(getLevel()).unapply(this);;
@@ -1179,7 +1179,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void modAttributeDontSaveData(Attribute a, int i, boolean silent) {
-        if (human() && i != 0 && !silent) {
+        if (human() && i != 0 && !silent && cloned == 0) {
             Global.writeIfCombatUpdateImmediately(Global.gui().combat, this, "You have " + (i > 0 ? "gained" : "lost") + " " + Math.abs(i) + " " + a.name());
         }
         if (a.equals(Attribute.Willpower)) {
@@ -2040,7 +2040,7 @@ public abstract class Character extends Observable implements Cloneable {
                 c.write(dong());
                 xp = Math.max(xp, Math.min(getXPReqToNextLevel() - 1, gained - xpStolen));
                 opponent.gainXPPure(gained);
-                opponent.levelUpIfPossible();
+                opponent.levelUpIfPossible(c);
             } else {
                 c.write(opponent, String.format("<b>%s %s pulses, but fails to"
                                                 + " draw in %s experience.</b>", Global.capitalizeFirstLetter(opponent.nameOrPossessivePronoun()),
@@ -3714,12 +3714,12 @@ public abstract class Character extends Observable implements Cloneable {
         return Integer.MAX_VALUE;
     }
 
-    public boolean levelUpIfPossible() {
+    public boolean levelUpIfPossible(Combat c) {
         int req;
         boolean dinged = false;
         while (xp > (req = getXPReqToNextLevel())) {
             xp -= req;
-            ding();
+            ding(c);
             dinged = true;
         }
         return dinged;

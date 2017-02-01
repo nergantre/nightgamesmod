@@ -14,7 +14,7 @@ public class LevelUpEffect extends ItemEffect {
     @Override
     public boolean use(Combat c, Character user, Character opponent, Item item) {
         for (int i = 0; i < levels; i++) {
-            user.ding();
+            user.ding(c);
         }
         return true;
     }

@@ -143,7 +143,7 @@ public abstract class CharacterConfiguration {
             base.change();
         }
         body.ifPresent(b -> b.apply(base.body));
-        base.levelUpIfPossible();
+        base.levelUpIfPossible(null);
     }
 
     /**

@@ -1408,8 +1408,8 @@ public class Combat extends Observable implements Cloneable {
         getCombatantData(p2).getRemovedItems().forEach(p2::gain);
         location.endEncounter();
         // it's a little ugly, but we must be mindful of lazy evaluation
-        boolean ding = p1.levelUpIfPossible() && p1.human();
-        ding = (p2.levelUpIfPossible() && p2.human()) || ding;
+        boolean ding = p1.levelUpIfPossible(this) && p1.human();
+        ding = (p2.levelUpIfPossible(this) && p2.human()) || ding;
         if (doExtendedLog()) {
             log.logEnd(winner);
         }
@@ -1739,7 +1739,7 @@ public class Combat extends Observable implements Cloneable {
             int levelups = Math.max(5, master.getLevel() / 4);
             self.getSelf().setPower(self.getSelf().getPower() + levelups);
             for (int i = 0; i < levelups; i++) {
-                self.ding();
+                self.ding(this);
             }
         }
         if (master.has(Trait.tactician)) {

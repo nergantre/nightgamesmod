@@ -1254,7 +1254,7 @@ public class GUI extends JFrame implements Observer {
             Global.writeIfCombatUpdateImmediately(combat, player, Global.gainSkills(player));
             player.finishDing();
             if (player.getLevelsToGain() > 0) {
-                player.actuallyDing();
+                player.actuallyDing(combat);
                 ding();
             } else {
                 if (combat != null) {

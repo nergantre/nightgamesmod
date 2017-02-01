@@ -20,7 +20,7 @@ public class DummyCharacter extends Character {
     private String type;
 
     @Override
-    public void ding() {}
+    public void ding(Combat c) {}
 
     @Override
     public void detect() {}

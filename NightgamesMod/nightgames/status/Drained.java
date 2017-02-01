@@ -119,7 +119,7 @@ public class Drained extends Abuff {
 
     @Override
     public String getVariant() {
-        return "DRAINED:" + modded.toString();
+        return "DRAINED:" + other.getTrueName() + ":" + modded.toString();
     }
 
     @Override

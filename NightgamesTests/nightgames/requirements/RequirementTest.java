@@ -150,7 +150,7 @@ public class RequirementTest {
         LevelRequirement sophomore = level(2);
         assertThat(sophomore.meets(combat, self, other), is(false));
         assertThat(sophomore.meets(combat, other, self), is(false));
-        self.ding();
+        self.ding(null);
         assertThat(sophomore.meets(combat, self, other), is(true));
         assertThat(sophomore.meets(combat, other, self), is(false));
     }

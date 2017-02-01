@@ -161,23 +161,7 @@ public class DebugGUIPanel extends JPanel {
                 } catch (NumberFormatException e) {
                 }
             }
-            IntStream.range(0, times).forEach(i -> target.ding());
-
-        }));
-        consoleCommands.add(new DebugCommand("(\\w+)\\.ding( \\d+)?", (output, list) -> {
-            Character target = Global.getCharacterByType(list.get(1));
-            if (target == null) {
-                output.setText(list.get(1) + " is not a valid charater");
-                return;
-            }
-            int times = 1;
-            if (list.size() > 2 && list.get(2) != null) {
-                try {
-                    times = Integer.valueOf(list.get(2).trim());
-                } catch (NumberFormatException e) {
-                }
-            }
-            IntStream.range(0, times).forEach(i -> target.ding());
+            IntStream.range(0, times).forEach(i -> target.ding(Global.gui().combat));
         }));
         consoleCommands.add(new DebugCommand("(\\w+)\\.list", (output, list) -> {
             try {

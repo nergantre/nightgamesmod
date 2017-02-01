@@ -390,11 +390,11 @@ public class Airi extends BasePersonality {
                 character.body.temporaryAddPartMod("pussy", GooeyMod.INSTANCE, 999);
                 c.write(character, 
                                 Global.format("{self:NAME-POSSESSIVE} %s re-slime-ified.",
-                                                character, opponent, character.body.getRandomPussy()));
+                                                character, opponent, character.body.getRandomPussy().describe(character)));
             }
             if (character.hasDick() && !character.body.getRandomCock().moddedPartCountsAs(character, CockMod.slimy)) {
                 character.body.temporaryAddPartMod("cock", CockMod.slimy, 999);
-                c.write(character, 
+                c.write(character,
                                 Global.format("{self:NAME-POSSESSIVE} %s re-slime-ified.",
                                                 character, opponent, character.body.getRandomCock().describe(character)));
             }

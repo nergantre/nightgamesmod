@@ -145,7 +145,7 @@ public class PetCharacter extends Character {
     }
 
     @Override
-    public void ding() {
+    public void ding(Combat c) {
         level += 1;
         getGrowth().levelUp(this);
         distributePoints(Arrays.asList());
