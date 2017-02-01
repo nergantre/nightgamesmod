@@ -6,6 +6,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
@@ -16,7 +17,7 @@ public class FieryMod extends PartMod {
         super("fiery", 0, .3, .2, -11);
     }
 
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         if (part.getType().equals("pussy")) {
             return "fiery";
         }

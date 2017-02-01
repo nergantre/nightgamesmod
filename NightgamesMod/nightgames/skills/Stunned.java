@@ -6,7 +6,6 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 
 public class Stunned extends Skill {
-
     public Stunned(Character self) {
         super("Stunned", self);
     }

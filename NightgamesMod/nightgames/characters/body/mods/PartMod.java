@@ -8,6 +8,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.BodyPartMod;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 
 public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
@@ -43,7 +44,7 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
         return modType;
     }
 
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         return modType;
     }
 
@@ -95,7 +96,11 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
 
     @Override
     public int compareTo(PartMod other) {
-        return Integer.compare(sortOrder, other.sortOrder);
+        return Integer.compare(getSortOrder(), other.getSortOrder());
+    }
+
+    protected int getSortOrder() {
+        return sortOrder;
     }
 
     public double getBaseHotness() {

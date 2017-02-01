@@ -96,9 +96,7 @@ public class WingWrapped extends Status {
                                 + " against {self:name-possessive} bare skin, leech {self:possessive}"
                                 + " power from {self:possessive} body, letting it flow back into"
                                 + " {other:direct-object}.", affected, wrapper));
-                affected.add(c, new Abuff(affected, Attribute.Power, -3, 20));
-                wrapper.add(c, new Abuff(affected, Attribute.Power, 3, 20));
-                Abuff.drain(c, wrapper, affected, Attribute.Power, 3, 20, true);
+                Drained.drain(c, wrapper, affected, Attribute.Power, 3, 20, true);
             }
         }
     }
@@ -123,12 +121,12 @@ public class WingWrapped extends Status {
     }
 
     @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
         return 0;
     }
 
     @Override
-    public int tempted(int x) {
+    public int tempted(Combat c, int x) {
         return 0;
     }
 

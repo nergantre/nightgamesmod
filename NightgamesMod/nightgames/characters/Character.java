@@ -566,7 +566,6 @@ public abstract class Character extends Observable implements Cloneable {
                                 this, other));
                 add(c, new Alluring(this, 1));
             }
-
             for (Status s : getStatuses()) {
                 bonus += s.damage(c, pain);
             }
@@ -619,7 +618,7 @@ public abstract class Character extends Observable implements Cloneable {
         int bonus = 0;
 
         for (Status s : getStatuses()) {
-            bonus += s.drained(drained);
+            bonus += s.drained(c, drained);
         }
         drained += bonus;
         if (drained >= stamina.get()) {
@@ -635,22 +634,24 @@ public abstract class Character extends Observable implements Cloneable {
         drainer.stamina.restore(drained);
     }
 
-    public void weaken(Combat c, int i) {
+    public void weaken(Combat c, final int i) {
         int weak = i;
         int bonus = 0;
         for (Status s : getStatuses()) {
-            bonus += s.weakened(i);
+            bonus += s.weakened(c, i);
         }
         weak += bonus;
+        weak = Math.max(1, weak);
         if (weak >= stamina.get()) {
             weak = stamina.get();
         }
-        i = Math.max(1, i);
-        if (c != null) {
-            c.writeSystemMessage(String.format("%s weakened by <font color='rgb(200,200,200)'>%d<font color='white'>",
-                            subjectWas(), i));
+        if (weak > 0) {
+            if (c != null) {
+                c.writeSystemMessage(String.format("%s weakened by <font color='rgb(200,200,200)'>%d<font color='white'>",
+                                subjectWas(), weak));
+            }
+            stamina.reduce(weak);
         }
-        stamina.reduce(weak);
     }
 
     public void heal(Combat c, int i) {
@@ -728,7 +729,7 @@ public abstract class Character extends Observable implements Cloneable {
 
         int bonus = 0;
         for (Status s : getStatuses()) {
-            bonus += s.tempted(i);
+            bonus += s.tempted(c, i);
         }
 
         if (has(Trait.desensitized2)) {
@@ -861,12 +862,15 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void calm(Combat c, int i) {
-        if (c != null) {
-            String message = String.format("%s calmed down by <font color='rgb(80,145,200)'>%d<font color='white'>\n",
-                            Global.capitalizeFirstLetter(subjectAction("have", "has")), i);
-            c.writeSystemMessage(message);
+        i = Math.min(arousal.get(), i);
+        if (i > 0) {
+            if (c != null) {
+                String message = String.format("%s calmed down by <font color='rgb(80,145,200)'>%d<font color='white'>\n",
+                                Global.capitalizeFirstLetter(subjectAction("have", "has")), i);
+                c.writeSystemMessage(message);
+            }
+            arousal.reduce(i);
         }
-        arousal.reduce(i);
     }
 
     public Meter getStamina() {
@@ -1370,6 +1374,7 @@ public abstract class Character extends Observable implements Cloneable {
             if (!done && unique) {
                 this.status.add(status);
                 message = status.initialMessage(c, Optional.empty());
+                done = true;
             }
         }
         if (done) {
@@ -1378,7 +1383,8 @@ public abstract class Character extends Observable implements Cloneable {
                 if (c != null) {
                     if (!c.getOpponent(this).human() || !c.getOpponent(this).is(Stsflag.blinded)) {
                         c.write(this, "<b>" + message + "</b>");
-                    } effectiveStatus.onApply(c, c.getOpponent(this));
+                    }
+                    effectiveStatus.onApply(c, c.getOpponent(this));
                 } else if (human() || location() != null && location().humanPresent()) {
                     Global.gui().message("<b>" + message + "</b>");
                     effectiveStatus.onApply(null, null);
@@ -3503,7 +3509,7 @@ public abstract class Character extends Observable implements Cloneable {
         int bonus = 0;
 
         for (Status s : getStatuses()) {
-            bonus += s.drained(drained);
+            bonus += s.drained(c, drained);
         }
         drained += bonus;
         if (drained >= willpower.get()) {
@@ -3525,7 +3531,7 @@ public abstract class Character extends Observable implements Cloneable {
         int bonus = 0;
 
         for (Status s : getStatuses()) {
-            bonus += s.drained(drained);
+            bonus += s.drained(c, drained);
         }
         drained += bonus;
         if (drained >= willpower.get()) {
@@ -3547,7 +3553,7 @@ public abstract class Character extends Observable implements Cloneable {
         int bonus = 0;
 
         for (Status s : getStatuses()) {
-            bonus += s.drained(drained);
+            bonus += s.drained(c, drained);
         }
         drained += bonus;
         if (drained >= stamina.get()) {
@@ -3569,7 +3575,7 @@ public abstract class Character extends Observable implements Cloneable {
         int bonus = 0;
 
         for (Status s : getStatuses()) {
-            bonus += s.drained(drained);
+            bonus += s.drained(c, drained);
         }
         drained += bonus;
         if (drained >= mojo.get()) {

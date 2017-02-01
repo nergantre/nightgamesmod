@@ -46,6 +46,7 @@ public class VideoGames extends Activity {
                 if (Global.random(3) == 0) {
                     Global.gui().message("<br/><br/><b>You feel like your experiences have grown from playing the game.</b>");
                     player.gainXPPure(50);
+                    player.levelUpIfPossible();
                 }
             }
         }

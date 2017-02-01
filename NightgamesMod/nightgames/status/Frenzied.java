@@ -144,12 +144,12 @@ public class Frenzied extends DurationStatus {
     }
 
     @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
         return (int) (-x * 0.2);
     }
 
     @Override
-    public int tempted(int x) {
+    public int tempted(Combat c, int x) {
         return (int) (x * 0.2);
     }
 

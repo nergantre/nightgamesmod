@@ -6,51 +6,15 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Abuff extends DurationStatus {
-    private Attribute modded;
-    private int value;
-    private Character other;
+    protected Attribute modded;
+    protected int value;
 
-    public static void drain(Combat c, Character drainer, Character drained, 
-                    Attribute att, int value, int duration, boolean write) {
-        if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
-            value *= 1.5;
-        }
-        if (drainer.has(Trait.Greedy)) {
-            duration *= 1.5;
-        }
-        int realValue = Math.min(drained.getPure(att) - 
-                        (Attribute.isBasic(drained, att) ? 3 : 0), value);
-        drainer.add(c, new Abuff(drainer, drained, att, realValue, duration));
-        drained.add(c, new Abuff(drained, drainer, att, -realValue, duration));
-        if (drainer.has(Trait.RaptorMentis)) {
-            drained.drainMojo(c, drainer, Math.max(5, realValue));
-        }
-        if (write) {
-            if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
-                c.write(drainer, Global.format("With {other:name-possessive} mental defences lowered as they are,"
-                                + " {self:subject-action:are|is} able to draw in more of {other:possessive} %s than"
-                                + " normal."
-                                , drainer, drained, att.toString()));
-            }
-            if (drainer.has(Trait.Greedy)) {
-                c.write(drainer, Global.format("{self:SUBJECT-ACTION:suck|sucks} {other:name-possessive} %s"
-                                + " deeply into {self:reflective}, holding onto it for longer than usual."
-                                , drainer, drained, att.toString()));
-            }
-            if (drainer.has(Trait.RaptorMentis)) {
-                c.write(drainer, Global.format("Additionally, the draining leaves a profound emptiness in its"
-                                + " wake, sapping {other:name-possessive} confidence.", drainer, drained));
-            }
-        }
-    }
-
-    public Abuff(Character affected, Character other, Attribute att, int value, int duration) {
+    public Abuff(Character affected, Attribute att, int value, int duration) {
         super(String.format("%s %+d", att.toString(), value), affected, duration);
         flag(Stsflag.purgable);
         if (value < 0) {
@@ -58,11 +22,6 @@ public class Abuff extends DurationStatus {
         }
         this.modded = att;
         this.value = value;
-        this.other = other;
-    }
-    
-    public Abuff(Character affected, Attribute att, int value, int duration) {
-        this(affected, null, att, value, duration);
     }
 
     @Override
@@ -74,9 +33,9 @@ public class Abuff extends DurationStatus {
             newValue = this.value;
         }
         if (newValue < 0) {
-            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}", affected, affected, modded.getLowerPhrase());
+            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}{self:if-nonhuman: now}", affected, affected, modded.getLowerPhrase());
         } else {
-            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}", affected, affected, modded.getRaisePhrase());
+            return Global.format("{self:pronoun-action:feel|seems} %s{self:if-human: than before}{self:if-nonhuman: now}", affected, affected, modded.getRaisePhrase());
         }
     }
 
@@ -141,12 +100,6 @@ public class Abuff extends DurationStatus {
     }
 
     @Override
-    public int regen(Combat c) {
-        super.regen(c);
-        return 0;
-    }
-
-    @Override
     public int damage(Combat c, int x) {
         return 0;
     }
@@ -157,12 +110,12 @@ public class Abuff extends DurationStatus {
     }
 
     @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
         return 0;
     }
 
     @Override
-    public int tempted(int x) {
+    public int tempted(Combat c, int x) {
         return 0;
     }
 
@@ -173,7 +126,7 @@ public class Abuff extends DurationStatus {
 
     @Override
     public int escape() {
-        return other != null && other.has(Trait.SpecificSapping) && value < 0 ? Math.max(-10, -value) : 0;
+        return 0;
     }
 
     @Override
@@ -203,7 +156,7 @@ public class Abuff extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new Abuff(newAffected, newOther, modded, value, getDuration());
+        return new Abuff(newAffected, modded, value, getDuration());
     }
 
     @Override

@@ -21,6 +21,7 @@ import nightgames.skills.damage.DamageType;
 import nightgames.status.Abuff;
 import nightgames.status.CockBound;
 import nightgames.status.DivineCharge;
+import nightgames.status.Drained;
 import nightgames.status.Enthralled;
 import nightgames.status.FluidAddiction;
 import nightgames.status.Horny;
@@ -254,9 +255,9 @@ public class CockMod extends PartMod {
                                     part.describe(self), opponent.directObject(), self.directObject()));
                     int attDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
                     int willDamage = target.moddedPartCountsAs(opponent, FeralMod.INSTANCE) ? 10 : 5;
-                    Abuff.drain(c, self, opponent, Attribute.Power, attDamage, 20, true);
-                    Abuff.drain(c, self, opponent, Attribute.Cunning, attDamage, 20, true);
-                    Abuff.drain(c, self, opponent, Attribute.Seduction, attDamage, 20, true);
+                    Drained.drain(c, self, opponent, Attribute.Power, attDamage, 20, true);
+                    Drained.drain(c, self, opponent, Attribute.Cunning, attDamage, 20, true);
+                    Drained.drain(c, self, opponent, Attribute.Seduction, attDamage, 20, true);
                     opponent.drainWillpower(c, self, (int) self.modifyDamage(DamageType.drain, opponent, willDamage));
                 }
             }

@@ -60,9 +60,9 @@ public abstract class Status implements Cloneable {
 
     public abstract double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x);
 
-    public abstract int weakened(int x);
+    public abstract int weakened(Combat c, int x);
 
-    public abstract int tempted(int x);
+    public abstract int tempted(Combat c, int x);
 
     public double sensitivity(double x) {
         return 0;
@@ -80,7 +80,7 @@ public abstract class Status implements Cloneable {
 
     public abstract int value();
     
-    public int drained(int x) {
+    public int drained(Combat c, int x) {
         return 0;
     }
 

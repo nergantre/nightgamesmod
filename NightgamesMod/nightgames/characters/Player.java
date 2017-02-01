@@ -402,7 +402,9 @@ public class Player extends Character {
         levelsToGain += 1;
         if (levelsToGain == 1) {
             actuallyDing();
-            gui.ding();
+            if (cloned == 0) {
+                gui.ding();
+            }
         }
     }
 

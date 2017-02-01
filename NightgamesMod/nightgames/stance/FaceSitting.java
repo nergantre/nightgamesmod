@@ -19,7 +19,7 @@ import nightgames.skills.Skill;
 import nightgames.skills.Struggle;
 import nightgames.skills.Wait;
 import nightgames.skills.damage.DamageType;
-import nightgames.status.Abuff;
+import nightgames.status.Drained;
 
 public class FaceSitting extends AbstractBehindStance {
     FaceSitting(Character top, Character bottom, Stance en) {
@@ -163,7 +163,7 @@ public class FaceSitting extends AbstractBehindStance {
                                 + " great gouts of {other:name-possessive} strength from {other:possessive}"
                                 + " body.", top, bottom));
                 bottom.drain(c, top, top.getLevel());
-                Abuff.drain(c, top, bottom, Attribute.Power, 3, 10, true);
+                Drained.drain(c, top, bottom, Attribute.Power, 3, 10, true);
             } else {
                 c.write(top, Global.format("{other:SUBJECT-ACTION:feel} both {other:possessive} breath and energy being stolen by {self:NAME-POSSESSIVE} ass overlapping {other:POSSESSIVE} face."
                                 + " .", top, bottom));

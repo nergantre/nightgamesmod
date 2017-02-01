@@ -8,7 +8,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.nskills.tags.SkillTag;
 import nightgames.skills.damage.DamageType;
-import nightgames.status.Abuff;
+import nightgames.status.Drained;
 
 public class Drain extends Skill {
     public Drain(Character self) {
@@ -52,7 +52,7 @@ public class Drain extends Skill {
     }
 
     private void steal(Combat c, Character target, Attribute att, int amount) {
-        Abuff.drain(c, getSelf(), target, att, amount, 20, true);
+        Drained.drain(c, getSelf(), target, att, amount, 20, true);
     }
 
     @Override

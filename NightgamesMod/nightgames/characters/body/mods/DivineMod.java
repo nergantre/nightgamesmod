@@ -4,6 +4,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.DivineCharge;
@@ -18,7 +19,7 @@ public class DivineMod extends PartMod {
         super("divine", 0, 1.0, 0.0, -10);
     }
 
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         if (part.getType().equals("pussy")) {
             return "divine";
         }

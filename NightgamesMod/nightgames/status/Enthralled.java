@@ -140,12 +140,12 @@ public class Enthralled extends DurationStatus {
     }
 
     @Override
-    public int weakened(int paramInt) {
+    public int weakened(Combat c, int paramInt) {
         return 0;
     }
 
     @Override
-    public int tempted(int paramInt) {
+    public int tempted(Combat c, int paramInt) {
         return paramInt / 4;
     }
 

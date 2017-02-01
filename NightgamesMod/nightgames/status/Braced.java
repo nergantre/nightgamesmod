@@ -1,5 +1,7 @@
 package nightgames.status;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -8,6 +10,7 @@ import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Braced extends DurationStatus {
 
@@ -43,6 +46,15 @@ public class Braced extends DurationStatus {
 
     @Override
     public int damage(Combat c, int x) {
+        List<String> possibleStrings = Arrays.asList("Since {self:subject-action:are} already down, it doesn't make much of a difference.");
+        if (affected.canRespond()) {
+            possibleStrings = Arrays.asList(
+                        "Prepared for the blow, {self:subject-action:manage} to avoid taking most of the damage.",
+                        "Being wary now, {self:subject-action:avoid} most of the attack.",
+                        "Once bitten twice shy, {self:subject} only {self:action:take} a glancing blow."
+                        );
+        }
+        c.write(affected, Global.format(Global.pickRandom(possibleStrings).get(), affected, affected));
         return -x * 3 / 4;
     }
 
@@ -52,17 +64,33 @@ public class Braced extends DurationStatus {
     }
 
     @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
+        List<String> possibleStrings = Arrays.asList("Since {self:subject-action:are} already down, there's not much to weaken.");
+        if (affected.canRespond()) {
+            possibleStrings = Arrays.asList(
+                        "Being wary now, {self:subject-action:avoid} manages to conserve most of {self:possessive} stamina.",
+                        "Being more careful now, {self:subject-action:avoid} manages to conserve most of {self:possessive} stamina."
+                        );
+        }
+        c.write(affected, Global.format(Global.pickRandom(possibleStrings).get(), affected, affected));
         return -x * 3 / 4;
     }
 
     @Override
-    public int drained(int x) {
+    public int drained(Combat c, int x) {
+        List<String> possibleStrings = Arrays.asList("Since {self:subject-action:are} already down, there's not much to drain.");
+        if (affected.canRespond()) {
+            possibleStrings = Arrays.asList(
+                            "Being wary now, {self:subject-action:avoid} manages to hold on to most of {self:possessive} stamina.",
+                            "Being more careful now, {self:subject-action:avoid} manages to prevent most of the theft of {self:possessive} stamina."
+                            );
+        }
+        c.write(affected, Global.format(Global.pickRandom(possibleStrings).get(), affected, affected));
         return -x * 3 / 4;
     }
 
     @Override
-    public int tempted(int x) {
+    public int tempted(Combat c, int x) {
         return 0;
     }
 

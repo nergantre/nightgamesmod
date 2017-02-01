@@ -9,6 +9,7 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Winded extends DurationStatus {
     public Winded(Character affected) {
@@ -72,21 +73,25 @@ public class Winded extends DurationStatus {
 
     @Override
     public int damage(Combat c, int x) {
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much more that can be done.", affected, affected));
         return -x;
     }
 
     @Override
-    public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
-        return -x / 2;
-    }
-
-    @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much more that can be done.", affected, affected));
         return -x;
     }
 
     @Override
-    public int tempted(int x) {
+    public int drained(Combat c, int x) {
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much to take.", affected, affected));
+        return -x;
+    }
+
+    @Override
+    public int tempted(Combat c, int x) {
+        Global.writeIfCombat(c, affected, Global.format("%s, {self:subject-action:are} already unconscious.", affected, affected, affected.human() ? "Fortunately" : "Unfortunately"));
         return -x;
     }
 
@@ -135,5 +140,10 @@ public class Winded extends DurationStatus {
         //Winded constructor can't handle nulls
         throw new UnsupportedOperationException();
         //return new Winded(null);
+    }
+
+    @Override
+    public double pleasure(Combat c, BodyPart withPart, BodyPart targetPart, double x) {
+        return 0;
     }
 }

@@ -60,7 +60,7 @@ public class TailSucked extends Status implements InsertedStatus {
 
         Attribute toDrain = Global.pickRandom(affected.att.entrySet().stream().filter(e -> e.getValue() != 0)
                         .map(e -> e.getKey()).toArray(Attribute[]::new)).get();
-        Abuff.drain(c, sucker, affected, toDrain, power, 20, true);
+        Drained.drain(c, sucker, affected, toDrain, power, 20, true);
         affected.drain(c, sucker, (int) sucker.modifyDamage(DamageType.drain, affected, 10));
         affected.drainMojo(c, sucker, 1 + Global.random(power * 3));
     }
@@ -86,12 +86,12 @@ public class TailSucked extends Status implements InsertedStatus {
     }
 
     @Override
-    public int weakened(int x) {
+    public int weakened(Combat c, int x) {
         return 0;
     }
 
     @Override
-    public int tempted(int x) {
+    public int tempted(Combat c, int x) {
         return 0;
     }
 

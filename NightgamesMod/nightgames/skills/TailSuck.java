@@ -8,7 +8,7 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.skills.damage.DamageType;
-import nightgames.status.Abuff;
+import nightgames.status.Drained;
 import nightgames.status.TailSucked;
 
 public class TailSuck extends Skill {
@@ -183,7 +183,7 @@ public class TailSuck extends Skill {
     private void drain(Combat c, Character target) {
         Attribute toDrain = Global.pickRandom(target.att.entrySet().stream().filter(e -> e.getValue() != 0)
                         .map(e -> e.getKey()).toArray(Attribute[]::new)).get();
-        Abuff.drain(c, getSelf(), target, toDrain, power(), 20, true);
+        Drained.drain(c, getSelf(), target, toDrain, power(), 20, true);
         target.drain(c, getSelf(), (int) getSelf().modifyDamage(DamageType.drain, target, 10));
         target.drainMojo(c, getSelf(), 1 + Global.random(power() * 3));
         target.emote(Emotion.desperate, 5);

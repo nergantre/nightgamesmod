@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.global.Global;
 
 public class SecondPussyMod extends PartMod {
@@ -14,7 +15,7 @@ public class SecondPussyMod extends PartMod {
     }
 
     @Override
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         return "";
     }
 

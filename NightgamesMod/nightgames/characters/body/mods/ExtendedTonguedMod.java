@@ -2,6 +2,7 @@ package nightgames.characters.body.mods;
 
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.CockBound;
@@ -15,7 +16,7 @@ public class ExtendedTonguedMod extends PartMod {
     }
 
     @Override
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         return "";
     }
 

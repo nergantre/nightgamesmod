@@ -10,6 +10,7 @@ import com.google.gson.JsonPrimitive;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.body.BodyPart;
+import nightgames.characters.body.GenericBodyPart;
 import nightgames.global.Global;
 
 public class SizeMod extends PartMod {
@@ -97,7 +98,7 @@ public class SizeMod extends PartMod {
         this(0);
     }
 
-    public String adjective(BodyPart part) {
+    public String adjective(GenericBodyPart part) {
         if (part.getType().equals("cock")) {
             return COCK_SIZE_DESCRIPTIONS.get(size);
         }
