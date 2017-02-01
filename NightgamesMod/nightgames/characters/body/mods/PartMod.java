@@ -57,6 +57,7 @@ public abstract class PartMod implements BodyPartMod, Comparable<PartMod> {
     public int counterValue(BodyPart part, BodyPart otherPart, Character self, Character other) { return 0; }
     public void onOrgasm(Combat c, Character self, Character opponent, BodyPart part) {}
     public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {}
+    public void receiveCum(Combat c, Character self, BodyPart part, Character donor, BodyPart sourcePart) {}
     
     public double modPleasure(Character self) {
         return getBasePleasure();

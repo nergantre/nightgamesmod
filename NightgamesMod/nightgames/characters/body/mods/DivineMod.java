@@ -58,8 +58,9 @@ public class DivineMod extends PartMod {
         return 0;
     }
 
-    public void onOrgasmWith(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, boolean selfCame) {
-        if (self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player && !selfCame && Global.random(4) > 0) {
+    @Override
+    public void receiveCum(Combat c, Character self, BodyPart part, Character opponent, BodyPart target) {
+        if (self.has(Trait.zealinspiring) && opponent.human() && opponent instanceof Player && Global.random(4) > -10) {
             if (c.getStance().partsForStanceOnly(c, self, opponent).contains(part) && c.getStance().partsForStanceOnly(c, opponent, self).stream().anyMatch(otherPart -> otherPart.isType("cock"))) {
                 c.write(self, Global.format(
                                 "As {other:possessive} cum floods {self:name-possessive} "
@@ -75,10 +76,10 @@ public class DivineMod extends PartMod {
     public void onStartPenetration(Combat c, Character self, Character opponent, BodyPart part, BodyPart target) {
         if (opponent.human()) {
             c.write(self, Global.format(
-                            "As soon as you penetrate {self:name-do}, you realize it was a bad idea. While it looks innocuous enough, {self:possessive} %s "
+                            "<b>As soon as you penetrate {self:name-do}, you realize it was a bad idea. While it looks innocuous enough, {self:possessive} %s "
                                             + "feels like pure ecstasy. You're not sure why you thought fucking a bonafide sex goddess was a good idea. "
                                             + "{self:SUBJECT} isn't even moving yet, but warm walls of flesh knead your cock ceaselessly while her perfectly trained %s muscles constrict and "
-                                            + "relax around your dick, bringing you waves of pleasure.",
+                                            + "relax around your dick, bringing you waves of pleasure.</b>",
                             self, opponent, part.getType(), part.adjective()));
         }
     }

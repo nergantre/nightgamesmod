@@ -139,6 +139,12 @@ public interface BodyPart {
         return getMods().isEmpty();
     }
 
+    public default void receiveCum(Combat c, Character self, Character donor, BodyPart sourcePart) {
+        if (Global.isDebugOn(DebugFlags.DEBUG_SCENE)) {
+            System.out.printf("Processing receive cum for %s -> (%s, %s, %s)\n", describe(self), self, donor, sourcePart.describe(donor));
+        }
+    }
+
     public Collection<? extends BodyPartMod> getMods();
 
     public static boolean hasType(Collection<BodyPart> parts, String type) {

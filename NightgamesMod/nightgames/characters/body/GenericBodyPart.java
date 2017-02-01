@@ -399,11 +399,15 @@ public class GenericBodyPart implements BodyPart {
         return part;
     }
 
-    public List<? extends BodyPartMod> getMods() {
+    public List<? extends PartMod> getMods() {
         return mods;
     }
 
     protected List<PartMod> getPartMods() {
         return mods;
+    }
+
+    public void receiveCum(Combat c, Character self, Character donor, BodyPart sourcePart) {
+        getMods().stream().forEach(mod -> mod.receiveCum(c, self, this, donor, sourcePart));
     }
 }

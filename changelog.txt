@@ -1,3 +1,25 @@
+2.5.0.2
+
+QoL/GUI:
+- Added some descriptive text for draining attributes (thanks DarkSinfulMage, didn't get to put all of it in, but should be a bit better now)
+- Changed the status display to display your current attribute, and how much of it is from bonuses
+	- Example:
+		- Power: 6 (+1) means you have 5 base power, and +1 from buffs
+- Added some text to show when hurting/weakening/draining someone does basically nothing because they are stunned/winded/braced after a fall
+
+Bug fixes:
+- Fixed a bunch of crash bugs related to custom starts
+- Fixed some crash bugs related to addictions
+- Fixed a bug where leveldrainers would not level from gaining exp from level drain/video games
+- Fixed anal pussy mod resetting ass sizes in the body shop
+- Fixed weaken not actually taking into account status bonuses/reductions for weaken
+- Fixed the initial message never displaying for status effects (only displays when it is replaced. d'oh)
+- Fixed tighten/orgasmic tighten sometimes using a cock
+- Fixed frottage sometimes using a non-existent cock
+- Fixed divine mod counting non-cumming inside as cumming inside.
+- Fixed a bug making starting penetration not do what it should
+- Fixed a bug making character start archetypes not work if the gender is not specified.
+
 2.5.0.1
 
 - Fix crash bugs when the main four have no pussies and turn 10.

@@ -1543,7 +1543,7 @@ public class Combat extends Observable implements Cloneable {
         parts2.forEach(part -> parts1.forEach(other -> part.onEndPenetration(this, partner, self, other)));
     }
 
-    private void doStartPenetration(Character self, Character partner) {
+    private void doStartPenetration(Position stance, Character self, Character partner) {
         List<BodyPart> parts1 = stance.getPartsFor(this, self, partner);
         List<BodyPart> parts2 = stance.getPartsFor(this, partner, self);
         parts1.forEach(part -> parts2.forEach(other -> part.onStartPenetration(this, self, partner, other)));
@@ -1598,11 +1598,11 @@ public class Combat extends Observable implements Cloneable {
             getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
             getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
         } else if (!stance.inserted() && newStance.inserted()) {
-            doStartPenetration(p1, p2);
+            doStartPenetration(newStance, p1, p2);
             Character threePCharacter = stance.domSexCharacter(this);
             if (threePCharacter != p1 && threePCharacter != p2) {
-                doStartPenetration(p1, threePCharacter);
-                doStartPenetration(p2, threePCharacter);
+                doStartPenetration(newStance, p1, threePCharacter);
+                doStartPenetration(newStance, p2, threePCharacter);
             }
             Player player = null;
             if (p1.human() && p1 instanceof Player) {

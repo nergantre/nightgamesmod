@@ -1270,6 +1270,7 @@ public class Body implements Cloneable {
         if (part == null) {
             part = character.body.getRandom("skin");
         }
+        part.receiveCum(c, character, opponent, part);
         if (character.has(Trait.spiritphage)) {
             c.write(character, "<br/><b>" + Global.capitalizeFirstLetter(character.subjectAction("glow", "glows")
                             + " with power as the cum is absorbed by " + character.possessiveAdjective() + " "

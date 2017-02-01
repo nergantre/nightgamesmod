@@ -56,6 +56,8 @@ public class NpcConfiguration extends CharacterConfiguration {
                 base.body.removeAll("pussy");
             }
             base.body.makeGenitalOrgans(sex);
+        } else {
+            base.body.makeGenitalOrgans(base.initialGender);
         }
         super.apply(base);
         if (isStartCharacter.isPresent()) {
