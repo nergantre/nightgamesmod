@@ -34,18 +34,18 @@ public class PartiallyCorrupted extends DurationStatus {
             affected.addict(c, AddictionType.CORRUPTION,
                             cause, cause.has(Trait.Subversion) ? Addiction.HIGH_INCREASE : Addiction.MED_INCREASE);
             counter = 0;
-            return Global.format("{other:NAME-POSSESSIVE} lips has finally broke through {self:possessive} resistance and planted a bit of darkness inside {self:possessive} very soul!", affected, cause);
+            return Global.format("{other:NAME-POSSESSIVE} lips have finally broke through {self:possessive} resistance and planted a bit of {other:possessive} darkness inside {self:possessive} very soul!", affected, cause);
         } else {
-            return Global.format("{other:NAME-POSSESSIVE} lips tug on {self:name-possessive} very soul. If this keeps up, {self:pronoun} could be in serious trouble!", affected, cause);
+            return Global.format("You {self:if-human:feel}{self:if-nonhuman:almost see} {other:NAME-POSSESSIVE} lips tug on {self:name-possessive} very soul. If this keeps up, {self:pronoun} could be in serious trouble!", affected, cause);
         }
     }
 
     public float fitnessModifier() {
         if (counter == 0) {
             //hack to get her to want to do the final kiss.
-            return -30;
+            return -300;
         }
-        return -5 * counter;
+        return -50 * counter;
     }
 
     @Override

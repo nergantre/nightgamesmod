@@ -1082,7 +1082,6 @@ public class Body implements Cloneable {
             if (!has("pussy")) {
                 add(PussyPart.generic);
             }
-
         }
         if (sex.hasCock()) {
             if (!has("cock")) {

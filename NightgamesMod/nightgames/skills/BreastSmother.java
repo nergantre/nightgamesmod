@@ -29,7 +29,11 @@ public class BreastSmother extends Skill {
 
     @Override
     public float priorityMod(Combat c) {
-        return 6;
+        if (c.getStance().havingSex(c)) {
+            return 1; 
+        } else {
+            return 3;
+        }
     }
 
     static int MIN_REQUIRED_BREAST_SIZE = 4;

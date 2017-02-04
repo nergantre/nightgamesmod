@@ -38,7 +38,7 @@ public class UpsideDownFemdom extends FemdomSexStance {
 
     @Override
     public boolean kiss(Character c, Character target) {
-        return c != top && c != bottom;
+        return c != bottom;
     }
 
     @Override

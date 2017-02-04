@@ -20,14 +20,7 @@
 		}
 	],
 	"all_npcs": {
-	"gender":"female",
-	"body":{"genitals": {
-				"cock": {
-					"type":"basic",
-					"length":6
-				},
-				"pussy": "normal"
-			}}
+		"gender":"herm"
 	},
 	"flags": ["FutaTime"]
 }

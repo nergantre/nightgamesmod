@@ -43,9 +43,9 @@ public class SuccubusNurse extends Skill {
         if (!getSelf().has(Trait.lactating)) {
             return -3.f;
         } else if (getSelf().has(Trait.Pacification)) {
-            return 5.f;
+            return 2.f;
         }
-        return 2.f;
+        return 1.f;
     }
 
     @Override
@@ -72,10 +72,10 @@ public class SuccubusNurse extends Skill {
                         getSelf().has(Trait.Pacification)
                                         ? "making {other:direct-object} feel strangely" + " calm and passive inside"
                                         : "feeling strangely erotic"));
-        new Suckle(target).resolve(c, getSelf(), true);
         if (getSelf().has(Trait.Pacification)) {
             target.add(c, new Abuff(target, Attribute.Power, -2, 5));
         }
+        new Suckle(target).resolve(c, getSelf(), true);
         if (Global.random(100) < 5 + 2 * getSelf().get(Attribute.Fetish)) {
             target.add(c, new BodyFetish(target, getSelf(), BreastsPart.a.getType(), .25));
         }

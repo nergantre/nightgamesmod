@@ -6,7 +6,7 @@ import nightgames.nskills.tags.SkillTag;
 public enum Attribute {
     Power("weaker", "stronger", "physical strength", "power"),
     Seduction("less seductive", "more seductive", "allure", "seductiveness"),
-    Cunning("that it's harder to think", "more intelligent", "guile", "cunning"),
+    Cunning("less intelligent", "more intelligent", "guile", "cunning"),
     Perception("less perceptive", "more perceptive", "keenness", "perception"),
     Speed("slower", "faster", "quickness", "speed"),
     Arcane("more mundane", "more in tune with mystic energies", "mystic energies", "arcane powers"),

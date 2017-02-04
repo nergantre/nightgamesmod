@@ -1,8 +1,8 @@
 package nightgames.status.addiction;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -43,48 +43,49 @@ public class Corruption extends Addiction {
         if (cause.has(Trait.Subversion) && affected.is(Stsflag.charmed)) {
             amt *= 1.5;
         }
-        List<Abuff> buffs = new ArrayList<>();
+        Map<Attribute, Integer> buffs = new HashMap<>();
+        int darkPlus = 0;
         if (noMoreAttrs()) {
             if (!atLeast(Severity.MED)) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             } else if (!affected.body.has("tail") || affected.body.getRandom("tail") != TailPart.demonic) {
-                c.write(affected, Global.format( "<b>The dark taint changes you even further, and a spade-tipped tail bursts out of {self:possessive}"
+                Global.writeIfCombat(c, affected, Global.format( "<b>The dark taint changes you even further, and a spade-tipped tail bursts out of {self:possessive}"
                                 + " lower back!</b>", affected, cause));
                 affected.body.temporaryAddOrReplacePartWithType(TailPart.demonic, Global.random(15, 40));
             } else if (!affected.body.has("wings") || affected.body.getRandom("wings") != WingsPart.demonic) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and a set of black bat wings grows from {self:possessive} back!</b>", affected, cause));
                 affected.body.temporaryAddOrReplacePartWithType(WingsPart.demonic, Global.random(15, 40));
             } else if (affected.hasPussy() && !affected.body.getRandomPussy().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and {self:possessive} pussy turns into that of a succubus!</b>", affected, cause));
                 affected.body.temporaryAddPartMod("pussy", DemonicMod.INSTANCE, Global.random(15, 40));
             } else if (affected.hasDick() && !affected.body.getRandomCock().moddedPartCountsAs(affected, CockMod.incubus)) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and {self:possessive} cock turns into that of an incubus!</b>", affected, cause));
                 affected.body.temporaryAddPartMod("cock", CockMod.incubus, Global.random(15, 40));
             } else if (!atLeast(Severity.HIGH)) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             } else if (!affected.hasPussy() && cause.hasDick()) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and a succubus's pussy forms between {self:possessive} legs!</b>", affected, cause));
                 affected.body.temporaryAddOrReplacePartWithType(PussyPart.generic.applyMod(DemonicMod.INSTANCE), Global.random(15, 40));
             } else if (!affected.hasDick()) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and an incubus's cock forms between {self:possessive} legs!</b>", affected, cause));
                 affected.body.temporaryAddOrReplacePartWithType(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.incubus), Global.random(15, 40));
             } else if (!affected.body.getRandomAss().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and {self:possessive} asshole darkens with corruption!</b>", affected, cause));
                 affected.body.temporaryAddPartMod("ass", DemonicMod.INSTANCE, Global.random(15, 40));
-            } else if (!affected.body.getRandomAss().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
-                c.write(affected, Global.format(
+            } else if (!affected.body.getRandom("mouth").moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
+                Global.writeIfCombat(c, affected, Global.format(
                                 "<b>The dark taint changes {self:name-do} even further, and {self:possessive} lush lips turns black!</b>", affected, cause));
                 affected.body.temporaryAddPartMod("mouth", DemonicMod.INSTANCE, Global.random(15, 40));
             } else {
-                c.write(affected, Global.format(
+                Global.writeIfCombat(c, affected, Global.format(
                                 "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             }
         } else {
@@ -93,28 +94,31 @@ public class Corruption extends Addiction {
                 if (!att.isPresent()) {
                     break;
                 }
-                buffs.add(new Abuff(affected, att.get(), -1, 20));
-                buffs.add(new Abuff(affected, Attribute.Dark, 1, 20));
+                buffs.compute(att.get(), (a, old) -> old == null ? -1 : old - 1);
+                darkPlus += 1;
             }
             switch (sev) {
                 case HIGH:
-                    c.write(affected, Global.format( "The corruption is rampaging through {self:possessive} soul, rapidly demonizing {self:direct-object}.", affected, cause));
-                    break;
-                case LOW:
-                    c.write(affected, Global.format( "The corruption inside of {self:name-do} is slowly changing {self:possessive} mind...", affected, cause));
+                    Global.writeIfCombat(c, affected, Global.format( "The corruption is rampaging through {self:possessive} soul, rapidly demonizing {self:direct-object}.", affected, cause));
                     break;
                 case MED:
-                    c.write(affected, Global.format(
+                    Global.writeIfCombat(c, affected, Global.format(
                                     "The corruption is rapidly subverting {self:possessive} skills, putting them to a darker use...", affected, cause));
+                    break;
+                case LOW:
+                    Global.writeIfCombat(c, affected, Global.format( "The corruption inside of {self:name-do} is slowly changing {self:possessive} mind...", affected, cause));
                     break;
                 case NONE:
                     assert buffs.isEmpty();
                 default:
             }
-            buffs.forEach(b -> affected.addlist.add(b));
+            buffs.forEach((att, b) -> affected.add(c, new Abuff(affected, att, b, 20)));
+            if (darkPlus > 0) {
+                affected.add(c, new Abuff(affected, Attribute.Dark, darkPlus, 20));
+            }
         }
         if (c != null && cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel() && c.getOpponent(affected).equals(cause)) {
-            c.write(affected, Global.format( "A wave of obedience radiates out from the dark essence within {self:name-do}, constraining"
+            Global.writeIfCombat(c, affected, Global.format( "A wave of obedience radiates out from the dark essence within {self:name-do}, constraining"
                             + " {self:possessive} free will. It will make fighting " 
                             + cause.getName() + " much more difficult...", affected, cause));
             affected.add(c, new Compulsion(affected, cause));
@@ -264,7 +268,7 @@ public class Corruption extends Addiction {
         } else {
             switch (getSeverity()) {
                 case HIGH:
-                    return Global.format("<b>{self:SUBJECT-ACTION:have} been almost completely demonized by " + cause.possessiveAdjective() + " demonic influence. "
+                    return Global.format("<b>{self:SUBJECT-ACTION:have} been almost completely demonized by " + cause.nameOrPossessivePronoun() + " demonic influence. "
                                     + "{self:POSSESSIVE} bright eyes have been replaced by ruby-like irises that seem to stare into your very soul. You better finish this one fast!</b>", affected, cause);
                 case MED:
                     return Global.format("<b>{self:SUBJECT-ACTION:have} been visibly changed by demonic corruption. "

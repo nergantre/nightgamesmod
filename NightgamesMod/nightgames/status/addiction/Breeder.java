@@ -25,7 +25,7 @@ public class Breeder extends Addiction {
 
     @Override
     protected Optional<Status> withdrawalEffects() {
-        return Optional.of(new Horny(affected, 5.f * getSeverity().ordinal(), 999, "your animal instincts"));
+        return Optional.of(new Horny(affected, 5.f * getSeverity().ordinal(), 999, affected.possessiveAdjective() + " animal instincts"));
     }
 
     @Override

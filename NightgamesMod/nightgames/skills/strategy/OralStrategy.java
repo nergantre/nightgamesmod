@@ -31,7 +31,7 @@ public class OralStrategy extends KnockdownThenActionStrategy {
             weight += .25;
         }
         if (self.has(Trait.Corrupting)) {
-            weight += 1;
+            weight += 10;
         }
         if (self.getMood().equals(Emotion.confident)) {
             weight += .25;
@@ -62,6 +62,6 @@ public class OralStrategy extends KnockdownThenActionStrategy {
 
     @Override
     public int initialDuration(Combat c, Character self) {
-        return Global.random(2, 6);
+        return Global.random(4, 8);
     }
 }

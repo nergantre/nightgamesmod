@@ -9,6 +9,7 @@ import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Status;
+import nightgames.status.Stsflag;
 
 public abstract class Addiction extends Status {
 
@@ -32,6 +33,7 @@ public abstract class Addiction extends Status {
 
     protected Addiction(Character affected, String name, Character cause, float magnitude) {
         super(name, affected);
+        flag(Stsflag.permanent);
         this.name = name;
         this.cause = cause;
         this.magnitude = magnitude;
@@ -141,8 +143,9 @@ public abstract class Addiction extends Status {
             }
             if (isActive()) {
                 inWithdrawal = true;
-                Global.gui()
-                      .message(describeWithdrawal());
+                if (affected.human()) {
+                    Global.gui().message(describeWithdrawal());
+                }
                 return withdrawalEffects();
             }
         }

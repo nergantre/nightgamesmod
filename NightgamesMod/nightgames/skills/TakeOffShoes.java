@@ -7,13 +7,11 @@ import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
-import nightgames.nskills.tags.SkillTag;
 
 public class TakeOffShoes extends Skill {
 
     public TakeOffShoes(Character self) {
         super("Remove Shoes", self);
-        addTag(SkillTag.undressing);
     }
 
     @Override
