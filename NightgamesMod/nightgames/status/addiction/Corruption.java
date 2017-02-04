@@ -28,7 +28,6 @@ import nightgames.status.Status;
 import nightgames.status.Stsflag;
 
 public class Corruption extends Addiction {
-
     public Corruption(Player affected, Character cause, float magnitude) {
         super(affected, "Corruption", cause, magnitude);
     }

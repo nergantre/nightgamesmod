@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import nightgames.characters.Character;
-import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
