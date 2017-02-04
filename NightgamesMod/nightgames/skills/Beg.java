@@ -3,7 +3,6 @@ package nightgames.skills;
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
 import nightgames.characters.Emotion;
-import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -40,15 +39,14 @@ public class Beg extends Skill {
                         && !target.is(Stsflag.cynical) || target.getMood() == Emotion.dominant)
                         && target.getMood() != Emotion.angry && target.getMood() != Emotion.desperate) {
             target.add(c, new Charmed(target));
-            if (getSelf().human() && getSelf() instanceof Player) {
-                Player player = (Player) getSelf();
+            if (getSelf().human()) {
                 c.write(getSelf(), deal(c, 0, Result.normal, target));
-                if (player.checkAddiction(AddictionType.MIND_CONTROL, target)) {
-                    player.unaddictCombat(AddictionType.MIND_CONTROL, target, Addiction.LOW_INCREASE, c);
-                    c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over you.");
-                }
             } else if (c.shouldPrintReceive(target, c)) {
                 c.write(getSelf(), receive(c, 0, Result.normal, target));
+            }
+            if (getSelf().checkAddiction(AddictionType.MIND_CONTROL, target)) {
+                getSelf().unaddictCombat(AddictionType.MIND_CONTROL, target, Addiction.LOW_INCREASE, c);
+                c.write(getSelf(), "Acting submissively voluntarily reduces Mara's control over " + getSelf().nameDirectObject());
             }
             return true;
         }

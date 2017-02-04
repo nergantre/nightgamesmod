@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -48,8 +47,7 @@ public class HypnoVisor extends Status {
 
     @Override
     public void tick(Combat c) {
-        Player p = (Player) affected;
-        p.addict(AddictionType.MIND_CONTROL, cause, Addiction.LOW_INCREASE / 2);
+        affected.addict(AddictionType.MIND_CONTROL, cause, Addiction.LOW_INCREASE / 2);
         c.write(affected, Global.format("The Hypno Visor is corrupting your mind, rewiring it"
                         + " to follow {other:name-possessive} commands.", affected, cause));
     }

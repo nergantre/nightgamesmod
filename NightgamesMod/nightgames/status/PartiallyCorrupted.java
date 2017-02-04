@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
@@ -20,7 +19,7 @@ public class PartiallyCorrupted extends DurationStatus {
     private int counter;
     private final Character cause;
 
-    public PartiallyCorrupted(Player affected, Character cause) {
+    public PartiallyCorrupted(Character affected, Character cause) {
         super("Partially Corrupted", affected, cause.has(Trait.LastingCorruption) ? 6 : 4);
         counter = 1;
         this.cause = cause;
@@ -53,10 +52,10 @@ public class PartiallyCorrupted extends DurationStatus {
         setDuration(Math.max(other.getDuration(), getDuration()));
         counter += other.counter;
         if (counter > THRESHOLD) {
-            ((Player) affected).addict(AddictionType.CORRUPTION, cause,
+            affected.addict(AddictionType.CORRUPTION, cause,
                             cause.has(Trait.Subversion) ? Addiction.HIGH_INCREASE : Addiction.MED_INCREASE);
             // TODO: message?
-            ((Player) affected).removelist.add(this);
+            affected.removelist.add(this);
         }
     }
 
@@ -122,7 +121,7 @@ public class PartiallyCorrupted extends DurationStatus {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        return new PartiallyCorrupted((Player) newAffected, newOther);
+        return new PartiallyCorrupted(newAffected, newOther);
     }
 
     @Override

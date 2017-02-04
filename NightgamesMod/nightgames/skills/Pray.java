@@ -1,7 +1,6 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -21,7 +20,7 @@ public class Pray extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        return getSelf().human() && ((Player)getSelf()).getAddiction(AddictionType.ZEAL).map(addiction -> addiction.wasCausedBy(target))
+        return getSelf().getAddiction(AddictionType.ZEAL).map(addiction -> addiction.wasCausedBy(target))
                         .orElse(false);
     }
 
@@ -33,15 +32,14 @@ public class Pray extends Skill {
     @Override
     public boolean resolve(Combat c, Character target) {
         c.write(getSelf(),
-                        String.format("You bow your head and close your eyes,"
-                                        + " whispering a quick prayer to Angel for guidance. %s looks at you strangely, but "
-                                        + " the knowledge that Angel is there for you reinvigorates your spirit"
-                                        + " and strengthens your faith.",
-                        target.getName()));
-        int amt = Math.round((((Player)getSelf()).getAddiction(AddictionType.ZEAL)
+                        Global.format("{self:SUBJECT-ACTION:bow} {self:possessive} head and close {self:possessive} eyes,"
+                                        + " whispering a quick prayer to Angel for guidance. {other:SUBJECT-ACTION:look} at {self:direct-object} strangely, but "
+                                        + " the knowledge that Angel is there for {self:direct-object} reinvigorates {self:possessive} spirit"
+                                        + " and strengthens {self:possessive} faith.", getSelf(), target));
+        int amt = Math.round((getSelf().getAddiction(AddictionType.ZEAL)
                         .orElseThrow(() -> new SkillUnusableException(this)).getMagnitude() * 5));
         getSelf().restoreWillpower(c, amt);
-        ((Player)getSelf()).addict(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
+        getSelf().addict(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
         return true;
     }
 

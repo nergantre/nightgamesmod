@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -16,34 +15,28 @@ import nightgames.status.Stsflag;
 public class MagicMilkAddiction extends Addiction {
     private int originalMaxWill;
 
-    public MagicMilkAddiction(Player affected, Character cause, float magnitude) {
+    public MagicMilkAddiction(Character affected, Character cause, float magnitude) {
         super(affected, "Magic Milk Addiction", cause, magnitude);
         flag(Stsflag.magicmilkcraving);
         flag(Stsflag.tolerance); // immune to regular addiction
     }
 
-    public MagicMilkAddiction(Player affected, Character cause) {
+    public MagicMilkAddiction(Character affected, Character cause) {
         this(affected, cause, .01f);
     }
 
     @Override
     protected Optional<Status> withdrawalEffects() {
         double mod = 1.0 / (double) getSeverity().ordinal();
-        originalMaxWill = Global.getPlayer()
-                                .getWillpower()
-                                .max();
-        Global.getPlayer()
-              .getWillpower()
-              .setTemporaryMax((int) (originalMaxWill * mod));
+        originalMaxWill = affected.getWillpower().max();
+        affected.getWillpower().setTemporaryMax((int) (originalMaxWill * mod));
         return Optional.empty();
     }
 
     @Override
     public void endNight() {
         super.endNight();
-        Global.getPlayer()
-              .getWillpower()
-              .setTemporaryMax(originalMaxWill);
+        affected.getWillpower().setTemporaryMax(originalMaxWill);
     }
 
     @Override
@@ -202,12 +195,11 @@ public class MagicMilkAddiction extends Addiction {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        assert newAffected.human();
-        return new MagicMilkAddiction((Player)newAffected, newOther, magnitude);
+        return new MagicMilkAddiction(newAffected, newOther, magnitude);
     }
 
     @Override public Status loadFromJson(JsonObject obj) {
-        return new MagicMilkAddiction(Global.getPlayer(), Global.getCharacterByType(obj.get("cause").getAsString()),
+        return new MagicMilkAddiction(Global.noneCharacter(), Global.getCharacterByType(obj.get("cause").getAsString()),
                         (float) obj.get("magnitude").getAsInt());
     }
 
@@ -250,8 +242,7 @@ public class MagicMilkAddiction extends Addiction {
                 default:
                     throw new IllegalStateException();
             }
-            Global.getPlayer()
-                  .loseWillpower(c, loss, 0, false, " due to your Milk Addiction");
+            affected.loseWillpower(c, loss, 0, false, " due to your Milk Addiction");
         }
     }
 

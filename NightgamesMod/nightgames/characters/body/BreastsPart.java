@@ -2,7 +2,6 @@ package nightgames.characters.body;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.characters.body.mods.SizeMod;
 import nightgames.combat.Combat;
@@ -119,14 +118,9 @@ public class BreastsPart extends GenericBodyPart {
             if (self.has(Trait.magicmilk)) {
                 float addictionLevel;
                 Addiction addiction;
-                if (opponent.human() && opponent instanceof Player) {
-                    ((Player)opponent).addict(AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
-                    addiction = ((Player)opponent).getAddiction(AddictionType.MAGIC_MILK).get();
-                    addictionLevel = addiction.getMagnitude();
-                } else {
-                    addictionLevel = 0;
-                    addiction = null;
-                }
+                opponent.addict(AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
+                addiction = opponent.getAddiction(AddictionType.MAGIC_MILK).get();
+                addictionLevel = addiction.getMagnitude();
                 if (addictionLevel < Addiction.LOW_THRESHOLD) {
                     // not addicted
                     c.write(opponent,

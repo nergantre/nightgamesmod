@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.Trait;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
@@ -19,7 +18,7 @@ public class WildThrust extends Thrust {
 
     @Override
     public boolean requirements(Combat c, Character user, Character target) {
-        return user.get(Attribute.Animism) > 1 || (user.human() && ((Player)user).checkAddiction(AddictionType.BREEDER));
+        return user.get(Attribute.Animism) > 1 || user.checkAddiction(AddictionType.BREEDER);
     }
 
     @Override
@@ -45,7 +44,7 @@ public class WildThrust extends Thrust {
             c.write(getSelf(), Global.format("The sheer ferocity of {self:name-possessive} movements"
                             + " fill you with an unnatural desire to sate {self:possessive} thirst with"
                             + " your cum.", getSelf(), target));
-            ((Player) target).addict(AddictionType.BREEDER, getSelf(), Addiction.LOW_INCREASE);
+            target.addict(AddictionType.BREEDER, getSelf(), Addiction.LOW_INCREASE);
         }
         return effective;
     }
@@ -61,42 +60,26 @@ public class WildThrust extends Thrust {
 
         results[0] = m;
         results[1] = mt;
+        modBreeder(c, getSelf(), target, results);
 
-        Player p = null;
-        if (getSelf().human()) {
-            p = (Player) getSelf();
-        } else if (target.human()) {
-            p = (Player) target;
-        }
+        return results;
+    }
 
-        if (p == null) {
-            return results;
-        }
-
-        Character npc = c.getOpponent(p);
+    private void modBreeder(Combat c, Character p, Character target, int results[]) {
         Optional<Addiction> addiction = p.getAddiction(AddictionType.BREEDER);
         if (!addiction.isPresent()) {
-            return results;
+            return;
         }
 
         Addiction add = addiction.get();
-        if (getSelf().human()) {
-            if (add.wasCausedBy(npc)) {
-                //Increased recoil vs Kat
-                mt *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
-                p.addict(AddictionType.BREEDER, npc, Addiction.LOW_INCREASE);
-            } else {
-                //Increased damage vs everyone else
-                m *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
-            }
-        } else if (target.human() && add.wasCausedBy(npc)) {
-            m *= 1 + ((float) add.getSeverity().ordinal() / 4.f);
+        if (add.wasCausedBy(target)) {
+            //Increased recoil vs Kat
+            results[1] *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
+            p.addict(AddictionType.BREEDER, target, Addiction.LOW_INCREASE);
+        } else {
+            //Increased damage vs everyone else
+            results[0] *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
         }
-
-        results[0] = m;
-        results[1] = mt;
-
-        return results;
     }
 
     @Override

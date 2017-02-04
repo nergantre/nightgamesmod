@@ -1,7 +1,6 @@
 package nightgames.skills;
 
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.combat.Combat;
 import nightgames.combat.Result;
 import nightgames.global.Global;
@@ -25,12 +24,9 @@ public class Prostrate extends Skill {
 
     @Override
     public boolean usable(Combat c, Character target) {
-        if (!getSelf().human()) {
+        if (!getSelf().checkAddiction(AddictionType.ZEAL))
             return false;
-        }
-        if (!((Player)getSelf()).checkAddiction(AddictionType.ZEAL))
-            return false;
-        return ((Player)getSelf()).getAddiction(AddictionType.ZEAL).map(a -> c.getStance().en == Stance.neutral && a.wasCausedBy(target)).orElse(false);
+        return getSelf().getAddiction(AddictionType.ZEAL).map(a -> c.getStance().en == Stance.neutral && a.wasCausedBy(target)).orElse(false);
     }
 
     @Override
@@ -53,8 +49,8 @@ public class Prostrate extends Skill {
                             + " chest and shoulder while walking around you and gently hugging you from behind.");
             c.setStance(new Behind(target, getSelf()), getSelf(), true);
         }
-        ((Player)getSelf()).unaddictCombat(AddictionType.ZEAL, target, Addiction.LOW_INCREASE, c);
-        ((Player)getSelf()).addict(AddictionType.ZEAL, target, Addiction.LOW_INCREASE);
+        getSelf().unaddictCombat(AddictionType.ZEAL, target, Addiction.LOW_INCREASE, c);
+        getSelf().addict(AddictionType.ZEAL, target, Addiction.LOW_INCREASE);
         return true;
     }
 

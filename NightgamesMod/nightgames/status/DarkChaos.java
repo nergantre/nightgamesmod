@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
-import nightgames.characters.Player;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
 import nightgames.global.Global;
@@ -18,7 +17,7 @@ import nightgames.status.addiction.AddictionType;
 
 public class DarkChaos extends Status {
 
-    public DarkChaos(Player affected) {
+    public DarkChaos(Character affected) {
         super("Dark Chaos", affected);
         flag(Stsflag.debuff);
     }
@@ -37,7 +36,7 @@ public class DarkChaos extends Status {
     public void tick(Combat c) {
         if (c == null)
             return;
-        float odds = ((Player)affected).getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
+        float odds = affected.getAddiction(AddictionType.CORRUPTION).map(Addiction::getMagnitude).orElse(0f)
                         / 4;
         if (odds > Math.random()) {
             Effect e = Effect.pick(c, affected);
@@ -107,8 +106,7 @@ public class DarkChaos extends Status {
 
     @Override
     public Status instance(Character newAffected, Character newOther) {
-        assert newAffected instanceof Player;
-        return new DarkChaos((Player) newAffected);
+        return new DarkChaos(newAffected);
     }
 
      @Override public JsonObject saveToJson() {
