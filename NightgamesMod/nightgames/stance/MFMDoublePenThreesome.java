@@ -34,7 +34,7 @@ public class MFMDoublePenThreesome extends MaledomSexStance {
 
     @Override
     public boolean canthrust(Combat c, Character self) {
-        return domSexCharacter(c) == self || top == self || self.has(Trait.powerfulhips);
+        return domSexCharacter(c) == self || top == self;
     }
 
     @Override

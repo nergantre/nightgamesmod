@@ -624,7 +624,7 @@ public class Body implements Cloneable {
         }
         double perceptionBonus = 1.0;
         if (opponent != null) {
-            perceptionBonus *= opponent.body.getCharismaBonus(c, character);
+            perceptionBonus *= opponent.body.getCharismaBonus(c, character) / 2;
         }
         double baseBonusDamage = bonus;
         if (opponent != null) {

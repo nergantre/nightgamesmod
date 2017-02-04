@@ -1,4 +1,13 @@
 2.5.0.3
+
+Balance:
+- Seduction/beauty bonus has been cut in half for pleasure attacks (remains the same for temptation)
+- Tighten now costs 15 mojo
+- Powerful hips now only allow grind/bounce from below.
+
+Other:
+- "Wild Ride" is now called "Wild Grind" when used from below (effects unchanged)
+
 Bug fixes:
 - Fixed a bug where level ups were being displayed even though the player isn't leveling up in combat.
 - Fixed a bug where drained messages would use the wrong person's name when being drained by multiple characters

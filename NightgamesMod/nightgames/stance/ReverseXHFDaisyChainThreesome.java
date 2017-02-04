@@ -35,7 +35,7 @@ public class ReverseXHFDaisyChainThreesome extends FemdomSexStance {
 
     @Override
     public boolean canthrust(Combat c, Character self) {
-        return domSexCharacter(c) == self || top == self || self.has(Trait.powerfulhips);
+        return domSexCharacter(c) == self || top == self;
     }
 
     public List<Character> getAllPartners(Combat c, Character self) {

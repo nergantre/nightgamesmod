@@ -128,7 +128,7 @@ public abstract class Position implements Cloneable {
     }
 
     public boolean canthrust(Combat c, Character self) {
-        return domSexCharacter(c) == self || self.has(Trait.powerfulhips);
+        return domSexCharacter(c) == self;
     }
 
     public boolean facing(Character c, Character target) {

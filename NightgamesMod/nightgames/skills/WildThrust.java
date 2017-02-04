@@ -111,8 +111,8 @@ public class WildThrust extends Thrust {
                             + " in the ass with no regard to technique. She whimpers in pleasure and can barely summon the strength to hold herself off the floor.";
         } else if (modifier == Result.reverse) {
             return Global.format(
-                            "{self:SUBJECT-ACTION:bounce|bounces} wildly on {other:name-possessive} cock with no regard to technique, relentlessly driving you both towards orgasm.",
-                            getSelf(), target);
+                            "{self:SUBJECT-ACTION:%s {other:name-possessive} cock with no regard to technique, relentlessly driving you both towards orgasm.",
+                            getSelf(), target, c.getStance().sub(getSelf()) ? "grind} against" : "bounce} on");
         } else {
             return "You wildly pound your dick into " + target.getName()
                             + "'s pussy with no regard to technique. Her pleasure filled cries are proof that you're having an effect, but you're feeling it "
@@ -134,8 +134,8 @@ public class WildThrust extends Thrust {
                             getSelf().possessiveAdjective(), target.possessiveAdjective(),
                             target.hasBalls() ? "prostate" : "insides");
         } else if (modifier == Result.reverse) {
-            return String.format("%s frenziedly bounces on %s cock, relentlessly driving %s both toward orgasm.",
-                            getSelf().subject(), target.nameOrPossessivePronoun(), c.bothDirectObject(target));
+            return String.format("%s frenziedly %s %s cock, relentlessly driving %s both toward orgasm.",
+                            getSelf().subject(), target.nameOrPossessivePronoun(), c.bothDirectObject(target), c.getStance().sub(getSelf()) ? "grinds against" : "bounces on");
         } else {
             return Global.format(
                             "{self:SUBJECT-ACTION:rapidly pound|rapidly pounds} {self:possessive} {self:body-part:cock} into {other:possessive} {other:body-part:pussy}, "
@@ -153,6 +153,8 @@ public class WildThrust extends Thrust {
     public String getName(Combat c) {
         if (c.getStance().penetratedBy(c, c.getStance().getPartner(c, getSelf()), getSelf())) {
             return "Wild Thrust";
+        } else if (c.getStance().sub(getSelf())) {
+            return "Wil Grind";
         } else {
             return "Wild Ride";
         }

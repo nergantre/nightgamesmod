@@ -33,6 +33,11 @@ public class Tighten extends Thrust {
     }
 
     @Override
+    public int getMojoCost(Combat c) {
+        return 15;
+    }
+
+    @Override
     public boolean requirements(Combat c, Character user, Character target) {
         return user.get(Attribute.Seduction) >= 26 || user.has(Trait.tight);
     }
