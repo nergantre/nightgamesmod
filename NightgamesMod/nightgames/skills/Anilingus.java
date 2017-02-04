@@ -45,8 +45,10 @@ public class Anilingus extends Skill {
     public boolean usable(Combat c, Character target) {
         boolean canUse = c.getStance().isBeingFaceSatBy(c, getSelf(), target) && getSelf().canRespond()
                         || getSelf().canAct();
+        boolean titsBlocking = c.getStance().enumerate() == Stance.paizuripin
+                        || c.getStance().enumerate() == Stance.titfucking;
         return target.crotchAvailable() && target.body.has("ass") && c.getStance().oral(getSelf(), target) && canUse
-                        && !c.getStance().anallyPenetrated(c, target) && !c.getStance().paizuri(getSelf(), target);
+                        && !c.getStance().anallyPenetrated(c, target) && !titsBlocking;
     }
 
     @Override
