@@ -47,7 +47,7 @@ public class HypnoVisor extends Status {
 
     @Override
     public void tick(Combat c) {
-        affected.addict(AddictionType.MIND_CONTROL, cause, Addiction.LOW_INCREASE / 2);
+        affected.addict(c, AddictionType.MIND_CONTROL, cause, Addiction.LOW_INCREASE / 2);
         c.write(affected, Global.format("The Hypno Visor is corrupting your mind, rewiring it"
                         + " to follow {other:name-possessive} commands.", affected, cause));
     }

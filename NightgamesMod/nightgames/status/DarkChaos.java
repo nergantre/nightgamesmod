@@ -29,7 +29,11 @@ public class DarkChaos extends Status {
 
     @Override
     public String describe(Combat c) {
-        return "The blackness coursing through your soul is looking for ways to hinder you.";
+        if (affected.human()) {
+            return "The blackness coursing through your soul is looking for ways to hinder you.";
+        } else {
+            return Global.format("{self:subject-action:are} visibly distracted, trying to fight the corruption in {self:reflective}.", affected, affected);            
+        }
     }
 
     @Override
@@ -121,18 +125,18 @@ public class DarkChaos extends Status {
 
     private enum Effect {
         HORNY((affected) -> new Horny(affected, 3.f, 5, "Reyka's Corruption"),
-                        "The corruption settles into your genitals, inflaming your lusts."),
+                        "The corruption settles into {self:possessive} genitals, inflaming {self:possessive} lusts."),
         HYPER((affected) -> new Hypersensitive(affected),
-                        "The corruption flows across your skin, leaving it much more sensitive."),
+                        "The corruption flows across {self:possessive} skin, leaving it much more sensitive."),
         CHARMED((affected) -> new Charmed(affected),
-                        "The blackness subverts your mind, making it unthinkable for you to harm your opponent."),
-        SHAMED((affected) -> new Shamed(affected), "The blackness plants a deep sense of shame in your mind."),
+                        "The blackness subverts {self:possessive} mind, making it unthinkable for {self:pronoun} to harm {self:possessive} opponent."),
+        SHAMED((affected) -> new Shamed(affected), "The blackness plants a deep sense of shame in {self:possessive} mind."),
         FALLING((affected) -> new Falling(affected),
-                        "The darkness interferes with your balance, sending you falling to the ground."),
+                        "The darkness interferes with {self:possessive} balance, sending {self:pronoun} falling to the ground."),
         FLATFOOTED((affected) -> new Flatfooted(affected, 1),
-                        "The darkness clouds your mind, distracting you from the fight."),
-        FRENZIED((affected) -> new Frenzied(affected, 3), "The corruption senses what you're doing, and is compelling"
-                        + " you to fuck as hard as you can.");
+                        "The darkness clouds {self:possessive} mind, distracting {self:direct-object} from the fight."),
+        FRENZIED((affected) -> new Frenzied(affected, 3), "The corruption senses what {self:subject-action:are} doing, and is compelling"
+                        + " {self:pronoun} to fuck as hard as {self:pronoun} can.");
 
         private final Function<Character, ? extends Status> effect;
         private final String message;
@@ -149,15 +153,16 @@ public class DarkChaos extends Status {
         }
 
         void execute(Combat c, Character affected) {
+            Character partner = c.getStance().getPartner(c, affected);
             if (this == FALLING)
                 c.setStance(new StandingOver(c.getOpponent(affected), affected));
             else
                 affected.addlist.add(effect.apply(affected));
-            c.write(affected, message);
+            c.write(affected, Global.format(message, affected, partner));
         }
 
         static Effect pick(Combat c, Character affected) {
-            if (c.getStance().inserted(affected))
+            if (c.getStance().havingSex(c, affected))
                 return FRENZIED;
             Effect picked;
             do {

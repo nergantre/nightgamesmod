@@ -2,6 +2,7 @@ package nightgames.characters.body.mods;
 
 import nightgames.characters.Attribute;
 import nightgames.characters.Character;
+import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.characters.body.CockMod;
 import nightgames.characters.body.GenericBodyPart;
@@ -28,6 +29,11 @@ public class DemonicMod extends PartMod {
     }
 
     public double applyBonuses(Combat c, Character self, Character opponent, BodyPart part, BodyPart target, double damage) {
+        if (opponent.has(Trait.succubus)) {
+            c.write(self, Global.format(
+                            "{self:NAME-POSSESSIVE} %s does nothing special against one of {self:possessive} own kind.", self, opponent, part.describe(self)));
+            return 0;
+        }
         boolean fucking = c.getStance().isPartFuckingPartInserted(c, opponent, target, self, part);
         if (target.moddedPartCountsAs(opponent, CockMod.runic)) {
             c.write(self, String.format(

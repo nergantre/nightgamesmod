@@ -47,7 +47,7 @@ public class Bite extends Skill {
                             + " you do realize you've sped up your thrusting and it does seem to feel even"
                             + " better than before.");            
         }
-        target.addict(AddictionType.BREEDER, getSelf(), Addiction.MED_INCREASE);
+        target.addict(c, AddictionType.BREEDER, getSelf(), Addiction.MED_INCREASE);
         
         return true;
     }

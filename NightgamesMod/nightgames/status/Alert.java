@@ -9,8 +9,16 @@ import nightgames.characters.Character;
 import nightgames.characters.Emotion;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 
 public class Alert extends DurationStatus {
+
+    /**
+     * Default constructor for loading
+     */
+    public Alert() {
+        this(Global.noneCharacter());
+    }
     public Alert(Character affected) {
         super("Alert", affected, 3);
         flag(Stsflag.alert);

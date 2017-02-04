@@ -68,7 +68,7 @@ public class Braced extends DurationStatus {
         List<String> possibleStrings = Arrays.asList("Since {self:subject-action:are} already down, there's not much to weaken.");
         if (affected.canRespond()) {
             possibleStrings = Arrays.asList(
-                        "Being wary now, {self:subject-action:avoid} manages to conserve most of {self:possessive} stamina.",
+                        "Being wary now, {self:subject-action:manage} to conserve most of {self:possessive} stamina.",
                         "Being more careful now, {self:subject-action:avoid} manages to conserve most of {self:possessive} stamina."
                         );
         }

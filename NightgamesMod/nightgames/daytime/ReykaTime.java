@@ -375,7 +375,7 @@ public class ReykaTime extends BaseNPCTime {
             Global.gui()
                   .choose(this, "Leave");
             Global.getPlayer()
-                  .addict(AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
+                  .addict(null, AddictionType.CORRUPTION, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.CORRUPTION).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 8 && (!player.has(Trait.desensitized) || Global.random(2) == 1)) {

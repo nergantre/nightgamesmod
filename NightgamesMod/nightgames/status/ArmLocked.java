@@ -15,6 +15,13 @@ import nightgames.requirements.RequirementShortcuts;
 public class ArmLocked extends Status {
     private float toughness;
 
+    /**
+     * Default constructor for loading
+     */
+    public ArmLocked() {
+        this(Global.noneCharacter(), 0);
+    }
+
     public ArmLocked(Character affected, float dc) {
         super("Arm Locked", affected);
         toughness = dc;

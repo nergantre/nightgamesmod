@@ -78,7 +78,7 @@ public class DemandArousal extends Skill {
         }
         c.write(getSelf(), Global.format(msg, getSelf(), target));
         target.temptWithSkill(c, getSelf(), null, dmg, this);
-        addict.alleviate(alleviation);
+        addict.alleviate(c, alleviation);
 
         return true;
     }

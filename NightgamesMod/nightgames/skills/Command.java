@@ -171,14 +171,12 @@ public class Command extends Skill {
         if (strippable(target))
             available.add(CommandType.STRIP_SLAVE);
 
-        if (getSelf().crotchAvailable()) {
+        if (getSelf().crotchAvailable() && !c.getStance().havingSex(c)) {
 
-            if (target.body.getFetish("cock")
-                           .isPresent() && getSelf().hasDick())
+            if (target.body.getFetish("cock").isPresent() && getSelf().hasDick())
                 available.add(CommandType.WORSHIP_COCK);
 
-            if (target.body.getFetish("pussy")
-                           .isPresent() && getSelf().hasPussy())
+            if (target.body.getFetish("pussy").isPresent() && getSelf().hasPussy())
                 available.add(CommandType.WORSHIP_PUSSY);
 
             if (getSelf().hasDick())

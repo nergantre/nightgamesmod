@@ -162,7 +162,7 @@ public class Atrophy extends DurationStatus {
         return obj;
     }
 
-    @Override public Status loadFromJson(JsonObject obj) {
+    public Status loadFromJson(JsonObject obj) {
         return new Atrophy(null, obj.get("magnitude").getAsFloat(), obj.get("duration").getAsInt(),
                         obj.get("source").getAsString());
     }

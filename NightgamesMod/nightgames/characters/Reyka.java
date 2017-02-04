@@ -21,10 +21,10 @@ import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.items.clothing.Clothing;
 import nightgames.skills.strategy.DisablingStrategy;
-import nightgames.skills.strategy.BreastStrategy;
 import nightgames.skills.strategy.FacesitStrategy;
 import nightgames.skills.strategy.FootjobStrategy;
 import nightgames.skills.strategy.KnockdownStrategy;
+import nightgames.skills.strategy.OralStrategy;
 import nightgames.start.NpcConfiguration;
 
 public class Reyka extends BasePersonality {
@@ -49,8 +49,8 @@ public class Reyka extends BasePersonality {
         self.plan = Plan.hunting;
         self.mood = Emotion.confident;
 
+        self.addPersonalStrategy(new OralStrategy());
         self.addPersonalStrategy(new FootjobStrategy());
-        self.addPersonalStrategy(new BreastStrategy());
         self.addPersonalStrategy(new FacesitStrategy());
         self.addPersonalStrategy(new KnockdownStrategy());
         self.addPersonalStrategy(new DisablingStrategy());
@@ -121,13 +121,13 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addBodyPartMod(53, "pussy", ExtendedTonguedMod.INSTANCE);
         character.getGrowth().addTrait(56, Trait.carnalvirtuoso);
         
-        character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 10 
+        character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 12 
                         && !Global.checkFlag(REYKA_DISABLING_FOCUS) && !Global.checkFlag(REYKA_SEDUCTION_FOCUS)
                         , (c, self, other) -> Global.format("You had turned your back to Reyka after your fight."
-                                        + " Big mistake. Out of nowhere, {other:pronoun} crashes into"
+                                        + " Big mistake. Out of nowhere, {self:pronoun} crashes into"
                                         + " you from behind with great force, knocking you down."
                                         + " You quickly roll over, but Reyka binds your legs together at"
-                                        + " the knees and holds close to {other:direct-object}. <i>\"My,"
+                                        + " the knees and holds them close to {self:direct-object}. <i>\"My,"
                                         + " {other:name}, I could get used to this.\"</i> Shocker. <i>\""
                                         + "The question, then, is simple. Do I make </i>you<i> want this"
                                         + " as well, or do I simply give you no choice in the matter?\"</i>", self, other), 
@@ -179,7 +179,7 @@ public class Reyka extends BasePersonality {
                             return true;
                         }))));
         
-        character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 20
+        character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 22
                         && !Global.checkFlag(REYKA_DRAINING_FOCUS) && !Global.checkFlag(REYKA_CORRUPTION_FOCUS)
                         && (Global.checkFlag(REYKA_DISABLING_FOCUS) || Global.checkFlag(REYKA_SEDUCTION_FOCUS))
                         , (c, self, other) -> Global.format("After your fight, Reyka is staring at you"
@@ -241,7 +241,7 @@ public class Reyka extends BasePersonality {
                          })
                          )));
     }
-    
+
     private void useDisabling() {
         Global.flag(REYKA_DISABLING_FOCUS);
         character.getGrowth().addTrait(12, Trait.SuccubusWarmth);
@@ -250,7 +250,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(28, Trait.DemonsEmbrace);
         character.getGrowth().addTrait(39, Trait.VampireWings);
     }
-    
+
     private void useSeduction() {
         Global.flag(REYKA_SEDUCTION_FOCUS);
         character.getGrowth().addTrait(12, Trait.MelodiousInflection);
@@ -258,7 +258,7 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(28, Trait.TenderKisses);
         character.getGrowth().addTrait(39, Trait.PinkHaze);
     }
-    
+
     private void useCorruption() {
         Global.flag(REYKA_CORRUPTION_FOCUS);
         character.getGrowth().addTrait(21, Trait.Corrupting);
@@ -270,7 +270,7 @@ public class Reyka extends BasePersonality {
             character.getGrowth().addTrait(52, Trait.Subversion);
         }
     }
-    
+
     private void useDraining() {
         Global.flag(REYKA_DRAINING_FOCUS);
         character.getGrowth().addTrait(21, Trait.Greedy);
@@ -426,8 +426,8 @@ public class Reyka extends BasePersonality {
             return "Reyka alternates between long hard thrusts and sensual grinding to keep you from getting used to the stimulation, and the pleasure it is "
                             + "inflicting on you stops you from mustering the resolve to fight back. <i>\"I do love a good bit of pegging.\"</i> Reyka comments as she begins "
                             + "to gently rock the head of the strapon over your prostate, leaving you breathing hard as your mouth hangs open. <i>\"There's a special "
-                            + "pleasure in making a " + Global.getPlayer().boyOrGirl() + " a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
-                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet " + Global.getPlayer().boyOrGirl() + " slut?\"</i> Your only response is to cum. Hard. Ropes "
+                            + "pleasure in making a " + opponent.boyOrGirl() + " a little butt slave.\"</i> Her words shock you and cause your resistance to slip a little. <i>\"Hmmm?\"</i> She purrs <i>\"Would "
+                            + "you like that?\"</i> she asks, picking up the pace of her thrusting. <i>\"To be my little pet " + opponent.boyOrGirl() + " slut?\"</i> Your only response is to cum. Hard. Ropes "
                             + "of cum fall to the ground below you.<br/><br/>Reyka pouts as she pulls out <i>\"Such a good waste of semen though.\"</i> she tuts. <i>\"Looks like you "
                             + "still owe me a meal.\"</i> She smirks in a way that makes your eyes flash quickly left to right, looking for an escape route. Reyka is too quick "
                             + "however and soon you find yourself pinned with your still hard cock buried deep in her pussy.<br/><br/>She rides you until you cum again and she "

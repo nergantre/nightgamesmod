@@ -39,7 +39,7 @@ public class Pray extends Skill {
         int amt = Math.round((getSelf().getAddiction(AddictionType.ZEAL)
                         .orElseThrow(() -> new SkillUnusableException(this)).getMagnitude() * 5));
         getSelf().restoreWillpower(c, amt);
-        getSelf().addict(AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
+        getSelf().addict(c, AddictionType.ZEAL, Global.getCharacterByType("Angel"), Addiction.LOW_INCREASE);
         return true;
     }
 

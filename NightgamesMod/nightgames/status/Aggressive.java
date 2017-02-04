@@ -21,6 +21,13 @@ public class Aggressive extends DurationStatus {
 
     private String cause;
 
+    /**
+     * Default constructor for loading
+     */
+    public Aggressive() {
+        this(Global.noneCharacter(), "none", 0);
+    }
+
     public Aggressive(Character affected, String cause, int duration) {
         super("Aggressive", affected, duration);
         this.cause = cause;

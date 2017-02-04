@@ -30,10 +30,13 @@ public class OralStrategy extends KnockdownThenActionStrategy {
         if (self.has(Trait.experttongue)) {
             weight += .25;
         }
+        if (self.has(Trait.Corrupting)) {
+            weight += 1;
+        }
         if (self.getMood().equals(Emotion.confident)) {
             weight += .25;
         }
-        if (c.getStance().havingSex(c)) {
+        if (c.getStance().havingSex(c) && !self.has(Trait.Corrupting)) {
             return 0;
         }
         return weight;

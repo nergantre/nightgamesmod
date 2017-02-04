@@ -255,7 +255,7 @@ public class MagicMilkAddiction extends Addiction {
     public String describeMorning() {
         switch (getSeverity()) {
             case HIGH:
-                aggravate(MED_INCREASE);
+                aggravate(null, MED_INCREASE);
                 flagDaytime();
                 return "You wake up in the morning with a burning need for " + cause.getName() + "'s milk. The thought of resisting the urge doesn't even enter your mind. You quickly whip out your cellphone and dial " + cause.getName() + "'s number. "
                                 + "Moments later, an amused voice answers. You sob into the phone, begging for " + cause.getName() + "'s milk. Luckily, " + cause.getName() + " doesn't seem to want to tease you today, and readily agrees to drop by. "
@@ -265,13 +265,13 @@ public class MagicMilkAddiction extends Addiction {
                                 + cause.getName() + " lowers " + cause.directObject() + " breasts into your face, and you happily start drinking " + cause.directObject() + " mindbending milk. Seconds turn into minutes and minutes turn into hours. "
                                 + "You don't know how long your were nursing at " + cause.directObject() + " teats, but you seemed to have dozed off in the middle of it. You find yourself on the bed by yourself, with a blanket covering you. "
                                 + cause.getName() + " has already left, but left a note on the kitchen table, <br/><i>Hey hun, unfortunately I have to get to class. I made you some lunch that I put in the fridge, and left you a bottle of milk in case the cravings come back. I'll see you tonight at the games okay? Love you baby.</i><br/><br/>";
-            case LOW:
-                return "You wake up in the morning with damp underwear. You realize that you've been dreaming of " + cause.getName() + "'s milk the entire night. This can't be healthy... <br/>"
-                                + "You want to immediately head over to " + cause.getName() + "'s and ask for another helping, but quickly realize that will just feed the addiction. "
-                                + "However, at this rate, you will be thinking of " + cause.directObject() + " the entire day, and affect your willpower. You will have to make a decision to tough it out or call " + cause.directObject() + " up and ask for more.<br/><br/>";
             case MED:
                 return "When you wake up in the morning, the first thing you think of is " + cause.getName() + "'s breasts. And the second. And the third. In fact, you realize that's all you can think of right now. "
                                 + "You sigh and attempt to take a cold shower to tear your mind from " + cause.directObject() + " sinfully sweet milk. Unfortunately, it does you little good. You will have to make a choice between toughing it out, or caving and calling " + cause.getName() + " for a helping of " + cause.directObject() + " addictive cream.<br/><br/>";
+            case LOW:
+                return "You wake up in the morning with damp underwear. You realize that you've been dreaming of " + cause.getName() + "'s milk the entire night. This can't be healthy... <br/>"
+                + "You want to immediately head over to " + cause.getName() + "'s and ask for another helping, but quickly realize that will just feed the addiction. "
+                + "However, at this rate, you will be thinking of " + cause.directObject() + " the entire day, and affect your willpower. You will have to make a decision to tough it out or call " + cause.directObject() + " up and ask for more.<br/><br/>";
             case NONE:
             default:
                 return "You wake up in the morning with your throat feeling strangely parched. You step into the kitchen and take out a carton of milk to attempt to slake your thirst. "

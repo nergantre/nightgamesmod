@@ -14,6 +14,10 @@ public class Abuff extends DurationStatus {
     protected Attribute modded;
     protected int value;
 
+    public Abuff() {
+        this(Global.noneCharacter(), Attribute.Hypnosis, 1, 0);
+    }
+
     public Abuff(Character affected, Attribute att, int value, int duration) {
         super(String.format("%s %+d", att.toString(), value), affected, duration);
         flag(Stsflag.purgable);
@@ -77,6 +81,10 @@ public class Abuff extends DurationStatus {
 
     public Attribute getModdedAttribute() {
         return modded;
+    }
+
+    public int getValue() {
+        return value;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package nightgames.status.addiction;
 
-import java.util.EnumSet;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -10,7 +9,6 @@ import nightgames.combat.Combat;
 import nightgames.global.DebugFlags;
 import nightgames.global.Global;
 import nightgames.status.Status;
-import nightgames.status.Stsflag;
 
 public abstract class Addiction extends Status {
 
@@ -22,15 +20,13 @@ public abstract class Addiction extends Status {
     public static final float MED_THRESHOLD = .4f;
     public static final float HIGH_THRESHOLD = .7f;
 
-    protected final Character cause;
+    protected final transient Character cause;
     protected float magnitude;
     protected float combatMagnitude;
 
     // should be saved
     private boolean didDaytime;
     private boolean overloading;
-    
-    protected final EnumSet<Stsflag> flags;
 
     protected boolean inWithdrawal;
 
@@ -43,7 +39,6 @@ public abstract class Addiction extends Status {
         didDaytime = false;
         inWithdrawal = false;
         overloading = false;
-        flags = EnumSet.noneOf(Stsflag.class);
     }
 
     protected Addiction(Character affected, String name, Character cause) {
@@ -142,7 +137,7 @@ public abstract class Addiction extends Status {
                 if (Global.isDebugOn(DebugFlags.DEBUG_ADDICTION)) {
                     System.out.println("Alleviating addiction " + this.getType() + " by " + amount);
                 }
-                alleviate(amount);
+                alleviate(null, amount);
             }
             if (isActive()) {
                 inWithdrawal = true;
@@ -195,35 +190,35 @@ public abstract class Addiction extends Status {
         return magnitude <= 0.f;
     }
 
-    public void aggravate(float amt) {
+    public void aggravate(Combat c, float amt) {
         Severity old = getSeverity();
         magnitude = clamp(magnitude + amt);
         if (getSeverity() != old) {
-            Global.gui().message(describeIncrease());
+            Global.writeIfCombat(c, cause, Global.format(describeIncrease(), affected, cause));
         }
     }
 
-    public void alleviate(float amt) {
+    public void alleviate(Combat c, float amt) {
         Severity old = getSeverity();
         magnitude = clamp(magnitude - amt);
         if (getSeverity() != old) {
-            Global.gui().message(describeDecrease());
+            Global.writeIfCombat(c, cause, Global.format(describeDecrease(), affected, cause));
         }
     }
 
-    public void aggravateCombat(float amt) {
+    public void aggravateCombat(Combat c, float amt) {
         Severity old = getCombatSeverity();
         combatMagnitude = clamp(combatMagnitude + amt);
         if (getSeverity() != old) {
-            Global.gui().message(describeCombatIncrease());
+            Global.writeIfCombat(c, cause, Global.format(describeCombatIncrease(), affected, cause));
         }
     }
 
-    public void alleviateCombat(float amt) {
+    public void alleviateCombat(Combat c, float amt) {
         Severity old = getCombatSeverity();
         combatMagnitude = clamp(combatMagnitude - amt);
         if (getSeverity() != old) {
-            Global.gui().message(describeCombatDecrease());
+            Global.writeIfCombat(c, cause, Global.format(describeCombatDecrease(), affected, cause));
         }
     }
 
@@ -247,12 +242,20 @@ public abstract class Addiction extends Status {
     }
 
     public void describeInitial() {
-        Global.gui()
-              .message(describeIncrease());
+        Global.gui().message(describeIncrease());
     }
 
-    public static Addiction load(Character player, AddictionType type, Character cause, float mag, float combat, boolean overloading, boolean reenforced) {
-        Addiction a = type.build(player, cause, mag);
+    public static Addiction load(Character self, JsonObject object) {
+        Character cause = Global.getNPCByType(object.get("cause").getAsString());
+        if (cause == null) {
+            return null;
+        }
+        AddictionType type = AddictionType.valueOf(object.get("type").getAsString());
+        float mag = object.get("magnitude").getAsFloat();
+        float combat = object.get("combat").getAsFloat();
+        boolean overloading = object.get("overloading").getAsBoolean();
+        boolean reenforced = object.get("reenforced").getAsBoolean();
+        Addiction a = type.build(self, cause, mag);
         a.magnitude = mag;
         a.combatMagnitude = combat;
         a.overloading = overloading;

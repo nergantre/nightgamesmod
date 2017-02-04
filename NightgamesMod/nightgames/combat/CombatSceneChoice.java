@@ -18,5 +18,6 @@ public class CombatSceneChoice {
     public void choose(Combat c, Character npc) {
         effect.execute(c, npc, c.getOpponent(npc));
         npc.getGrowth().addOrRemoveTraits(npc);
+        c.updateAndClearMessage();
     }
 }

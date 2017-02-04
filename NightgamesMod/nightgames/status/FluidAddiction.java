@@ -3,6 +3,7 @@ package nightgames.status;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import com.google.gson.JsonObject;
@@ -13,6 +14,7 @@ import nightgames.characters.Emotion;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.skills.Beg;
 import nightgames.skills.Blowjob;
 import nightgames.skills.Cunnilingus;
 import nightgames.skills.Kiss;
@@ -121,7 +123,7 @@ public class FluidAddiction extends DurationStatus {
     @Override
     public String initialMessage(Combat c, Optional<Status> replacement) {
         if (replacement.isPresent()) {
-            return String.format("%s still %s to %s fluids.\n", affected.subjectAction("are", "is"),
+            return String.format("%s %s to %s fluids.\n", affected.subjectAction("are", "is"),
                             toString().toLowerCase(), target.nameOrPossessivePronoun());
         }
         return String.format("%s now %s to %s fluids.\n", affected.subjectAction("are", "is"), toString().toLowerCase(),
@@ -180,13 +182,19 @@ public class FluidAddiction extends DurationStatus {
 
     @Override
     public Collection<Skill> allowedSkills(Combat c) {
+        List<Skill> availSkills;
         if (!isActive()) {
             return Collections.emptySet();
         } else if (target.has(Trait.lactating)) {
-            return Arrays.asList((Skill) new Suckle(affected), new LickNipples(affected), new Kiss(affected),
+            availSkills = Arrays.asList((Skill) new Suckle(affected), new LickNipples(affected), new Kiss(affected),
                             new Cunnilingus(affected), new Blowjob(affected));
         } else {
-            return Arrays.asList((Skill) new Kiss(affected), new Cunnilingus(affected), new Blowjob(affected));
+            availSkills = Arrays.asList((Skill) new Kiss(affected), new Cunnilingus(affected), new Blowjob(affected));
+        }
+        if (availSkills.stream().anyMatch(skill -> skill.usable(c, target))) {
+            return availSkills;
+        } else {
+            return Collections.singletonList(new Beg(affected));
         }
     }
 

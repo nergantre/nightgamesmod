@@ -35,7 +35,7 @@ public class Embrace extends Skill {
     }
 
     private boolean validPosition(Position stance, Combat c, Character target) {
-        if (!stance.connected(c) || !stance.dom(getSelf())) {
+        if (!stance.connected(c) || !stance.dom(getSelf()) || stance.anallyPenetratedBy(c, getSelf(), target)) {
             return false;
         }
         if (stance.en == Stance.succubusembrace || stance.en == Stance.upsidedownmaledom
@@ -59,8 +59,7 @@ public class Embrace extends Skill {
 
         Position pos = c.getStance();
         Position next;
-        boolean selfCatches = c.getStance()
-                               .vaginallyPenetratedBy(c, getSelf(), target);
+        boolean selfCatches = c.getStance().vaginallyPenetratedBy(c, getSelf(), target);
 
         String trans = transition(c, pos, target, selfCatches);
 

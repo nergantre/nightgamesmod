@@ -32,7 +32,6 @@ public class EnthrallingTrap extends Trap {
                                 + ", you notice a pentagram drawn on the floor,"
                                 + " appearing to have been drawn in cum. Wisely," + " you avoid stepping into it.");
             } else {
-                target.addNonCombat(new Enthralled(target, owner, 5 + getStrength() / 20));
                 target.location().opportunity(target, this);
                 Global.gui().message("As you step across the " + target.location().name
                                 + ", you are suddenly surrounded by purple flames. Your mind "
@@ -41,6 +40,7 @@ public class EnthrallingTrap extends Trap {
                                 + " times and hope whatever that thing was, it failed at"
                                 + " whatever it was supposed to do. The lingering vision of two"
                                 + " large red irises staring at you suggest differently, though.");
+                target.addNonCombat(new Enthralled(target, owner, 5 + getStrength() / 20));
             }
         } else if (target.check(Attribute.Perception, 25 + target.baseDisarm()) || !target.eligible(owner) || !owner.eligible(target)) {
             if (target.location().humanPresent()) {

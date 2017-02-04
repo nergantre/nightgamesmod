@@ -68,10 +68,11 @@ public class BreastGrowth extends Skill {
             if (permanent) {
                 if (part != null) {
                     target.body.addReplace(part.upgrade(), 1);
+                    target.body.temporaryAddOrReplacePartWithType(part.upgrade().upgrade().upgrade(), 10);
                 }
             } else {
                 if (part != null) {
-                    target.body.temporaryAddOrReplacePartWithType(part.upgrade(), 10);
+                    target.body.temporaryAddOrReplacePartWithType(part.upgrade().upgrade().upgrade(), 10);
                 }
             }
         }

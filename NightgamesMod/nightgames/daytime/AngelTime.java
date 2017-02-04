@@ -284,7 +284,7 @@ public class AngelTime extends BaseNPCTime {
             Global.gui()
                   .choose(this, "Leave");
             Global.getPlayer()
-                  .addict(AddictionType.ZEAL, npc, Addiction.MED_INCREASE);
+                  .addict(null, AddictionType.ZEAL, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.ZEAL).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.experttongue) || Global.random(2) == 1)) {

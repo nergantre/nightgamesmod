@@ -44,7 +44,7 @@ public class WildThrust extends Thrust {
             c.write(getSelf(), Global.format("The sheer ferocity of {self:name-possessive} movements"
                             + " fill you with an unnatural desire to sate {self:possessive} thirst with"
                             + " your cum.", getSelf(), target));
-            target.addict(AddictionType.BREEDER, getSelf(), Addiction.LOW_INCREASE);
+            target.addict(c, AddictionType.BREEDER, getSelf(), Addiction.LOW_INCREASE);
         }
         return effective;
     }
@@ -75,7 +75,7 @@ public class WildThrust extends Thrust {
         if (add.wasCausedBy(target)) {
             //Increased recoil vs Kat
             results[1] *= 1 + ((float) add.getSeverity().ordinal() / 3.f);
-            p.addict(AddictionType.BREEDER, target, Addiction.LOW_INCREASE);
+            p.addict(c, AddictionType.BREEDER, target, Addiction.LOW_INCREASE);
         } else {
             //Increased damage vs everyone else
             results[0] *= 1 + ((float) add.getSeverity().ordinal() / 3.f);

@@ -56,7 +56,7 @@ public class Cynical extends DurationStatus {
 
     @Override
     public int tempted(Combat c, int x) {
-        return -5;
+        return -Math.min(5, x / 4);
     }
 
     @Override

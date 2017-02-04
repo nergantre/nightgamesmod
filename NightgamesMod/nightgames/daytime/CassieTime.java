@@ -399,7 +399,7 @@ public class CassieTime extends BaseNPCTime {
             Global.gui().choose(this, "Leave");
             npc.gainAffection(player, 1);
             player.gainAffection(npc, 1);
-            Global.getPlayer().addict(AddictionType.MAGIC_MILK, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().addict(null, AddictionType.MAGIC_MILK, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.MAGIC_MILK).ifPresent(Addiction::flagDaytime);
         } else if (choice.equals("Sex")) {
             if (npc.getAffection(player) >= 12 && (!player.has(Trait.silvertongue) || Global.random(2) == 1)) {

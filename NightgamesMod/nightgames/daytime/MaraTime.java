@@ -268,7 +268,7 @@ public class MaraTime extends BaseNPCTime {
                                       + " it's worth it?");
             }
             Global.gui().choose(this, "Leave");
-            Global.getPlayer().addict(AddictionType.MIND_CONTROL, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().addict(null, AddictionType.MIND_CONTROL, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.MIND_CONTROL).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {

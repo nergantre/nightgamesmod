@@ -45,36 +45,47 @@ public class Corruption extends Addiction {
         }
         List<Abuff> buffs = new ArrayList<>();
         if (noMoreAttrs()) {
-            if (sev != Severity.HIGH) {
-                c.write(affected,
-                                "The corruption is churning within you, but it seems that it's done all it can for now.");
+            if (!atLeast(Severity.MED)) {
+                c.write(affected, Global.format(
+                                "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             } else if (!affected.body.has("tail") || affected.body.getRandom("tail") != TailPart.demonic) {
-                c.write(affected, "<b>The dark taint changes you even further, and a spade-tipped tail bursts out of your"
-                                + " lower back!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(TailPart.demonic, 20);
+                c.write(affected, Global.format( "<b>The dark taint changes you even further, and a spade-tipped tail bursts out of {self:possessive}"
+                                + " lower back!</b>", affected, cause));
+                affected.body.temporaryAddOrReplacePartWithType(TailPart.demonic, Global.random(15, 40));
             } else if (!affected.body.has("wings") || affected.body.getRandom("wings") != WingsPart.demonic) {
-                c.write(affected,
-                                "<b>The dark taint changes you even further, and a set of black bat wings grows from your back!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(WingsPart.demonic, 20);
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and a set of black bat wings grows from {self:possessive} back!</b>", affected, cause));
+                affected.body.temporaryAddOrReplacePartWithType(WingsPart.demonic, Global.random(15, 40));
             } else if (affected.hasPussy() && !affected.body.getRandomPussy().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
-                c.write(affected,
-                                "<b>The dark taint changes you even further, and your pussy turns into that of a succubus!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(affected.body.getRandomPussy().applyMod(DemonicMod.INSTANCE), 20);
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and {self:possessive} pussy turns into that of a succubus!</b>", affected, cause));
+                affected.body.temporaryAddPartMod("pussy", DemonicMod.INSTANCE, Global.random(15, 40));
             } else if (affected.hasDick() && !affected.body.getRandomCock().moddedPartCountsAs(affected, CockMod.incubus)) {
-                c.write(affected,
-                                "<b>The dark taint changes you even further, and your cock turns into that of an incubus!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(affected.body.getRandomCock().applyMod(CockMod.incubus), 20);
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and {self:possessive} cock turns into that of an incubus!</b>", affected, cause));
+                affected.body.temporaryAddPartMod("cock", CockMod.incubus, Global.random(15, 40));
+            } else if (!atLeast(Severity.HIGH)) {
+                c.write(affected, Global.format(
+                                "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             } else if (!affected.hasPussy() && cause.hasDick()) {
-                c.write(affected,
-                                "<b>The dark taint changes you even further, and a succubus's pussy forms between your legs!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(PussyPart.generic.applyMod(DemonicMod.INSTANCE), 20);
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and a succubus's pussy forms between {self:possessive} legs!</b>", affected, cause));
+                affected.body.temporaryAddOrReplacePartWithType(PussyPart.generic.applyMod(DemonicMod.INSTANCE), Global.random(15, 40));
             } else if (!affected.hasDick()) {
-                c.write(affected,
-                                "<b>The dark taint changes you even further, and an incubus's cock forms between your legs!</b>");
-                affected.body.temporaryAddOrReplacePartWithType(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.incubus), 20);
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and an incubus's cock forms between {self:possessive} legs!</b>", affected, cause));
+                affected.body.temporaryAddOrReplacePartWithType(new CockPart().applyMod(new SizeMod(SizeMod.COCK_SIZE_BIG)).applyMod(CockMod.incubus), Global.random(15, 40));
+            } else if (!affected.body.getRandomAss().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and {self:possessive} asshole darkens with corruption!</b>", affected, cause));
+                affected.body.temporaryAddPartMod("ass", DemonicMod.INSTANCE, Global.random(15, 40));
+            } else if (!affected.body.getRandomAss().moddedPartCountsAs(affected, DemonicMod.INSTANCE)) {
+                c.write(affected, Global.format(
+                                "<b>The dark taint changes {self:name-do} even further, and {self:possessive} lush lips turns black!</b>", affected, cause));
+                affected.body.temporaryAddPartMod("mouth", DemonicMod.INSTANCE, Global.random(15, 40));
             } else {
-                c.write(affected,
-                                "The corruption is churning within you, but it seems that it's done all it can for now.");
+                c.write(affected, Global.format(
+                                "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             }
         } else {
             for (int i = 0; i < amt; i++) {
@@ -87,14 +98,14 @@ public class Corruption extends Addiction {
             }
             switch (sev) {
                 case HIGH:
-                    c.write(affected, "The corruption is rampaging through your soul, rapidly demonizing you.");
+                    c.write(affected, Global.format( "The corruption is rampaging through {self:possessive} soul, rapidly demonizing {self:direct-object}.", affected, cause));
                     break;
                 case LOW:
-                    c.write(affected, "The corruption inside of you is slowly changing your mind...");
+                    c.write(affected, Global.format( "The corruption inside of {self:name-do} is slowly changing {self:possessive} mind...", affected, cause));
                     break;
                 case MED:
-                    c.write(affected,
-                                    "The corruption is rapidly subverting your skills, putting them to a darker use...");
+                    c.write(affected, Global.format(
+                                    "The corruption is rapidly subverting {self:possessive} skills, putting them to a darker use...", affected, cause));
                     break;
                 case NONE:
                     assert buffs.isEmpty();
@@ -103,23 +114,27 @@ public class Corruption extends Addiction {
             buffs.forEach(b -> affected.addlist.add(b));
         }
         if (c != null && cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel() && c.getOpponent(affected).equals(cause)) {
-            c.write(affected, "A wave of obedience radiates out from the dark essence within you, constraining"
-                            + " your free will. It will make fighting " 
-                            + cause.getTrueName() + " much more difficult...");
+            c.write(affected, Global.format( "A wave of obedience radiates out from the dark essence within {self:name-do}, constraining"
+                            + " {self:possessive} free will. It will make fighting " 
+                            + cause.getName() + " much more difficult...", affected, cause));
             affected.add(c, new Compulsion(affected, cause));
         }
     }
 
     private boolean shouldCompel() {
-        return getSeverity().ordinal() * 20 < Global.random(100);
+        return getMagnitude() * 50 > Global.random(100);
     }
-    
+
     private boolean noMoreAttrs() {
         return !getDrainAttr().isPresent();
     }
 
     private Optional<Attribute> getDrainAttr() {
-        return Global.pickRandom(Arrays.stream(Attribute.values()).filter(a -> a != Attribute.Dark && affected.get(a) >= 10).toArray(Attribute[]::new));
+        Optional<Abuff> darkBuff = affected.getStatusOfClass(Abuff.class).stream().filter(status -> status.getModdedAttribute() == Attribute.Dark).findAny();
+        if (!darkBuff.isPresent() || darkBuff.get().getValue() <  10 + getMagnitude() * 50) {
+            return Global.pickRandom(Arrays.stream(Attribute.values()).filter(a -> a != Attribute.Dark && affected.get(a) >= 10).toArray(Attribute[]::new));            
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -136,13 +151,23 @@ public class Corruption extends Addiction {
     protected String describeIncrease() {
         switch (getSeverity()) {
             case HIGH:
-                return cause.getName() + "'s blackness threatens to overwhelm what purity "
-                                + "remains inside of you, and it's a constant presence in your mind.";
+                if (affected.human()) {
+                    return cause.getName() + "'s blackness threatens to overwhelm what purity "
+                                    + "remains inside of you, and it's a constant presence in {self:possessive} mind.";
+                } else {
+                    return cause.getName() + "'s dark taint threatens to overwhelm what purity "
+                                    + "remains inside of {self:name-do}, and you can almost feel that {self:pronoun} has almost given up fighting it.";
+                }
             case LOW:
-                return "The blackness " + cause.getName() + " poured into you is still "
-                                + "there, and it feels like it's alive somehow; a churning mass of corruption and depravity.";
+                if (affected.human()) {
+                    return "The blackness " + cause.getName() + " poured into you is still "
+                                    + "there, and it feels like it's alive somehow; a churning mass of corruption and depravity.";
+                } else {
+                    return "The blackness " + cause.getName() + " poured into {self:name-do} is still "
+                                    + "there, and you can almost feel it inside {self:direct-object}; a churning mass of corruption and depravity.";
+                }
             case MED:
-                return "The corruption in your soul spreads further, seeping into your flesh and bones.";
+                return "The corruption in {self:possessive} soul spreads further, seeping into {self:possessive} flesh and bones.";
             case NONE:
             default:
                 return "";
@@ -152,16 +177,32 @@ public class Corruption extends Addiction {
     @Override
     protected String describeDecrease() {
         switch (getSeverity()) {
-            case LOW:
-                return "The corruption in your soul is backing off, but "
-                                + "there is work to be done yet if you are to be entirely free of it. ";
+            case HIGH:
+                if (affected.human()) {
+                    return "The corruption in {self:possessive} soul is backing off, but "
+                                    + "there is work to be done yet if you are to be entirely free of it. ";
+                } else {
+                    return "The corruption in {self:possessive} soul visibly recedes a bit, taking away some of {self:possessive} demonic attributes along with it.";
+                }
             case MED:
-                return "Whatever it was exactly that " + cause.getName() + " created in you "
-                                + "has weakened considerably and is no longer corrupting your every thought. ";
+                if (affected.human()) {
+                    return "Whatever it was exactly that " + cause.getName() + " created in you "
+                                    + "has weakened somewhat and is no longer taking all of your concentration to resist it. ";
+                } else {
+                    return "Whatever it was exactly that " + cause.getName() + " has tainted {self:name-do} with "
+                                    + "has weakened somewhat and {self:possessive} gaze doesn't feel as dangerous as before. ";
+                }
+            case LOW:
+                if (affected.human()) {
+                    return "Whatever it was exactly that " + cause.getName() + " created in you "
+                                    + "has weakened considerably and is no longer corrupting {self:possessive} every thought. ";
+                } else {
+                    return "Whatever it was exactly that " + cause.getName() + " has tainted {self:name-do} with "
+                                    + "has weakened considerably and some of {self:possessive} old gentleness is showing through. ";
+                }
             case NONE:
                 return "The last of the infernal corruption is purified "
-                                + "from your soul, bringing you back to normal. Well, as normal as you're ever going to be, anyway. ";
-            case HIGH:
+                + "from {self:possessive} soul, bringing {self:direct-object} back to normal. Well, as normal as {self:subject-action:are} ever going to be, anyway. ";
             default:
                 return "";
         }
@@ -177,7 +218,7 @@ public class Corruption extends Addiction {
                 return "<b>Something is not quite right. The blackness " + cause.getName()
                                 + " put in you is stirring, causing all kinds of strange sensations. Perhaps it's hungry?</b>";
             case MED:
-                return "<b>The powerful corruption within you is rebelling"
+                return "<b>The powerful corruption within {self:name-do} is rebelling"
                                 + " against not being fed today. Expect the unexpected tonight.</b>";
             case NONE:
             default:
@@ -198,7 +239,7 @@ public class Corruption extends Addiction {
     @Override
     public String describeMorning() {
         return "Something is churning inside of you this morning. It feels both wonderful and disgusting"
-                        + " at the same time. You think you hear an echo of a whisper as you go about your"
+                        + " at the same time. You think you hear an echo of a whisper as you go about {self:possessive}"
                         + " daily routine, pushing you to evil acts.";
     }
 
@@ -213,12 +254,30 @@ public class Corruption extends Addiction {
             return "The blackness resonates with " + cause.getName() + ", growing even more powerful and troublesome than before.";
         }
         return "The blackness " + cause.getName() + " places in you resonates with " + cause.directObject() + ". You can"
-                        + " feel it starting to corrupt your mind and body!";
+                        + " feel it starting to corrupt {self:possessive} mind and body!";
     }
 
     @Override
     public String describe(Combat c) {
-        return ""; //handled in tick
+        if (affected.human()) {
+            return "";
+        } else {
+            switch (getSeverity()) {
+                case HIGH:
+                    return Global.format("<b>{self:SUBJECT-ACTION:have} been almost completely demonized by " + cause.possessiveAdjective() + " demonic influence. "
+                                    + "{self:POSSESSIVE} bright eyes have been replaced by ruby-like irises that seem to stare into your very soul. You better finish this one fast!</b>", affected, cause);
+                case MED:
+                    return Global.format("<b>{self:SUBJECT-ACTION:have} been visibly changed by demonic corruption. "
+                                    + "Black lines run along {self:possessive} body where it hadn't before and there's a hungry look in {self:possessive} eyes that "
+                                    + "disturbs you almost as much as it turns you on.</b>", affected, cause);
+                case LOW:
+                    return Global.format("<b>{self:SUBJECT-ACTION:look} a bit strange. While you can't quite put your finger on it, something about {self:direct-object} feels a bit off to you. "
+                                    + "Probably best not too worry about it too much.</b>", affected, cause);
+                case NONE:
+                default:
+                    return "";
+            }
+        }
     }
 
     @Override
@@ -295,8 +354,8 @@ public class Corruption extends Addiction {
     public String informantsOverview() {
         return "Dude. Not cool. I like " + cause.getName() + " shaking " + cause.directObject() + " evil ass around at night as much"
                         + " as the next guy, but the evil should stay there, you know? Now, the"
-                        + " rest of the competitors will not appreciate your new attitude either."
-                        + " I don't see them jumping to your defence any time soon. You should also"
+                        + " rest of the competitors will not appreciate {self:possessive} new attitude either."
+                        + " I don't see them jumping to {self:possessive} defence any time soon. You should also"
                         + " worry about this thing inside of you taking over the uncorrupted parts of"
                         + " your mind. Also, I would imagine that that evil part of you won't appreciate"
                         + " any efforts to get rid of it. Who knows what chaos it might cause? Of course,"

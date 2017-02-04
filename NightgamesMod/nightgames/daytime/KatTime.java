@@ -313,7 +313,7 @@ public class KatTime extends BaseNPCTime {
                                 + " that, is that a bad thing?");
             }
             Global.gui().choose(this, "Leave");
-            Global.getPlayer().addict(AddictionType.BREEDER, npc, Addiction.MED_INCREASE);
+            Global.getPlayer().addict(null, AddictionType.BREEDER, npc, Addiction.MED_INCREASE);
             Global.getPlayer().getAddiction(AddictionType.BREEDER).ifPresent(Addiction::flagDaytime);
         }
         if (choice.equals("Sex")) {

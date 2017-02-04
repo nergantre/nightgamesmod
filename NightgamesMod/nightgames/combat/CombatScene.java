@@ -24,7 +24,9 @@ public class CombatScene {
     }
 
     public void visit(Combat c, Character npc) {
-        Global.gui().message(message.provide(c, npc, c.getOpponent(npc)));
+        c.write("<br/>");
+        c.write(message.provide(c, npc, c.getOpponent(npc)));
+        c.updateAndClearMessage();
         choices.forEach(choice -> Global.gui().choose(c, npc, choice.getChoice(), choice));
     }
 

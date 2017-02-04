@@ -425,8 +425,10 @@ public class Combat extends Observable implements Cloneable {
 
     private void checkForCombatComment() {
         Character other;
-        if (p1.human() || p2.human()) {
-            other = (NPC) getOpponent(Global.getPlayer());
+        if (p1.human()) {
+            other = p2;
+        } else if (p2.human()) {
+            other = p1;
         } else {
             other = (NPC) (Global.random(2) == 0 ? p1 : p2);
         }
@@ -680,7 +682,7 @@ public class Combat extends Observable implements Cloneable {
             Collection<Clothing> infra = self.outfit.getArticlesWithTrait(ClothingTrait.infrasound);
             float magnitude = infra.size() * (Addiction.LOW_INCREASE / 6);
             if (magnitude > 0) {
-                other.addict(AddictionType.MIND_CONTROL, self, magnitude);
+                other.addict(this, AddictionType.MIND_CONTROL, self, magnitude);
                 if (Global.random(3) == 0) {
                     Addiction add = other.getAddiction(AddictionType.MIND_CONTROL).orElse(null);
                     Clothing source = (Clothing) infra.toArray()[0];
@@ -1314,7 +1316,7 @@ public class Combat extends Observable implements Cloneable {
                                     + " psyche finds strangely appealing. {self:SUBJECT-ACTION:find} {self:reflective}"
                                     + " wanting more.", p, other));
                 }
-                p.addict(AddictionType.DOMINANCE, other, Addiction.HIGH_INCREASE);
+                p.addict(this, AddictionType.DOMINANCE, other, Addiction.HIGH_INCREASE);
             }
         }
     }
@@ -1635,12 +1637,12 @@ public class Combat extends Observable implements Cloneable {
                 write(checked, "As you enter Kat, instinct immediately kicks in. It just"
                                 + " feels so right, like this is what you're supposed"
                                 + " to be doing all the time.");
-                checked.addict(AddictionType.BREEDER, opp, Addiction.MED_INCREASE);
+                checked.addict(this, AddictionType.BREEDER, opp, Addiction.MED_INCREASE);
             } else {
                 write(checked, "Something shifts inside of you as Kat fills herself with"
                                 + " you. A haze descends over your mind, clouding all but a desire"
                                 + " to fuck her as hard as you can.");
-                checked.addict(AddictionType.BREEDER, opp, Addiction.LOW_INCREASE);
+                checked.addict(this, AddictionType.BREEDER, opp, Addiction.LOW_INCREASE);
             }
         }
     }

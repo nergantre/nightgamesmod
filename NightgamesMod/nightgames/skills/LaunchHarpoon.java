@@ -7,11 +7,13 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.Clothing;
 import nightgames.items.clothing.ClothingSlot;
+import nightgames.nskills.tags.SkillTag;
 
 public class LaunchHarpoon extends Skill {
 
     public LaunchHarpoon(Character self) {
         super("Launch Harpoon", self);
+        this.addTag(SkillTag.usesToy);
     }
 
     @Override

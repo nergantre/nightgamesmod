@@ -3,7 +3,7 @@ package nightgames.status;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,15 +20,15 @@ import nightgames.skills.Skill;
 
 public abstract class Status implements Cloneable {
     public String name;
-    public Character affected;
-    protected HashSet<Stsflag> flags;
-    protected List<Requirement> requirements;
+    public transient Character affected;
+    protected transient Set<Stsflag> flags;
+    protected transient List<Requirement> requirements;
 
     public Status(String name, Character affected) {
         this.name = name;
         this.affected = affected;
         requirements = new ArrayList<>();
-        flags = new HashSet<Stsflag>();
+        flags = EnumSet.noneOf(Stsflag.class);
     }
 
     @Override

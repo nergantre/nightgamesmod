@@ -250,6 +250,7 @@ public class NPC extends Character {
         target.undress(c);
         gainTrophy(c, target);
         target.defeated(this);
+        c.updateAndClearMessage();
         c.write(ai.victory3p(c, target, assist));
         gainAttraction(target, 1);
     }

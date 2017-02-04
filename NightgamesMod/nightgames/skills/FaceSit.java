@@ -32,7 +32,7 @@ public class FaceSit extends Skill {
     public float priorityMod(Combat c) {
         return getSelf().has(Trait.lacedjuices) || getSelf().has(Trait.addictivefluids)
                         || (getSelf().body.has("pussy") && getSelf().body.
-                                        getRandomPussy().moddedPartCountsAs(getSelf(), FeralMod.INSTANCE)) ? 3.0f : 0;
+                                        getRandomPussy().moddedPartCountsAs(getSelf(), FeralMod.INSTANCE)) ? 2.5f : 0;
     }
 
     @Override
@@ -70,11 +70,7 @@ public class FaceSit extends Skill {
                 target.add(c, new BodyFetish(target, getSelf(), "pussy", .05));
             }
         }
-        double n = 4 + Global.random(4);
-        if (c.getStance().front(getSelf())) {
-            // opponent can see self
-            n += 3 * getSelf().body.getHotness(target);
-        }
+        double n = 4 + Global.random(4) + 1.5 * getSelf().body.getHotness(target);
         if (target.has(Trait.imagination)) {
             n *= 1.5;
         }

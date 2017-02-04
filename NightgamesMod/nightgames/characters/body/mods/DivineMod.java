@@ -66,7 +66,7 @@ public class DivineMod extends PartMod {
                                                 + "%s, a holy aura surrounds {self:direct-object}. The soothing"
                                                 + " light washes over {other:pronoun}, filling {other:direct-object} with a zealous need to worship {self:possessive} divine body.",
                                 self, opponent, part.describe(self)));
-                opponent.addict(AddictionType.ZEAL, self, Addiction.MED_INCREASE);
+                opponent.addict(c, AddictionType.ZEAL, self, Addiction.MED_INCREASE);
             }
         }
     }

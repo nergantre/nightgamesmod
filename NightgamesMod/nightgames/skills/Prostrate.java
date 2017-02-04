@@ -50,7 +50,7 @@ public class Prostrate extends Skill {
             c.setStance(new Behind(target, getSelf()), getSelf(), true);
         }
         getSelf().unaddictCombat(AddictionType.ZEAL, target, Addiction.LOW_INCREASE, c);
-        getSelf().addict(AddictionType.ZEAL, target, Addiction.LOW_INCREASE);
+        getSelf().addict(c, AddictionType.ZEAL, target, Addiction.LOW_INCREASE);
         return true;
     }
 

@@ -118,7 +118,7 @@ public class BreastsPart extends GenericBodyPart {
             if (self.has(Trait.magicmilk)) {
                 float addictionLevel;
                 Addiction addiction;
-                opponent.addict(AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
+                opponent.addict(c, AddictionType.MAGIC_MILK, self, Addiction.LOW_INCREASE);
                 addiction = opponent.getAddiction(AddictionType.MAGIC_MILK).get();
                 addictionLevel = addiction.getMagnitude();
                 if (addictionLevel < Addiction.LOW_THRESHOLD) {
@@ -159,7 +159,7 @@ public class BreastsPart extends GenericBodyPart {
     
                 if (opponent.is(Stsflag.magicmilkcraving)) {
                     // temporarily relieve craving
-                    addiction.alleviateCombat(Addiction.LOW_INCREASE);
+                    addiction.alleviateCombat(c, Addiction.LOW_INCREASE);
                 }
                 if (c.getCombatantData(opponent) != null) {
                     int timesDrank = c.getCombatantData(opponent)

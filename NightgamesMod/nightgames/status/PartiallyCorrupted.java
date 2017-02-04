@@ -9,11 +9,11 @@ import nightgames.characters.Character;
 import nightgames.characters.Trait;
 import nightgames.characters.body.BodyPart;
 import nightgames.combat.Combat;
+import nightgames.global.Global;
 import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class PartiallyCorrupted extends DurationStatus {
-
     private static final int THRESHOLD = 5;
 
     private int counter;
@@ -30,14 +30,31 @@ public class PartiallyCorrupted extends DurationStatus {
 
     @Override
     public String initialMessage(Combat c, Optional<Status> replacement) {
-        return cause.nameOrPossessivePronoun() + " lips tug on your very soul."
-                        + " If this keeps up, you could be in serious trouble!";
+        if (counter > THRESHOLD) {
+            affected.addict(c, AddictionType.CORRUPTION,
+                            cause, cause.has(Trait.Subversion) ? Addiction.HIGH_INCREASE : Addiction.MED_INCREASE);
+            counter = 0;
+            return Global.format("{other:NAME-POSSESSIVE} lips has finally broke through {self:possessive} resistance and planted a bit of darkness inside {self:possessive} very soul!", affected, cause);
+        } else {
+            return Global.format("{other:NAME-POSSESSIVE} lips tug on {self:name-possessive} very soul. If this keeps up, {self:pronoun} could be in serious trouble!", affected, cause);
+        }
+    }
+
+    public float fitnessModifier() {
+        if (counter == 0) {
+            //hack to get her to want to do the final kiss.
+            return -30;
+        }
+        return -5 * counter;
     }
 
     @Override
     public String describe(Combat c) {
-        return "The barriers protecting your soul are temporarily weakened by " + cause.nameOrPossessivePronoun()
-                        + " lips.";
+        if (counter > 0) {
+            return Global.format("The barriers protecting {self:name-possessive} soul are temporarily weakened by {other:name-possessive} lips.", affected, cause);
+        } else {
+            return "";
+        }
     }
 
     @Override
@@ -51,10 +68,10 @@ public class PartiallyCorrupted extends DurationStatus {
         PartiallyCorrupted other = (PartiallyCorrupted) s;
         setDuration(Math.max(other.getDuration(), getDuration()));
         counter += other.counter;
-        if (counter > THRESHOLD) {
-            affected.addict(AddictionType.CORRUPTION, cause,
-                            cause.has(Trait.Subversion) ? Addiction.HIGH_INCREASE : Addiction.MED_INCREASE);
-            // TODO: message?
+    }
+
+    public void tick(Combat c) {
+        if (counter <= 0) {
             affected.removelist.add(this);
         }
     }

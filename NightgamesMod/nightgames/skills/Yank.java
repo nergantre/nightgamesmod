@@ -7,6 +7,7 @@ import nightgames.combat.Result;
 import nightgames.global.Global;
 import nightgames.items.clothing.ClothingSlot;
 import nightgames.items.clothing.ClothingTrait;
+import nightgames.nskills.tags.SkillTag;
 import nightgames.stance.Stance;
 import nightgames.status.Falling;
 
@@ -14,6 +15,7 @@ public class Yank extends Skill {
 
     public Yank(Character self) {
         super("Yank", self);
+        addTag(SkillTag.usesToy);
     }
 
     @Override

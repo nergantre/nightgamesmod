@@ -11,6 +11,14 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 
 public class Alluring extends DurationStatus {
+
+    /**
+     * Default constructor for loading
+     */
+    public Alluring() {
+        this(Global.noneCharacter());
+    }
+
     public Alluring(Character affected, int duration) {
         super("Alluring", affected, duration);
         flag(Stsflag.alluring);
