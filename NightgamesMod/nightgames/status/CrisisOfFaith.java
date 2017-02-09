@@ -12,7 +12,6 @@ import nightgames.status.addiction.Addiction;
 import nightgames.status.addiction.AddictionType;
 
 public class CrisisOfFaith extends Status {
-
     public CrisisOfFaith(Character affected) {
         super("Crisis of Faith", affected);
         assert affected == null || affected.human();
@@ -28,7 +27,7 @@ public class CrisisOfFaith extends Status {
     public boolean lingering() {
         return true;
     }
-    
+
     @Override
     public String describe(Combat c) {
         return "You are deeply disturbed by the doubt in your heart, limiting mojo gain.";

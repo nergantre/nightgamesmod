@@ -18,11 +18,14 @@ import nightgames.characters.custom.CharacterLine;
 import nightgames.characters.custom.CommentSituation;
 import nightgames.characters.custom.RecruitmentData;
 import nightgames.combat.Combat;
+import nightgames.global.DebugFlags;
 import nightgames.global.Flag;
 import nightgames.global.Global;
 import nightgames.items.Item;
 import nightgames.skills.Skill;
 import nightgames.start.NpcConfiguration;
+import nightgames.status.addiction.Addiction;
+import nightgames.status.addiction.Addiction.Severity;
 
 public abstract class BasePersonality implements Personality {
     /**
@@ -88,6 +91,24 @@ public abstract class BasePersonality implements Personality {
                 CockPart part = (CockPart) optDick.get();
                 character.body.remove(part);
                 character.body.add(part.applyMod(preferredCockMod));
+            }
+        }
+        for (Addiction addiction : character.getAddictions()) {
+            if (addiction.atLeast(Severity.LOW)) {
+                Character cause = addiction.getCause();
+                int affection = character.getAffection(cause);
+                int affectionDelta = affection - character.getAffection(Global.getPlayer());
+                // day 10, this would be (10 + sqrt(10) * 5) * .7 = 18 affection lead to max
+                // day 60, this would be (10 + sqrt(70) * 5) * .7 = 36 affection lead to max
+                double chanceToDoDaytime = .25 + (addiction.getMagnitude() / 2) + Global.clamp((affectionDelta / (10 + Math.sqrt(Global.getDate()) * 5)), -.7, .7);
+                if (Global.randomdouble() < chanceToDoDaytime) {
+                    addiction.aggravate(null, Addiction.MED_INCREASE);
+                    addiction.flagDaytime();
+                    character.gainAffection(cause, 1);
+                    if (Global.isDebugOn(DebugFlags.DEBUG_ADDICTION)) {
+                        System.out.printf("%s did daytime for %s (%s), chance = %f\n", character.getTrueName(), addiction.getType().name(), cause.getTrueName(), chanceToDoDaytime);
+                    }
+                }
             }
         }
     }

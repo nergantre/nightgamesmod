@@ -26,6 +26,8 @@ import java.util.stream.Stream;
 
 import javax.swing.plaf.basic.BasicTreeUI.TreeIncrementAction;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -1916,11 +1918,12 @@ public abstract class Character extends Observable implements Cloneable {
                     int times, int total) {
         if (c.getStance().inserted(this) && !has(Trait.strapped)) {
             Character partner = c.getStance().getPenetratedCharacter(c, this);
+            BodyPart holePart = Global.pickRandom(c.getStance().getPartsFor(c, partner, this)).orElse(null);
             if (times == 1) {
                 String hole = "pulsing hole";
-                if (opponentPart != null && opponentPart.isType("breasts")) {
+                if (holePart != null && holePart.isType("breasts")) {
                     hole = "cleavage";
-                } else if (opponentPart != null && opponentPart.isType("mouth")) {
+                } else if (holePart != null && holePart.isType("mouth")) {
                     hole = "hungry mouth";
                 }
                 c.write(this, Global.format(
@@ -3973,15 +3976,21 @@ public abstract class Character extends Observable implements Cloneable {
     public Optional<Addiction> getAddiction(AddictionType type) {
         return getAdditionStream().filter(a -> a.getType() == type).findAny();
     }
-    
+
     public Optional<Addiction> getStrongestAddiction() {
         return getAdditionStream().max(Comparator.comparing(Addiction::getSeverity));
     }
 
+    private static final Set<AddictionType> NPC_ADDICTABLES = EnumSet.of(AddictionType.CORRUPTION);
     public void addict(Combat c, AddictionType type, Character cause, float mag) {
         boolean dbg = Global.isDebugOn(DebugFlags.DEBUG_ADDICTION);
+        if (!human() && !NPC_ADDICTABLES.contains(type)) {
+            if (dbg) {
+                System.out.printf("Skipping %s addiction on %s because it's not supported for NPCs", type.name(), getType());
+            }
+        }
         Optional<Addiction> addiction = getAddiction(type);
-        if (addiction.isPresent()) {
+        if (addiction.isPresent() && Objects.equals(addiction.map(Addiction::getCause).orElse(null), cause)) {
             if (dbg) {
                 System.out.printf("Aggravating %s on player by %.3f\n", type.name(), mag);
             }

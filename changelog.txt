@@ -1,9 +1,23 @@
-2.5.0.3
+2.5.1
+
+QoL/GUI:
+- Made the body part sort order stable
+- Made the body part description non-random in the status window
+- Added new messages for drained and converted attributes (they work the same way though as before)
+
+New:
+- Added Reyka's focus traits, courtesy of dndw 
+- At level 12, choose between disabling and seduction
+- At level 22, choose between draining and corruption
+	- Word of warning, if you choose corruption, she will not necessarily corrupt only the player.
+- Rebalanced her trait gains to work with her new focus traits
 
 Balance:
 - Seduction/beauty bonus has been cut in half for pleasure attacks (remains the same for temptation)
 - Tighten now costs 15 mojo
 - Powerful hips now only allow grind/bounce from below.
+- Dominate can no longer be used while you are already in a dominant stance
+- Tempt, Charm, Facesit and Smother temptation scaling with charisma has been nerfed
 
 Other:
 - "Wild Ride" is now called "Wild Grind" when used from below (effects unchanged)
@@ -11,6 +25,8 @@ Other:
 Bug fixes:
 - Fixed a bug where level ups were being displayed even though the player isn't leveling up in combat.
 - Fixed a bug where drained messages would use the wrong person's name when being drained by multiple characters
+- Fixed some typos with Cassie's scenes
+- Fixed a bug where the wrong body part would be used for the orgasm message in a threesome.
 
 2.5.0.2
 

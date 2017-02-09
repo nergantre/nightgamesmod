@@ -101,26 +101,21 @@ public class Reyka extends BasePersonality {
         character.getGrowth().addTrait(0, Trait.darkpromises);
         character.getGrowth().addTrait(0, Trait.Confident);
         character.getGrowth().addTrait(0, Trait.shameless);
-        character.getGrowth().addTrait(2, Trait.sexTraining1);
-        character.getGrowth().addTrait(5, Trait.tongueTraining1);
-        character.getGrowth().addTrait(8, Trait.expertGoogler);
-        character.getGrowth().addTrait(11, Trait.addictivefluids);
-        character.getGrowth().addTrait(14, Trait.graceful);
-        character.getGrowth().addTrait(17, Trait.insertion);
-        character.getGrowth().addTrait(20, Trait.spiritphage);
-        character.getGrowth().addTrait(23, Trait.tongueTraining2);
-        character.getGrowth().addTrait(26, Trait.magicEyeTrance);
-        character.getGrowth().addTrait(29, Trait.dickhandler);
-        character.getGrowth().addTrait(32, Trait.lacedjuices);
-        character.getGrowth().addTrait(35, Trait.energydrain);
-        character.getGrowth().addTrait(38, Trait.sexTraining2);
-        character.getGrowth().addTrait(41, Trait.soulsucker);
-        character.getGrowth().addTrait(44, Trait.analTraining1);
-        character.getGrowth().addTrait(47, Trait.desensitized2);
-        character.getGrowth().addTrait(50, Trait.sexTraining3);
-        character.getGrowth().addBodyPartMod(53, "pussy", ExtendedTonguedMod.INSTANCE);
-        character.getGrowth().addTrait(56, Trait.carnalvirtuoso);
-        
+        character.getGrowth().addTrait(3, Trait.sexTraining1);
+        character.getGrowth().addTrait(6, Trait.tongueTraining1);
+        character.getGrowth().addTrait(9, Trait.expertGoogler);
+        character.getGrowth().addTrait(15, Trait.lacedjuices);
+        character.getGrowth().addTrait(18, Trait.graceful);
+        character.getGrowth().addTrait(24, Trait.spiritphage);
+        character.getGrowth().addTrait(33, Trait.magicEyeTrance);
+        character.getGrowth().addTrait(36, Trait.addictivefluids);
+        character.getGrowth().addTrait(43, Trait.energydrain);
+        character.getGrowth().addTrait(46, Trait.sexTraining2);
+        character.getGrowth().addBodyPartMod(46, "pussy", ExtendedTonguedMod.INSTANCE);
+        character.getGrowth().addTrait(49, Trait.soulsucker);
+        character.getGrowth().addTrait(55, Trait.desensitized2);
+        character.getGrowth().addTrait(58, Trait.carnalvirtuoso);
+
         character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 12 
                         && !Global.checkFlag(REYKA_DISABLING_FOCUS) && !Global.checkFlag(REYKA_SEDUCTION_FOCUS)
                         , (c, self, other) -> Global.format("You had turned your back to Reyka after your fight."
@@ -178,7 +173,7 @@ public class Reyka extends BasePersonality {
                             useDisabling();
                             return true;
                         }))));
-        
+
         character.addCombatScene(new CombatScene((c, self, other) -> self.getLevel() >= 22
                         && !Global.checkFlag(REYKA_DRAINING_FOCUS) && !Global.checkFlag(REYKA_CORRUPTION_FOCUS)
                         && (Global.checkFlag(REYKA_DISABLING_FOCUS) || Global.checkFlag(REYKA_SEDUCTION_FOCUS))

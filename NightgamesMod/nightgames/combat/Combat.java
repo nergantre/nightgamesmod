@@ -1288,7 +1288,7 @@ public class Combat extends Observable implements Cloneable {
                     }
                 } else if (getStance().havingSex(this, p) && getStance().dom(p) && getStance().reversable(this)) {
                     write(getOpponent(p), Global.format("{other:SUBJECT-ACTION:take|takes} the chance to shift into a more dominant position.", p, getOpponent(p)));
-                    setStance(getStance().reverse(this, true));
+                    setStance(getStance().reverse(this, false));
                 } else {
                     if (stance.havingSex(this)) {
                         setStance(stance.reverse(this, true));

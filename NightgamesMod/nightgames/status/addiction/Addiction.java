@@ -46,6 +46,10 @@ public abstract class Addiction extends Status {
     protected Addiction(Character affected, String name, Character cause) {
         this(affected, name, cause, .01f);
     }
+    
+    public Character getCause() {
+        return cause;
+    }
 
     @Override
     public void tick(Combat c) {
@@ -190,7 +194,7 @@ public abstract class Addiction extends Status {
     }
 
     public boolean shouldRemove() {
-        return magnitude <= 0.f;
+        return magnitude <= 0.001f;
     }
 
     public void aggravate(Combat c, float amt) {

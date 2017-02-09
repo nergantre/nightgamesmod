@@ -70,7 +70,7 @@ public class FaceSit extends Skill {
                 target.add(c, new BodyFetish(target, getSelf(), "pussy", .05));
             }
         }
-        double n = 4 + Global.random(4) + 1.5 * getSelf().body.getHotness(target);
+        double n = 4 + Global.random(4) + getSelf().body.getHotness(target);
         if (target.has(Trait.imagination)) {
             n *= 1.5;
         }

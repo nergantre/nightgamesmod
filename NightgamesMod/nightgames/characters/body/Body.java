@@ -228,7 +228,9 @@ public class Body implements Cloneable {
     }
 
     public void describe(StringBuilder b, Character other, String delimiter, boolean hideInvisible) {
-        for (BodyPart part : getCurrentParts()) {
+        List<BodyPart> sortedParts = new ArrayList<>(getCurrentParts());
+        sortedParts.sort(SORTER);
+        for (BodyPart part : sortedParts) {
             if ((!hideInvisible || part.isVisible(character)) && part.isNotable()) {
                 int prevLength = b.length();
                 part.describeLong(b, character);
@@ -296,11 +298,13 @@ public class Body implements Cloneable {
         }
         return Global.format(message, character, other, startString, bodyString);
     }
-
+    private static final BodyPartSorter SORTER = new BodyPartSorter();
     public void describeBodyText(StringBuilder b, Character other, boolean notableOnly) {
         b.append(Global.format("{self:POSSESSIVE} body has ", character, null));
         BodyPart previous = null;
-        for (BodyPart part : getCurrentParts()) {
+        List<BodyPart> sortedParts = new ArrayList<>(getCurrentParts());
+        sortedParts.sort(SORTER);
+        for (BodyPart part : sortedParts) {
             if (!notableOnly || part.isNotable()) {
                 if (previous != null) {
                     b.append(Global.prependPrefix(previous.prefix(), previous.fullDescribe(character)));

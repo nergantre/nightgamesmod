@@ -27,7 +27,7 @@ public class Dominate extends Skill {
     @Override
     public boolean usable(Combat c, Character target) {
         return !target.wary() && !c.getStance().sub(getSelf()) && !c.getStance().prone(getSelf())
-                        && !c.getStance().prone(target) && getSelf().canAct() && !getSelf().has(Trait.submissive);
+                        && !c.getStance().prone(target) && !c.getStance().sub(target) && getSelf().canAct() && !getSelf().has(Trait.submissive);
     }
 
     @Override

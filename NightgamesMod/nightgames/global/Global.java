@@ -255,6 +255,7 @@ public class Global {
         Map<String, Boolean> configurationFlags = JsonUtils.mapFromJson(JsonUtils.rootJson(new InputStreamReader(ResourceLoader.getFileResourceAsStream("data/globalflags.json"))).getAsJsonObject(), String.class, Boolean.class);
         configurationFlags.forEach((flag, val) -> Global.setFlag(flag, val));
         time = Time.NIGHT;
+        date = 1;
         setCharacterDisabledFlag(getNPCByType("Yui"));
         setFlag(Flag.systemMessages, true);
         setUpMatch(new NoModifier());
@@ -1721,6 +1722,7 @@ public class Global {
     }
 
     private static String DISABLED_FORMAT = "%sDisabled";
+    private static Random FROZEN_RNG = new Random();
     public static boolean checkCharacterDisabledFlag(Character self) {
         return checkFlag(String.format(DISABLED_FORMAT, self.getTrueName()));
     }
@@ -1762,4 +1764,20 @@ public class Global {
 			c.write(self, format(string, self, other, args));
 		}
 	}
+
+	/**
+	 * TODO Huge hack to freeze status descriptions.
+	 */
+    public static void freezeRNG() {
+        FROZEN_RNG = rng;
+        rng = new Random(0);
+    }
+
+    /**
+     * TODO Huge hack to freeze status descriptions.
+     */
+    public static void unfreezeRNG() {
+        FROZEN_RNG = new Random();
+        rng = FROZEN_RNG;
+    }
 }

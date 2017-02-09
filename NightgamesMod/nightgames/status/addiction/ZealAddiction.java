@@ -133,13 +133,13 @@ public class ZealAddiction extends Addiction {
                 return "<b>Your mind is completely preoccupied by " + cause.getName() + ". You didn't worship today!"
                                 + " Will " + cause.directObject() + " be angry? What will you do if " + cause.pronoun()
                                 + " is? You aren't going to be able to focus on much else tonight.</b>";
+            case MED:
+                return "<b>You are terribly nervous at the thought of having to face " + cause.getName()
+                + " tonight after failing to pray to " + cause.directObject() + " today. The rampaging"
+                + " thoughts are throwing you off your game.</b>";
             case LOW:
                 return "<b>You didn't pay your respects to " + cause.getName() + " today... Is that bad? Or isn't it?"
                                 + " You are confused, and will have less mojo tonight.</b>";
-            case MED:
-                return "<b>You are terribly nervous at the thought of having to face " + cause.getName()
-                                + " tonight after failing to pray to " + cause.directObject() + " today. The rampaging"
-                                + " thoughts are throwing you off your game.</b>";
             case NONE:
                 throw new IllegalStateException("Tried to describe withdrawal for an inactive zeal addiction.");
             default:
@@ -187,16 +187,15 @@ public class ZealAddiction extends Addiction {
         switch (getCombatSeverity()) {
             case HIGH:
                 return "Your knees tremble with your desire to offer yourself to your goddess.";
+            case MED:
+                return "A part of you is screaming to kneel before " + cause.getName()
+                + ". Perhaps it's better to just give in?";
             case LOW:
                 return cause.getName() + " divine presence makes you wonder whether you should really be fighting "
                         + cause.directObject() + ".";
-            case MED:
-                return "A part of you is screaming to kneel before " + cause.getName()
-                                + ". Perhaps it's better to just give in?";
             case NONE:
             default:
                 return "";
-
         }
     }
 

@@ -22,6 +22,7 @@ import nightgames.combat.Combat;
 import nightgames.global.Global;
 import nightgames.status.Abuff;
 import nightgames.status.Compulsion;
+import nightgames.status.Converted;
 import nightgames.status.DarkChaos;
 import nightgames.status.Status;
 import nightgames.status.Stsflag;
@@ -44,8 +45,7 @@ public class Corruption extends Addiction {
             amt *= 1.5;
         }
         Map<Attribute, Integer> buffs = new HashMap<>();
-        int darkPlus = 0;
-        if (noMoreAttrs()) {
+        if (noMoreAttrs() || (atLeast(Severity.MED) && Global.random(100) < 5)) {
             if (!atLeast(Severity.MED)) {
                 Global.writeIfCombat(c, affected, Global.format(
                                 "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
@@ -94,16 +94,15 @@ public class Corruption extends Addiction {
                 if (!att.isPresent()) {
                     break;
                 }
-                buffs.compute(att.get(), (a, old) -> old == null ? -1 : old - 1);
-                darkPlus += 1;
+                buffs.compute(att.get(), (a, old) -> old == null ? 1 : old + 1);
             }
             switch (sev) {
                 case HIGH:
-                    Global.writeIfCombat(c, affected, Global.format( "The corruption is rampaging through {self:possessive} soul, rapidly demonizing {self:direct-object}.", affected, cause));
+                    Global.writeIfCombat(c, affected, Global.format( "The corruption is rampaging through {self:name-possessive} soul, rapidly demonizing {self:direct-object}.", affected, cause));
                     break;
                 case MED:
                     Global.writeIfCombat(c, affected, Global.format(
-                                    "The corruption is rapidly subverting {self:possessive} skills, putting them to a darker use...", affected, cause));
+                                    "The corruption is rapidly subverting {self:name-possessive} skills, putting them to a darker use...", affected, cause));
                     break;
                 case LOW:
                     Global.writeIfCombat(c, affected, Global.format( "The corruption inside of {self:name-do} is slowly changing {self:possessive} mind...", affected, cause));
@@ -112,10 +111,7 @@ public class Corruption extends Addiction {
                     assert buffs.isEmpty();
                 default:
             }
-            buffs.forEach((att, b) -> affected.add(c, new Abuff(affected, att, b, 20)));
-            if (darkPlus > 0) {
-                affected.add(c, new Abuff(affected, Attribute.Dark, darkPlus, 20));
-            }
+            buffs.forEach((att, b) -> affected.add(c, new Converted(affected, Attribute.Dark, att, b, 20)));
         }
         if (c != null && cause.has(Trait.InfernalAllegiance) && !affected.is(Stsflag.compelled) && shouldCompel() && c.getOpponent(affected).equals(cause)) {
             Global.writeIfCombat(c, affected, Global.format( "A wave of obedience radiates out from the dark essence within {self:name-do}, constraining"
@@ -258,7 +254,7 @@ public class Corruption extends Addiction {
             return "The blackness resonates with " + cause.getName() + ", growing even more powerful and troublesome than before.";
         }
         return "The blackness " + cause.getName() + " places in you resonates with " + cause.directObject() + ". You can"
-                        + " feel it starting to corrupt {self:possessive} mind and body!";
+                        + " feel it starting to corrupt " + affected.possessiveAdjective() + " mind and body!";
     }
 
     @Override

@@ -399,7 +399,11 @@ public class Angel extends BasePersonality {
         });
 
         character.addLine(CharacterLine.DESCRIBE_LINER, (c, self, other) -> {
-            if (character.has(Trait.demigoddess)) {
+            if (character.has(Trait.demigoddess) && character.isDemonic()) {
+                return "Angel seems to have transformed by some corruptive influences. Her previously pure white wings have been dyed with a muddy darkness. You also see "
+                                + "a spade tail poke out behind her shapely rear. "
+                                + "Still, she didn't seem to have lost any of her divine atmosphere. Instead she now carries herself like a whismical dark goddess, ready to subject you to her will.";
+            } else if (character.has(Trait.demigoddess)) {
                 return "Angel's transformation seems to have taken inspiration from her own name. She has large angelic wings behind her, which combined with her long blonde hair and perfect unblemished "
                                 + "skin gives her a positively divine appearance. Her appearance should be emanating holy purity, but instead her eyes and expression seem lewder than ever. "
                                 + "You're not sure what happened exactly, but it's clear to you that she's somehow become a goddess of sexuality. "
