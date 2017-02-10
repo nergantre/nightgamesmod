@@ -453,12 +453,12 @@ public abstract class Character extends Observable implements Cloneable {
 
 
     public double modifyDamage(DamageType type, Character other, double baseDamage) {
-        // so for each damage type, one level from the attacker should result in about 10% increased damage, while a point in defense should reduce damage by around 5% per level.
-        // this differential should be max capped to (2 * (100 + attacker's level * 3))%
-        // this differential should be min capped to (.5 * (100 + attacker's level * 3))%
-        double maxDamage = baseDamage * 2 * (1 + .03 * getLevel());
-        double minDamage = baseDamage * .5 * (1 + .03 * getLevel());
-        double multiplier = (1 + .1 * getOffensivePower(type) - .05 * other.getDefensivePower(type));
+        // so for each damage type, one level from the attacker should result in about 3% increased damage, while a point in defense should reduce damage by around 1.5% per level.
+        // this differential should be max capped to (2 * (100 + attacker's level * 1.5))%
+        // this differential should be min capped to (.5 * (100 + attacker's level * 1.5))%
+        double maxDamage = baseDamage * 2 * (1 + .015 * getLevel());
+        double minDamage = baseDamage * .5 * (1 + .015 * getLevel());
+        double multiplier = (1 + .03 * getOffensivePower(type) - .015 * other.getDefensivePower(type));
         if (Global.isDebugOn(DebugFlags.DEBUG_DAMAGE)) {
             System.out.println(baseDamage + " from " + getTrueName() + " has multiplier " + multiplier + " against " + other.getTrueName() + " ["+ getOffensivePower(type) +", " + other.getDefensivePower(type) + "].");
         }
@@ -631,14 +631,15 @@ public abstract class Character extends Observable implements Cloneable {
         if (drained >= stamina.get()) {
             drained = stamina.get();
         }
-        drained = Math.max(drained, i);
-        if (c != null) {
-            c.writeSystemMessage(
-                            String.format("%s drained of <font color='rgb(200,200,200)'>%d<font color='white'> stamina by %s",
-                                            subjectWas(), drained, drainer.subject()));
+        if (drained > 0) {
+            if (c != null) {
+                c.writeSystemMessage(
+                                String.format("%s drained of <font color='rgb(200,200,200)'>%d<font color='white'> stamina by %s",
+                                                subjectWas(), drained, drainer.subject()));
+            }
+            stamina.reduce(drained);
+            drainer.stamina.restore(drained);
         }
-        stamina.reduce(drained);
-        drainer.stamina.restore(drained);
     }
 
     public void weaken(Combat c, final int i) {
@@ -1297,7 +1298,7 @@ public abstract class Character extends Observable implements Cloneable {
     }
 
     public void regen(Combat c, boolean combat) {
-        getAdditionStream().forEach(Addiction::refreshWithdrawal);
+        getAddictions().forEach(Addiction::refreshWithdrawal);
         int regen = 1;
         // TODO can't find the concurrent modification error, just use a copy
         // for now I guess...
@@ -1714,7 +1715,7 @@ public abstract class Character extends Observable implements Cloneable {
             levelPlan = new HashMap<>();
         }
         status = new ArrayList<>();
-        for (JsonElement element : object.getAsJsonArray("status")) {
+        for (JsonElement element : Optional.of(object.getAsJsonArray("status")).orElse(new JsonArray())) {
             try {
                 Addiction addiction = Addiction.load(this, element.getAsJsonObject());
                 if (addiction != null) {

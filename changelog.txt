@@ -1,3 +1,16 @@
+2.5.1.1
+
+Balance:
+- Nerfed attribute based increases to pheromones, certain toys, and draining
+
+Bug fixes:
+- Actually implemented Bottomless Pit (thanks Truepower)
+- Fixed various bugs with addictions (Thanks DarkSinfulMage)
+- Fixed some text issues
+- Made old 2.5.0.x saves compatible with the new build
+	- (warning: this will make Reyka's traits growths weird, and she'll gain extra traits she is not supposed to have any more, so do so at your own risk)
+- Fixed some draining issues
+
 2.5.1
 
 QoL/GUI:

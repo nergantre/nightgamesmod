@@ -187,7 +187,7 @@ public class Combat extends Observable implements Cloneable {
         if (other.human()) {
             write(self.challenge(other));
         }
-        self.getAdditionStream().forEach(a -> {
+        self.getAddictions().forEach(a -> {
             if (a.isActive()) {
                 Optional<Status> status = a.startCombat(this, other);
                 if (status.isPresent()) {

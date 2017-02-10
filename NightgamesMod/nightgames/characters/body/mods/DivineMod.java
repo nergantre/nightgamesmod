@@ -63,8 +63,8 @@ public class DivineMod extends PartMod {
             if (c.getStance().partsForStanceOnly(c, self, opponent).contains(part) && c.getStance().partsForStanceOnly(c, opponent, self).stream().anyMatch(otherPart -> otherPart.isType("cock"))) {
                 c.write(self, Global.format(
                                 "As {other:possessive} cum floods {self:name-possessive} "
-                                                + "%s, a holy aura surrounds {self:direct-object}. The soothing"
-                                                + " light washes over {other:pronoun}, filling {other:direct-object} with a zealous need to worship {self:possessive} divine body.",
+                                                + "%s, {other:subject-action:are} assaulted by a feeling of inner peace and belonging. The soothing"
+                                                + " emotions washes over {other:pronoun}, before settling in as an unadulterated adoration for {other:possessive} divine partner.",
                                 self, opponent, part.describe(self)));
                 opponent.addict(c, AddictionType.ZEAL, self, Addiction.MED_INCREASE);
             }

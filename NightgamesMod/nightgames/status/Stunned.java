@@ -85,19 +85,19 @@ public class Stunned extends DurationStatus {
 
     @Override
     public int damage(Combat c, int x) {
-        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much more that can be done.", affected, affected));
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already downed, there's not much more that can be done.", affected, affected));
         return -x;
     }
 
     @Override
     public int weakened(Combat c, int x) {
-        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much more that can be done.", affected, affected));
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already downed, there's not much more that can be done.", affected, affected));
         return -x;
     }
 
     @Override
     public int drained(Combat c, int x) {
-        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already down, there's not much to take.", affected, affected));
+        Global.writeIfCombat(c, affected, Global.format("Since {self:subject-action:are} already downed, there's not much to take.", affected, affected));
         return -x;
     }
 

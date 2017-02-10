@@ -15,9 +15,9 @@ public class WinningRequirement extends BaseRequirement {
         if (c == null)
             return false;
         int score = INITIAL_WINNING_SCORE;
-        score -= other.getWillpower().get();
-        score += (other.getArousal().percent() - 50) / 2;
-        score += (self.getFitness(c) - other.getFitness(c)) / 3;
+        score += (other.getWillpower().percent() - self.getWillpower().percent()) * 4;
+        score += (other.getArousal().percent() - self.getArousal().percent()) * 2;
+        //score += (self.getFitness(c) - other.getFitness(c)) / 3;
         if (c.getStance().dom(self))
             score += 10;
         if (c.getStance().mobile(self))

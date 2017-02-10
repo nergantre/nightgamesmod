@@ -70,7 +70,7 @@ public class ZealAddiction extends Addiction {
     @Override
     public void tick(Combat c) {
         super.tick(c);
-        if ((c.getStance().en == Stance.neutral || c.getStance().en == Stance.behind)
+        if (c != null && (c.getStance().en == Stance.neutral || c.getStance().en == Stance.behind)
                         && Global.randomdouble() < Math.min(.5f, combatMagnitude / 2.0)) {
             c.write(affected, "Overcome by your desire to serve " + cause.getName() + ", you get on the ground "
                             + "and prostrate yourself in front of " + cause.directObject() + ".");

@@ -21,29 +21,34 @@ public class Drained extends Abuff {
         if (drainer.has(Trait.Greedy)) {
             duration *= 1.5;
         }
-        int realValue = Math.min(drained.getPure(att) - 
+        int realValue = Math.min(drained.get(att) - 
                         (Attribute.isBasic(drained, att) ? 3 : 0), value);
-        drainer.add(c, new Drained(drainer, drained, att, realValue, duration));
-        drained.add(c, new Drained(drained, drainer, att, -realValue, duration));
-        if (write) {
-            if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
-                Global.writeIfCombat(c, drainer, Global.format("With {other:name-possessive} mental defences lowered as they are,"
-                                + " {self:subject-action:are|is} able to draw in more of {other:possessive} %s than"
-                                + " normal."
-                                , drainer, drained, att.toString()));
-            }
-            if (drainer.has(Trait.Greedy)) {
-                Global.writeIfCombat(c, drainer, Global.format("{self:SUBJECT-ACTION:suck|sucks} {other:name-possessive} %s"
-                                + " deeply into {self:reflective}, holding onto it for longer than usual."
-                                , drainer, drained, att.toString()));
+        if (realValue > 0) {
+            drainer.add(c, new Drained(drainer, drained, att, realValue, duration));
+            drained.add(c, new Drained(drained, drainer, att, -realValue, duration));
+            if (write) {
+                if (drainer.has(Trait.WillingSacrifice) && drained.is(Stsflag.charmed)) {
+                    Global.writeIfCombat(c, drainer, Global.format("With {other:name-possessive} mental defences lowered as they are,"
+                                    + " {self:subject-action:are|is} able to draw in more of {other:possessive} %s than"
+                                    + " normal."
+                                    , drainer, drained, att.toString()));
+                }
+                if (drainer.has(Trait.Greedy)) {
+                    Global.writeIfCombat(c, drainer, Global.format("{self:SUBJECT-ACTION:suck|sucks} {other:name-possessive} %s"
+                                    + " deeply into {self:reflective}, holding onto it for longer than usual."
+                                    , drainer, drained, att.toString()));
+                }
+                if (drainer.has(Trait.RaptorMentis)) {
+                    Global.writeIfCombat(c, drainer, Global.format("Additionally, the draining leaves a profound emptiness in its"
+                                    + " wake, sapping {other:name-possessive} confidence.", drainer, drained));
+                }
             }
             if (drainer.has(Trait.RaptorMentis)) {
-                Global.writeIfCombat(c, drainer, Global.format("Additionally, the draining leaves a profound emptiness in its"
-                                + " wake, sapping {other:name-possessive} confidence.", drainer, drained));
+                drained.drainMojo(c, drainer, Math.max(5, realValue));
             }
-        }
-        if (drainer.has(Trait.RaptorMentis)) {
-            drained.drainMojo(c, drainer, Math.max(5, realValue));
+        } else {
+            Global.writeIfCombat(c, drainer, Global.format("{self:subject-action:try} to drain {other:name-possessive} %s but {self:action:find} that there's nothing left to take.",
+                            drainer, drained, att.getDrainedDO()));
         }
     }
 

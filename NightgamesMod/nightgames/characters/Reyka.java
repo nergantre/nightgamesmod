@@ -131,7 +131,7 @@ public class Reyka extends BasePersonality {
                             c.write(Global.format("Well... If you can't stop {self:direct-object} anyway -"
                                             + " and chances seem good you won't be able to, given present"
                                             + " circumstances - then you might as well enjoy it, right?"
-                                            + " <i>\"How wise of you, {self:name}. This should come as no"
+                                            + " <i>\"How wise of you, {other:name}. This should come as no"
                                             + " suprise, but succubi are </i>very<i> good at making cute"
                                             + " {other:boy}s like you enjoy themselves. I shall bring all of"
                                             + " that considerable talent to bear on you. I'd tell you to prepare"

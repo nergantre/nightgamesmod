@@ -1,9 +1,11 @@
 package nightgames.status.addiction;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -39,6 +41,10 @@ public class Corruption extends Addiction {
     @Override
     public void tick(Combat c) {
         super.tick(c);
+        if (c == null && Global.random(100) < 66) {
+            // if you aren't in combat, just apply corrupt 1/3rd of the time.
+            return;
+        }
         Severity sev = getCombatSeverity();
         int amt = sev.ordinal() * 2;
         if (cause.has(Trait.Subversion) && affected.is(Stsflag.charmed)) {
@@ -50,7 +56,7 @@ public class Corruption extends Addiction {
                 Global.writeIfCombat(c, affected, Global.format(
                                 "The corruption is churning within {self:name-do}, but it seems that it's done all it can for now.", affected, cause));
             } else if (!affected.body.has("tail") || affected.body.getRandom("tail") != TailPart.demonic) {
-                Global.writeIfCombat(c, affected, Global.format( "<b>The dark taint changes you even further, and a spade-tipped tail bursts out of {self:possessive}"
+                Global.writeIfCombat(c, affected, Global.format( "<b>The dark taint changes {self:name-do} even further, and a spade-tipped tail bursts out of {self:possessive}"
                                 + " lower back!</b>", affected, cause));
                 affected.body.temporaryAddOrReplacePartWithType(TailPart.demonic, Global.random(15, 40));
             } else if (!affected.body.has("wings") || affected.body.getRandom("wings") != WingsPart.demonic) {
@@ -129,10 +135,14 @@ public class Corruption extends Addiction {
         return !getDrainAttr().isPresent();
     }
 
+    private static final Set<Attribute> UNDRAINABLE_ATTS = EnumSet.of(Attribute.Dark, Attribute.Speed, Attribute.Perception);
+    private boolean attIsDrainable(Attribute att) {
+        return !UNDRAINABLE_ATTS.contains(att) && affected.get(att) > Math.max(10, affected.getPure(att) / 10);
+    }
     private Optional<Attribute> getDrainAttr() {
         Optional<Abuff> darkBuff = affected.getStatusOfClass(Abuff.class).stream().filter(status -> status.getModdedAttribute() == Attribute.Dark).findAny();
         if (!darkBuff.isPresent() || darkBuff.get().getValue() <  10 + getMagnitude() * 50) {
-            return Global.pickRandom(Arrays.stream(Attribute.values()).filter(a -> a != Attribute.Dark && affected.get(a) >= 10).toArray(Attribute[]::new));            
+            return Global.pickRandom(Arrays.stream(Attribute.values()).filter(this::attIsDrainable).toArray(Attribute[]::new));            
         }
         return Optional.empty();
     }
