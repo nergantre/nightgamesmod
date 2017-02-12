@@ -21,7 +21,7 @@ public class Drained extends Abuff {
         if (drainer.has(Trait.Greedy)) {
             duration *= 1.5;
         }
-        int realValue = Math.min(drained.get(att) - 
+        int realValue = Math.min(drained.getPure(att) - 
                         (Attribute.isBasic(drained, att) ? 3 : 0), value);
         if (realValue > 0) {
             drainer.add(c, new Drained(drainer, drained, att, realValue, duration));

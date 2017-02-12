@@ -22,7 +22,12 @@ public class Disguise extends Action {
     }
 
     private NPC getRandomNPC(Character user) {
-        NPC target = (NPC) Global.pickRandom(Global.getParticipants().stream().filter(other -> !other.human() && user != other && !Global.checkCharacterDisabledFlag(other)).collect(Collectors.toList())).orElse(null);
+        NPC target = (NPC) Global.pickRandom(Global.getParticipants()
+                        .stream().filter(other -> !other.human() 
+                                        && user != other 
+                                        && !other.has(Trait.cursed)
+                                        && !Global.checkCharacterDisabledFlag(other))
+                        .collect(Collectors.toList())).orElse(null);
         return target;
     }
 

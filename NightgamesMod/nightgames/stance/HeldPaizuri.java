@@ -21,7 +21,10 @@ public class HeldPaizuri extends AbstractFacingStance {
 
     @Override
     public boolean inserted(Character c) {
-        return c == bottom;
+        if (bottom.hasDick()) {
+            return c == bottom;
+        }
+        return false;
     }
 
     @Override

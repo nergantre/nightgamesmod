@@ -842,11 +842,6 @@ public class GUI extends JFrame implements Observer {
     }
 
     public void populatePlayer(Player player) {
-        if (Global.checkFlag(Flag.largefonts)) {
-            fontsize = 6;
-        } else {
-            fontsize = 5;
-        }
         mntmOptions.setEnabled(true);
         getContentPane().remove(creation);
         getContentPane().add(gamePanel);
@@ -1306,6 +1301,7 @@ public class GUI extends JFrame implements Observer {
         if (Global.isDebugOn(DebugFlags.DEBUG_GUI)) {
             System.out.println("Match end");
         }
+        combat = null;
         clearCommand();
         showNone();
         mntmQuitMatch.setEnabled(false);

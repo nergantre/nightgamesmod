@@ -22,10 +22,10 @@ public class SaveData {
     public final Map<String, Float> counters;
     public Time time;
     public int date;
-
+    public int fontsize;
 
     private enum JSONKey {
-        PLAYERS("characters"), FLAGS("flags"), COUNTERS("counters"), TIME("time"), DATE("date");
+        PLAYERS("characters"), FLAGS("flags"), COUNTERS("counters"), TIME("time"), DATE("date"), FONTSIZE("fontsize");
 
         final String key;
 
@@ -66,7 +66,12 @@ public class SaveData {
         counters.putAll(JsonUtils.mapFromJson(countersJSON, String.class, Float.class));
 
         date = rootJSON.get(JSONKey.DATE.key).getAsInt();
-
+        if (rootJSON.has(JSONKey.FONTSIZE.key)) {
+            fontsize = rootJSON.get(JSONKey.FONTSIZE.key).getAsInt();
+        } else {
+            fontsize = 5;
+        }
+        
         time = Time.fromDesc(rootJSON.get(JSONKey.TIME.key).getAsString());
     }
 
@@ -89,6 +94,7 @@ public class SaveData {
         rootJSON.addProperty(JSONKey.TIME.key, time.desc);
 
         rootJSON.addProperty(JSONKey.DATE.key, date);
+        rootJSON.addProperty(JSONKey.FONTSIZE.key, fontsize);
 
         return rootJSON;
     }

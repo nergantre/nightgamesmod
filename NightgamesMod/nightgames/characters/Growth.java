@@ -194,4 +194,8 @@ public class Growth implements Cloneable {
         clone.clothing = Collections.unmodifiableMap(clone.clothing);
         return clone;
     }
+
+    public void removeNullTraits() {
+        traits.forEach((i, l) -> l.removeIf(t -> t == null));
+    }
 }

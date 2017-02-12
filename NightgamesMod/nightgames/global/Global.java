@@ -1126,6 +1126,7 @@ public class Global {
         data.counters.putAll(counters);
         data.time = time;
         data.date = date;
+        data.fontsize = gui.fontsize;
         return data;
     }
 
@@ -1269,6 +1270,7 @@ public class Global {
         counters.putAll(data.counters);
         date = data.date;
         time = data.time;
+        gui.fontsize = data.fontsize;
     }
 
     public static Set<Character> everyone() {
@@ -1377,7 +1379,7 @@ public class Global {
         if (arr == null || arr.length == 0) return Optional.empty();
         return Optional.of(arr[Global.random(arr.length)]);
     }
-    
+
     public static <T> Optional<T> pickRandom(List<T> list) {
         if (list == null || list.size() == 0) {
             return Optional.empty();

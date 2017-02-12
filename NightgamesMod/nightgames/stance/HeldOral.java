@@ -108,7 +108,11 @@ public class HeldOral extends AbstractFacingStance {
 
     @Override
     public boolean inserted(Character c) {
-        return c == bottom;
+        if (bottom.hasDick()) {
+            return c == bottom;
+        } else {
+            return false;
+        }
     }
 
     @Override

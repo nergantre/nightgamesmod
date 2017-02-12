@@ -1598,7 +1598,7 @@ public class Combat extends Observable implements Cloneable {
             }
             getCombatantData(p1).setIntegerFlag("ChoseToFuck", 0);
             getCombatantData(p2).setIntegerFlag("ChoseToFuck", 0);
-        } else if (!stance.inserted() && newStance.inserted()) {
+        } else if (!stance.inserted() && newStance.inserted() && (newStance.penetrated(this, p1) || newStance.penetrated(this, p2)) ) {
             doStartPenetration(newStance, p1, p2);
         } else if (!stance.havingSex(this) && newStance.havingSex(this)) {
             Character threePCharacter = stance.domSexCharacter(this);
