@@ -2,11 +2,14 @@
 Minor:
 - Started saving font size to file.
 - Added the trait IndiscriminateThief to allow level drainers to steal levels from each other.
+- Reyka's short duration charmed now does not apply cynical
 
 Bug fixes:
 - Airi can no longer disguise as Maya (this fixes a crash bug)
 - Removed unloadable traits from loaded growth plans
 - Fixed stale combats getting saved after a match (results in errors if leveling up during daytime)
+- Fixed addiction removal to actually remove addictions.
+- Attributes can no longer be modded below 0 (temporarily fix, they can still be drained below 0, but it will be affectively 0 for now).
 
 2.5.1.1
 

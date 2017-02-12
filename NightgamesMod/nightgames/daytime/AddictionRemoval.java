@@ -61,7 +61,7 @@ public class AddictionRemoval extends Activity {
             player.money -= 15000;
             Global.gui().message("You dole out the mountain of cash and are taken to the back for your treatment."
                             + " When you emerge, you are completely free of your addiction.");
-            Global.getPlayer().getAddictions().remove(Global.getPlayer().getStrongestAddiction().get());
+            Global.getPlayer().removeStatusImmediately(Global.getPlayer().getStrongestAddiction().get());
         } else if (choice.equals("Leave")) {
             done(true);
             return;

@@ -554,7 +554,7 @@ public class Informant extends Activity {
                                   .get();
             String message = "You tell Aesop about the feelings you've been having"
                             + " lately, asking if he can do anything to help. <i>" +
-                            add.informantsOverview();
+                            Global.format(add.informantsOverview(), add.affected, add.getCause());
             if (!Global.checkFlag(Flag.AddictionAdvice)) {
                 message += "\n\nAnyway, if you want to get rid of it, I might have got an address for you."
                                 + " Being as kind as I am, I'll give it to you for free. You know, help"

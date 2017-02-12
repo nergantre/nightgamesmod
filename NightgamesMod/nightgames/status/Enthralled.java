@@ -32,6 +32,7 @@ public class Enthralled extends DurationStatus {
         flag(Stsflag.debuff);
         flag(Stsflag.disabling);
         flag(Stsflag.purgable);
+        flag(Stsflag.mindgames);
         this.makesCynical = makesCynical;
     }
 
@@ -72,11 +73,6 @@ public class Enthralled extends DurationStatus {
         Enthralled other = (Enthralled) s;
         setDuration(Math.max(getDuration() + 1, other.getDuration() - 2 * (timesRefreshed + 1)));
         timesRefreshed += 1;
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

@@ -19,6 +19,7 @@ public class Shamed extends DurationStatus {
         flag(Stsflag.shamed);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        flag(Stsflag.mindgames);
         magnitude = 1;
     }
 
@@ -34,11 +35,6 @@ public class Shamed extends DurationStatus {
     @Override
     public String initialMessage(Combat c, Optional<Status> replacement) {
         return String.format("%s now shamed.\n", affected.subjectAction("are", "is"));
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

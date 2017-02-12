@@ -366,7 +366,7 @@ public abstract class Character extends Observable implements Cloneable {
             default:
                 break;
         }
-        return total;
+        return Math.max(0, total);
     }
 
     public boolean has(ClothingTrait attribute) {
@@ -4032,7 +4032,7 @@ public abstract class Character extends Observable implements Cloneable {
         }
     }
 
-    private void removeStatusImmediately(Status status) {
+    public void removeStatusImmediately(Status status) {
         this.status.remove(status);
     }
 

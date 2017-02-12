@@ -28,6 +28,7 @@ public class Trance extends DurationStatus {
         flag(Stsflag.trance);
         flag(Stsflag.disabling);
         flag(Stsflag.purgable);
+        flag(Stsflag.mindgames);
         this.makesCynical = makesCynical;
     }
 
@@ -51,11 +52,6 @@ public class Trance extends DurationStatus {
         } else {
             return String.format("%s already entranced.\n", affected.subjectAction("are", "is"));
         }
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

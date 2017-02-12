@@ -23,6 +23,7 @@ public class Suckling extends DurationStatus {
         flag(Stsflag.suckling);
         flag(Stsflag.debuff);
         flag(Stsflag.purgable);
+        flag(Stsflag.mindgames);
     }
 
     @Override
@@ -44,11 +45,6 @@ public class Suckling extends DurationStatus {
             return affected.getName() + " is looking intently at "
                             +c.getOpponent(affected).nameOrPossessivePronoun()+" breasts.";
         }
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

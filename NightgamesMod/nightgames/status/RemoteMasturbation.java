@@ -24,6 +24,7 @@ public class RemoteMasturbation extends DurationStatus {
         super("Remote Masturbation", affected, 10);
         flag(Stsflag.trance);
         flag(Stsflag.purgable);
+        flag(Stsflag.mindgames);
         this.controller = controller;
     }
 
@@ -46,11 +47,6 @@ public class RemoteMasturbation extends DurationStatus {
     public String describe(Combat c) {
         return controller.subject() + " is remotely directing " + affected.nameOrPossessivePronoun()
                         + " hands to masturbate fiercely.";
-    }
-    
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

@@ -60,7 +60,7 @@ public class Taunt extends Skill {
                             + " way {self:possessive} voice rises and falls, {self:possessive}"
                             + " pauses and pitch... {other:SUBJECT} soon {other:action:find|finds}"
                             + " {other:reflective} utterly hooked.", getSelf(), target));
-            target.add(c, new Charmed(target, 2));
+            target.add(c, new Charmed(target, 2).withFlagRemoved(Stsflag.mindgames));
         }
         target.emote(Emotion.angry, 30);
         target.emote(Emotion.nervous, 15);

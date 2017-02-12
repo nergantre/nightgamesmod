@@ -16,6 +16,7 @@ public class Charmed extends DurationStatus {
         flag(Stsflag.charmed);
         flag(Stsflag.purgable);
         flag(Stsflag.debuff);
+        flag(Stsflag.mindgames);
     }
 
     public Charmed(Character affected, int duration) {
@@ -31,11 +32,6 @@ public class Charmed extends DurationStatus {
             return affected.getName() + " is looking at "+c.getOpponent(affected).nameDirectObject()
                             +" like a lovestruck teenager.";
         }
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

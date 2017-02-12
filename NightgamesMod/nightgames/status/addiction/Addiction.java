@@ -173,6 +173,7 @@ public abstract class Addiction extends Status {
             Global.gui()
                   .message("<b>The overload treatment seems to have worked, and you are now rid of all traces of"
                                   + " your " + name + ".\n</b>");
+            affected.removeStatusImmediately(this);
         }
     }
 

@@ -182,7 +182,7 @@ public class BreastsPart extends GenericBodyPart {
                                                 + " {self:pronoun} seems more and more impossibly beautiful to {other:possessive} eyes."
                                                 + " Why would {other:pronoun} want to mar such perfect beauty?",
                                                 self, opponent));
-                opponent.add(c, new Charmed(opponent, 2));
+                opponent.add(c, new Charmed(opponent, 2).withFlagRemoved(Stsflag.mindgames));
             }
             if (self.has(Trait.PheromonedMilk) && !opponent.has(Trait.Rut)) {
                 c.write(opponent, Global.format("<b>Drinking {self:possessive} breast milk sends {other:direct-object} into a chemically induced rut!</b>",

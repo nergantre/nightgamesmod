@@ -19,6 +19,7 @@ public class Lovestruck extends DurationStatus {
         flag(Stsflag.charmed);
         flag(Stsflag.purgable);
         flag(Stsflag.debuff);
+        flag(Stsflag.mindgames);
     }
 
     @Override
@@ -28,11 +29,6 @@ public class Lovestruck extends DurationStatus {
         } else {
             return affected.getName() + " is looking at "+other.nameDirectObject()+" like a lovestruck teenager.";
         }
-    }
-
-    @Override
-    public boolean mindgames() {
-        return true;
     }
 
     @Override

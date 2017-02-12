@@ -41,11 +41,6 @@ public class Flatfooted extends DurationStatus {
     }
 
     @Override
-    public boolean mindgames() {
-        return false;
-    }
-
-    @Override
     public float fitnessModifier() {
         return -3;
     }

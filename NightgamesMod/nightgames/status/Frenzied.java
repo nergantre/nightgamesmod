@@ -69,6 +69,7 @@ public class Frenzied extends DurationStatus {
         flag(Stsflag.frenzied);
         if (!selfInflicted && !affected.has(Trait.NaturalHeat)) {
             flag(Stsflag.debuff);
+            flag(Stsflag.mindgames);
         }
         flag(Stsflag.purgable);
         this.selfInflicted = selfInflicted;
@@ -118,11 +119,6 @@ public class Frenzied extends DurationStatus {
         if (!selfInflicted) {
             affected.addlist.add(new Cynical(affected));
         }
-    }
-
-    @Override
-    public boolean mindgames() {
-        return !selfInflicted;
     }
 
     @Override

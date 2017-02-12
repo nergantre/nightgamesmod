@@ -104,6 +104,11 @@ public abstract class Status implements Cloneable {
         return flags;
     }
 
+    public Status withFlagRemoved(Stsflag flag) {
+        flags.remove(flag);
+        return this;
+    }
+    
     public boolean overrides(Status s) {
         return s.getClass() == this.getClass();
     }
@@ -111,7 +116,7 @@ public abstract class Status implements Cloneable {
     public void replace(Status newStatus) {}
 
     public boolean mindgames() {
-        return false;
+        return flags().contains(Stsflag.mindgames);
     }
 
     @Override
